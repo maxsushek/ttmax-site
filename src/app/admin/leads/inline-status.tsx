@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useTransition, useRef, useEffect } from "react";
+import {
+  useState,
+  useTransition,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+} from "react";
+import { createPortal } from "react-dom";
 import type { LeadStatus } from "@/lib/supabase/types";
 import { updateLeadStatusAction } from "./[id]/actions";
 
@@ -32,22 +39,77 @@ const ALL_STATUSES: LeadStatus[] = [
   "lost",
 ];
 
+const MENU_HEIGHT_ESTIMATE = 280;
+const MENU_WIDTH = 180;
+
 export function InlineStatus({ leadId, currentStatus }: Props) {
   const [optimistic, setOptimistic] = useState<LeadStatus>(currentStatus);
   const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState<{
+    top: number;
+    left: number;
+    placement: "below" | "above";
+  } | null>(null);
   const [isPending, startTransition] = useTransition();
-  const ref = useRef<HTMLDivElement | null>(null);
+  const [mounted, setMounted] = useState(false);
 
-  // Close on outside click
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Smart positioning — flip up if no room below
+  useLayoutEffect(() => {
+    if (!open || !btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const viewportW = window.innerWidth;
+    const spaceBelow = viewportH - rect.bottom;
+    const placement: "below" | "above" =
+      spaceBelow < MENU_HEIGHT_ESTIMATE && rect.top > MENU_HEIGHT_ESTIMATE
+        ? "above"
+        : "below";
+
+    let left = rect.left;
+    // Don't go off the right edge
+    if (left + MENU_WIDTH > viewportW - 8) {
+      left = viewportW - MENU_WIDTH - 8;
+    }
+    if (left < 8) left = 8;
+
+    const top =
+      placement === "below"
+        ? rect.bottom + 4 + window.scrollY
+        : rect.top - 4 + window.scrollY;
+
+    setPos({ top, left: left + window.scrollX, placement });
+  }, [open]);
+
+  // Close on outside click / scroll / resize / escape
   useEffect(() => {
     if (!open) return;
     const onClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      const target = e.target as Node;
+      if (btnRef.current?.contains(target)) return;
+      if (menuRef.current?.contains(target)) return;
+      setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onScrollOrResize = () => setOpen(false);
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onScrollOrResize, true);
+    window.addEventListener("resize", onScrollOrResize);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onScrollOrResize, true);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
   }, [open]);
 
   const meta = STATUS_META[optimistic];
@@ -69,9 +131,62 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
     });
   };
 
+  const menuPortal =
+    mounted && open && pos
+      ? createPortal(
+          <div
+            ref={menuRef}
+            style={{
+              position: "absolute",
+              top: pos.top,
+              left: pos.left,
+              width: MENU_WIDTH,
+              transform: pos.placement === "above" ? "translateY(-100%)" : "none",
+              zIndex: 9999,
+            }}
+            className="bg-[#0E1117] border border-white/[0.1] rounded-lg shadow-2xl py-1 overflow-hidden"
+          >
+            {ALL_STATUSES.map((s) => {
+              const m = STATUS_META[s];
+              const isActive = s === optimistic;
+              return (
+                <button
+                  key={s}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleChange(s);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-[12px] flex items-center gap-2 transition-colors ${
+                    isActive ? "bg-white/[0.05]" : "hover:bg-white/[0.04]"
+                  }`}
+                >
+                  <span
+                    className="inline-block w-2 h-2 rounded-full flex-shrink-0"
+                    style={{ background: m.dot }}
+                  />
+                  <span
+                    className={`font-bold uppercase tracking-wide text-[11px] ${m.text}`}
+                  >
+                    {m.label}
+                  </span>
+                  {isActive && (
+                    <span className="ml-auto text-[#E8FF47] text-[11px]">
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>,
+          document.body
+        )
+      : null;
+
   return (
-    <div ref={ref} className="relative inline-block">
+    <>
       <button
+        ref={btnRef}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -97,41 +212,7 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
           />
         </svg>
       </button>
-
-      {open && (
-        <div className="absolute z-50 mt-1 left-0 min-w-[160px] bg-[#0E1117] border border-white/[0.1] rounded-lg shadow-xl py-1 overflow-hidden">
-          {ALL_STATUSES.map((s) => {
-            const m = STATUS_META[s];
-            const isActive = s === optimistic;
-            return (
-              <button
-                key={s}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  handleChange(s);
-                }}
-                className={`w-full text-left px-3 py-2 text-[12px] flex items-center gap-2 transition-colors ${
-                  isActive
-                    ? "bg-white/[0.05]"
-                    : "hover:bg-white/[0.04]"
-                }`}
-              >
-                <span
-                  className="inline-block w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ background: m.dot }}
-                />
-                <span className={`font-bold uppercase tracking-wide text-[11px] ${m.text}`}>
-                  {m.label}
-                </span>
-                {isActive && (
-                  <span className="ml-auto text-[#E8FF47] text-[11px]">✓</span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
+      {menuPortal}
+    </>
   );
 }
