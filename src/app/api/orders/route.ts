@@ -120,6 +120,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, persisted: false });
   }
 
+  // 1) Створюємо шапку замовлення
   const { data: orderRow, error: orderError } = await supabase
     .from("orders")
     .insert({
@@ -147,6 +148,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 
+  // 2) Вставляємо позиції
   const itemsToInsert = data.items.map((i) => ({
     order_id: orderRow.id,
     product_id: i.productId,
@@ -165,6 +167,37 @@ export async function POST(request: NextRequest) {
     console.error("[orders] items insert error:", itemsError.message, itemsError.code);
     await supabase.from("orders").delete().eq("id", orderRow.id);
     return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+
+  // 3) Дублюємо в leads, щоб замовлення з'являлось у CRM /admin/leads
+  const itemsSummary = data.items
+    .map((i) => `${i.brand} ${i.model} ×${i.qty}`)
+    .join(", ");
+
+  const deliveryNote = [
+    `Замовлення ${orderRow.order_number}`,
+    `Товари: ${itemsSummary}`,
+    `Доставка: ${data.delivery.method}${data.delivery.city ? `, ${data.delivery.city}` : ""}${data.delivery.branch ? `, ${data.delivery.branch}` : ""}`,
+    `Оплата: ${data.payment.method}`,
+    data.comment ? `Коментар: ${data.comment}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const { error: leadError } = await supabase.from("leads").insert({
+    name: data.customer.name,
+    phone: data.customer.phone,
+    email: data.customer.email ?? null,
+    source: "order",
+    locale: data.locale,
+    attribution,
+    value_uah: computedTotal,
+    notes: deliveryNote,
+  });
+
+  if (leadError) {
+    // Не валимо запит — замовлення вже збережено в orders
+    console.error("[orders] lead mirror error:", leadError.message);
   }
 
   return NextResponse.json({
