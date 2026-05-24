@@ -81,9 +81,10 @@ export async function POST(request: NextRequest) {
     attribution: parsed.data.attribution ?? {},
   });
 
-  if (error) {
-    return NextResponse.json({ error: "Database error" }, { status: 500 });
+ if (error) {
+    console.error("[leads] supabase insert error:", error.message, error.code, error.details);
+    return NextResponse.json(
+      { error: "Database error", details: error.message },
+      { status: 500 },
+    );
   }
-
-  return NextResponse.json({ ok: true, persisted: true });
-}
