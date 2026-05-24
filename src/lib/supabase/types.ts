@@ -1,16 +1,3 @@
-/**
- * Supabase database types.
- * Replace with auto-generated types from Supabase CLI:
- *   npx supabase gen types typescript --project-id <id> > src/lib/supabase/types.ts
- */
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
-
 export type LeadRow = {
   id: string;
   created_at: string;
@@ -18,17 +5,19 @@ export type LeadRow = {
   phone: string;
   email: string | null;
   source: string;
-  locale: string;
-  attribution: Json;
+  locale: "uk" | "ru";
+  attribution: Record<string, unknown>;
 };
 
 export type LeadInsert = {
+  id?: string;
+  created_at?: string;
   name: string;
   phone: string;
   email?: string | null;
   source: string;
-  locale: string;
-  attribution?: Json;
+  locale: "uk" | "ru";
+  attribution?: Record<string, unknown>;
 };
 
 export type Database = {
@@ -38,10 +27,12 @@ export type Database = {
         Row: LeadRow;
         Insert: LeadInsert;
         Update: Partial<LeadInsert>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 };
