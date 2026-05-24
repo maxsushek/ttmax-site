@@ -13,7 +13,16 @@ export function Logo({
   className?: string;
 }) {
   const tileSize = size === "sm" ? "h-8 w-8 text-base" : "h-9 w-9 text-lg";
-  const textSize = size === "sm" ? "text-lg" : "text-xl";
+  const textSize = size === "sm" ? "text-[15px]" : "text-[17px]";
+  const subSize = size === "sm" ? "text-[8px]" : "text-[9px]";
+
+  // Brand visual is "BUTTERFLY.UA" with yellow accent on .UA + "by TTMAX" small sub
+  // We split the main name on the brandSuffix so the suffix renders with accent color.
+  // Example: name="Butterfly UA", brandSuffix="UA" → "BUTTERFLY" + accent ".UA"
+  const fullName = siteConfig.name.toUpperCase();
+  const suffix = siteConfig.brandSuffix.toUpperCase();
+  const mainName = fullName.replace(new RegExp(`\\s*${suffix}$`), "");
+
   return (
     <Link
       href={`/${locale}`}
@@ -29,13 +38,24 @@ export function Logo({
       >
         {siteConfig.emoji}
       </span>
-      <span
-        className={cn(
-          "font-display font-black uppercase tracking-[0.06em] text-ink",
-          textSize,
-        )}
-      >
-        TT<span className="text-accent">{siteConfig.brandSuffix}</span>
+      <span className="flex flex-col leading-none">
+        <span
+          className={cn(
+            "font-display font-black uppercase tracking-[0.04em] text-ink",
+            textSize,
+          )}
+        >
+          {mainName}
+          <span className="text-accent">.{suffix}</span>
+        </span>
+        <span
+          className={cn(
+            "mt-0.5 font-body uppercase tracking-[0.18em] text-ink-ghost",
+            subSize,
+          )}
+        >
+          {siteConfig.subBrand}
+        </span>
       </span>
     </Link>
   );
