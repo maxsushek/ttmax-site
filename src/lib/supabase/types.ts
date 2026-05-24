@@ -1,38 +1,39 @@
-export type LeadRow = {
+import { redirect } from "next/navigation";
+import { getSupabaseSessionClient } from "@/lib/supabase/server";
+
+export type AdminUser = {
   id: string;
-  created_at: string;
-  name: string;
-  phone: string;
-  email: string | null;
-  source: string;
-  locale: "uk" | "ru";
-  attribution: Record<string, unknown>;
+  email: string;
 };
 
-export type LeadInsert = {
-  id?: string;
-  created_at?: string;
-  name: string;
-  phone: string;
-  email?: string | null;
-  source: string;
-  locale: "uk" | "ru";
-  attribution?: Record<string, unknown>;
-};
+/**
+ * Возвращает текущего admin'а, если пользователь залогинен И есть в public.admins.
+ * Иначе null. Используется в Server Components где нужна гибкая логика.
+ */
+export async function getCurrentAdmin(): Promise<AdminUser | null> {
+  const supabase = await getSupabaseSessionClient();
+  if (!supabase) return null;
 
-export type Database = {
-  public: {
-    Tables: {
-      leads: {
-        Row: LeadRow;
-        Insert: LeadInsert;
-        Update: Partial<LeadInsert>;
-        Relationships: [];
-      };
-    };
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
-    Enums: Record<string, never>;
-    CompositeTypes: Record<string, never>;
-  };
-};
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user?.email) return null;
+
+  const { data: isAdmin, error } = await supabase.rpc("is_admin");
+  if (error || isAdmin !== true) return null;
+
+  return { id: user.id, email: user.email };
+}
+
+/**
+ * Используется в начале каждой защищённой admin-страницы.
+ * Если не admin — редиректит на /admin/login.
+ * Если admin — возвращает объект с id/email для использования в странице.
+ */
+export async function requireAdmin(): Promise<AdminUser> {
+  const admin = await getCurrentAdmin();
+  if (!admin) {
+    redirect("/admin/login");
+  }
+  return admin;
+}
