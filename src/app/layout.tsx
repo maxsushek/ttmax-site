@@ -6,7 +6,7 @@ import { cn } from "@/utils/cn";
 import "./globals.css";
 
 const barlowCondensed = Barlow_Condensed({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin", "latin-ext"],
   weight: ["400", "600", "700", "800", "900"],
   variable: "--font-display",
   display: "swap",
@@ -14,7 +14,7 @@ const barlowCondensed = Barlow_Condensed({
 });
 
 const barlow = Barlow({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "500"],
   variable: "--font-body",
   display: "swap",
