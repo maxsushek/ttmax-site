@@ -20,27 +20,31 @@ const STATUS_META: Record<
   LeadStatus,
   { label: string; short: string; bg: string; text: string; dot: string }
 > = {
-  new:         { label: "Новый",          short: "Новый",       bg: "bg-white/[0.06]",     text: "text-[#aaa]",     dot: "#888" },
-  contacted:   { label: "Связались",      short: "Связ.",       bg: "bg-[#A29BFE]/[0.12]", text: "text-[#A29BFE]",  dot: "#A29BFE" },
-  qualified:   { label: "Целевой",        short: "Целевой",     bg: "bg-[#54A0FF]/[0.12]", text: "text-[#54A0FF]",  dot: "#54A0FF" },
-  in_progress: { label: "Заказал",        short: "Заказал",     bg: "bg-[#FFA94D]/[0.12]", text: "text-[#FFA94D]",  dot: "#FFA94D" },
-  won:         { label: "Выкупил",        short: "Выкупил",     bg: "bg-[#2ED573]/[0.14]", text: "text-[#2ED573]",  dot: "#2ED573" },
-  unqualified: { label: "Не наш",         short: "Не наш",      bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
-  lost:        { label: "Не выкупил",     short: "Не выкуп.",   bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
+  new:         { label: "Новый",          short: "Новый",     bg: "bg-white/[0.06]",     text: "text-[#aaa]",     dot: "#888" },
+  contacted:   { label: "Связались",      short: "Связ.",     bg: "bg-[#A29BFE]/[0.12]", text: "text-[#A29BFE]",  dot: "#A29BFE" },
+  qualified:   { label: "Целевой",        short: "Целевой",   bg: "bg-[#54A0FF]/[0.12]", text: "text-[#54A0FF]",  dot: "#54A0FF" },
+  unqualified: { label: "Не наш",         short: "Не наш",    bg: "bg-white/[0.04]",     text: "text-[#888]",     dot: "#666" },
+  in_progress: { label: "Заказал",        short: "Заказал",   bg: "bg-[#FFA94D]/[0.12]", text: "text-[#FFA94D]",  dot: "#FFA94D" },
+  won:         { label: "Выкупил",        short: "Выкупил",   bg: "bg-[#2ED573]/[0.14]", text: "text-[#2ED573]",  dot: "#2ED573" },
+  lost:        { label: "Не выкупил",     short: "Не выкуп.", bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
 };
 
-// Order in dropdown matches the funnel flow
+// Order matches manager's decision flow:
+// new → contacted → (qualified OR unqualified) → in_progress → (won OR lost)
 const ALL_STATUSES: LeadStatus[] = [
   "new",
   "contacted",
   "qualified",
+  "unqualified",
   "in_progress",
   "won",
-  "unqualified",
   "lost",
 ];
 
-const MENU_HEIGHT_ESTIMATE = 280;
+// Visual separator after these statuses (decision points)
+const SEPARATOR_AFTER: LeadStatus[] = ["contacted", "unqualified"];
+
+const MENU_HEIGHT_ESTIMATE = 290;
 const MENU_WIDTH = 180;
 
 export function InlineStatus({ leadId, currentStatus }: Props) {
@@ -147,33 +151,38 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
             {ALL_STATUSES.map((s) => {
               const m = STATUS_META[s];
               const isActive = s === optimistic;
+              const showSeparator = SEPARATOR_AFTER.includes(s);
               return (
-                <button
-                  key={s}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleChange(s);
-                  }}
-                  className={`w-full text-left px-3 py-2 text-[12px] flex items-center gap-2 transition-colors ${
-                    isActive ? "bg-white/[0.05]" : "hover:bg-white/[0.04]"
-                  }`}
-                >
-                  <span
-                    className="inline-block w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ background: m.dot }}
-                  />
-                  <span
-                    className={`font-bold uppercase tracking-wide text-[11px] ${m.text}`}
+                <div key={s}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleChange(s);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-[12px] flex items-center gap-2 transition-colors ${
+                      isActive ? "bg-white/[0.05]" : "hover:bg-white/[0.04]"
+                    }`}
                   >
-                    {m.label}
-                  </span>
-                  {isActive && (
-                    <span className="ml-auto text-[#E8FF47] text-[11px]">
-                      ✓
+                    <span
+                      className="inline-block w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ background: m.dot }}
+                    />
+                    <span
+                      className={`font-bold uppercase tracking-wide text-[11px] ${m.text}`}
+                    >
+                      {m.label}
                     </span>
+                    {isActive && (
+                      <span className="ml-auto text-[#E8FF47] text-[11px]">
+                        ✓
+                      </span>
+                    )}
+                  </button>
+                  {showSeparator && (
+                    <div className="border-t border-white/[0.05] my-0.5" />
                   )}
-                </button>
+                </div>
               );
             })}
           </div>,
