@@ -17,25 +17,16 @@ const VALID_STATUSES: LeadStatus[] = [
   "lost",
 ];
 
-type AuthedContext = {
-  admin: { id: string; email: string };
-  supabase: NonNullable<Awaited<ReturnType<typeof getSupabaseSessionClient>>>;
-};
-
-type AuthedResult =
-  | { ok: true; ctx: AuthedContext }
-  | { ok: false; error: string };
-
-async function getAuthedClient(): Promise<AuthedResult> {
+async function getAuthedClient() {
   const admin = await getCurrentAdmin();
   if (!admin) {
-    return { ok: false, error: "Не авторизован" };
+    return { ok: false as const, error: "Не авторизован" };
   }
   const supabase = await getSupabaseSessionClient();
   if (!supabase) {
-    return { ok: false, error: "Сервис недоступен" };
+    return { ok: false as const, error: "Сервис недоступен" };
   }
-  return { ok: true, ctx: { admin, supabase } };
+  return { ok: true as const, admin, supabase };
 }
 
 function revalidate(leadId: string) {
@@ -56,7 +47,7 @@ export async function updateLeadStatusAction(
   const auth = await getAuthedClient();
   if (!auth.ok) return { ok: false, error: auth.error };
 
-  const { error } = await auth.ctx.supabase
+  const { error } = await auth.supabase
     .from("leads")
     .update({ status })
     .eq("id", leadId);
@@ -82,7 +73,7 @@ export async function updateLeadNotesAction(
 
   const value = notes.trim().length === 0 ? null : notes;
 
-  const { error } = await auth.ctx.supabase
+  const { error } = await auth.supabase
     .from("leads")
     .update({ notes: value })
     .eq("id", leadId);
@@ -111,7 +102,7 @@ export async function updateLeadValueAction(
   const auth = await getAuthedClient();
   if (!auth.ok) return { ok: false, error: auth.error };
 
-  const { error } = await auth.ctx.supabase
+  const { error } = await auth.supabase
     .from("leads")
     .update({ value_uah: value })
     .eq("id", leadId);
@@ -137,7 +128,7 @@ export async function updateLeadQualificationReasonAction(
 
   const value = reason.trim().length === 0 ? null : reason.trim();
 
-  const { error } = await auth.ctx.supabase
+  const { error } = await auth.supabase
     .from("leads")
     .update({ qualification_reason: value })
     .eq("id", leadId);
@@ -163,7 +154,7 @@ export async function updateLeadLossReasonAction(
 
   const value = reason.trim().length === 0 ? null : reason.trim();
 
-  const { error } = await auth.ctx.supabase
+  const { error } = await auth.supabase
     .from("leads")
     .update({ loss_reason: value })
     .eq("id", leadId);
