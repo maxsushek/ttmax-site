@@ -17,6 +17,12 @@ type SearchParams = {
   range?: string; // 'today' | 'week' | 'month' | 'all'
 };
 
+type MetricsRow = {
+  status: LeadStatus;
+  value_uah: number | null;
+  source: string;
+};
+
 const VALID_STATUSES: LeadStatus[] = [
   "new",
   "qualified",
@@ -96,12 +102,14 @@ export default async function AdminLeadsPage({
   const { data: leads, error: leadsError } = await query;
 
   // ---------- агрегированные метрики ----------
-  const { data: allForMetrics, error: metricsError } = await supabase
+  const metricsRes = await supabase
     .from("leads")
     .select("status, value_uah, source");
 
+  const allForMetrics = (metricsRes.data ?? []) as unknown as MetricsRow[];
+  const metricsError = metricsRes.error;
+
   const metrics = (() => {
-    if (!allForMetrics) return { total: 0, qualified: 0, won: 0, conversion: 0, revenue: 0 };
     let total = 0;
     let qualified = 0;
     let won = 0;
@@ -130,7 +138,9 @@ export default async function AdminLeadsPage({
   })();
 
   // ---------- список уникальных source для селектора ----------
-  const sources = Array.from(new Set((allForMetrics ?? []).map((l) => l.source))).filter(Boolean);
+  const sources = Array.from(
+    new Set(allForMetrics.map((l) => l.source))
+  ).filter(Boolean);
 
   return (
     <>
