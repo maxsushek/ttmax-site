@@ -11,13 +11,50 @@ type Props = {
   currentStatus: LeadStatus;
 };
 
-const RELEVANT_STATUSES: LeadStatus[] = ["in_progress", "won"];
+const STATUS_LABELS: Record<
+  LeadStatus,
+  { title: string; hint: string; color: string }
+> = {
+  new: {
+    title: "Ожидаемый чек",
+    hint: "Можно прикинуть после звонка. Сейчас не обязательно.",
+    color: "#888",
+  },
+  contacted: {
+    title: "Ожидаемый чек",
+    hint: "Бюджет клиента. Ракетка для новичка ~800–2000 ₴, любителя ~2000–5000 ₴, профи 5000+ ₴.",
+    color: "#A29BFE",
+  },
+  qualified: {
+    title: "Ожидаемый чек",
+    hint: "Сумма по подобранному товару (ракетка + накладки, стол и т.д.).",
+    color: "#54A0FF",
+  },
+  in_progress: {
+    title: "Сумма заказа",
+    hint: "Стоимость оформленного заказа. Финализируется когда клиент выкупит.",
+    color: "#FFA94D",
+  },
+  won: {
+    title: "Сумма выкупа",
+    hint: "Финальная сумма что клиент заплатил. Попадёт в Revenue и attribution Ads.",
+    color: "#2ED573",
+  },
+  unqualified: {
+    title: "Сумма (не нужна)",
+    hint: "Обычно не заполняется — клиент не наш.",
+    color: "#666",
+  },
+  lost: {
+    title: "Упущенный чек",
+    hint: "Сколько мог стоить заказ если бы выкупил — для аналитики потерь.",
+    color: "#FF6B81",
+  },
+};
 
 function formatNumber(v: string): string {
-  // оставляем только цифры
   const digits = v.replace(/\D/g, "");
   if (!digits) return "";
-  // форматируем пробелами по 3 цифры справа
   return digits.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
@@ -37,9 +74,7 @@ export function ValueInput({ leadId, initialValue, currentStatus }: Props) {
   const [saved, setSaved] = useState(initialValue);
   const [justSaved, setJustSaved] = useState(false);
 
-  const isRelevant = RELEVANT_STATUSES.includes(currentStatus);
-  if (!isRelevant) return null;
-
+  const meta = STATUS_LABELS[currentStatus];
   const isWon = currentStatus === "won";
   const parsed = parseNumber(value);
   const dirty = parsed !== saved;
@@ -70,9 +105,9 @@ export function ValueInput({ leadId, initialValue, currentStatus }: Props) {
       <div className="px-4 py-3 border-b border-white/[0.04] flex items-center justify-between gap-3">
         <div
           className="text-[10px] font-bold tracking-[0.16em] uppercase"
-          style={{ color: isWon ? "#2ED573" : "#666" }}
+          style={{ color: meta.color }}
         >
-          {isWon ? "Сумма сделки" : "Ожидаемая сумма"}
+          {meta.title}
         </div>
         <div className="min-h-[16px] flex items-center">
           {isPending ? (
@@ -107,16 +142,16 @@ export function ValueInput({ leadId, initialValue, currentStatus }: Props) {
               }
             }}
             placeholder="0"
-            className="flex-1 bg-transparent outline-none text-[28px] font-black tracking-tight"
+            className="flex-1 bg-transparent outline-none text-[28px] font-black tracking-tight w-0 min-w-0"
             style={{
-              color: isWon ? "#2ED573" : "#E8FF47",
+              color: meta.color,
               fontFamily: "'Barlow Condensed',sans-serif",
             }}
           />
           <span
             className="text-[24px] font-black"
             style={{
-              color: isWon ? "#2ED573" : "#E8FF47",
+              color: meta.color,
               fontFamily: "'Barlow Condensed',sans-serif",
             }}
           >
@@ -128,9 +163,7 @@ export function ValueInput({ leadId, initialValue, currentStatus }: Props) {
           className="text-[11px] text-[#444] mt-1"
           style={{ fontFamily: "'Barlow',sans-serif" }}
         >
-          {isWon
-            ? "Эта сумма попадёт в метрику Revenue и в attribution для рекламы"
-            : "Прогноз для расчёта pipeline value"}
+          {meta.hint}
         </div>
       </div>
     </div>
