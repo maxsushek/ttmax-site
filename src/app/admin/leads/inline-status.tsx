@@ -20,19 +20,20 @@ const STATUS_META: Record<
   LeadStatus,
   { label: string; short: string; bg: string; text: string; dot: string }
 > = {
-  new:         { label: "Новый",       short: "Новый",     bg: "bg-white/[0.06]",     text: "text-[#aaa]",     dot: "#888" },
-  qualified:   { label: "Квалиф.",     short: "Квалиф.",   bg: "bg-[#54A0FF]/[0.12]", text: "text-[#54A0FF]",  dot: "#54A0FF" },
-  contacted:   { label: "Связались",   short: "Связ.",     bg: "bg-[#A29BFE]/[0.12]", text: "text-[#A29BFE]",  dot: "#A29BFE" },
-  in_progress: { label: "В работе",    short: "В работе",  bg: "bg-[#FFA94D]/[0.12]", text: "text-[#FFA94D]",  dot: "#FFA94D" },
-  won:         { label: "Купил",       short: "Купил",     bg: "bg-[#2ED573]/[0.14]", text: "text-[#2ED573]",  dot: "#2ED573" },
-  unqualified: { label: "Неквалиф.",   short: "Неквалиф.", bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
-  lost:        { label: "Потерян",     short: "Потерян",   bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
+  new:         { label: "Новый",          short: "Новый",       bg: "bg-white/[0.06]",     text: "text-[#aaa]",     dot: "#888" },
+  contacted:   { label: "Связались",      short: "Связ.",       bg: "bg-[#A29BFE]/[0.12]", text: "text-[#A29BFE]",  dot: "#A29BFE" },
+  qualified:   { label: "Целевой",        short: "Целевой",     bg: "bg-[#54A0FF]/[0.12]", text: "text-[#54A0FF]",  dot: "#54A0FF" },
+  in_progress: { label: "Заказал",        short: "Заказал",     bg: "bg-[#FFA94D]/[0.12]", text: "text-[#FFA94D]",  dot: "#FFA94D" },
+  won:         { label: "Выкупил",        short: "Выкупил",     bg: "bg-[#2ED573]/[0.14]", text: "text-[#2ED573]",  dot: "#2ED573" },
+  unqualified: { label: "Не наш",         short: "Не наш",      bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
+  lost:        { label: "Не выкупил",     short: "Не выкуп.",   bg: "bg-[#FF6B81]/[0.10]", text: "text-[#FF6B81]",  dot: "#FF6B81" },
 };
 
+// Order in dropdown matches the funnel flow
 const ALL_STATUSES: LeadStatus[] = [
   "new",
-  "qualified",
   "contacted",
+  "qualified",
   "in_progress",
   "won",
   "unqualified",
@@ -60,7 +61,6 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
     setMounted(true);
   }, []);
 
-  // Smart positioning — flip up if no room below
   useLayoutEffect(() => {
     if (!open || !btnRef.current) return;
     const rect = btnRef.current.getBoundingClientRect();
@@ -73,7 +73,6 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
         : "below";
 
     let left = rect.left;
-    // Don't go off the right edge
     if (left + MENU_WIDTH > viewportW - 8) {
       left = viewportW - MENU_WIDTH - 8;
     }
@@ -87,7 +86,6 @@ export function InlineStatus({ leadId, currentStatus }: Props) {
     setPos({ top, left: left + window.scrollX, placement });
   }, [open]);
 
-  // Close on outside click / scroll / resize / escape
   useEffect(() => {
     if (!open) return;
     const onClick = (e: MouseEvent) => {
