@@ -1,68 +1,60 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { defaultLocale, isLocale } from "@/i18n/config";
+import { updateSession } from "@/lib/supabase/middleware";
+import { locales } from "@/i18n/config";
 
-const PUBLIC_FILE = /\.[a-zA-Z0-9]+$/;
+const DEFAULT_LOCALE = locales[0]; // 'uk'
 
-function detectLocaleFromAcceptLanguage(header: string | null): string | null {
-  if (!header) return null;
-  const langs = header
-    .split(",")
-    .map((part) => part.split(";")[0]?.trim().toLowerCase() ?? "")
-    .filter(Boolean);
-  for (const lang of langs) {
-    const short = lang.split("-")[0];
-    if (short && isLocale(short)) return short;
-  }
-  return null;
-}
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-export function middleware(request: NextRequest) {
-  const { pathname, search } = request.nextUrl;
+  // ===== /admin/* — авторизация =====
+  if (pathname.startsWith("/admin")) {
+    const { response, user, isAdmin } = await updateSession(request);
+    const isLoginPage = pathname === "/admin/login";
 
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/static") ||
-    pathname === "/favicon.ico" ||
-    pathname === "/favicon.svg" ||
-    pathname === "/robots.txt" ||
-    pathname === "/sitemap.xml" ||
-    PUBLIC_FILE.test(pathname)
-  ) {
-    return NextResponse.next();
-  }
-
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-  const pathLocale = first && isLocale(first) ? first : null;
-
-  if (pathLocale) {
-    const response = NextResponse.next();
-    response.headers.set("x-locale", pathLocale);
-    response.headers.set("x-pathname", pathname);
-    // Persist user preference
-    if (request.cookies.get("NEXT_LOCALE")?.value !== pathLocale) {
-      response.cookies.set("NEXT_LOCALE", pathLocale, {
-        maxAge: 60 * 60 * 24 * 365,
-        sameSite: "lax",
-        path: "/",
-      });
+    // 1. Не залогинен на защищённой странице → редирект на /admin/login
+    if (!user && !isLoginPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
     }
+
+    // 2. Залогинен, но НЕ admin → выкидываем с ошибкой
+    if (user && !isAdmin && !isLoginPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("error", "not_admin");
+      return NextResponse.redirect(url);
+    }
+
+    // 3. Admin уже залогинен и открыл /admin/login → отправляем в leads
+    if (user && isAdmin && isLoginPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/leads";
+      return NextResponse.redirect(url);
+    }
+
     return response;
   }
 
-  const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
-  const detected =
-    cookieLocale && isLocale(cookieLocale)
-      ? cookieLocale
-      : (detectLocaleFromAcceptLanguage(request.headers.get("accept-language")) ?? defaultLocale);
+  // ===== Локали для публичного сайта =====
+  const hasLocale = locales.some(
+    (loc) => pathname === `/${loc}` || pathname.startsWith(`/${loc}/`),
+  );
 
-  const url = request.nextUrl.clone();
-  url.pathname = `/${detected}${pathname === "/" ? "" : pathname}`;
-  url.search = search;
-  return NextResponse.redirect(url);
+  if (!hasLocale) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${DEFAULT_LOCALE}${pathname === "/" ? "" : pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  matcher: [
+    // Игнорируем: _next/*, api/*, файлы с расширением (.ico, .png, .txt и т.д.)
+    "/((?!_next/|api/|.*\\..*).*)",
+  ],
 };
