@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getSupabaseSessionClient } from "@/lib/supabase/server";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getCurrentAdmin } from "@/lib/auth/admin";
 import type { LeadStatus } from "@/lib/supabase/types";
 
@@ -22,7 +22,8 @@ async function getAuthedClient() {
   if (!admin) {
     return { ok: false as const, error: "Не авторизован" };
   }
-  const supabase = await getSupabaseSessionClient();
+  // Service role — admin already authenticated via getCurrentAdmin()
+  const supabase = getSupabaseServerClient({ useServiceRole: true });
   if (!supabase) {
     return { ok: false as const, error: "Сервис недоступен" };
   }
