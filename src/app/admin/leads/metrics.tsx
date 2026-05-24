@@ -7,15 +7,41 @@ type Metrics = {
 };
 
 export function LeadsMetrics({ metrics }: { metrics: Metrics }) {
+  const qualifiedRate =
+    metrics.total > 0
+      ? Math.round((metrics.qualified / metrics.total) * 1000) / 10
+      : 0;
+
   const cards = [
-    { label: "Total", value: metrics.total.toString(), color: "#aaa" },
-    { label: "Qualified+", value: metrics.qualified.toString(), color: "#54A0FF" },
-    { label: "Won", value: metrics.won.toString(), color: "#2ED573" },
-    { label: "Conversion", value: `${metrics.conversion}%`, color: "#E8FF47" },
+    {
+      label: "Total",
+      value: metrics.total.toString(),
+      color: "#aaa",
+      sub: null as string | null,
+    },
+    {
+      label: "Qualified+",
+      value: metrics.qualified.toString(),
+      color: "#54A0FF",
+      sub: metrics.total > 0 ? `${qualifiedRate}% от total` : null,
+    },
+    {
+      label: "Won",
+      value: metrics.won.toString(),
+      color: "#2ED573",
+      sub: null,
+    },
+    {
+      label: "Conversion",
+      value: `${metrics.conversion}%`,
+      color: "#E8FF47",
+      sub: "Won / Total",
+    },
     {
       label: "Revenue",
       value: `${metrics.revenue.toLocaleString("uk-UA")} ₴`,
       color: "#E8FF47",
+      sub: null,
     },
   ];
 
@@ -29,12 +55,22 @@ export function LeadsMetrics({ metrics }: { metrics: Metrics }) {
           <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#555] mb-1.5">
             {c.label}
           </div>
-          <div
-            className="text-2xl font-black tracking-tight leading-none truncate"
-            style={{ color: c.color }}
-            title={c.value}
-          >
-            {c.value}
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <div
+              className="text-2xl font-black tracking-tight leading-none truncate"
+              style={{ color: c.color }}
+              title={c.value}
+            >
+              {c.value}
+            </div>
+            {c.sub && (
+              <div
+                className="text-[10px] font-bold text-[#555] whitespace-nowrap"
+                style={{ fontFamily: "'Barlow',sans-serif" }}
+              >
+                {c.sub}
+              </div>
+            )}
           </div>
         </div>
       ))}
