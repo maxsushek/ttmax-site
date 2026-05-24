@@ -1,381 +1,176 @@
-// Полный тип базы данных для типизации Supabase-клиентов.
-// Покрывает таблицы leads, lead_events, admins, orders, order_items, order_events
-// + views + функции + enums.
-// Формат точно следует тому что ожидает @supabase/supabase-js GenericSchema.
+import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
+import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { locales } from "@/i18n/config";
 
-// ─── LEADS ────────────────────────────────────────────────────────
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-export type LeadStatus =
-  | "new"
-  | "qualified"
-  | "unqualified"
-  | "contacted"
-  | "in_progress"
-  | "won"
-  | "lost";
+const phoneRe = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
 
-export type LeadRow = {
-  id: string;
-  created_at: string;
-  name: string;
-  phone: string;
-  email: string | null;
-  source: string;
-  locale: "uk" | "ru";
-  attribution: Record<string, unknown>;
-  status: LeadStatus;
-  assigned_to: string | null;
-  notes: string | null;
-  qualification_reason: string | null;
-  loss_reason: string | null;
-  value_uah: number | null;
-  qualified_at: string | null;
-  contacted_at: string | null;
-  in_progress_at: string | null;
-  won_at: string | null;
-  lost_at: string | null;
-  updated_at: string;
-  synced_to_google_ads_at: string | null;
-  synced_to_meta_ads_at: string | null;
-};
+const OrderItemSchema = z.object({
+  productId: z.string().min(1).max(120),
+  brand: z.string().min(1).max(80),
+  model: z.string().min(1).max(160),
+  category: z.string().max(40).optional().nullable(),
+  emoji: z.string().max(8).optional().nullable(),
+  price: z.number().positive().max(1_000_000),
+  qty: z.number().int().positive().max(999),
+});
 
-export type LeadInsert = {
-  id?: string;
-  created_at?: string;
-  name: string;
-  phone: string;
-  email?: string | null;
-  source: string;
-  locale: "uk" | "ru";
-  attribution?: Record<string, unknown>;
-  status?: LeadStatus;
-  assigned_to?: string | null;
-  notes?: string | null;
-  qualification_reason?: string | null;
-  loss_reason?: string | null;
-  value_uah?: number | null;
-};
+const OrderSchema = z.object({
+  customer: z.object({
+    name: z.string().trim().min(2).max(120),
+    phone: z
+      .string()
+      .transform((v) => v.replace(/[\s\-()]/g, ""))
+      .refine((v) => phoneRe.test(v), "Invalid Ukrainian phone"),
+    email: z.string().email().optional().nullable(),
+  }),
+  delivery: z.object({
+    method: z.enum(["np", "ukrposhta", "pickup"]),
+    city: z.string().max(120).optional().nullable(),
+    branch: z.string().max(240).optional().nullable(),
+  }),
+  payment: z.object({
+    method: z.enum(["apple", "cod", "card"]),
+  }),
+  items: z.array(OrderItemSchema).min(1).max(50),
+  totals: z.object({
+    subtotal: z.number().nonnegative().max(10_000_000),
+    shipping: z.number().nonnegative().max(10_000),
+    total: z.number().positive().max(10_000_000),
+  }),
+  comment: z.string().max(2000).optional().nullable(),
+  agreed: z.boolean(),
+  locale: z.enum(locales),
+  attribution: z.record(z.string(), z.unknown()).optional(),
+});
 
-export type LeadEventRow = {
-  id: string;
-  lead_id: string;
-  created_at: string;
-  from_status: LeadStatus | null;
-  to_status: LeadStatus;
-  changed_by: string | null;
-  reason: string | null;
-  metadata: Record<string, unknown>;
-};
+const buckets = new Map<string, { count: number; reset: number }>();
+const LIMIT = 5;
+const WINDOW_MS = 60_000;
 
-export type LeadEventInsert = {
-  id?: string;
-  lead_id: string;
-  created_at?: string;
-  from_status?: LeadStatus | null;
-  to_status: LeadStatus;
-  changed_by?: string | null;
-  reason?: string | null;
-  metadata?: Record<string, unknown>;
-};
+function isLimited(ip: string): boolean {
+  const now = Date.now();
+  const bucket = buckets.get(ip);
+  if (!bucket || bucket.reset < now) {
+    buckets.set(ip, { count: 1, reset: now + WINDOW_MS });
+    return false;
+  }
+  bucket.count += 1;
+  if (bucket.count > LIMIT) return true;
+  return false;
+}
 
-export type AdminRow = {
-  id: string;
-  email: string;
-  created_at: string;
-  added_by: string | null;
-  notes: string | null;
-};
+export async function POST(request: NextRequest) {
+  const forwarded = request.headers.get("x-forwarded-for");
+  const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
 
-export type AdminInsert = {
-  id?: string;
-  email: string;
-  created_at?: string;
-  added_by?: string | null;
-  notes?: string | null;
-};
+  if (isLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
 
-export type LeadFunnelRow = {
-  day: string;
-  source: string;
-  total: number;
-  qualified: number;
-  unqualified: number;
-  contacted: number;
-  won: number;
-  lost: number;
-  revenue_uah: number;
-  qual_rate_pct: number | null;
-  win_rate_pct: number | null;
-};
+  let json: unknown;
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
 
-export type LeadsPendingAdsSyncRow = {
-  id: string;
-  created_at: string;
-  qualified_at: string | null;
-  source: string;
-  locale: "uk" | "ru";
-  value_uah: number | null;
-  attribution: Record<string, unknown>;
-  synced_to_google_ads_at: string | null;
-  synced_to_meta_ads_at: string | null;
-  gclid: string | null;
-  fbclid: string | null;
-  email_sha256: string | null;
-  phone_sha256: string | null;
-};
+  const parsed = OrderSchema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Validation failed", details: parsed.error.flatten() },
+      { status: 400 },
+    );
+  }
 
-// ─── ORDERS ───────────────────────────────────────────────────────
+  const data = parsed.data;
 
-export type OrderStatus =
-  | "pending"
-  | "processing"
-  | "paid"
-  | "shipped"
-  | "delivered"
-  | "cancelled"
-  | "refunded";
+  const computedSubtotal = data.items.reduce(
+    (s, i) => s + Math.round(i.price * i.qty * 100) / 100,
+    0,
+  );
+  const computedTotal = Math.round((computedSubtotal + data.totals.shipping) * 100) / 100;
+  const clientTotal = Math.round(data.totals.total * 100) / 100;
 
-export type DeliveryMethod = "np" | "ukrposhta" | "pickup";
-export type PaymentMethod = "apple" | "cod" | "card";
+  if (Math.abs(computedTotal - clientTotal) > 0.01) {
+    console.warn(
+      "[orders] total mismatch — using server value",
+      { client: clientTotal, server: computedTotal },
+    );
+  }
 
-export type OrderRow = {
-  id: string;
-  order_number: string;
-  created_at: string;
-  updated_at: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_email: string | null;
-  locale: "uk" | "ru";
-  delivery_method: DeliveryMethod;
-  delivery_city: string | null;
-  delivery_branch: string | null;
-  payment_method: PaymentMethod;
-  subtotal_uah: number;
-  shipping_uah: number;
-  total_uah: number;
-  items_count: number;
-  comment: string | null;
-  agreed: boolean;
-  status: OrderStatus;
-  assigned_to: string | null;
-  notes: string | null;
-  cancel_reason: string | null;
-  processing_at: string | null;
-  paid_at: string | null;
-  shipped_at: string | null;
-  delivered_at: string | null;
-  cancelled_at: string | null;
-  attribution: Record<string, unknown>;
-  synced_to_google_ads_at: string | null;
-  synced_to_meta_ads_at: string | null;
-};
+  const itemsCount = data.items.reduce((s, i) => s + i.qty, 0);
 
-export type OrderInsert = {
-  id?: string;
-  order_number?: string; // авто-генерируется DEFAULT
-  created_at?: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_email?: string | null;
-  locale: "uk" | "ru";
-  delivery_method: DeliveryMethod;
-  delivery_city?: string | null;
-  delivery_branch?: string | null;
-  payment_method: PaymentMethod;
-  subtotal_uah: number;
-  shipping_uah?: number;
-  total_uah: number;
-  items_count?: number;
-  comment?: string | null;
-  agreed?: boolean;
-  status?: OrderStatus;
-  assigned_to?: string | null;
-  notes?: string | null;
-  cancel_reason?: string | null;
-  attribution?: Record<string, unknown>;
-};
-
-export type OrderItemRow = {
-  id: string;
-  order_id: string;
-  created_at: string;
-  product_id: string;
-  brand: string;
-  model: string;
-  category: string | null;
-  emoji: string | null;
-  price_uah: number;
-  qty: number;
-  line_total_uah: number;
-};
-
-export type OrderItemInsert = {
-  id?: string;
-  order_id: string;
-  created_at?: string;
-  product_id: string;
-  brand: string;
-  model: string;
-  category?: string | null;
-  emoji?: string | null;
-  price_uah: number;
-  qty: number;
-  line_total_uah: number;
-};
-
-export type OrderEventRow = {
-  id: string;
-  order_id: string;
-  created_at: string;
-  from_status: OrderStatus | null;
-  to_status: OrderStatus;
-  changed_by: string | null;
-  reason: string | null;
-  metadata: Record<string, unknown>;
-};
-
-export type OrderEventInsert = {
-  id?: string;
-  order_id: string;
-  created_at?: string;
-  from_status?: OrderStatus | null;
-  to_status: OrderStatus;
-  changed_by?: string | null;
-  reason?: string | null;
-  metadata?: Record<string, unknown>;
-};
-
-export type OrdersFunnelRow = {
-  day: string;
-  utm_source: string;
-  delivery_method: DeliveryMethod;
-  payment_method: PaymentMethod;
-  total: number;
-  taken: number;
-  delivered: number;
-  cancelled: number;
-  revenue_uah: number;
-  gmv_uah: number;
-  delivery_rate_pct: number | null;
-};
-
-export type OrdersPendingAdsSyncRow = {
-  id: string;
-  order_number: string;
-  created_at: string;
-  delivered_at: string | null;
-  locale: "uk" | "ru";
-  total_uah: number;
-  attribution: Record<string, unknown>;
-  synced_to_google_ads_at: string | null;
-  synced_to_meta_ads_at: string | null;
-  gclid: string | null;
-  fbclid: string | null;
-  email_sha256: string | null;
-  phone_sha256: string | null;
-};
-
-// ─── DATABASE TYPE ────────────────────────────────────────────────
-
-export type Database = {
-  public: {
-    Tables: {
-      leads: {
-        Row: LeadRow;
-        Insert: LeadInsert;
-        Update: Partial<LeadInsert>;
-        Relationships: [];
-      };
-      lead_events: {
-        Row: LeadEventRow;
-        Insert: LeadEventInsert;
-        Update: Partial<LeadEventInsert>;
-        Relationships: [
-          {
-            foreignKeyName: "lead_events_lead_id_fkey";
-            columns: ["lead_id"];
-            isOneToOne: false;
-            referencedRelation: "leads";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      admins: {
-        Row: AdminRow;
-        Insert: AdminInsert;
-        Update: Partial<AdminInsert>;
-        Relationships: [];
-      };
-      orders: {
-        Row: OrderRow;
-        Insert: OrderInsert;
-        Update: Partial<OrderInsert>;
-        Relationships: [];
-      };
-      order_items: {
-        Row: OrderItemRow;
-        Insert: OrderItemInsert;
-        Update: Partial<OrderItemInsert>;
-        Relationships: [
-          {
-            foreignKeyName: "order_items_order_id_fkey";
-            columns: ["order_id"];
-            isOneToOne: false;
-            referencedRelation: "orders";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      order_events: {
-        Row: OrderEventRow;
-        Insert: OrderEventInsert;
-        Update: Partial<OrderEventInsert>;
-        Relationships: [
-          {
-            foreignKeyName: "order_events_order_id_fkey";
-            columns: ["order_id"];
-            isOneToOne: false;
-            referencedRelation: "orders";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-    };
-    Views: {
-      lead_funnel: {
-        Row: LeadFunnelRow;
-        Relationships: [];
-      };
-      leads_pending_ads_sync: {
-        Row: LeadsPendingAdsSyncRow;
-        Relationships: [];
-      };
-      orders_funnel: {
-        Row: OrdersFunnelRow;
-        Relationships: [];
-      };
-      orders_pending_ads_sync: {
-        Row: OrdersPendingAdsSyncRow;
-        Relationships: [];
-      };
-    };
-    Functions: {
-      is_admin: {
-        Args: Record<PropertyKey, never>;
-        Returns: boolean;
-      };
-      generate_order_number: {
-        Args: Record<PropertyKey, never>;
-        Returns: string;
-      };
-    };
-    Enums: {
-      lead_status: LeadStatus;
-      order_status: OrderStatus;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
+  const userAgent = request.headers.get("user-agent") ?? null;
+  const referer = request.headers.get("referer") ?? null;
+  const attribution: Record<string, unknown> = {
+    ...(data.attribution ?? {}),
+    user_agent: userAgent,
+    server_referer: referer,
+    ip,
+    submitted_at: new Date().toISOString(),
   };
-};
+
+  const supabase = getSupabaseServerClient({ useServiceRole: true });
+  if (!supabase) {
+    console.error("[orders] supabase client unavailable");
+    return NextResponse.json({ ok: true, persisted: false });
+  }
+
+  const { data: orderRow, error: orderError } = await supabase
+    .from("orders")
+    .insert({
+      customer_name: data.customer.name,
+      customer_phone: data.customer.phone,
+      customer_email: data.customer.email ?? null,
+      locale: data.locale,
+      delivery_method: data.delivery.method,
+      delivery_city: data.delivery.city ?? null,
+      delivery_branch: data.delivery.branch ?? null,
+      payment_method: data.payment.method,
+      subtotal_uah: computedSubtotal,
+      shipping_uah: data.totals.shipping,
+      total_uah: computedTotal,
+      items_count: itemsCount,
+      comment: data.comment ?? null,
+      agreed: data.agreed,
+      attribution,
+    })
+    .select("id, order_number")
+    .single();
+
+  if (orderError || !orderRow) {
+    console.error("[orders] insert error:", orderError?.message, orderError?.code);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+
+  const itemsToInsert = data.items.map((i) => ({
+    order_id: orderRow.id,
+    product_id: i.productId,
+    brand: i.brand,
+    model: i.model,
+    category: i.category ?? null,
+    emoji: i.emoji ?? null,
+    price_uah: i.price,
+    qty: i.qty,
+    line_total_uah: Math.round(i.price * i.qty * 100) / 100,
+  }));
+
+  const { error: itemsError } = await supabase.from("order_items").insert(itemsToInsert);
+
+  if (itemsError) {
+    console.error("[orders] items insert error:", itemsError.message, itemsError.code);
+    await supabase.from("orders").delete().eq("id", orderRow.id);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    persisted: true,
+    orderId: orderRow.id,
+    orderNumber: orderRow.order_number,
+  });
+}
