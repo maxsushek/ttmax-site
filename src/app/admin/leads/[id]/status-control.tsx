@@ -21,6 +21,8 @@ type StatusMeta = {
   terminal?: boolean;
 };
 
+// Order matches manager's decision flow:
+// new → contacted → (qualified OR unqualified) → in_progress → (won OR lost)
 const STATUSES: StatusMeta[] = [
   {
     value: "new",
@@ -50,6 +52,15 @@ const STATUSES: StatusMeta[] = [
     hint: "Клиент чётко понимает что нужно, бюджет адекватный. Согласовали модели. Готов оформлять заказ.",
   },
   {
+    value: "unqualified",
+    label: "Не наш клиент",
+    color: "#666",
+    bg: "rgba(255,255,255,0.04)",
+    icon: "—",
+    description: "Спам / не ЦА",
+    hint: "Ошиблись номером, спам-бот, продают свои услуги, или ищут товар которого у нас нет (промышленные роботы, столы для соревнований).",
+  },
+  {
     value: "in_progress",
     label: "Заказал",
     color: "#FFA502",
@@ -67,15 +78,6 @@ const STATUSES: StatusMeta[] = [
     description: "Получил товар, оплата прошла",
     hint: "Клиент забрал заказ на НП / самовывозом, или курьер доставил и оплата получена. ⚠️ Финальный статус — попадёт в Revenue и Google/Meta Ads.",
     terminal: true,
-  },
-  {
-    value: "unqualified",
-    label: "Не наш клиент",
-    color: "#666",
-    bg: "rgba(255,255,255,0.04)",
-    icon: "—",
-    description: "Спам / не ЦА",
-    hint: "Ошиблись номером, спам-бот, продают свои услуги, или ищут товар которого у нас нет (промышленные роботы, столы для соревнований и т.д.).",
   },
   {
     value: "lost",
@@ -198,7 +200,7 @@ export function StatusControl({ leadId, currentStatus }: Props) {
         </div>
       </div>
 
-      {/* Desktop: grid */}
+      {/* Desktop: 2-column grid - pairs are logical decisions */}
       <div className="hidden md:block px-4 pb-4">
         <div className="grid grid-cols-2 gap-2">
           {STATUSES.map((s) => {
