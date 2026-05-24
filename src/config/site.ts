@@ -1,9 +1,17 @@
 export const siteConfig = {
-  name: "TTMAX",
-  brandSuffix: "MAX",
+  /** Main brand displayed in Logo/Header/Footer */
+  name: "Butterfly UA",
+  /** Yellow-accented part of the brand name in Logo */
+  brandSuffix: "UA",
+  /** Sub-brand line shown under main logo */
+  subBrand: "by TTMAX",
+  /** Used in legal footer copyright */
+  operator: "TTMAX",
   domain: "ttmax.ua",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ttmax.ua",
-  emoji: "🏓",
+  emoji: "🦋",
+  /** Featured brand on the storefront (used in Hero, FAQ, JSON-LD) */
+  featuredBrand: "Butterfly",
   phone: "+380000000000",
   phoneDisplay: "+380 (XX) XXX-XX-XX",
   email: "hello@ttmax.ua",
