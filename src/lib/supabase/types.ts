@@ -1,5 +1,6 @@
 // Полный тип базы данных для типизации Supabase-клиентов.
 // Покрывает таблицы leads, lead_events, admins + views + функции + enums.
+// Формат точно следует тому что ожидает @supabase/supabase-js GenericSchema.
 
 export type LeadStatus =
   | "new"
@@ -127,31 +128,50 @@ export type Database = {
         Row: LeadRow;
         Insert: LeadInsert;
         Update: Partial<LeadInsert>;
+        Relationships: [];
       };
       lead_events: {
         Row: LeadEventRow;
         Insert: LeadEventInsert;
         Update: Partial<LeadEventInsert>;
+        Relationships: [
+          {
+            foreignKeyName: "lead_events_lead_id_fkey";
+            columns: ["lead_id"];
+            isOneToOne: false;
+            referencedRelation: "leads";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       admins: {
         Row: AdminRow;
         Insert: AdminInsert;
         Update: Partial<AdminInsert>;
+        Relationships: [];
       };
     };
     Views: {
-      lead_funnel: { Row: LeadFunnelRow };
-      leads_pending_ads_sync: { Row: LeadsPendingAdsSyncRow };
+      lead_funnel: {
+        Row: LeadFunnelRow;
+        Relationships: [];
+      };
+      leads_pending_ads_sync: {
+        Row: LeadsPendingAdsSyncRow;
+        Relationships: [];
+      };
     };
     Functions: {
       is_admin: {
-        Args: Record<string, never>;
+        Args: Record<PropertyKey, never>;
         Returns: boolean;
       };
     };
     Enums: {
       lead_status: LeadStatus;
     };
-    CompositeTypes: Record<string, never>;
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 };
