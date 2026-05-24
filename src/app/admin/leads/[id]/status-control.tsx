@@ -112,7 +112,7 @@ export function StatusControl({ leadId, currentStatus }: Props) {
     });
   };
 
-  const currentMeta = STATUSES.find((s) => s.value === optimistic) ?? STATUSES[0];
+  const currentMeta = (STATUSES.find((s) => s.value === optimistic) ?? STATUSES[0])!;
 
   return (
     <div className="bg-[#0E1117] border border-white/[0.06] rounded-2xl overflow-hidden">
