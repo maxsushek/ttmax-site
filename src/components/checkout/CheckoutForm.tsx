@@ -7,6 +7,7 @@ import { useCart } from "@/components/cart/CartProvider";
 import { formatPrice, formatCardExp, formatCardNumber, formatPhone } from "@/utils/format";
 import { validators, type FieldKey } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
+import { getAttribution } from "@/lib/analytics/attribution";
 import { siteConfig } from "@/config/site";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
@@ -48,6 +49,8 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
   const [ordered, setOrdered] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
   const [errors, setErrors] = useState<Partial<Record<FieldKey | "agreed", string>>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const [form, setForm] = useState<FormState>({
     fullName: "",
@@ -120,21 +123,109 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
     setStep(3);
   };
 
-  const submitOrder = () => {
+  // Локальные строки для submit — чтобы не модифицировать messages/uk.ts и ru.ts.
+  // Если позже захочешь — перенеси в i18n.
+  const t = {
+    sending: locale === "uk" ? "Надсилаємо…" : "Отправляем…",
+    submitError:
+      locale === "uk"
+        ? "Не вдалося оформити замовлення. Спробуйте ще раз."
+        : "Не удалось оформить заказ. Попробуйте ещё раз.",
+    emptyCart:
+      locale === "uk"
+        ? "Кошик порожній."
+        : "Корзина пуста.",
+  };
+
+  const submitOrder = async () => {
+    if (submitting) return;
     if (!form.agreed) {
       setErrors({ agreed: v.agreement });
       return;
     }
-    const id = "#TT" + Math.floor(Math.random() * 90000 + 10000);
-    setOrderId(id);
-    setOrdered(true);
-    trackEvent({
-      name: "purchase",
-      params: { value: total, orderId: id, itemsCount: cart.count },
-    });
-    trackEvent({ name: "conversion", params: { type: "purchase", value: total } });
-    // Note: actual order submission to backend goes here.
-    // POST /api/orders with form + cart.items + attribution
+    if (cart.items.length === 0) {
+      setSubmitError(t.emptyCart);
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: form.fullName,
+            phone: form.phone,
+            email: form.email || null,
+          },
+          delivery: {
+            method: form.delivery,
+            city: form.city || null,
+            branch: form.npBranch || null,
+          },
+          payment: {
+            method: form.payment,
+          },
+          items: cart.items.map((item) => ({
+            productId: item.id,
+            brand: item.brand,
+            model: item.model,
+            category: item.category,
+            emoji: item.emoji,
+            price: item.price,
+            qty: item.qty,
+          })),
+          totals: {
+            subtotal: cart.total,
+            shipping,
+            total,
+          },
+          agreed: form.agreed,
+          locale,
+          attribution: getAttribution(),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const data = (await res.json()) as {
+        ok: boolean;
+        persisted?: boolean;
+        orderId?: string;
+        orderNumber?: string;
+      };
+
+      // Префикс # для отображения; fallback на локальный ID если backend без Supabase
+      const displayId = data.orderNumber
+        ? `#${data.orderNumber}`
+        : "#TT" + Math.floor(Math.random() * 90000 + 10000);
+
+      setOrderId(displayId);
+      setOrdered(true);
+
+      trackEvent({
+        name: "purchase",
+        params: {
+          value: total,
+          orderId: displayId,
+          itemsCount: cart.count,
+        },
+      });
+      trackEvent({ name: "conversion", params: { type: "purchase", value: total } });
+
+      // Очищаем кошик после успешного заказа
+      cart.clear();
+    } catch (err) {
+      console.error("Order submit failed:", err);
+      setSubmitError(t.submitError);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const STEPS: Array<{ n: 1 | 2 | 3; label: string }> = useMemo(
@@ -691,8 +782,23 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                     ⚠ {errors.agreed}
                   </div>
                 )}
-                <Button variant="primary" size="lg" fullWidth onClick={submitOrder}>
-                  🔒 {m.confirm.submit} — {formatPrice(total)}
+                {submitError && (
+                  <div className="mb-2.5 font-body text-[12px] text-danger" role="alert">
+                    ⚠ {submitError}
+                  </div>
+                )}
+                <Button
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  onClick={submitOrder}
+                  disabled={submitting}
+                  data-cta="checkout-submit"
+                  data-location="checkout"
+                >
+                  {submitting
+                    ? t.sending
+                    : `🔒 ${m.confirm.submit} — ${formatPrice(total)}`}
                 </Button>
                 <div className="mt-3 flex flex-wrap justify-center gap-3">
                   {[
