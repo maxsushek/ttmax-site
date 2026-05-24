@@ -17,16 +17,25 @@ const VALID_STATUSES: LeadStatus[] = [
   "lost",
 ];
 
-async function getAuthedClient() {
+type AuthedContext = {
+  admin: { id: string; email: string };
+  supabase: NonNullable<Awaited<ReturnType<typeof getSupabaseSessionClient>>>;
+};
+
+type AuthedResult =
+  | { ok: true; ctx: AuthedContext }
+  | { ok: false; error: string };
+
+async function getAuthedClient(): Promise<AuthedResult> {
   const admin = await getCurrentAdmin();
   if (!admin) {
-    return { error: "Не авторизован" as const };
+    return { ok: false, error: "Не авторизован" };
   }
   const supabase = await getSupabaseSessionClient();
   if (!supabase) {
-    return { error: "Сервис недоступен" as const };
+    return { ok: false, error: "Сервис недоступен" };
   }
-  return { admin, supabase };
+  return { ok: true, ctx: { admin, supabase } };
 }
 
 function revalidate(leadId: string) {
@@ -44,10 +53,10 @@ export async function updateLeadStatusAction(
     return { ok: false, error: "Неверный статус" };
   }
 
-  const ctx = await getAuthedClient();
-  if ("error" in ctx) return { ok: false, error: ctx.error };
+  const auth = await getAuthedClient();
+  if (!auth.ok) return { ok: false, error: auth.error };
 
-  const { error } = await ctx.supabase
+  const { error } = await auth.ctx.supabase
     .from("leads")
     .update({ status })
     .eq("id", leadId);
@@ -68,12 +77,12 @@ export async function updateLeadNotesAction(
 ): Promise<ActionResult> {
   if (!leadId) return { ok: false, error: "Нет ID лида" };
 
-  const ctx = await getAuthedClient();
-  if ("error" in ctx) return { ok: false, error: ctx.error };
+  const auth = await getAuthedClient();
+  if (!auth.ok) return { ok: false, error: auth.error };
 
   const value = notes.trim().length === 0 ? null : notes;
 
-  const { error } = await ctx.supabase
+  const { error } = await auth.ctx.supabase
     .from("leads")
     .update({ notes: value })
     .eq("id", leadId);
@@ -99,10 +108,10 @@ export async function updateLeadValueAction(
     }
   }
 
-  const ctx = await getAuthedClient();
-  if ("error" in ctx) return { ok: false, error: ctx.error };
+  const auth = await getAuthedClient();
+  if (!auth.ok) return { ok: false, error: auth.error };
 
-  const { error } = await ctx.supabase
+  const { error } = await auth.ctx.supabase
     .from("leads")
     .update({ value_uah: value })
     .eq("id", leadId);
@@ -123,12 +132,12 @@ export async function updateLeadQualificationReasonAction(
 ): Promise<ActionResult> {
   if (!leadId) return { ok: false, error: "Нет ID лида" };
 
-  const ctx = await getAuthedClient();
-  if ("error" in ctx) return { ok: false, error: ctx.error };
+  const auth = await getAuthedClient();
+  if (!auth.ok) return { ok: false, error: auth.error };
 
   const value = reason.trim().length === 0 ? null : reason.trim();
 
-  const { error } = await ctx.supabase
+  const { error } = await auth.ctx.supabase
     .from("leads")
     .update({ qualification_reason: value })
     .eq("id", leadId);
@@ -149,12 +158,12 @@ export async function updateLeadLossReasonAction(
 ): Promise<ActionResult> {
   if (!leadId) return { ok: false, error: "Нет ID лида" };
 
-  const ctx = await getAuthedClient();
-  if ("error" in ctx) return { ok: false, error: ctx.error };
+  const auth = await getAuthedClient();
+  if (!auth.ok) return { ok: false, error: auth.error };
 
   const value = reason.trim().length === 0 ? null : reason.trim();
 
-  const { error } = await ctx.supabase
+  const { error } = await auth.ctx.supabase
     .from("leads")
     .update({ loss_reason: value })
     .eq("id", leadId);
