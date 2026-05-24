@@ -17,6 +17,7 @@ type StatusMeta = {
   bg: string;
   icon: string;
   description: string;
+  hint: string;
   terminal?: boolean;
 };
 
@@ -27,56 +28,63 @@ const STATUSES: StatusMeta[] = [
     color: "#888",
     bg: "rgba(255,255,255,0.06)",
     icon: "○",
-    description: "Лид только что пришёл",
+    description: "Заявка на консультацию",
+    hint: "Клиент оставил заявку, но мы ещё не звонили. Свяжись в ближайшее время.",
   },
   {
     value: "contacted",
-    label: "Контакт установлен",
+    label: "Связались",
     color: "#A29BFE",
     bg: "rgba(162,155,254,0.08)",
     icon: "📞",
-    description: "Позвонили или написали",
+    description: "Дозвонились, узнали что нужно",
+    hint: "Узнали уровень игры (новичок / любитель / профи), стиль, бюджет. Товар пока не подбирали.",
   },
   {
     value: "qualified",
-    label: "Квалифицирован",
+    label: "Целевой клиент",
     color: "#54A0FF",
     bg: "rgba(84,160,255,0.08)",
     icon: "✓",
-    description: "Реальный потенциальный клиент",
+    description: "Хочет купить, выбрали товар",
+    hint: "Клиент чётко понимает что нужно, бюджет адекватный. Согласовали модели. Готов оформлять заказ.",
   },
   {
     value: "in_progress",
-    label: "В работе",
+    label: "Заказал",
     color: "#FFA502",
     bg: "rgba(255,165,2,0.08)",
-    icon: "⚡",
-    description: "Готовим предложение / договариваемся",
+    icon: "📦",
+    description: "Оставил данные для доставки",
+    hint: "Принял заказ — адрес НП, ФИО получателя. Уточни способ оплаты (предоплата / наложка / при получении) и запиши в заметки. Ждём отправки или выкупа.",
   },
   {
     value: "won",
-    label: "Купил",
+    label: "Выкупил",
     color: "#2ED573",
     bg: "rgba(46,213,115,0.08)",
     icon: "🎉",
-    description: "Сделка закрыта успешно",
+    description: "Получил товар, оплата прошла",
+    hint: "Клиент забрал заказ на НП / самовывозом, или курьер доставил и оплата получена. ⚠️ Финальный статус — попадёт в Revenue и Google/Meta Ads.",
     terminal: true,
   },
   {
     value: "unqualified",
-    label: "Не квалифицирован",
+    label: "Не наш клиент",
     color: "#666",
     bg: "rgba(255,255,255,0.04)",
     icon: "—",
-    description: "Не наш клиент / спам",
+    description: "Спам / не ЦА",
+    hint: "Ошиблись номером, спам-бот, продают свои услуги, или ищут товар которого у нас нет (промышленные роботы, столы для соревнований и т.д.).",
   },
   {
     value: "lost",
-    label: "Потерян",
+    label: "Не выкупил",
     color: "#FF6B81",
     bg: "rgba(255,107,129,0.08)",
     icon: "✕",
-    description: "Не купил / отказался",
+    description: "Отказался / не забрал",
+    hint: "Не забрал посылку с НП через 7 дней, отказался от заказа, передумал, нашёл дешевле, не дозвонились. Укажи причину — для аналитики.",
     terminal: true,
   },
 ];
@@ -130,10 +138,10 @@ export function StatusControl({ leadId, currentStatus }: Props) {
         )}
       </div>
 
-      {/* Current status pill */}
+      {/* Current status pill + hint */}
       <div className="px-4 pt-4 pb-3">
         <div
-          className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors"
+          className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors mb-2"
           style={{
             background: currentMeta.bg,
             border: `1px solid ${currentMeta.color}33`,
@@ -147,6 +155,12 @@ export function StatusControl({ leadId, currentStatus }: Props) {
             {currentMeta.label}
           </span>
         </div>
+        <p
+          className="text-[12px] leading-relaxed text-[#888]"
+          style={{ fontFamily: "'Barlow',sans-serif" }}
+        >
+          {currentMeta.hint}
+        </p>
       </div>
 
       {/* Mobile: horizontal scroll */}
@@ -194,11 +208,12 @@ export function StatusControl({ leadId, currentStatus }: Props) {
                 key={s.value}
                 onClick={() => handleChange(s)}
                 disabled={isPending}
-                className="text-left rounded-xl px-3 py-2.5 transition-all disabled:opacity-50 hover:bg-white/[0.03]"
+                className="text-left rounded-xl px-3 py-2.5 transition-all disabled:opacity-50 hover:bg-white/[0.03] group"
                 style={{
                   background: active ? s.bg : "rgba(255,255,255,0.02)",
                   border: `1.5px solid ${active ? s.color : "rgba(255,255,255,0.06)"}`,
                 }}
+                title={s.hint}
               >
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[13px]">{s.icon}</span>
@@ -219,6 +234,12 @@ export function StatusControl({ leadId, currentStatus }: Props) {
             );
           })}
         </div>
+        <p
+          className="text-[10px] text-[#444] mt-2 italic"
+          style={{ fontFamily: "'Barlow',sans-serif" }}
+        >
+          Наведи на статус чтобы увидеть когда его применять
+        </p>
       </div>
 
       {/* Confirm modal */}
@@ -257,9 +278,7 @@ export function StatusControl({ leadId, currentStatus }: Props) {
               className="text-[13px] text-[#888] leading-relaxed mb-4"
               style={{ fontFamily: "'Barlow',sans-serif" }}
             >
-              {confirm.value === "won"
-                ? "Лид будет отмечен как купивший. Это запишется в attribution Google Ads / Meta Ads и попадёт в метрику конверсии."
-                : "Лид будет помечен как потерянный. Это финальный статус — изменить можно будет только вручную."}
+              {confirm.hint}
             </p>
             <div className="flex gap-2">
               <button
