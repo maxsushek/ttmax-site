@@ -1,7 +1,8 @@
 // src/data/catalog/products.ts
 // Каталог накладок Butterfly: 43 модели → 248 вариантов (цвет × толщина).
-// Сгенерировано из проверенного каталога (офиц. спецификация Butterfly). Zyre 03 = 2.5/2.7.
-// price/inStock по вариантам и images (Cloudinary/Storage) добавляются позже.
+// Цены проставлены из прайс-листа tabletennis.com.ua (округление до целой грн), inStock=true.
+// Модели без цены (нет в прайсе) остаются с «Ціна за запитом»: roundell, roundell-soft, bugller, feint-ox.
+// Картинки (Cloudinary/Storage) добавляются позже.
 import type { CatalogProduct } from "@/types/catalog";
 
 export const catalogProducts: CatalogProduct[] = [
@@ -44,27 +45,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       }
     ],
     "images": [],
@@ -111,19 +124,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       }
     ],
     "images": [],
@@ -171,27 +192,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       }
     ],
     "images": [],
@@ -239,27 +272,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 4155,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 4155,
+        "inStock": true
       }
     ],
     "images": [],
@@ -306,19 +351,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       }
     ],
     "images": [],
@@ -366,27 +419,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       }
     ],
     "images": [],
@@ -434,27 +499,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -502,27 +579,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -570,27 +659,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -638,27 +739,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -706,27 +819,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -773,19 +898,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "2.5",
-        "color": "black"
+        "color": "black",
+        "price": 4675,
+        "inStock": true
       },
       {
         "thickness": "2.5",
-        "color": "red"
+        "color": "red",
+        "price": 4675,
+        "inStock": true
       },
       {
         "thickness": "2.7",
-        "color": "black"
+        "color": "black",
+        "price": 4675,
+        "inStock": true
       },
       {
         "thickness": "2.7",
-        "color": "red"
+        "color": "red",
+        "price": 4675,
+        "inStock": true
       }
     ],
     "images": [],
@@ -831,19 +964,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       }
     ],
     "images": [],
@@ -888,19 +1029,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2699,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2699,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2699,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2699,
+        "inStock": true
       }
     ],
     "images": [],
@@ -946,27 +1095,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2335,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2335,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1127,35 +1288,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1200,19 +1377,27 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1258,27 +1443,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1324,27 +1521,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1390,27 +1599,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1456,27 +1677,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 3115,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 3115,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1588,27 +1821,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1649,27 +1894,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 2491,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 2491,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 2491,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 2491,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 2491,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 2491,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1708,35 +1965,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1775,35 +2048,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 2075,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 2075,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1885,35 +2174,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1659,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1659,
+        "inStock": true
       }
     ],
     "images": [],
@@ -1960,35 +2265,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "black"
+        "color": "black",
+        "price": 1139,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "red"
+        "color": "red",
+        "price": 1139,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2029,27 +2350,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2090,27 +2423,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.1",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1555,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1555,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2156,27 +2501,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2222,27 +2579,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 2595,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 2595,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2278,11 +2647,15 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "OX",
-        "color": "black"
+        "color": "black",
+        "price": 1035,
+        "inStock": true
       },
       {
         "thickness": "OX",
-        "color": "red"
+        "color": "red",
+        "price": 1035,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2328,27 +2701,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1711,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1711,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1711,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1711,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1711,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1711,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2395,35 +2780,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2470,35 +2871,51 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "2.1",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2539,27 +2956,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1399,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1399,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1399,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1399,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1399,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1399,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2605,27 +3034,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2671,27 +3112,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.3",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.3",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.5",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1919,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1919,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2737,27 +3190,39 @@ export const catalogProducts: CatalogProduct[] = [
     "variants": [
       {
         "thickness": "1.7",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.7",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "1.9",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "black"
+        "color": "black",
+        "price": 1815,
+        "inStock": true
       },
       {
         "thickness": "MAX",
-        "color": "red"
+        "color": "red",
+        "price": 1815,
+        "inStock": true
       }
     ],
     "images": [],
@@ -2765,5 +3230,3 @@ export const catalogProducts: CatalogProduct[] = [
     "crossSell": []
   }
 ];
-
-export default catalogProducts;
