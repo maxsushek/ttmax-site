@@ -3,7 +3,6 @@ import { HeroCTA } from "./HeroCTA";
 import { heroStats } from "@/data/stats";
 import { t } from "@/i18n";
 import type { Messages } from "@/i18n/messages/types";
-import { siteConfig } from "@/config/site";
 
 export function Hero({ messages }: { messages: Messages }) {
   const m = messages.hero;
@@ -83,12 +82,11 @@ export function Hero({ messages }: { messages: Messages }) {
             />
             <div className="absolute h-[330px] w-[330px] rounded-full border border-dashed border-accent/[0.09] animate-spin-slow" />
             <div className="absolute h-[250px] w-[250px] rounded-full border border-info/[0.08] animate-spin-slower" />
-            <div className="relative z-10 text-center">
-              <div className="text-[108px] leading-none drop-shadow-[0_0_44px_rgba(232,255,71,0.25)] animate-float">
-                {siteConfig.emoji}
-              </div>
+            <div className="relative z-10 flex flex-col items-center text-center">
+              {/* Плейсхолдер изображения (бабочку убрали). Реальное фото товара — на шаге Cloudinary. */}
+              <div className="h-[150px] w-[150px] rounded-3xl border border-accent/20 bg-white/[0.03] shadow-[0_0_44px_rgba(232,255,71,0.12)] animate-float" />
               <div
-                className="mt-4 inline-block rounded-full border border-accent/20 bg-accent/[0.07] px-6 py-2"
+                className="mt-5 inline-block rounded-full border border-accent/20 bg-accent/[0.07] px-6 py-2"
                 style={{ backdropFilter: "blur(8px)" }}
               >
                 <span className="text-xs font-bold uppercase tracking-[0.12em] text-accent">
