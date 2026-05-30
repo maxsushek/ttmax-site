@@ -1,19 +1,19 @@
 // src/app/[locale]/[...segments]/page.tsx
 // Catch-all каталога: /{category}, /{brand}, /{brand}/{category}, /{brand}/{category}/{product}.
 // Не перехватывает главную (/{locale}) и имеет низший приоритет, поэтому ничего существующего не ломает.
-// Шаг 3B = дизайн витрины каталога + интерактивный выбор цвета/толщины и «В кошик».
-// Картинки (Cloudinary) и фасетные фильтры — следующие шаги.
+// Поддержка двух видов товара: накладки (kind: "rubber") и основания (kind: "base").
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Section } from "@/components/ui/Section";
 import { isLocale, type Locale } from "@/i18n/config";
-import { getBrandBySlug, getCrossSell, getMinPrice, isInStock } from "@/data/catalog";
+import { getBrandBySlug, getCrossSell, getMinPrice } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
-import type { CatalogProduct } from "@/types/catalog";
+import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
+import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
 import {
   catalogBreadcrumbs,
   catalogStaticParams,
@@ -58,6 +58,28 @@ const CART_CATEGORY: Record<string, ProductCategory> = {
   osnovaniya: "base",
   myachi: "ball",
   odyag: "apparel",
+};
+
+/* Подписи характеристик основания (клас / тип волокна). */
+const BLADE_CLASS_LABEL: Record<BladeClass, { uk: string; ru: string }> = {
+  "off-plus": { uk: "OFF+ · атака", ru: "OFF+ · атака" },
+  off: { uk: "OFF", ru: "OFF" },
+  "off-minus": { uk: "OFF− · універсал", ru: "OFF− · универсал" },
+  "all-plus": { uk: "ALL+", ru: "ALL+" },
+  all: { uk: "ALL · контроль", ru: "ALL · контроль" },
+  def: { uk: "DEF · захист", ru: "DEF · защита" },
+};
+const BLADE_SURFACE_LABEL: Record<BladeSurface, string> = {
+  wood: "Дерево",
+  alc: "ALC (арилат-карбон)",
+  "super-alc": "Super ALC",
+  zlc: "ZLC (Zylon-карбон)",
+  "super-zlc": "Super ZLC",
+  zlf: "ZLF (Zylon-fiber)",
+  t5000: "T5000",
+  cnf: "CNF",
+  caf: "CAF / карбон",
+  carbon: "Карбон",
 };
 
 export default async function CatalogPage({
@@ -193,9 +215,17 @@ function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale:
   );
 }
 
+/** Вторичная строка карточки: для основания — клас, для накладки — тип поверхности. */
+function cardSecondary(product: CatalogProduct, locale: Locale): string {
+  if (product.base) return BLADE_CLASS_LABEL[product.base.bladeClass][locale];
+  if (product.surfaceType) return labelFor("surfaceType", product.surfaceType, locale);
+  return "";
+}
+
 function ProductCard({ product, locale }: { product: CatalogProduct; locale: Locale }) {
   const price = getMinPrice(product);
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const secondary = cardSecondary(product, locale);
 
   return (
     <Link
@@ -204,7 +234,6 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
       data-cta="catalog-product"
       data-location={product.slug}
     >
-      {/* Плейсхолдер изображения (фото — на шаге Cloudinary) */}
       <div
         aria-hidden
         className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
@@ -224,9 +253,7 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
       <div className="mt-0.5 font-display text-[16px] font-extrabold leading-tight tracking-tight text-ink">
         {product.model}
       </div>
-      <div className="mt-1 font-body text-[11px] text-ink-dim">
-        {labelFor("surfaceType", product.surfaceType, locale)}
-      </div>
+      {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
 
       <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
         {price !== undefined
@@ -237,7 +264,7 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
   );
 }
 
-/* ---------------- Страница товара ---------------- */
+/* ---------------- Страница товара (диспетчер: основание / накладка) ---------------- */
 
 function ProductView({
   route,
@@ -246,29 +273,30 @@ function ProductView({
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
 }) {
-  const product = route.product;
-  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
-  void isInStock(product);
+  return route.product.base ? (
+    <BaseView route={route} locale={locale} />
+  ) : (
+    <RubberView route={route} locale={locale} />
+  );
+}
 
-  const specRows: { label: string; value: string }[] = [
-    { label: catalogUi.surface[locale], value: labelFor("surfaceType", product.surfaceType, locale) },
-  ];
-  if (product.specs.speed !== undefined)
-    specRows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
-  if (product.specs.spin !== undefined)
-    specRows.push({ label: catalogUi.spin[locale], value: String(product.specs.spin) });
-  if (product.specs.arc !== undefined)
-    specRows.push({ label: catalogUi.arc[locale], value: String(product.specs.arc) });
-  if (product.specs.hardnessDeg !== undefined)
-    specRows.push({ label: catalogUi.hardness[locale], value: `${product.specs.hardnessDeg}°` });
-  specRows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
-
-  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
-
+function ProductShell({
+  brandName,
+  h1,
+  visualLabel,
+  children,
+  related,
+  locale,
+}: {
+  brandName: string;
+  h1: string;
+  visualLabel: string;
+  children: React.ReactNode;
+  related: CatalogProduct[];
+  locale: Locale;
+}) {
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-      {/* Левая колонка: визуал */}
       <div>
         <div
           aria-hidden
@@ -276,62 +304,21 @@ function ProductView({
         >
           <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
           <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
-            {brandName}
+            {visualLabel}
           </span>
         </div>
       </div>
 
-      {/* Правая колонка: бренд + h1 + покупка */}
       <div>
         <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
           {brandName}
         </div>
         <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
-          {routeH1(route, locale)}
+          {h1}
         </h1>
-
-        <div className="mt-7">
-          <ProductPurchasePanel
-            locale={locale}
-            slug={product.slug}
-            brandLabel={brandName}
-            model={product.model}
-            cartCategory={cartCategory}
-            accentColor="#E8FF47"
-            colors={product.colors}
-            thicknessOptions={product.thicknessOptions}
-            variants={product.variants.map((v) => ({
-              thickness: v.thickness,
-              color: v.color,
-              price: v.price,
-              inStock: v.inStock,
-            }))}
-            phone={siteConfig.phone}
-          />
-        </div>
-
-        {/* Характеристики */}
-        <div className="mt-9">
-          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
-            {catalogUi.specs[locale]}
-          </h2>
-          <dl className="overflow-hidden rounded-2xl border border-border-strong">
-            {specRows.map((r, i) => (
-              <div
-                key={r.label}
-                className={`flex items-center justify-between px-4 py-3 text-sm ${
-                  i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"
-                }`}
-              >
-                <dt className="text-ink-muted">{r.label}</dt>
-                <dd className="font-semibold text-ink">{r.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        {children}
       </div>
 
-      {/* Сопутствующие */}
       {related.length > 0 && (
         <div className="lg:col-span-2">
           <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
@@ -341,5 +328,147 @@ function ProductView({
         </div>
       )}
     </div>
+  );
+}
+
+function SpecTable({ rows }: { rows: { label: string; value: string }[] }) {
+  return (
+    <dl className="overflow-hidden rounded-2xl border border-border-strong">
+      {rows.map((r, i) => (
+        <div
+          key={r.label}
+          className={`flex items-center justify-between px-4 py-3 text-sm ${
+            i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"
+          }`}
+        >
+          <dt className="text-ink-muted">{r.label}</dt>
+          <dd className="font-semibold text-ink">{r.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/* ---- Накладка ---- */
+
+function RubberView({
+  route,
+  locale,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+}) {
+  const product = route.product;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+
+  const rows: { label: string; value: string }[] = [];
+  if (product.surfaceType)
+    rows.push({ label: catalogUi.surface[locale], value: labelFor("surfaceType", product.surfaceType, locale) });
+  if (product.specs.speed !== undefined)
+    rows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
+  if (product.specs.spin !== undefined)
+    rows.push({ label: catalogUi.spin[locale], value: String(product.specs.spin) });
+  if (product.specs.arc !== undefined)
+    rows.push({ label: catalogUi.arc[locale], value: String(product.specs.arc) });
+  if (product.specs.hardnessDeg !== undefined)
+    rows.push({ label: catalogUi.hardness[locale], value: `${product.specs.hardnessDeg}°` });
+  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      related={related}
+      locale={locale}
+    >
+      <div className="mt-7">
+        <ProductPurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          colors={product.colors}
+          thicknessOptions={product.thicknessOptions}
+          variants={product.variants.map((v) => ({
+            thickness: v.thickness,
+            color: v.color,
+            price: v.price,
+            inStock: v.inStock,
+          }))}
+          phone={siteConfig.phone}
+        />
+      </div>
+
+      <div className="mt-9">
+        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+          {catalogUi.specs[locale]}
+        </h2>
+        <SpecTable rows={rows} />
+      </div>
+    </ProductShell>
+  );
+}
+
+/* ---- Основание ---- */
+
+function BaseView({
+  route,
+  locale,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+}) {
+  const product = route.product;
+  const base = product.base!;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+
+  const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
+  const rows: { label: string; value: string }[] = [
+    { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
+    { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },
+  ];
+  if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
+  if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
+  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      related={related}
+      locale={locale}
+    >
+      <div className="mt-7">
+        <BasePurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          handles={base.handles}
+          priceFrom={product.priceFrom}
+          inStock={product.inStock}
+          phone={siteConfig.phone}
+        />
+      </div>
+
+      <div className="mt-9">
+        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+          {catalogUi.specs[locale]}
+        </h2>
+        <SpecTable rows={rows} />
+      </div>
+    </ProductShell>
   );
 }
