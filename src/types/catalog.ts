@@ -71,10 +71,20 @@ export interface CatalogProduct {
   title: Localized;
   /** meta description (опционально, заполняется позже). */
   description?: Localized;
-  surfaceType: SurfaceType;
-  playStyle: PlayStyle;
+  /** Тип поверхні — лише для накладок (kind: "rubber"). */
+  surfaceType?: SurfaceType;
+  /** Ігровий стиль — лише для накладок. */
+  playStyle?: PlayStyle;
   level: Level;
   specs: RubberSpecs;
+  /** Вид товару. За замовчуванням — накладка. */
+  kind?: "rubber" | "base";
+  /** Базова ціна (основи мають єдину ціну; накладки — ціну за варіантами). */
+  priceFrom?: number;
+  /** Наявність на рівні товару (для основ). */
+  inStock?: boolean;
+  /** Характеристики основи (лише для kind: "base"). */
+  base?: BaseSpec;
   thicknessOptions: string[];
   colors: Color[];
   /** Развёртка вариантов (толщина × цвет). */
@@ -130,4 +140,37 @@ export interface FilterDef {
   options: FilterOption[];
   /** Допустим ли индексируемый ЧПУ-срез (бренд×категория, серия и т.п.). */
   facetIndexable: boolean;
+}
+
+/* ---------- Основания (blades) ---------- */
+
+/** Клас основи за швидкістю/контролем. */
+export type BladeClass = "all" | "all-plus" | "off-minus" | "off" | "off-plus" | "def";
+
+/** Тип конструкції/волокна основи. */
+export type BladeSurface =
+  | "wood"
+  | "alc"
+  | "super-alc"
+  | "zlc"
+  | "super-zlc"
+  | "zlf"
+  | "t5000"
+  | "cnf"
+  | "caf"
+  | "carbon";
+
+/** Тип ручки. FL — конічна, ST — пряма, AN — анатомічна, CS — китайське перо. */
+export type Handle = "fl" | "st" | "an" | "cs";
+
+/** Характеристики основи (для kind: "base"). */
+export interface BaseSpec {
+  bladeClass: BladeClass;
+  surface: BladeSurface;
+  /** Кількість шарів: "5", "7", "5+2" тощо. */
+  plies?: string;
+  /** Приблизна вага, г. */
+  weightG?: number;
+  /** Доступні типи ручки. */
+  handles: Handle[];
 }
