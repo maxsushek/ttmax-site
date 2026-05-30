@@ -28,7 +28,7 @@ export function Products({
             </SectionTitle>
           </div>
           <Link
-            href={`/${locale}/catalog`}
+            href={`/${locale}/butterfly`}
             className="nav-link font-display text-[13px] font-bold uppercase tracking-[0.1em] text-accent"
           >
             {m.seeAll} →
