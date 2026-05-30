@@ -5,6 +5,16 @@ import { t } from "@/i18n";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 
+// Коллекции Butterfly → реальная категория (вместо битых /brands/{id}).
+const COLLECTION_HREF: Record<string, string> = {
+  tenergy: "/nakladki",
+  dignics: "/nakladki",
+  rozena: "/nakladki",
+  viscaria: "/osnovaniya",
+  hadraw: "/osnovaniya",
+  wear: "/odyag",
+};
+
 export function Brands({
   locale,
   messages,
@@ -27,7 +37,7 @@ export function Brands({
           {brands.map((b) => (
             <li key={b.id}>
               <Link
-                href={`/${locale}/brands/${b.id}`}
+                href={`/${locale}${COLLECTION_HREF[b.id] ?? "/butterfly"}`}
                 className="group flex flex-col items-center rounded-2xl border border-border-subtle bg-bg-raised px-3 py-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/15 hover:bg-bg-elevated"
                 data-cta="brand"
                 data-location={b.id}
@@ -41,7 +51,7 @@ export function Brands({
                 <span className="mb-1 font-display text-[17px] font-extrabold uppercase tracking-[0.04em]">
                   {b.name}
                 </span>
-                <span className="font-body text-[11px] text-ink-ghost transition-colors group-hover:text-accent">
+                <span className="font-body text-[11px] text-ink-muted transition-colors group-hover:text-accent">
                   {t(m.productsCount, { count: b.productsCount })}
                 </span>
               </Link>
