@@ -9,33 +9,37 @@ import type {
   Color,
 } from "@/types/catalog";
 import { catalogProducts } from "./products";
+import { catalogBases } from "./bases";
 import { catalogBrands, catalogSeries } from "./brands";
 import { catalogCategories } from "./categories";
 import { rubberFilters } from "./filters";
 
-export { catalogProducts, catalogBrands, catalogSeries, catalogCategories, rubberFilters };
+export { catalogProducts, catalogBases, catalogBrands, catalogSeries, catalogCategories, rubberFilters };
+
+/** Спільний пул товарів: накладки (rubber) + основи (base). */
+const pool: CatalogProduct[] = [...catalogProducts, ...catalogBases];
 
 /* ---------- Товары ---------- */
 
-export const getAllProducts = (): CatalogProduct[] => catalogProducts;
+export const getAllProducts = (): CatalogProduct[] => pool;
 
 export const getProductBySlug = (slug: string): CatalogProduct | undefined =>
-  catalogProducts.find((p) => p.slug === slug);
+  pool.find((p) => p.slug === slug);
 
 export const getProductsByCategory = (categorySlug: string): CatalogProduct[] =>
-  catalogProducts.filter((p) => p.categorySlug === categorySlug);
+  pool.filter((p) => p.categorySlug === categorySlug);
 
 export const getProductsByBrand = (brandSlug: string): CatalogProduct[] =>
-  catalogProducts.filter((p) => p.brandSlug === brandSlug);
+  pool.filter((p) => p.brandSlug === brandSlug);
 
 export const getProductsByBrandCategory = (
   brandSlug: string,
   categorySlug: string,
 ): CatalogProduct[] =>
-  catalogProducts.filter((p) => p.brandSlug === brandSlug && p.categorySlug === categorySlug);
+  pool.filter((p) => p.brandSlug === brandSlug && p.categorySlug === categorySlug);
 
 export const getProductsBySeries = (seriesSlug: string): CatalogProduct[] =>
-  catalogProducts.filter((p) => p.seriesSlug === seriesSlug);
+  pool.filter((p) => p.seriesSlug === seriesSlug);
 
 /** Сопутствующие/похожие для блока «з цим купують» / «схожі». */
 export const getCrossSell = (product: CatalogProduct): CatalogProduct[] => {
@@ -85,11 +89,15 @@ export const getMinPrice = (product: CatalogProduct): number | undefined => {
   const prices = product.variants
     .map((v) => v.price)
     .filter((p): p is number => typeof p === "number");
-  return prices.length > 0 ? Math.min(...prices) : undefined;
+  return prices.length > 0
+    ? Math.min(...prices)
+    : typeof product.priceFrom === "number"
+      ? product.priceFrom
+      : undefined;
 };
 
 export const isInStock = (product: CatalogProduct): boolean =>
-  product.variants.some((v) => v.inStock === true);
+  product.variants.some((v) => v.inStock === true) || product.inStock === true;
 
 export const getVariant = (
   product: CatalogProduct,
