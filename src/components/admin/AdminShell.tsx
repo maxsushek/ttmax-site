@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, useTransition, type ReactNode } from "react";
 import { signOutAction } from "@/app/admin/actions";
 import { adminNav } from "@/config/admin-nav";
+import { useAdminLogo } from "@/components/admin/AdminLogoContext";
 import { cn } from "@/utils/cn";
 
 function isActive(pathname: string | null, href?: string): boolean {
@@ -17,7 +18,16 @@ function isActive(pathname: string | null, href?: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function Brand() {
+function Brand({ logoUrl }: { logoUrl?: string }) {
+  if (logoUrl) {
+    return (
+      <div className="flex min-w-0 items-center gap-2">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoUrl} alt="TTMAX" className="h-8 w-auto max-w-[150px] object-contain" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#555]">Admin</span>
+      </div>
+    );
+  }
   return (
     <div className="flex min-w-0 items-center gap-3">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E8FF47] text-base">
@@ -171,6 +181,7 @@ function IconButton({
 
 export function AdminShell({ email, children }: { email: string; children: ReactNode }) {
   const pathname = usePathname();
+  const logoUrl = useAdminLogo();
   const [open, setOpen] = useState(false);
 
   // Закривати дровер при зміні маршруту.
@@ -194,7 +205,7 @@ export function AdminShell({ email, children }: { email: string; children: React
       <aside className="hidden border-r border-white/[0.06] bg-[#0A0C12] lg:block">
         <div className="sticky top-0 flex h-screen flex-col">
           <div className="flex h-14 items-center border-b border-white/[0.06] px-4">
-            <Brand />
+            <Brand logoUrl={logoUrl} />
           </div>
           <SidebarBody email={email} />
         </div>
@@ -215,7 +226,7 @@ export function AdminShell({ email, children }: { email: string; children: React
                 />
               </svg>
             </IconButton>
-            <Brand />
+            <Brand logoUrl={logoUrl} />
           </div>
           <SignOutButton />
         </header>
@@ -231,7 +242,7 @@ export function AdminShell({ email, children }: { email: string; children: React
             />
             <div className="absolute left-0 top-0 flex h-full w-72 animate-slide-in flex-col border-r border-white/[0.08] bg-[#0A0C12]">
               <div className="flex h-14 items-center justify-between border-b border-white/[0.06] px-4">
-                <Brand />
+                <Brand logoUrl={logoUrl} />
                 <IconButton label="Закрити" onClick={() => setOpen(false)}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path
