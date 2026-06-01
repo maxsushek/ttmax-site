@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics/events";
+import type { ContactInfo } from "@/lib/contact/get";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
@@ -64,12 +65,19 @@ export function Footer({
   locale,
   messages,
   logoUrl,
+  contact,
 }: {
   locale: Locale;
   messages: Messages;
   logoUrl?: string;
+  contact?: ContactInfo;
 }) {
   const m = messages.footer;
+  const phoneHref = contact?.phone ?? siteConfig.phone;
+  const socialHref = (key: string): string =>
+    (contact?.social[key as "telegram" | "youtube" | "facebook"] ||
+      siteConfig.social.find((s) => s.key === key)?.href) ??
+    "#";
 
   // Каталожные пункты футера → реальные URL категорий.
   const catalogPaths: Record<string, string> = {
@@ -108,7 +116,7 @@ export function Footer({
               {siteConfig.social.map((s) => (
                 <a
                   key={s.key}
-                  href={s.href}
+                  href={socialHref(s.key)}
                   rel="noopener noreferrer"
                   aria-label={s.key}
                   className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-white/[0.12] text-[11px] font-bold text-ink-muted transition-all hover:-translate-y-0.5"
@@ -128,7 +136,7 @@ export function Footer({
               ))}
             </div>
             <a
-              href={`tel:${siteConfig.phone}`}
+              href={`tel:${phoneHref}`}
               data-cta="phone"
               data-location="footer"
               onClick={() => trackEvent({ name: "phone_click", params: { location: "footer" } })}
