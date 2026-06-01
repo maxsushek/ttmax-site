@@ -2,6 +2,8 @@ import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewOrder } from "@/lib/telegram/notify";
+import { getProductBySlug, getMinPrice } from "@/data/catalog";
+import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
 import { locales } from "@/i18n/config";
 
 export const runtime = "nodejs";
@@ -88,6 +90,41 @@ export async function POST(request: NextRequest) {
   }
 
   const data = parsed.data;
+
+  // 0) Серверна перевірка цін: ціну диктує сервер (код + product_overrides), а не клієнт.
+  //    Валідуємо лише позиції, для яких можемо однозначно визначити ціну з каталогу;
+  //    showcase-товари та "ціна за запитом" не блокуємо (приймаємо як є, без регресії).
+  const overrides = await getOverrides();
+  for (const it of data.items) {
+    const slug = it.productId.split("__")[0];
+    const product = slug ? getProductBySlug(slug) : undefined;
+    if (!product) continue; // не з каталогу — не валідуємо
+
+    const eff = applyOverrides(product, overrides);
+    const variant = eff.variants.find(
+      (v) => `${eff.slug}__${v.thickness}__${v.color}` === it.productId,
+    );
+    const expected =
+      variant && typeof variant.price === "number"
+        ? variant.price
+        : typeof eff.priceFrom === "number"
+          ? eff.priceFrom
+          : (getMinPrice(eff) ?? null);
+
+    if (expected == null) continue; // ціну не визначено в каталозі — пропускаємо
+
+    if (Math.abs(expected - it.price) > 0.01) {
+      console.warn("[orders] price mismatch — rejecting", {
+        productId: it.productId,
+        client: it.price,
+        expected,
+      });
+      return NextResponse.json(
+        { error: "Price changed", productId: it.productId, expected },
+        { status: 409 },
+      );
+    }
+  }
 
   const computedSubtotal = data.items.reduce(
     (s, i) => s + Math.round(i.price * i.qty * 100) / 100,
