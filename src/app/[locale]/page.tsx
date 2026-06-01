@@ -11,6 +11,9 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n";
 import { faqJsonLd } from "@/lib/seo/jsonld";
 
+// ISR: после загрузки фото в админке кеш витрины инвалидируется тегом и страница пересобирается.
+export const revalidate = 600;
+
 export default async function HomePage({
   params,
 }: {
