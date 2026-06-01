@@ -12,6 +12,8 @@ import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
+import { getSettings, settingString } from "@/lib/settings/get";
+import { COUNTER_KEYS, type AnalyticsIds } from "@/lib/analytics/ids";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -58,6 +60,20 @@ export default async function LocaleLayout({
   const logoAsset = getSiteAsset(media, "logo");
   const logoUrl = logoAsset ? cldUrl(logoAsset.publicId, { h: 72, crop: "fit" }) : undefined;
 
+  // Лічильники: з site_settings, із фолбэком на env (NEXT_PUBLIC_*).
+  const settings = await getSettings();
+  const analyticsIds: AnalyticsIds = {
+    gtm: settingString(settings, COUNTER_KEYS.gtm) || (process.env.NEXT_PUBLIC_GTM_ID ?? ""),
+    ga: settingString(settings, COUNTER_KEYS.ga) || (process.env.NEXT_PUBLIC_GA_ID ?? ""),
+    adsId:
+      settingString(settings, COUNTER_KEYS.adsId) || (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? ""),
+    adsLabel:
+      settingString(settings, COUNTER_KEYS.adsLabel) ||
+      (process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL ?? ""),
+    pixel:
+      settingString(settings, COUNTER_KEYS.pixel) || (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ""),
+  };
+
   return (
     <>
       <script
@@ -68,7 +84,7 @@ export default async function LocaleLayout({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale)) }}
       />
-      <AnalyticsProvider />
+      <AnalyticsProvider ids={analyticsIds} />
       <CartProvider>
         <Header locale={locale} messages={messages} logoUrl={logoUrl} />
         <main id="main" className="pt-16">
