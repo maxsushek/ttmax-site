@@ -64,3 +64,60 @@ export function faqJsonLd(items: ReadonlyArray<{ q: string; a: string }>) {
     })),
   };
 }
+
+/** Хлібні крихти. items: [{ name, path }], path без локалі ("/" = головна). */
+export function breadcrumbJsonLd(
+  items: ReadonlyArray<{ name: string; path: string }>,
+  locale: Locale,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: `${siteConfig.url}/${locale}${item.path === "/" ? "" : item.path}`,
+    })),
+  };
+}
+
+/** Schema.org Product для сторінки товару. Якщо ціни немає — блок offers не додається. */
+export function productJsonLd(opts: {
+  name: string;
+  description: string;
+  /** Абсолютний URL сторінки товару. */
+  url: string;
+  brand: string;
+  /** Абсолютні URL зображень (поки порожньо — додамо з Cloudinary). */
+  images?: string[];
+  sku?: string;
+  /** Ціна "від". */
+  price?: number;
+  /** Напр. "UAH". */
+  currency?: string;
+  inStock?: boolean;
+}) {
+  const { name, description, url, brand, images, sku, price, currency = "UAH", inStock } = opts;
+
+  const node: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    description,
+    url,
+    brand: { "@type": "Brand", name: brand },
+  };
+  if (images && images.length > 0) node.image = images;
+  if (sku) node.sku = sku;
+  if (typeof price === "number" && price > 0) {
+    node.offers = {
+      "@type": "Offer",
+      url,
+      price,
+      priceCurrency: currency,
+      availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    };
+  }
+  return node;
+}
