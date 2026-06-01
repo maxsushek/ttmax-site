@@ -14,9 +14,11 @@ import { cn } from "@/utils/cn";
 export function Header({
   locale,
   messages,
+  logoUrl,
 }: {
   locale: Locale;
   messages: Messages;
+  logoUrl?: string;
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -43,12 +45,9 @@ export function Header({
         }}
       >
         <div className="container-page flex h-16 items-center gap-6">
-          <Logo locale={locale} />
+          <Logo locale={locale} imageUrl={logoUrl} />
 
-          <nav
-            aria-label="Primary"
-            className="hidden flex-1 items-center gap-5 lg:flex"
-          >
+          <nav aria-label="Primary" className="hidden flex-1 items-center gap-5 lg:flex">
             {navigation.map((link) => {
               const label = messages.nav[link.key as keyof Messages["nav"]];
               return (
@@ -69,8 +68,8 @@ export function Header({
                       className={cn(
                         "absolute left-1/2 top-full mt-3 -translate-x-1/2",
                         "min-w-[168px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0D13]/[0.97]",
-                        "opacity-0 transition-all duration-200 pointer-events-none",
-                        "group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100",
+                        "pointer-events-none opacity-0 transition-all duration-200",
+                        "group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100",
                       )}
                       style={{ backdropFilter: "blur(20px)" }}
                     >
@@ -136,6 +135,7 @@ export function Header({
         onClose={() => setMenuOpen(false)}
         locale={locale}
         messages={messages}
+        logoUrl={logoUrl}
       />
     </>
   );
