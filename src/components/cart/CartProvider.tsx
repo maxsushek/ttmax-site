@@ -7,11 +7,13 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
 import type { CartItem, Product } from "@/types";
 import { trackEvent } from "@/lib/analytics/events";
+import { CURRENCY, linesValue, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { siteConfig } from "@/config/site";
 
 type CartState = { items: CartItem[]; hydrated: boolean };
@@ -32,9 +34,7 @@ function reducer(state: CartState, action: CartAction): CartState {
     case "add": {
       const existing = state.items.find((i) => i.id === action.product.id);
       const items = existing
-        ? state.items.map((i) =>
-            i.id === action.product.id ? { ...i, qty: i.qty + 1 } : i,
-          )
+        ? state.items.map((i) => (i.id === action.product.id ? { ...i, qty: i.qty + 1 } : i))
         : [...state.items, { ...action.product, qty: 1 }];
       return { ...state, items };
     }
@@ -103,6 +103,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [state.items, state.hydrated]);
 
+  // Поточні позиції для подій (view_cart / remove_from_cart) без stale-closure
+  const itemsRef = useRef<CartItem[]>([]);
+  useEffect(() => {
+    itemsRef.current = state.items;
+  }, [state.items]);
+
   // Lock body scroll when drawer is open
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -113,10 +119,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [isOpen]);
 
   const count = useMemo(() => state.items.reduce((s, i) => s + i.qty, 0), [state.items]);
-  const total = useMemo(
-    () => state.items.reduce((s, i) => s + i.price * i.qty, 0),
-    [state.items],
-  );
+  const total = useMemo(() => state.items.reduce((s, i) => s + i.price * i.qty, 0), [state.items]);
   const threshold = siteConfig.freeShippingThreshold;
   const hasFreeShip = total >= threshold;
   const freeShipProgress = Math.min(100, (total / threshold) * 100);
@@ -124,7 +127,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const open = useCallback(() => {
     setIsOpen(true);
-    trackEvent({ name: "view_cart" });
+    trackEvent({
+      name: "view_cart",
+      params: {
+        currency: CURRENCY,
+        value: linesValue(itemsRef.current),
+        items: toAnalyticsItems(itemsRef.current),
+      },
+    });
   }, []);
   const close = useCallback(() => setIsOpen(false), []);
 
@@ -134,14 +144,34 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsOpen(true);
     trackEvent({
       name: "add_to_cart",
-      params: { productId: product.id, price: product.price, brand: product.brand },
+      params: {
+        currency: CURRENCY,
+        value: product.price,
+        items: [
+          {
+            id: product.id,
+            name: product.model,
+            brand: product.brand,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+      },
     });
     window.setTimeout(() => setJustAddedId(null), 1200);
   }, []);
 
   const remove = useCallback((productId: string) => {
+    const item = itemsRef.current.find((i) => i.id === productId);
+    trackEvent({
+      name: "remove_from_cart",
+      params: {
+        currency: CURRENCY,
+        value: item ? item.price * item.qty : 0,
+        items: item ? toAnalyticsItems([item]) : [],
+      },
+    });
     dispatch({ type: "remove", productId });
-    trackEvent({ name: "remove_from_cart", params: { productId } });
   }, []);
 
   const changeQty = useCallback((productId: string, delta: number) => {
