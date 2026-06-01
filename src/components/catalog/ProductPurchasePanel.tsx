@@ -1,20 +1,14 @@
-// src/components/catalog/ProductPurchasePanel.tsx
+// src/components/catalog/BasePurchasePanel.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
+import { trackEvent } from "@/lib/analytics/events";
+import { CURRENCY } from "@/lib/analytics/ecommerce";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
-import type { Color } from "@/types/catalog";
+import type { Handle } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
-
-/** Сериализуемый срез варианта (server → client). */
-export type PanelVariant = {
-  thickness: string;
-  color: Color;
-  price?: number;
-  inStock?: boolean;
-};
 
 type Props = {
   locale: "uk" | "ru";
@@ -23,72 +17,86 @@ type Props = {
   model: string;
   cartCategory: ProductCategory;
   accentColor: string;
-  colors: Color[];
-  thicknessOptions: string[];
-  variants: PanelVariant[];
+  handles: Handle[];
+  priceFrom?: number;
+  inStock?: boolean;
   phone: string;
   imageUrl?: string;
 };
 
 const LABELS = {
   uk: {
-    color: "Колір",
-    thickness: "Товщина, мм",
+    handle: "Тип ручки",
     addToCart: "В кошик",
     added: "Додано в кошик",
     request: "Запитати ціну",
     soldOut: "Немає в наявності",
     priceOnRequest: "Ціна за запитом",
     inStock: "В наявності",
-    pickNote: "Оберіть колір і товщину",
+    pickNote: "Оберіть тип ручки",
   },
   ru: {
-    color: "Цвет",
-    thickness: "Толщина, мм",
+    handle: "Тип ручки",
     addToCart: "В корзину",
     added: "Добавлено в корзину",
     request: "Узнать цену",
     soldOut: "Нет в наличии",
     priceOnRequest: "Цена по запросу",
     inStock: "В наличии",
-    pickNote: "Выберите цвет и толщину",
+    pickNote: "Выберите тип ручки",
   },
 } as const;
 
-const COLOR_LABELS: Record<"uk" | "ru", Record<Color, string>> = {
-  uk: { black: "Чорна", red: "Червона" },
-  ru: { black: "Чёрная", red: "Красная" },
+const HANDLE_LABELS: Record<"uk" | "ru", Record<Handle, { code: string; note: string }>> = {
+  uk: {
+    fl: { code: "FL", note: "конічна" },
+    st: { code: "ST", note: "пряма" },
+    an: { code: "AN", note: "анатомічна" },
+    cs: { code: "CS", note: "кит. перо" },
+  },
+  ru: {
+    fl: { code: "FL", note: "коническая" },
+    st: { code: "ST", note: "прямая" },
+    an: { code: "AN", note: "анатомическая" },
+    cs: { code: "CS", note: "кит. перо" },
+  },
 };
 
-const COLOR_SWATCH: Record<Color, string> = {
-  black: "#0c0c0c",
-  red: "#d61f26",
-};
-
-export function ProductPurchasePanel({
+export function BasePurchasePanel({
   locale,
   slug,
   brandLabel,
   model,
   cartCategory,
   accentColor,
-  colors,
-  thicknessOptions,
-  variants,
+  handles,
+  priceFrom,
+  inStock,
   phone,
   imageUrl,
 }: Props) {
   const t = LABELS[locale];
   const cart = useCart();
 
-  const [color, setColor] = useState<Color>(colors[0] ?? "black");
-  const [thickness, setThickness] = useState<string>(thicknessOptions[0] ?? "");
+  const [handle, setHandle] = useState<Handle>(handles[0] ?? "fl");
 
-  const selected = variants.find((v) => v.thickness === thickness && v.color === color);
-  const hasPrice = typeof selected?.price === "number" && selected.price > 0;
-  const soldOut = selected?.inStock === false;
+  // GA4 view_item при відкритті картки основи
+  useEffect(() => {
+    const repPrice = priceFrom ?? 0;
+    trackEvent({
+      name: "view_item",
+      params: {
+        currency: CURRENCY,
+        value: repPrice,
+        items: [{ id: slug, name: model, brand: brandLabel, price: repPrice, quantity: 1 }],
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const cartId = `${slug}__${thickness}__${color}`;
+  const hasPrice = typeof priceFrom === "number" && priceFrom > 0;
+  const soldOut = inStock === false;
+  const cartId = `${slug}__${handle}`;
   const justAdded = cart.justAddedId === cartId;
 
   const addToCart = () => {
@@ -96,9 +104,9 @@ export function ProductPurchasePanel({
     cart.add({
       id: cartId,
       brand: brandLabel,
-      model: `${model} · ${thickness} мм · ${COLOR_LABELS[locale][color]}`,
+      model: `${model} · ${HANDLE_LABELS[locale][handle].code}`,
       category: cartCategory,
-      price: selected!.price as number,
+      price: priceFrom as number,
       accentColor,
       emoji: "",
       image: imageUrl,
@@ -109,10 +117,9 @@ export function ProductPurchasePanel({
 
   return (
     <div>
-      {/* Цена */}
       <div className="flex items-end gap-3">
         <span className="font-display text-[34px] font-black leading-none tracking-tight text-accent">
-          {hasPrice ? formatPrice(selected!.price as number) : t.priceOnRequest}
+          {hasPrice ? formatPrice(priceFrom as number) : t.priceOnRequest}
         </span>
         {hasPrice && !soldOut && (
           <span className="mb-1 inline-flex items-center gap-1.5 text-xs font-semibold text-success">
@@ -122,61 +129,30 @@ export function ProductPurchasePanel({
         )}
       </div>
 
-      {/* Колір */}
+      {/* Тип ручки */}
       <div className="mt-7">
         <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
-          {t.color}
+          {t.handle}
         </div>
         <div className="flex flex-wrap gap-2">
-          {colors.map((c) => {
-            const active = c === color;
+          {handles.map((h) => {
+            const active = h === handle;
+            const lab = HANDLE_LABELS[locale][h];
             return (
               <button
-                key={c}
+                key={h}
                 type="button"
-                onClick={() => setColor(c)}
+                onClick={() => setHandle(h)}
                 aria-pressed={active}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-medium transition-all",
+                  "flex flex-col items-start rounded-xl border px-3.5 py-2 transition-all",
                   active
                     ? "border-accent bg-accent/[0.08] text-ink"
                     : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
                 )}
               >
-                <span
-                  aria-hidden
-                  className="h-4 w-4 rounded-full border border-white/20"
-                  style={{ backgroundColor: COLOR_SWATCH[c] }}
-                />
-                {COLOR_LABELS[locale][c]}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Товщина */}
-      <div className="mt-5">
-        <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
-          {t.thickness}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {thicknessOptions.map((th) => {
-            const active = th === thickness;
-            return (
-              <button
-                key={th}
-                type="button"
-                onClick={() => setThickness(th)}
-                aria-pressed={active}
-                className={cn(
-                  "min-w-[52px] rounded-xl border px-3.5 py-2 text-sm font-semibold tabular-nums transition-all",
-                  active
-                    ? "border-accent bg-accent/[0.08] text-ink"
-                    : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
-                )}
-              >
-                {th}
+                <span className="font-display text-sm font-bold">{lab.code}</span>
+                <span className="text-[10px] text-ink-dim">{lab.note}</span>
               </button>
             );
           })}
