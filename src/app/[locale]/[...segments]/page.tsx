@@ -19,7 +19,7 @@ import {
   type CatalogCardVM,
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
-import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonld";
+import { breadcrumbJsonLd, productJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { getMediaMap, pickPrimary, type EntityMediaMap } from "@/lib/media/get";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -37,6 +37,8 @@ import {
   type CatalogRoute,
 } from "@/lib/catalog/routing";
 import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
+import { getContent, type ContentBlock, type ContentEntityType } from "@/lib/content/get";
+import { ContentIntro, ContentSections } from "@/components/content/ContentSections";
 
 export const dynamicParams = true;
 
@@ -45,6 +47,24 @@ export const revalidate = 600;
 
 export function generateStaticParams() {
   return catalogStaticParams();
+}
+
+/** Сутність + slug для прив'язки контентного блоку до маршруту каталогу. */
+function contentKeyForRoute(
+  route: CatalogRoute,
+): { entityType: ContentEntityType; slug: string } | null {
+  switch (route.kind) {
+    case "product":
+      return { entityType: "product", slug: route.product.slug };
+    case "category":
+      return { entityType: "category", slug: route.category.slug };
+    case "brand":
+      return { entityType: "brand", slug: route.brand.slug };
+    case "brandCategory":
+      return { entityType: "brandCategory", slug: `${route.brand.slug}/${route.category.slug}` };
+    default:
+      return null;
+  }
 }
 
 export async function generateMetadata({
@@ -56,12 +76,14 @@ export async function generateMetadata({
   if (!isLocale(l)) return {};
   const route = resolveSegments(segments);
   if (!route) return { robots: { index: false, follow: false } };
+  const ck = contentKeyForRoute(route);
+  const content = ck ? await getContent(ck.entityType, ck.slug, l) : null;
   return buildCatalogMetadata({
     locale: l,
     pathname: "/" + segments.join("/"),
-    title: routeTitle(route, l),
-    description: routeDescription(route, l),
-    index: route.index,
+    title: content?.metaTitle || routeTitle(route, l),
+    description: content?.metaDescription || routeDescription(route, l),
+    index: route.index && !content?.noindex,
   });
 }
 
@@ -113,6 +135,10 @@ export default async function CatalogPage({
   // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
   const eroute = withOverrides(route, overrides);
 
+  // Контентний шар (опис/FAQ/порівняння) — по сутності маршруту й поточній мові.
+  const ck = contentKeyForRoute(route);
+  const content = ck ? await getContent(ck.entityType, ck.slug, locale) : null;
+
   const crumbs = catalogBreadcrumbs(route, locale);
   const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
   const productLd =
@@ -128,6 +154,12 @@ export default async function CatalogPage({
         })
       : null;
 
+  // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
+  // schema й допомагає AI/Copilot розбирати Q&A. Тримаємо за прапором; розмітка = видимий FAQ.
+  const EMIT_FAQ_JSONLD = true;
+  const faqLd =
+    EMIT_FAQ_JSONLD && content?.faq && content.faq.length > 0 ? faqJsonLd(content.faq) : null;
+
   return (
     <Section as="div" className="pt-10">
       <script
@@ -138,6 +170,12 @@ export default async function CatalogPage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
+        />
+      )}
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
         />
       )}
       <Container>
@@ -167,9 +205,9 @@ export default async function CatalogPage({
         </nav>
 
         {eroute.kind === "product" ? (
-          <ProductView route={eroute} locale={locale} media={media} />
+          <ProductView route={eroute} locale={locale} media={media} content={content} />
         ) : (
-          <ListingView route={eroute} locale={locale} media={media} />
+          <ListingView route={eroute} locale={locale} media={media} content={content} />
         )}
       </Container>
     </Section>
@@ -193,17 +231,20 @@ function ListingView({
   route,
   locale,
   media,
+  content,
 }: {
   route: Exclude<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
+  content: ContentBlock | null;
 }) {
-  const intro =
+  const routeIntro =
     route.kind === "category"
       ? route.category.intro
       : route.kind === "brand"
         ? route.brand.intro
         : undefined;
+  const introText = content?.intro ?? (routeIntro ? pickLocalized(routeIntro, locale) : undefined);
 
   return (
     <>
@@ -211,11 +252,7 @@ function ListingView({
         <h1 className="text-balance font-display text-3xl font-black uppercase tracking-tight sm:text-[42px] sm:leading-[1.05]">
           {routeH1(route, locale)}
         </h1>
-        {intro && (
-          <p className="mt-4 font-body text-sm leading-relaxed text-ink-muted">
-            {pickLocalized(intro, locale)}
-          </p>
-        )}
+        <ContentIntro text={introText} />
       </header>
 
       {route.kind === "brand" ? (
@@ -243,6 +280,7 @@ function ListingView({
           priceBuckets={buildPriceBuckets(route.products, locale)}
         />
       )}
+      <ContentSections block={content} locale={locale} />
     </>
   );
 }
@@ -481,15 +519,17 @@ function ProductView({
   route,
   locale,
   media,
+  content,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
+  content: ContentBlock | null;
 }) {
   return route.product.base ? (
-    <BaseView route={route} locale={locale} media={media} />
+    <BaseView route={route} locale={locale} media={media} content={content} />
   ) : (
-    <RubberView route={route} locale={locale} media={media} />
+    <RubberView route={route} locale={locale} media={media} content={content} />
   );
 }
 
@@ -503,6 +543,7 @@ function ProductShell({
   related,
   locale,
   media,
+  content,
 }: {
   brandName: string;
   h1: string;
@@ -513,6 +554,7 @@ function ProductShell({
   related: CatalogProduct[];
   locale: Locale;
   media: EntityMediaMap;
+  content: ContentBlock | null;
 }) {
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
@@ -545,6 +587,7 @@ function ProductShell({
         <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
           {h1}
         </h1>
+        <ContentIntro text={content?.intro} />
         {children}
       </div>
 
@@ -554,6 +597,11 @@ function ProductShell({
             {catalogUi.related[locale]}
           </h2>
           <ProductGrid products={related} locale={locale} media={media} />
+        </div>
+      )}
+      {content && (
+        <div className="lg:col-span-2">
+          <ContentSections block={content} locale={locale} />
         </div>
       )}
     </div>
@@ -584,10 +632,12 @@ function RubberView({
   route,
   locale,
   media,
+  content,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
+  content: ContentBlock | null;
 }) {
   const product = route.product;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
@@ -622,6 +672,7 @@ function RubberView({
       related={related}
       locale={locale}
       media={media}
+      content={content}
     >
       <div className="mt-7">
         <ProductPurchasePanel
@@ -660,10 +711,12 @@ function BaseView({
   route,
   locale,
   media,
+  content,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
+  content: ContentBlock | null;
 }) {
   const product = route.product;
   const base = product.base!;
@@ -692,6 +745,7 @@ function BaseView({
       related={related}
       locale={locale}
       media={media}
+      content={content}
     >
       <div className="mt-7">
         <BasePurchasePanel
