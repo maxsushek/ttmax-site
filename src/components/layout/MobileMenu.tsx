@@ -16,11 +16,13 @@ export function MobileMenu({
   onClose,
   locale,
   messages,
+  logoUrl,
 }: {
   open: boolean;
   onClose: () => void;
   locale: Locale;
   messages: Messages;
+  logoUrl?: string;
 }) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const cart = useCart();
@@ -68,7 +70,7 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-border-subtle px-6 py-5">
-          <Logo locale={locale} size="sm" />
+          <Logo locale={locale} size="sm" imageUrl={logoUrl} />
           <button
             type="button"
             onClick={onClose}
@@ -109,7 +111,7 @@ export function MobileMenu({
                           "inline-flex h-8 w-8 items-center justify-center rounded-lg transition-all",
                           isActive
                             ? "rotate-180 bg-accent"
-                            : "bg-white/[0.07] border border-border",
+                            : "border border-border bg-white/[0.07]",
                         )}
                       >
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
