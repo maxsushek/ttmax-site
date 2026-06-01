@@ -27,6 +27,7 @@ type Props = {
   thicknessOptions: string[];
   variants: PanelVariant[];
   phone: string;
+  imageUrl?: string;
 };
 
 const LABELS = {
@@ -75,6 +76,7 @@ export function ProductPurchasePanel({
   thicknessOptions,
   variants,
   phone,
+  imageUrl,
 }: Props) {
   const t = LABELS[locale];
   const cart = useCart();
@@ -99,6 +101,7 @@ export function ProductPurchasePanel({
       price: selected!.price as number,
       accentColor,
       emoji: "",
+      image: imageUrl,
     });
   };
 
