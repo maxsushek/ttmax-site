@@ -63,9 +63,11 @@ function FooterColumn({ column }: { column: FootColumn }) {
 export function Footer({
   locale,
   messages,
+  logoUrl,
 }: {
   locale: Locale;
   messages: Messages;
+  logoUrl?: string;
 }) {
   const m = messages.footer;
 
@@ -96,7 +98,7 @@ export function Footer({
       <div className="container-page pt-12">
         <div className="flex flex-wrap items-start justify-between gap-5 border-b border-border-subtle pb-7">
           <div>
-            <Logo locale={locale} className="mb-3.5" />
+            <Logo locale={locale} imageUrl={logoUrl} className="mb-3.5" />
             <p className="max-w-[240px] font-body text-[13px] leading-relaxed text-ink-muted">
               {m.tagline}
             </p>
