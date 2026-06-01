@@ -66,14 +66,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, persisted: false });
   }
 
-  const { error } = await supabase.from("leads").insert({
-    name: parsed.data.name,
-    phone: parsed.data.phone,
-    email: parsed.data.email ?? null,
-    source: parsed.data.source,
-    locale: parsed.data.locale,
-    attribution: parsed.data.attribution ?? {},
-  });
+  const { data: leadRow, error } = await supabase
+    .from("leads")
+    .insert({
+      name: parsed.data.name,
+      phone: parsed.data.phone,
+      email: parsed.data.email ?? null,
+      source: parsed.data.source,
+      locale: parsed.data.locale,
+      attribution: parsed.data.attribution ?? {},
+    })
+    .select("id")
+    .single();
 
   if (error) {
     console.error("[leads] insert error:", error.message, error.code);
@@ -82,7 +86,8 @@ export async function POST(request: NextRequest) {
 
   // Telegram-сповіщення (no-op без TELEGRAM_*; помилки не валять запит).
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const adminUrl = host ? `https://${host}/admin/leads` : null;
+  const leadId = leadRow?.id ?? null;
+  const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
   after(() => {
     notifyNewLead({
       name: parsed.data.name,
