@@ -30,8 +30,6 @@ type FormState = {
   cardCvv: string;
 };
 
-const SHIPPING_FEE = 99;
-
 type Props = {
   messages: Messages;
   locale: Locale;
@@ -73,7 +71,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     }
   }, []);
 
-  const shipping = cart.total >= siteConfig.freeShippingThreshold ? 0 : SHIPPING_FEE;
+  const shipping = cart.total >= cart.freeShippingThreshold ? 0 : cart.shippingFee;
   const total = cart.total + shipping;
 
   const validate1 = () => {
