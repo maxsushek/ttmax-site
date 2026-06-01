@@ -27,7 +27,6 @@ type FormState = {
   cardNum: string;
   cardExp: string;
   cardCvv: string;
-  agreed: boolean;
 };
 
 const SHIPPING_FEE = 99;
@@ -48,7 +47,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
   const [done, setDone] = useState<Array<1 | 2>>([]);
   const [ordered, setOrdered] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
-  const [errors, setErrors] = useState<Partial<Record<FieldKey | "agreed", string>>>({});
+  const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -63,7 +62,6 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
     cardNum: "",
     cardExp: "",
     cardCvv: "",
-    agreed: false,
   });
 
   const update = useCallback(<K extends keyof FormState>(key: K, value: FormState[K]) => {
@@ -131,18 +129,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
       locale === "uk"
         ? "Не вдалося оформити замовлення. Спробуйте ще раз."
         : "Не удалось оформить заказ. Попробуйте ещё раз.",
-    emptyCart:
-      locale === "uk"
-        ? "Кошик порожній."
-        : "Корзина пуста.",
+    emptyCart: locale === "uk" ? "Кошик порожній." : "Корзина пуста.",
   };
 
   const submitOrder = async () => {
     if (submitting) return;
-    if (!form.agreed) {
-      setErrors({ agreed: v.agreement });
-      return;
-    }
     if (cart.items.length === 0) {
       setSubmitError(t.emptyCart);
       return;
@@ -183,7 +174,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
             shipping,
             total,
           },
-          agreed: form.agreed,
+          agreed: true,
           locale,
           attribution: getAttribution(),
         }),
@@ -241,11 +232,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
     cn(
       "flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full",
       "font-display text-xs font-black text-bg-base transition-all duration-300",
-      done.includes(n as 1 | 2)
-        ? "bg-success"
-        : step === n
-          ? "bg-accent"
-          : "bg-white/10",
+      done.includes(n as 1 | 2) ? "bg-success" : step === n ? "bg-accent" : "bg-white/10",
     );
 
   const sectionBoxCls = (n: 1 | 2 | 3) =>
@@ -262,7 +249,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
   if (ordered) {
     return (
       <div className="fixed inset-0 z-[910] flex flex-col items-center justify-center bg-bg-base p-6 text-center">
-        <div aria-hidden className="mb-5 text-7xl animate-check-bounce">
+        <div aria-hidden className="mb-5 animate-check-bounce text-7xl">
           🎉
         </div>
         <h2 className="mb-3 font-display text-3xl font-black uppercase">{m.success.title}</h2>
@@ -396,13 +383,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                   {m.delivery.method}
                 </div>
                 <div className="mb-6 flex flex-col gap-2">
-                  {(
-                    [
-                      { v: "np" as const, icon: "📦", ...m.delivery.np },
-                      { v: "ukrposhta" as const, icon: "✉️", ...m.delivery.ukrposhta },
-                      { v: "pickup" as const, icon: "🏪", ...m.delivery.pickup },
-                    ]
-                  ).map((opt) => (
+                  {[
+                    { v: "np" as const, icon: "📦", ...m.delivery.np },
+                    { v: "ukrposhta" as const, icon: "✉️", ...m.delivery.ukrposhta },
+                    { v: "pickup" as const, icon: "🏪", ...m.delivery.pickup },
+                  ].map((opt) => (
                     <button
                       key={opt.v}
                       type="button"
@@ -582,13 +567,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                   {m.payment.method}
                 </div>
                 <div className="mb-5 flex flex-col gap-2">
-                  {(
-                    [
-                      { v: "apple" as const, icon: "📱", ...m.payment.apple },
-                      { v: "cod" as const, icon: "💵", ...m.payment.cod },
-                      { v: "card" as const, icon: "💳", ...m.payment.card },
-                    ]
-                  ).map((opt) => (
+                  {[
+                    { v: "apple" as const, icon: "📱", ...m.payment.apple },
+                    { v: "cod" as const, icon: "💵", ...m.payment.cod },
+                    { v: "card" as const, icon: "💳", ...m.payment.card },
+                  ].map((opt) => (
                     <button
                       key={opt.v}
                       type="button"
@@ -760,28 +743,12 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                     </span>
                   </div>
                 </div>
-                <label className="mb-4 flex cursor-pointer items-start gap-2.5">
-                  <input
-                    type="checkbox"
-                    checked={form.agreed}
-                    onChange={(e) => update("agreed", e.target.checked)}
-                    className="mt-0.5 h-[18px] w-[18px] shrink-0 cursor-pointer accent-accent"
-                  />
-                  <span className="font-body text-[13px] leading-relaxed text-ink-dim">
-                    {m.confirm.agreement.replace(
-                      m.confirm.agreementLink,
-                      "",
-                    )}
-                    <a href={`/${locale}/terms`} className="text-accent hover:underline">
-                      {m.confirm.agreementLink}
-                    </a>
-                  </span>
-                </label>
-                {errors.agreed && (
-                  <div className="mb-2.5 font-body text-[11px] text-danger" role="alert">
-                    ⚠ {errors.agreed}
-                  </div>
-                )}
+                <p className="mb-4 font-body text-[12px] leading-relaxed text-ink-dim">
+                  {m.confirm.agreement.replace(m.confirm.agreementLink, "")}
+                  <a href={`/${locale}/terms`} className="text-accent hover:underline">
+                    {m.confirm.agreementLink}
+                  </a>
+                </p>
                 {submitError && (
                   <div className="mb-2.5 font-body text-[12px] text-danger" role="alert">
                     ⚠ {submitError}
@@ -796,9 +763,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                   data-cta="checkout-submit"
                   data-location="checkout"
                 >
-                  {submitting
-                    ? t.sending
-                    : `🔒 ${m.confirm.submit} — ${formatPrice(total)}`}
+                  {submitting ? t.sending : `🔒 ${m.confirm.submit} — ${formatPrice(total)}`}
                 </Button>
                 <div className="mt-3 flex flex-wrap justify-center gap-3">
                   {[
@@ -844,9 +809,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-bold">{item.model}</span>
-                      <span className="block font-body text-[11px] text-ink-dim">
-                        {item.brand}
-                      </span>
+                      <span className="block font-body text-[11px] text-ink-dim">{item.brand}</span>
                     </span>
                     <span className="shrink-0 font-display text-sm font-extrabold">
                       {formatPrice(item.price * item.qty)}
@@ -857,15 +820,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
             </div>
             <div className="px-5 py-3.5">
               <div className="mb-2 flex justify-between">
-                <span className="font-body text-[13px] text-ink-dim">
-                  {messages.cart.subtotal}
-                </span>
+                <span className="font-body text-[13px] text-ink-dim">{messages.cart.subtotal}</span>
                 <span className="font-display text-[13px] text-ink">{formatPrice(cart.total)}</span>
               </div>
               <div className="mb-2 flex justify-between">
-                <span className="font-body text-[13px] text-ink-dim">
-                  {messages.cart.delivery}
-                </span>
+                <span className="font-body text-[13px] text-ink-dim">{messages.cart.delivery}</span>
                 <span
                   className={cn(
                     "font-display text-[13px]",
