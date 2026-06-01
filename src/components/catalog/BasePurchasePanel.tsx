@@ -19,6 +19,7 @@ type Props = {
   priceFrom?: number;
   inStock?: boolean;
   phone: string;
+  imageUrl?: string;
 };
 
 const LABELS = {
@@ -70,6 +71,7 @@ export function BasePurchasePanel({
   priceFrom,
   inStock,
   phone,
+  imageUrl,
 }: Props) {
   const t = LABELS[locale];
   const cart = useCart();
@@ -91,6 +93,7 @@ export function BasePurchasePanel({
       price: priceFrom as number,
       accentColor,
       emoji: "",
+      image: imageUrl,
     });
   };
 
