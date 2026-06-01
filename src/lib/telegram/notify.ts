@@ -125,3 +125,30 @@ export async function notifyNewOrder(order: NewOrderNotification): Promise<boole
 
   return sendMessage(lines.join("\n"));
 }
+
+export type NewLeadNotification = {
+  name: string;
+  phone: string;
+  email?: string | null;
+  source: string;
+  locale: string;
+  /** Посилання на CRM (будується з домену запиту). */
+  adminUrl?: string | null;
+};
+
+/** Збирає й відправляє повідомлення про нову заявку (форма-CTA). Безпечно за будь-яких умов. */
+export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean> {
+  if (!isTelegramConfigured()) return false;
+
+  const lines: string[] = [
+    "📩 <b>Нова заявка</b>",
+    "",
+    `👤 ${esc(lead.name)}`,
+    `📞 ${esc(lead.phone)}`,
+  ];
+  if (lead.email) lines.push(`✉️ ${esc(lead.email)}`);
+  lines.push("", `🔖 Джерело: ${esc(lead.source)}`, `🌐 ${esc(lead.locale)}`);
+  if (lead.adminUrl) lines.push("", `<a href="${lead.adminUrl}">Відкрити в CRM →</a>`);
+
+  return sendMessage(lines.join("\n"));
+}
