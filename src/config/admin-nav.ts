@@ -34,7 +34,7 @@ export const adminNav: AdminNavGroup[] = [
     items: [
       { label: "Ціни та наявність", href: "/admin/products" },
       { label: "Медіа / фото", href: "/admin/media" },
-      { label: "Описи", status: "soon" },
+      { label: "Описи", href: "/admin/content" },
     ],
   },
   {
