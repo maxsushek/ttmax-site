@@ -1,51 +1,58 @@
-// src/lib/seo/catalog-metadata.ts
-// Метаданные для страниц КАТАЛОГА (товар/категория/бренд). Отдельный билдер, чтобы не трогать
-// существующий buildMetadata. Повторяет его логику canonical/hreflang/OG, но title/description — из данных.
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { getMessages } from "@/i18n";
 import { locales, type Locale } from "@/i18n/config";
 
-export function buildCatalogMetadata(opts: {
-  locale: Locale;
-  /** Путь без локали, напр. "/butterfly/nakladki/dignics-09c". */
-  pathname: string;
-  title: string;
-  description: string;
-  /** false → noindex (для пустых категорий до наполнения). */
-  index?: boolean;
-}): Metadata {
-  const { locale, pathname, title, description, index = true } = opts;
-
+export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
+  const messages = getMessages(locale);
+  const meta = messages.meta;
   const url = `${siteConfig.url}/${locale}${pathname}`;
   const languages: Record<string, string> = {};
-  for (const l of locales) languages[l] = `${siteConfig.url}/${l}${pathname}`;
+  for (const l of locales) {
+    languages[l] = `${siteConfig.url}/${l}${pathname}`;
+  }
   languages["x-default"] = `${siteConfig.url}/uk${pathname}`;
 
   return {
-    // absolute → игнорирует title.template из корневого layout (заголовки уже полные).
-    title: { absolute: title },
-    description,
-    alternates: { canonical: url, languages },
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: meta.title,
+      template: meta.titleTemplate,
+    },
+    description: meta.description,
+    keywords: meta.keywords,
+    alternates: {
+      canonical: url,
+      languages,
+    },
     openGraph: {
       type: "website",
       url,
       siteName: siteConfig.name,
-      title,
-      description,
+      title: meta.title,
+      description: meta.description,
       locale: locale === "uk" ? "uk_UA" : "ru_UA",
       alternateLocale: locale === "uk" ? ["ru_UA"] : ["uk_UA"],
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: meta.title,
+      description: meta.description,
     },
-    robots: index
+    robots: siteConfig.launched
       ? {
           index: true,
           follow: true,
-          googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
         }
-      : { index: false, follow: true },
+      : { index: false, follow: false },
+    icons: {
+      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    },
   };
 }
