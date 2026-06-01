@@ -698,59 +698,68 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
 
             {step === 3 && (
               <div className="px-5 pb-6">
-                <ul className="divide-y divide-border-subtle">
-                  {cart.items.map((item) => (
-                    <li key={item.id} className="flex items-center gap-2.5 py-2">
-                      <div
-                        aria-hidden
-                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
-                      >
-                        {item.image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img src={item.image} alt="" className="h-full w-full object-contain" />
-                        ) : (
-                          item.emoji
-                        )}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="truncate text-[13px] font-bold">{item.model}</div>
-                        <div className="font-body text-[11px] text-ink-dim">×{item.qty}</div>
-                      </div>
-                      <div className="shrink-0 font-display text-[14px] font-black text-accent">
-                        {formatPrice(item.price * item.qty)}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <div className="my-4 rounded-xl bg-white/[0.03] px-4 py-3.5">
-                  <div className="mb-2 flex justify-between">
-                    <span className="font-body text-[13px] text-ink-muted">
-                      {messages.cart.subtotal}:
-                    </span>
-                    <span className="font-display text-[14px] text-ink">
-                      {formatPrice(cart.total)}
-                    </span>
-                  </div>
-                  <div className="mb-2 flex justify-between">
-                    <span className="font-body text-[13px] text-ink-muted">
-                      {messages.cart.delivery}:
-                    </span>
-                    <span className="font-display text-[14px] text-ink">
-                      {shipping === 0 ? `🎉 ${messages.cart.free}` : formatPrice(shipping)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between border-t border-border-subtle pt-2.5">
-                    <span className="font-display text-base font-bold uppercase">
-                      {messages.cart.total}:
-                    </span>
-                    <span className="font-display text-[22px] font-black text-accent">
-                      {formatPrice(total)}
-                    </span>
+                {/* Список + підсумки дублюють sticky-сайдбар праворуч,
+                    тому на десктопі ховаємо їх; на мобайлі сайдбара немає — показуємо тут. */}
+                <div className="lg:hidden">
+                  <ul className="divide-y divide-border-subtle">
+                    {cart.items.map((item) => (
+                      <li key={item.id} className="flex items-center gap-2.5 py-2">
+                        <div
+                          aria-hidden
+                          className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
+                        >
+                          {item.image ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={item.image} alt="" className="h-full w-full object-contain" />
+                          ) : (
+                            item.emoji
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-[13px] font-bold">{item.model}</div>
+                          <div className="font-body text-[11px] text-ink-dim">×{item.qty}</div>
+                        </div>
+                        <div className="shrink-0 font-display text-[14px] font-black text-accent">
+                          {formatPrice(item.price * item.qty)}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="my-4 rounded-xl bg-white/[0.03] px-4 py-3.5">
+                    <div className="mb-2 flex justify-between">
+                      <span className="font-body text-[13px] text-ink-muted">
+                        {messages.cart.subtotal}:
+                      </span>
+                      <span className="font-display text-[14px] text-ink">
+                        {formatPrice(cart.total)}
+                      </span>
+                    </div>
+                    <div className="mb-2 flex justify-between">
+                      <span className="font-body text-[13px] text-ink-muted">
+                        {messages.cart.delivery}:
+                      </span>
+                      <span className="font-display text-[14px] text-ink">
+                        {shipping === 0 ? `🎉 ${messages.cart.free}` : formatPrice(shipping)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-t border-border-subtle pt-2.5">
+                      <span className="font-display text-base font-bold uppercase">
+                        {messages.cart.total}:
+                      </span>
+                      <span className="font-display text-[22px] font-black text-accent">
+                        {formatPrice(total)}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <p className="mb-4 font-body text-[12px] leading-relaxed text-ink-dim">
+                <p className="mb-4 font-body text-[13px] leading-relaxed text-ink-muted">
                   {m.confirm.agreement.replace(m.confirm.agreementLink, "")}
-                  <a href={`/${locale}/terms`} className="text-accent hover:underline">
+                  <a
+                    href={`/${locale}/terms`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline-offset-2 hover:underline"
+                  >
                     {m.confirm.agreementLink}
                   </a>
                 </p>
@@ -819,7 +828,9 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-bold">{item.model}</span>
-                      <span className="block font-body text-[11px] text-ink-dim">{item.brand}</span>
+                      <span className="block font-body text-[11px] text-ink-muted">
+                        {item.brand}
+                      </span>
                     </span>
                     <span className="shrink-0 font-display text-sm font-extrabold">
                       {formatPrice(item.price * item.qty)}
@@ -830,11 +841,15 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
             </div>
             <div className="px-5 py-3.5">
               <div className="mb-2 flex justify-between">
-                <span className="font-body text-[13px] text-ink-dim">{messages.cart.subtotal}</span>
+                <span className="font-body text-[13px] text-ink-muted">
+                  {messages.cart.subtotal}
+                </span>
                 <span className="font-display text-[13px] text-ink">{formatPrice(cart.total)}</span>
               </div>
               <div className="mb-2 flex justify-between">
-                <span className="font-body text-[13px] text-ink-dim">{messages.cart.delivery}</span>
+                <span className="font-body text-[13px] text-ink-muted">
+                  {messages.cart.delivery}
+                </span>
                 <span
                   className={cn(
                     "font-display text-[13px]",
