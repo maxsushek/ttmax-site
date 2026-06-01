@@ -1,8 +1,10 @@
 // src/components/catalog/BasePurchasePanel.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
+import { trackEvent } from "@/lib/analytics/events";
+import { CURRENCY } from "@/lib/analytics/ecommerce";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
 import type { Handle } from "@/types/catalog";
@@ -77,6 +79,20 @@ export function BasePurchasePanel({
   const cart = useCart();
 
   const [handle, setHandle] = useState<Handle>(handles[0] ?? "fl");
+
+  // GA4 view_item при відкритті картки основи
+  useEffect(() => {
+    const repPrice = priceFrom ?? 0;
+    trackEvent({
+      name: "view_item",
+      params: {
+        currency: CURRENCY,
+        value: repPrice,
+        items: [{ id: slug, name: model, brand: brandLabel, price: repPrice, quantity: 1 }],
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const hasPrice = typeof priceFrom === "number" && priceFrom > 0;
   const soldOut = inStock === false;
