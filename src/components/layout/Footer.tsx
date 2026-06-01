@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics/events";
-import type { ContactInfo } from "@/lib/contact/get";
+import type { ContactInfo } from "@/lib/contact/keys";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
