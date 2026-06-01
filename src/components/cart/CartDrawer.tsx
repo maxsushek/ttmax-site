@@ -15,9 +15,10 @@ import { cn } from "@/utils/cn";
 type Props = {
   messages: Messages;
   locale: Locale;
+  logoUrl?: string;
 };
 
-export function CartDrawer({ messages, locale }: Props) {
+export function CartDrawer({ messages, locale, logoUrl }: Props) {
   const cart = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
@@ -232,6 +233,7 @@ export function CartDrawer({ messages, locale }: Props) {
         <CheckoutForm
           messages={messages}
           locale={locale}
+          logoUrl={logoUrl}
           onClose={() => setCheckoutOpen(false)}
           onComplete={() => {
             cart.clear();
