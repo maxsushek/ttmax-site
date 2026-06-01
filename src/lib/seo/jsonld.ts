@@ -1,18 +1,25 @@
 import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/config";
+import type { ContactInfo } from "@/lib/contact/get";
 
-export function organizationJsonLd() {
+export function organizationJsonLd(contact?: ContactInfo) {
+  const telephone = contact?.phoneDisplay ?? siteConfig.phoneDisplay;
+  const email = contact?.email ?? siteConfig.email;
+  const sameAs = contact
+    ? Object.values(contact.social).filter((h) => h && h !== "#")
+    : siteConfig.social.map((s) => s.href).filter((h) => h !== "#");
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
     logo: `${siteConfig.url}/logo.png`,
-    sameAs: siteConfig.social.map((s) => s.href).filter((h) => h !== "#"),
+    sameAs,
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: siteConfig.phoneDisplay,
+        telephone,
+        email,
         contactType: "customer service",
         areaServed: "UA",
         availableLanguage: ["uk", "ru"],
