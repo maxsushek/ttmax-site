@@ -17,6 +17,8 @@ export type CatalogCardVM = {
   /** Числовая цена для сортировки/фильтра (минимальная). */
   priceValue: number | null;
   inStock: boolean;
+  /** Готовый URL картинки (Cloudinary) или null → плейсхолдер. */
+  imageUrl: string | null;
   /** Значения для фасетов (любой ключ → значение). */
   facets: Record<string, string | undefined>;
   /** Исходный порядок (для сортировки «Популярні»). */
@@ -294,13 +296,20 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                 data-cta="catalog-product"
                 data-location={item.slug}
               >
-                <div
-                  aria-hidden
-                  className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
-                >
-                  <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost">
-                    {item.brandName}
-                  </span>
+                <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]">
+                  {item.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.imageUrl}
+                      alt={`${item.brandName} ${item.model}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost">
+                      {item.brandName}
+                    </span>
+                  )}
                   <div
                     className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
                     aria-hidden
