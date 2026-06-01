@@ -1,3 +1,17 @@
+// Один товар у структурі ecommerce (внутрішнє представлення).
+export type AnalyticsItem = {
+  id: string;
+  name: string;
+  brand?: string;
+  price: number;
+  quantity: number;
+};
+
+// Спільні параметри ecommerce-подій (GA4: currency + value + items).
+type EcommerceParams = { currency: string; value: number; items: AnalyticsItem[] };
+// Покупка додатково має id транзакції та доставку.
+type PurchaseParams = EcommerceParams & { transactionId: string; shipping?: number };
+
 export type AnalyticsEvent =
   | { name: "page_view"; params?: { path: string } }
   | { name: "lead_form_view"; params?: { location: string } }
@@ -9,14 +23,12 @@ export type AnalyticsEvent =
   | { name: "whatsapp_click"; params?: { location: string } }
   | { name: "faq_open"; params: { question: string } }
   | { name: "scroll_depth"; params: { depth: 25 | 50 | 75 | 100 } }
-  | { name: "add_to_cart"; params: { productId: string; price: number; brand: string } }
-  | { name: "remove_from_cart"; params: { productId: string } }
-  | { name: "view_cart" }
-  | { name: "begin_checkout"; params: { value: number; itemsCount: number } }
-  | {
-      name: "purchase";
-      params: { value: number; orderId: string; itemsCount: number };
-    }
+  | { name: "view_item"; params: EcommerceParams }
+  | { name: "add_to_cart"; params: EcommerceParams }
+  | { name: "remove_from_cart"; params: EcommerceParams }
+  | { name: "view_cart"; params: EcommerceParams }
+  | { name: "begin_checkout"; params: EcommerceParams }
+  | { name: "purchase"; params: PurchaseParams }
   | { name: "conversion"; params: { type: "lead" | "purchase"; value?: number } };
 
 export type EventName = AnalyticsEvent["name"];
