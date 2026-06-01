@@ -20,6 +20,9 @@ import {
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonld";
+import { getMediaMap, pickPrimary, type EntityMediaMap } from "@/lib/media/get";
+import { cldUrl } from "@/lib/cloudinary/url";
+import Image from "next/image";
 import {
   catalogBreadcrumbs,
   catalogStaticParams,
@@ -35,6 +38,9 @@ import {
 import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
 
 export const dynamicParams = true;
+
+// ISR: фото из админки появляются без передеплоя (кеш медиа инвалидируется тегом + revalidate).
+export const revalidate = 600;
 
 export function generateStaticParams() {
   return catalogStaticParams();
@@ -100,6 +106,8 @@ export default async function CatalogPage({
   const route = resolveSegments(segments);
   if (!route) notFound();
 
+  const media = await getMediaMap();
+
   const crumbs = catalogBreadcrumbs(route, locale);
   const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
   const productLd =
@@ -154,9 +162,9 @@ export default async function CatalogPage({
         </nav>
 
         {route.kind === "product" ? (
-          <ProductView route={route} locale={locale} />
+          <ProductView route={route} locale={locale} media={media} />
         ) : (
-          <ListingView route={route} locale={locale} />
+          <ListingView route={route} locale={locale} media={media} />
         )}
       </Container>
     </Section>
@@ -168,9 +176,11 @@ export default async function CatalogPage({
 function ListingView({
   route,
   locale,
+  media,
 }: {
   route: Exclude<CatalogRoute, { kind: "product" }>;
   locale: Locale;
+  media: EntityMediaMap;
 }) {
   const intro =
     route.kind === "category"
@@ -212,7 +222,7 @@ function ListingView({
       ) : (
         <CatalogFilters
           locale={locale}
-          items={buildCardVMs(route.products, locale)}
+          items={buildCardVMs(route.products, locale, media)}
           groups={buildFacetGroups(route.products, locale)}
           priceBuckets={buildPriceBuckets(route.products, locale)}
         />
@@ -231,10 +241,15 @@ function cardSecondary(product: CatalogProduct, locale: Locale): string {
 /* ---------------- Серверная подготовка данных для клиентских фильтров ---------------- */
 
 /** Готовит сериализуемые VM карточек (вся отрисовка — в клиентском компоненте). */
-function buildCardVMs(products: CatalogProduct[], locale: Locale): CatalogCardVM[] {
+function buildCardVMs(
+  products: CatalogProduct[],
+  locale: Locale,
+  media: EntityMediaMap,
+): CatalogCardVM[] {
   return products.map((p, i) => {
     const price = getMinPrice(p);
     const brandName = getBrandBySlug(p.brandSlug)?.name ?? p.brandSlug;
+    const img = pickPrimary(media, "product", p.slug);
     return {
       slug: p.slug,
       href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
@@ -244,6 +259,7 @@ function buildCardVMs(products: CatalogProduct[], locale: Locale): CatalogCardVM
       priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
       priceValue: price ?? null,
       inStock: isInStock(p),
+      imageUrl: img ? cldUrl(img.publicId, { w: 480, h: 480 }) : null,
       facets: {
         bladeClass: p.base?.bladeClass,
         surface: p.base?.surface,
@@ -353,10 +369,19 @@ function buildPriceBuckets(
   return buckets;
 }
 
-function ProductCard({ product, locale }: { product: CatalogProduct; locale: Locale }) {
+function ProductCard({
+  product,
+  locale,
+  media,
+}: {
+  product: CatalogProduct;
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
   const price = getMinPrice(product);
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const secondary = cardSecondary(product, locale);
+  const img = pickPrimary(media, "product", product.slug);
 
   return (
     <Link
@@ -365,13 +390,23 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
       data-cta="catalog-product"
       data-location={product.slug}
     >
-      <div
-        aria-hidden
-        className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
-      >
-        <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost">
-          {brandName}
-        </span>
+      <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]">
+        {img ? (
+          <Image
+            src={cldUrl(img.publicId, { w: 480, h: 480 })}
+            alt={img.alt ?? `${brandName} ${product.model}`}
+            fill
+            sizes="(max-width: 1024px) 50vw, 25vw"
+            className="object-cover"
+          />
+        ) : (
+          <span
+            aria-hidden
+            className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost"
+          >
+            {brandName}
+          </span>
+        )}
         <div
           className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
           aria-hidden
@@ -396,12 +431,20 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
 }
 
 /** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
-function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale: Locale }) {
+function ProductGrid({
+  products,
+  locale,
+  media,
+}: {
+  products: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
   return (
     <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
       {products.map((p) => (
         <li key={p.slug} className="h-full">
-          <ProductCard product={p} locale={locale} />
+          <ProductCard product={p} locale={locale} media={media} />
         </li>
       ))}
     </ul>
@@ -413,14 +456,16 @@ function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale:
 function ProductView({
   route,
   locale,
+  media,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
+  media: EntityMediaMap;
 }) {
   return route.product.base ? (
-    <BaseView route={route} locale={locale} />
+    <BaseView route={route} locale={locale} media={media} />
   ) : (
-    <RubberView route={route} locale={locale} />
+    <RubberView route={route} locale={locale} media={media} />
   );
 }
 
@@ -428,28 +473,44 @@ function ProductShell({
   brandName,
   h1,
   visualLabel,
+  imageUrl,
+  imageAlt,
   children,
   related,
   locale,
+  media,
 }: {
   brandName: string;
   h1: string;
   visualLabel: string;
+  imageUrl: string | null;
+  imageAlt: string;
   children: React.ReactNode;
   related: CatalogProduct[];
   locale: Locale;
+  media: EntityMediaMap;
 }) {
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
       <div>
-        <div
-          aria-hidden
-          className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]"
-        >
-          <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
-          <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
-            {visualLabel}
-          </span>
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <>
+              <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
+              <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
+                {visualLabel}
+              </span>
+            </>
+          )}
         </div>
       </div>
 
@@ -468,7 +529,7 @@ function ProductShell({
           <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
             {catalogUi.related[locale]}
           </h2>
-          <ProductGrid products={related} locale={locale} />
+          <ProductGrid products={related} locale={locale} media={media} />
         </div>
       )}
     </div>
@@ -498,13 +559,16 @@ function SpecTable({ rows }: { rows: { label: string; value: string }[] }) {
 function RubberView({
   route,
   locale,
+  media,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
+  media: EntityMediaMap;
 }) {
   const product = route.product;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
 
   const rows: { label: string; value: string }[] = [];
   if (product.surfaceType)
@@ -526,8 +590,11 @@ function RubberView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
+      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
+      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
       related={related}
       locale={locale}
+      media={media}
     >
       <div className="mt-7">
         <ProductPurchasePanel
@@ -564,14 +631,17 @@ function RubberView({
 function BaseView({
   route,
   locale,
+  media,
 }: {
   route: Extract<CatalogRoute, { kind: "product" }>;
   locale: Locale;
+  media: EntityMediaMap;
 }) {
   const product = route.product;
   const base = product.base!;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
 
   const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
   const rows: { label: string; value: string }[] = [
@@ -589,8 +659,11 @@ function BaseView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
+      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
+      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
       related={related}
       locale={locale}
+      media={media}
     >
       <div className="mt-7">
         <BasePurchasePanel
