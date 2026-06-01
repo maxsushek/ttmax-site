@@ -9,6 +9,8 @@ export const siteConfig = {
   operator: "TTMAX",
   domain: "ttmax.ua",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ttmax.ua",
+  /** false → весь сайт noindex + robots блокує все (до офіційного запуску). Вмикається NEXT_PUBLIC_SITE_LAUNCHED="true". */
+  launched: process.env.NEXT_PUBLIC_SITE_LAUNCHED === "true",
   emoji: "🦋",
   /** Featured brand on the storefront (used in Hero, FAQ, JSON-LD) */
   featuredBrand: "Butterfly",
