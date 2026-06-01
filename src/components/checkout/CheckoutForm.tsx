@@ -7,6 +7,7 @@ import { useCart } from "@/components/cart/CartProvider";
 import { formatPrice, formatCardExp, formatCardNumber, formatPhone } from "@/utils/format";
 import { validators, type FieldKey } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
+import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { siteConfig } from "@/config/site";
 import type { Messages } from "@/i18n/messages/types";
@@ -202,9 +203,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
       trackEvent({
         name: "purchase",
         params: {
+          currency: CURRENCY,
           value: total,
-          orderId: displayId,
-          itemsCount: cart.count,
+          transactionId: data.orderNumber ?? displayId,
+          shipping,
+          items: toAnalyticsItems(cart.items),
         },
       });
       trackEvent({ name: "conversion", params: { type: "purchase", value: total } });
