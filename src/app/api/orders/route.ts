@@ -208,8 +208,8 @@ export async function POST(request: NextRequest) {
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   const leadId = leadRow?.id ?? null;
   const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
-  after(() => {
-    notifyNewOrder({
+  after(async () => {
+    await notifyNewOrder({
       orderNumber: orderRow.order_number,
       name: data.customer.name,
       phone: data.customer.phone,
