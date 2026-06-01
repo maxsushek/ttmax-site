@@ -183,16 +183,20 @@ export async function POST(request: NextRequest) {
     .filter(Boolean)
     .join("\n");
 
-  const { error: leadError } = await supabase.from("leads").insert({
-    name: data.customer.name,
-    phone: data.customer.phone,
-    email: data.customer.email ?? null,
-    source: "order",
-    locale: data.locale,
-    attribution,
-    value_uah: computedTotal,
-    notes: deliveryNote,
-  });
+  const { data: leadRow, error: leadError } = await supabase
+    .from("leads")
+    .insert({
+      name: data.customer.name,
+      phone: data.customer.phone,
+      email: data.customer.email ?? null,
+      source: "order",
+      locale: data.locale,
+      attribution,
+      value_uah: computedTotal,
+      notes: deliveryNote,
+    })
+    .select("id")
+    .single();
 
   if (leadError) {
     // Не валимо запит — замовлення вже збережено в orders
@@ -202,7 +206,8 @@ export async function POST(request: NextRequest) {
   // 4) Telegram-сповіщення. Не блокує результат: notifyNewOrder ловить помилки
   //    всередині й повертає false, якщо токен/чат не задані або Telegram недоступний.
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const adminUrl = host ? `https://${host}/admin/leads` : null;
+  const leadId = leadRow?.id ?? null;
+  const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
   after(() => {
     notifyNewOrder({
       orderNumber: orderRow.order_number,
