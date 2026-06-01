@@ -3,19 +3,19 @@ export function fbqTrack(event: string, params?: Record<string, unknown>): void 
   window.fbq("track", event, params);
 }
 
-// Mapping our internal event names to Meta standard events
+// Маппінг наших подій у стандартні події Meta Pixel.
 export function metaEventName(name: string): string | null {
   switch (name) {
-    case "lead_form_submit":
-      return "Lead";
+    case "view_item":
+      return "ViewContent";
     case "add_to_cart":
       return "AddToCart";
-    case "view_cart":
-      return "ViewCart";
     case "begin_checkout":
       return "InitiateCheckout";
     case "purchase":
       return "Purchase";
+    case "lead_form_submit":
+      return "Lead";
     default:
       return null;
   }
