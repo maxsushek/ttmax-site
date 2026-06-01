@@ -10,6 +10,8 @@ export type Product = {
   badge?: ProductBadge;
   accentColor: string;
   emoji: string;
+  /** Resolved Cloudinary URL для мініатюри в кошику (необов'язково). */
+  image?: string;
 };
 
 export type CartItem = Product & { qty: number };
