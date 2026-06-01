@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { notifyNewOrder } from "@/lib/telegram/notify";
 import { locales } from "@/i18n/config";
 
 export const runtime = "nodejs";
@@ -96,10 +97,10 @@ export async function POST(request: NextRequest) {
   const clientTotal = Math.round(data.totals.total * 100) / 100;
 
   if (Math.abs(computedTotal - clientTotal) > 0.01) {
-    console.warn(
-      "[orders] total mismatch — using server value",
-      { client: clientTotal, server: computedTotal },
-    );
+    console.warn("[orders] total mismatch — using server value", {
+      client: clientTotal,
+      server: computedTotal,
+    });
   }
 
   const itemsCount = data.items.reduce((s, i) => s + i.qty, 0);
@@ -170,9 +171,7 @@ export async function POST(request: NextRequest) {
   }
 
   // 3) Дублюємо в leads, щоб замовлення з'являлось у CRM /admin/leads
-  const itemsSummary = data.items
-    .map((i) => `${i.brand} ${i.model} ×${i.qty}`)
-    .join(", ");
+  const itemsSummary = data.items.map((i) => `${i.brand} ${i.model} ×${i.qty}`).join(", ");
 
   const deliveryNote = [
     `Замовлення ${orderRow.order_number}`,
@@ -199,6 +198,31 @@ export async function POST(request: NextRequest) {
     // Не валимо запит — замовлення вже збережено в orders
     console.error("[orders] lead mirror error:", leadError.message);
   }
+
+  // 4) Telegram-сповіщення. Не блокує результат: notifyNewOrder ловить помилки
+  //    всередині й повертає false, якщо токен/чат не задані або Telegram недоступний.
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  const adminUrl = host ? `https://${host}/admin/leads` : null;
+  await notifyNewOrder({
+    orderNumber: orderRow.order_number,
+    name: data.customer.name,
+    phone: data.customer.phone,
+    email: data.customer.email ?? null,
+    items: data.items.map((i) => ({
+      brand: i.brand,
+      model: i.model,
+      qty: i.qty,
+      lineTotal: Math.round(i.price * i.qty * 100) / 100,
+    })),
+    subtotal: computedSubtotal,
+    shipping: data.totals.shipping,
+    total: computedTotal,
+    delivery: data.delivery,
+    payment: data.payment,
+    comment: data.comment ?? null,
+    locale: data.locale,
+    adminUrl,
+  });
 
   return NextResponse.json({
     ok: true,
