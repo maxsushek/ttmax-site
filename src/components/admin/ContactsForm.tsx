@@ -4,7 +4,7 @@
 "use client";
 
 import { useState } from "react";
-import { CONTACT_KEYS } from "@/lib/contact/get";
+import { CONTACT_KEYS } from "@/lib/contact/keys";
 
 type Values = Record<string, string>;
 type Status = "idle" | "saving" | "saved" | "error";
