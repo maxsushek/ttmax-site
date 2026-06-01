@@ -37,9 +37,10 @@ type Props = {
   locale: Locale;
   onClose: () => void;
   onComplete: () => void;
+  logoUrl?: string;
 };
 
-export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
+export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }: Props) {
   const cart = useCart();
   const m = messages.checkout;
   const v = messages.validators;
@@ -284,15 +285,26 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
       {/* Header */}
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border-subtle bg-bg-base/95 px-5 py-3.5 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
-          <span
-            aria-hidden
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-base"
-          >
-            {siteConfig.emoji}
-          </span>
-          <span className="font-display text-lg font-black uppercase tracking-[0.06em]">
-            TT<span className="text-accent">{siteConfig.brandSuffix}</span>
-          </span>
+          {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logoUrl}
+              alt={siteConfig.name}
+              className="h-8 w-auto max-w-[150px] object-contain"
+            />
+          ) : (
+            <>
+              <span
+                aria-hidden
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-base"
+              >
+                {siteConfig.emoji}
+              </span>
+              <span className="font-display text-lg font-black uppercase tracking-[0.06em]">
+                TT<span className="text-accent">{siteConfig.brandSuffix}</span>
+              </span>
+            </>
+          )}
         </div>
         <div className="flex items-center gap-1.5">
           <span aria-hidden>🔒</span>
@@ -344,7 +356,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
       </div>
 
       {/* Layout */}
-      <div className="mx-auto grid max-w-[900px] grid-cols-1 gap-5 px-4 py-6 lg:grid-cols-[1fr_340px]">
+      <div className="mx-auto grid max-w-[900px] grid-cols-1 gap-5 px-4 py-6 lg:min-h-[calc(100vh-8rem)] lg:grid-cols-[1fr_340px] lg:content-center lg:py-10">
         {/* Form column */}
         <div>
           {/* Step 1 */}
