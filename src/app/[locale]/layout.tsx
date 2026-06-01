@@ -13,6 +13,7 @@ import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
 import { getSettings, settingString } from "@/lib/settings/get";
+import { resolveContact } from "@/lib/contact/get";
 import { COUNTER_KEYS, type AnalyticsIds } from "@/lib/analytics/ids";
 import type { Metadata } from "next";
 
@@ -74,23 +75,29 @@ export default async function LocaleLayout({
       settingString(settings, COUNTER_KEYS.pixel) || (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? ""),
   };
 
+  // Контакти + доставка: те саме джерело (site_settings), із фолбэком на siteConfig.
+  const contact = resolveContact(settings);
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(contact)) }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale)) }}
       />
       <AnalyticsProvider ids={analyticsIds} />
-      <CartProvider>
+      <CartProvider
+        freeShippingThreshold={contact.freeShippingThreshold}
+        shippingFee={contact.shippingFee}
+      >
         <Header locale={locale} messages={messages} logoUrl={logoUrl} />
         <main id="main" className="pt-16">
           {children}
         </main>
-        <Footer locale={locale} messages={messages} logoUrl={logoUrl} />
+        <Footer locale={locale} messages={messages} logoUrl={logoUrl} contact={contact} />
         <CartDrawer messages={messages} locale={locale} logoUrl={logoUrl} />
       </CartProvider>
     </>
