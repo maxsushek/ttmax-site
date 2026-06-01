@@ -703,9 +703,14 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                     <li key={item.id} className="flex items-center gap-2.5 py-2">
                       <div
                         aria-hidden
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] text-xl"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
                       >
-                        {item.emoji}
+                        {item.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.image} alt="" className="h-full w-full object-contain" />
+                        ) : (
+                          item.emoji
+                        )}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="truncate text-[13px] font-bold">{item.model}</div>
@@ -798,9 +803,14 @@ export function CheckoutForm({ messages, locale, onClose, onComplete }: Props) {
                   <li key={item.id} className="flex items-center gap-2.5">
                     <span
                       aria-hidden
-                      className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] text-xl"
+                      className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
                     >
-                      {item.emoji}
+                      {item.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={item.image} alt="" className="h-full w-full object-contain" />
+                      ) : (
+                        item.emoji
+                      )}
                       {item.qty > 1 && (
                         <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[9px] font-black text-bg-base">
                           {item.qty}
