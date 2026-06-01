@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { formatPrice } from "@/utils/format";
 import { t } from "@/i18n";
 import { trackEvent } from "@/lib/analytics/events";
+import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
@@ -25,7 +26,7 @@ export function CartDrawer({ messages, locale }: Props) {
   const goCheckout = () => {
     trackEvent({
       name: "begin_checkout",
-      params: { value: cart.total, itemsCount: cart.count },
+      params: { currency: CURRENCY, value: cart.total, items: toAnalyticsItems(cart.items) },
     });
     cart.close();
     setCheckoutOpen(true);
