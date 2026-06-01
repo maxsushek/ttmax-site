@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewLead } from "@/lib/telegram/notify";
@@ -83,13 +83,15 @@ export async function POST(request: NextRequest) {
   // Telegram-сповіщення (no-op без TELEGRAM_*; помилки не валять запит).
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   const adminUrl = host ? `https://${host}/admin/leads` : null;
-  await notifyNewLead({
-    name: parsed.data.name,
-    phone: parsed.data.phone,
-    email: parsed.data.email ?? null,
-    source: parsed.data.source,
-    locale: parsed.data.locale,
-    adminUrl,
+  after(() => {
+    notifyNewLead({
+      name: parsed.data.name,
+      phone: parsed.data.phone,
+      email: parsed.data.email ?? null,
+      source: parsed.data.source,
+      locale: parsed.data.locale,
+      adminUrl,
+    });
   });
 
   return NextResponse.json({ ok: true, persisted: true });
