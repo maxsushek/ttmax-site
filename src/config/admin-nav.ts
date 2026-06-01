@@ -47,7 +47,7 @@ export const adminNav: AdminNavGroup[] = [
   {
     title: "Налаштування",
     items: [
-      { label: "Лічильники", status: "soon" },
+      { label: "Лічильники", href: "/admin/settings" },
       { label: "Контакти", status: "soon" },
       { label: "Адміни", status: "soon" },
     ],
