@@ -53,6 +53,11 @@ export default async function LocaleLayout({
   const locale: Locale = l;
   const messages = getMessages(locale);
 
+  // Логотип з адмінки (entity_media → category:site-logo). Фолбэк — текстовий логотип у <Logo/>.
+  const media = await getMediaMap();
+  const logoAsset = getSiteAsset(media, "logo");
+  const logoUrl = logoAsset ? cldUrl(logoAsset.publicId, { h: 72, crop: "fit" }) : undefined;
+
   return (
     <>
       <script
@@ -65,11 +70,11 @@ export default async function LocaleLayout({
       />
       <AnalyticsProvider />
       <CartProvider>
-        <Header locale={locale} messages={messages} />
+        <Header locale={locale} messages={messages} logoUrl={logoUrl} />
         <main id="main" className="pt-16">
           {children}
         </main>
-        <Footer locale={locale} messages={messages} />
+        <Footer locale={locale} messages={messages} logoUrl={logoUrl} />
         <CartDrawer messages={messages} locale={locale} />
       </CartProvider>
     </>
