@@ -125,9 +125,14 @@ export function CartDrawer({ messages, locale }: Props) {
                 <li key={item.id} className="flex items-center gap-3 py-3.5">
                   <div
                     aria-hidden
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border-subtle bg-white/[0.04] text-2xl"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border-subtle bg-white/[0.04] text-2xl"
                   >
-                    {item.emoji}
+                    {item.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.image} alt="" className="h-full w-full object-contain" />
+                    ) : (
+                      item.emoji
+                    )}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-ink-ghost">
@@ -181,12 +186,8 @@ export function CartDrawer({ messages, locale }: Props) {
         {cart.count > 0 && (
           <div className="shrink-0 border-t border-border-subtle px-5 pb-6 pt-4">
             <div className="mb-3.5 flex items-baseline justify-between">
-              <span className="font-body text-[13px] text-ink-muted">
-                {m.total}:
-              </span>
-              <span className="font-display text-[22px] font-black">
-                {formatPrice(cart.total)}
-              </span>
+              <span className="font-body text-[13px] text-ink-muted">{m.total}:</span>
+              <span className="font-display text-[22px] font-black">{formatPrice(cart.total)}</span>
             </div>
             <Button
               variant="primary"
