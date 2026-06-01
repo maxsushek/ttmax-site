@@ -192,7 +192,7 @@ function ListingView({
   return (
     <>
       <header className="mb-9 max-w-3xl">
-        <h1 className="font-display text-3xl font-black uppercase tracking-tight text-balance sm:text-[42px] sm:leading-[1.05]">
+        <h1 className="text-balance font-display text-3xl font-black uppercase tracking-tight sm:text-[42px] sm:leading-[1.05]">
           {routeH1(route, locale)}
         </h1>
         {intro && (
@@ -363,9 +363,17 @@ function buildPriceBuckets(
   const buckets: { label: string; min: number; max: number | null }[] = [];
   buckets.push({ label: `${upTo} ${fmt(edges[0]!)}`, min: 0, max: edges[0]! });
   for (let i = 0; i < edges.length - 1; i++) {
-    buckets.push({ label: `${fmt(edges[i]!)}–${fmt(edges[i + 1]!)}`, min: edges[i]!, max: edges[i + 1]! });
+    buckets.push({
+      label: `${fmt(edges[i]!)}–${fmt(edges[i + 1]!)}`,
+      min: edges[i]!,
+      max: edges[i + 1]!,
+    });
   }
-  buckets.push({ label: `${from} ${fmt(edges[edges.length - 1]!)}`, min: edges[edges.length - 1]!, max: null });
+  buckets.push({
+    label: `${from} ${fmt(edges[edges.length - 1]!)}`,
+    min: edges[edges.length - 1]!,
+    max: null,
+  });
   return buckets;
 }
 
@@ -572,7 +580,10 @@ function RubberView({
 
   const rows: { label: string; value: string }[] = [];
   if (product.surfaceType)
-    rows.push({ label: catalogUi.surface[locale], value: labelFor("surfaceType", product.surfaceType, locale) });
+    rows.push({
+      label: catalogUi.surface[locale],
+      value: labelFor("surfaceType", product.surfaceType, locale),
+    });
   if (product.specs.speed !== undefined)
     rows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
   if (product.specs.spin !== undefined)
@@ -613,6 +624,7 @@ function RubberView({
             inStock: v.inStock,
           }))}
           phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
         />
       </div>
 
@@ -677,6 +689,7 @@ function BaseView({
           priceFrom={product.priceFrom}
           inStock={product.inStock}
           phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
         />
       </div>
 
