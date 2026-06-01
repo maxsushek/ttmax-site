@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewOrder } from "@/lib/telegram/notify";
@@ -203,25 +203,27 @@ export async function POST(request: NextRequest) {
   //    всередині й повертає false, якщо токен/чат не задані або Telegram недоступний.
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   const adminUrl = host ? `https://${host}/admin/leads` : null;
-  await notifyNewOrder({
-    orderNumber: orderRow.order_number,
-    name: data.customer.name,
-    phone: data.customer.phone,
-    email: data.customer.email ?? null,
-    items: data.items.map((i) => ({
-      brand: i.brand,
-      model: i.model,
-      qty: i.qty,
-      lineTotal: Math.round(i.price * i.qty * 100) / 100,
-    })),
-    subtotal: computedSubtotal,
-    shipping: data.totals.shipping,
-    total: computedTotal,
-    delivery: data.delivery,
-    payment: data.payment,
-    comment: data.comment ?? null,
-    locale: data.locale,
-    adminUrl,
+  after(() => {
+    notifyNewOrder({
+      orderNumber: orderRow.order_number,
+      name: data.customer.name,
+      phone: data.customer.phone,
+      email: data.customer.email ?? null,
+      items: data.items.map((i) => ({
+        brand: i.brand,
+        model: i.model,
+        qty: i.qty,
+        lineTotal: Math.round(i.price * i.qty * 100) / 100,
+      })),
+      subtotal: computedSubtotal,
+      shipping: data.totals.shipping,
+      total: computedTotal,
+      delivery: data.delivery,
+      payment: data.payment,
+      comment: data.comment ?? null,
+      locale: data.locale,
+      adminUrl,
+    });
   });
 
   return NextResponse.json({
