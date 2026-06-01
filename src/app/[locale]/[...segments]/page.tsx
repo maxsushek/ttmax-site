@@ -7,13 +7,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Section } from "@/components/ui/Section";
 import { isLocale, type Locale } from "@/i18n/config";
-import { getBrandBySlug, getCrossSell, getMinPrice } from "@/data/catalog";
+import { getBrandBySlug, getCrossSell, getMinPrice, isInStock } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
 import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
+import {
+  CatalogFilters,
+  type CatalogCardVM,
+  type FacetGroup,
+} from "@/components/catalog/CatalogFilters";
+import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonld";
 import {
   catalogBreadcrumbs,
   catalogStaticParams,
@@ -95,9 +101,32 @@ export default async function CatalogPage({
   if (!route) notFound();
 
   const crumbs = catalogBreadcrumbs(route, locale);
+  const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
+  const productLd =
+    route.kind === "product"
+      ? productJsonLd({
+          name: pickLocalized(route.product.name, locale),
+          description: routeDescription(route, locale),
+          url: `${siteConfig.url}/${locale}/${route.product.brandSlug}/${route.product.categorySlug}/${route.product.slug}`,
+          brand: getBrandBySlug(route.product.brandSlug)?.name ?? route.product.brandSlug,
+          price: getMinPrice(route.product),
+          currency: "UAH",
+          inStock: isInStock(route.product),
+        })
+      : null;
 
   return (
     <Section as="div" className="pt-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      {productLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
+        />
+      )}
       <Container>
         <nav
           aria-label="breadcrumb"
@@ -150,9 +179,6 @@ function ListingView({
         ? route.brand.intro
         : undefined;
 
-  const count =
-    route.kind === "category" || route.kind === "brandCategory" ? route.products.length : null;
-
   return (
     <>
       <header className="mb-9 max-w-3xl">
@@ -162,12 +188,6 @@ function ListingView({
         {intro && (
           <p className="mt-4 font-body text-sm leading-relaxed text-ink-muted">
             {pickLocalized(intro, locale)}
-          </p>
-        )}
-        {count !== null && count > 0 && (
-          <p className="mt-4 font-display text-xs font-bold uppercase tracking-[0.12em] text-ink-dim">
-            {count}
-            {pluralProducts(count, locale)}
           </p>
         )}
       </header>
@@ -185,33 +205,19 @@ function ListingView({
             </li>
           ))}
         </ul>
+      ) : route.products.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
+          <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
+        </div>
       ) : (
-        <ProductGrid products={route.products} locale={locale} />
+        <CatalogFilters
+          locale={locale}
+          items={buildCardVMs(route.products, locale)}
+          groups={buildFacetGroups(route.products, locale)}
+          priceBuckets={buildPriceBuckets(route.products, locale)}
+        />
       )}
     </>
-  );
-}
-
-function pluralProducts(_n: number, locale: Locale): string {
-  return locale === "ru" ? " товаров" : " товарів";
-}
-
-function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale: Locale }) {
-  if (products.length === 0) {
-    return (
-      <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
-        <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
-      </div>
-    );
-  }
-  return (
-    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
-      {products.map((p) => (
-        <li key={p.slug} className="h-full">
-          <ProductCard product={p} locale={locale} />
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -220,6 +226,131 @@ function cardSecondary(product: CatalogProduct, locale: Locale): string {
   if (product.base) return BLADE_CLASS_LABEL[product.base.bladeClass][locale];
   if (product.surfaceType) return labelFor("surfaceType", product.surfaceType, locale);
   return "";
+}
+
+/* ---------------- Серверная подготовка данных для клиентских фильтров ---------------- */
+
+/** Готовит сериализуемые VM карточек (вся отрисовка — в клиентском компоненте). */
+function buildCardVMs(products: CatalogProduct[], locale: Locale): CatalogCardVM[] {
+  return products.map((p, i) => {
+    const price = getMinPrice(p);
+    const brandName = getBrandBySlug(p.brandSlug)?.name ?? p.brandSlug;
+    return {
+      slug: p.slug,
+      href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
+      brandName,
+      model: p.model,
+      secondary: cardSecondary(p, locale),
+      priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
+      priceValue: price ?? null,
+      inStock: isInStock(p),
+      facets: {
+        bladeClass: p.base?.bladeClass,
+        surface: p.base?.surface,
+        surfaceType: p.surfaceType,
+        playStyle: p.playStyle,
+        level: p.level,
+      },
+      order: i,
+    };
+  });
+}
+
+/** Динамические фасеты: только значения, реально присутствующие в списке. */
+function buildFacetGroups(products: CatalogProduct[], locale: Locale): FacetGroup[] {
+  const isBases = products.some((p) => p.base);
+  const groups: FacetGroup[] = [];
+
+  const collect = (
+    key: string,
+    label: string,
+    getVal: (p: CatalogProduct) => string | undefined,
+    labelOf: (v: string) => string,
+    orderRef?: string[],
+  ) => {
+    const counts = new Map<string, number>();
+    for (const p of products) {
+      const v = getVal(p);
+      if (v === undefined) continue;
+      counts.set(v, (counts.get(v) ?? 0) + 1);
+    }
+    if (counts.size < 2) return; // фильтр из одного значения бесполезен
+    const values = [...counts.keys()];
+    if (orderRef) values.sort((a, b) => orderRef.indexOf(a) - orderRef.indexOf(b));
+    else values.sort((a, b) => labelOf(a).localeCompare(labelOf(b)));
+    groups.push({
+      key,
+      label,
+      options: values.map((v) => ({ value: v, label: labelOf(v), count: counts.get(v) ?? 0 })),
+    });
+  };
+
+  if (isBases) {
+    collect(
+      "bladeClass",
+      locale === "ru" ? "Класс" : "Клас",
+      (p) => p.base?.bladeClass,
+      (v) => BLADE_CLASS_LABEL[v as keyof typeof BLADE_CLASS_LABEL]?.[locale] ?? v,
+      ["off-plus", "off", "off-minus", "all-plus", "all", "def"],
+    );
+    collect(
+      "surface",
+      locale === "ru" ? "Тип основания" : "Тип основи",
+      (p) => p.base?.surface,
+      (v) => BLADE_SURFACE_LABEL[v as keyof typeof BLADE_SURFACE_LABEL] ?? v,
+      ["wood", "alc", "super-alc", "zlc", "super-zlc", "zlf", "t5000", "cnf", "caf", "carbon"],
+    );
+  } else {
+    collect(
+      "surfaceType",
+      locale === "ru" ? "Тип поверхности" : "Тип поверхні",
+      (p) => p.surfaceType,
+      (v) => labelFor("surfaceType", v, locale),
+      ["gladka", "korotki-shypy", "dovgi-shypy", "antyspin"],
+    );
+    collect(
+      "playStyle",
+      "Стиль",
+      (p) => p.playStyle,
+      (v) => labelFor("playStyle", v, locale),
+    );
+  }
+
+  // Уровень — общий для обоих типов
+  collect(
+    "level",
+    locale === "ru" ? "Уровень" : "Рівень",
+    (p) => p.level,
+    (v) => labelFor("level", v, locale),
+    ["beginner", "amateur", "advanced", "pro", "special"],
+  );
+
+  return groups;
+}
+
+/** Адаптивные ценовые бакеты по диапазону цен в списке. */
+function buildPriceBuckets(
+  products: CatalogProduct[],
+  locale: Locale,
+): { label: string; min: number; max: number | null }[] {
+  const prices = products
+    .map((p) => getMinPrice(p))
+    .filter((v): v is number => typeof v === "number");
+  if (prices.length < 3) return [];
+  const max = Math.max(...prices);
+  const fmt = (n: number) => formatPrice(n);
+  const upTo = locale === "ru" ? "до" : "до";
+  const from = locale === "ru" ? "от" : "від";
+
+  // Пороговые значения подобраны под ассортимент Butterfly (накладки ~1–5к, основи ~1–26к).
+  const edges = max > 12000 ? [3000, 6000, 10000] : max > 5000 ? [2000, 4000, 6000] : [1500, 2500];
+  const buckets: { label: string; min: number; max: number | null }[] = [];
+  buckets.push({ label: `${upTo} ${fmt(edges[0]!)}`, min: 0, max: edges[0]! });
+  for (let i = 0; i < edges.length - 1; i++) {
+    buckets.push({ label: `${fmt(edges[i]!)}–${fmt(edges[i + 1]!)}`, min: edges[i]!, max: edges[i + 1]! });
+  }
+  buckets.push({ label: `${from} ${fmt(edges[edges.length - 1]!)}`, min: edges[edges.length - 1]!, max: null });
+  return buckets;
 }
 
 function ProductCard({ product, locale }: { product: CatalogProduct; locale: Locale }) {
@@ -261,6 +392,19 @@ function ProductCard({ product, locale }: { product: CatalogProduct; locale: Loc
           : catalogUi.priceOnRequest[locale]}
       </div>
     </Link>
+  );
+}
+
+/** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
+function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale: Locale }) {
+  return (
+    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+      {products.map((p) => (
+        <li key={p.slug} className="h-full">
+          <ProductCard product={p} locale={locale} />
+        </li>
+      ))}
+    </ul>
   );
 }
 
