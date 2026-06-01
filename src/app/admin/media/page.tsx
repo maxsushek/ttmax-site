@@ -37,7 +37,7 @@ export default async function MediaPage() {
   // як type="category" із зарезервованими slug — окрема міграція не потрібна.
   const site: MediaEntity[] = [
     { type: "category", slug: SITE_ASSETS.logo, label: "Логотип", group: "Сайт" },
-    { type: "category", slug: SITE_ASSETS.hero, label: "Hero — головний банер", group: "Сайт" },
+    { type: "category", slug: SITE_ASSETS.hero, label: "Hero — головне фото", group: "Сайт" },
     { type: "category", slug: SITE_ASSETS.favicon, label: "Favicon", group: "Сайт" },
   ];
 
