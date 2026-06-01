@@ -2,17 +2,23 @@ import { Container } from "@/components/ui/Section";
 import { HeroCTA } from "./HeroCTA";
 import { heroStats } from "@/data/stats";
 import { t } from "@/i18n";
+import { getMediaMap } from "@/lib/media/get";
+import { getSiteAsset } from "@/lib/media/site-assets";
+import { cldUrl } from "@/lib/cloudinary/url";
 import type { Messages } from "@/i18n/messages/types";
 
-export function Hero({ messages }: { messages: Messages }) {
+export async function Hero({ messages }: { messages: Messages }) {
   const m = messages.hero;
+  const media = await getMediaMap();
+  const heroAsset = getSiteAsset(media, "hero");
+  const heroUrl = heroAsset ? cldUrl(heroAsset.publicId, { w: 600, h: 600, crop: "fit" }) : "";
 
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-grid-pattern pt-16">
+    <section className="bg-grid-pattern relative flex min-h-[100svh] items-center overflow-hidden pt-16">
       {/* Floating glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[54%] top-[4%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(232,255,71,0.07),transparent_70%)] blur-[2px] animate-float"
+        className="pointer-events-none absolute left-[54%] top-[4%] h-[420px] w-[420px] animate-float rounded-full bg-[radial-gradient(circle,rgba(232,255,71,0.07),transparent_70%)] blur-[2px]"
       />
       {/* Diagonal accent line */}
       <div
@@ -26,19 +32,19 @@ export function Hero({ messages }: { messages: Messages }) {
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/[0.04] px-4 py-1.5">
               <span
                 aria-hidden
-                className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_#E8FF47] animate-ping-dot"
+                className="h-1.5 w-1.5 animate-ping-dot rounded-full bg-accent shadow-[0_0_8px_#E8FF47]"
               />
               <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
                 {m.badge}
               </span>
             </div>
 
-            <h1 className="mb-7 font-display text-display-xl font-black uppercase tracking-tight text-balance">
-              <span className="block text-white/55 text-[0.72em]">{m.title1}</span>
-              <span className="block text-gradient-accent">{m.title2}</span>
+            <h1 className="mb-7 text-balance font-display text-display-xl font-black uppercase tracking-tight">
+              <span className="block text-[0.72em] text-white/55">{m.title1}</span>
+              <span className="text-gradient-accent block">{m.title2}</span>
             </h1>
 
-            <p className="mb-9 max-w-[400px] font-body text-base leading-[1.75] text-ink-muted text-pretty">
+            <p className="mb-9 max-w-[400px] text-pretty font-body text-base leading-[1.75] text-ink-muted">
               {t(m.subtitle, { brandsCount: heroStats.brandsTotal }).replace(
                 t(m.brandsAccent, { brandsCount: heroStats.brandsTotal }),
                 "",
@@ -75,16 +81,25 @@ export function Hero({ messages }: { messages: Messages }) {
             aria-hidden
             className="relative hidden h-[500px] items-center justify-center lg:flex"
           >
-            <div className="absolute h-[170px] w-[170px] rounded-full border border-accent/15 animate-pulse-ring" />
+            <div className="absolute h-[170px] w-[170px] animate-pulse-ring rounded-full border border-accent/15" />
             <div
-              className="absolute h-[170px] w-[170px] rounded-full border border-accent/[0.08] animate-pulse-ring"
+              className="absolute h-[170px] w-[170px] animate-pulse-ring rounded-full border border-accent/[0.08]"
               style={{ animationDelay: "1s" }}
             />
-            <div className="absolute h-[330px] w-[330px] rounded-full border border-dashed border-accent/[0.09] animate-spin-slow" />
-            <div className="absolute h-[250px] w-[250px] rounded-full border border-info/[0.08] animate-spin-slower" />
+            <div className="absolute h-[330px] w-[330px] animate-spin-slow rounded-full border border-dashed border-accent/[0.09]" />
+            <div className="absolute h-[250px] w-[250px] animate-spin-slower rounded-full border border-info/[0.08]" />
             <div className="relative z-10 flex flex-col items-center text-center">
-              {/* Плейсхолдер изображения (бабочку убрали). Реальное фото товара — на шаге Cloudinary. */}
-              <div className="h-[150px] w-[150px] rounded-3xl border border-accent/20 bg-white/[0.03] shadow-[0_0_44px_rgba(232,255,71,0.12)] animate-float" />
+              {/* Головне фото з адмінки (entity_media → category:site-hero). */}
+              {heroUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={heroUrl}
+                  alt=""
+                  className="h-[220px] w-[220px] animate-float rounded-3xl border border-accent/20 bg-white/[0.03] object-contain shadow-[0_0_44px_rgba(232,255,71,0.12)]"
+                />
+              ) : (
+                <div className="h-[150px] w-[150px] animate-float rounded-3xl border border-accent/20 bg-white/[0.03] shadow-[0_0_44px_rgba(232,255,71,0.12)]" />
+              )}
               <div
                 className="mt-5 inline-block rounded-full border border-accent/20 bg-accent/[0.07] px-6 py-2"
                 style={{ backdropFilter: "blur(8px)" }}
