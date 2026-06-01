@@ -1,618 +1,330 @@
-// src/app/[locale]/[...segments]/page.tsx
-// Catch-all каталога: /{category}, /{brand}, /{brand}/{category}, /{brand}/{category}/{product}.
-// Не перехватывает главную (/{locale}) и имеет низший приоритет, поэтому ничего существующего не ломает.
-// Поддержка двух видов товара: накладки (kind: "rubber") и основания (kind: "base").
-import type { Metadata } from "next";
+// src/components/catalog/CatalogFilters.tsx
+"use client";
+
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Container, Section } from "@/components/ui/Section";
-import { isLocale, type Locale } from "@/i18n/config";
-import { getBrandBySlug, getCrossSell, getMinPrice, isInStock } from "@/data/catalog";
-import { siteConfig } from "@/config/site";
-import { formatPrice } from "@/utils/format";
-import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
-import type { ProductCategory } from "@/types";
-import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
-import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
-import {
-  CatalogFilters,
-  type CatalogCardVM,
-  type FacetGroup,
-} from "@/components/catalog/CatalogFilters";
-import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonld";
-import {
-  catalogBreadcrumbs,
-  catalogStaticParams,
-  catalogUi,
-  labelFor,
-  pickLocalized,
-  resolveSegments,
-  routeDescription,
-  routeH1,
-  routeTitle,
-  type CatalogRoute,
-} from "@/lib/catalog/routing";
-import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
+import { cn } from "@/utils/cn";
 
-export const dynamicParams = true;
+/** Сериализуемая модель карточки + поля для фильтрации (готовится на сервере). */
+export type CatalogCardVM = {
+  slug: string;
+  href: string;
+  brandName: string;
+  model: string;
+  secondary: string;
+  /** Отформатированная цена ("від 4 155 ₴") или null. */
+  priceLabel: string | null;
+  /** Числовая цена для сортировки/фильтра (минимальная). */
+  priceValue: number | null;
+  inStock: boolean;
+  /** Значения для фасетов (любой ключ → значение). */
+  facets: Record<string, string | undefined>;
+  /** Исходный порядок (для сортировки «Популярні»). */
+  order: number;
+};
 
-export function generateStaticParams() {
-  return catalogStaticParams();
+export type FacetOption = { value: string; label: string; count: number };
+export type FacetGroup = { key: string; label: string; options: FacetOption[] };
+
+type Props = {
+  locale: "uk" | "ru";
+  items: CatalogCardVM[];
+  groups: FacetGroup[];
+  /** Границы цены для подписи кнопок-бакетов. */
+  priceBuckets: { label: string; min: number; max: number | null }[];
+};
+
+type SortKey = "popular" | "price-asc" | "price-desc" | "name";
+
+const T = {
+  uk: {
+    filters: "Фільтри",
+    sort: "Сортування",
+    sortPopular: "Популярні",
+    sortPriceAsc: "Спочатку дешевші",
+    sortPriceDesc: "Спочатку дорожчі",
+    sortName: "За назвою",
+    inStock: "Тільки в наявності",
+    price: "Ціна",
+    reset: "Скинути",
+    found: "Знайдено",
+    nothing: "За вибраними фільтрами нічого не знайдено",
+    showFilters: "Показати фільтри",
+    hideFilters: "Сховати фільтри",
+    priceOnRequest: "Ціна за запитом",
+  },
+  ru: {
+    filters: "Фильтры",
+    sort: "Сортировка",
+    sortPopular: "Популярные",
+    sortPriceAsc: "Сначала дешевле",
+    sortPriceDesc: "Сначала дороже",
+    sortName: "По названию",
+    inStock: "Только в наличии",
+    price: "Цена",
+    reset: "Сбросить",
+    found: "Найдено",
+    nothing: "По выбранным фильтрам ничего не найдено",
+    showFilters: "Показать фильтры",
+    hideFilters: "Скрыть фильтры",
+    priceOnRequest: "Цена по запросу",
+  },
+} as const;
+
+function plural(n: number, locale: "uk" | "ru") {
+  return locale === "ru" ? "товаров" : "товарів";
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string; segments: string[] }>;
-}): Promise<Metadata> {
-  const { locale: l, segments } = await params;
-  if (!isLocale(l)) return {};
-  const route = resolveSegments(segments);
-  if (!route) return { robots: { index: false, follow: false } };
-  return buildCatalogMetadata({
-    locale: l,
-    pathname: "/" + segments.join("/"),
-    title: routeTitle(route, l),
-    description: routeDescription(route, l),
-    index: route.index,
-  });
-}
+export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
+  const t = T[locale];
 
-/** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
-const CART_CATEGORY: Record<string, ProductCategory> = {
-  nakladki: "rubber",
-  osnovaniya: "base",
-  myachi: "ball",
-  odyag: "apparel",
-};
+  // selected: { [groupKey]: Set<value> }
+  const [selected, setSelected] = useState<Record<string, Set<string>>>({});
+  const [priceBucket, setPriceBucket] = useState<number | null>(null);
+  const [onlyStock, setOnlyStock] = useState(false);
+  const [sort, setSort] = useState<SortKey>("popular");
+  const [openMobile, setOpenMobile] = useState(false);
 
-/* Подписи характеристик основания (клас / тип волокна). */
-const BLADE_CLASS_LABEL: Record<BladeClass, { uk: string; ru: string }> = {
-  "off-plus": { uk: "OFF+ · атака", ru: "OFF+ · атака" },
-  off: { uk: "OFF", ru: "OFF" },
-  "off-minus": { uk: "OFF− · універсал", ru: "OFF− · универсал" },
-  "all-plus": { uk: "ALL+", ru: "ALL+" },
-  all: { uk: "ALL · контроль", ru: "ALL · контроль" },
-  def: { uk: "DEF · захист", ru: "DEF · защита" },
-};
-const BLADE_SURFACE_LABEL: Record<BladeSurface, string> = {
-  wood: "Дерево",
-  alc: "ALC (арилат-карбон)",
-  "super-alc": "Super ALC",
-  zlc: "ZLC (Zylon-карбон)",
-  "super-zlc": "Super ZLC",
-  zlf: "ZLF (Zylon-fiber)",
-  t5000: "T5000",
-  cnf: "CNF",
-  caf: "CAF / карбон",
-  carbon: "Карбон",
-};
+  const activeCount =
+    Object.values(selected).reduce((n, s) => n + s.size, 0) +
+    (priceBucket !== null ? 1 : 0) +
+    (onlyStock ? 1 : 0);
 
-export default async function CatalogPage({
-  params,
-}: {
-  params: Promise<{ locale: string; segments: string[] }>;
-}) {
-  const { locale: l, segments } = await params;
-  if (!isLocale(l)) notFound();
-  const locale: Locale = l;
+  const toggle = (groupKey: string, value: string) => {
+    setSelected((prev) => {
+      const next = { ...prev };
+      const set = new Set(next[groupKey] ?? []);
+      if (set.has(value)) set.delete(value);
+      else set.add(value);
+      if (set.size === 0) delete next[groupKey];
+      else next[groupKey] = set;
+      return next;
+    });
+  };
 
-  const route = resolveSegments(segments);
-  if (!route) notFound();
+  const reset = () => {
+    setSelected({});
+    setPriceBucket(null);
+    setOnlyStock(false);
+  };
 
-  const crumbs = catalogBreadcrumbs(route, locale);
-  const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
-  const productLd =
-    route.kind === "product"
-      ? productJsonLd({
-          name: pickLocalized(route.product.name, locale),
-          description: routeDescription(route, locale),
-          url: `${siteConfig.url}/${locale}/${route.product.brandSlug}/${route.product.categorySlug}/${route.product.slug}`,
-          brand: getBrandBySlug(route.product.brandSlug)?.name ?? route.product.brandSlug,
-          price: getMinPrice(route.product),
-          currency: "UAH",
-          inStock: isInStock(route.product),
-        })
-      : null;
+  const filtered = useMemo(() => {
+    let list = items.filter((item) => {
+      // фасеты: внутри группы OR, между группами AND
+      for (const [key, set] of Object.entries(selected)) {
+        if (set.size === 0) continue;
+        const v = item.facets[key];
+        if (v === undefined || !set.has(v)) return false;
+      }
+      if (onlyStock && !item.inStock) return false;
+      if (priceBucket !== null) {
+        const b = priceBuckets[priceBucket];
+        if (!b) return true;
+        if (item.priceValue === null) return false;
+        if (item.priceValue < b.min) return false;
+        if (b.max !== null && item.priceValue > b.max) return false;
+      }
+      return true;
+    });
+
+    list = [...list].sort((a, b) => {
+      switch (sort) {
+        case "price-asc":
+          return (a.priceValue ?? Infinity) - (b.priceValue ?? Infinity);
+        case "price-desc":
+          return (b.priceValue ?? -Infinity) - (a.priceValue ?? -Infinity);
+        case "name":
+          return a.model.localeCompare(b.model);
+        default:
+          return a.order - b.order;
+      }
+    });
+    return list;
+  }, [items, selected, onlyStock, priceBucket, priceBuckets, sort]);
 
   return (
-    <Section as="div" className="pt-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
-      />
-      {productLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
-        />
-      )}
-      <Container>
-        <nav
-          aria-label="breadcrumb"
-          className="mb-6 flex flex-wrap items-center gap-x-1.5 gap-y-1 font-body text-xs text-ink-muted"
+    <div>
+      {/* Панель управления */}
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={() => setOpenMobile((v) => !v)}
+          className="inline-flex items-center gap-2 rounded-xl border border-border-strong bg-bg-raised px-3.5 py-2 font-display text-xs font-bold uppercase tracking-[0.08em] text-ink lg:hidden"
+          aria-expanded={openMobile}
         >
-          {crumbs.map((c, i) => (
-            <span key={c.path} className="inline-flex items-center gap-1.5">
-              {i > 0 && (
-                <span aria-hidden className="text-ink-ghost">
-                  /
-                </span>
-              )}
-              {i < crumbs.length - 1 ? (
-                <Link
-                  href={`/${locale}${c.path === "/" ? "" : c.path}`}
-                  className="transition-colors hover:text-accent"
-                >
-                  {c.name}
-                </Link>
-              ) : (
-                <span className="text-ink">{c.name}</span>
-              )}
+          {t.filters}
+          {activeCount > 0 && (
+            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-bg-base">
+              {activeCount}
             </span>
-          ))}
-        </nav>
+          )}
+        </button>
 
-        {route.kind === "product" ? (
-          <ProductView route={route} locale={locale} />
-        ) : (
-          <ListingView route={route} locale={locale} />
+        <div className="ml-auto flex items-center gap-2">
+          <label className="sr-only" htmlFor="catalog-sort">
+            {t.sort}
+          </label>
+          <select
+            id="catalog-sort"
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortKey)}
+            className="rounded-xl border border-border-strong bg-bg-raised px-3 py-2 font-body text-sm text-ink outline-none transition-colors focus:border-accent/60"
+          >
+            <option value="popular">{t.sortPopular}</option>
+            <option value="price-asc">{t.sortPriceAsc}</option>
+            <option value="price-desc">{t.sortPriceDesc}</option>
+            <option value="name">{t.sortName}</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Фасеты: на мобиле скрываются за кнопкой, на десктопе всегда видны */}
+      <div className={cn("mb-7 space-y-5", openMobile ? "block" : "hidden lg:block")}>
+        {groups.map((g) => (
+          <fieldset key={g.key}>
+            <legend className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
+              {g.label}
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {g.options.map((o) => {
+                const active = selected[g.key]?.has(o.value) ?? false;
+                return (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => toggle(g.key, o.value)}
+                    aria-pressed={active}
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-sm font-medium transition-all",
+                      active
+                        ? "border-accent bg-accent/[0.08] text-ink"
+                        : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
+                    )}
+                  >
+                    {o.label}
+                    <span className={cn("text-[11px]", active ? "text-accent" : "text-ink-dim")}>
+                      {o.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+        ))}
+
+        {/* Цена */}
+        {priceBuckets.length > 0 && (
+          <fieldset>
+            <legend className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
+              {t.price}
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {priceBuckets.map((b, i) => {
+                const active = priceBucket === i;
+                return (
+                  <button
+                    key={b.label}
+                    type="button"
+                    onClick={() => setPriceBucket(active ? null : i)}
+                    aria-pressed={active}
+                    className={cn(
+                      "rounded-xl border px-3 py-1.5 text-sm font-medium tabular-nums transition-all",
+                      active
+                        ? "border-accent bg-accent/[0.08] text-ink"
+                        : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
+                    )}
+                  >
+                    {b.label}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
         )}
-      </Container>
-    </Section>
-  );
-}
 
-/* ---------------- Витрина-листинг (категория / бренд / бренд×категория) ---------------- */
+        {/* В наличии + сброс */}
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <button
+            type="button"
+            onClick={() => setOnlyStock((v) => !v)}
+            aria-pressed={onlyStock}
+            className={cn(
+              "inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-medium transition-all",
+              onlyStock
+                ? "border-success/70 bg-success/[0.08] text-ink"
+                : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
+            )}
+          >
+            <span
+              aria-hidden
+              className={cn("h-2 w-2 rounded-full", onlyStock ? "bg-success" : "bg-ink-ghost")}
+            />
+            {t.inStock}
+          </button>
 
-function ListingView({
-  route,
-  locale,
-}: {
-  route: Exclude<CatalogRoute, { kind: "product" }>;
-  locale: Locale;
-}) {
-  const intro =
-    route.kind === "category"
-      ? route.category.intro
-      : route.kind === "brand"
-        ? route.brand.intro
-        : undefined;
+          {activeCount > 0 && (
+            <button
+              type="button"
+              onClick={reset}
+              className="font-body text-sm text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+            >
+              {t.reset}
+            </button>
+          )}
+        </div>
+      </div>
 
-  return (
-    <>
-      <header className="mb-9 max-w-3xl">
-        <h1 className="font-display text-3xl font-black uppercase tracking-tight text-balance sm:text-[42px] sm:leading-[1.05]">
-          {routeH1(route, locale)}
-        </h1>
-        {intro && (
-          <p className="mt-4 font-body text-sm leading-relaxed text-ink-muted">
-            {pickLocalized(intro, locale)}
-          </p>
-        )}
-      </header>
+      {/* Счётчик */}
+      <p className="mb-4 font-display text-xs font-bold uppercase tracking-[0.12em] text-ink-dim">
+        {t.found}: {filtered.length} {plural(filtered.length, locale)}
+      </p>
 
-      {route.kind === "brand" ? (
-        <ul className="flex flex-wrap gap-2.5">
-          {route.categories.map((c) => (
-            <li key={c.slug}>
+      {/* Сетка карточек */}
+      {filtered.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
+          <p className="font-body text-sm text-ink-muted">{t.nothing}</p>
+        </div>
+      ) : (
+        <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+          {filtered.map((item) => (
+            <li key={item.slug} className="h-full">
               <Link
-                href={`/${locale}/${route.brand.slug}/${c.slug}`}
-                className="inline-flex rounded-xl border border-border-strong bg-bg-raised px-4 py-2.5 font-display text-sm font-bold uppercase tracking-[0.04em] text-ink transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+                href={item.href}
+                className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
+                data-cta="catalog-product"
+                data-location={item.slug}
               >
-                {pickLocalized(c.name, locale)}
+                <div
+                  aria-hidden
+                  className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
+                >
+                  <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost">
+                    {item.brandName}
+                  </span>
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
+                    aria-hidden
+                  />
+                </div>
+
+                <div className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-muted">
+                  {item.brandName}
+                </div>
+                <div className="mt-0.5 font-display text-[16px] font-extrabold leading-tight tracking-tight text-ink">
+                  {item.model}
+                </div>
+                {item.secondary && (
+                  <div className="mt-1 font-body text-[11px] text-ink-dim">{item.secondary}</div>
+                )}
+
+                <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
+                  {item.priceLabel ?? t.priceOnRequest}
+                </div>
               </Link>
             </li>
           ))}
         </ul>
-      ) : route.products.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
-          <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
-        </div>
-      ) : (
-        <CatalogFilters
-          locale={locale}
-          items={buildCardVMs(route.products, locale)}
-          groups={buildFacetGroups(route.products, locale)}
-          priceBuckets={buildPriceBuckets(route.products, locale)}
-        />
-      )}
-    </>
-  );
-}
-
-/** Вторичная строка карточки: для основания — клас, для накладки — тип поверхности. */
-function cardSecondary(product: CatalogProduct, locale: Locale): string {
-  if (product.base) return BLADE_CLASS_LABEL[product.base.bladeClass][locale];
-  if (product.surfaceType) return labelFor("surfaceType", product.surfaceType, locale);
-  return "";
-}
-
-/* ---------------- Серверная подготовка данных для клиентских фильтров ---------------- */
-
-/** Готовит сериализуемые VM карточек (вся отрисовка — в клиентском компоненте). */
-function buildCardVMs(products: CatalogProduct[], locale: Locale): CatalogCardVM[] {
-  return products.map((p, i) => {
-    const price = getMinPrice(p);
-    const brandName = getBrandBySlug(p.brandSlug)?.name ?? p.brandSlug;
-    return {
-      slug: p.slug,
-      href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
-      brandName,
-      model: p.model,
-      secondary: cardSecondary(p, locale),
-      priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
-      priceValue: price ?? null,
-      inStock: isInStock(p),
-      facets: {
-        bladeClass: p.base?.bladeClass,
-        surface: p.base?.surface,
-        surfaceType: p.surfaceType,
-        playStyle: p.playStyle,
-        level: p.level,
-      },
-      order: i,
-    };
-  });
-}
-
-/** Динамические фасеты: только значения, реально присутствующие в списке. */
-function buildFacetGroups(products: CatalogProduct[], locale: Locale): FacetGroup[] {
-  const isBases = products.some((p) => p.base);
-  const groups: FacetGroup[] = [];
-
-  const collect = (
-    key: string,
-    label: string,
-    getVal: (p: CatalogProduct) => string | undefined,
-    labelOf: (v: string) => string,
-    orderRef?: string[],
-  ) => {
-    const counts = new Map<string, number>();
-    for (const p of products) {
-      const v = getVal(p);
-      if (v === undefined) continue;
-      counts.set(v, (counts.get(v) ?? 0) + 1);
-    }
-    if (counts.size < 2) return; // фильтр из одного значения бесполезен
-    const values = [...counts.keys()];
-    if (orderRef) values.sort((a, b) => orderRef.indexOf(a) - orderRef.indexOf(b));
-    else values.sort((a, b) => labelOf(a).localeCompare(labelOf(b)));
-    groups.push({
-      key,
-      label,
-      options: values.map((v) => ({ value: v, label: labelOf(v), count: counts.get(v) ?? 0 })),
-    });
-  };
-
-  if (isBases) {
-    collect(
-      "bladeClass",
-      locale === "ru" ? "Класс" : "Клас",
-      (p) => p.base?.bladeClass,
-      (v) => BLADE_CLASS_LABEL[v as keyof typeof BLADE_CLASS_LABEL]?.[locale] ?? v,
-      ["off-plus", "off", "off-minus", "all-plus", "all", "def"],
-    );
-    collect(
-      "surface",
-      locale === "ru" ? "Тип основания" : "Тип основи",
-      (p) => p.base?.surface,
-      (v) => BLADE_SURFACE_LABEL[v as keyof typeof BLADE_SURFACE_LABEL] ?? v,
-      ["wood", "alc", "super-alc", "zlc", "super-zlc", "zlf", "t5000", "cnf", "caf", "carbon"],
-    );
-  } else {
-    collect(
-      "surfaceType",
-      locale === "ru" ? "Тип поверхности" : "Тип поверхні",
-      (p) => p.surfaceType,
-      (v) => labelFor("surfaceType", v, locale),
-      ["gladka", "korotki-shypy", "dovgi-shypy", "antyspin"],
-    );
-    collect(
-      "playStyle",
-      "Стиль",
-      (p) => p.playStyle,
-      (v) => labelFor("playStyle", v, locale),
-    );
-  }
-
-  // Уровень — общий для обоих типов
-  collect(
-    "level",
-    locale === "ru" ? "Уровень" : "Рівень",
-    (p) => p.level,
-    (v) => labelFor("level", v, locale),
-    ["beginner", "amateur", "advanced", "pro", "special"],
-  );
-
-  return groups;
-}
-
-/** Адаптивные ценовые бакеты по диапазону цен в списке. */
-function buildPriceBuckets(
-  products: CatalogProduct[],
-  locale: Locale,
-): { label: string; min: number; max: number | null }[] {
-  const prices = products
-    .map((p) => getMinPrice(p))
-    .filter((v): v is number => typeof v === "number");
-  if (prices.length < 3) return [];
-  const max = Math.max(...prices);
-  const fmt = (n: number) => formatPrice(n);
-  const upTo = locale === "ru" ? "до" : "до";
-  const from = locale === "ru" ? "от" : "від";
-
-  // Пороговые значения подобраны под ассортимент Butterfly (накладки ~1–5к, основи ~1–26к).
-  const edges = max > 12000 ? [3000, 6000, 10000] : max > 5000 ? [2000, 4000, 6000] : [1500, 2500];
-  const buckets: { label: string; min: number; max: number | null }[] = [];
-  buckets.push({ label: `${upTo} ${fmt(edges[0]!)}`, min: 0, max: edges[0]! });
-  for (let i = 0; i < edges.length - 1; i++) {
-    buckets.push({ label: `${fmt(edges[i]!)}–${fmt(edges[i + 1]!)}`, min: edges[i]!, max: edges[i + 1]! });
-  }
-  buckets.push({ label: `${from} ${fmt(edges[edges.length - 1]!)}`, min: edges[edges.length - 1]!, max: null });
-  return buckets;
-}
-
-function ProductCard({ product, locale }: { product: CatalogProduct; locale: Locale }) {
-  const price = getMinPrice(product);
-  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const secondary = cardSecondary(product, locale);
-
-  return (
-    <Link
-      href={`/${locale}/${product.brandSlug}/${product.categorySlug}/${product.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
-      data-cta="catalog-product"
-      data-location={product.slug}
-    >
-      <div
-        aria-hidden
-        className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
-      >
-        <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost">
-          {brandName}
-        </span>
-        <div
-          className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
-          aria-hidden
-        />
-      </div>
-
-      <div className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-muted">
-        {brandName}
-      </div>
-      <div className="mt-0.5 font-display text-[16px] font-extrabold leading-tight tracking-tight text-ink">
-        {product.model}
-      </div>
-      {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
-
-      <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
-        {price !== undefined
-          ? `${catalogUi.from[locale]} ${formatPrice(price)}`
-          : catalogUi.priceOnRequest[locale]}
-      </div>
-    </Link>
-  );
-}
-
-/** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
-function ProductGrid({ products, locale }: { products: CatalogProduct[]; locale: Locale }) {
-  return (
-    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
-      {products.map((p) => (
-        <li key={p.slug} className="h-full">
-          <ProductCard product={p} locale={locale} />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/* ---------------- Страница товара (диспетчер: основание / накладка) ---------------- */
-
-function ProductView({
-  route,
-  locale,
-}: {
-  route: Extract<CatalogRoute, { kind: "product" }>;
-  locale: Locale;
-}) {
-  return route.product.base ? (
-    <BaseView route={route} locale={locale} />
-  ) : (
-    <RubberView route={route} locale={locale} />
-  );
-}
-
-function ProductShell({
-  brandName,
-  h1,
-  visualLabel,
-  children,
-  related,
-  locale,
-}: {
-  brandName: string;
-  h1: string;
-  visualLabel: string;
-  children: React.ReactNode;
-  related: CatalogProduct[];
-  locale: Locale;
-}) {
-  return (
-    <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-      <div>
-        <div
-          aria-hidden
-          className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]"
-        >
-          <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
-          <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
-            {visualLabel}
-          </span>
-        </div>
-      </div>
-
-      <div>
-        <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
-          {brandName}
-        </div>
-        <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
-          {h1}
-        </h1>
-        {children}
-      </div>
-
-      {related.length > 0 && (
-        <div className="lg:col-span-2">
-          <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
-            {catalogUi.related[locale]}
-          </h2>
-          <ProductGrid products={related} locale={locale} />
-        </div>
       )}
     </div>
-  );
-}
-
-function SpecTable({ rows }: { rows: { label: string; value: string }[] }) {
-  return (
-    <dl className="overflow-hidden rounded-2xl border border-border-strong">
-      {rows.map((r, i) => (
-        <div
-          key={r.label}
-          className={`flex items-center justify-between px-4 py-3 text-sm ${
-            i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"
-          }`}
-        >
-          <dt className="text-ink-muted">{r.label}</dt>
-          <dd className="font-semibold text-ink">{r.value}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-/* ---- Накладка ---- */
-
-function RubberView({
-  route,
-  locale,
-}: {
-  route: Extract<CatalogRoute, { kind: "product" }>;
-  locale: Locale;
-}) {
-  const product = route.product;
-  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
-
-  const rows: { label: string; value: string }[] = [];
-  if (product.surfaceType)
-    rows.push({ label: catalogUi.surface[locale], value: labelFor("surfaceType", product.surfaceType, locale) });
-  if (product.specs.speed !== undefined)
-    rows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
-  if (product.specs.spin !== undefined)
-    rows.push({ label: catalogUi.spin[locale], value: String(product.specs.spin) });
-  if (product.specs.arc !== undefined)
-    rows.push({ label: catalogUi.arc[locale], value: String(product.specs.arc) });
-  if (product.specs.hardnessDeg !== undefined)
-    rows.push({ label: catalogUi.hardness[locale], value: `${product.specs.hardnessDeg}°` });
-  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
-
-  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
-
-  return (
-    <ProductShell
-      brandName={brandName}
-      h1={routeH1(route, locale)}
-      visualLabel={brandName}
-      related={related}
-      locale={locale}
-    >
-      <div className="mt-7">
-        <ProductPurchasePanel
-          locale={locale}
-          slug={product.slug}
-          brandLabel={brandName}
-          model={product.model}
-          cartCategory={cartCategory}
-          accentColor="#E8FF47"
-          colors={product.colors}
-          thicknessOptions={product.thicknessOptions}
-          variants={product.variants.map((v) => ({
-            thickness: v.thickness,
-            color: v.color,
-            price: v.price,
-            inStock: v.inStock,
-          }))}
-          phone={siteConfig.phone}
-        />
-      </div>
-
-      <div className="mt-9">
-        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
-          {catalogUi.specs[locale]}
-        </h2>
-        <SpecTable rows={rows} />
-      </div>
-    </ProductShell>
-  );
-}
-
-/* ---- Основание ---- */
-
-function BaseView({
-  route,
-  locale,
-}: {
-  route: Extract<CatalogRoute, { kind: "product" }>;
-  locale: Locale;
-}) {
-  const product = route.product;
-  const base = product.base!;
-  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
-
-  const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
-  const rows: { label: string; value: string }[] = [
-    { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
-    { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },
-  ];
-  if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
-  if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
-  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
-
-  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
-
-  return (
-    <ProductShell
-      brandName={brandName}
-      h1={routeH1(route, locale)}
-      visualLabel={brandName}
-      related={related}
-      locale={locale}
-    >
-      <div className="mt-7">
-        <BasePurchasePanel
-          locale={locale}
-          slug={product.slug}
-          brandLabel={brandName}
-          model={product.model}
-          cartCategory={cartCategory}
-          accentColor="#E8FF47"
-          handles={base.handles}
-          priceFrom={product.priceFrom}
-          inStock={product.inStock}
-          phone={siteConfig.phone}
-        />
-      </div>
-
-      <div className="mt-9">
-        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
-          {catalogUi.specs[locale]}
-        </h2>
-        <SpecTable rows={rows} />
-      </div>
-    </ProductShell>
   );
 }
