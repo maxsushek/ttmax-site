@@ -91,7 +91,7 @@ export default async function LocaleLayout({
           {children}
         </main>
         <Footer locale={locale} messages={messages} logoUrl={logoUrl} />
-        <CartDrawer messages={messages} locale={locale} />
+        <CartDrawer messages={messages} locale={locale} logoUrl={logoUrl} />
       </CartProvider>
     </>
   );
