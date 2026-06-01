@@ -3,32 +3,12 @@
 // Переиспользуємо існуючу таблицю site_settings (без нової міграції) і той самий кеш/тег.
 import { getSettings, settingString, type SettingsMap } from "@/lib/settings/get";
 import { siteConfig } from "@/config/site";
+import { CONTACT_KEYS, type ContactInfo } from "./keys";
 
-/** Ключі site_settings для контактів та доставки. */
-export const CONTACT_KEYS = {
-  phone: "contact_phone",
-  phoneDisplay: "contact_phone_display",
-  email: "contact_email",
-  telegram: "social_telegram",
-  youtube: "social_youtube",
-  facebook: "social_facebook",
-  addrStreet: "address_street",
-  addrLocality: "address_locality",
-  addrRegion: "address_region",
-  addrPostal: "address_postal",
-  freeThreshold: "delivery_free_threshold",
-  shippingFee: "delivery_shipping_fee",
-} as const;
-
-export type ContactInfo = {
-  phone: string;
-  phoneDisplay: string;
-  email: string;
-  social: { telegram: string; youtube: string; facebook: string };
-  address: { street: string; locality: string; region: string; postal: string; country: string };
-  freeShippingThreshold: number;
-  shippingFee: number;
-};
+// CONTACT_KEYS і тип ContactInfo тепер живуть у ./keys (без серверних імпортів), щоб їх
+// могли безпечно імпортувати клієнтські компоненти. Реекспортуємо для серверних споживачів.
+export { CONTACT_KEYS };
+export type { ContactInfo };
 
 function num(s: string, fallback: number): number {
   if (!s) return fallback;
