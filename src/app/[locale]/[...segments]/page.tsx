@@ -20,6 +20,7 @@ import {
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo/jsonld";
+import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { getMediaMap, pickPrimary, type EntityMediaMap } from "@/lib/media/get";
 import { cldUrl } from "@/lib/cloudinary/url";
 import Image from "next/image";
@@ -107,19 +108,23 @@ export default async function CatalogPage({
   if (!route) notFound();
 
   const media = await getMediaMap();
+  const overrides = await getOverrides();
+  // Накладаємо ціну/наявність із Supabase поверх коду один раз — далі всі читання
+  // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
+  const eroute = withOverrides(route, overrides);
 
   const crumbs = catalogBreadcrumbs(route, locale);
   const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
   const productLd =
-    route.kind === "product"
+    eroute.kind === "product"
       ? productJsonLd({
-          name: pickLocalized(route.product.name, locale),
-          description: routeDescription(route, locale),
-          url: `${siteConfig.url}/${locale}/${route.product.brandSlug}/${route.product.categorySlug}/${route.product.slug}`,
-          brand: getBrandBySlug(route.product.brandSlug)?.name ?? route.product.brandSlug,
-          price: getMinPrice(route.product),
+          name: pickLocalized(eroute.product.name, locale),
+          description: routeDescription(eroute, locale),
+          url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
+          brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
+          price: getMinPrice(eroute.product),
           currency: "UAH",
-          inStock: isInStock(route.product),
+          inStock: isInStock(eroute.product),
         })
       : null;
 
@@ -161,10 +166,10 @@ export default async function CatalogPage({
           ))}
         </nav>
 
-        {route.kind === "product" ? (
-          <ProductView route={route} locale={locale} media={media} />
+        {eroute.kind === "product" ? (
+          <ProductView route={eroute} locale={locale} media={media} />
         ) : (
-          <ListingView route={route} locale={locale} media={media} />
+          <ListingView route={eroute} locale={locale} media={media} />
         )}
       </Container>
     </Section>
@@ -172,6 +177,17 @@ export default async function CatalogPage({
 }
 
 /* ---------------- Витрина-листинг (категория / бренд / бренд×категория) ---------------- */
+
+/** Повертає копію route з накладеними ціною/наявністю на товар(и). */
+function withOverrides(route: CatalogRoute, ov: OverridesMap): CatalogRoute {
+  if (route.kind === "product") {
+    return { ...route, product: applyOverrides(route.product, ov) };
+  }
+  if ("products" in route) {
+    return { ...route, products: route.products.map((p) => applyOverrides(p, ov)) };
+  }
+  return route;
+}
 
 function ListingView({
   route,
