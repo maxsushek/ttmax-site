@@ -61,6 +61,8 @@ type CartContextValue = {
   freeShipProgress: number;
   freeShipRemaining: number;
   hasFreeShip: boolean;
+  shippingFee: number;
+  freeShippingThreshold: number;
   isOpen: boolean;
   justAddedId: string | null;
   open: () => void;
@@ -73,7 +75,15 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({
+  children,
+  freeShippingThreshold = siteConfig.freeShippingThreshold,
+  shippingFee = 99,
+}: {
+  children: ReactNode;
+  freeShippingThreshold?: number;
+  shippingFee?: number;
+}) {
   const [state, dispatch] = useReducer(reducer, { items: [], hydrated: false });
   const [isOpen, setIsOpen] = useState(false);
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
@@ -120,7 +130,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const count = useMemo(() => state.items.reduce((s, i) => s + i.qty, 0), [state.items]);
   const total = useMemo(() => state.items.reduce((s, i) => s + i.price * i.qty, 0), [state.items]);
-  const threshold = siteConfig.freeShippingThreshold;
+  const threshold = freeShippingThreshold;
   const hasFreeShip = total >= threshold;
   const freeShipProgress = Math.min(100, (total / threshold) * 100);
   const freeShipRemaining = Math.max(0, threshold - total);
@@ -187,6 +197,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     freeShipProgress,
     freeShipRemaining,
     hasFreeShip,
+    shippingFee,
+    freeShippingThreshold: threshold,
     isOpen,
     justAddedId,
     open,
