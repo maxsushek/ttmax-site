@@ -36,7 +36,7 @@ export type NavItem = {
   key: string;
   href: string;
   subKey?: string;
-  sub?: ReadonlyArray<string>;
+  sub?: ReadonlyArray<{ label: string; href: string }>;
 };
 
 export type AttributionData = {
