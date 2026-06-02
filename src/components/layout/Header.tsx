@@ -66,22 +66,29 @@ export function Header({
                   {link.sub && (
                     <div
                       className={cn(
-                        "absolute left-1/2 top-full mt-3 -translate-x-1/2",
-                        "min-w-[168px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0D13]/[0.97]",
-                        "pointer-events-none opacity-0 transition-all duration-200",
-                        "group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100",
+                        // Без зазору: тягнеться від низу тригера (top-full, БЕЗ margin),
+                        // pt-3 — прозорий «місток», щоб курсор не виходив із зони наведення
+                        // дорогою до меню (це й ламало вибір підпунктів).
+                        "absolute left-1/2 top-full z-10 -translate-x-1/2 pt-3",
+                        "pointer-events-none opacity-0 transition-opacity delay-150 duration-200",
+                        "group-hover:pointer-events-auto group-hover:opacity-100 group-hover:delay-0",
+                        "group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:delay-0",
                       )}
-                      style={{ backdropFilter: "blur(20px)" }}
                     >
-                      {link.sub.map((s) => (
-                        <Link
-                          key={s}
-                          href={`/${locale}${link.href}`}
-                          className="block border-b border-white/[0.04] px-4 py-2.5 font-body text-[13px] font-medium tracking-[0.05em] text-ink-dim transition-all last:border-0 hover:bg-accent/[0.05] hover:pl-5 hover:text-accent"
-                        >
-                          {s}
-                        </Link>
-                      ))}
+                      <div
+                        className="min-w-[180px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0D13]/[0.97] shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+                        style={{ backdropFilter: "blur(20px)" }}
+                      >
+                        {link.sub.map((s) => (
+                          <Link
+                            key={s}
+                            href={`/${locale}${link.href}`}
+                            className="block border-b border-white/[0.04] px-4 py-2.5 font-body text-[13px] font-medium tracking-[0.05em] text-ink-dim transition-all last:border-0 hover:bg-accent/[0.05] hover:pl-5 hover:text-accent"
+                          >
+                            {s}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
