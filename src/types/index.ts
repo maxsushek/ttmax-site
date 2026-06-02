@@ -1,4 +1,12 @@
-export type ProductCategory = "base" | "rubber" | "ball" | "apparel";
+export type ProductCategory =
+  | "base"
+  | "rubber"
+  | "ball"
+  | "apparel"
+  | "shoes"
+  | "accessory"
+  | "bag"
+  | "net";
 export type ProductBadge = "hit" | "new" | "sale";
 
 export type Product = {
