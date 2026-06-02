@@ -10,14 +10,23 @@ import type {
 } from "@/types/catalog";
 import { catalogProducts } from "./products";
 import { catalogBases } from "./bases";
+import { catalogGear } from "./gear";
 import { catalogBrands, catalogSeries } from "./brands";
 import { catalogCategories } from "./categories";
 import { rubberFilters } from "./filters";
 
-export { catalogProducts, catalogBases, catalogBrands, catalogSeries, catalogCategories, rubberFilters };
+export {
+  catalogProducts,
+  catalogBases,
+  catalogGear,
+  catalogBrands,
+  catalogSeries,
+  catalogCategories,
+  rubberFilters,
+};
 
-/** Спільний пул товарів: накладки (rubber) + основи (base). */
-const pool: CatalogProduct[] = [...catalogProducts, ...catalogBases];
+/** Спільний пул товарів: накладки (rubber) + основи (base) + екіпірування (gear). */
+const pool: CatalogProduct[] = [...catalogProducts, ...catalogBases, ...catalogGear];
 
 /* ---------- Товары ---------- */
 
