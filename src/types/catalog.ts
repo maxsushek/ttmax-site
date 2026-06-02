@@ -78,13 +78,15 @@ export interface CatalogProduct {
   level: Level;
   specs: RubberSpecs;
   /** Вид товару. За замовчуванням — накладка. */
-  kind?: "rubber" | "base";
-  /** Базова ціна (основи мають єдину ціну; накладки — ціну за варіантами). */
+  kind?: "rubber" | "base" | "gear";
+  /** Базова ціна (основи/екіпірування мають єдину ціну; накладки — ціну за варіантами). */
   priceFrom?: number;
-  /** Наявність на рівні товару (для основ). */
+  /** Наявність на рівні товару (для основ/екіпірування). */
   inStock?: boolean;
   /** Характеристики основи (лише для kind: "base"). */
   base?: BaseSpec;
+  /** Характеристики екіпірування: одяг, взуття, м'ячі, аксесуари (kind: "gear"). */
+  gear?: GearSpec;
   thicknessOptions: string[];
   colors: Color[];
   /** Развёртка вариантов (толщина × цвет). */
@@ -173,4 +175,25 @@ export interface BaseSpec {
   weightG?: number;
   /** Доступні типи ручки. */
   handles: Handle[];
+}
+
+/** Стать для одягу/взуття. */
+export type Gender = "men" | "women" | "unisex";
+
+/** Характеристики екіпірування (для kind: "gear"): одяг, взуття, м'ячі, аксесуари. */
+export interface GearSpec {
+  /** Підтип для угруповання й фільтрів: tshirt, shorts, suit, jacket, track, sweater, skirt,
+   *  socks, cap, band, shoes, slippers, balls, glue, cleaner, care, edge-tape, overgrip,
+   *  film, ball-tube, insole, towel, bottle, bag, backpack, case, net тощо. */
+  gearType: string;
+  /** Стать — для одягу та взуття. */
+  gender?: Gender;
+  /** Розміри одягу ["XS","S",...] або взуття ["38","39",...]. */
+  sizes?: string[];
+  /** К-сть у пакованні (м'ячі): "6 шт". */
+  packSize?: string;
+  /** Зірковість м'ячів: "3*" / "трен.". */
+  stars?: string;
+  /** Об'єм (клей/очисник), мл. */
+  volumeMl?: number;
 }
