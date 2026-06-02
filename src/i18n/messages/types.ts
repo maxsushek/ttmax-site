@@ -57,6 +57,10 @@ export type Messages = {
       rubber: string;
       ball: string;
       apparel: string;
+      shoes: string;
+      accessory: string;
+      bag: string;
+      net: string;
     };
     badges: {
       hit: string;
