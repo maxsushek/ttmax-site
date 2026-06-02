@@ -218,10 +218,10 @@ export function ContentEditor({
       </aside>
 
       <div className="flex flex-col gap-4 lg:order-1">
-        {/* Шпаргалка формул (токенів) — завжди під рукою */}
-        <details open className="rounded-lg border border-[#E8FF47]/25 bg-[#E8FF47]/[0.04]">
+        {/* Шпаргалка формул (токенів) — згорнута, завжди під рукою */}
+        <details className="rounded-lg border border-[#E8FF47]/25 bg-[#E8FF47]/[0.04]">
           <summary className="cursor-pointer list-none px-3.5 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] text-[#E8FF47]">
-            Формули — натисніть, щоб скопіювати ▾
+            ▸ Формули (шпаргалка) — натисніть, щоб розгорнути
           </summary>
           <div className="border-t border-[#E8FF47]/15 px-3.5 py-3">
             <div className="flex flex-col gap-1.5">
@@ -271,23 +271,36 @@ export function ContentEditor({
           </label>
           <label className="block">
             <span className="mb-1 block text-[12px] text-[#aaa]">Slug</span>
+            {sugg.length > 0 && (
+              <select
+                value={sugg.some((s) => s.slug === slug) ? slug : ""}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    setSlug(e.target.value);
+                    setStatus("idle");
+                  }
+                }}
+                className={`${field} mb-1.5`}
+              >
+                <option value="">
+                  — оберіть ({ENTITY_LABEL[entityType] ?? entityType}: {sugg.length}) —
+                </option>
+                {sugg.map((s) => (
+                  <option key={s.slug} value={s.slug}>
+                    {s.label} — {s.slug}
+                  </option>
+                ))}
+              </select>
+            )}
             <input
-              list="slug-suggestions"
               value={slug}
               onChange={(e) => {
                 setSlug(e.target.value);
                 setStatus("idle");
               }}
-              placeholder="напр. nakladki / dignics-09c / butterfly"
+              placeholder={sugg.length > 0 ? "або введіть slug вручну" : "введіть slug"}
               className={field}
             />
-            <datalist id="slug-suggestions">
-              {sugg.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.label}
-                </option>
-              ))}
-            </datalist>
           </label>
           <label className="block">
             <span className="mb-1 block text-[12px] text-[#aaa]">Мова</span>
