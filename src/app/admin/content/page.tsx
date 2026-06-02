@@ -5,6 +5,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getAllProducts, getActiveBrands, catalogCategories, catalogSeries } from "@/data/catalog";
 import { findTokensDeep } from "@/lib/content/token-catalog";
+import { ContentImport } from "@/components/admin/ContentImport";
 import { ContentEditor } from "@/components/admin/ContentEditor";
 
 export const dynamic = "force-dynamic";
@@ -81,6 +82,9 @@ export default async function AdminContentPage() {
           SEO-контент по сутностях і мовах: meta, вступ, текст (markdown), FAQ, порівняння.
           Підхоплюється сайтом без передеплою. Порожні поля не виводяться на сайті.
         </p>
+        <div className="mb-6">
+          <ContentImport />
+        </div>
         <ContentEditor suggestions={suggestions} existing={existing} />
       </main>
     </AdminShell>
