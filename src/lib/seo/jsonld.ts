@@ -99,13 +99,33 @@ export function productJsonLd(opts: {
   /** Абсолютні URL зображень (поки порожньо — додамо з Cloudinary). */
   images?: string[];
   sku?: string;
-  /** Ціна "від". */
+  /** Ціна "від" (для одиничного Offer). */
   price?: number;
+  /** Діапазон цін варіантів — для AggregateOffer (коли варіанти мають різні ціни). */
+  lowPrice?: number;
+  highPrice?: number;
+  offerCount?: number;
+  /** YYYY-MM-DD; автообчислюється на стороні виклику (вручну не задається). */
+  priceValidUntil?: string;
   /** Напр. "UAH". */
   currency?: string;
   inStock?: boolean;
 }) {
-  const { name, description, url, brand, images, sku, price, currency = "UAH", inStock } = opts;
+  const {
+    name,
+    description,
+    url,
+    brand,
+    images,
+    sku,
+    price,
+    lowPrice,
+    highPrice,
+    offerCount,
+    priceValidUntil,
+    currency = "UAH",
+    inStock,
+  } = opts;
 
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -117,13 +137,36 @@ export function productJsonLd(opts: {
   };
   if (images && images.length > 0) node.image = images;
   if (sku) node.sku = sku;
-  if (typeof price === "number" && price > 0) {
+
+  const availability = inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+  const itemCondition = "https://schema.org/NewCondition";
+
+  if (
+    typeof lowPrice === "number" &&
+    typeof highPrice === "number" &&
+    highPrice > lowPrice &&
+    (offerCount ?? 0) > 1
+  ) {
+    node.offers = {
+      "@type": "AggregateOffer",
+      url,
+      lowPrice,
+      highPrice,
+      offerCount,
+      priceCurrency: currency,
+      availability,
+      itemCondition,
+      ...(priceValidUntil ? { priceValidUntil } : {}),
+    };
+  } else if (typeof price === "number" && price > 0) {
     node.offers = {
       "@type": "Offer",
       url,
       price,
       priceCurrency: currency,
-      availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      availability,
+      itemCondition,
+      ...(priceValidUntil ? { priceValidUntil } : {}),
     };
   }
   return node;
