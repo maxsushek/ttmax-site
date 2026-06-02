@@ -1,8 +1,9 @@
 // src/components/catalog/CatalogFilters.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { cn } from "@/utils/cn";
 
 /** Сериализуемая модель карточки + поля для фильтрации (готовится на сервере). */
@@ -77,11 +78,36 @@ function plural(n: number, locale: "uk" | "ru") {
   return locale === "ru" ? "товаров" : "товарів";
 }
 
+/** Будує вибір фасетів із query-параметрів URL (напр. ?bladeClass=off,off-plus). */
+function selectedFromParams(
+  params: ReadonlyURLSearchParams | null,
+  knownKeys: Set<string>,
+): Record<string, Set<string>> {
+  const out: Record<string, Set<string>> = {};
+  if (!params) return out;
+  params.forEach((value, key) => {
+    if (!knownKeys.has(key)) return;
+    const vals = value
+      .split(",")
+      .map((v) => v.trim())
+      .filter(Boolean);
+    if (vals.length) out[key] = new Set(vals);
+  });
+  return out;
+}
+
 export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
   const t = T[locale];
+  const searchParams = useSearchParams();
+  const knownKeys = useMemo(() => new Set(groups.map((g) => g.key)), [groups]);
 
-  // selected: { [groupKey]: Set<value> }
-  const [selected, setSelected] = useState<Record<string, Set<string>>>({});
+  // selected: { [groupKey]: Set<value> } — стартова з URL + реакція на навігацію (напр. підпункт меню).
+  const [selected, setSelected] = useState<Record<string, Set<string>>>(() =>
+    selectedFromParams(searchParams, knownKeys),
+  );
+  useEffect(() => {
+    setSelected(selectedFromParams(searchParams, knownKeys));
+  }, [searchParams, knownKeys]);
   const [priceBucket, setPriceBucket] = useState<number | null>(null);
   const [onlyStock, setOnlyStock] = useState(false);
   const [sort, setSort] = useState<SortKey>("popular");
