@@ -4,6 +4,7 @@
 "use client";
 
 import { useState } from "react";
+import { TOKEN_DEFS, TOKEN_NOTE, findTokens } from "@/lib/content/token-catalog";
 
 type Suggestion = { slug: string; label: string };
 type ExistingRow = {
@@ -12,6 +13,8 @@ type ExistingRow = {
   locale: string;
   meta_title: string | null;
   updated_at: string;
+  /** Формули-токени, знайдені в будь-якому полі опису (для огляду). */
+  tokens?: string[];
 };
 type Faq = { q: string; a: string };
 type Status = "idle" | "loading" | "saving" | "saved" | "deleted" | "error";
@@ -46,8 +49,34 @@ export function ContentEditor({
 
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
+  const [onlyFormulas, setOnlyFormulas] = useState(false);
 
   const sugg = suggestions[entityType] ?? [];
+  const formulaCount = existing.filter((r) => (r.tokens?.length ?? 0) > 0).length;
+  const shownExisting = onlyFormulas
+    ? existing.filter((r) => (r.tokens?.length ?? 0) > 0)
+    : existing;
+
+  // Формули в ПОТОЧНОМУ описі (оновлюється під час набору).
+  const blockTokens = [
+    { field: "Meta title", tokens: findTokens(metaTitle) },
+    { field: "Meta description", tokens: findTokens(metaDescription) },
+    { field: "Intro", tokens: findTokens(intro) },
+    { field: "Body", tokens: findTokens(body) },
+    { field: "FAQ", tokens: findTokens(faq.map((f) => `${f.q} ${f.a}`).join(" ")) },
+    { field: "Порівняння", tokens: findTokens(comparison) },
+  ].filter((x) => x.tokens.length > 0);
+
+  const copyToken = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(text);
+      setTimeout(() => setCopied((c) => (c === text ? null : c)), 1200);
+    } catch {
+      /* clipboard недоступний — ігноруємо */
+    }
+  };
 
   const resetFields = () => {
     setMetaTitle("");
@@ -151,9 +180,19 @@ export function ContentEditor({
         <h2 className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
           Існуючі ({existing.length})
         </h2>
+        <label className="mb-2 flex items-center gap-2 text-[12px] text-[#aaa]">
+          <input
+            type="checkbox"
+            checked={onlyFormulas}
+            onChange={(e) => setOnlyFormulas(e.target.checked)}
+          />
+          лише з формулами ({formulaCount})
+        </label>
         <div className="max-h-[60vh] overflow-y-auto rounded-lg border border-white/10">
-          {existing.length === 0 && <p className="p-3 text-[12px] text-[#666]">Поки порожньо</p>}
-          {existing.map((r) => (
+          {shownExisting.length === 0 && (
+            <p className="p-3 text-[12px] text-[#666]">Поки порожньо</p>
+          )}
+          {shownExisting.map((r) => (
             <button
               key={`${r.entity_type}:${r.slug}:${r.locale}`}
               type="button"
@@ -163,6 +202,14 @@ export function ContentEditor({
               <span className="text-[#888]">
                 {ENTITY_LABEL[r.entity_type] ?? r.entity_type} · {r.locale}
               </span>
+              {r.tokens && r.tokens.length > 0 && (
+                <span
+                  className="ml-1.5 rounded bg-[#E8FF47]/15 px-1.5 py-0.5 text-[10px] font-bold text-[#E8FF47]"
+                  title={r.tokens.join("  ")}
+                >
+                  ƒ {r.tokens.length}
+                </span>
+              )}
               <br />
               <span className="text-[#eee]">{r.slug}</span>
             </button>
@@ -171,6 +218,38 @@ export function ContentEditor({
       </aside>
 
       <div className="flex flex-col gap-4 lg:order-1">
+        {/* Шпаргалка формул (токенів) — завжди під рукою */}
+        <details open className="rounded-lg border border-[#E8FF47]/25 bg-[#E8FF47]/[0.04]">
+          <summary className="cursor-pointer list-none px-3.5 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] text-[#E8FF47]">
+            Формули — натисніть, щоб скопіювати ▾
+          </summary>
+          <div className="border-t border-[#E8FF47]/15 px-3.5 py-3">
+            <div className="flex flex-col gap-1.5">
+              {TOKEN_DEFS.map((t) => (
+                <div key={t.label} className="flex items-baseline gap-2">
+                  <button
+                    type="button"
+                    onClick={() => copyToken(t.insert)}
+                    className="shrink-0 rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[12px] text-[#E8FF47] hover:bg-white/[0.12]"
+                    title="Скопіювати"
+                  >
+                    {t.label}
+                  </button>
+                  <span className="text-[12px] leading-snug text-[#aaa]">
+                    {t.desc}
+                    {copied === t.insert && (
+                      <span className="ml-1 text-[#4ade80]">скопійовано ✓</span>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-2.5 border-t border-white/10 pt-2 text-[11px] leading-relaxed text-[#777]">
+              {TOKEN_NOTE}
+            </p>
+          </div>
+        </details>
+
         {/* Ключ */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-[160px_1fr_120px]">
           <label className="block">
@@ -352,6 +431,32 @@ export function ContentEditor({
           <input type="checkbox" checked={noindex} onChange={(e) => setNoindex(e.target.checked)} />
           noindex (примусово закрити сторінку від індексації)
         </label>
+
+        {/* Які формули вжито в ЦЬОМУ описі (оновлюється під час набору) */}
+        <div className="rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-2.5">
+          <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#888]">
+            Формули в цьому описі
+          </span>
+          {blockTokens.length === 0 ? (
+            <p className="mt-1 text-[12px] text-[#666]">Немає — текст статичний.</p>
+          ) : (
+            <ul className="mt-1.5 flex flex-col gap-1">
+              {blockTokens.map((b) => (
+                <li key={b.field} className="text-[12px] text-[#bbb]">
+                  <span className="text-[#777]">{b.field}:</span>{" "}
+                  {b.tokens.map((t) => (
+                    <code
+                      key={t}
+                      className="mr-1 rounded bg-white/[0.06] px-1 py-0.5 font-mono text-[11px] text-[#E8FF47]"
+                    >
+                      {t}
+                    </code>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <div className="sticky bottom-0 flex items-center gap-3 border-t border-white/10 bg-[#080A0E]/95 py-3 backdrop-blur">
           <button
