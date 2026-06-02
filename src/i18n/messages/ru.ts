@@ -76,6 +76,10 @@ export const ru: Messages = {
       rubber: "Накладка",
       ball: "Мяч",
       apparel: "Одежда",
+      shoes: "Обувь",
+      accessory: "Аксессуар",
+      bag: "Сумка/чехол",
+      net: "Сетка",
     },
     badges: {
       hit: "Хит",
