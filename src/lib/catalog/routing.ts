@@ -6,9 +6,11 @@ import type {
   CatalogBrand,
   CatalogCategory,
   CatalogProduct,
+  CatalogSeries,
   Localized,
 } from "@/types/catalog";
 import {
+  catalogSeries,
   getActiveBrands,
   getBrandBySlug,
   getCategoryBySlug,
@@ -17,6 +19,7 @@ import {
   getProductsByBrand,
   getProductsByBrandCategory,
   getProductsByCategory,
+  getProductsBySeries,
   rubberFilters,
 } from "@/data/catalog";
 
@@ -44,6 +47,13 @@ export type CatalogRoute =
       kind: "brandCategory";
       brand: CatalogBrand;
       category: CatalogCategory;
+      products: CatalogProduct[];
+      index: boolean;
+    }
+  | {
+      kind: "series";
+      category: CatalogCategory;
+      series: CatalogSeries;
       products: CatalogProduct[];
       index: boolean;
     }
@@ -84,7 +94,7 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     return null;
   }
 
-  // /{brand}/{category} — бренд×категория
+  // /{brand}/{category} — бренд×категория; або /{category}/{series} — хаб серії
   if (segments.length === 2) {
     const a = segments[0];
     const b = segments[1];
@@ -95,6 +105,14 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     if (brand && category) {
       const products = getProductsByBrandCategory(brand.slug, category.slug);
       return { kind: "brandCategory", brand, category, products, index: products.length > 0 };
+    }
+
+    // /{category}/{series} — напр. /nakladki/dignics
+    const cat = getCategoryBySlug(a);
+    const series = catalogSeries.find((s) => s.slug === b);
+    if (cat && series) {
+      const products = getProductsBySeries(series.slug).filter((p) => p.categorySlug === cat.slug);
+      return { kind: "series", category: cat, series, products, index: products.length > 0 };
     }
     return null;
   }
@@ -148,6 +166,13 @@ export function catalogStaticParams(): { segments: string[] }[] {
     }
   }
 
+  // Хаби серій з товарами: /{category}/{series}
+  for (const s of catalogSeries) {
+    const prods = getProductsBySeries(s.slug);
+    const cat = prods[0]?.categorySlug;
+    if (cat) params.push({ segments: [cat, s.slug] });
+  }
+
   return params;
 }
 
@@ -163,6 +188,10 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
       const cat = pickLocalized(route.category.name, locale);
       const tail = locale === "uk" ? "купити в Україні" : "купить в Украине";
       return `${cat} ${route.brand.name} — ${tail} | TTMAX`;
+    }
+    case "series": {
+      const tail = locale === "uk" ? "купити в Україні" : "купить в Украине";
+      return `${route.series.name} — ${tail} | TTMAX`;
     }
     case "product":
       return pickLocalized(route.product.title, locale);
@@ -181,6 +210,12 @@ export function routeDescription(route: CatalogRoute, locale: Locale): string {
         ? `${route.brand.name}: ${cat} для настільного тенісу. Офіційний товар, гарантія, доставка по Україні.`
         : `${route.brand.name}: ${cat} для настольного тенниса. Официальный товар, гарантия, доставка по Украине.`;
     }
+    case "series": {
+      const cat = pickLocalized(route.category.name, locale).toLowerCase();
+      return locale === "uk"
+        ? `Серія ${route.series.name}: ${cat} для настільного тенісу. Офіційний товар, гарантія, доставка по Україні.`
+        : `Серия ${route.series.name}: ${cat} для настольного тенниса. Официальный товар, гарантия, доставка по Украине.`;
+    }
     case "product":
       if (route.product.description) return pickLocalized(route.product.description, locale);
       return locale === "uk"
@@ -197,6 +232,8 @@ export function routeH1(route: CatalogRoute, locale: Locale): string {
       return route.brand.name;
     case "brandCategory":
       return `${pickLocalized(route.category.name, locale)} ${route.brand.name}`;
+    case "series":
+      return `${pickLocalized(route.category.name, locale)} ${route.series.name}`;
     case "product":
       return pickLocalized(route.product.name, locale);
   }
@@ -210,7 +247,10 @@ export function catalogBreadcrumbs(
   const home = { name: locale === "uk" ? "Головна" : "Главная", path: "/" };
   switch (route.kind) {
     case "category":
-      return [home, { name: pickLocalized(route.category.name, locale), path: `/${route.category.slug}` }];
+      return [
+        home,
+        { name: pickLocalized(route.category.name, locale), path: `/${route.category.slug}` },
+      ];
     case "brand":
       return [home, { name: route.brand.name, path: `/${route.brand.slug}` }];
     case "brandCategory":
@@ -220,6 +260,18 @@ export function catalogBreadcrumbs(
         {
           name: pickLocalized(route.category.name, locale),
           path: `/${route.brand.slug}/${route.category.slug}`,
+        },
+      ];
+    case "series":
+      return [
+        home,
+        {
+          name: pickLocalized(route.category.name, locale),
+          path: `/${route.category.slug}`,
+        },
+        {
+          name: route.series.name,
+          path: `/${route.category.slug}/${route.series.slug}`,
         },
       ];
     case "product":
