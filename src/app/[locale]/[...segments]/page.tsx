@@ -15,6 +15,7 @@ import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
+import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
 import {
   CatalogFilters,
   type CatalogCardVM,
@@ -118,11 +119,56 @@ export async function generateMetadata({
 }
 
 /** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
+const GEAR_TYPE_LABEL: Record<string, { uk: string; ru: string }> = {
+  tshirt: { uk: "Футболка", ru: "Футболка" },
+  shorts: { uk: "Шорти", ru: "Шорты" },
+  suit: { uk: "Костюм", ru: "Костюм" },
+  jacket: { uk: "Куртка", ru: "Куртка" },
+  track: { uk: "Олімпійка", ru: "Олимпийка" },
+  sweater: { uk: "Кофта", ru: "Кофта" },
+  skirt: { uk: "Спідниця", ru: "Юбка" },
+  socks: { uk: "Шкарпетки", ru: "Носки" },
+  cap: { uk: "Кепка", ru: "Кепка" },
+  band: { uk: "Пов'язка", ru: "Повязка" },
+  shoes: { uk: "Кросівки", ru: "Кроссовки" },
+  slippers: { uk: "Шльопанці", ru: "Шлёпанцы" },
+  balls: { uk: "М'ячі", ru: "Мячи" },
+  glue: { uk: "Клей", ru: "Клей" },
+  cleaner: { uk: "Очисник", ru: "Очиститель" },
+  care: { uk: "Догляд", ru: "Уход" },
+  "edge-tape": { uk: "Торцева стрічка", ru: "Торцевая лента" },
+  overgrip: { uk: "Обмотка", ru: "Обмотка" },
+  film: { uk: "Захисна плівка", ru: "Защитная плёнка" },
+  "ball-tube": { uk: "Тубус для м'ячів", ru: "Тубус для мячей" },
+  insole: { uk: "Устілки", ru: "Стельки" },
+  towel: { uk: "Рушник", ru: "Полотенце" },
+  bottle: { uk: "Пляшка", ru: "Бутылка" },
+  bag: { uk: "Сумка", ru: "Сумка" },
+  backpack: { uk: "Рюкзак", ru: "Рюкзак" },
+  case: { uk: "Чохол", ru: "Чехол" },
+  "shoe-bag": { uk: "Сумка для взуття", ru: "Сумка для обуви" },
+  "ball-bag": { uk: "Сумка для м'ячів", ru: "Сумка для мячей" },
+  net: { uk: "Сітка", ru: "Сетка" },
+};
+
+const GENDER_LABEL: Record<string, { uk: string; ru: string }> = {
+  men: { uk: "Чоловіча", ru: "Мужская" },
+  women: { uk: "Жіноча", ru: "Женская" },
+  unisex: { uk: "Унісекс", ru: "Унисекс" },
+};
+
+const gearTypeLabel = (v: string, locale: Locale) => GEAR_TYPE_LABEL[v]?.[locale] ?? v;
+const genderLabel = (v: string, locale: Locale) => GENDER_LABEL[v]?.[locale] ?? v;
+
 const CART_CATEGORY: Record<string, ProductCategory> = {
   nakladki: "rubber",
   osnovaniya: "base",
   myachi: "ball",
   odyag: "apparel",
+  obuv: "shoes",
+  aksessuary: "accessory",
+  chehly: "bag",
+  setki: "net",
 };
 
 /* Подписи характеристик основания (клас / тип волокна). */
@@ -339,6 +385,10 @@ function ListingView({
 function cardSecondary(product: CatalogProduct, locale: Locale): string {
   if (product.base) return BLADE_CLASS_LABEL[product.base.bladeClass][locale];
   if (product.surfaceType) return labelFor("surfaceType", product.surfaceType, locale);
+  if (product.gear) {
+    const tp = gearTypeLabel(product.gear.gearType, locale);
+    return product.gear.gender ? `${tp} · ${genderLabel(product.gear.gender, locale)}` : tp;
+  }
   return "";
 }
 
@@ -369,6 +419,8 @@ function buildCardVMs(
         surface: p.base?.surface,
         surfaceType: p.surfaceType,
         playStyle: p.playStyle,
+        gearType: p.gear?.gearType,
+        gender: p.gear?.gender,
         level: p.level,
       },
       order: i,
@@ -379,6 +431,7 @@ function buildCardVMs(
 /** Динамические фасеты: только значения, реально присутствующие в списке. */
 function buildFacetGroups(products: CatalogProduct[], locale: Locale): FacetGroup[] {
   const isBases = products.some((p) => p.base);
+  const isGear = products.some((p) => p.gear);
   const groups: FacetGroup[] = [];
 
   const collect = (
@@ -419,6 +472,20 @@ function buildFacetGroups(products: CatalogProduct[], locale: Locale): FacetGrou
       (p) => p.base?.surface,
       (v) => BLADE_SURFACE_LABEL[v as keyof typeof BLADE_SURFACE_LABEL] ?? v,
       ["wood", "alc", "super-alc", "zlc", "super-zlc", "zlf", "t5000", "cnf", "caf", "carbon"],
+    );
+  } else if (isGear) {
+    collect(
+      "gearType",
+      locale === "ru" ? "Тип" : "Тип",
+      (p) => p.gear?.gearType,
+      (v) => gearTypeLabel(v, locale),
+    );
+    collect(
+      "gender",
+      locale === "ru" ? "Пол" : "Стать",
+      (p) => p.gear?.gender,
+      (v) => genderLabel(v, locale),
+      ["men", "women", "unisex"],
     );
   } else {
     collect(
@@ -576,7 +643,9 @@ function ProductView({
   media: EntityMediaMap;
   content: ContentBlock | null;
 }) {
-  return route.product.base ? (
+  return route.product.gear ? (
+    <GearView route={route} locale={locale} media={media} content={content} />
+  ) : route.product.base ? (
     <BaseView route={route} locale={locale} media={media} content={content} />
   ) : (
     <RubberView route={route} locale={locale} media={media} content={content} />
@@ -751,6 +820,77 @@ function RubberView({
         </h2>
         <SpecTable rows={rows} />
       </div>
+    </ProductShell>
+  );
+}
+
+/* ---- Основание ---- */
+
+function GearView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const gear = product.gear!;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
+  const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
+
+  const rows: { label: string; value: string }[] = [];
+  rows.push({ label: L("Тип", "Тип"), value: gearTypeLabel(gear.gearType, locale) });
+  if (gear.gender) rows.push({ label: L("Стать", "Пол"), value: genderLabel(gear.gender, locale) });
+  if (gear.sizes && gear.sizes.length)
+    rows.push({ label: L("Розміри", "Размеры"), value: gear.sizes.join(", ") });
+  if (gear.stars) rows.push({ label: L("Зірковість", "Звёздность"), value: gear.stars });
+  if (gear.packSize) rows.push({ label: L("В упаковці", "В упаковке"), value: gear.packSize });
+  if (gear.volumeMl) rows.push({ label: L("Об'єм", "Объём"), value: `${gear.volumeMl} мл` });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
+      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
+      related={related}
+      locale={locale}
+      media={media}
+      content={content}
+    >
+      <div className="mt-7">
+        <GearPurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          sizes={gear.sizes}
+          priceFrom={product.priceFrom}
+          inStock={product.inStock}
+          phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+        />
+      </div>
+
+      {rows.length > 0 && (
+        <div className="mt-9">
+          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+            {catalogUi.specs[locale]}
+          </h2>
+          <SpecTable rows={rows} />
+        </div>
+      )}
     </ProductShell>
   );
 }
