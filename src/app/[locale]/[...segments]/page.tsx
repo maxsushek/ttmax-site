@@ -3,6 +3,7 @@
 // Не перехватывает главную (/{locale}) и имеет низший приоритет, поэтому ничего существующего не ломает.
 // Поддержка двух видов товара: накладки (kind: "rubber") и основания (kind: "base").
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Section } from "@/components/ui/Section";
@@ -62,6 +63,8 @@ function contentKeyForRoute(
       return { entityType: "brand", slug: route.brand.slug };
     case "brandCategory":
       return { entityType: "brandCategory", slug: `${route.brand.slug}/${route.category.slug}` };
+    case "series":
+      return { entityType: "series", slug: route.series.slug };
     default:
       return null;
   }
@@ -273,12 +276,16 @@ function ListingView({
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
         </div>
       ) : (
-        <CatalogFilters
-          locale={locale}
-          items={buildCardVMs(route.products, locale, media)}
-          groups={buildFacetGroups(route.products, locale)}
-          priceBuckets={buildPriceBuckets(route.products, locale)}
-        />
+        <Suspense
+          fallback={<ProductGrid products={route.products} locale={locale} media={media} />}
+        >
+          <CatalogFilters
+            locale={locale}
+            items={buildCardVMs(route.products, locale, media)}
+            groups={buildFacetGroups(route.products, locale)}
+            priceBuckets={buildPriceBuckets(route.products, locale)}
+          />
+        </Suspense>
       )}
       <ContentSections block={content} locale={locale} />
     </>
