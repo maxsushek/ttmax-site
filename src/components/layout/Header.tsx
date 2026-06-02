@@ -81,11 +81,11 @@ export function Header({
                       >
                         {link.sub.map((s) => (
                           <Link
-                            key={s}
-                            href={`/${locale}${link.href}`}
+                            key={s.href}
+                            href={`/${locale}${s.href}`}
                             className="block border-b border-white/[0.04] px-4 py-2.5 font-body text-[13px] font-medium tracking-[0.05em] text-ink-dim transition-all last:border-0 hover:bg-accent/[0.05] hover:pl-5 hover:text-accent"
                           >
-                            {s}
+                            {s.label}
                           </Link>
                         ))}
                       </div>
