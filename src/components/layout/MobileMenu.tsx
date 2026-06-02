@@ -135,8 +135,8 @@ export function MobileMenu({
                         <div className="py-1.5">
                           {link.sub.map((s) => (
                             <Link
-                              key={s}
-                              href={`/${locale}${link.href}`}
+                              key={s.href}
+                              href={`/${locale}${s.href}`}
                               onClick={onClose}
                               className="flex items-center gap-2 px-5 py-2.5 pl-[52px] font-body text-sm text-ink-dim transition-all hover:pl-[60px] hover:text-accent"
                             >
@@ -144,7 +144,7 @@ export function MobileMenu({
                                 aria-hidden
                                 className="h-1 w-1 shrink-0 rounded-full bg-accent/40"
                               />
-                              {s}
+                              {s.label}
                             </Link>
                           ))}
                         </div>
