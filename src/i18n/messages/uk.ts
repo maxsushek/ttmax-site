@@ -88,6 +88,10 @@ export const uk: Messages = {
       rubber: "Накладка",
       ball: "М'яч",
       apparel: "Одяг",
+      shoes: "Взуття",
+      accessory: "Аксесуар",
+      bag: "Сумка/чохол",
+      net: "Сітка",
     },
     badges: {
       hit: "Хіт",
