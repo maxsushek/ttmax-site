@@ -30,9 +30,9 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "apparel",
     href: "/odyag",
     sub: [
-      { label: "Футболки", href: "/odyag" },
-      { label: "Шорти", href: "/odyag" },
-      { label: "Взуття", href: "/odyag" },
+      { label: "Футболки", href: "/odyag?gearType=tshirt" },
+      { label: "Шорти", href: "/odyag?gearType=shorts" },
+      { label: "Взуття", href: "/obuv" },
     ],
   },
   {
@@ -43,9 +43,9 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "accessories",
     href: "/aksessuary",
     sub: [
-      { label: "Клеї", href: "/aksessuary" },
-      { label: "Чохли", href: "/aksessuary" },
-      { label: "Сітки", href: "/aksessuary" },
+      { label: "Клеї", href: "/aksessuary?gearType=glue" },
+      { label: "Чохли та сумки", href: "/chehly" },
+      { label: "Сітки", href: "/setki" },
     ],
   },
   {
