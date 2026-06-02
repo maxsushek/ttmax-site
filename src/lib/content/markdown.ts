@@ -1,7 +1,9 @@
 // src/lib/content/markdown.ts
 // Мінімальний БЕЗПЕЧНИЙ markdown→HTML для адмінських SEO-текстів.
 // Спершу екрануємо весь HTML (захист від XSS), потім вмикаємо лише дозволений набір:
-// заголовки ## / ###, абзаци, переноси, списки "- ", жирний **…**, курсив *…*, посилання [текст](url).
+// заголовки # / ## / ###, абзаци, списки "- " або "* ", жирний **…**, курсив *…*, посилання [текст](url).
+// РОЗБІР ПОРЯДКОВИЙ: заголовок/список/абзац визначаються по рядку — не залежить від порожніх рядків,
+// тож "## Заголовок", "### Підзаголовок" і текст підряд (через один \n) рендеряться коректно.
 // Зовнішні посилання отримують rel/target; внутрішні (з "/") лишаються dofollow для перелінковки.
 
 function escapeHtml(s: string): string {
@@ -29,23 +31,54 @@ function inline(s: string): string {
 
 /** Повертає безпечний HTML-рядок. Порожній вхід → "". */
 export function renderMarkdown(md: string): string {
-  const escaped = escapeHtml(md.replace(/\r\n/g, "\n").trim());
-  if (!escaped) return "";
-  const blocks = escaped.split(/\n{2,}/);
+  const text = escapeHtml(md.replace(/\r\n/g, "\n").trim());
+  if (!text) return "";
+
   const html: string[] = [];
-  for (const block of blocks) {
-    const lines = block.split("\n");
-    const first = lines[0] ?? "";
-    if (lines.length === 1 && /^### /.test(first)) {
-      html.push(`<h3>${inline(first.slice(4))}</h3>`);
-    } else if (lines.length === 1 && /^## /.test(first)) {
-      html.push(`<h2>${inline(first.slice(3))}</h2>`);
-    } else if (lines.every((l) => /^[-*] /.test(l))) {
-      const items = lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join("");
-      html.push(`<ul>${items}</ul>`);
+  let para: string[] = [];
+  let list: string[] = [];
+
+  const flushPara = () => {
+    if (para.length) {
+      html.push(`<p>${inline(para.join(" "))}</p>`);
+      para = [];
+    }
+  };
+  const flushList = () => {
+    if (list.length) {
+      html.push(`<ul>${list.map((i) => `<li>${inline(i)}</li>`).join("")}</ul>`);
+      list = [];
+    }
+  };
+  const flushAll = () => {
+    flushList();
+    flushPara();
+  };
+
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (!line) {
+      flushAll();
+      continue;
+    }
+    if (/^### /.test(line)) {
+      flushAll();
+      html.push(`<h3>${inline(line.slice(4))}</h3>`);
+    } else if (/^## /.test(line)) {
+      flushAll();
+      html.push(`<h2>${inline(line.slice(3))}</h2>`);
+    } else if (/^# /.test(line)) {
+      // На сторінці вже є H1 — одиничний "#" трактуємо як H2.
+      flushAll();
+      html.push(`<h2>${inline(line.slice(2))}</h2>`);
+    } else if (/^[-*] /.test(line)) {
+      flushPara();
+      list.push(line.slice(2));
     } else {
-      html.push(`<p>${inline(lines.join("<br/>"))}</p>`);
+      flushList();
+      para.push(line);
     }
   }
+  flushAll();
   return html.join("");
 }
