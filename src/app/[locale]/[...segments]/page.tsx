@@ -39,6 +39,12 @@ import {
 } from "@/lib/catalog/routing";
 import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
 import { getContent, type ContentBlock, type ContentEntityType } from "@/lib/content/get";
+import {
+  buildTokenContext,
+  expandContentBlock,
+  expandTokens,
+  pluralModels,
+} from "@/lib/content/tokens";
 import { ContentIntro, ContentSections } from "@/components/content/ContentSections";
 
 export const dynamicParams = true;
@@ -81,11 +87,32 @@ export async function generateMetadata({
   if (!route) return { robots: { index: false, follow: false } };
   const ck = contentKeyForRoute(route);
   const content = ck ? await getContent(ck.entityType, ck.slug, l) : null;
+
+  // Токени: живі ціна/кількість/рік підставляються на рендері (з оверрайдами), без ручної правки.
+  const overrides = await getOverrides();
+  const currentProducts = route.kind === "product" ? [route.product] : route.products;
+  const tctx = buildTokenContext({ locale: l, overrides, currentProducts });
+
+  const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx) ?? "";
+  let description =
+    expandTokens(content?.metaDescription || routeDescription(route, l), tctx) ?? "";
+
+  // Авто-числа в СГЕНЕРОВАНИХ (неавторських) описах категорій/серій — щоб нові сторінки
+  // мали актуальну ціну/кількість без ручного редагування.
+  if (!content?.metaDescription && (route.kind === "category" || route.kind === "series")) {
+    const bits: string[] = [];
+    if (tctx.current.count > 0)
+      bits.push(`${tctx.current.count} ${pluralModels(tctx.current.count, l)}`);
+    if (tctx.current.minPrice != null)
+      bits.push(`${l === "uk" ? "від" : "от"} ${formatPrice(tctx.current.minPrice)}`);
+    if (bits.length) description = `${description} ${bits.join(" · ")}`.trim();
+  }
+
   return buildCatalogMetadata({
     locale: l,
     pathname: "/" + segments.join("/"),
-    title: content?.metaTitle || routeTitle(route, l),
-    description: content?.metaDescription || routeDescription(route, l),
+    title,
+    description,
     index: route.index && !content?.noindex,
   });
 }
@@ -140,21 +167,37 @@ export default async function CatalogPage({
 
   // Контентний шар (опис/FAQ/порівняння) — по сутності маршруту й поточній мові.
   const ck = contentKeyForRoute(route);
-  const content = ck ? await getContent(ck.entityType, ck.slug, locale) : null;
+  const rawContent = ck ? await getContent(ck.entityType, ck.slug, locale) : null;
+
+  // Токени контенту: живі значення (ціна з оверрайдами, кількість, рік) у всіх текстах блоку.
+  const currentProducts = eroute.kind === "product" ? [eroute.product] : eroute.products;
+  const tctx = buildTokenContext({ locale, overrides, currentProducts });
+  const content = expandContentBlock(rawContent, tctx);
 
   const crumbs = catalogBreadcrumbs(route, locale);
   const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
   const productLd =
     eroute.kind === "product"
-      ? productJsonLd({
-          name: pickLocalized(eroute.product.name, locale),
-          description: routeDescription(eroute, locale),
-          url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
-          brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
-          price: getMinPrice(eroute.product),
-          currency: "UAH",
-          inStock: isInStock(eroute.product),
-        })
+      ? (() => {
+          const vPrices = eroute.product.variants
+            .map((v) => v.price)
+            .filter((n): n is number => typeof n === "number" && n > 0);
+          const lowPrice = vPrices.length ? Math.min(...vPrices) : undefined;
+          const highPrice = vPrices.length ? Math.max(...vPrices) : undefined;
+          return productJsonLd({
+            name: pickLocalized(eroute.product.name, locale),
+            description: expandTokens(routeDescription(eroute, locale), tctx) ?? "",
+            url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
+            brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
+            price: getMinPrice(eroute.product),
+            currency: "UAH",
+            inStock: isInStock(eroute.product),
+            lowPrice,
+            highPrice,
+            offerCount: eroute.product.variants.length,
+            priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+          });
+        })()
       : null;
 
   // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
