@@ -9,12 +9,17 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { SETTINGS_TAG } from "@/lib/settings/get";
 import { COUNTER_KEYS } from "@/lib/analytics/ids";
 import { CONTACT_KEYS } from "@/lib/contact/get";
+import { HOME_KEY_VALUES } from "@/lib/homepage/keys";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const ALLOWED = new Set<string>([...Object.values(COUNTER_KEYS), ...Object.values(CONTACT_KEYS)]);
+const ALLOWED = new Set<string>([
+  ...Object.values(COUNTER_KEYS),
+  ...Object.values(CONTACT_KEYS),
+  ...HOME_KEY_VALUES,
+]);
 
 function db(): SupabaseClient | null {
   const c = getSupabaseServerClient({ useServiceRole: true });
