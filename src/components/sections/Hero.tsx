@@ -5,11 +5,16 @@ import { t } from "@/i18n";
 import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
+import { getSettings } from "@/lib/settings/get";
+import { heroTitleOverride } from "@/lib/homepage/home";
 import type { Messages } from "@/i18n/messages/types";
+import type { Locale } from "@/i18n/config";
 
-export async function Hero({ messages }: { messages: Messages }) {
+export async function Hero({ messages, locale }: { messages: Messages; locale: Locale }) {
   const m = messages.hero;
   const media = await getMediaMap();
+  const settings = await getSettings();
+  const titleOverride = heroTitleOverride(settings, locale);
   const heroAsset = getSiteAsset(media, "hero");
   const heroUrl = heroAsset ? cldUrl(heroAsset.publicId, { w: 600, h: 600, crop: "fit" }) : "";
 
@@ -40,8 +45,14 @@ export async function Hero({ messages }: { messages: Messages }) {
             </div>
 
             <h1 className="mb-7 text-balance font-display text-display-xl font-black uppercase tracking-tight">
-              <span className="block text-[0.72em] text-white/55">{m.title1}</span>
-              <span className="text-gradient-accent block">{m.title2}</span>
+              {titleOverride ? (
+                <span className="text-gradient-accent block">{titleOverride}</span>
+              ) : (
+                <>
+                  <span className="block text-[0.72em] text-white/55">{m.title1}</span>
+                  <span className="text-gradient-accent block">{m.title2}</span>
+                </>
+              )}
             </h1>
 
             <p className="mb-9 max-w-[400px] text-pretty font-body text-base leading-[1.75] text-ink-muted">
