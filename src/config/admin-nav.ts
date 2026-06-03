@@ -23,6 +23,10 @@ export const adminNav: AdminNavGroup[] = [
     items: [{ label: "Дашборд", href: "/admin" }],
   },
   {
+    title: "Головна",
+    items: [{ label: "Головна (хіти, заголовки)", href: "/admin/homepage" }],
+  },
+  {
     title: "Продажі",
     items: [
       { label: "Заявки", href: "/admin/leads" },
