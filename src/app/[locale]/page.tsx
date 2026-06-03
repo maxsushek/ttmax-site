@@ -14,11 +14,7 @@ import { faqJsonLd } from "@/lib/seo/jsonld";
 // ISR: после загрузки фото в админке кеш витрины инвалидируется тегом и страница пересобирается.
 export const revalidate = 600;
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: l } = await params;
   if (!isLocale(l)) notFound();
   const locale: Locale = l;
@@ -32,7 +28,7 @@ export default async function HomePage({
           __html: JSON.stringify(faqJsonLd(messages.faq.items)),
         }}
       />
-      <Hero messages={messages} />
+      <Hero messages={messages} locale={locale} />
       <Marquee />
       <TrustBar messages={messages} />
       <Categories locale={locale} messages={messages} />
