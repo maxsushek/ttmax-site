@@ -89,7 +89,7 @@ export const ru: Messages = {
   },
   brands: {
     kicker: "Коллекции Butterfly",
-    title: "От хобби до олимпийского уровня",
+    title: "Инвентарь Butterfly для любого уровня",
     productsCount: "{count} товаров",
   },
   trustBar: {
