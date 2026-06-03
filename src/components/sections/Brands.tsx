@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Container, Section, SectionKicker, SectionTitle } from "@/components/ui/Section";
 import { brands } from "@/data/brands";
 import { t } from "@/i18n";
+import { getSettings } from "@/lib/settings/get";
+import { brandsTitleOverride } from "@/lib/homepage/home";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 
@@ -15,14 +17,10 @@ const COLLECTION_HREF: Record<string, string> = {
   wear: "/odyag",
 };
 
-export function Brands({
-  locale,
-  messages,
-}: {
-  locale: Locale;
-  messages: Messages;
-}) {
+export async function Brands({ locale, messages }: { locale: Locale; messages: Messages }) {
   const m = messages.brands;
+  const settings = await getSettings();
+  const title = brandsTitleOverride(settings, locale) || m.title;
   return (
     <Section
       className="border-t border-border-subtle bg-white/[0.007] !py-16 lg:!py-20"
@@ -31,7 +29,7 @@ export function Brands({
       <Container>
         <div className="mb-11 text-center">
           <SectionKicker>{m.kicker}</SectionKicker>
-          <SectionTitle id="brands-title">{m.title}</SectionTitle>
+          <SectionTitle id="brands-title">{title}</SectionTitle>
         </div>
         <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
           {brands.map((b) => (
