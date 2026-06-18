@@ -23,7 +23,8 @@ import {
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
-import { getMediaMap, pickPrimary, type EntityMediaMap } from "@/lib/media/get";
+import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
+import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { cldUrl } from "@/lib/cloudinary/url";
 import Image from "next/image";
 import {
@@ -652,12 +653,24 @@ function ProductView({
   );
 }
 
+/** Собирает все фото товара из entity_media: url (900×900) + thumb (160×160). */
+function buildGallery(
+  media: EntityMediaMap,
+  slug: string,
+  fallbackAlt: string,
+): GalleryImage[] {
+  return pickAll(media, "product", slug).map((m) => ({
+    url: cldUrl(m.publicId, { w: 900, h: 900 }),
+    thumb: cldUrl(m.publicId, { w: 160, h: 160 }),
+    alt: m.alt ?? fallbackAlt,
+  }));
+}
+
 function ProductShell({
   brandName,
   h1,
   visualLabel,
-  imageUrl,
-  imageAlt,
+  images,
   children,
   related,
   locale,
@@ -667,8 +680,7 @@ function ProductShell({
   brandName: string;
   h1: string;
   visualLabel: string;
-  imageUrl: string | null;
-  imageAlt: string;
+  images: GalleryImage[];
   children: React.ReactNode;
   related: CatalogProduct[];
   locale: Locale;
@@ -678,25 +690,16 @@ function ProductShell({
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
       <div>
-        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={imageAlt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <>
-              <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
-              <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
-                {visualLabel}
-              </span>
-            </>
-          )}
-        </div>
+        {images.length > 0 ? (
+          <ProductGallery images={images} />
+        ) : (
+          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
+            <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
+            <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
+              {visualLabel}
+            </span>
+          </div>
+        )}
       </div>
 
       <div>
@@ -786,8 +789,7 @@ function RubberView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
-      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
       related={related}
       locale={locale}
       media={media}
@@ -860,8 +862,7 @@ function GearView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
-      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
       related={related}
       locale={locale}
       media={media}
@@ -930,8 +931,7 @@ function BaseView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      imageUrl={img ? cldUrl(img.publicId, { w: 900, h: 900 }) : null}
-      imageAlt={img?.alt ?? `${brandName} ${product.model}`}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
       related={related}
       locale={locale}
       media={media}
