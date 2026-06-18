@@ -2814,42 +2814,6 @@ export const catalogBases: CatalogProduct[] = [
     }
   },
   {
-    "id": "balsa-x5-22",
-    "slug": "balsa-x5-22",
-    "brandSlug": "butterfly",
-    "seriesSlug": "balsa",
-    "categorySlug": "osnovaniya",
-    "model": "Balsa X5 22",
-    "kind": "base",
-    "name": {
-      "uk": "Butterfly Balsa X5 22",
-      "ru": "Butterfly Balsa X5 22"
-    },
-    "title": {
-      "uk": "Основа Butterfly Balsa X5 22 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Balsa X5 22 — купить в Украине | цена, отзывы"
-    },
-    "level": "pro",
-    "specs": {},
-    "thicknessOptions": [],
-    "colors": [],
-    "variants": [],
-    "images": [],
-    "priority": 2,
-    "priceFrom": 3375,
-    "inStock": true,
-    "base": {
-      "bladeClass": "off-plus",
-      "surface": "wood",
-      "plies": "5",
-      "handles": [
-        "fl",
-        "st",
-        "an"
-      ]
-    }
-  },
-  {
     "id": "balsa-carbo-x5",
     "slug": "balsa-carbo-x5",
     "brandSlug": "butterfly",
