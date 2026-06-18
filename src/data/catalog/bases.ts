@@ -3028,5 +3028,256 @@ export const catalogBases: CatalogProduct[] = [
         "an"
       ]
     }
+  },
+  {
+    "id": "grubba-all-plus",
+    "slug": "grubba-all-plus",
+    "brandSlug": "butterfly",
+    "seriesSlug": "grubba",
+    "categorySlug": "osnovaniya",
+    "model": "Grubba ALL+",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Grubba ALL+",
+      "ru": "Butterfly Grubba ALL+"
+    },
+    "title": {
+      "uk": "Основа Butterfly Grubba ALL+ — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Grubba ALL+ — купить в Украине | цена, отзывы"
+    },
+    "level": "amateur",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "priceFrom": 2095,
+    "inStock": true,
+    "base": {
+      "bladeClass": "all-plus",
+      "surface": "wood",
+      "plies": "5",
+      "weightG": 85,
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "balsa-carbo-x5-off",
+    "slug": "balsa-carbo-x5-off",
+    "brandSlug": "butterfly",
+    "seriesSlug": "balsa",
+    "categorySlug": "osnovaniya",
+    "model": "Balsa Carbo X5",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Balsa Carbo X5",
+      "ru": "Butterfly Balsa Carbo X5"
+    },
+    "title": {
+      "uk": "Основа Butterfly Balsa Carbo X5 — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Balsa Carbo X5 — купить в Украине | цена, отзывы"
+    },
+    "level": "advanced",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "priceFrom": 3408,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off",
+      "surface": "carbon",
+      "plies": "5",
+      "weightG": 80,
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "jun-mizutani-zlc",
+    "slug": "jun-mizutani-zlc",
+    "brandSlug": "butterfly",
+    "seriesSlug": "jun-mizutani",
+    "categorySlug": "osnovaniya",
+    "model": "Jun Mizutani ZLC",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Jun Mizutani ZLC",
+      "ru": "Butterfly Jun Mizutani ZLC"
+    },
+    "title": {
+      "uk": "Основа Butterfly Jun Mizutani ZLC — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Jun Mizutani ZLC — купить в Украине | цена, отзывы"
+    },
+    "level": "pro",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "priceFrom": 12595,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off-plus",
+      "surface": "zlc",
+      "plies": "5+2",
+      "weightG": 90,
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "fan-zhendong-cnf",
+    "slug": "fan-zhendong-cnf",
+    "brandSlug": "butterfly",
+    "seriesSlug": "fan-zhendong",
+    "categorySlug": "osnovaniya",
+    "model": "Fan Zhendong CNF",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Fan Zhendong CNF",
+      "ru": "Butterfly Fan Zhendong CNF"
+    },
+    "title": {
+      "uk": "Основа Butterfly Fan Zhendong CNF — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Fan Zhendong CNF — купить в Украине | цена, отзывы"
+    },
+    "level": "advanced",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off",
+      "surface": "cnf",
+      "plies": "5+2",
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "jun-mizutani-szlc",
+    "slug": "jun-mizutani-szlc",
+    "brandSlug": "butterfly",
+    "seriesSlug": "jun-mizutani",
+    "categorySlug": "osnovaniya",
+    "model": "Jun Mizutani SZLC",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Jun Mizutani SZLC",
+      "ru": "Butterfly Jun Mizutani SZLC"
+    },
+    "title": {
+      "uk": "Основа Butterfly Jun Mizutani SZLC — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Jun Mizutani SZLC — купить в Украине | цена, отзывы"
+    },
+    "level": "pro",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off-plus",
+      "surface": "super-zlc",
+      "plies": "5+2",
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "korbel-japan",
+    "slug": "korbel-japan",
+    "brandSlug": "butterfly",
+    "seriesSlug": "korbel",
+    "categorySlug": "osnovaniya",
+    "model": "Korbel Japan",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Korbel Japan",
+      "ru": "Butterfly Korbel Japan"
+    },
+    "title": {
+      "uk": "Основа Butterfly Korbel Japan — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Korbel Japan — купить в Украине | цена, отзывы"
+    },
+    "level": "advanced",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off",
+      "surface": "wood",
+      "plies": "5",
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
+  },
+  {
+    "id": "primorac-off-japan",
+    "slug": "primorac-off-japan",
+    "brandSlug": "butterfly",
+    "seriesSlug": "primorac",
+    "categorySlug": "osnovaniya",
+    "model": "Primorac OFF Japan",
+    "kind": "base",
+    "name": {
+      "uk": "Butterfly Primorac OFF Japan",
+      "ru": "Butterfly Primorac OFF Japan"
+    },
+    "title": {
+      "uk": "Основа Butterfly Primorac OFF Japan — купити в Україні | ціна, відгуки",
+      "ru": "Основание Butterfly Primorac OFF Japan — купить в Украине | цена, отзывы"
+    },
+    "level": "advanced",
+    "specs": {},
+    "thicknessOptions": [],
+    "colors": [],
+    "variants": [],
+    "images": [],
+    "priority": 2,
+    "inStock": true,
+    "base": {
+      "bladeClass": "off",
+      "surface": "wood",
+      "plies": "5",
+      "handles": [
+        "fl",
+        "st",
+        "an"
+      ]
+    }
   }
 ];
