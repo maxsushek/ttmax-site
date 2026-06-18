@@ -43,7 +43,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <div
-      className="flex flex-col gap-3"
+      className="flex w-full min-w-0 flex-col gap-3"
       tabIndex={0}
       aria-roledescription="carousel"
       onKeyDown={(e) => {
@@ -52,7 +52,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
       }}
     >
       <div
-        className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]"
+        className="group relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -116,7 +116,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
       {count > 1 && (
         <div
           ref={thumbsRef}
-          className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex w-full min-w-0 max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {images.map((img, i) => (
             <button
