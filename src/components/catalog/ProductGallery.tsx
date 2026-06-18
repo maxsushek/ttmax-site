@@ -32,18 +32,19 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
     el?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
   }, [active]);
 
-  if (count === 0) return null;
-
-  const current = images[Math.min(active, count - 1)];
+  const current = count > 0 ? images[Math.min(active, count - 1)] : undefined;
+  if (!current) return null;
 
   const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    touchStartX.current = e.touches[0]?.clientX ?? null;
   };
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40) go(dx < 0 ? active + 1 : active - 1);
+    const startX = touchStartX.current;
     touchStartX.current = null;
+    const endX = e.changedTouches[0]?.clientX;
+    if (startX === null || endX === undefined) return;
+    const dx = endX - startX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? active + 1 : active - 1);
   };
 
   return (
