@@ -11,6 +11,7 @@ import type {
 import { catalogProducts } from "./products";
 import { catalogBases } from "./bases";
 import { catalogGear } from "./gear";
+import { catalogRackets } from "./rackets";
 import { catalogBrands, catalogSeries } from "./brands";
 import { catalogCategories } from "./categories";
 import { rubberFilters } from "./filters";
@@ -19,6 +20,7 @@ export {
   catalogProducts,
   catalogBases,
   catalogGear,
+  catalogRackets,
   catalogBrands,
   catalogSeries,
   catalogCategories,
@@ -26,7 +28,12 @@ export {
 };
 
 /** Спільний пул товарів: накладки (rubber) + основи (base) + екіпірування (gear). */
-const pool: CatalogProduct[] = [...catalogProducts, ...catalogBases, ...catalogGear];
+const pool: CatalogProduct[] = [
+  ...catalogProducts,
+  ...catalogBases,
+  ...catalogGear,
+  ...catalogRackets,
+];
 
 /* ---------- Товары ---------- */
 

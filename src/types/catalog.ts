@@ -78,7 +78,7 @@ export interface CatalogProduct {
   level: Level;
   specs: RubberSpecs;
   /** Вид товару. За замовчуванням — накладка. */
-  kind?: "rubber" | "base" | "gear";
+  kind?: "rubber" | "base" | "gear" | "racket";
   /** Базова ціна (основи/екіпірування мають єдину ціну; накладки — ціну за варіантами). */
   priceFrom?: number;
   /** Наявність на рівні товару (для основ/екіпірування). */
@@ -87,6 +87,8 @@ export interface CatalogProduct {
   base?: BaseSpec;
   /** Характеристики екіпірування: одяг, взуття, м'ячі, аксесуари (kind: "gear"). */
   gear?: GearSpec;
+  /** Склад збірної ракетки (для kind: "racket"): slug основи + накладок FH/BH. */
+  combo?: { blade: string; fh: string; bh: string };
   thicknessOptions: string[];
   colors: Color[];
   /** Развёртка вариантов (толщина × цвет). */

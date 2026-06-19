@@ -8,7 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Section } from "@/components/ui/Section";
 import { isLocale, type Locale } from "@/i18n/config";
-import { getBrandBySlug, getCrossSell, getMinPrice, isInStock } from "@/data/catalog";
+import { getBrandBySlug, getCrossSell, getMinPrice, getProductsByCategory, isInStock } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
 import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
@@ -23,6 +23,9 @@ import {
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
+import { resolveCombo } from "@/lib/catalog/racket";
+import { RacketBenefits } from "@/components/catalog/RacketBenefits";
+import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -162,6 +165,7 @@ const gearTypeLabel = (v: string, locale: Locale) => GEAR_TYPE_LABEL[v]?.[locale
 const genderLabel = (v: string, locale: Locale) => GENDER_LABEL[v]?.[locale] ?? v;
 
 const CART_CATEGORY: Record<string, ProductCategory> = {
+  rakety: "base",
   nakladki: "rubber",
   osnovaniya: "base",
   myachi: "ball",
@@ -378,6 +382,8 @@ function ListingView({
         <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
         </div>
+      ) : route.kind === "category" && route.category.slug === "rakety" ? (
+        <RacketGrid products={route.products} locale={locale} media={media} />
       ) : (
         <Suspense
           fallback={<ProductGrid products={ordered} locale={locale} media={media} />}
@@ -657,7 +663,9 @@ function ProductView({
   media: EntityMediaMap;
   content: ContentBlock | null;
 }) {
-  return route.product.gear ? (
+  return route.product.kind === "racket" ? (
+    <RacketComboView route={route} locale={locale} media={media} content={content} />
+  ) : route.product.gear ? (
     <GearView route={route} locale={locale} media={media} content={content} />
   ) : route.product.base ? (
     <BaseView route={route} locale={locale} media={media} content={content} />
@@ -973,5 +981,235 @@ function BaseView({
         <SpecTable rows={rows} />
       </div>
     </ProductShell>
+  );
+}
+
+/* ---------------- Збірні ракетки (kind: "racket") ---------------- */
+
+/** Триптих із фото компонентів: основа + 2 накладки. */
+function ComboTriptych({
+  parts,
+  media,
+  size = "card",
+}: {
+  parts: CatalogProduct[];
+  media: EntityMediaMap;
+  size?: "card" | "hero";
+}) {
+  const px = size === "hero" ? 420 : 240;
+  const tiles = parts.slice(0, 3).map((p, i) => {
+    const m = pickPrimary(media, "product", p.slug);
+    return {
+      key: `${p.slug}-${i}`,
+      url: m ? cldUrl(m.publicId, { w: px, h: px, crop: "fit" }) : null,
+      label: p.model,
+    };
+  });
+  return (
+    <div className="grid grid-cols-3 gap-2.5">
+      {tiles.map((t) => (
+        <div
+          key={t.key}
+          className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border-strong bg-white/[0.03]"
+        >
+          {t.url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={t.url} alt={t.label} className="h-full w-full object-contain p-1.5" />
+          ) : (
+            <span className="px-1 text-center font-display text-[9px] font-bold uppercase tracking-[0.12em] text-ink-ghost">
+              {t.label}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Сітка карток-збірок (3 фото + ціна зі знижкою). Чиста функція рендера. */
+function racketCardsGrid(
+  rows: { p: CatalogProduct; info: ReturnType<typeof resolveCombo> }[],
+  locale: Locale,
+  media: EntityMediaMap,
+) {
+  return (
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {rows.map(({ p, info }) => (
+        <li key={p.slug}>
+          <Link
+            href={`/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`}
+            className="group flex h-full flex-col rounded-2xl border border-border-subtle bg-bg-raised p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-bg-elevated"
+            data-cta="racket-card"
+            data-location={p.slug}
+          >
+            <ComboTriptych parts={info.parts} media={media} size="card" />
+            <div className="mt-3.5 font-display text-[15px] font-bold uppercase leading-tight tracking-[0.02em] text-ink">
+              {p.name[locale]}
+            </div>
+            <div className="mt-auto flex items-end gap-2 pt-3.5">
+              {info.promoPrice !== undefined ? (
+                <>
+                  <span className="font-display text-xl font-black leading-none text-accent">
+                    {formatPrice(info.promoPrice)}
+                  </span>
+                  {info.oldPrice !== undefined && info.oldPrice > info.promoPrice && (
+                    <span className="text-sm text-ink-dim line-through">
+                      {formatPrice(info.oldPrice)}
+                    </span>
+                  )}
+                  <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-display text-[11px] font-black text-bg-base">
+                    −{info.discountPct}%
+                  </span>
+                </>
+              ) : (
+                <span className="text-sm text-ink-muted">{catalogUi.priceOnRequest[locale]}</span>
+              )}
+            </div>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Сітка категорії /rakety: блок переваг + картки збірок. */
+async function RacketGrid({
+  products,
+  locale,
+  media,
+}: {
+  products: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  const ov = await getOverrides();
+  const rows = products
+    .map((p) => ({ p, info: resolveCombo(p, ov) }))
+    .sort(
+      (a, b) =>
+        (a.p.priority ?? 3) - (b.p.priority ?? 3) ||
+        (a.info.promoPrice ?? Number.MAX_SAFE_INTEGER) -
+          (b.info.promoPrice ?? Number.MAX_SAFE_INTEGER),
+    );
+  return (
+    <div>
+      <div className="mb-6">
+        <RacketBenefits locale={locale} />
+      </div>
+      {racketCardsGrid(rows, locale, media)}
+    </div>
+  );
+}
+
+/** Сторінка збірної ракетки: триптих, ціна -10%, переваги, склад, схожі. */
+async function RacketComboView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const ov = await getOverrides();
+  const info = resolveCombo(product, ov);
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? "Butterfly";
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
+  const heroImg = pickPrimary(media, "product", info.blade?.slug ?? product.slug);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const roles = [
+    L("Основа", "Основание"),
+    L("Накладка (FH)", "Накладка (FH)"),
+    L("Накладка (BH)", "Накладка (BH)"),
+  ];
+  const related = getProductsByCategory("rakety")
+    .filter((p) => p.slug !== product.slug)
+    .slice(0, 3)
+    .map((p) => ({ p, info: resolveCombo(p, ov) }));
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="min-w-0">
+        <ComboTriptych parts={info.parts} media={media} size="hero" />
+      </div>
+
+      <div>
+        <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
+          {brandName}
+        </div>
+        <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
+          {routeH1(route, locale)}
+        </h1>
+        <ContentIntro text={content?.intro} />
+
+        <div className="mt-6">
+          <RacketComboPanel
+            locale={locale}
+            slug={product.slug}
+            brandLabel={brandName}
+            model={product.model}
+            cartCategory={cartCategory}
+            accentColor="#E8FF47"
+            oldPrice={info.oldPrice}
+            promoPrice={info.promoPrice}
+            discountPct={info.discountPct}
+            inStock={product.inStock}
+            phone={siteConfig.phone}
+            imageUrl={heroImg ? cldUrl(heroImg.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+          />
+        </div>
+
+        <div className="mt-6">
+          <RacketBenefits locale={locale} />
+        </div>
+
+        <div className="mt-9">
+          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+            {L("Що всередині", "Что внутри")}
+          </h2>
+          <ul className="space-y-2">
+            {info.parts.map((part, i) => {
+              const pr = getMinPrice(part);
+              return (
+                <li key={`${part.slug}-${i}`}>
+                  <Link
+                    href={`/${locale}/${part.brandSlug}/${part.categorySlug}/${part.slug}`}
+                    className="flex items-center justify-between gap-3 rounded-xl border border-border-strong bg-white/[0.02] px-4 py-3 transition-colors hover:border-accent/40"
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+                        {roles[i] ?? ""}
+                      </span>
+                      <span className="font-semibold text-ink">{part.name[locale]}</span>
+                    </span>
+                    {pr !== undefined && (
+                      <span className="shrink-0 text-sm text-ink-muted">{formatPrice(pr)}</span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <div className="lg:col-span-2">
+          <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
+            {catalogUi.related[locale]}
+          </h2>
+          {racketCardsGrid(related, locale, media)}
+        </div>
+      )}
+
+      {content && (
+        <div className="lg:col-span-2">
+          <ContentSections block={content} locale={locale} />
+        </div>
+      )}
+    </div>
   );
 }
