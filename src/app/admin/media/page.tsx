@@ -17,7 +17,7 @@ export default async function MediaPage() {
 
   const categories: MediaEntity[] = [...catalogCategories]
     .sort((a, b) => a.sort - b.sort)
-    .map((c) => ({ type: "category", slug: c.slug, label: c.name.uk, group: "Категорії" }));
+    .map((c) => ({ type: "category", slug: c.slug, label: c.name.ua, group: "Категорії" }));
 
   const brands: MediaEntity[] = getActiveBrands().map((b) => ({
     type: "brand",

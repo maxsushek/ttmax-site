@@ -844,7 +844,7 @@ function GearView({
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const related = getCrossSell(product);
   const img = pickPrimary(media, "product", product.slug);
-  const L = (ua: string, ru: string) => (locale === "ru" ? ru : uk);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
 
   const rows: { label: string; value: string }[] = [];
   rows.push({ label: L("Тип", "Тип"), value: gearTypeLabel(gear.gearType, locale) });
@@ -915,7 +915,7 @@ function BaseView({
   const related = getCrossSell(product);
   const img = pickPrimary(media, "product", product.slug);
 
-  const L = (ua: string, ru: string) => (locale === "ru" ? ru : uk);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
   const rows: { label: string; value: string }[] = [
     { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
     { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },

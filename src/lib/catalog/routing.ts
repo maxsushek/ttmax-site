@@ -219,7 +219,7 @@ export function routeDescription(route: CatalogRoute, locale: Locale): string {
     case "product":
       if (route.product.description) return pickLocalized(route.product.description, locale);
       return locale === "ua"
-        ? `Купити ${route.product.name.uk} в Україні. Характеристики, ціна, відгуки. Гарантія, доставка.`
+        ? `Купити ${route.product.name.ua} в Україні. Характеристики, ціна, відгуки. Гарантія, доставка.`
         : `Купить ${route.product.name.ru} в Украине. Характеристики, цена, отзывы. Гарантия, доставка.`;
   }
 }

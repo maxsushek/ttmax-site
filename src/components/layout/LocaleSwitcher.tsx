@@ -7,7 +7,7 @@ import { cn } from "@/utils/cn";
 
 export function LocaleSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const pathname = usePathname() ?? `/${currentLocale}`;
-  const stripped = pathname.replace(/^\/(uk|ru)/, "") || "";
+  const stripped = pathname.replace(/^\/(ua|ru)/, "") || "";
 
   return (
     <div className="flex items-center gap-1" role="group" aria-label="Language">

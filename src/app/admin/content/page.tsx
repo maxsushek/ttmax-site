@@ -61,13 +61,13 @@ export default async function AdminContentPage() {
   const products = getAllProducts();
   const activeBrands = getActiveBrands();
   const suggestions: Record<string, { slug: string; label: string }[]> = {
-    product: products.map((p) => ({ slug: p.slug, label: `${p.name.uk} (${p.brandSlug})` })),
-    category: catalogCategories.map((c) => ({ slug: c.slug, label: c.name.uk })),
+    product: products.map((p) => ({ slug: p.slug, label: `${p.name.ua} (${p.brandSlug})` })),
+    category: catalogCategories.map((c) => ({ slug: c.slug, label: c.name.ua })),
     brand: activeBrands.map((b) => ({ slug: b.slug, label: b.name })),
     brandCategory: activeBrands.flatMap((b) =>
       catalogCategories.map((c) => ({
         slug: `${b.slug}/${c.slug}`,
-        label: `${b.name} · ${c.name.uk}`,
+        label: `${b.name} · ${c.name.ua}`,
       })),
     ),
     series: catalogSeries.map((s) => ({ slug: s.slug, label: `${s.name} (${s.brandSlug})` })),
