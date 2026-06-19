@@ -28,6 +28,8 @@ import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
+import { ExpertSections } from "@/components/catalog/ExpertSections";
+import { getExpert } from "@/data/catalog/expert";
 import { cldUrl } from "@/lib/cloudinary/url";
 import Image from "next/image";
 import {
@@ -256,8 +258,15 @@ export default async function CatalogPage({
   // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
   // schema й допомагає AI/Copilot розбирати Q&A. Тримаємо за прапором; розмітка = видимий FAQ.
   const EMIT_FAQ_JSONLD = true;
-  const faqLd =
-    EMIT_FAQ_JSONLD && content?.faq && content.faq.length > 0 ? faqJsonLd(content.faq) : null;
+  const expertFaq =
+    eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
+  const faqItems =
+    content?.faq && content.faq.length > 0
+      ? content.faq
+      : expertFaq && expertFaq.length > 0
+        ? expertFaq.map((f) => ({ q: pickLocalized(f.q, locale), a: pickLocalized(f.a, locale) }))
+        : null;
+  const faqLd = EMIT_FAQ_JSONLD && faqItems ? faqJsonLd(faqItems) : null;
 
   return (
     <Section as="div" className="pt-10">
@@ -700,6 +709,7 @@ function ProductShell({
   locale,
   media,
   content,
+  extra,
 }: {
   brandName: string;
   h1: string;
@@ -710,6 +720,7 @@ function ProductShell({
   locale: Locale;
   media: EntityMediaMap;
   content: ContentBlock | null;
+  extra?: React.ReactNode;
 }) {
   return (
     <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
@@ -736,6 +747,8 @@ function ProductShell({
         <ContentIntro text={content?.intro} />
         {children}
       </div>
+
+      {extra && <div className="lg:col-span-2">{extra}</div>}
 
       {related.length > 0 && (
         <div className="lg:col-span-2">
@@ -807,6 +820,7 @@ function RubberView({
   rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
+  const expertEntry = getExpert(product.slug);
 
   return (
     <ProductShell
@@ -818,6 +832,11 @@ function RubberView({
       locale={locale}
       media={media}
       content={content}
+      extra={
+        expertEntry ? (
+          <ExpertSections entry={expertEntry} locale={locale} currentSlug={product.slug} />
+        ) : null
+      }
     >
       <div className="mt-7">
         <ProductPurchasePanel
