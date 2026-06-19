@@ -40,7 +40,9 @@ import {
   routeDescription,
   routeH1,
   routeTitle,
+  surfaceGroups,
   type CatalogRoute,
+  type SurfaceGroup,
 } from "@/lib/catalog/routing";
 import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
 import { getContent, type ContentBlock, type ContentEntityType } from "@/lib/content/get";
@@ -397,6 +399,7 @@ function ListingView({
         </Suspense>
       )}
       <ContentSections block={content} locale={locale} />
+      {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
     </>
   );
 }
@@ -1006,7 +1009,7 @@ function ComboTriptych({
     const url = m ? cldUrl(m.publicId, { ...dim, crop: "fit" }) : null;
     return url ? (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={url} alt={p?.model ?? ""} className="h-full w-full object-contain p-1" />
+      <img src={url} alt={p?.model ?? ""} loading="lazy" className="h-full w-full object-contain p-1" />
     ) : (
       <span className="px-1 text-center font-display text-[9px] font-bold uppercase leading-tight tracking-[0.1em] text-ink-ghost">
         {p?.model ?? "Butterfly"}
@@ -1215,5 +1218,56 @@ async function RacketComboView({
         </div>
       )}
     </div>
+  );
+}
+
+/** SEO-текст + перелінковка для сторінок-колекцій основ за поверхнею (ALC/ZLC). */
+function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Locale }) {
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const paras = pickLocalized(group.seoText, locale)
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const sibling = surfaceGroups.find(
+    (g) => g.slug !== group.slug && g.category === group.category,
+  );
+  const links: { label: string; href: string }[] = [
+    { label: L("Усі основи Butterfly", "Все основания Butterfly"), href: `/${locale}/${group.category}` },
+  ];
+  if (sibling) {
+    links.push({
+      label: pickLocalized(sibling.name, locale),
+      href: `/${locale}/${sibling.category}/${sibling.slug}`,
+    });
+  }
+  links.push({ label: L("Готові ракетки у зборі", "Готовые ракетки в сборе"), href: `/${locale}/rakety` });
+  links.push({ label: L("Накладки Butterfly", "Накладки Butterfly"), href: `/${locale}/nakladki` });
+
+  return (
+    <section className="mt-12 border-t border-border-subtle pt-8">
+      <div className="max-w-3xl space-y-4">
+        {paras.map((p, i) => (
+          <p key={i} className="font-body text-sm leading-relaxed text-ink-dim">
+            {p}
+          </p>
+        ))}
+      </div>
+      <div className="mt-7">
+        <div className="mb-3 font-display text-xs font-bold uppercase tracking-[0.14em] text-ink-muted">
+          {L("Дивіться також", "Смотрите также")}
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-full border border-border-strong bg-white/[0.02] px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.04em] text-ink transition-colors hover:border-accent/40 hover:text-accent"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
