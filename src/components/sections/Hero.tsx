@@ -46,11 +46,11 @@ export async function Hero({ messages, locale }: { messages: Messages; locale: L
 
             <h1 className="mb-7 text-balance font-display text-display-xl font-black uppercase tracking-tight">
               {titleOverride ? (
-                <span className="text-gradient-accent block">{titleOverride}</span>
+                <span className="text-gradient-accent block py-[0.14em] -my-[0.14em]">{titleOverride}</span>
               ) : (
                 <>
                   <span className="block text-[0.72em] text-white/55">{m.title1}</span>
-                  <span className="text-gradient-accent block">{m.title2}</span>
+                  <span className="text-gradient-accent block py-[0.14em] -my-[0.14em]">{m.title2}</span>
                 </>
               )}
             </h1>
