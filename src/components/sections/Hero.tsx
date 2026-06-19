@@ -56,14 +56,19 @@ export async function Hero({ messages, locale }: { messages: Messages; locale: L
             </h1>
 
             <p className="mb-9 max-w-[400px] text-pretty font-body text-base leading-[1.75] text-ink-muted">
-              {t(m.subtitle, { brandsCount: heroStats.brandsTotal }).replace(
-                t(m.brandsAccent, { brandsCount: heroStats.brandsTotal }),
-                "",
-              )}
-              <span className="font-semibold text-accent">
-                {t(m.brandsAccent, { brandsCount: heroStats.brandsTotal })}
-              </span>
-              .
+              {(() => {
+                const full = t(m.subtitle, { brandsCount: heroStats.brandsTotal });
+                const accent = t(m.brandsAccent, { brandsCount: heroStats.brandsTotal });
+                const idx = full.indexOf(accent);
+                if (idx === -1) return full;
+                return (
+                  <>
+                    {full.slice(0, idx)}
+                    <span className="font-semibold text-accent">{accent}</span>
+                    {full.slice(idx + accent.length)}
+                  </>
+                );
+              })()}
             </p>
 
             <HeroCTA messages={messages} />
