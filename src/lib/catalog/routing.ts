@@ -58,12 +58,75 @@ export type CatalogRoute =
       index: boolean;
     }
   | {
+      kind: "surfaceGroup";
+      category: CatalogCategory;
+      group: SurfaceGroup;
+      products: CatalogProduct[];
+      index: boolean;
+    }
+  | {
       kind: "product";
       brand: CatalogBrand;
       category: CatalogCategory;
       product: CatalogProduct;
       index: boolean;
     };
+
+/** Група основ за типом поверхні (ALC/ZLC) — окрема сторінка-колекція /{category}/{slug}. */
+export type SurfaceGroup = {
+  slug: string;
+  category: string;
+  surfaces: string[];
+  name: Localized;
+  h1: Localized;
+  title: Localized;
+  metaDescription: Localized;
+  intro: Localized;
+};
+
+export const surfaceGroups: SurfaceGroup[] = [
+  {
+    slug: "alc",
+    category: "osnovaniya",
+    surfaces: ["alc", "super-alc"],
+    name: { ua: "Основи ALC", ru: "Основания ALC" },
+    h1: { ua: "Основи Butterfly ALC", ru: "Основания Butterfly ALC" },
+    title: {
+      ua: "Основи Butterfly ALC — купити в Україні | ціна, відгуки | TTMAX",
+      ru: "Основания Butterfly ALC — купить в Украине | цена, отзывы | TTMAX",
+    },
+    metaDescription: {
+      ua: "Основи Butterfly з арилат-карбоном (ALC): Viscaria, Timo Boll ALC, Harimoto ALC. Баланс швидкості та контролю для атаки. Гарантія, доставка по Україні.",
+      ru: "Основания Butterfly с арилат-карбоном (ALC): Viscaria, Timo Boll ALC, Harimoto ALC. Баланс скорости и контроля для атаки. Гарантия, доставка по Украине.",
+    },
+    intro: {
+      ua: "Основи ALC (арилат-карбон) — золотий стандарт для атакувальної гри: швидкість плюс контроль. Серед моделей Butterfly: Viscaria, Timo Boll ALC, Harimoto Tomokazu ALC.",
+      ru: "Основания ALC (арилат-карбон) — золотой стандарт для атакующей игры: скорость плюс контроль. Среди моделей Butterfly: Viscaria, Timo Boll ALC, Harimoto Tomokazu ALC.",
+    },
+  },
+  {
+    slug: "zlc",
+    category: "osnovaniya",
+    surfaces: ["zlc", "super-zlc"],
+    name: { ua: "Основи ZLC", ru: "Основания ZLC" },
+    h1: { ua: "Основи Butterfly ZLC", ru: "Основания Butterfly ZLC" },
+    title: {
+      ua: "Основи Butterfly ZLC — купити в Україні | ціна, відгуки | TTMAX",
+      ru: "Основания Butterfly ZLC — купить в Украине | цена, отзывы | TTMAX",
+    },
+    metaDescription: {
+      ua: "Основи Butterfly із Zylon-карбоном (ZLC): Apolonia ZLC, Zhang Jike ZLC та інші. Максимальна швидкість для гри першим темпом. Гарантія, доставка по Україні.",
+      ru: "Основания Butterfly с Zylon-карбоном (ZLC): Apolonia ZLC, Zhang Jike ZLC и другие. Максимальная скорость для игры первым темпом. Гарантия, доставка по Украине.",
+    },
+    intro: {
+      ua: "Основи ZLC (Zylon-карбон) — жорсткіші та швидші за ALC, для потужної гри першим темпом. Серед моделей: Apolonia ZLC, Zhang Jike ZLC.",
+      ru: "Основания ZLC (Zylon-карбон) — жёстче и быстрее ALC, для мощной игры первым темпом. Среди моделей: Apolonia ZLC, Zhang Jike ZLC.",
+    },
+  },
+];
+
+export const findSurfaceGroup = (slug: string): SurfaceGroup | undefined =>
+  surfaceGroups.find((g) => g.slug === slug);
 
 function activeBrand(slug: string): CatalogBrand | undefined {
   const b = getBrandBySlug(slug);
@@ -113,6 +176,20 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     if (cat && series) {
       const products = getProductsBySeries(series.slug).filter((p) => p.categorySlug === cat.slug);
       return { kind: "series", category: cat, series, products, index: products.length > 0 };
+    }
+    // /{category}/{surface-group} — напр. /osnovaniya/alc, /osnovaniya/zlc
+    const sg = findSurfaceGroup(b);
+    if (cat && sg && sg.category === cat.slug) {
+      const sgProducts = getProductsByCategory(cat.slug).filter((p) =>
+        sg.surfaces.includes(p.base?.surface ?? ""),
+      );
+      return {
+        kind: "surfaceGroup",
+        category: cat,
+        group: sg,
+        products: sgProducts,
+        index: sgProducts.length > 0,
+      };
     }
     return null;
   }
@@ -173,6 +250,14 @@ export function catalogStaticParams(): { segments: string[] }[] {
     if (cat) params.push({ segments: [cat, s.slug] });
   }
 
+  // Хаби груп поверхонь основ: /osnovaniya/alc, /osnovaniya/zlc
+  for (const g of surfaceGroups) {
+    const has = getProductsByCategory(g.category).some((p) =>
+      g.surfaces.includes(p.base?.surface ?? ""),
+    );
+    if (has) params.push({ segments: [g.category, g.slug] });
+  }
+
   return params;
 }
 
@@ -193,6 +278,8 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
       const tail = locale === "ua" ? "купити в Україні" : "купить в Украине";
       return `${route.series.name} — ${tail} | TTMAX`;
     }
+    case "surfaceGroup":
+      return pickLocalized(route.group.title, locale);
     case "product":
       return pickLocalized(route.product.title, locale);
   }
@@ -216,6 +303,8 @@ export function routeDescription(route: CatalogRoute, locale: Locale): string {
         ? `Серія ${route.series.name}: ${cat} для настільного тенісу. Офіційний товар, гарантія, доставка по Україні.`
         : `Серия ${route.series.name}: ${cat} для настольного тенниса. Официальный товар, гарантия, доставка по Украине.`;
     }
+    case "surfaceGroup":
+      return pickLocalized(route.group.metaDescription, locale);
     case "product":
       if (route.product.description) return pickLocalized(route.product.description, locale);
       return locale === "ua"
@@ -234,6 +323,8 @@ export function routeH1(route: CatalogRoute, locale: Locale): string {
       return `${pickLocalized(route.category.name, locale)} ${route.brand.name}`;
     case "series":
       return `${pickLocalized(route.category.name, locale)} ${route.series.name}`;
+    case "surfaceGroup":
+      return pickLocalized(route.group.h1, locale);
     case "product":
       return pickLocalized(route.product.name, locale);
   }
@@ -272,6 +363,18 @@ export function catalogBreadcrumbs(
         {
           name: route.series.name,
           path: `/${route.category.slug}/${route.series.slug}`,
+        },
+      ];
+    case "surfaceGroup":
+      return [
+        home,
+        {
+          name: pickLocalized(route.category.name, locale),
+          path: `/${route.category.slug}`,
+        },
+        {
+          name: pickLocalized(route.group.name, locale),
+          path: `/${route.category.slug}/${route.group.slug}`,
         },
       ];
     case "product":

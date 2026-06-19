@@ -10,14 +10,15 @@ import { getProductsBySeries, getProductsByCategory } from "@/data/catalog";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 
-// Поверхні основ, що вважаємо «ALC / ZLC» для колекції дощок.
-const ALC_ZLC = ["alc", "super-alc", "zlc", "super-zlc"];
+// Поверхні основ за групами (відповідають сторінкам /osnovaniya/alc та /osnovaniya/zlc).
+const ALC = ["alc", "super-alc"];
+const ZLC = ["zlc", "super-zlc"];
 
 type Collection = {
   id: string;
   name: string;
   emoji: string; // фолбек, якщо фото товара-репрезентанта ще не залите
-  href: string; // веде САМЕ на цю частину товарів (серія-хаб або відфільтровані основи)
+  href: string; // веде САМЕ на цю частину товарів (серія-хаб або група основ)
   imageSlug: string; // товар-репрезентант — його головне фото на плитці
   count: number; // к-сть товарів (рахуємо з каталогу, щоб збігалося зі сторінкою)
 };
@@ -27,18 +28,17 @@ export async function Brands({ locale, messages }: { locale: Locale; messages: M
   const [settings, media] = await Promise.all([getSettings(), getMediaMap()]);
   const title = brandsTitleOverride(settings, locale) || m.title;
 
-  const boardsAlcZlc = getProductsByCategory("osnovaniya").filter((p) =>
-    ALC_ZLC.includes(p.base?.surface ?? ""),
-  ).length;
+  const boards = getProductsByCategory("osnovaniya");
+  const countSurfaces = (set: string[]) =>
+    boards.filter((p) => set.includes(p.base?.surface ?? "")).length;
 
   const collections: Collection[] = [
     { id: "dignics", name: "Dignics", emoji: "💎", href: "/nakladki/dignics", imageSlug: "dignics-09c", count: getProductsBySeries("dignics").length },
     { id: "tenergy", name: "Tenergy", emoji: "🔥", href: "/nakladki/tenergy", imageSlug: "tenergy-05", count: getProductsBySeries("tenergy").length },
     { id: "zyre", name: "Zyre", emoji: "⚡", href: "/nakladki/zyre", imageSlug: "zyre-03", count: getProductsBySeries("zyre").length },
     { id: "glayzer", name: "Glayzer", emoji: "✴️", href: "/nakladki/glayzer", imageSlug: "glayzer-09c", count: getProductsBySeries("glayzer").length },
-    { id: "boards", name: "Основи ALC / ZLC", emoji: "🎯", href: "/osnovaniya?surface=alc,super-alc,zlc,super-zlc", imageSlug: "viscaria", count: boardsAlcZlc },
-    // ↓ 6-та плитка — припущення (ваше повідомлення обірвалось на «и»); замініть за потреби.
-    { id: "rozena", name: "Rozena", emoji: "🌟", href: "/nakladki/rozena", imageSlug: "rozena", count: getProductsBySeries("rozena").length },
+    { id: "alc", name: "Основи ALC", emoji: "🎯", href: "/osnovaniya/alc", imageSlug: "viscaria", count: countSurfaces(ALC) },
+    { id: "zlc", name: "Основи ZLC", emoji: "🚀", href: "/osnovaniya/zlc", imageSlug: "apolonia-zlc", count: countSurfaces(ZLC) },
   ];
 
   return (

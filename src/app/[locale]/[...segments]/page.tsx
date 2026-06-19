@@ -347,7 +347,9 @@ function ListingView({
       ? route.category.intro
       : route.kind === "brand"
         ? route.brand.intro
-        : undefined;
+        : route.kind === "surfaceGroup"
+          ? route.group.intro
+          : undefined;
   const introText = content?.intro ?? (routeIntro ? pickLocalized(routeIntro, locale) : undefined);
 
   return (

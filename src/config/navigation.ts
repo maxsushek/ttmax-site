@@ -1,16 +1,19 @@
 // src/config/navigation.ts
 import type { NavItem } from "@/types";
 
-// Пункты ведут на реальные SEO-URL каталога. Подпункты теперь имеют свои адреса:
-//  • основания/накладки → категория с фасет-параметром (CatalogFilters применяет фильтр);
-//  • «Колекції» (Butterfly) → хабы серий /{категория}/{серія};
+// Пункты ведут на реальные SEO-URL каталога. Подпункты имеют свои адреса:
+//  • основания: группы ALC/ZLC → собственные страницы-коллекции /osnovaniya/{alc|zlc};
+//    стили (атака/защита/универсал) → категория с фасет-параметром (CatalogFilters применяет фильтр);
+//  • накладки → категория с фасет-параметром;
+//  • «Колекції» (Butterfly) → хабы серий и групп основ;
 //  • одяг/аксесуари → пока на родительскую категорию (фасеты появятся позже).
-// Параметры фасетов соответствуют реальным значениям данных (bladeClass, surfaceType).
 export const navigation: ReadonlyArray<NavItem> = [
   {
     key: "bases",
     href: "/osnovaniya",
     sub: [
+      { label: "Основи ALC", href: "/osnovaniya/alc" },
+      { label: "Основи ZLC", href: "/osnovaniya/zlc" },
       { label: "Атакуючі", href: "/osnovaniya?bladeClass=off,off-plus" },
       { label: "Захисні", href: "/osnovaniya?bladeClass=def" },
       { label: "Універсальні", href: "/osnovaniya?bladeClass=all,all-plus,off-minus" },
@@ -49,15 +52,16 @@ export const navigation: ReadonlyArray<NavItem> = [
     ],
   },
   {
-    // Лейбл из messages.nav.brands = «Колекції». Только Butterfly. Подпункты → хабы серий.
+    // Лейбл из messages.nav.brands = «Колекції». Подпункты → хабы серий и групп основ.
     key: "brands",
     href: "/butterfly",
     sub: [
       { label: "Tenergy", href: "/nakladki/tenergy" },
       { label: "Dignics", href: "/nakladki/dignics" },
-      { label: "Rozena", href: "/nakladki/rozena" },
-      { label: "Glayzer", href: "/nakladki/glayzer" },
       { label: "Zyre", href: "/nakladki/zyre" },
+      { label: "Glayzer", href: "/nakladki/glayzer" },
+      { label: "Основи ALC", href: "/osnovaniya/alc" },
+      { label: "Основи ZLC", href: "/osnovaniya/zlc" },
     ],
   },
 ];
