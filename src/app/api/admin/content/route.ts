@@ -18,7 +18,7 @@ function db(): SupabaseClient | null {
 }
 
 const ENTITY = ["product", "category", "brand", "brandCategory", "series", "facet"] as const;
-const LOCALE = ["uk", "ru"] as const;
+const LOCALE = ["ua", "ru"] as const;
 
 const SaveSchema = z.object({
   entityType: z.enum(ENTITY),

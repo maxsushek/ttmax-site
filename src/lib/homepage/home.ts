@@ -13,12 +13,12 @@ export function resolveHitSlugs(settings: SettingsMap): string[] {
 }
 
 /** Заголовок Hero (accent-рядок) з оверрайду або "". */
-export function heroTitleOverride(settings: SettingsMap, locale: "uk" | "ru"): string {
+export function heroTitleOverride(settings: SettingsMap, locale: "ua" | "ru"): string {
   return settingString(settings, locale === "ru" ? HOME_KEYS.heroTitleRu : HOME_KEYS.heroTitleUk);
 }
 
 /** Заголовок секції брендів з оверрайду або "". */
-export function brandsTitleOverride(settings: SettingsMap, locale: "uk" | "ru"): string {
+export function brandsTitleOverride(settings: SettingsMap, locale: "ua" | "ru"): string {
   return settingString(
     settings,
     locale === "ru" ? HOME_KEYS.brandsTitleRu : HOME_KEYS.brandsTitleUk,

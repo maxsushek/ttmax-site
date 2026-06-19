@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { locales } from "@/i18n/config";
 
-const DEFAULT_LOCALE = locales[0]; // 'uk'
+const DEFAULT_LOCALE = locales[0]; // 'ua'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -37,6 +37,13 @@ export async function middleware(request: NextRequest) {
 
     return response;
   }
+  // Старая локаль /uk/* -> /ua/* (постоянный редирект)
+  if (pathname === "/uk" || pathname.startsWith("/uk/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/ua" + pathname.slice(3);
+    return NextResponse.redirect(url, 308);
+  }
+
 
   // ===== Локали для публичного сайта =====
   const hasLocale = locales.some(

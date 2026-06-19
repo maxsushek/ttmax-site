@@ -3,7 +3,7 @@
 // существующий buildMetadata. Повторяет его логику canonical/hreflang/OG, но title/description — из данных.
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { locales, type Locale } from "@/i18n/config";
+import { defaultLocale, locales, localeToLang, type Locale } from "@/i18n/config";
 
 export function buildCatalogMetadata(opts: {
   locale: Locale;
@@ -20,8 +20,8 @@ export function buildCatalogMetadata(opts: {
 
   const url = `${siteConfig.url}/${locale}${pathname}`;
   const languages: Record<string, string> = {};
-  for (const l of locales) languages[l] = `${siteConfig.url}/${l}${pathname}`;
-  languages["x-default"] = `${siteConfig.url}/uk${pathname}`;
+  for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${pathname}`;
+  languages["x-default"] = `${siteConfig.url}/${defaultLocale}${pathname}`;
 
   return {
     // absolute → игнорирует title.template из корневого layout (заголовки уже полные).
@@ -34,8 +34,8 @@ export function buildCatalogMetadata(opts: {
       siteName: siteConfig.name,
       title,
       description,
-      locale: locale === "uk" ? "uk_UA" : "ru_UA",
-      alternateLocale: locale === "uk" ? ["ru_UA"] : ["uk_UA"],
+      locale: locale === "ua" ? "uk_UA" : "ru_UA",
+      alternateLocale: locale === "ua" ? ["ru_UA"] : ["uk_UA"],
     },
     twitter: {
       card: "summary_large_image",

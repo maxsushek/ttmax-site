@@ -1,6 +1,6 @@
 import type { Messages } from "./types";
 
-export const uk: Messages = {
+export const ua: Messages = {
   meta: {
     title: "Butterfly UA — офіційний інвентар для настільного тенісу",
     titleTemplate: "%s | Butterfly UA",

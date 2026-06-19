@@ -11,7 +11,7 @@ import type { Handle } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 
 type Props = {
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   slug: string;
   brandLabel: string;
   model: string;
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const LABELS = {
-  uk: {
+  ua: {
     handle: "Тип ручки",
     addToCart: "В кошик",
     added: "Додано в кошик",
@@ -47,8 +47,8 @@ const LABELS = {
   },
 } as const;
 
-const HANDLE_LABELS: Record<"uk" | "ru", Record<Handle, { code: string; note: string }>> = {
-  uk: {
+const HANDLE_LABELS: Record<"ua" | "ru", Record<Handle, { code: string; note: string }>> = {
+  ua: {
     fl: { code: "FL", note: "конічна" },
     st: { code: "ST", note: "пряма" },
     an: { code: "AN", note: "анатомічна" },

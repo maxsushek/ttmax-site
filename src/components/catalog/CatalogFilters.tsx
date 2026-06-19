@@ -30,7 +30,7 @@ export type FacetOption = { value: string; label: string; count: number };
 export type FacetGroup = { key: string; label: string; options: FacetOption[] };
 
 type Props = {
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   items: CatalogCardVM[];
   groups: FacetGroup[];
   /** Границы цены для подписи кнопок-бакетов. */
@@ -40,7 +40,7 @@ type Props = {
 type SortKey = "popular" | "price-asc" | "price-desc" | "name";
 
 const T = {
-  uk: {
+  ua: {
     filters: "Фільтри",
     sort: "Сортування",
     sortPopular: "Популярні",
@@ -74,7 +74,7 @@ const T = {
   },
 } as const;
 
-function plural(n: number, locale: "uk" | "ru") {
+function plural(n: number, locale: "ua" | "ru") {
   return locale === "ru" ? "товаров" : "товарів";
 }
 

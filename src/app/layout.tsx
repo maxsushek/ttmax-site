@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { headers } from "next/headers";
-import { defaultLocale, isLocale } from "@/i18n/config";
+import { defaultLocale, isLocale, localeToLang } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import "./globals.css";
 
@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const locale = headerLocale && isLocale(headerLocale) ? headerLocale : defaultLocale;
   return (
     <html
-      lang={locale}
+      lang={localeToLang[locale]}
       className={cn(barlowCondensed.variable, barlow.variable)}
       suppressHydrationWarning
     >

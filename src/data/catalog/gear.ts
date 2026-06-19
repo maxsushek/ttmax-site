@@ -15,11 +15,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболки Meranji",
     kind: "gear",
     name: {
-      uk: "Футболки Butterfly Meranji",
+      ua: "Футболки Butterfly Meranji",
       ru: "Футболки Butterfly Meranji",
     },
     title: {
-      uk: "Футболки Butterfly Meranji - купити в Україні | TTMAX",
+      ua: "Футболки Butterfly Meranji - купити в Україні | TTMAX",
       ru: "Футболки Butterfly Meranji - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -46,11 +46,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка з довгим рукавом Suribu",
     kind: "gear",
     name: {
-      uk: "Футболка з довгим рукавом Butterfly Suribu",
+      ua: "Футболка з довгим рукавом Butterfly Suribu",
       ru: "Футболка з довгим рукавом Butterfly Suribu",
     },
     title: {
-      uk: "Футболка з довгим рукавом Butterfly Suribu - купити в Україні | TTMAX",
+      ua: "Футболка з довгим рукавом Butterfly Suribu - купити в Україні | TTMAX",
       ru: "Футболка з довгим рукавом Butterfly Suribu - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -77,11 +77,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Yasu Cotton",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Yasu Cotton",
+      ua: "Футболка Butterfly Yasu Cotton",
       ru: "Футболка Butterfly Yasu Cotton",
     },
     title: {
-      uk: "Футболка Butterfly Yasu Cotton - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Yasu Cotton - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Yasu Cotton - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -108,11 +108,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Yao Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Yao Lady",
+      ua: "Футболка Butterfly Yao Lady",
       ru: "Футболка Butterfly Yao Lady",
     },
     title: {
-      uk: "Футболка Butterfly Yao Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Yao Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Yao Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -139,11 +139,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Yao",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Yao",
+      ua: "Футболка Butterfly Yao",
       ru: "Футболка Butterfly Yao",
     },
     title: {
-      uk: "Футболка Butterfly Yao - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Yao - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Yao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -170,11 +170,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Yaizu",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Yaizu",
+      ua: "Футболка Butterfly Yaizu",
       ru: "Футболка Butterfly Yaizu",
     },
     title: {
-      uk: "Футболка Butterfly Yaizu - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Yaizu - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Yaizu - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -201,11 +201,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Xero",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Xero",
+      ua: "Футболка Butterfly Xero",
       ru: "Футболка Butterfly Xero",
     },
     title: {
-      uk: "Футболка Butterfly Xero - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Xero - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Xero - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -232,11 +232,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Ukraine",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Ukraine",
+      ua: "Футболка Butterfly Ukraine",
       ru: "Футболка Butterfly Ukraine",
     },
     title: {
-      uk: "Футболка Butterfly Ukraine - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Ukraine - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Ukraine - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -263,11 +263,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Toyama",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Toyama",
+      ua: "Футболка Butterfly Toyama",
       ru: "Футболка Butterfly Toyama",
     },
     title: {
-      uk: "Футболка Butterfly Toyama - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Toyama - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Toyama - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -294,11 +294,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tosy Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tosy Lady",
+      ua: "Футболка Butterfly Tosy Lady",
       ru: "Футболка Butterfly Tosy Lady",
     },
     title: {
-      uk: "Футболка Butterfly Tosy Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tosy Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tosy Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -325,11 +325,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tosy",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tosy",
+      ua: "Футболка Butterfly Tosy",
       ru: "Футболка Butterfly Tosy",
     },
     title: {
-      uk: "Футболка Butterfly Tosy - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tosy - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tosy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -356,11 +356,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tori",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tori",
+      ua: "Футболка Butterfly Tori",
       ru: "Футболка Butterfly Tori",
     },
     title: {
-      uk: "Футболка Butterfly Tori - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tori - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tori - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -387,11 +387,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tori Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tori Lady",
+      ua: "Футболка Butterfly Tori Lady",
       ru: "Футболка Butterfly Tori Lady",
     },
     title: {
-      uk: "Футболка Butterfly Tori Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tori Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tori Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -418,11 +418,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Toka",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Toka",
+      ua: "Футболка Butterfly Toka",
       ru: "Футболка Butterfly Toka",
     },
     title: {
-      uk: "Футболка Butterfly Toka - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Toka - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Toka - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -449,11 +449,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Toka Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Toka Lady",
+      ua: "Футболка Butterfly Toka Lady",
       ru: "Футболка Butterfly Toka Lady",
     },
     title: {
-      uk: "Футболка Butterfly Toka Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Toka Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Toka Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -480,11 +480,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Toc",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Toc",
+      ua: "Футболка Butterfly Toc",
       ru: "Футболка Butterfly Toc",
     },
     title: {
-      uk: "Футболка Butterfly Toc - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Toc - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Toc - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -511,11 +511,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tenergy (S,M,L)",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tenergy (S,M,L)",
+      ua: "Футболка Butterfly Tenergy (S,M,L)",
       ru: "Футболка Butterfly Tenergy (S,M,L)",
     },
     title: {
-      uk: "Футболка Butterfly Tenergy (S,M,L) - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tenergy (S,M,L) - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tenergy (S,M,L) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -542,11 +542,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tenergy Lady (L)",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tenergy Lady (L)",
+      ua: "Футболка Butterfly Tenergy Lady (L)",
       ru: "Футболка Butterfly Tenergy Lady (L)",
     },
     title: {
-      uk: "Футболка Butterfly Tenergy Lady (L) - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tenergy Lady (L) - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tenergy Lady (L) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -573,11 +573,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Tano",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Tano",
+      ua: "Футболка Butterfly Tano",
       ru: "Футболка Butterfly Tano",
     },
     title: {
-      uk: "Футболка Butterfly Tano - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Tano - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Tano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -603,11 +603,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Sutairu Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Sutairu Lady",
+      ua: "Футболка Butterfly Sutairu Lady",
       ru: "Футболка Butterfly Sutairu Lady",
     },
     title: {
-      uk: "Футболка Butterfly Sutairu Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Sutairu Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Sutairu Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -634,11 +634,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Sutairu",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Sutairu",
+      ua: "Футболка Butterfly Sutairu",
       ru: "Футболка Butterfly Sutairu",
     },
     title: {
-      uk: "Футболка Butterfly Sutairu - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Sutairu - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Sutairu - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -665,11 +665,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Stripe",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Stripe",
+      ua: "Футболка Butterfly Stripe",
       ru: "Футболка Butterfly Stripe",
     },
     title: {
-      uk: "Футболка Butterfly Stripe - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Stripe - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Stripe - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -696,11 +696,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Shiro",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Shiro",
+      ua: "Футболка Butterfly Shiro",
       ru: "Футболка Butterfly Shiro",
     },
     title: {
-      uk: "Футболка Butterfly Shiro - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Shiro - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Shiro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -727,11 +727,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Santo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Santo",
+      ua: "Футболка Butterfly Santo",
       ru: "Футболка Butterfly Santo",
     },
     title: {
-      uk: "Футболка Butterfly Santo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Santo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Santo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -758,11 +758,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Saijo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Saijo",
+      ua: "Футболка Butterfly Saijo",
       ru: "Футболка Butterfly Saijo",
     },
     title: {
-      uk: "Футболка Butterfly Saijo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Saijo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Saijo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -789,11 +789,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Puro",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Puro",
+      ua: "Футболка Butterfly Puro",
       ru: "Футболка Butterfly Puro",
     },
     title: {
-      uk: "Футболка Butterfly Puro - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Puro - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Puro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -820,11 +820,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Puren",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Puren",
+      ua: "Футболка Butterfly Puren",
       ru: "Футболка Butterfly Puren",
     },
     title: {
-      uk: "Футболка Butterfly Puren - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Puren - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Puren - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -851,11 +851,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Naomi Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Naomi Lady",
+      ua: "Футболка Butterfly Naomi Lady",
       ru: "Футболка Butterfly Naomi Lady",
     },
     title: {
-      uk: "Футболка Butterfly Naomi Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Naomi Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Naomi Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -882,11 +882,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Nagoya",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Nagoya",
+      ua: "Футболка Butterfly Nagoya",
       ru: "Футболка Butterfly Nagoya",
     },
     title: {
-      uk: "Футболка Butterfly Nagoya - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Nagoya - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Nagoya - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -913,11 +913,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Nagano",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Nagano",
+      ua: "Футболка Butterfly Nagano",
       ru: "Футболка Butterfly Nagano",
     },
     title: {
-      uk: "Футболка Butterfly Nagano - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Nagano - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Nagano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -944,11 +944,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Mira Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Mira Lady",
+      ua: "Футболка Butterfly Mira Lady",
       ru: "Футболка Butterfly Mira Lady",
     },
     title: {
-      uk: "Футболка Butterfly Mira Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Mira Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Mira Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -975,11 +975,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kosay",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kosay",
+      ua: "Футболка Butterfly Kosay",
       ru: "Футболка Butterfly Kosay",
     },
     title: {
-      uk: "Футболка Butterfly Kosay - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kosay - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kosay - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1006,11 +1006,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kosay Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kosay Lady",
+      ua: "Футболка Butterfly Kosay Lady",
       ru: "Футболка Butterfly Kosay Lady",
     },
     title: {
-      uk: "Футболка Butterfly Kosay Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kosay Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kosay Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1037,11 +1037,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kitao",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kitao",
+      ua: "Футболка Butterfly Kitao",
       ru: "Футболка Butterfly Kitao",
     },
     title: {
-      uk: "Футболка Butterfly Kitao - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kitao - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kitao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1068,11 +1068,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kisa",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kisa",
+      ua: "Футболка Butterfly Kisa",
       ru: "Футболка Butterfly Kisa",
     },
     title: {
-      uk: "Футболка Butterfly Kisa - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kisa - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kisa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1099,11 +1099,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kido",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kido",
+      ua: "Футболка Butterfly Kido",
       ru: "Футболка Butterfly Kido",
     },
     title: {
-      uk: "Футболка Butterfly Kido - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kido - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kido - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1130,11 +1130,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Kariya",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Kariya",
+      ua: "Футболка Butterfly Kariya",
       ru: "Футболка Butterfly Kariya",
     },
     title: {
-      uk: "Футболка Butterfly Kariya - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Kariya - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Kariya - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1161,11 +1161,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Izumo Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Izumo Lady",
+      ua: "Футболка Butterfly Izumo Lady",
       ru: "Футболка Butterfly Izumo Lady",
     },
     title: {
-      uk: "Футболка Butterfly Izumo Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Izumo Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Izumo Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1192,11 +1192,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Izumo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Izumo",
+      ua: "Футболка Butterfly Izumo",
       ru: "Футболка Butterfly Izumo",
     },
     title: {
-      uk: "Футболка Butterfly Izumo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Izumo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Izumo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1223,11 +1223,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Ikoma",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Ikoma",
+      ua: "Футболка Butterfly Ikoma",
       ru: "Футболка Butterfly Ikoma",
     },
     title: {
-      uk: "Футболка Butterfly Ikoma - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Ikoma - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Ikoma - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1254,11 +1254,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Higo Lady",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Higo Lady",
+      ua: "Футболка Butterfly Higo Lady",
       ru: "Футболка Butterfly Higo Lady",
     },
     title: {
-      uk: "Футболка Butterfly Higo Lady - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Higo Lady - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Higo Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1285,11 +1285,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Daito",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Daito",
+      ua: "Футболка Butterfly Daito",
       ru: "Футболка Butterfly Daito",
     },
     title: {
-      uk: "Футболка Butterfly Daito - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Daito - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Daito - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1316,11 +1316,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Bamboo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Bamboo",
+      ua: "Футболка Butterfly Bamboo",
       ru: "Футболка Butterfly Bamboo",
     },
     title: {
-      uk: "Футболка Butterfly Bamboo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Bamboo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Bamboo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1347,11 +1347,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Atamy",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Atamy",
+      ua: "Футболка Butterfly Atamy",
       ru: "Футболка Butterfly Atamy",
     },
     title: {
-      uk: "Футболка Butterfly Atamy - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Atamy - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Atamy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1378,11 +1378,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Higo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Higo",
+      ua: "Футболка Butterfly Higo",
       ru: "Футболка Butterfly Higo",
     },
     title: {
-      uk: "Футболка Butterfly Higo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Higo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Higo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1409,11 +1409,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Antei",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Antei",
+      ua: "Футболка Butterfly Antei",
       ru: "Футболка Butterfly Antei",
     },
     title: {
-      uk: "Футболка Butterfly Antei - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Antei - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Antei - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1440,11 +1440,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Aino Lady (XL)",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Aino Lady (XL)",
+      ua: "Футболка Butterfly Aino Lady (XL)",
       ru: "Футболка Butterfly Aino Lady (XL)",
     },
     title: {
-      uk: "Футболка Butterfly Aino Lady (XL) - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Aino Lady (XL) - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Aino Lady (XL) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1471,11 +1471,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Ageo",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Ageo",
+      ua: "Футболка Butterfly Ageo",
       ru: "Футболка Butterfly Ageo",
     },
     title: {
-      uk: "Футболка Butterfly Ageo - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Ageo - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Ageo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1502,11 +1502,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка Abiko",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly Abiko",
+      ua: "Футболка Butterfly Abiko",
       ru: "Футболка Butterfly Abiko",
     },
     title: {
-      uk: "Футболка Butterfly Abiko - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly Abiko - купити в Україні | TTMAX",
       ru: "Футболка Butterfly Abiko - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1533,11 +1533,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Футболка 70th Anniversary RETRO",
     kind: "gear",
     name: {
-      uk: "Футболка Butterfly 70th Anniversary RETRO",
+      ua: "Футболка Butterfly 70th Anniversary RETRO",
       ru: "Футболка Butterfly 70th Anniversary RETRO",
     },
     title: {
-      uk: "Футболка Butterfly 70th Anniversary RETRO - купити в Україні | TTMAX",
+      ua: "Футболка Butterfly 70th Anniversary RETRO - купити в Україні | TTMAX",
       ru: "Футболка Butterfly 70th Anniversary RETRO - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1564,11 +1564,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Tosy",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Tosy",
+      ua: "Шорти Butterfly Tosy",
       ru: "Шорти Butterfly Tosy",
     },
     title: {
-      uk: "Шорти Butterfly Tosy - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Tosy - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Tosy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1595,11 +1595,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Toka",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Toka",
+      ua: "Шорти Butterfly Toka",
       ru: "Шорти Butterfly Toka",
     },
     title: {
-      uk: "Шорти Butterfly Toka - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Toka - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Toka - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1626,11 +1626,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Riso",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Riso",
+      ua: "Шорти Butterfly Riso",
       ru: "Шорти Butterfly Riso",
     },
     title: {
-      uk: "Шорти Butterfly Riso - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Riso - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Riso - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1657,11 +1657,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Puro",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Puro",
+      ua: "Шорти Butterfly Puro",
       ru: "Шорти Butterfly Puro",
     },
     title: {
-      uk: "Шорти Butterfly Puro - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Puro - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Puro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1688,11 +1688,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Niiza Lady",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Niiza Lady",
+      ua: "Шорти Butterfly Niiza Lady",
       ru: "Шорти Butterfly Niiza Lady",
     },
     title: {
-      uk: "Шорти Butterfly Niiza Lady - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Niiza Lady - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Niiza Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1719,11 +1719,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Mino",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Mino",
+      ua: "Шорти Butterfly Mino",
       ru: "Шорти Butterfly Mino",
     },
     title: {
-      uk: "Шорти Butterfly Mino - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Mino - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Mino - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1750,11 +1750,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Kariya",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Kariya",
+      ua: "Шорти Butterfly Kariya",
       ru: "Шорти Butterfly Kariya",
     },
     title: {
-      uk: "Шорти Butterfly Kariya - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Kariya - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Kariya - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1781,11 +1781,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Izumo",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Izumo",
+      ua: "Шорти Butterfly Izumo",
       ru: "Шорти Butterfly Izumo",
     },
     title: {
-      uk: "Шорти Butterfly Izumo - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Izumo - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Izumo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1812,11 +1812,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Higo",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Higo",
+      ua: "Шорти Butterfly Higo",
       ru: "Шорти Butterfly Higo",
     },
     title: {
-      uk: "Шорти Butterfly Higo - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Higo - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Higo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1843,11 +1843,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шорти Apego",
     kind: "gear",
     name: {
-      uk: "Шорти Butterfly Apego",
+      ua: "Шорти Butterfly Apego",
       ru: "Шорти Butterfly Apego",
     },
     title: {
-      uk: "Шорти Butterfly Apego - купити в Україні | TTMAX",
+      ua: "Шорти Butterfly Apego - купити в Україні | TTMAX",
       ru: "Шорти Butterfly Apego - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1874,11 +1874,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Yao Lady",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Yao Lady",
+      ua: "Костюм Butterfly Yao Lady",
       ru: "Костюм Butterfly Yao Lady",
     },
     title: {
-      uk: "Костюм Butterfly Yao Lady - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Yao Lady - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Yao Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1905,11 +1905,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Yao",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Yao",
+      ua: "Костюм Butterfly Yao",
       ru: "Костюм Butterfly Yao",
     },
     title: {
-      uk: "Костюм Butterfly Yao - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Yao - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Yao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1936,11 +1936,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Xero New",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Xero New",
+      ua: "Костюм Butterfly Xero New",
       ru: "Костюм Butterfly Xero New",
     },
     title: {
-      uk: "Костюм Butterfly Xero New - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Xero New - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Xero New - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1967,11 +1967,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Xero",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Xero",
+      ua: "Костюм Butterfly Xero",
       ru: "Костюм Butterfly Xero",
     },
     title: {
-      uk: "Костюм Butterfly Xero - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Xero - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Xero - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -1998,11 +1998,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Tosy",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Tosy",
+      ua: "Костюм Butterfly Tosy",
       ru: "Костюм Butterfly Tosy",
     },
     title: {
-      uk: "Костюм Butterfly Tosy - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Tosy - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Tosy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2029,11 +2029,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Tori",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Tori",
+      ua: "Костюм Butterfly Tori",
       ru: "Костюм Butterfly Tori",
     },
     title: {
-      uk: "Костюм Butterfly Tori - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Tori - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Tori - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2060,11 +2060,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Taori",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Taori",
+      ua: "Костюм Butterfly Taori",
       ru: "Костюм Butterfly Taori",
     },
     title: {
-      uk: "Костюм Butterfly Taori - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Taori - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Taori - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2091,11 +2091,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Takeo",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Takeo",
+      ua: "Костюм Butterfly Takeo",
       ru: "Костюм Butterfly Takeo",
     },
     title: {
-      uk: "Костюм Butterfly Takeo - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Takeo - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Takeo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2122,11 +2122,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Shiro",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Shiro",
+      ua: "Костюм Butterfly Shiro",
       ru: "Костюм Butterfly Shiro",
     },
     title: {
-      uk: "Костюм Butterfly Shiro - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Shiro - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Shiro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2153,11 +2153,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Santo",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Santo",
+      ua: "Костюм Butterfly Santo",
       ru: "Костюм Butterfly Santo",
     },
     title: {
-      uk: "Костюм Butterfly Santo - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Santo - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Santo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2184,11 +2184,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Ninyo",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Ninyo",
+      ua: "Костюм Butterfly Ninyo",
       ru: "Костюм Butterfly Ninyo",
     },
     title: {
-      uk: "Костюм Butterfly Ninyo - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Ninyo - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Ninyo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2215,11 +2215,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Mira Lady",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Mira Lady",
+      ua: "Костюм Butterfly Mira Lady",
       ru: "Костюм Butterfly Mira Lady",
     },
     title: {
-      uk: "Костюм Butterfly Mira Lady - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Mira Lady - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Mira Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2246,11 +2246,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Kitao",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Kitao",
+      ua: "Костюм Butterfly Kitao",
       ru: "Костюм Butterfly Kitao",
     },
     title: {
-      uk: "Костюм Butterfly Kitao - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Kitao - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Kitao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2277,11 +2277,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Kisa",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Kisa",
+      ua: "Костюм Butterfly Kisa",
       ru: "Костюм Butterfly Kisa",
     },
     title: {
-      uk: "Костюм Butterfly Kisa - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Kisa - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Kisa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2308,11 +2308,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Kido",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Kido",
+      ua: "Костюм Butterfly Kido",
       ru: "Костюм Butterfly Kido",
     },
     title: {
-      uk: "Костюм Butterfly Kido - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Kido - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Kido - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2339,11 +2339,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Kano",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Kano",
+      ua: "Костюм Butterfly Kano",
       ru: "Костюм Butterfly Kano",
     },
     title: {
-      uk: "Костюм Butterfly Kano - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Kano - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Kano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2370,11 +2370,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Kano Lady",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Kano Lady",
+      ua: "Костюм Butterfly Kano Lady",
       ru: "Костюм Butterfly Kano Lady",
     },
     title: {
-      uk: "Костюм Butterfly Kano Lady - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Kano Lady - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Kano Lady - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2401,11 +2401,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Izumo",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Izumo",
+      ua: "Костюм Butterfly Izumo",
       ru: "Костюм Butterfly Izumo",
     },
     title: {
-      uk: "Костюм Butterfly Izumo - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Izumo - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Izumo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2432,11 +2432,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Higo",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Higo",
+      ua: "Костюм Butterfly Higo",
       ru: "Костюм Butterfly Higo",
     },
     title: {
-      uk: "Костюм Butterfly Higo - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Higo - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Higo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2463,11 +2463,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Костюм Atamy",
     kind: "gear",
     name: {
-      uk: "Костюм Butterfly Atamy",
+      ua: "Костюм Butterfly Atamy",
       ru: "Костюм Butterfly Atamy",
     },
     title: {
-      uk: "Костюм Butterfly Atamy - купити в Україні | TTMAX",
+      ua: "Костюм Butterfly Atamy - купити в Україні | TTMAX",
       ru: "Костюм Butterfly Atamy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2494,11 +2494,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Uruma",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Uruma",
+      ua: "Куртка Butterfly Uruma",
       ru: "Куртка Butterfly Uruma",
     },
     title: {
-      uk: "Куртка Butterfly Uruma - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Uruma - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Uruma - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2525,11 +2525,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Taku",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Taku",
+      ua: "Куртка Butterfly Taku",
       ru: "Куртка Butterfly Taku",
     },
     title: {
-      uk: "Куртка Butterfly Taku - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Taku - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Taku - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2556,11 +2556,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Sorano",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Sorano",
+      ua: "Куртка Butterfly Sorano",
       ru: "Куртка Butterfly Sorano",
     },
     title: {
-      uk: "Куртка Butterfly Sorano - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Sorano - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Sorano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2587,11 +2587,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Otaru",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Otaru",
+      ua: "Куртка Butterfly Otaru",
       ru: "Куртка Butterfly Otaru",
     },
     title: {
-      uk: "Куртка Butterfly Otaru - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Otaru - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Otaru - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2618,11 +2618,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Maruno (розмір S)",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Maruno (розмір S)",
+      ua: "Куртка Butterfly Maruno (розмір S)",
       ru: "Куртка Butterfly Maruno (розмір S)",
     },
     title: {
-      uk: "Куртка Butterfly Maruno (розмір S) - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Maruno (розмір S) - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Maruno (розмір S) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2649,11 +2649,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Куртка Azura",
     kind: "gear",
     name: {
-      uk: "Куртка Butterfly Azura",
+      ua: "Куртка Butterfly Azura",
       ru: "Куртка Butterfly Azura",
     },
     title: {
-      uk: "Куртка Butterfly Azura - купити в Україні | TTMAX",
+      ua: "Куртка Butterfly Azura - купити в Україні | TTMAX",
       ru: "Куртка Butterfly Azura - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2680,11 +2680,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Tano",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Tano",
+      ua: "Олімпійка Butterfly Tano",
       ru: "Олімпійка Butterfly Tano",
     },
     title: {
-      uk: "Олімпійка Butterfly Tano - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Tano - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Tano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2711,11 +2711,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Shiro",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Shiro",
+      ua: "Олімпійка Butterfly Shiro",
       ru: "Олімпійка Butterfly Shiro",
     },
     title: {
-      uk: "Олімпійка Butterfly Shiro - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Shiro - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Shiro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2742,11 +2742,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Naoki",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Naoki",
+      ua: "Олімпійка Butterfly Naoki",
       ru: "Олімпійка Butterfly Naoki",
     },
     title: {
-      uk: "Олімпійка Butterfly Naoki - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Naoki - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Naoki - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2773,11 +2773,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Koba",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Koba",
+      ua: "Олімпійка Butterfly Koba",
       ru: "Олімпійка Butterfly Koba",
     },
     title: {
-      uk: "Олімпійка Butterfly Koba - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Koba - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Koba - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2804,11 +2804,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Hino (XXL)",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Hino (XXL)",
+      ua: "Олімпійка Butterfly Hino (XXL)",
       ru: "Олімпійка Butterfly Hino (XXL)",
     },
     title: {
-      uk: "Олімпійка Butterfly Hino (XXL) - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Hino (XXL) - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Hino (XXL) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2835,11 +2835,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Олімпійка Hadano",
     kind: "gear",
     name: {
-      uk: "Олімпійка Butterfly Hadano",
+      ua: "Олімпійка Butterfly Hadano",
       ru: "Олімпійка Butterfly Hadano",
     },
     title: {
-      uk: "Олімпійка Butterfly Hadano - купити в Україні | TTMAX",
+      ua: "Олімпійка Butterfly Hadano - купити в Україні | TTMAX",
       ru: "Олімпійка Butterfly Hadano - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2866,11 +2866,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кофта Ninyo Lady (XS)",
     kind: "gear",
     name: {
-      uk: "Кофта Butterfly Ninyo Lady (XS)",
+      ua: "Кофта Butterfly Ninyo Lady (XS)",
       ru: "Кофта Butterfly Ninyo Lady (XS)",
     },
     title: {
-      uk: "Кофта Butterfly Ninyo Lady (XS) - купити в Україні | TTMAX",
+      ua: "Кофта Butterfly Ninyo Lady (XS) - купити в Україні | TTMAX",
       ru: "Кофта Butterfly Ninyo Lady (XS) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2897,11 +2897,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Спідниця Chiara",
     kind: "gear",
     name: {
-      uk: "Спідниця Butterfly Chiara",
+      ua: "Спідниця Butterfly Chiara",
       ru: "Спідниця Butterfly Chiara",
     },
     title: {
-      uk: "Спідниця Butterfly Chiara - купити в Україні | TTMAX",
+      ua: "Спідниця Butterfly Chiara - купити в Україні | TTMAX",
       ru: "Спідниця Butterfly Chiara - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2928,11 +2928,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Seto Socks",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Seto Socks",
+      ua: "Шкарпетки Butterfly Seto Socks",
       ru: "Шкарпетки Butterfly Seto Socks",
     },
     title: {
-      uk: "Шкарпетки Butterfly Seto Socks - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Seto Socks - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Seto Socks - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2957,11 +2957,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Seto Sneaker",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Seto Sneaker",
+      ua: "Шкарпетки Butterfly Seto Sneaker",
       ru: "Шкарпетки Butterfly Seto Sneaker",
     },
     title: {
-      uk: "Шкарпетки Butterfly Seto Sneaker - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Seto Sneaker - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Seto Sneaker - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -2986,11 +2986,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Kijun Socks",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Kijun Socks",
+      ua: "Шкарпетки Butterfly Kijun Socks",
       ru: "Шкарпетки Butterfly Kijun Socks",
     },
     title: {
-      uk: "Шкарпетки Butterfly Kijun Socks - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Kijun Socks - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Kijun Socks - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3015,11 +3015,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Kijun Sneaker",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Kijun Sneaker",
+      ua: "Шкарпетки Butterfly Kijun Sneaker",
       ru: "Шкарпетки Butterfly Kijun Sneaker",
     },
     title: {
-      uk: "Шкарпетки Butterfly Kijun Sneaker - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Kijun Sneaker - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Kijun Sneaker - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3044,11 +3044,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Kado Socks",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Kado Socks",
+      ua: "Шкарпетки Butterfly Kado Socks",
       ru: "Шкарпетки Butterfly Kado Socks",
     },
     title: {
-      uk: "Шкарпетки Butterfly Kado Socks - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Kado Socks - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Kado Socks - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3073,11 +3073,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Kado Sneaker",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Kado Sneaker",
+      ua: "Шкарпетки Butterfly Kado Sneaker",
       ru: "Шкарпетки Butterfly Kado Sneaker",
     },
     title: {
-      uk: "Шкарпетки Butterfly Kado Sneaker - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Kado Sneaker - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Kado Sneaker - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3102,11 +3102,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Jiro",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Jiro",
+      ua: "Шкарпетки Butterfly Jiro",
       ru: "Шкарпетки Butterfly Jiro",
     },
     title: {
-      uk: "Шкарпетки Butterfly Jiro - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Jiro - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Jiro - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3131,11 +3131,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Iwagy Socks",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Iwagy Socks",
+      ua: "Шкарпетки Butterfly Iwagy Socks",
       ru: "Шкарпетки Butterfly Iwagy Socks",
     },
     title: {
-      uk: "Шкарпетки Butterfly Iwagy Socks - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Iwagy Socks - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Iwagy Socks - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3160,11 +3160,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Iwagy Sneaker",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Iwagy Sneaker",
+      ua: "Шкарпетки Butterfly Iwagy Sneaker",
       ru: "Шкарпетки Butterfly Iwagy Sneaker",
     },
     title: {
-      uk: "Шкарпетки Butterfly Iwagy Sneaker - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Iwagy Sneaker - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Iwagy Sneaker - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3189,11 +3189,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Hisa Sneaker",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Hisa Sneaker",
+      ua: "Шкарпетки Butterfly Hisa Sneaker",
       ru: "Шкарпетки Butterfly Hisa Sneaker",
     },
     title: {
-      uk: "Шкарпетки Butterfly Hisa Sneaker - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Hisa Sneaker - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Hisa Sneaker - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3218,11 +3218,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Hisa",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Hisa",
+      ua: "Шкарпетки Butterfly Hisa",
       ru: "Шкарпетки Butterfly Hisa",
     },
     title: {
-      uk: "Шкарпетки Butterfly Hisa - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Hisa - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Hisa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3247,11 +3247,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Ebina",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Ebina",
+      ua: "Шкарпетки Butterfly Ebina",
       ru: "Шкарпетки Butterfly Ebina",
     },
     title: {
-      uk: "Шкарпетки Butterfly Ebina - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Ebina - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Ebina - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3276,11 +3276,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шкарпетки Anjo",
     kind: "gear",
     name: {
-      uk: "Шкарпетки Butterfly Anjo",
+      ua: "Шкарпетки Butterfly Anjo",
       ru: "Шкарпетки Butterfly Anjo",
     },
     title: {
-      uk: "Шкарпетки Butterfly Anjo - купити в Україні | TTMAX",
+      ua: "Шкарпетки Butterfly Anjo - купити в Україні | TTMAX",
       ru: "Шкарпетки Butterfly Anjo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3305,11 +3305,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кепка 1950",
     kind: "gear",
     name: {
-      uk: "Кепка Butterfly 1950",
+      ua: "Кепка Butterfly 1950",
       ru: "Кепка Butterfly 1950",
     },
     title: {
-      uk: "Кепка Butterfly 1950 - купити в Україні | TTMAX",
+      ua: "Кепка Butterfly 1950 - купити в Україні | TTMAX",
       ru: "Кепка Butterfly 1950 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3334,11 +3334,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пов'язка на голову Streak",
     kind: "gear",
     name: {
-      uk: "Пов'язка на голову Butterfly Streak",
+      ua: "Пов'язка на голову Butterfly Streak",
       ru: "Пов'язка на голову Butterfly Streak",
     },
     title: {
-      uk: "Пов'язка на голову Butterfly Streak - купити в Україні | TTMAX",
+      ua: "Пов'язка на голову Butterfly Streak - купити в Україні | TTMAX",
       ru: "Пов'язка на голову Butterfly Streak - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3363,11 +3363,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пов'язка на голову Hachimaki",
     kind: "gear",
     name: {
-      uk: "Пов'язка на голову Butterfly Hachimaki",
+      ua: "Пов'язка на голову Butterfly Hachimaki",
       ru: "Пов'язка на голову Butterfly Hachimaki",
     },
     title: {
-      uk: "Пов'язка на голову Butterfly Hachimaki - купити в Україні | TTMAX",
+      ua: "Пов'язка на голову Butterfly Hachimaki - купити в Україні | TTMAX",
       ru: "Пов'язка на голову Butterfly Hachimaki - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3392,11 +3392,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пов'язка на голову",
     kind: "gear",
     name: {
-      uk: "Пов'язка на голову Butterfly",
+      ua: "Пов'язка на голову Butterfly",
       ru: "Пов'язка на голову Butterfly",
     },
     title: {
-      uk: "Пов'язка на голову Butterfly - купити в Україні | TTMAX",
+      ua: "Пов'язка на голову Butterfly - купити в Україні | TTMAX",
       ru: "Пов'язка на голову Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3421,11 +3421,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Напульсник Yao",
     kind: "gear",
     name: {
-      uk: "Напульсник Butterfly Yao",
+      ua: "Напульсник Butterfly Yao",
       ru: "Напульсник Butterfly Yao",
     },
     title: {
-      uk: "Напульсник Butterfly Yao - купити в Україні | TTMAX",
+      ua: "Напульсник Butterfly Yao - купити в Україні | TTMAX",
       ru: "Напульсник Butterfly Yao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3450,11 +3450,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Напульсник Streak",
     kind: "gear",
     name: {
-      uk: "Напульсник Butterfly Streak",
+      ua: "Напульсник Butterfly Streak",
       ru: "Напульсник Butterfly Streak",
     },
     title: {
-      uk: "Напульсник Butterfly Streak - купити в Україні | TTMAX",
+      ua: "Напульсник Butterfly Streak - купити в Україні | TTMAX",
       ru: "Напульсник Butterfly Streak - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3479,11 +3479,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки VILIGHT",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly VILIGHT",
+      ua: "Кросівки Butterfly VILIGHT",
       ru: "Кросівки Butterfly VILIGHT",
     },
     title: {
-      uk: "Кросівки Butterfly VILIGHT - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly VILIGHT - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly VILIGHT - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3510,11 +3510,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Vilata",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Vilata",
+      ua: "Кросівки Butterfly Vilata",
       ru: "Кросівки Butterfly Vilata",
     },
     title: {
-      uk: "Кросівки Butterfly Vilata - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Vilata - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Vilata - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3541,11 +3541,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Sunika",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Sunika",
+      ua: "Кросівки Butterfly Sunika",
       ru: "Кросівки Butterfly Sunika",
     },
     title: {
-      uk: "Кросівки Butterfly Sunika - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Sunika - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Sunika - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3572,11 +3572,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Radial Cross",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Radial Cross",
+      ua: "Кросівки Butterfly Radial Cross",
       ru: "Кросівки Butterfly Radial Cross",
     },
     title: {
-      uk: "Кросівки Butterfly Radial Cross - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Radial Cross - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Radial Cross - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3603,11 +3603,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Mach",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Mach",
+      ua: "Кросівки Butterfly Mach",
       ru: "Кросівки Butterfly Mach",
     },
     title: {
-      uk: "Кросівки Butterfly Mach - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Mach - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Mach - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3634,11 +3634,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Zero",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Zero",
+      ua: "Кросівки Butterfly Lezoline Zero",
       ru: "Кросівки Butterfly Lezoline Zero",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Zero - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Zero - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Zero - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3665,11 +3665,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Unizes 2",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Unizes 2",
+      ua: "Кросівки Butterfly Lezoline Unizes 2",
       ru: "Кросівки Butterfly Lezoline Unizes 2",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Unizes 2 - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Unizes 2 - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Unizes 2 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3696,11 +3696,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Unizes",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Unizes",
+      ua: "Кросівки Butterfly Lezoline Unizes",
       ru: "Кросівки Butterfly Lezoline Unizes",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Unizes - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Unizes - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Unizes - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3727,11 +3727,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Trynex",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Trynex",
+      ua: "Кросівки Butterfly Lezoline Trynex",
       ru: "Кросівки Butterfly Lezoline Trynex",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Trynex - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Trynex - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Trynex - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3758,11 +3758,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Sal",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Sal",
+      ua: "Кросівки Butterfly Lezoline Sal",
       ru: "Кросівки Butterfly Lezoline Sal",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Sal - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Sal - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Sal - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3789,11 +3789,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Rifones (сині)",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Rifones (сині)",
+      ua: "Кросівки Butterfly Lezoline Rifones (сині)",
       ru: "Кросівки Butterfly Lezoline Rifones (сині)",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Rifones (сині) - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Rifones (сині) - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Rifones (сині) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3820,11 +3820,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Rifones (чорні)",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Rifones (чорні)",
+      ua: "Кросівки Butterfly Lezoline Rifones (чорні)",
       ru: "Кросівки Butterfly Lezoline Rifones (чорні)",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Rifones (чорні) - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Rifones (чорні) - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Rifones (чорні) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3851,11 +3851,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Rifones",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Rifones",
+      ua: "Кросівки Butterfly Lezoline Rifones",
       ru: "Кросівки Butterfly Lezoline Rifones",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Rifones - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Rifones - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Rifones - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3882,11 +3882,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Nine",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Nine",
+      ua: "Кросівки Butterfly Lezoline Nine",
       ru: "Кросівки Butterfly Lezoline Nine",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Nine - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Nine - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Nine - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3913,11 +3913,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Levalis",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Levalis",
+      ua: "Кросівки Butterfly Lezoline Levalis",
       ru: "Кросівки Butterfly Lezoline Levalis",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Levalis - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Levalis - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Levalis - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3944,11 +3944,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Groovy (сині) 44р",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Groovy (сині) 44р",
+      ua: "Кросівки Butterfly Lezoline Groovy (сині) 44р",
       ru: "Кросівки Butterfly Lezoline Groovy (сині) 44р",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Groovy (сині) 44р - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Groovy (сині) 44р - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Groovy (сині) 44р - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -3975,11 +3975,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Groovy (рожеві)",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Groovy (рожеві)",
+      ua: "Кросівки Butterfly Lezoline Groovy (рожеві)",
       ru: "Кросівки Butterfly Lezoline Groovy (рожеві)",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Groovy (рожеві) - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Groovy (рожеві) - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Groovy (рожеві) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4006,11 +4006,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Groovy (чорні)",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Groovy (чорні)",
+      ua: "Кросівки Butterfly Lezoline Groovy (чорні)",
       ru: "Кросівки Butterfly Lezoline Groovy (чорні)",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Groovy (чорні) - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Groovy (чорні) - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Groovy (чорні) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4037,11 +4037,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Кросівки Lezoline Gigu",
     kind: "gear",
     name: {
-      uk: "Кросівки Butterfly Lezoline Gigu",
+      ua: "Кросівки Butterfly Lezoline Gigu",
       ru: "Кросівки Butterfly Lezoline Gigu",
     },
     title: {
-      uk: "Кросівки Butterfly Lezoline Gigu - купити в Україні | TTMAX",
+      ua: "Кросівки Butterfly Lezoline Gigu - купити в Україні | TTMAX",
       ru: "Кросівки Butterfly Lezoline Gigu - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4068,11 +4068,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Шльопанці",
     kind: "gear",
     name: {
-      uk: "Шльопанці Butterfly",
+      ua: "Шльопанці Butterfly",
       ru: "Шльопанці Butterfly",
     },
     title: {
-      uk: "Шльопанці Butterfly - купити в Україні | TTMAX",
+      ua: "Шльопанці Butterfly - купити в Україні | TTMAX",
       ru: "Шльопанці Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4099,11 +4099,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі Training Ball 40+ (6шт в уп)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly Training Ball 40+ (6шт в уп)",
+      ua: "М'ячі Butterfly Training Ball 40+ (6шт в уп)",
       ru: "М'ячі Butterfly Training Ball 40+ (6шт в уп)",
     },
     title: {
-      uk: "М'ячі Butterfly Training Ball 40+ (6шт в уп) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly Training Ball 40+ (6шт в уп) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly Training Ball 40+ (6шт в уп) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4130,11 +4130,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі Training Ball 40+ (120шт в уп)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly Training Ball 40+ (120шт в уп)",
+      ua: "М'ячі Butterfly Training Ball 40+ (120шт в уп)",
       ru: "М'ячі Butterfly Training Ball 40+ (120шт в уп)",
     },
     title: {
-      uk: "М'ячі Butterfly Training Ball 40+ (120шт в уп) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly Training Ball 40+ (120шт в уп) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly Training Ball 40+ (120шт в уп) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4161,11 +4161,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі S40 + 3 * ITTF (3 шт в уп)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп)",
+      ua: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп)",
       ru: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп)",
     },
     title: {
-      uk: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly S40 + 3 * ITTF (3 шт в уп) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4192,11 +4192,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі R40 + 3 * (3шт в уп)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly R40 + 3 * (3шт в уп)",
+      ua: "М'ячі Butterfly R40 + 3 * (3шт в уп)",
       ru: "М'ячі Butterfly R40 + 3 * (3шт в уп)",
     },
     title: {
-      uk: "М'ячі Butterfly R40 + 3 * (3шт в уп) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly R40 + 3 * (3шт в уп) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly R40 + 3 * (3шт в уп) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4223,11 +4223,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі R40 + 3 * (12шт в уп)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly R40 + 3 * (12шт в уп)",
+      ua: "М'ячі Butterfly R40 + 3 * (12шт в уп)",
       ru: "М'ячі Butterfly R40 + 3 * (12шт в уп)",
     },
     title: {
-      uk: "М'ячі Butterfly R40 + 3 * (12шт в уп) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly R40 + 3 * (12шт в уп) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly R40 + 3 * (12шт в уп) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4254,11 +4254,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі Master Quality Ball 40+ (72 шт.)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.)",
+      ua: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.)",
       ru: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.)",
     },
     title: {
-      uk: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly Master Quality Ball 40+ (72 шт.) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4284,11 +4284,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі Easy Ball 40+ (6 шт)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly Easy Ball 40+ (6 шт)",
+      ua: "М'ячі Butterfly Easy Ball 40+ (6 шт)",
       ru: "М'ячі Butterfly Easy Ball 40+ (6 шт)",
     },
     title: {
-      uk: "М'ячі Butterfly Easy Ball 40+ (6 шт) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly Easy Ball 40+ (6 шт) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly Easy Ball 40+ (6 шт) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4315,11 +4315,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "М'ячі Easy Ball 40+ (120 шт)",
     kind: "gear",
     name: {
-      uk: "М'ячі Butterfly Easy Ball 40+ (120 шт)",
+      ua: "М'ячі Butterfly Easy Ball 40+ (120 шт)",
       ru: "М'ячі Butterfly Easy Ball 40+ (120 шт)",
     },
     title: {
-      uk: "М'ячі Butterfly Easy Ball 40+ (120 шт) - купити в Україні | TTMAX",
+      ua: "М'ячі Butterfly Easy Ball 40+ (120 шт) - купити в Україні | TTMAX",
       ru: "М'ячі Butterfly Easy Ball 40+ (120 шт) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4346,11 +4346,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей FreeChack Pro II (90мл)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly FreeChack Pro II (90мл)",
+      ua: "Клей Butterfly FreeChack Pro II (90мл)",
       ru: "Клей Butterfly FreeChack Pro II (90мл)",
     },
     title: {
-      uk: "Клей Butterfly FreeChack Pro II (90мл) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly FreeChack Pro II (90мл) - купити в Україні | TTMAX",
       ru: "Клей Butterfly FreeChack Pro II (90мл) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4376,11 +4376,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей FreeChack Pro II (50мл)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly FreeChack Pro II (50мл)",
+      ua: "Клей Butterfly FreeChack Pro II (50мл)",
       ru: "Клей Butterfly FreeChack Pro II (50мл)",
     },
     title: {
-      uk: "Клей Butterfly FreeChack Pro II (50мл) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly FreeChack Pro II (50мл) - купити в Україні | TTMAX",
       ru: "Клей Butterfly FreeChack Pro II (50мл) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4406,11 +4406,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Freechack PRO 90ml",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Freechack PRO 90ml",
+      ua: "Клей Butterfly Freechack PRO 90ml",
       ru: "Клей Butterfly Freechack PRO 90ml",
     },
     title: {
-      uk: "Клей Butterfly Freechack PRO 90ml - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Freechack PRO 90ml - купити в Україні | TTMAX",
       ru: "Клей Butterfly Freechack PRO 90ml - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4436,11 +4436,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Freechack PRO II 500ml",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Freechack PRO II 500ml",
+      ua: "Клей Butterfly Freechack PRO II 500ml",
       ru: "Клей Butterfly Freechack PRO II 500ml",
     },
     title: {
-      uk: "Клей Butterfly Freechack PRO II 500ml - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Freechack PRO II 500ml - купити в Україні | TTMAX",
       ru: "Клей Butterfly Freechack PRO II 500ml - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4466,11 +4466,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Freechack PRO 37ml",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Freechack PRO 37ml",
+      ua: "Клей Butterfly Freechack PRO 37ml",
       ru: "Клей Butterfly Freechack PRO 37ml",
     },
     title: {
-      uk: "Клей Butterfly Freechack PRO 37ml - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Freechack PRO 37ml - купити в Україні | TTMAX",
       ru: "Клей Butterfly Freechack PRO 37ml - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4496,11 +4496,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Free Chack (90 ml)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Free Chack (90 ml)",
+      ua: "Клей Butterfly Free Chack (90 ml)",
       ru: "Клей Butterfly Free Chack (90 ml)",
     },
     title: {
-      uk: "Клей Butterfly Free Chack (90 ml) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Free Chack (90 ml) - купити в Україні | TTMAX",
       ru: "Клей Butterfly Free Chack (90 ml) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4526,11 +4526,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Free Chack (500 ml)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Free Chack (500 ml)",
+      ua: "Клей Butterfly Free Chack (500 ml)",
       ru: "Клей Butterfly Free Chack (500 ml)",
     },
     title: {
-      uk: "Клей Butterfly Free Chack (500 ml) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Free Chack (500 ml) - купити в Україні | TTMAX",
       ru: "Клей Butterfly Free Chack (500 ml) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4556,11 +4556,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Free Chack (50мл)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Free Chack (50мл)",
+      ua: "Клей Butterfly Free Chack (50мл)",
       ru: "Клей Butterfly Free Chack (50мл)",
     },
     title: {
-      uk: "Клей Butterfly Free Chack (50мл) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Free Chack (50мл) - купити в Україні | TTMAX",
       ru: "Клей Butterfly Free Chack (50мл) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4586,11 +4586,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Free Chack (37 ml)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Free Chack (37 ml)",
+      ua: "Клей Butterfly Free Chack (37 ml)",
       ru: "Клей Butterfly Free Chack (37 ml)",
     },
     title: {
-      uk: "Клей Butterfly Free Chack (37 ml) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Free Chack (37 ml) - купити в Україні | TTMAX",
       ru: "Клей Butterfly Free Chack (37 ml) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4616,11 +4616,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Клей Free Chack (30 ml)",
     kind: "gear",
     name: {
-      uk: "Клей Butterfly Free Chack (30 ml)",
+      ua: "Клей Butterfly Free Chack (30 ml)",
       ru: "Клей Butterfly Free Chack (30 ml)",
     },
     title: {
-      uk: "Клей Butterfly Free Chack (30 ml) - купити в Україні | TTMAX",
+      ua: "Клей Butterfly Free Chack (30 ml) - купити в Україні | TTMAX",
       ru: "Клей Butterfly Free Chack (30 ml) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4646,11 +4646,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Очисник для накладок Combi Cleaner",
     kind: "gear",
     name: {
-      uk: "Очисник для накладок Butterfly Combi Cleaner",
+      ua: "Очисник для накладок Butterfly Combi Cleaner",
       ru: "Очисник для накладок Butterfly Combi Cleaner",
     },
     title: {
-      uk: "Очисник для накладок Butterfly Combi Cleaner - купити в Україні | TTMAX",
+      ua: "Очисник для накладок Butterfly Combi Cleaner - купити в Україні | TTMAX",
       ru: "Очисник для накладок Butterfly Combi Cleaner - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4675,11 +4675,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Очищувач для столу Table Cleaner",
     kind: "gear",
     name: {
-      uk: "Очищувач для столу Butterfly Table Cleaner",
+      ua: "Очищувач для столу Butterfly Table Cleaner",
       ru: "Очищувач для столу Butterfly Table Cleaner",
     },
     title: {
-      uk: "Очищувач для столу Butterfly Table Cleaner - купити в Україні | TTMAX",
+      ua: "Очищувач для столу Butterfly Table Cleaner - купити в Україні | TTMAX",
       ru: "Очищувач для столу Butterfly Table Cleaner - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4704,11 +4704,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Очищувач для накладок Rubber Cleaner",
     kind: "gear",
     name: {
-      uk: "Очищувач для накладок Butterfly Rubber Cleaner",
+      ua: "Очищувач для накладок Butterfly Rubber Cleaner",
       ru: "Очищувач для накладок Butterfly Rubber Cleaner",
     },
     title: {
-      uk: "Очищувач для накладок Butterfly Rubber Cleaner - купити в Україні | TTMAX",
+      ua: "Очищувач для накладок Butterfly Rubber Cleaner - купити в Україні | TTMAX",
       ru: "Очищувач для накладок Butterfly Rubber Cleaner - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4733,11 +4733,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Очищувач для накладок Cure Water",
     kind: "gear",
     name: {
-      uk: "Очищувач для накладок Butterfly Cure Water",
+      ua: "Очищувач для накладок Butterfly Cure Water",
       ru: "Очищувач для накладок Butterfly Cure Water",
     },
     title: {
-      uk: "Очищувач для накладок Butterfly Cure Water - купити в Україні | TTMAX",
+      ua: "Очищувач для накладок Butterfly Cure Water - купити в Україні | TTMAX",
       ru: "Очищувач для накладок Butterfly Cure Water - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4762,11 +4762,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Відновник обертання Spin Refresh",
     kind: "gear",
     name: {
-      uk: "Відновник обертання Butterfly Spin Refresh",
+      ua: "Відновник обертання Butterfly Spin Refresh",
       ru: "Відновник обертання Butterfly Spin Refresh",
     },
     title: {
-      uk: "Відновник обертання Butterfly Spin Refresh - купити в Україні | TTMAX",
+      ua: "Відновник обертання Butterfly Spin Refresh - купити в Україні | TTMAX",
       ru: "Відновник обертання Butterfly Spin Refresh - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4791,11 +4791,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Губка Rubber Care",
     kind: "gear",
     name: {
-      uk: "Губка Butterfly Rubber Care",
+      ua: "Губка Butterfly Rubber Care",
       ru: "Губка Butterfly Rubber Care",
     },
     title: {
-      uk: "Губка Butterfly Rubber Care - купити в Україні | TTMAX",
+      ua: "Губка Butterfly Rubber Care - купити в Україні | TTMAX",
       ru: "Губка Butterfly Rubber Care - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4820,11 +4820,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Бавовняна губка",
     kind: "gear",
     name: {
-      uk: "Бавовняна губка Butterfly",
+      ua: "Бавовняна губка Butterfly",
       ru: "Бавовняна губка Butterfly",
     },
     title: {
-      uk: "Бавовняна губка Butterfly - купити в Україні | TTMAX",
+      ua: "Бавовняна губка Butterfly - купити в Україні | TTMAX",
       ru: "Бавовняна губка Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4849,11 +4849,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Обмотка на ручку ракетки Overgrip",
     kind: "gear",
     name: {
-      uk: "Обмотка на ручку ракетки Butterfly Overgrip",
+      ua: "Обмотка на ручку ракетки Butterfly Overgrip",
       ru: "Обмотка на ручку ракетки Butterfly Overgrip",
     },
     title: {
-      uk: "Обмотка на ручку ракетки Butterfly Overgrip - купити в Україні | TTMAX",
+      ua: "Обмотка на ручку ракетки Butterfly Overgrip - купити в Україні | TTMAX",
       ru: "Обмотка на ручку ракетки Butterfly Overgrip - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4878,11 +4878,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Захисна плівка",
     kind: "gear",
     name: {
-      uk: "Захисна плівка Butterfly",
+      ua: "Захисна плівка Butterfly",
       ru: "Захисна плівка Butterfly",
     },
     title: {
-      uk: "Захисна плівка Butterfly - купити в Україні | TTMAX",
+      ua: "Захисна плівка Butterfly - купити в Україні | TTMAX",
       ru: "Захисна плівка Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4907,11 +4907,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Logo 6мм / 10м",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Logo 6мм / 10м",
+      ua: "Торцева стрічка Butterfly Logo 6мм / 10м",
       ru: "Торцева стрічка Butterfly Logo 6мм / 10м",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Logo 6мм / 10м - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Logo 6мм / 10м - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Logo 6мм / 10м - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4936,11 +4936,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Logo 12мм / 50м",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Logo 12мм / 50м",
+      ua: "Торцева стрічка Butterfly Logo 12мм / 50м",
       ru: "Торцева стрічка Butterfly Logo 12мм / 50м",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Logo 12мм / 50м - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Logo 12мм / 50м - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Logo 12мм / 50м - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4965,11 +4965,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Logo 12мм / 1м",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Logo 12мм / 1м",
+      ua: "Торцева стрічка Butterfly Logo 12мм / 1м",
       ru: "Торцева стрічка Butterfly Logo 12мм / 1м",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Logo 12мм / 1м - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Logo 12мм / 1м - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Logo 12мм / 1м - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -4994,11 +4994,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Logo 12mm / 10m",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Logo 12mm / 10m",
+      ua: "Торцева стрічка Butterfly Logo 12mm / 10m",
       ru: "Торцева стрічка Butterfly Logo 12mm / 10m",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Logo 12mm / 10m - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Logo 12mm / 10m - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Logo 12mm / 10m - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5023,11 +5023,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Glayzer",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Glayzer",
+      ua: "Торцева стрічка Butterfly Glayzer",
       ru: "Торцева стрічка Butterfly Glayzer",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Glayzer - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Glayzer - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Glayzer - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5052,11 +5052,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Торцева стрічка Dignics",
     kind: "gear",
     name: {
-      uk: "Торцева стрічка Butterfly Dignics",
+      ua: "Торцева стрічка Butterfly Dignics",
       ru: "Торцева стрічка Butterfly Dignics",
     },
     title: {
-      uk: "Торцева стрічка Butterfly Dignics - купити в Україні | TTMAX",
+      ua: "Торцева стрічка Butterfly Dignics - купити в Україні | TTMAX",
       ru: "Торцева стрічка Butterfly Dignics - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5081,11 +5081,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Тубус для м'ячів",
     kind: "gear",
     name: {
-      uk: "Тубус для м'ячів Butterfly",
+      ua: "Тубус для м'ячів Butterfly",
       ru: "Тубус для м'ячів Butterfly",
     },
     title: {
-      uk: "Тубус для м'ячів Butterfly - купити в Україні | TTMAX",
+      ua: "Тубус для м'ячів Butterfly - купити в Україні | TTMAX",
       ru: "Тубус для м'ячів Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5110,11 +5110,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Запасні устілки",
     kind: "gear",
     name: {
-      uk: "Запасні устілки Butterfly",
+      ua: "Запасні устілки Butterfly",
       ru: "Запасні устілки Butterfly",
     },
     title: {
-      uk: "Запасні устілки Butterfly - купити в Україні | TTMAX",
+      ua: "Запасні устілки Butterfly - купити в Україні | TTMAX",
       ru: "Запасні устілки Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5139,11 +5139,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Yao Midi",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Yao Midi",
+      ua: "Рушник Butterfly Yao Midi",
       ru: "Рушник Butterfly Yao Midi",
     },
     title: {
-      uk: "Рушник Butterfly Yao Midi - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Yao Midi - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Yao Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5168,11 +5168,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Taoru",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Taoru",
+      ua: "Рушник Butterfly Taoru",
       ru: "Рушник Butterfly Taoru",
     },
     title: {
-      uk: "Рушник Butterfly Taoru - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Taoru - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Taoru - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5197,11 +5197,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Stripe",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Stripe",
+      ua: "Рушник Butterfly Stripe",
       ru: "Рушник Butterfly Stripe",
     },
     title: {
-      uk: "Рушник Butterfly Stripe - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Stripe - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Stripe - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5226,11 +5226,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Streak",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Streak",
+      ua: "Рушник Butterfly Streak",
       ru: "Рушник Butterfly Streak",
     },
     title: {
-      uk: "Рушник Butterfly Streak - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Streak - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Streak - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5255,11 +5255,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Sign",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Sign",
+      ua: "Рушник Butterfly Sign",
       ru: "Рушник Butterfly Sign",
     },
     title: {
-      uk: "Рушник Butterfly Sign - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Sign - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Sign - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5284,11 +5284,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Handa",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Handa",
+      ua: "Рушник Butterfly Handa",
       ru: "Рушник Butterfly Handa",
     },
     title: {
-      uk: "Рушник Butterfly Handa - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Handa - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Handa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5313,11 +5313,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Germany",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Germany",
+      ua: "Рушник Butterfly Germany",
       ru: "Рушник Butterfly Germany",
     },
     title: {
-      uk: "Рушник Butterfly Germany - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Germany - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Germany - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5342,11 +5342,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Dignics",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Dignics",
+      ua: "Рушник Butterfly Dignics",
       ru: "Рушник Butterfly Dignics",
     },
     title: {
-      uk: "Рушник Butterfly Dignics - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Dignics - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Dignics - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5371,11 +5371,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Borussia",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Borussia",
+      ua: "Рушник Butterfly Borussia",
       ru: "Рушник Butterfly Borussia",
     },
     title: {
-      uk: "Рушник Butterfly Borussia - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Borussia - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Borussia - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5400,11 +5400,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Big Yao",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Big Yao",
+      ua: "Рушник Butterfly Big Yao",
       ru: "Рушник Butterfly Big Yao",
     },
     title: {
-      uk: "Рушник Butterfly Big Yao - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Big Yao - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Big Yao - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5429,11 +5429,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Big Taoru",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Big Taoru",
+      ua: "Рушник Butterfly Big Taoru",
       ru: "Рушник Butterfly Big Taoru",
     },
     title: {
-      uk: "Рушник Butterfly Big Taoru - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Big Taoru - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Big Taoru - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5458,11 +5458,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рушник Big Streak",
     kind: "gear",
     name: {
-      uk: "Рушник Butterfly Big Streak",
+      ua: "Рушник Butterfly Big Streak",
       ru: "Рушник Butterfly Big Streak",
     },
     title: {
-      uk: "Рушник Butterfly Big Streak - купити в Україні | TTMAX",
+      ua: "Рушник Butterfly Big Streak - купити в Україні | TTMAX",
       ru: "Рушник Butterfly Big Streak - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5487,11 +5487,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пляшка Tenergy",
     kind: "gear",
     name: {
-      uk: "Пляшка Butterfly Tenergy",
+      ua: "Пляшка Butterfly Tenergy",
       ru: "Пляшка Butterfly Tenergy",
     },
     title: {
-      uk: "Пляшка Butterfly Tenergy - купити в Україні | TTMAX",
+      ua: "Пляшка Butterfly Tenergy - купити в Україні | TTMAX",
       ru: "Пляшка Butterfly Tenergy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5516,11 +5516,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пляшка Borussia",
     kind: "gear",
     name: {
-      uk: "Пляшка Butterfly Borussia",
+      ua: "Пляшка Butterfly Borussia",
       ru: "Пляшка Butterfly Borussia",
     },
     title: {
-      uk: "Пляшка Butterfly Borussia - купити в Україні | TTMAX",
+      ua: "Пляшка Butterfly Borussia - купити в Україні | TTMAX",
       ru: "Пляшка Butterfly Borussia - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5545,11 +5545,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пляшка 22",
     kind: "gear",
     name: {
-      uk: "Пляшка Butterfly 22",
+      ua: "Пляшка Butterfly 22",
       ru: "Пляшка Butterfly 22",
     },
     title: {
-      uk: "Пляшка Butterfly 22 - купити в Україні | TTMAX",
+      ua: "Пляшка Butterfly 22 - купити в Україні | TTMAX",
       ru: "Пляшка Butterfly 22 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5574,11 +5574,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Пляшка",
     kind: "gear",
     name: {
-      uk: "Пляшка Butterfly",
+      ua: "Пляшка Butterfly",
       ru: "Пляшка Butterfly",
     },
     title: {
-      uk: "Пляшка Butterfly - купити в Україні | TTMAX",
+      ua: "Пляшка Butterfly - купити в Україні | TTMAX",
       ru: "Пляшка Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5603,11 +5603,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка для взуття",
     kind: "gear",
     name: {
-      uk: "Сумка для взуття Butterfly",
+      ua: "Сумка для взуття Butterfly",
       ru: "Сумка для взуття Butterfly",
     },
     title: {
-      uk: "Сумка для взуття Butterfly - купити в Україні | TTMAX",
+      ua: "Сумка для взуття Butterfly - купити в Україні | TTMAX",
       ru: "Сумка для взуття Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5632,11 +5632,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка для м'ячів",
     kind: "gear",
     name: {
-      uk: "Сумка для м'ячів Butterfly",
+      ua: "Сумка для м'ячів Butterfly",
       ru: "Сумка для м'ячів Butterfly",
     },
     title: {
-      uk: "Сумка для м'ячів Butterfly - купити в Україні | TTMAX",
+      ua: "Сумка для м'ячів Butterfly - купити в Україні | TTMAX",
       ru: "Сумка для м'ячів Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5661,11 +5661,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Yasyo SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Yasyo SportBag",
+      ua: "Сумка Butterfly Yasyo SportBag",
       ru: "Сумка Butterfly Yasyo SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Yasyo SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Yasyo SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Yasyo SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5690,11 +5690,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Yasyo Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Yasyo Midi",
+      ua: "Сумка Butterfly Yasyo Midi",
       ru: "Сумка Butterfly Yasyo Midi",
     },
     title: {
-      uk: "Сумка Butterfly Yasyo Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Yasyo Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Yasyo Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5719,11 +5719,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Yasyo Maxi Bag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Yasyo Maxi Bag",
+      ua: "Сумка Butterfly Yasyo Maxi Bag",
       ru: "Сумка Butterfly Yasyo Maxi Bag",
     },
     title: {
-      uk: "Сумка Butterfly Yasyo Maxi Bag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Yasyo Maxi Bag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Yasyo Maxi Bag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5748,11 +5748,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка SportBag Wheels",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly SportBag Wheels",
+      ua: "Сумка Butterfly SportBag Wheels",
       ru: "Сумка Butterfly SportBag Wheels",
     },
     title: {
-      uk: "Сумка Butterfly SportBag Wheels - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly SportBag Wheels - купити в Україні | TTMAX",
       ru: "Сумка Butterfly SportBag Wheels - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5777,11 +5777,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Sendai Dufflebag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Sendai Dufflebag",
+      ua: "Сумка Butterfly Sendai Dufflebag",
       ru: "Сумка Butterfly Sendai Dufflebag",
     },
     title: {
-      uk: "Сумка Butterfly Sendai Dufflebag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Sendai Dufflebag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Sendai Dufflebag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5806,11 +5806,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Otomo SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Otomo SportBag",
+      ua: "Сумка Butterfly Otomo SportBag",
       ru: "Сумка Butterfly Otomo SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Otomo SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Otomo SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Otomo SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5835,11 +5835,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Otomo Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Otomo Midi",
+      ua: "Сумка Butterfly Otomo Midi",
       ru: "Сумка Butterfly Otomo Midi",
     },
     title: {
-      uk: "Сумка Butterfly Otomo Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Otomo Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Otomo Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5864,11 +5864,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kitami SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kitami SportBag",
+      ua: "Сумка Butterfly Kitami SportBag",
       ru: "Сумка Butterfly Kitami SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Kitami SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kitami SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kitami SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5893,11 +5893,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kitami Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kitami Midi",
+      ua: "Сумка Butterfly Kitami Midi",
       ru: "Сумка Butterfly Kitami Midi",
     },
     title: {
-      uk: "Сумка Butterfly Kitami Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kitami Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kitami Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5922,11 +5922,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kashiwa SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kashiwa SportBag",
+      ua: "Сумка Butterfly Kashiwa SportBag",
       ru: "Сумка Butterfly Kashiwa SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Kashiwa SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kashiwa SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kashiwa SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5951,11 +5951,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kashiwa Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kashiwa Midi",
+      ua: "Сумка Butterfly Kashiwa Midi",
       ru: "Сумка Butterfly Kashiwa Midi",
     },
     title: {
-      uk: "Сумка Butterfly Kashiwa Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kashiwa Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kashiwa Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -5980,11 +5980,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kanoy SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kanoy SportBag",
+      ua: "Сумка Butterfly Kanoy SportBag",
       ru: "Сумка Butterfly Kanoy SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Kanoy SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kanoy SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kanoy SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6009,11 +6009,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kaban SportBag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kaban SportBag",
+      ua: "Сумка Butterfly Kaban SportBag",
       ru: "Сумка Butterfly Kaban SportBag",
     },
     title: {
-      uk: "Сумка Butterfly Kaban SportBag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kaban SportBag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kaban SportBag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6038,11 +6038,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Kaban Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Kaban Midi",
+      ua: "Сумка Butterfly Kaban Midi",
       ru: "Сумка Butterfly Kaban Midi",
     },
     title: {
-      uk: "Сумка Butterfly Kaban Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Kaban Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Kaban Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6067,11 +6067,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Black Line Maxibag",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Black Line Maxibag",
+      ua: "Сумка Butterfly Black Line Maxibag",
       ru: "Сумка Butterfly Black Line Maxibag",
     },
     title: {
-      uk: "Сумка Butterfly Black Line Maxibag - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Black Line Maxibag - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Black Line Maxibag - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6096,11 +6096,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка Tokai Midi",
     kind: "gear",
     name: {
-      uk: "Сумка Butterfly Tokai Midi",
+      ua: "Сумка Butterfly Tokai Midi",
       ru: "Сумка Butterfly Tokai Midi",
     },
     title: {
-      uk: "Сумка Butterfly Tokai Midi - купити в Україні | TTMAX",
+      ua: "Сумка Butterfly Tokai Midi - купити в Україні | TTMAX",
       ru: "Сумка Butterfly Tokai Midi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6125,11 +6125,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сумка-рюкзак Kanoy",
     kind: "gear",
     name: {
-      uk: "Сумка-рюкзак Butterfly Kanoy",
+      ua: "Сумка-рюкзак Butterfly Kanoy",
       ru: "Сумка-рюкзак Butterfly Kanoy",
     },
     title: {
-      uk: "Сумка-рюкзак Butterfly Kanoy - купити в Україні | TTMAX",
+      ua: "Сумка-рюкзак Butterfly Kanoy - купити в Україні | TTMAX",
       ru: "Сумка-рюкзак Butterfly Kanoy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6154,11 +6154,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Yasyo",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Yasyo",
+      ua: "Рюкзак Butterfly Yasyo",
       ru: "Рюкзак Butterfly Yasyo",
     },
     title: {
-      uk: "Рюкзак Butterfly Yasyo - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Yasyo - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Yasyo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6183,11 +6183,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Tokai",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Tokai",
+      ua: "Рюкзак Butterfly Tokai",
       ru: "Рюкзак Butterfly Tokai",
     },
     title: {
-      uk: "Рюкзак Butterfly Tokai - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Tokai - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Tokai - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6212,11 +6212,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Sendai Rolltop",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Sendai Rolltop",
+      ua: "Рюкзак Butterfly Sendai Rolltop",
       ru: "Рюкзак Butterfly Sendai Rolltop",
     },
     title: {
-      uk: "Рюкзак Butterfly Sendai Rolltop - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Sendai Rolltop - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Sendai Rolltop - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6241,11 +6241,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Otomo",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Otomo",
+      ua: "Рюкзак Butterfly Otomo",
       ru: "Рюкзак Butterfly Otomo",
     },
     title: {
-      uk: "Рюкзак Butterfly Otomo - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Otomo - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Otomo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6270,11 +6270,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Kitami",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Kitami",
+      ua: "Рюкзак Butterfly Kitami",
       ru: "Рюкзак Butterfly Kitami",
     },
     title: {
-      uk: "Рюкзак Butterfly Kitami - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Kitami - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Kitami - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6299,11 +6299,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Kashiwa",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Kashiwa",
+      ua: "Рюкзак Butterfly Kashiwa",
       ru: "Рюкзак Butterfly Kashiwa",
     },
     title: {
-      uk: "Рюкзак Butterfly Kashiwa - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Kashiwa - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Kashiwa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6328,11 +6328,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Рюкзак Kanoy",
     kind: "gear",
     name: {
-      uk: "Рюкзак Butterfly Kanoy",
+      ua: "Рюкзак Butterfly Kanoy",
       ru: "Рюкзак Butterfly Kanoy",
     },
     title: {
-      uk: "Рюкзак Butterfly Kanoy - купити в Україні | TTMAX",
+      ua: "Рюкзак Butterfly Kanoy - купити в Україні | TTMAX",
       ru: "Рюкзак Butterfly Kanoy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6357,11 +6357,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Валіза Yasyo Trolley",
     kind: "gear",
     name: {
-      uk: "Валіза Butterfly Yasyo Trolley",
+      ua: "Валіза Butterfly Yasyo Trolley",
       ru: "Валіза Butterfly Yasyo Trolley",
     },
     title: {
-      uk: "Валіза Butterfly Yasyo Trolley - купити в Україні | TTMAX",
+      ua: "Валіза Butterfly Yasyo Trolley - купити в Україні | TTMAX",
       ru: "Валіза Butterfly Yasyo Trolley - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6386,11 +6386,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Валіза Tabi",
     kind: "gear",
     name: {
-      uk: "Валіза Butterfly Tabi",
+      ua: "Валіза Butterfly Tabi",
       ru: "Валіза Butterfly Tabi",
     },
     title: {
-      uk: "Валіза Butterfly Tabi - купити в Україні | TTMAX",
+      ua: "Валіза Butterfly Tabi - купити в Україні | TTMAX",
       ru: "Валіза Butterfly Tabi - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6415,11 +6415,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Валіза Black Line",
     kind: "gear",
     name: {
-      uk: "Валіза Butterfly Black Line",
+      ua: "Валіза Butterfly Black Line",
       ru: "Валіза Butterfly Black Line",
     },
     title: {
-      uk: "Валіза Butterfly Black Line - купити в Україні | TTMAX",
+      ua: "Валіза Butterfly Black Line - купити в Україні | TTMAX",
       ru: "Валіза Butterfly Black Line - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6444,11 +6444,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Подвійний чохол Otomo",
     kind: "gear",
     name: {
-      uk: "Подвійний чохол Butterfly Otomo",
+      ua: "Подвійний чохол Butterfly Otomo",
       ru: "Подвійний чохол Butterfly Otomo",
     },
     title: {
-      uk: "Подвійний чохол Butterfly Otomo - купити в Україні | TTMAX",
+      ua: "Подвійний чохол Butterfly Otomo - купити в Україні | TTMAX",
       ru: "Подвійний чохол Butterfly Otomo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6473,11 +6473,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Подвійний чохол Logo 2019",
     kind: "gear",
     name: {
-      uk: "Подвійний чохол Butterfly Logo 2019",
+      ua: "Подвійний чохол Butterfly Logo 2019",
       ru: "Подвійний чохол Butterfly Logo 2019",
     },
     title: {
-      uk: "Подвійний чохол Butterfly Logo 2019 - купити в Україні | TTMAX",
+      ua: "Подвійний чохол Butterfly Logo 2019 - купити в Україні | TTMAX",
       ru: "Подвійний чохол Butterfly Logo 2019 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6502,11 +6502,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Подвійний чохол Kitami",
     kind: "gear",
     name: {
-      uk: "Подвійний чохол Butterfly Kitami",
+      ua: "Подвійний чохол Butterfly Kitami",
       ru: "Подвійний чохол Butterfly Kitami",
     },
     title: {
-      uk: "Подвійний чохол Butterfly Kitami - купити в Україні | TTMAX",
+      ua: "Подвійний чохол Butterfly Kitami - купити в Україні | TTMAX",
       ru: "Подвійний чохол Butterfly Kitami - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6531,11 +6531,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Подвійний чохол Kashiwa",
     kind: "gear",
     name: {
-      uk: "Подвійний чохол Butterfly Kashiwa",
+      ua: "Подвійний чохол Butterfly Kashiwa",
       ru: "Подвійний чохол Butterfly Kashiwa",
     },
     title: {
-      uk: "Подвійний чохол Butterfly Kashiwa - купити в Україні | TTMAX",
+      ua: "Подвійний чохол Butterfly Kashiwa - купити в Україні | TTMAX",
       ru: "Подвійний чохол Butterfly Kashiwa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6560,11 +6560,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Подвійний чохол Kanoy",
     kind: "gear",
     name: {
-      uk: "Подвійний чохол Butterfly Kanoy",
+      ua: "Подвійний чохол Butterfly Kanoy",
       ru: "Подвійний чохол Butterfly Kanoy",
     },
     title: {
-      uk: "Подвійний чохол Butterfly Kanoy - купити в Україні | TTMAX",
+      ua: "Подвійний чохол Butterfly Kanoy - купити в Україні | TTMAX",
       ru: "Подвійний чохол Butterfly Kanoy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6589,11 +6589,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Otomo",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Otomo",
+      ua: "Одинарний чохол Butterfly Otomo",
       ru: "Одинарний чохол Butterfly Otomo",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Otomo - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Otomo - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Otomo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6618,11 +6618,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Logo 2019 (овал)",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Logo 2019 (овал)",
+      ua: "Одинарний чохол Butterfly Logo 2019 (овал)",
       ru: "Одинарний чохол Butterfly Logo 2019 (овал)",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Logo 2019 (овал) - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Logo 2019 (овал) - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Logo 2019 (овал) - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6647,11 +6647,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Logo 2019",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Logo 2019",
+      ua: "Одинарний чохол Butterfly Logo 2019",
       ru: "Одинарний чохол Butterfly Logo 2019",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Logo 2019 - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Logo 2019 - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Logo 2019 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6676,11 +6676,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Kitami",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Kitami",
+      ua: "Одинарний чохол Butterfly Kitami",
       ru: "Одинарний чохол Butterfly Kitami",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Kitami - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Kitami - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Kitami - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6705,11 +6705,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Kashiwa",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Kashiwa",
+      ua: "Одинарний чохол Butterfly Kashiwa",
       ru: "Одинарний чохол Butterfly Kashiwa",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Kashiwa - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Kashiwa - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Kashiwa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6734,11 +6734,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Одинарний чохол Kanoy",
     kind: "gear",
     name: {
-      uk: "Одинарний чохол Butterfly Kanoy",
+      ua: "Одинарний чохол Butterfly Kanoy",
       ru: "Одинарний чохол Butterfly Kanoy",
     },
     title: {
-      uk: "Одинарний чохол Butterfly Kanoy - купити в Україні | TTMAX",
+      ua: "Одинарний чохол Butterfly Kanoy - купити в Україні | TTMAX",
       ru: "Одинарний чохол Butterfly Kanoy - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6763,11 +6763,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол подвійний Yasyo",
     kind: "gear",
     name: {
-      uk: "Чохол подвійний Butterfly Yasyo",
+      ua: "Чохол подвійний Butterfly Yasyo",
       ru: "Чохол подвійний Butterfly Yasyo",
     },
     title: {
-      uk: "Чохол подвійний Butterfly Yasyo - купити в Україні | TTMAX",
+      ua: "Чохол подвійний Butterfly Yasyo - купити в Україні | TTMAX",
       ru: "Чохол подвійний Butterfly Yasyo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6792,11 +6792,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол подвійний Kaban",
     kind: "gear",
     name: {
-      uk: "Чохол подвійний Butterfly Kaban",
+      ua: "Чохол подвійний Butterfly Kaban",
       ru: "Чохол подвійний Butterfly Kaban",
     },
     title: {
-      uk: "Чохол подвійний Butterfly Kaban - купити в Україні | TTMAX",
+      ua: "Чохол подвійний Butterfly Kaban - купити в Україні | TTMAX",
       ru: "Чохол подвійний Butterfly Kaban - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6821,11 +6821,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол одинарний Yasyo",
     kind: "gear",
     name: {
-      uk: "Чохол одинарний Butterfly Yasyo",
+      ua: "Чохол одинарний Butterfly Yasyo",
       ru: "Чохол одинарний Butterfly Yasyo",
     },
     title: {
-      uk: "Чохол одинарний Butterfly Yasyo - купити в Україні | TTMAX",
+      ua: "Чохол одинарний Butterfly Yasyo - купити в Україні | TTMAX",
       ru: "Чохол одинарний Butterfly Yasyo - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6850,11 +6850,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол одинарний Kaban",
     kind: "gear",
     name: {
-      uk: "Чохол одинарний Butterfly Kaban",
+      ua: "Чохол одинарний Butterfly Kaban",
       ru: "Чохол одинарний Butterfly Kaban",
     },
     title: {
-      uk: "Чохол одинарний Butterfly Kaban - купити в Україні | TTMAX",
+      ua: "Чохол одинарний Butterfly Kaban - купити в Україні | TTMAX",
       ru: "Чохол одинарний Butterfly Kaban - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6879,11 +6879,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол одинарний Black Line",
     kind: "gear",
     name: {
-      uk: "Чохол одинарний Butterfly Black Line",
+      ua: "Чохол одинарний Butterfly Black Line",
       ru: "Чохол одинарний Butterfly Black Line",
     },
     title: {
-      uk: "Чохол одинарний Butterfly Black Line - купити в Україні | TTMAX",
+      ua: "Чохол одинарний Butterfly Black Line - купити в Україні | TTMAX",
       ru: "Чохол одинарний Butterfly Black Line - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6908,11 +6908,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол-кейс Kibako",
     kind: "gear",
     name: {
-      uk: "Чохол-кейс Butterfly Kibako",
+      ua: "Чохол-кейс Butterfly Kibako",
       ru: "Чохол-кейс Butterfly Kibako",
     },
     title: {
-      uk: "Чохол-кейс Butterfly Kibako - купити в Україні | TTMAX",
+      ua: "Чохол-кейс Butterfly Kibako - купити в Україні | TTMAX",
       ru: "Чохол-кейс Butterfly Kibako - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6937,11 +6937,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол Full Hard Case",
     kind: "gear",
     name: {
-      uk: "Чохол Butterfly Full Hard Case",
+      ua: "Чохол Butterfly Full Hard Case",
       ru: "Чохол Butterfly Full Hard Case",
     },
     title: {
-      uk: "Чохол Butterfly Full Hard Case - купити в Україні | TTMAX",
+      ua: "Чохол Butterfly Full Hard Case - купити в Україні | TTMAX",
       ru: "Чохол Butterfly Full Hard Case - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6966,11 +6966,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол Easy Case",
     kind: "gear",
     name: {
-      uk: "Чохол Butterfly Easy Case",
+      ua: "Чохол Butterfly Easy Case",
       ru: "Чохол Butterfly Easy Case",
     },
     title: {
-      uk: "Чохол Butterfly Easy Case - купити в Україні | TTMAX",
+      ua: "Чохол Butterfly Easy Case - купити в Україні | TTMAX",
       ru: "Чохол Butterfly Easy Case - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -6995,11 +6995,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол Cell Case 2",
     kind: "gear",
     name: {
-      uk: "Чохол Butterfly Cell Case 2",
+      ua: "Чохол Butterfly Cell Case 2",
       ru: "Чохол Butterfly Cell Case 2",
     },
     title: {
-      uk: "Чохол Butterfly Cell Case 2 - купити в Україні | TTMAX",
+      ua: "Чохол Butterfly Cell Case 2 - купити в Україні | TTMAX",
       ru: "Чохол Butterfly Cell Case 2 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -7024,11 +7024,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол Cell Case 1",
     kind: "gear",
     name: {
-      uk: "Чохол Butterfly Cell Case 1",
+      ua: "Чохол Butterfly Cell Case 1",
       ru: "Чохол Butterfly Cell Case 1",
     },
     title: {
-      uk: "Чохол Butterfly Cell Case 1 - купити в Україні | TTMAX",
+      ua: "Чохол Butterfly Cell Case 1 - купити в Україні | TTMAX",
       ru: "Чохол Butterfly Cell Case 1 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -7053,11 +7053,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Чохол 1950",
     kind: "gear",
     name: {
-      uk: "Чохол Butterfly 1950",
+      ua: "Чохол Butterfly 1950",
       ru: "Чохол Butterfly 1950",
     },
     title: {
-      uk: "Чохол Butterfly 1950 - купити в Україні | TTMAX",
+      ua: "Чохол Butterfly 1950 - купити в Україні | TTMAX",
       ru: "Чохол Butterfly 1950 - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -7082,11 +7082,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сітка National League",
     kind: "gear",
     name: {
-      uk: "Сітка Butterfly National League",
+      ua: "Сітка Butterfly National League",
       ru: "Сітка Butterfly National League",
     },
     title: {
-      uk: "Сітка Butterfly National League - купити в Україні | TTMAX",
+      ua: "Сітка Butterfly National League - купити в Україні | TTMAX",
       ru: "Сітка Butterfly National League - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -7111,11 +7111,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сітка Europa",
     kind: "gear",
     name: {
-      uk: "Сітка Butterfly Europa",
+      ua: "Сітка Butterfly Europa",
       ru: "Сітка Butterfly Europa",
     },
     title: {
-      uk: "Сітка Butterfly Europa - купити в Україні | TTMAX",
+      ua: "Сітка Butterfly Europa - купити в Україні | TTMAX",
       ru: "Сітка Butterfly Europa - купить в Украине | TTMAX",
     },
     level: "amateur",
@@ -7140,11 +7140,11 @@ export const catalogGear: CatalogProduct[] = [
     model: "Сітка Elite Clip",
     kind: "gear",
     name: {
-      uk: "Сітка Butterfly Elite Clip",
+      ua: "Сітка Butterfly Elite Clip",
       ru: "Сітка Butterfly Elite Clip",
     },
     title: {
-      uk: "Сітка Butterfly Elite Clip - купити в Україні | TTMAX",
+      ua: "Сітка Butterfly Elite Clip - купити в Україні | TTMAX",
       ru: "Сітка Butterfly Elite Clip - купить в Украине | TTMAX",
     },
     level: "amateur",

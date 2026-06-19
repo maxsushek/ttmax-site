@@ -21,7 +21,7 @@ export type LeadRow = {
   phone: string;
   email: string | null;
   source: string;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   attribution: Record<string, unknown>;
   status: LeadStatus;
   assigned_to: string | null;
@@ -46,7 +46,7 @@ export type LeadInsert = {
   phone: string;
   email?: string | null;
   source: string;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   attribution?: Record<string, unknown>;
   status?: LeadStatus;
   assigned_to?: string | null;
@@ -113,7 +113,7 @@ export type LeadsPendingAdsSyncRow = {
   created_at: string;
   qualified_at: string | null;
   source: string;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   value_uah: number | null;
   attribution: Record<string, unknown>;
   synced_to_google_ads_at: string | null;
@@ -146,7 +146,7 @@ export type OrderRow = {
   customer_name: string;
   customer_phone: string;
   customer_email: string | null;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   delivery_method: DeliveryMethod;
   delivery_city: string | null;
   delivery_branch: string | null;
@@ -178,7 +178,7 @@ export type OrderInsert = {
   customer_name: string;
   customer_phone: string;
   customer_email?: string | null;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   delivery_method: DeliveryMethod;
   delivery_city?: string | null;
   delivery_branch?: string | null;
@@ -265,7 +265,7 @@ export type OrdersPendingAdsSyncRow = {
   order_number: string;
   created_at: string;
   delivered_at: string | null;
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   total_uah: number;
   attribution: Record<string, unknown>;
   synced_to_google_ads_at: string | null;

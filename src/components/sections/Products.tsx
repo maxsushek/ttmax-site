@@ -116,15 +116,15 @@ export async function Products({ locale, messages }: { locale: Locale; messages:
                     {p.model}
                   </div>
                   <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-                    <span className="font-display text-xl font-black text-accent">
+                    <span className="font-display text-xl font-black text-accent whitespace-nowrap">
                       {typeof p.price === "number"
                         ? formatPrice(p.price)
                         : locale === "ru"
                           ? "Цена по запросу"
                           : "Ціна за запитом"}
                     </span>
-                    <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-accent">
-                      {m.seeAll} →
+                    <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-accent whitespace-nowrap">
+                      <span className="hidden sm:inline">{m.seeAll} </span>→
                     </span>
                   </div>
                 </div>

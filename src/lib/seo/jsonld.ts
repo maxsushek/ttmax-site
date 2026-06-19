@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import type { Locale } from "@/i18n/config";
+import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
 
 export function organizationJsonLd(contact?: ContactInfo) {
@@ -34,7 +34,7 @@ export function websiteJsonLd(locale: Locale) {
     "@type": "WebSite",
     name: siteConfig.name,
     url: `${siteConfig.url}/${locale}`,
-    inLanguage: locale,
+    inLanguage: localeToLang[locale],
     potentialAction: {
       "@type": "SearchAction",
       target: `${siteConfig.url}/${locale}/search?q={search_term_string}`,

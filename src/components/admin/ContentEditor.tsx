@@ -37,7 +37,7 @@ export function ContentEditor({
 }) {
   const [entityType, setEntityType] = useState("category");
   const [slug, setSlug] = useState("");
-  const [locale, setLocale] = useState("uk");
+  const [locale, setLocale] = useState("ua");
 
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
@@ -312,7 +312,7 @@ export function ContentEditor({
               }}
               className={field}
             >
-              <option value="uk">uk</option>
+              <option value="ua">uk</option>
               <option value="ru">ru</option>
             </select>
           </label>
@@ -435,7 +435,7 @@ export function ContentEditor({
             value={comparison}
             onChange={(e) => setComparison(e.target.value)}
             rows={5}
-            placeholder='{"columns":["Модель","Швидкість","Контроль"],"rows":[{"cells":["Dignics 05","9.5","8"],"href":"/uk/butterfly/nakladki/dignics-05"}]}'
+            placeholder='{"columns":["Модель","Швидкість","Контроль"],"rows":[{"cells":["Dignics 05","9.5","8"],"href":"/ua/butterfly/nakladki/dignics-05"}]}'
             className={`${field} font-mono text-[12px]`}
           />
         </label>

@@ -186,11 +186,11 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
       return pickLocalized(route.brand.title, locale);
     case "brandCategory": {
       const cat = pickLocalized(route.category.name, locale);
-      const tail = locale === "uk" ? "купити в Україні" : "купить в Украине";
+      const tail = locale === "ua" ? "купити в Україні" : "купить в Украине";
       return `${cat} ${route.brand.name} — ${tail} | TTMAX`;
     }
     case "series": {
-      const tail = locale === "uk" ? "купити в Україні" : "купить в Украине";
+      const tail = locale === "ua" ? "купити в Україні" : "купить в Украине";
       return `${route.series.name} — ${tail} | TTMAX`;
     }
     case "product":
@@ -206,19 +206,19 @@ export function routeDescription(route: CatalogRoute, locale: Locale): string {
       return pickLocalized(route.brand.description, locale);
     case "brandCategory": {
       const cat = pickLocalized(route.category.name, locale).toLowerCase();
-      return locale === "uk"
+      return locale === "ua"
         ? `${route.brand.name}: ${cat} для настільного тенісу. Офіційний товар, гарантія, доставка по Україні.`
         : `${route.brand.name}: ${cat} для настольного тенниса. Официальный товар, гарантия, доставка по Украине.`;
     }
     case "series": {
       const cat = pickLocalized(route.category.name, locale).toLowerCase();
-      return locale === "uk"
+      return locale === "ua"
         ? `Серія ${route.series.name}: ${cat} для настільного тенісу. Офіційний товар, гарантія, доставка по Україні.`
         : `Серия ${route.series.name}: ${cat} для настольного тенниса. Официальный товар, гарантия, доставка по Украине.`;
     }
     case "product":
       if (route.product.description) return pickLocalized(route.product.description, locale);
-      return locale === "uk"
+      return locale === "ua"
         ? `Купити ${route.product.name.uk} в Україні. Характеристики, ціна, відгуки. Гарантія, доставка.`
         : `Купить ${route.product.name.ru} в Украине. Характеристики, цена, отзывы. Гарантия, доставка.`;
   }
@@ -244,7 +244,7 @@ export function catalogBreadcrumbs(
   route: CatalogRoute,
   locale: Locale,
 ): { name: string; path: string }[] {
-  const home = { name: locale === "uk" ? "Головна" : "Главная", path: "/" };
+  const home = { name: locale === "ua" ? "Головна" : "Главная", path: "/" };
   switch (route.kind) {
     case "category":
       return [
@@ -292,22 +292,22 @@ export function catalogBreadcrumbs(
 
 /** UI-подписи каталога (чтобы не трогать i18n/messages). */
 export const catalogUi = {
-  from: { uk: "від", ru: "от" },
-  uah: { uk: "грн", ru: "грн" },
-  priceOnRequest: { uk: "Ціна за запитом", ru: "Цена по запросу" },
-  specs: { uk: "Характеристики", ru: "Характеристики" },
-  speed: { uk: "Швидкість", ru: "Скорость" },
-  spin: { uk: "Обертання", ru: "Вращение" },
-  arc: { uk: "Дуга", ru: "Дуга" },
-  hardness: { uk: "Жорсткість губки", ru: "Жёсткость губки" },
-  surface: { uk: "Тип поверхні", ru: "Тип поверхности" },
-  level: { uk: "Рівень", ru: "Уровень" },
-  colors: { uk: "Колір", ru: "Цвет" },
-  thickness: { uk: "Товщина, мм", ru: "Толщина, мм" },
-  emptySoon: { uk: "Товари скоро з'являться", ru: "Товары скоро появятся" },
-  related: { uk: "Схожі товари", ru: "Похожие товары" },
+  from: { ua: "від", ru: "от" },
+  uah: { ua: "грн", ru: "грн" },
+  priceOnRequest: { ua: "Ціна за запитом", ru: "Цена по запросу" },
+  specs: { ua: "Характеристики", ru: "Характеристики" },
+  speed: { ua: "Швидкість", ru: "Скорость" },
+  spin: { ua: "Обертання", ru: "Вращение" },
+  arc: { ua: "Дуга", ru: "Дуга" },
+  hardness: { ua: "Жорсткість губки", ru: "Жёсткость губки" },
+  surface: { ua: "Тип поверхні", ru: "Тип поверхности" },
+  level: { ua: "Рівень", ru: "Уровень" },
+  colors: { ua: "Колір", ru: "Цвет" },
+  thickness: { ua: "Товщина, мм", ru: "Толщина, мм" },
+  emptySoon: { ua: "Товари скоро з'являться", ru: "Товары скоро появятся" },
+  related: { ua: "Схожі товари", ru: "Похожие товары" },
   chooseInStep3: {
-    uk: "Вибір варіанта та кошик — на наступному кроці",
+    ua: "Вибір варіанта та кошик — на наступному кроці",
     ru: "Выбор варианта и корзина — на следующем шаге",
   },
 } satisfies Record<string, Localized>;

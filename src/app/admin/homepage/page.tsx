@@ -22,7 +22,7 @@ export default async function AdminHomepagePage() {
       slug: p.slug,
       label: `${getBrandBySlug(p.brandSlug)?.name ?? p.brandSlug} ${p.model}`.trim(),
     }))
-    .sort((a, b) => a.label.localeCompare(b.label, "uk"));
+    .sort((a, b) => a.label.localeCompare(b.label, "ua"));
 
   const initial = {
     heroUk: settingString(settings, HOME_KEYS.heroTitleUk),

@@ -124,12 +124,12 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   // Локальные строки для submit — чтобы не модифицировать messages/uk.ts и ru.ts.
   // Если позже захочешь — перенеси в i18n.
   const t = {
-    sending: locale === "uk" ? "Надсилаємо…" : "Отправляем…",
+    sending: locale === "ua" ? "Надсилаємо…" : "Отправляем…",
     submitError:
-      locale === "uk"
+      locale === "ua"
         ? "Не вдалося оформити замовлення. Спробуйте ще раз."
         : "Не удалось оформить заказ. Попробуйте ещё раз.",
-    emptyCart: locale === "uk" ? "Кошик порожній." : "Корзина пуста.",
+    emptyCart: locale === "ua" ? "Кошик порожній." : "Корзина пуста.",
   };
 
   const submitOrder = async () => {

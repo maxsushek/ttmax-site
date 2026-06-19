@@ -17,7 +17,7 @@ type Block = {
 };
 
 const ENTITY = ["product", "category", "brand", "brandCategory", "series", "facet"];
-const LOCALE = ["uk", "ru"];
+const LOCALE = ["ua", "ru"];
 
 /** Прибираємо обгортку ```json ... ``` якщо вона є, і парсимо. */
 function parseInput(raw: string): Block[] {
@@ -109,7 +109,7 @@ export function ContentImport() {
           value={raw}
           onChange={(e) => setRaw(e.target.value)}
           placeholder={
-            '[\n  { "entityType": "category", "slug": "nakladki", "locale": "uk", "metaTitle": "…", "intro": "…" },\n  { "entityType": "category", "slug": "nakladki", "locale": "ru", "metaTitle": "…", "intro": "…" }\n]'
+            '[\n  { "entityType": "category", "slug": "nakladki", "locale": "ua", "metaTitle": "…", "intro": "…" },\n  { "entityType": "category", "slug": "nakladki", "locale": "ru", "metaTitle": "…", "intro": "…" }\n]'
           }
           spellCheck={false}
           className="h-44 w-full rounded-lg border border-white/10 bg-[#0B0E13] px-3 py-2 font-mono text-[12px] text-[#eee] outline-none focus:border-[#E8FF47]/40"

@@ -19,7 +19,7 @@ export type PanelVariant = {
 };
 
 type Props = {
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   slug: string;
   brandLabel: string;
   model: string;
@@ -33,7 +33,7 @@ type Props = {
 };
 
 const LABELS = {
-  uk: {
+  ua: {
     color: "Колір",
     thickness: "Товщина, мм",
     addToCart: "В кошик",
@@ -57,8 +57,8 @@ const LABELS = {
   },
 } as const;
 
-const COLOR_LABELS: Record<"uk" | "ru", Record<Color, string>> = {
-  uk: { black: "Чорна", red: "Червона" },
+const COLOR_LABELS: Record<"ua" | "ru", Record<Color, string>> = {
+  ua: { black: "Чорна", red: "Червона" },
   ru: { black: "Чёрная", red: "Красная" },
 };
 

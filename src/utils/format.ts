@@ -1,7 +1,7 @@
 export const CURRENCY_SYMBOL = "₴";
 
 export function formatPrice(amount: number): string {
-  return `${new Intl.NumberFormat("uk-UA").format(amount)} ${CURRENCY_SYMBOL}`;
+  return `${new Intl.NumberFormat("uk-UA").format(amount)}\u00A0${CURRENCY_SYMBOL}`;
 }
 
 export function formatPhone(raw: string): string {

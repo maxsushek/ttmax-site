@@ -14,11 +14,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Dignics 05",
     name: {
-      uk: "Butterfly Dignics 05",
+      ua: "Butterfly Dignics 05",
       ru: "Butterfly Dignics 05",
     },
     title: {
-      uk: "Накладка Butterfly Dignics 05 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Dignics 05 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Dignics 05 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -75,11 +75,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Dignics 09C",
     name: {
-      uk: "Butterfly Dignics 09C",
+      ua: "Butterfly Dignics 09C",
       ru: "Butterfly Dignics 09C",
     },
     title: {
-      uk: "Накладка Butterfly Dignics 09C — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Dignics 09C — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Dignics 09C — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -136,11 +136,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Dignics 64",
     name: {
-      uk: "Butterfly Dignics 64",
+      ua: "Butterfly Dignics 64",
       ru: "Butterfly Dignics 64",
     },
     title: {
-      uk: "Накладка Butterfly Dignics 64 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Dignics 64 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Dignics 64 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -197,11 +197,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Dignics 80",
     name: {
-      uk: "Butterfly Dignics 80",
+      ua: "Butterfly Dignics 80",
       ru: "Butterfly Dignics 80",
     },
     title: {
-      uk: "Накладка Butterfly Dignics 80 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Dignics 80 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Dignics 80 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -258,11 +258,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Glayzer 09C",
     name: {
-      uk: "Butterfly Glayzer 09C",
+      ua: "Butterfly Glayzer 09C",
       ru: "Butterfly Glayzer 09C",
     },
     title: {
-      uk: "Накладка Butterfly Glayzer 09C — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Glayzer 09C — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Glayzer 09C — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -319,11 +319,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Rozena",
     name: {
-      uk: "Butterfly Rozena",
+      ua: "Butterfly Rozena",
       ru: "Butterfly Rozena",
     },
     title: {
-      uk: "Накладка Butterfly Rozena — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Rozena — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Rozena — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -392,11 +392,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 05",
     name: {
-      uk: "Butterfly Tenergy 05",
+      ua: "Butterfly Tenergy 05",
       ru: "Butterfly Tenergy 05",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 05 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 05 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 05 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -465,11 +465,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 05 FX",
     name: {
-      uk: "Butterfly Tenergy 05 FX",
+      ua: "Butterfly Tenergy 05 FX",
       ru: "Butterfly Tenergy 05 FX",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 05 FX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 05 FX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 05 FX — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -538,11 +538,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 19",
     name: {
-      uk: "Butterfly Tenergy 19",
+      ua: "Butterfly Tenergy 19",
       ru: "Butterfly Tenergy 19",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 19 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 19 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 19 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -611,11 +611,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 64",
     name: {
-      uk: "Butterfly Tenergy 64",
+      ua: "Butterfly Tenergy 64",
       ru: "Butterfly Tenergy 64",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 64 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 64 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 64 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -684,11 +684,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 80",
     name: {
-      uk: "Butterfly Tenergy 80",
+      ua: "Butterfly Tenergy 80",
       ru: "Butterfly Tenergy 80",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 80 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 80 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 80 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -757,11 +757,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Zyre 03",
     name: {
-      uk: "Butterfly Zyre 03",
+      ua: "Butterfly Zyre 03",
       ru: "Butterfly Zyre 03",
     },
     title: {
-      uk: "Накладка Butterfly Zyre 03 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Zyre 03 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Zyre 03 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -818,11 +818,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Aibiss",
     name: {
-      uk: "Butterfly Aibiss",
+      ua: "Butterfly Aibiss",
       ru: "Butterfly Aibiss",
     },
     title: {
-      uk: "Накладка Butterfly Aibiss — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Aibiss — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Aibiss — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -876,11 +876,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Bryce High Speed",
     name: {
-      uk: "Butterfly Bryce High Speed",
+      ua: "Butterfly Bryce High Speed",
       ru: "Butterfly Bryce High Speed",
     },
     title: {
-      uk: "Накладка Butterfly Bryce High Speed — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Bryce High Speed — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Bryce High Speed — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -935,11 +935,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Glayzer",
     name: {
-      uk: "Butterfly Glayzer",
+      ua: "Butterfly Glayzer",
       ru: "Butterfly Glayzer",
     },
     title: {
-      uk: "Накладка Butterfly Glayzer — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Glayzer — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Glayzer — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -994,11 +994,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Roundell",
     name: {
-      uk: "Butterfly Roundell",
+      ua: "Butterfly Roundell",
       ru: "Butterfly Roundell",
     },
     title: {
-      uk: "Накладка Butterfly Roundell — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Roundell — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Roundell — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1045,11 +1045,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Roundell Soft",
     name: {
-      uk: "Butterfly Roundell Soft",
+      ua: "Butterfly Roundell Soft",
       ru: "Butterfly Roundell Soft",
     },
     title: {
-      uk: "Накладка Butterfly Roundell Soft — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Roundell Soft — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Roundell Soft — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1096,11 +1096,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Sriver",
     name: {
-      uk: "Butterfly Sriver",
+      ua: "Butterfly Sriver",
       ru: "Butterfly Sriver",
     },
     title: {
-      uk: "Накладка Butterfly Sriver — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Sriver — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Sriver — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1179,11 +1179,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 05 Hard",
     name: {
-      uk: "Butterfly Tenergy 05 Hard",
+      ua: "Butterfly Tenergy 05 Hard",
       ru: "Butterfly Tenergy 05 Hard",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 05 Hard — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 05 Hard — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 05 Hard — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1238,11 +1238,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 25",
     name: {
-      uk: "Butterfly Tenergy 25",
+      ua: "Butterfly Tenergy 25",
       ru: "Butterfly Tenergy 25",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 25 — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 25 — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 25 — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1309,11 +1309,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 25 FX",
     name: {
-      uk: "Butterfly Tenergy 25 FX",
+      ua: "Butterfly Tenergy 25 FX",
       ru: "Butterfly Tenergy 25 FX",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 25 FX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 25 FX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 25 FX — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1380,11 +1380,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 64 FX",
     name: {
-      uk: "Butterfly Tenergy 64 FX",
+      ua: "Butterfly Tenergy 64 FX",
       ru: "Butterfly Tenergy 64 FX",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 64 FX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 64 FX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 64 FX — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1451,11 +1451,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tenergy 80 FX",
     name: {
-      uk: "Butterfly Tenergy 80 FX",
+      ua: "Butterfly Tenergy 80 FX",
       ru: "Butterfly Tenergy 80 FX",
     },
     title: {
-      uk: "Накладка Butterfly Tenergy 80 FX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tenergy 80 FX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tenergy 80 FX — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -1522,11 +1522,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Bugller",
     name: {
-      uk: "Butterfly Bugller",
+      ua: "Butterfly Bugller",
       ru: "Butterfly Bugller",
     },
     title: {
-      uk: "Накладка Butterfly Bugller — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Bugller — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Bugller — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -1581,11 +1581,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Challenger Attack",
     name: {
-      uk: "Butterfly Challenger Attack",
+      ua: "Butterfly Challenger Attack",
       ru: "Butterfly Challenger Attack",
     },
     title: {
-      uk: "Накладка Butterfly Challenger Attack — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Challenger Attack — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Challenger Attack — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -1652,11 +1652,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Feint AG",
     name: {
-      uk: "Butterfly Feint AG",
+      ua: "Butterfly Feint AG",
       ru: "Butterfly Feint AG",
     },
     title: {
-      uk: "Накладка Butterfly Feint AG — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Feint AG — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Feint AG — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -1718,11 +1718,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Feint Long II",
     name: {
-      uk: "Butterfly Feint Long II",
+      ua: "Butterfly Feint Long II",
       ru: "Butterfly Feint Long II",
     },
     title: {
-      uk: "Накладка Butterfly Feint Long II — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Feint Long II — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Feint Long II — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -1793,11 +1793,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Feint Long III",
     name: {
-      uk: "Butterfly Feint Long III",
+      ua: "Butterfly Feint Long III",
       ru: "Butterfly Feint Long III",
     },
     title: {
-      uk: "Накладка Butterfly Feint Long III — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Feint Long III — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Feint Long III — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -1868,11 +1868,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Feint OX",
     name: {
-      uk: "Butterfly Feint OX",
+      ua: "Butterfly Feint OX",
       ru: "Butterfly Feint OX",
     },
     title: {
-      uk: "Накладка Butterfly Feint OX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Feint OX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Feint OX — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -1903,11 +1903,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Feint Soft",
     name: {
-      uk: "Butterfly Feint Soft",
+      ua: "Butterfly Feint Soft",
       ru: "Butterfly Feint Soft",
     },
     title: {
-      uk: "Накладка Butterfly Feint Soft — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Feint Soft — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Feint Soft — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -1981,11 +1981,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Flextra",
     name: {
-      uk: "Butterfly Flextra",
+      ua: "Butterfly Flextra",
       ru: "Butterfly Flextra",
     },
     title: {
-      uk: "Накладка Butterfly Flextra — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Flextra — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Flextra — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -2064,11 +2064,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Ilius B",
     name: {
-      uk: "Butterfly Ilius B",
+      ua: "Butterfly Ilius B",
       ru: "Butterfly Ilius B",
     },
     title: {
-      uk: "Накладка Butterfly Ilius B — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Ilius B — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Ilius B — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -2130,11 +2130,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Ilius S",
     name: {
-      uk: "Butterfly Ilius S",
+      ua: "Butterfly Ilius S",
       ru: "Butterfly Ilius S",
     },
     title: {
-      uk: "Накладка Butterfly Ilius S — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Ilius S — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Ilius S — купить в Украине | цена, отзывы",
     },
     surfaceType: "dovgi-shypy",
@@ -2196,11 +2196,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Impartial XB",
     name: {
-      uk: "Butterfly Impartial XB",
+      ua: "Butterfly Impartial XB",
       ru: "Butterfly Impartial XB",
     },
     title: {
-      uk: "Накладка Butterfly Impartial XB — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Impartial XB — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Impartial XB — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -2267,11 +2267,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Impartial XS",
     name: {
-      uk: "Butterfly Impartial XS",
+      ua: "Butterfly Impartial XS",
       ru: "Butterfly Impartial XS",
     },
     title: {
-      uk: "Накладка Butterfly Impartial XS — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Impartial XS — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Impartial XS — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -2338,11 +2338,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Orthodox",
     name: {
-      uk: "Butterfly Orthodox",
+      ua: "Butterfly Orthodox",
       ru: "Butterfly Orthodox",
     },
     title: {
-      uk: "Накладка Butterfly Orthodox — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Orthodox — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Orthodox — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -2377,11 +2377,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Speedy P.O.",
     name: {
-      uk: "Butterfly Speedy P.O.",
+      ua: "Butterfly Speedy P.O.",
       ru: "Butterfly Speedy P.O.",
     },
     title: {
-      uk: "Накладка Butterfly Speedy P.O. — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Speedy P.O. — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Speedy P.O. — купить в Украине | цена, отзывы",
     },
     surfaceType: "korotki-shypy",
@@ -2448,11 +2448,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Sriver EL",
     name: {
-      uk: "Butterfly Sriver EL",
+      ua: "Butterfly Sriver EL",
       ru: "Butterfly Sriver EL",
     },
     title: {
-      uk: "Накладка Butterfly Sriver EL — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Sriver EL — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Sriver EL — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -2531,11 +2531,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Sriver FX",
     name: {
-      uk: "Butterfly Sriver FX",
+      ua: "Butterfly Sriver FX",
       ru: "Butterfly Sriver FX",
     },
     title: {
-      uk: "Накладка Butterfly Sriver FX — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Sriver FX — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Sriver FX — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -2614,11 +2614,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Super Anti",
     name: {
-      uk: "Butterfly Super Anti",
+      ua: "Butterfly Super Anti",
       ru: "Butterfly Super Anti",
     },
     title: {
-      uk: "Накладка Butterfly Super Anti — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Super Anti — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Super Anti — купить в Украине | цена, отзывы",
     },
     surfaceType: "antyspin",
@@ -2680,11 +2680,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tackiness Chop",
     name: {
-      uk: "Butterfly Tackiness Chop",
+      ua: "Butterfly Tackiness Chop",
       ru: "Butterfly Tackiness Chop",
     },
     title: {
-      uk: "Накладка Butterfly Tackiness Chop — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tackiness Chop — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tackiness Chop — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -2751,11 +2751,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tackiness Chop II",
     name: {
-      uk: "Butterfly Tackiness Chop II",
+      ua: "Butterfly Tackiness Chop II",
       ru: "Butterfly Tackiness Chop II",
     },
     title: {
-      uk: "Накладка Butterfly Tackiness Chop II — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tackiness Chop II — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tackiness Chop II — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",
@@ -2822,11 +2822,11 @@ export const catalogProducts: CatalogProduct[] = [
     categorySlug: "nakladki",
     model: "Tackiness Drive",
     name: {
-      uk: "Butterfly Tackiness Drive",
+      ua: "Butterfly Tackiness Drive",
       ru: "Butterfly Tackiness Drive",
     },
     title: {
-      uk: "Накладка Butterfly Tackiness Drive — купити в Україні | ціна, відгуки",
+      ua: "Накладка Butterfly Tackiness Drive — купити в Україні | ціна, відгуки",
       ru: "Накладка Butterfly Tackiness Drive — купить в Украине | цена, отзывы",
     },
     surfaceType: "gladka",

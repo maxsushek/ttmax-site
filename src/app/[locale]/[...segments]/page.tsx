@@ -106,7 +106,7 @@ export async function generateMetadata({
     if (tctx.current.count > 0)
       bits.push(`${tctx.current.count} ${pluralModels(tctx.current.count, l)}`);
     if (tctx.current.minPrice != null)
-      bits.push(`${l === "uk" ? "від" : "от"} ${formatPrice(tctx.current.minPrice)}`);
+      bits.push(`${l === "ua" ? "від" : "от"} ${formatPrice(tctx.current.minPrice)}`);
     if (bits.length) description = `${description} ${bits.join(" · ")}`.trim();
   }
 
@@ -120,42 +120,42 @@ export async function generateMetadata({
 }
 
 /** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
-const GEAR_TYPE_LABEL: Record<string, { uk: string; ru: string }> = {
-  tshirt: { uk: "Футболка", ru: "Футболка" },
-  shorts: { uk: "Шорти", ru: "Шорты" },
-  suit: { uk: "Костюм", ru: "Костюм" },
-  jacket: { uk: "Куртка", ru: "Куртка" },
-  track: { uk: "Олімпійка", ru: "Олимпийка" },
-  sweater: { uk: "Кофта", ru: "Кофта" },
-  skirt: { uk: "Спідниця", ru: "Юбка" },
-  socks: { uk: "Шкарпетки", ru: "Носки" },
-  cap: { uk: "Кепка", ru: "Кепка" },
-  band: { uk: "Пов'язка", ru: "Повязка" },
-  shoes: { uk: "Кросівки", ru: "Кроссовки" },
-  slippers: { uk: "Шльопанці", ru: "Шлёпанцы" },
-  balls: { uk: "М'ячі", ru: "Мячи" },
-  glue: { uk: "Клей", ru: "Клей" },
-  cleaner: { uk: "Очисник", ru: "Очиститель" },
-  care: { uk: "Догляд", ru: "Уход" },
-  "edge-tape": { uk: "Торцева стрічка", ru: "Торцевая лента" },
-  overgrip: { uk: "Обмотка", ru: "Обмотка" },
-  film: { uk: "Захисна плівка", ru: "Защитная плёнка" },
-  "ball-tube": { uk: "Тубус для м'ячів", ru: "Тубус для мячей" },
-  insole: { uk: "Устілки", ru: "Стельки" },
-  towel: { uk: "Рушник", ru: "Полотенце" },
-  bottle: { uk: "Пляшка", ru: "Бутылка" },
-  bag: { uk: "Сумка", ru: "Сумка" },
-  backpack: { uk: "Рюкзак", ru: "Рюкзак" },
-  case: { uk: "Чохол", ru: "Чехол" },
-  "shoe-bag": { uk: "Сумка для взуття", ru: "Сумка для обуви" },
-  "ball-bag": { uk: "Сумка для м'ячів", ru: "Сумка для мячей" },
-  net: { uk: "Сітка", ru: "Сетка" },
+const GEAR_TYPE_LABEL: Record<string, { ua: string; ru: string }> = {
+  tshirt: { ua: "Футболка", ru: "Футболка" },
+  shorts: { ua: "Шорти", ru: "Шорты" },
+  suit: { ua: "Костюм", ru: "Костюм" },
+  jacket: { ua: "Куртка", ru: "Куртка" },
+  track: { ua: "Олімпійка", ru: "Олимпийка" },
+  sweater: { ua: "Кофта", ru: "Кофта" },
+  skirt: { ua: "Спідниця", ru: "Юбка" },
+  socks: { ua: "Шкарпетки", ru: "Носки" },
+  cap: { ua: "Кепка", ru: "Кепка" },
+  band: { ua: "Пов'язка", ru: "Повязка" },
+  shoes: { ua: "Кросівки", ru: "Кроссовки" },
+  slippers: { ua: "Шльопанці", ru: "Шлёпанцы" },
+  balls: { ua: "М'ячі", ru: "Мячи" },
+  glue: { ua: "Клей", ru: "Клей" },
+  cleaner: { ua: "Очисник", ru: "Очиститель" },
+  care: { ua: "Догляд", ru: "Уход" },
+  "edge-tape": { ua: "Торцева стрічка", ru: "Торцевая лента" },
+  overgrip: { ua: "Обмотка", ru: "Обмотка" },
+  film: { ua: "Захисна плівка", ru: "Защитная плёнка" },
+  "ball-tube": { ua: "Тубус для м'ячів", ru: "Тубус для мячей" },
+  insole: { ua: "Устілки", ru: "Стельки" },
+  towel: { ua: "Рушник", ru: "Полотенце" },
+  bottle: { ua: "Пляшка", ru: "Бутылка" },
+  bag: { ua: "Сумка", ru: "Сумка" },
+  backpack: { ua: "Рюкзак", ru: "Рюкзак" },
+  case: { ua: "Чохол", ru: "Чехол" },
+  "shoe-bag": { ua: "Сумка для взуття", ru: "Сумка для обуви" },
+  "ball-bag": { ua: "Сумка для м'ячів", ru: "Сумка для мячей" },
+  net: { ua: "Сітка", ru: "Сетка" },
 };
 
-const GENDER_LABEL: Record<string, { uk: string; ru: string }> = {
-  men: { uk: "Чоловіча", ru: "Мужская" },
-  women: { uk: "Жіноча", ru: "Женская" },
-  unisex: { uk: "Унісекс", ru: "Унисекс" },
+const GENDER_LABEL: Record<string, { ua: string; ru: string }> = {
+  men: { ua: "Чоловіча", ru: "Мужская" },
+  women: { ua: "Жіноча", ru: "Женская" },
+  unisex: { ua: "Унісекс", ru: "Унисекс" },
 };
 
 const gearTypeLabel = (v: string, locale: Locale) => GEAR_TYPE_LABEL[v]?.[locale] ?? v;
@@ -173,13 +173,13 @@ const CART_CATEGORY: Record<string, ProductCategory> = {
 };
 
 /* Подписи характеристик основания (клас / тип волокна). */
-const BLADE_CLASS_LABEL: Record<BladeClass, { uk: string; ru: string }> = {
-  "off-plus": { uk: "OFF+ · атака", ru: "OFF+ · атака" },
-  off: { uk: "OFF", ru: "OFF" },
-  "off-minus": { uk: "OFF− · універсал", ru: "OFF− · универсал" },
-  "all-plus": { uk: "ALL+", ru: "ALL+" },
-  all: { uk: "ALL · контроль", ru: "ALL · контроль" },
-  def: { uk: "DEF · захист", ru: "DEF · защита" },
+const BLADE_CLASS_LABEL: Record<BladeClass, { ua: string; ru: string }> = {
+  "off-plus": { ua: "OFF+ · атака", ru: "OFF+ · атака" },
+  off: { ua: "OFF", ru: "OFF" },
+  "off-minus": { ua: "OFF− · універсал", ru: "OFF− · универсал" },
+  "all-plus": { ua: "ALL+", ru: "ALL+" },
+  all: { ua: "ALL · контроль", ru: "ALL · контроль" },
+  def: { ua: "DEF · захист", ru: "DEF · защита" },
 };
 const BLADE_SURFACE_LABEL: Record<BladeSurface, string> = {
   wood: "Дерево",
@@ -844,7 +844,7 @@ function GearView({
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const related = getCrossSell(product);
   const img = pickPrimary(media, "product", product.slug);
-  const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : uk);
 
   const rows: { label: string; value: string }[] = [];
   rows.push({ label: L("Тип", "Тип"), value: gearTypeLabel(gear.gearType, locale) });
@@ -915,7 +915,7 @@ function BaseView({
   const related = getCrossSell(product);
   const img = pickPrimary(media, "product", product.slug);
 
-  const L = (uk: string, ru: string) => (locale === "ru" ? ru : uk);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : uk);
   const rows: { label: string; value: string }[] = [
     { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
     { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },

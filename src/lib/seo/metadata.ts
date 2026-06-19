@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { getMessages } from "@/i18n";
-import { locales, type Locale } from "@/i18n/config";
+import { defaultLocale, locales, localeToLang, type Locale } from "@/i18n/config";
 
 export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
   const messages = getMessages(locale);
@@ -9,9 +9,9 @@ export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
   const url = `${siteConfig.url}/${locale}${pathname}`;
   const languages: Record<string, string> = {};
   for (const l of locales) {
-    languages[l] = `${siteConfig.url}/${l}${pathname}`;
+    languages[localeToLang[l]] = `${siteConfig.url}/${l}${pathname}`;
   }
-  languages["x-default"] = `${siteConfig.url}/uk${pathname}`;
+  languages["x-default"] = `${siteConfig.url}/${defaultLocale}${pathname}`;
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -31,8 +31,8 @@ export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
       siteName: siteConfig.name,
       title: meta.title,
       description: meta.description,
-      locale: locale === "uk" ? "uk_UA" : "ru_UA",
-      alternateLocale: locale === "uk" ? ["ru_UA"] : ["uk_UA"],
+      locale: locale === "ua" ? "uk_UA" : "ru_UA",
+      alternateLocale: locale === "ua" ? ["ru_UA"] : ["uk_UA"],
     },
     twitter: {
       card: "summary_large_image",

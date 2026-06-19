@@ -1,9 +1,9 @@
-import { uk } from "./messages/uk";
+import { ua } from "./messages/ua";
 import { ru } from "./messages/ru";
 import type { Messages } from "./messages/types";
 import type { Locale } from "./config";
 
-const dictionaries: Record<Locale, Messages> = { uk, ru };
+const dictionaries: Record<Locale, Messages> = { ua, ru };
 
 export function getMessages(locale: Locale): Messages {
   return dictionaries[locale];

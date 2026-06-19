@@ -10,7 +10,7 @@ import { cn } from "@/utils/cn";
 import type { ProductCategory } from "@/types";
 
 type Props = {
-  locale: "uk" | "ru";
+  locale: "ua" | "ru";
   slug: string;
   brandLabel: string;
   model: string;
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const LABELS = {
-  uk: {
+  ua: {
     size: "Розмір",
     addToCart: "В кошик",
     added: "Додано в кошик",
