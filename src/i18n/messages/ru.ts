@@ -69,6 +69,7 @@ export const ru: Messages = {
     titleMuted: "Хиты",
     titleAccent: "Butterfly",
     seeAll: "Весь Butterfly",
+    viewProduct: "Подробнее",
     addToCart: "В корзину",
     added: "Добавлено",
     categories: {

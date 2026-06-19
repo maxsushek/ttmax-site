@@ -81,6 +81,7 @@ export const ua: Messages = {
     titleMuted: "Хіти",
     titleAccent: "Butterfly",
     seeAll: "Весь Butterfly",
+    viewProduct: "Детальніше",
     addToCart: "У кошик",
     added: "Додано",
     categories: {

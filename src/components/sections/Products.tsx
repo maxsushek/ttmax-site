@@ -66,7 +66,7 @@ export async function Products({ locale, messages }: { locale: Locale; messages:
           </div>
           <Link
             href={`/${locale}/butterfly`}
-            className="nav-link font-display text-[13px] font-bold uppercase tracking-[0.1em] text-accent"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-accent/40 bg-accent/10 px-4 py-2.5 font-display text-[13px] font-bold uppercase tracking-[0.1em] text-accent transition-all hover:-translate-y-0.5 hover:bg-accent hover:text-bg-base"
           >
             {m.seeAll} →
           </Link>
@@ -124,7 +124,7 @@ export async function Products({ locale, messages }: { locale: Locale; messages:
                           : "Ціна за запитом"}
                     </span>
                     <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-accent whitespace-nowrap">
-                      <span className="hidden sm:inline">{m.seeAll} </span>→
+                      <span className="hidden sm:inline">{m.viewProduct} </span>→
                     </span>
                   </div>
                 </div>

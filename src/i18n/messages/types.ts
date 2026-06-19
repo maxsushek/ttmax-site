@@ -50,6 +50,7 @@ export type Messages = {
     titleMuted: string;
     titleAccent: string;
     seeAll: string;
+    viewProduct: string;
     addToCart: string;
     added: string;
     categories: {

@@ -14,11 +14,14 @@ export const HOME_KEY_VALUES: string[] = Object.values(HOME_KEYS);
 
 /** Початковий набір хітів (поки адмін не задав свій). */
 export const DEFAULT_HITS: string[] = [
-  "zyre-03",
-  "dignics-09c",
+  "tenergy-05",
   "viscaria",
-  "apolonia-zlc",
+  "dignics-05",
   "timo-boll-alc",
+  "dignics-09c",
+  "apolonia-zlc",
+  "zyre-03",
+  "harimoto-tomokazu-alc",
 ];
 
 /** Парсить рядок "slug1, slug2" у масив slug. */

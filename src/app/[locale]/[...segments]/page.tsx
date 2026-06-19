@@ -331,6 +331,17 @@ function ListingView({
   media: EntityMediaMap;
   content: ContentBlock | null;
 }) {
+  // Пріоритетні товари (priority:1) і в наявності — вище; далі за ціною.
+  const ordered = [...route.products].sort((a, b) => {
+    const pa = a.priority ?? 3;
+    const pb = b.priority ?? 3;
+    if (pa !== pb) return pa - pb;
+    const sa = isInStock(a) ? 0 : 1;
+    const sb = isInStock(b) ? 0 : 1;
+    if (sa !== sb) return sa - sb;
+    return (getMinPrice(a) ?? Number.MAX_SAFE_INTEGER) - (getMinPrice(b) ?? Number.MAX_SAFE_INTEGER);
+  });
+
   const routeIntro =
     route.kind === "category"
       ? route.category.intro
@@ -367,13 +378,13 @@ function ListingView({
         </div>
       ) : (
         <Suspense
-          fallback={<ProductGrid products={route.products} locale={locale} media={media} />}
+          fallback={<ProductGrid products={ordered} locale={locale} media={media} />}
         >
           <CatalogFilters
             locale={locale}
-            items={buildCardVMs(route.products, locale, media)}
-            groups={buildFacetGroups(route.products, locale)}
-            priceBuckets={buildPriceBuckets(route.products, locale)}
+            items={buildCardVMs(ordered, locale, media)}
+            groups={buildFacetGroups(ordered, locale)}
+            priceBuckets={buildPriceBuckets(ordered, locale)}
           />
         </Suspense>
       )}
