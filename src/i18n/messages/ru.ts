@@ -24,6 +24,7 @@ export const ru: Messages = {
     ],
   },
   nav: {
+    rackets: "Готовые ракетки",
     bases: "Основания",
     rubbers: "Накладки",
     apparel: "Одежда",

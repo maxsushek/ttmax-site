@@ -9,6 +9,10 @@ import type { NavItem } from "@/types";
 //  • одяг/аксесуари → пока на родительскую категорию (фасеты появятся позже).
 export const navigation: ReadonlyArray<NavItem> = [
   {
+    key: "rackets",
+    href: "/rakety",
+  },
+  {
     key: "bases",
     href: "/osnovaniya",
     sub: [

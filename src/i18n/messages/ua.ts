@@ -24,6 +24,7 @@ export const ua: Messages = {
     ],
   },
   nav: {
+    rackets: "Готові ракетки",
     bases: "Основи",
     rubbers: "Накладки",
     apparel: "Одяг",

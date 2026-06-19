@@ -382,7 +382,7 @@ function ListingView({
         <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
         </div>
-      ) : route.kind === "category" && route.category.slug === "rakety" ? (
+      ) : (route.kind === "category" || route.kind === "brandCategory") && route.category.slug === "rakety" ? (
         <RacketGrid products={route.products} locale={locale} media={media} />
       ) : (
         <Suspense
@@ -996,32 +996,36 @@ function ComboTriptych({
   media: EntityMediaMap;
   size?: "card" | "hero";
 }) {
-  const px = size === "hero" ? 420 : 240;
-  const tiles = parts.slice(0, 3).map((p, i) => {
-    const m = pickPrimary(media, "product", p.slug);
-    return {
-      key: `${p.slug}-${i}`,
-      url: m ? cldUrl(m.publicId, { w: px, h: px, crop: "fit" }) : null,
-      label: p.model,
-    };
-  });
+  const blade = parts[0];
+  const rubbers = parts.slice(1, 3);
+  const tile = (p: CatalogProduct | undefined, big: boolean) => {
+    const m = p ? pickPrimary(media, "product", p.slug) : null;
+    const dim = big
+      ? { w: size === "hero" ? 460 : 280, h: size === "hero" ? 620 : 380 }
+      : { w: size === "hero" ? 300 : 190, h: size === "hero" ? 300 : 190 };
+    const url = m ? cldUrl(m.publicId, { ...dim, crop: "fit" }) : null;
+    return url ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={url} alt={p?.model ?? ""} className="h-full w-full object-contain p-1" />
+    ) : (
+      <span className="px-1 text-center font-display text-[9px] font-bold uppercase leading-tight tracking-[0.1em] text-ink-ghost">
+        {p?.model ?? "Butterfly"}
+      </span>
+    );
+  };
   return (
-    <div className="grid grid-cols-3 gap-2.5">
-      {tiles.map((t) => (
-        <div
-          key={t.key}
-          className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border-strong bg-white/[0.03]"
-        >
-          {t.url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={t.url} alt={t.label} className="h-full w-full object-contain p-1.5" />
-          ) : (
-            <span className="px-1 text-center font-display text-[9px] font-bold uppercase tracking-[0.12em] text-ink-ghost">
-              {t.label}
-            </span>
-          )}
+    <div className="flex gap-2 rounded-2xl border border-border-strong bg-white/[0.02] p-2">
+      <div className="relative flex aspect-[3/4] basis-[56%] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+        {tile(blade, true)}
+      </div>
+      <div className="flex grow flex-col gap-2">
+        <div className="relative flex grow items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+          {tile(rubbers[0], false)}
         </div>
-      ))}
+        <div className="relative flex grow items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+          {tile(rubbers[1], false)}
+        </div>
+      </div>
     </div>
   );
 }

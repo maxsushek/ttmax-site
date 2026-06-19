@@ -6,6 +6,7 @@ export type Messages = {
     keywords: string[];
   };
   nav: {
+    rackets: string;
     bases: string;
     rubbers: string;
     apparel: string;
