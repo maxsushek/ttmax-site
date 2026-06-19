@@ -145,7 +145,7 @@ export function ExpertSections({
       {entry.comparison && entry.comparison.length > 0 && (
         <section>
           <h2 className={h2}>{L("Порівняння лінійки Dignics", "Сравнение линейки Dignics")}</h2>
-          <div className="-mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          <div className="mt-5 overflow-x-auto">
             <table className="w-full min-w-[460px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">

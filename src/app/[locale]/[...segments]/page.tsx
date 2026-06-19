@@ -748,7 +748,7 @@ function ProductShell({
         {children}
       </div>
 
-      {extra && <div className="lg:col-span-2">{extra}</div>}
+      {extra && <div className="min-w-0 lg:col-span-2">{extra}</div>}
 
       {related.length > 0 && (
         <div className="lg:col-span-2">
