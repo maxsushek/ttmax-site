@@ -29,6 +29,7 @@ import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
+import { CategorySeo } from "@/components/catalog/CategorySeo";
 import { getExpert } from "@/data/catalog/expert";
 import { cldUrl } from "@/lib/cloudinary/url";
 import Image from "next/image";
@@ -260,11 +261,13 @@ export default async function CatalogPage({
   const EMIT_FAQ_JSONLD = true;
   const expertFaq =
     eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
+  const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
+  const fallbackFaq = expertFaq ?? categoryFaq;
   const faqItems =
     content?.faq && content.faq.length > 0
       ? content.faq
-      : expertFaq && expertFaq.length > 0
-        ? expertFaq.map((f) => ({ q: pickLocalized(f.q, locale), a: pickLocalized(f.a, locale) }))
+      : fallbackFaq && fallbackFaq.length > 0
+        ? fallbackFaq.map((f) => ({ q: pickLocalized(f.q, locale), a: pickLocalized(f.a, locale) }))
         : null;
   const faqLd = EMIT_FAQ_JSONLD && faqItems ? faqJsonLd(faqItems) : null;
 
@@ -409,6 +412,7 @@ function ListingView({
       )}
       <ContentSections block={content} locale={locale} />
       {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
+      {route.kind === "category" && <CategorySeo category={route.category} locale={locale} />}
     </>
   );
 }

@@ -127,6 +127,7 @@ export interface CatalogCategory {
   metaDescription: Localized;
   intro?: Localized;
   seoText?: Localized;
+  faq?: { q: Localized; a: Localized }[];
   isIndexable: boolean;
   sort: number;
 }
