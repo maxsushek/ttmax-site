@@ -262,7 +262,8 @@ export default async function CatalogPage({
   const expertFaq =
     eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
   const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
-  const fallbackFaq = expertFaq ?? categoryFaq;
+  const groupFaq = eroute.kind === "surfaceGroup" ? eroute.group.faq : undefined;
+  const fallbackFaq = expertFaq ?? categoryFaq ?? groupFaq;
   const faqItems =
     content?.faq && content.faq.length > 0
       ? content.faq
@@ -1247,10 +1248,12 @@ async function RacketComboView({
 /** SEO-текст + перелінковка для сторінок-колекцій основ за поверхнею (ALC/ZLC). */
 function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Locale }) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
   const paras = pickLocalized(group.seoText, locale)
     .split("\n")
     .map((s) => s.trim())
     .filter(Boolean);
+  const faq = group.faq ?? [];
   const sibling = surfaceGroups.find(
     (g) => g.slug !== group.slug && g.category === group.category,
   );
@@ -1267,15 +1270,39 @@ function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Local
   links.push({ label: L("Накладки Butterfly", "Накладки Butterfly"), href: `/${locale}/nakladki` });
 
   return (
-    <section className="mt-12 border-t border-border-subtle pt-8">
-      <div className="max-w-3xl space-y-4">
-        {paras.map((p, i) => (
-          <p key={i} className="font-body text-sm leading-relaxed text-ink-dim">
-            {p}
-          </p>
-        ))}
-      </div>
-      <div className="mt-7">
+    <div className="mt-14 space-y-10 border-t border-border-subtle pt-10 sm:mt-16">
+      {paras.length > 0 && (
+        <section>
+          <div className="max-w-[70ch] space-y-4">
+            {paras.map((p, i) => (
+              <p key={i} className="font-body text-[15px] leading-[1.75] text-white/80">
+                {p}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+      {faq.length > 0 && (
+        <section>
+          <h2 className={h2}>{L("Питання й відповіді", "Вопросы и ответы")}</h2>
+          <div className="mt-5 divide-y divide-border-subtle overflow-hidden rounded-2xl border border-border-strong">
+            {faq.map((f, i) => (
+              <details key={i} className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 font-body text-[15px] font-medium text-white/90 [&::-webkit-details-marker]:hidden">
+                  <span>{pickLocalized(f.q, locale)}</span>
+                  <span className="shrink-0 text-xl leading-none text-accent transition-transform duration-200 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="px-4 pb-4 font-body text-sm leading-[1.7] text-white/75">
+                  {pickLocalized(f.a, locale)}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+      <section>
         <div className="mb-3 font-display text-xs font-bold uppercase tracking-[0.14em] text-ink-muted">
           {L("Дивіться також", "Смотрите также")}
         </div>
@@ -1284,13 +1311,13 @@ function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Local
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-full border border-border-strong bg-white/[0.02] px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.04em] text-ink transition-colors hover:border-accent/40 hover:text-accent"
+              className="rounded-full border border-border-strong bg-white/[0.02] px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.04em] text-white/85 transition-colors hover:border-accent/40 hover:text-accent"
             >
               {l.label}
             </Link>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

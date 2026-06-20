@@ -7,7 +7,7 @@ import type { ContentBlock } from "@/lib/content/get";
 import { renderMarkdown } from "@/lib/content/markdown";
 
 const PROSE =
-  "font-body text-sm leading-relaxed text-ink-muted " +
+  "font-body text-[15px] leading-[1.75] text-white/80 " +
   "[&_a]:text-accent [&_a:hover]:underline " +
   "[&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:uppercase [&_h2]:tracking-[0.04em] [&_h2]:text-ink " +
   "[&_h3]:mt-6 [&_h3]:font-display [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-ink " +
@@ -16,7 +16,7 @@ const PROSE =
 /** Короткий вступний абзац (під H1). */
 export function ContentIntro({ text }: { text?: string }) {
   if (!text) return null;
-  return <p className="mt-4 max-w-3xl font-body text-sm leading-relaxed text-ink-muted">{text}</p>;
+  return <p className="mt-4 max-w-[70ch] font-body text-[15px] leading-[1.7] text-white/80">{text}</p>;
 }
 
 function ComparisonTable({ comparison }: { comparison: NonNullable<ContentBlock["comparison"]> }) {
@@ -73,7 +73,7 @@ function ComparisonTable({ comparison }: { comparison: NonNullable<ContentBlock[
           </tbody>
         </table>
       </div>
-      {note && <p className="mt-2 font-body text-xs text-ink-ghost">{note}</p>}
+      {note && <p className="mt-2 font-body text-xs text-ink-muted">{note}</p>}
     </section>
   );
 }
@@ -97,7 +97,7 @@ function Faq({ items, locale }: { items: { q: string; a: string }[]; locale: Loc
                 +
               </span>
             </summary>
-            <p className="pb-4 font-body text-sm leading-relaxed text-ink-muted">{f.a}</p>
+            <p className="pb-4 font-body text-sm leading-[1.7] text-white/75">{f.a}</p>
           </details>
         ))}
       </div>
