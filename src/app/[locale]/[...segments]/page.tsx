@@ -30,6 +30,8 @@ import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/me
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
 import { CategorySeo } from "@/components/catalog/CategorySeo";
+import { RichContent } from "@/components/catalog/RichContent";
+import { getRichContent } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
 import { cldUrl } from "@/lib/cloudinary/url";
 import Image from "next/image";
@@ -263,7 +265,14 @@ export default async function CatalogPage({
     eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
   const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
   const groupFaq = eroute.kind === "surfaceGroup" ? eroute.group.faq : undefined;
-  const fallbackFaq = expertFaq ?? categoryFaq ?? groupFaq;
+  const richFaqSlug =
+    eroute.kind === "category"
+      ? eroute.category.slug
+      : eroute.kind === "surfaceGroup"
+        ? eroute.group.slug
+        : null;
+  const richFaq = richFaqSlug ? getRichContent(richFaqSlug)?.faq : undefined;
+  const fallbackFaq = richFaq ?? expertFaq ?? categoryFaq ?? groupFaq;
   const faqItems =
     content?.faq && content.faq.length > 0
       ? content.faq
@@ -411,9 +420,26 @@ function ListingView({
           />
         </Suspense>
       )}
-      <ContentSections block={content} locale={locale} />
-      {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
-      {route.kind === "category" && <CategorySeo category={route.category} locale={locale} />}
+      {(() => {
+        const richSlug =
+          route.kind === "category"
+            ? route.category.slug
+            : route.kind === "surfaceGroup"
+              ? route.group.slug
+              : null;
+        const rich = richSlug ? getRichContent(richSlug) : undefined;
+        if (rich) return <RichContent content={rich} locale={locale} />;
+        const cmsRich = !!(content && ((content.body?.length ?? 0) > 0 || (content.faq?.length ?? 0) > 0));
+        return (
+          <>
+            <ContentSections block={content} locale={locale} />
+            {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
+            {route.kind === "category" && (
+              <CategorySeo category={route.category} locale={locale} linksOnly={cmsRich} />
+            )}
+          </>
+        );
+      })()}
     </>
   );
 }

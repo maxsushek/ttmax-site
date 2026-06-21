@@ -62,7 +62,15 @@ const LINKS: Record<string, Lnk[]> = {
   ],
 };
 
-export function CategorySeo({ category, locale }: { category: CatalogCategory; locale: Locale }) {
+export function CategorySeo({
+  category,
+  locale,
+  linksOnly = false,
+}: {
+  category: CatalogCategory;
+  locale: Locale;
+  linksOnly?: boolean;
+}) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
 
@@ -80,7 +88,7 @@ export function CategorySeo({ category, locale }: { category: CatalogCategory; l
   return (
     <div className="mt-14 space-y-10 border-t border-border-subtle pt-10 sm:mt-16">
       {/* SEO-текст */}
-      {paras.length > 0 && (
+      {!linksOnly && paras.length > 0 && (
         <section>
           <div className="max-w-[70ch] space-y-4">
             {paras.map((p, i) => (
@@ -93,7 +101,7 @@ export function CategorySeo({ category, locale }: { category: CatalogCategory; l
       )}
 
       {/* FAQ */}
-      {faq.length > 0 && (
+      {!linksOnly && faq.length > 0 && (
         <section>
           <h2 className={h2}>{L("Питання й відповіді", "Вопросы и ответы")}</h2>
           <div className="mt-5 divide-y divide-border-subtle overflow-hidden rounded-2xl border border-border-strong">
