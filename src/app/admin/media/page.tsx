@@ -2,6 +2,7 @@
 import { requireAdmin } from "@/lib/auth/admin";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { MediaManager, type MediaEntity } from "@/components/admin/MediaManager";
+import { RevalidateMediaButton } from "@/components/admin/RevalidateMediaButton";
 import { catalogCategories, getActiveBrands, getAllProducts } from "@/data/catalog";
 import { SITE_ASSETS } from "@/lib/media/site-assets";
 
@@ -33,8 +34,6 @@ export default async function MediaPage() {
     group: p.base ? "Товари — основи" : "Товари — накладки",
   }));
 
-  // Загальносайтові слоти (logo / hero / favicon) живуть в entity_media
-  // як type="category" із зарезервованими slug — окрема міграція не потрібна.
   const site: MediaEntity[] = [
     { type: "category", slug: SITE_ASSETS.logo, label: "Логотип", group: "Сайт" },
     { type: "category", slug: SITE_ASSETS.hero, label: "Hero — головне фото", group: "Сайт" },
@@ -47,11 +46,14 @@ export default async function MediaPage() {
     <AdminShell email={admin.email}>
       <main className="mx-auto max-w-[1100px] px-5 py-8">
         <h1 className="mb-1 text-2xl font-black">Медіа / фото</h1>
-        <p className="mb-6 text-sm text-[#888]">
+        <p className="mb-4 text-sm text-[#888]">
           Завантаження зображень для категорій, товарів і брендів, а також загальносайтових слотів
           (група «Сайт»: логотип, банер, фавікон — береться перше зображення). Зміни застосовуються
           без передеплою — оновлюється на сайті за хвилину.
         </p>
+        <div className="mb-6">
+          <RevalidateMediaButton />
+        </div>
         <MediaManager entities={entities} />
       </main>
     </AdminShell>
