@@ -89,42 +89,58 @@ export function MobileMenu({
               <div key={link.key} className="border-b border-white/[0.04]">
                 {link.sub ? (
                   <>
-                    <button
-                      type="button"
-                      onClick={() => setActiveKey(isActive ? null : link.key)}
-                      aria-expanded={isActive}
+                    <div
                       className={cn(
-                        "flex w-full items-center justify-between bg-transparent px-5 py-4 text-left",
-                        "font-display text-lg font-bold uppercase tracking-[0.06em] transition-colors",
-                        isActive ? "bg-accent/[0.05] text-ink" : "text-ink-muted hover:text-ink",
+                        "flex items-stretch transition-colors",
+                        isActive ? "bg-accent/[0.05]" : "",
                       )}
                     >
-                      <span className="flex items-center gap-3">
-                        {isActive && (
-                          <span aria-hidden className="h-[18px] w-[3px] rounded bg-accent" />
-                        )}
-                        {label}
-                      </span>
-                      <span
-                        aria-hidden
+                      <Link
+                        href={`/${locale}${link.href}`}
+                        onClick={onClose}
                         className={cn(
-                          "inline-flex h-8 w-8 items-center justify-center rounded-lg transition-all",
-                          isActive
-                            ? "rotate-180 bg-accent"
-                            : "border border-border bg-white/[0.07]",
+                          "flex flex-1 items-center gap-3 px-5 py-4 text-left",
+                          "font-display text-lg font-bold uppercase tracking-[0.06em] transition-colors",
+                          isActive ? "text-ink" : "text-ink-muted hover:text-ink",
                         )}
                       >
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path
-                            d="M2 4L6 8L10 4"
-                            stroke={isActive ? "#080A0E" : "#E8FF47"}
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                    </button>
+                        <span
+                          aria-hidden
+                          className={cn(
+                            "h-[18px] w-[3px] shrink-0 rounded transition-colors",
+                            isActive ? "bg-accent" : "bg-accent/40",
+                          )}
+                        />
+                        {label}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setActiveKey(isActive ? null : link.key)}
+                        aria-expanded={isActive}
+                        aria-label={isActive ? "Згорнути" : "Розгорнути"}
+                        className="flex items-center border-l border-white/[0.06] px-4 transition-colors hover:bg-white/[0.03]"
+                      >
+                        <span
+                          aria-hidden
+                          className={cn(
+                            "inline-flex h-8 w-8 items-center justify-center rounded-lg transition-all",
+                            isActive
+                              ? "rotate-180 bg-accent"
+                              : "border border-border bg-white/[0.07]",
+                          )}
+                        >
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path
+                              d="M2 4L6 8L10 4"
+                              stroke={isActive ? "#080A0E" : "#E8FF47"}
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </div>
                     <div
                       className={cn(
                         "grid bg-black/20 transition-[grid-template-rows] duration-[380ms] ease-[cubic-bezier(0.23,1,0.32,1)]",
@@ -133,16 +149,6 @@ export function MobileMenu({
                     >
                       <div className="overflow-hidden">
                         <div className="py-1.5">
-                          {link.href && (
-                            <Link
-                              href={`/${locale}${link.href}`}
-                              onClick={onClose}
-                              className="flex items-center gap-2 px-5 py-2.5 pl-[52px] font-body text-sm font-semibold text-ink transition-all hover:pl-[60px] hover:text-accent"
-                            >
-                              <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-accent" />
-                              {locale === "ru" ? "Все" : "Усі"} {label.toLowerCase()}
-                            </Link>
-                          )}
                           {link.sub.map((s) => (
                             <Link
                               key={s.href}
