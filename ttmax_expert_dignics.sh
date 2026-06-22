@@ -1,0 +1,1920 @@
+#!/usr/bin/env bash
+# ttmax_expert_dignics.sh — розширена «топ-карточка» товару для серії накладок Dignics.
+# Додає: вердикт, рейтинг-бари (офіційні числа), кому підійде/ні, думку магазину,
+# порівняння лінійки, FAQ (+FAQPage schema), лінк на готову ракетку. Mobile-first.
+# Перезаписує page.tsx + створює 2 нові файли. Запуск: bash ttmax_expert_dignics.sh
+# Сухий прогін: TTMAX_NO_GIT=1 bash ttmax_expert_dignics.sh
+set -euo pipefail
+
+PAGE='src/app/[locale]/[...segments]/page.tsx'
+
+if [ ! -f package.json ] || [ ! -f "$PAGE" ] || [ ! -f src/lib/catalog/routing.ts ]; then
+  echo "✗ Запустіть у корені репозиторію ttmax-site."; exit 1
+fi
+if ! grep -q "function SurfaceGroupSeo" "$PAGE" || ! grep -q "function ComboTriptych" "$PAGE"; then
+  echo "✗ Очікував попередні зміни (ALC/ZLC + збірні ракетки) у проді. Спершу застосуйте попередні скрипти."; exit 1
+fi
+echo "▶ Розгортаю розширену картку для Dignics…"
+
+mkdir -p "$(dirname "src/app/[locale]/[...segments]/page.tsx")"
+cat > 'src/app/[locale]/[...segments]/page.tsx' <<'PAGE_EOF'
+// src/app/[locale]/[...segments]/page.tsx
+// Catch-all каталога: /{category}, /{brand}, /{brand}/{category}, /{brand}/{category}/{product}.
+// Не перехватывает главную (/{locale}) и имеет низший приоритет, поэтому ничего существующего не ломает.
+// Поддержка двух видов товара: накладки (kind: "rubber") и основания (kind: "base").
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Container, Section } from "@/components/ui/Section";
+import { isLocale, type Locale } from "@/i18n/config";
+import { getBrandBySlug, getCrossSell, getMinPrice, getProductsByCategory, isInStock } from "@/data/catalog";
+import { siteConfig } from "@/config/site";
+import { formatPrice } from "@/utils/format";
+import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
+import type { ProductCategory } from "@/types";
+import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
+import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
+import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
+import {
+  CatalogFilters,
+  type CatalogCardVM,
+  type FacetGroup,
+} from "@/components/catalog/CatalogFilters";
+import { breadcrumbJsonLd, productJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
+import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
+import { resolveCombo } from "@/lib/catalog/racket";
+import { RacketBenefits } from "@/components/catalog/RacketBenefits";
+import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
+import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
+import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
+import { ExpertSections } from "@/components/catalog/ExpertSections";
+import { getExpert } from "@/data/catalog/expert";
+import { cldUrl } from "@/lib/cloudinary/url";
+import Image from "next/image";
+import {
+  catalogBreadcrumbs,
+  catalogStaticParams,
+  catalogUi,
+  labelFor,
+  pickLocalized,
+  resolveSegments,
+  routeDescription,
+  routeH1,
+  routeTitle,
+  surfaceGroups,
+  type CatalogRoute,
+  type SurfaceGroup,
+} from "@/lib/catalog/routing";
+import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
+import { getContent, type ContentBlock, type ContentEntityType } from "@/lib/content/get";
+import {
+  buildTokenContext,
+  expandContentBlock,
+  expandTokens,
+  pluralModels,
+} from "@/lib/content/tokens";
+import { ContentIntro, ContentSections } from "@/components/content/ContentSections";
+
+export const dynamicParams = true;
+
+// ISR: фото из админки появляются без передеплоя (кеш медиа инвалидируется тегом + revalidate).
+export const revalidate = 600;
+
+export function generateStaticParams() {
+  return catalogStaticParams();
+}
+
+/** Сутність + slug для прив'язки контентного блоку до маршруту каталогу. */
+function contentKeyForRoute(
+  route: CatalogRoute,
+): { entityType: ContentEntityType; slug: string } | null {
+  switch (route.kind) {
+    case "product":
+      return { entityType: "product", slug: route.product.slug };
+    case "category":
+      return { entityType: "category", slug: route.category.slug };
+    case "brand":
+      return { entityType: "brand", slug: route.brand.slug };
+    case "brandCategory":
+      return { entityType: "brandCategory", slug: `${route.brand.slug}/${route.category.slug}` };
+    case "series":
+      return { entityType: "series", slug: route.series.slug };
+    default:
+      return null;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; segments: string[] }>;
+}): Promise<Metadata> {
+  const { locale: l, segments } = await params;
+  if (!isLocale(l)) return {};
+  const route = resolveSegments(segments);
+  if (!route) return { robots: { index: false, follow: false } };
+  const ck = contentKeyForRoute(route);
+  const content = ck ? await getContent(ck.entityType, ck.slug, l) : null;
+
+  // Токени: живі ціна/кількість/рік підставляються на рендері (з оверрайдами), без ручної правки.
+  const overrides = await getOverrides();
+  const currentProducts = route.kind === "product" ? [route.product] : route.products;
+  const tctx = buildTokenContext({ locale: l, overrides, currentProducts });
+
+  const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx) ?? "";
+  let description =
+    expandTokens(content?.metaDescription || routeDescription(route, l), tctx) ?? "";
+
+  // Авто-числа в СГЕНЕРОВАНИХ (неавторських) описах категорій/серій — щоб нові сторінки
+  // мали актуальну ціну/кількість без ручного редагування.
+  if (!content?.metaDescription && (route.kind === "category" || route.kind === "series")) {
+    const bits: string[] = [];
+    if (tctx.current.count > 0)
+      bits.push(`${tctx.current.count} ${pluralModels(tctx.current.count, l)}`);
+    if (tctx.current.minPrice != null)
+      bits.push(`${l === "ua" ? "від" : "от"} ${formatPrice(tctx.current.minPrice)}`);
+    if (bits.length) description = `${description} ${bits.join(" · ")}`.trim();
+  }
+
+  return buildCatalogMetadata({
+    locale: l,
+    pathname: "/" + segments.join("/"),
+    title,
+    description,
+    index: route.index && !content?.noindex,
+  });
+}
+
+/** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
+const GEAR_TYPE_LABEL: Record<string, { ua: string; ru: string }> = {
+  tshirt: { ua: "Футболка", ru: "Футболка" },
+  shorts: { ua: "Шорти", ru: "Шорты" },
+  suit: { ua: "Костюм", ru: "Костюм" },
+  jacket: { ua: "Куртка", ru: "Куртка" },
+  track: { ua: "Олімпійка", ru: "Олимпийка" },
+  sweater: { ua: "Кофта", ru: "Кофта" },
+  skirt: { ua: "Спідниця", ru: "Юбка" },
+  socks: { ua: "Шкарпетки", ru: "Носки" },
+  cap: { ua: "Кепка", ru: "Кепка" },
+  band: { ua: "Пов'язка", ru: "Повязка" },
+  shoes: { ua: "Кросівки", ru: "Кроссовки" },
+  slippers: { ua: "Шльопанці", ru: "Шлёпанцы" },
+  balls: { ua: "М'ячі", ru: "Мячи" },
+  glue: { ua: "Клей", ru: "Клей" },
+  cleaner: { ua: "Очисник", ru: "Очиститель" },
+  care: { ua: "Догляд", ru: "Уход" },
+  "edge-tape": { ua: "Торцева стрічка", ru: "Торцевая лента" },
+  overgrip: { ua: "Обмотка", ru: "Обмотка" },
+  film: { ua: "Захисна плівка", ru: "Защитная плёнка" },
+  "ball-tube": { ua: "Тубус для м'ячів", ru: "Тубус для мячей" },
+  insole: { ua: "Устілки", ru: "Стельки" },
+  towel: { ua: "Рушник", ru: "Полотенце" },
+  bottle: { ua: "Пляшка", ru: "Бутылка" },
+  bag: { ua: "Сумка", ru: "Сумка" },
+  backpack: { ua: "Рюкзак", ru: "Рюкзак" },
+  case: { ua: "Чохол", ru: "Чехол" },
+  "shoe-bag": { ua: "Сумка для взуття", ru: "Сумка для обуви" },
+  "ball-bag": { ua: "Сумка для м'ячів", ru: "Сумка для мячей" },
+  net: { ua: "Сітка", ru: "Сетка" },
+};
+
+const GENDER_LABEL: Record<string, { ua: string; ru: string }> = {
+  men: { ua: "Чоловіча", ru: "Мужская" },
+  women: { ua: "Жіноча", ru: "Женская" },
+  unisex: { ua: "Унісекс", ru: "Унисекс" },
+};
+
+const gearTypeLabel = (v: string, locale: Locale) => GEAR_TYPE_LABEL[v]?.[locale] ?? v;
+const genderLabel = (v: string, locale: Locale) => GENDER_LABEL[v]?.[locale] ?? v;
+
+const CART_CATEGORY: Record<string, ProductCategory> = {
+  rakety: "base",
+  nakladki: "rubber",
+  osnovaniya: "base",
+  myachi: "ball",
+  odyag: "apparel",
+  obuv: "shoes",
+  aksessuary: "accessory",
+  chehly: "bag",
+  setki: "net",
+};
+
+/* Подписи характеристик основания (клас / тип волокна). */
+const BLADE_CLASS_LABEL: Record<BladeClass, { ua: string; ru: string }> = {
+  "off-plus": { ua: "OFF+ · атака", ru: "OFF+ · атака" },
+  off: { ua: "OFF", ru: "OFF" },
+  "off-minus": { ua: "OFF− · універсал", ru: "OFF− · универсал" },
+  "all-plus": { ua: "ALL+", ru: "ALL+" },
+  all: { ua: "ALL · контроль", ru: "ALL · контроль" },
+  def: { ua: "DEF · захист", ru: "DEF · защита" },
+};
+const BLADE_SURFACE_LABEL: Record<BladeSurface, string> = {
+  wood: "Дерево",
+  alc: "ALC (арилат-карбон)",
+  "super-alc": "Super ALC",
+  zlc: "ZLC (Zylon-карбон)",
+  "super-zlc": "Super ZLC",
+  zlf: "ZLF (Zylon-fiber)",
+  t5000: "T5000",
+  cnf: "CNF",
+  caf: "CAF / карбон",
+  carbon: "Карбон",
+};
+
+export default async function CatalogPage({
+  params,
+}: {
+  params: Promise<{ locale: string; segments: string[] }>;
+}) {
+  const { locale: l, segments } = await params;
+  if (!isLocale(l)) notFound();
+  const locale: Locale = l;
+
+  const route = resolveSegments(segments);
+  if (!route) notFound();
+
+  const media = await getMediaMap();
+  const overrides = await getOverrides();
+  // Накладаємо ціну/наявність із Supabase поверх коду один раз — далі всі читання
+  // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
+  const eroute = withOverrides(route, overrides);
+
+  // Контентний шар (опис/FAQ/порівняння) — по сутності маршруту й поточній мові.
+  const ck = contentKeyForRoute(route);
+  const rawContent = ck ? await getContent(ck.entityType, ck.slug, locale) : null;
+
+  // Токени контенту: живі значення (ціна з оверрайдами, кількість, рік) у всіх текстах блоку.
+  const currentProducts = eroute.kind === "product" ? [eroute.product] : eroute.products;
+  const tctx = buildTokenContext({ locale, overrides, currentProducts });
+  const content = expandContentBlock(rawContent, tctx);
+
+  const crumbs = catalogBreadcrumbs(route, locale);
+  const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
+  const productLd =
+    eroute.kind === "product"
+      ? (() => {
+          const vPrices = eroute.product.variants
+            .map((v) => v.price)
+            .filter((n): n is number => typeof n === "number" && n > 0);
+          const lowPrice = vPrices.length ? Math.min(...vPrices) : undefined;
+          const highPrice = vPrices.length ? Math.max(...vPrices) : undefined;
+          return productJsonLd({
+            name: pickLocalized(eroute.product.name, locale),
+            description: expandTokens(routeDescription(eroute, locale), tctx) ?? "",
+            url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
+            brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
+            price: getMinPrice(eroute.product),
+            currency: "UAH",
+            inStock: isInStock(eroute.product),
+            lowPrice,
+            highPrice,
+            offerCount: eroute.product.variants.length,
+            priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+          });
+        })()
+      : null;
+
+  // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
+  // schema й допомагає AI/Copilot розбирати Q&A. Тримаємо за прапором; розмітка = видимий FAQ.
+  const EMIT_FAQ_JSONLD = true;
+  const expertFaq =
+    eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
+  const faqItems =
+    content?.faq && content.faq.length > 0
+      ? content.faq
+      : expertFaq && expertFaq.length > 0
+        ? expertFaq.map((f) => ({ q: pickLocalized(f.q, locale), a: pickLocalized(f.a, locale) }))
+        : null;
+  const faqLd = EMIT_FAQ_JSONLD && faqItems ? faqJsonLd(faqItems) : null;
+
+  return (
+    <Section as="div" className="pt-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      {productLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
+        />
+      )}
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
+      <Container>
+        <nav
+          aria-label="breadcrumb"
+          className="mb-6 flex flex-wrap items-center gap-x-1.5 gap-y-1 font-body text-xs text-ink-muted"
+        >
+          {crumbs.map((c, i) => (
+            <span key={c.path} className="inline-flex items-center gap-1.5">
+              {i > 0 && (
+                <span aria-hidden className="text-ink-ghost">
+                  /
+                </span>
+              )}
+              {i < crumbs.length - 1 ? (
+                <Link
+                  href={`/${locale}${c.path === "/" ? "" : c.path}`}
+                  className="transition-colors hover:text-accent"
+                >
+                  {c.name}
+                </Link>
+              ) : (
+                <span className="text-ink">{c.name}</span>
+              )}
+            </span>
+          ))}
+        </nav>
+
+        {eroute.kind === "product" ? (
+          <ProductView route={eroute} locale={locale} media={media} content={content} />
+        ) : (
+          <ListingView route={eroute} locale={locale} media={media} content={content} />
+        )}
+      </Container>
+    </Section>
+  );
+}
+
+/* ---------------- Витрина-листинг (категория / бренд / бренд×категория) ---------------- */
+
+/** Повертає копію route з накладеними ціною/наявністю на товар(и). */
+function withOverrides(route: CatalogRoute, ov: OverridesMap): CatalogRoute {
+  if (route.kind === "product") {
+    return { ...route, product: applyOverrides(route.product, ov) };
+  }
+  if ("products" in route) {
+    return { ...route, products: route.products.map((p) => applyOverrides(p, ov)) };
+  }
+  return route;
+}
+
+function ListingView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Exclude<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  // Пріоритетні товари (priority:1) і в наявності — вище; далі за ціною.
+  const ordered = [...route.products].sort((a, b) => {
+    const pa = a.priority ?? 3;
+    const pb = b.priority ?? 3;
+    if (pa !== pb) return pa - pb;
+    const sa = isInStock(a) ? 0 : 1;
+    const sb = isInStock(b) ? 0 : 1;
+    if (sa !== sb) return sa - sb;
+    return (getMinPrice(a) ?? Number.MAX_SAFE_INTEGER) - (getMinPrice(b) ?? Number.MAX_SAFE_INTEGER);
+  });
+
+  const routeIntro =
+    route.kind === "category"
+      ? route.category.intro
+      : route.kind === "brand"
+        ? route.brand.intro
+        : route.kind === "surfaceGroup"
+          ? route.group.intro
+          : undefined;
+  const introText = content?.intro ?? (routeIntro ? pickLocalized(routeIntro, locale) : undefined);
+
+  return (
+    <>
+      <header className="mb-9 max-w-3xl">
+        <h1 className="text-balance font-display text-3xl font-black uppercase tracking-tight sm:text-[42px] sm:leading-[1.05]">
+          {routeH1(route, locale)}
+        </h1>
+        <ContentIntro text={introText} />
+      </header>
+
+      {route.kind === "brand" ? (
+        <ul className="flex flex-wrap gap-2.5">
+          {route.categories.map((c) => (
+            <li key={c.slug}>
+              <Link
+                href={`/${locale}/${route.brand.slug}/${c.slug}`}
+                className="inline-flex rounded-xl border border-border-strong bg-bg-raised px-4 py-2.5 font-display text-sm font-bold uppercase tracking-[0.04em] text-ink transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+              >
+                {pickLocalized(c.name, locale)}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : route.products.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
+          <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
+        </div>
+      ) : (route.kind === "category" || route.kind === "brandCategory") && route.category.slug === "rakety" ? (
+        <RacketGrid products={route.products} locale={locale} media={media} />
+      ) : (
+        <Suspense
+          fallback={<ProductGrid products={ordered} locale={locale} media={media} />}
+        >
+          <CatalogFilters
+            locale={locale}
+            items={buildCardVMs(ordered, locale, media)}
+            groups={buildFacetGroups(ordered, locale)}
+            priceBuckets={buildPriceBuckets(ordered, locale)}
+          />
+        </Suspense>
+      )}
+      <ContentSections block={content} locale={locale} />
+      {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
+    </>
+  );
+}
+
+/** Вторичная строка карточки: для основания — клас, для накладки — тип поверхности. */
+function cardSecondary(product: CatalogProduct, locale: Locale): string {
+  if (product.base) return BLADE_CLASS_LABEL[product.base.bladeClass][locale];
+  if (product.surfaceType) return labelFor("surfaceType", product.surfaceType, locale);
+  if (product.gear) {
+    const tp = gearTypeLabel(product.gear.gearType, locale);
+    return product.gear.gender ? `${tp} · ${genderLabel(product.gear.gender, locale)}` : tp;
+  }
+  return "";
+}
+
+/* ---------------- Серверная подготовка данных для клиентских фильтров ---------------- */
+
+/** Готовит сериализуемые VM карточек (вся отрисовка — в клиентском компоненте). */
+function buildCardVMs(
+  products: CatalogProduct[],
+  locale: Locale,
+  media: EntityMediaMap,
+): CatalogCardVM[] {
+  return products.map((p, i) => {
+    const price = getMinPrice(p);
+    const brandName = getBrandBySlug(p.brandSlug)?.name ?? p.brandSlug;
+    const img = pickPrimary(media, "product", p.slug);
+    return {
+      slug: p.slug,
+      href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
+      brandName,
+      model: p.model,
+      secondary: cardSecondary(p, locale),
+      priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
+      priceValue: price ?? null,
+      inStock: isInStock(p),
+      imageUrl: img ? cldUrl(img.publicId, { w: 480, h: 480 }) : null,
+      facets: {
+        bladeClass: p.base?.bladeClass,
+        surface: p.base?.surface,
+        surfaceType: p.surfaceType,
+        playStyle: p.playStyle,
+        gearType: p.gear?.gearType,
+        gender: p.gear?.gender,
+        level: p.level,
+      },
+      order: i,
+    };
+  });
+}
+
+/** Динамические фасеты: только значения, реально присутствующие в списке. */
+function buildFacetGroups(products: CatalogProduct[], locale: Locale): FacetGroup[] {
+  const isBases = products.some((p) => p.base);
+  const isGear = products.some((p) => p.gear);
+  const groups: FacetGroup[] = [];
+
+  const collect = (
+    key: string,
+    label: string,
+    getVal: (p: CatalogProduct) => string | undefined,
+    labelOf: (v: string) => string,
+    orderRef?: string[],
+  ) => {
+    const counts = new Map<string, number>();
+    for (const p of products) {
+      const v = getVal(p);
+      if (v === undefined) continue;
+      counts.set(v, (counts.get(v) ?? 0) + 1);
+    }
+    if (counts.size < 2) return; // фильтр из одного значения бесполезен
+    const values = [...counts.keys()];
+    if (orderRef) values.sort((a, b) => orderRef.indexOf(a) - orderRef.indexOf(b));
+    else values.sort((a, b) => labelOf(a).localeCompare(labelOf(b)));
+    groups.push({
+      key,
+      label,
+      options: values.map((v) => ({ value: v, label: labelOf(v), count: counts.get(v) ?? 0 })),
+    });
+  };
+
+  if (isBases) {
+    collect(
+      "bladeClass",
+      locale === "ru" ? "Класс" : "Клас",
+      (p) => p.base?.bladeClass,
+      (v) => BLADE_CLASS_LABEL[v as keyof typeof BLADE_CLASS_LABEL]?.[locale] ?? v,
+      ["off-plus", "off", "off-minus", "all-plus", "all", "def"],
+    );
+    collect(
+      "surface",
+      locale === "ru" ? "Тип основания" : "Тип основи",
+      (p) => p.base?.surface,
+      (v) => BLADE_SURFACE_LABEL[v as keyof typeof BLADE_SURFACE_LABEL] ?? v,
+      ["wood", "alc", "super-alc", "zlc", "super-zlc", "zlf", "t5000", "cnf", "caf", "carbon"],
+    );
+  } else if (isGear) {
+    collect(
+      "gearType",
+      locale === "ru" ? "Тип" : "Тип",
+      (p) => p.gear?.gearType,
+      (v) => gearTypeLabel(v, locale),
+    );
+    collect(
+      "gender",
+      locale === "ru" ? "Пол" : "Стать",
+      (p) => p.gear?.gender,
+      (v) => genderLabel(v, locale),
+      ["men", "women", "unisex"],
+    );
+  } else {
+    collect(
+      "surfaceType",
+      locale === "ru" ? "Тип поверхности" : "Тип поверхні",
+      (p) => p.surfaceType,
+      (v) => labelFor("surfaceType", v, locale),
+      ["gladka", "korotki-shypy", "dovgi-shypy", "antyspin"],
+    );
+    collect(
+      "playStyle",
+      "Стиль",
+      (p) => p.playStyle,
+      (v) => labelFor("playStyle", v, locale),
+    );
+  }
+
+  // Уровень — общий для обоих типов
+  collect(
+    "level",
+    locale === "ru" ? "Уровень" : "Рівень",
+    (p) => p.level,
+    (v) => labelFor("level", v, locale),
+    ["beginner", "amateur", "advanced", "pro", "special"],
+  );
+
+  return groups;
+}
+
+/** Адаптивные ценовые бакеты по диапазону цен в списке. */
+function buildPriceBuckets(
+  products: CatalogProduct[],
+  locale: Locale,
+): { label: string; min: number; max: number | null }[] {
+  const prices = products
+    .map((p) => getMinPrice(p))
+    .filter((v): v is number => typeof v === "number");
+  if (prices.length < 3) return [];
+  const max = Math.max(...prices);
+  const fmt = (n: number) => formatPrice(n);
+  const upTo = locale === "ru" ? "до" : "до";
+  const from = locale === "ru" ? "от" : "від";
+
+  // Пороговые значения подобраны под ассортимент Butterfly (накладки ~1–5к, основи ~1–26к).
+  const edges = max > 12000 ? [3000, 6000, 10000] : max > 5000 ? [2000, 4000, 6000] : [1500, 2500];
+  const buckets: { label: string; min: number; max: number | null }[] = [];
+  buckets.push({ label: `${upTo} ${fmt(edges[0]!)}`, min: 0, max: edges[0]! });
+  for (let i = 0; i < edges.length - 1; i++) {
+    buckets.push({
+      label: `${fmt(edges[i]!)}–${fmt(edges[i + 1]!)}`,
+      min: edges[i]!,
+      max: edges[i + 1]!,
+    });
+  }
+  buckets.push({
+    label: `${from} ${fmt(edges[edges.length - 1]!)}`,
+    min: edges[edges.length - 1]!,
+    max: null,
+  });
+  return buckets;
+}
+
+function ProductCard({
+  product,
+  locale,
+  media,
+}: {
+  product: CatalogProduct;
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  const price = getMinPrice(product);
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const secondary = cardSecondary(product, locale);
+  const img = pickPrimary(media, "product", product.slug);
+
+  return (
+    <Link
+      href={`/${locale}/${product.brandSlug}/${product.categorySlug}/${product.slug}`}
+      className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
+      data-cta="catalog-product"
+      data-location={product.slug}
+    >
+      <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]">
+        {img ? (
+          <Image
+            src={cldUrl(img.publicId, { w: 480, h: 480 })}
+            alt={img.alt ?? `${brandName} ${product.model}`}
+            fill
+            sizes="(max-width: 1024px) 50vw, 25vw"
+            className="object-cover"
+          />
+        ) : (
+          <span
+            aria-hidden
+            className="font-display text-[10px] font-bold uppercase tracking-[0.2em] text-ink-ghost"
+          >
+            {brandName}
+          </span>
+        )}
+        <div
+          className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
+          aria-hidden
+        />
+      </div>
+
+      <div className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-muted">
+        {brandName}
+      </div>
+      <div className="mt-0.5 font-display text-[16px] font-extrabold leading-tight tracking-tight text-ink">
+        {product.model}
+      </div>
+      {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
+
+      <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
+        {price !== undefined
+          ? `${catalogUi.from[locale]} ${formatPrice(price)}`
+          : catalogUi.priceOnRequest[locale]}
+      </div>
+    </Link>
+  );
+}
+
+/** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
+function ProductGrid({
+  products,
+  locale,
+  media,
+}: {
+  products: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  return (
+    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+      {products.map((p) => (
+        <li key={p.slug} className="h-full">
+          <ProductCard product={p} locale={locale} media={media} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* ---------------- Страница товара (диспетчер: основание / накладка) ---------------- */
+
+function ProductView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  return route.product.kind === "racket" ? (
+    <RacketComboView route={route} locale={locale} media={media} content={content} />
+  ) : route.product.gear ? (
+    <GearView route={route} locale={locale} media={media} content={content} />
+  ) : route.product.base ? (
+    <BaseView route={route} locale={locale} media={media} content={content} />
+  ) : (
+    <RubberView route={route} locale={locale} media={media} content={content} />
+  );
+}
+
+/** Собирает все фото товара из entity_media: url (900×900) + thumb (160×160). */
+function buildGallery(
+  media: EntityMediaMap,
+  slug: string,
+  fallbackAlt: string,
+): GalleryImage[] {
+  return pickAll(media, "product", slug).map((m) => ({
+    url: cldUrl(m.publicId, { w: 900, h: 900 }),
+    thumb: cldUrl(m.publicId, { w: 160, h: 160 }),
+    alt: m.alt ?? fallbackAlt,
+  }));
+}
+
+function ProductShell({
+  brandName,
+  h1,
+  visualLabel,
+  images,
+  children,
+  related,
+  locale,
+  media,
+  content,
+  extra,
+}: {
+  brandName: string;
+  h1: string;
+  visualLabel: string;
+  images: GalleryImage[];
+  children: React.ReactNode;
+  related: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+  extra?: React.ReactNode;
+}) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="min-w-0">
+        {images.length > 0 ? (
+          <ProductGallery images={images} />
+        ) : (
+          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
+            <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
+            <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
+              {visualLabel}
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div>
+        <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
+          {brandName}
+        </div>
+        <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
+          {h1}
+        </h1>
+        <ContentIntro text={content?.intro} />
+        {children}
+      </div>
+
+      {extra && <div className="lg:col-span-2">{extra}</div>}
+
+      {related.length > 0 && (
+        <div className="lg:col-span-2">
+          <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
+            {catalogUi.related[locale]}
+          </h2>
+          <ProductGrid products={related} locale={locale} media={media} />
+        </div>
+      )}
+      {content && (
+        <div className="lg:col-span-2">
+          <ContentSections block={content} locale={locale} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SpecTable({ rows }: { rows: { label: string; value: string }[] }) {
+  return (
+    <dl className="overflow-hidden rounded-2xl border border-border-strong">
+      {rows.map((r, i) => (
+        <div
+          key={r.label}
+          className={`flex items-center justify-between px-4 py-3 text-sm ${
+            i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"
+          }`}
+        >
+          <dt className="text-ink-muted">{r.label}</dt>
+          <dd className="font-semibold text-ink">{r.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/* ---- Накладка ---- */
+
+function RubberView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
+
+  const rows: { label: string; value: string }[] = [];
+  if (product.surfaceType)
+    rows.push({
+      label: catalogUi.surface[locale],
+      value: labelFor("surfaceType", product.surfaceType, locale),
+    });
+  if (product.specs.speed !== undefined)
+    rows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
+  if (product.specs.spin !== undefined)
+    rows.push({ label: catalogUi.spin[locale], value: String(product.specs.spin) });
+  if (product.specs.arc !== undefined)
+    rows.push({ label: catalogUi.arc[locale], value: String(product.specs.arc) });
+  if (product.specs.hardnessDeg !== undefined)
+    rows.push({ label: catalogUi.hardness[locale], value: `${product.specs.hardnessDeg}°` });
+  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
+  const expertEntry = getExpert(product.slug);
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      related={related}
+      locale={locale}
+      media={media}
+      content={content}
+      extra={
+        expertEntry ? (
+          <ExpertSections entry={expertEntry} locale={locale} currentSlug={product.slug} />
+        ) : null
+      }
+    >
+      <div className="mt-7">
+        <ProductPurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          colors={product.colors}
+          thicknessOptions={product.thicknessOptions}
+          variants={product.variants.map((v) => ({
+            thickness: v.thickness,
+            color: v.color,
+            price: v.price,
+            inStock: v.inStock,
+          }))}
+          phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+        />
+      </div>
+
+      <div className="mt-9">
+        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+          {catalogUi.specs[locale]}
+        </h2>
+        <SpecTable rows={rows} />
+      </div>
+    </ProductShell>
+  );
+}
+
+/* ---- Основание ---- */
+
+function GearView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const gear = product.gear!;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+
+  const rows: { label: string; value: string }[] = [];
+  rows.push({ label: L("Тип", "Тип"), value: gearTypeLabel(gear.gearType, locale) });
+  if (gear.gender) rows.push({ label: L("Стать", "Пол"), value: genderLabel(gear.gender, locale) });
+  if (gear.sizes && gear.sizes.length)
+    rows.push({ label: L("Розміри", "Размеры"), value: gear.sizes.join(", ") });
+  if (gear.stars) rows.push({ label: L("Зірковість", "Звёздность"), value: gear.stars });
+  if (gear.packSize) rows.push({ label: L("В упаковці", "В упаковке"), value: gear.packSize });
+  if (gear.volumeMl) rows.push({ label: L("Об'єм", "Объём"), value: `${gear.volumeMl} мл` });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      related={related}
+      locale={locale}
+      media={media}
+      content={content}
+    >
+      <div className="mt-7">
+        <GearPurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          sizes={gear.sizes}
+          priceFrom={product.priceFrom}
+          inStock={product.inStock}
+          phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+        />
+      </div>
+
+      {rows.length > 0 && (
+        <div className="mt-9">
+          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+            {catalogUi.specs[locale]}
+          </h2>
+          <SpecTable rows={rows} />
+        </div>
+      )}
+    </ProductShell>
+  );
+}
+
+/* ---- Основание ---- */
+
+function BaseView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const base = product.base!;
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
+  const related = getCrossSell(product);
+  const img = pickPrimary(media, "product", product.slug);
+
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const rows: { label: string; value: string }[] = [
+    { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
+    { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },
+  ];
+  if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
+  if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
+  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
+
+  return (
+    <ProductShell
+      brandName={brandName}
+      h1={routeH1(route, locale)}
+      visualLabel={brandName}
+      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      related={related}
+      locale={locale}
+      media={media}
+      content={content}
+    >
+      <div className="mt-7">
+        <BasePurchasePanel
+          locale={locale}
+          slug={product.slug}
+          brandLabel={brandName}
+          model={product.model}
+          cartCategory={cartCategory}
+          accentColor="#E8FF47"
+          handles={base.handles}
+          priceFrom={product.priceFrom}
+          inStock={product.inStock}
+          phone={siteConfig.phone}
+          imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+        />
+      </div>
+
+      <div className="mt-9">
+        <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+          {catalogUi.specs[locale]}
+        </h2>
+        <SpecTable rows={rows} />
+      </div>
+    </ProductShell>
+  );
+}
+
+/* ---------------- Збірні ракетки (kind: "racket") ---------------- */
+
+/** Триптих із фото компонентів: основа + 2 накладки. */
+function ComboTriptych({
+  parts,
+  media,
+  size = "card",
+}: {
+  parts: CatalogProduct[];
+  media: EntityMediaMap;
+  size?: "card" | "hero";
+}) {
+  const blade = parts[0];
+  const rubbers = parts.slice(1, 3);
+  const tile = (p: CatalogProduct | undefined, big: boolean) => {
+    const m = p ? pickPrimary(media, "product", p.slug) : null;
+    const dim = big
+      ? { w: size === "hero" ? 460 : 280, h: size === "hero" ? 620 : 380 }
+      : { w: size === "hero" ? 300 : 190, h: size === "hero" ? 300 : 190 };
+    const url = m ? cldUrl(m.publicId, { ...dim, crop: "fit" }) : null;
+    return url ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={url} alt={p?.model ?? ""} loading="lazy" className="h-full w-full object-contain p-1" />
+    ) : (
+      <span className="px-1 text-center font-display text-[9px] font-bold uppercase leading-tight tracking-[0.1em] text-ink-ghost">
+        {p?.model ?? "Butterfly"}
+      </span>
+    );
+  };
+  return (
+    <div className="flex gap-2 rounded-2xl border border-border-strong bg-white/[0.02] p-2">
+      <div className="relative flex aspect-[3/4] basis-[56%] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+        {tile(blade, true)}
+      </div>
+      <div className="flex grow flex-col gap-2">
+        <div className="relative flex grow items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+          {tile(rubbers[0], false)}
+        </div>
+        <div className="relative flex grow items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+          {tile(rubbers[1], false)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Сітка карток-збірок (3 фото + ціна зі знижкою). Чиста функція рендера. */
+function racketCardsGrid(
+  rows: { p: CatalogProduct; info: ReturnType<typeof resolveCombo> }[],
+  locale: Locale,
+  media: EntityMediaMap,
+) {
+  return (
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {rows.map(({ p, info }) => (
+        <li key={p.slug}>
+          <Link
+            href={`/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`}
+            className="group flex h-full flex-col rounded-2xl border border-border-subtle bg-bg-raised p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-bg-elevated"
+            data-cta="racket-card"
+            data-location={p.slug}
+          >
+            <ComboTriptych parts={info.parts} media={media} size="card" />
+            <div className="mt-3.5 font-display text-[15px] font-bold uppercase leading-tight tracking-[0.02em] text-ink">
+              {p.name[locale]}
+            </div>
+            <div className="mt-auto flex items-end gap-2 pt-3.5">
+              {info.promoPrice !== undefined ? (
+                <>
+                  <span className="font-display text-xl font-black leading-none text-accent">
+                    {formatPrice(info.promoPrice)}
+                  </span>
+                  {info.oldPrice !== undefined && info.oldPrice > info.promoPrice && (
+                    <span className="text-sm text-ink-dim line-through">
+                      {formatPrice(info.oldPrice)}
+                    </span>
+                  )}
+                  <span className="ml-auto rounded bg-accent px-1.5 py-0.5 font-display text-[11px] font-black text-bg-base">
+                    −{info.discountPct}%
+                  </span>
+                </>
+              ) : (
+                <span className="text-sm text-ink-muted">{catalogUi.priceOnRequest[locale]}</span>
+              )}
+            </div>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Сітка категорії /rakety: блок переваг + картки збірок. */
+async function RacketGrid({
+  products,
+  locale,
+  media,
+}: {
+  products: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  const ov = await getOverrides();
+  const rows = products
+    .map((p) => ({ p, info: resolveCombo(p, ov) }))
+    .sort(
+      (a, b) =>
+        (a.p.priority ?? 3) - (b.p.priority ?? 3) ||
+        (a.info.promoPrice ?? Number.MAX_SAFE_INTEGER) -
+          (b.info.promoPrice ?? Number.MAX_SAFE_INTEGER),
+    );
+  return (
+    <div>
+      <div className="mb-6">
+        <RacketBenefits locale={locale} />
+      </div>
+      {racketCardsGrid(rows, locale, media)}
+    </div>
+  );
+}
+
+/** Сторінка збірної ракетки: триптих, ціна -10%, переваги, склад, схожі. */
+async function RacketComboView({
+  route,
+  locale,
+  media,
+  content,
+}: {
+  route: Extract<CatalogRoute, { kind: "product" }>;
+  locale: Locale;
+  media: EntityMediaMap;
+  content: ContentBlock | null;
+}) {
+  const product = route.product;
+  const ov = await getOverrides();
+  const info = resolveCombo(product, ov);
+  const brandName = getBrandBySlug(product.brandSlug)?.name ?? "Butterfly";
+  const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
+  const heroImg = pickPrimary(media, "product", info.blade?.slug ?? product.slug);
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const roles = [
+    L("Основа", "Основание"),
+    L("Накладка (FH)", "Накладка (FH)"),
+    L("Накладка (BH)", "Накладка (BH)"),
+  ];
+  const related = getProductsByCategory("rakety")
+    .filter((p) => p.slug !== product.slug)
+    .slice(0, 3)
+    .map((p) => ({ p, info: resolveCombo(p, ov) }));
+
+  return (
+    <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="min-w-0">
+        <ComboTriptych parts={info.parts} media={media} size="hero" />
+      </div>
+
+      <div>
+        <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
+          {brandName}
+        </div>
+        <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
+          {routeH1(route, locale)}
+        </h1>
+        <ContentIntro text={content?.intro} />
+
+        <div className="mt-6">
+          <RacketComboPanel
+            locale={locale}
+            slug={product.slug}
+            brandLabel={brandName}
+            model={product.model}
+            cartCategory={cartCategory}
+            accentColor="#E8FF47"
+            oldPrice={info.oldPrice}
+            promoPrice={info.promoPrice}
+            discountPct={info.discountPct}
+            inStock={product.inStock}
+            phone={siteConfig.phone}
+            imageUrl={heroImg ? cldUrl(heroImg.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+          />
+        </div>
+
+        <div className="mt-6">
+          <RacketBenefits locale={locale} />
+        </div>
+
+        <div className="mt-9">
+          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.04em] text-ink">
+            {L("Що всередині", "Что внутри")}
+          </h2>
+          <ul className="space-y-2">
+            {info.parts.map((part, i) => {
+              const pr = getMinPrice(part);
+              return (
+                <li key={`${part.slug}-${i}`}>
+                  <Link
+                    href={`/${locale}/${part.brandSlug}/${part.categorySlug}/${part.slug}`}
+                    className="flex items-center justify-between gap-3 rounded-xl border border-border-strong bg-white/[0.02] px-4 py-3 transition-colors hover:border-accent/40"
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+                        {roles[i] ?? ""}
+                      </span>
+                      <span className="font-semibold text-ink">{part.name[locale]}</span>
+                    </span>
+                    {pr !== undefined && (
+                      <span className="shrink-0 text-sm text-ink-muted">{formatPrice(pr)}</span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <div className="lg:col-span-2">
+          <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
+            {catalogUi.related[locale]}
+          </h2>
+          {racketCardsGrid(related, locale, media)}
+        </div>
+      )}
+
+      {content && (
+        <div className="lg:col-span-2">
+          <ContentSections block={content} locale={locale} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** SEO-текст + перелінковка для сторінок-колекцій основ за поверхнею (ALC/ZLC). */
+function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Locale }) {
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const paras = pickLocalized(group.seoText, locale)
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const sibling = surfaceGroups.find(
+    (g) => g.slug !== group.slug && g.category === group.category,
+  );
+  const links: { label: string; href: string }[] = [
+    { label: L("Усі основи Butterfly", "Все основания Butterfly"), href: `/${locale}/${group.category}` },
+  ];
+  if (sibling) {
+    links.push({
+      label: pickLocalized(sibling.name, locale),
+      href: `/${locale}/${sibling.category}/${sibling.slug}`,
+    });
+  }
+  links.push({ label: L("Готові ракетки у зборі", "Готовые ракетки в сборе"), href: `/${locale}/rakety` });
+  links.push({ label: L("Накладки Butterfly", "Накладки Butterfly"), href: `/${locale}/nakladki` });
+
+  return (
+    <section className="mt-12 border-t border-border-subtle pt-8">
+      <div className="max-w-3xl space-y-4">
+        {paras.map((p, i) => (
+          <p key={i} className="font-body text-sm leading-relaxed text-ink-dim">
+            {p}
+          </p>
+        ))}
+      </div>
+      <div className="mt-7">
+        <div className="mb-3 font-display text-xs font-bold uppercase tracking-[0.14em] text-ink-muted">
+          {L("Дивіться також", "Смотрите также")}
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="rounded-full border border-border-strong bg-white/[0.02] px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.04em] text-ink transition-colors hover:border-accent/40 hover:text-accent"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+PAGE_EOF
+echo "  ✓ src/app/[locale]/[...segments]/page.tsx"
+
+mkdir -p "$(dirname "src/data/catalog/expert.ts")"
+cat > 'src/data/catalog/expert.ts' <<'EXPERT_EOF'
+// src/data/catalog/expert.ts
+// Експертний контент картки (рейтинги, «кому підійде», думка магазину, FAQ, порівняння).
+// Рейтинги /10 виведені з офіційних чисел Butterfly (Speed/Spin/Hardness) + консенсусу оглядів.
+// Зараз заповнено для серії накладок Dignics; легко розширюється на інші товари за slug.
+import type { Locale } from "@/i18n/config";
+
+type L = Record<Locale, string>;
+export type ExpertRating = { label: L; value: number };
+export type ExpertFaq = { q: L; a: L };
+export type ComparisonRow = {
+  slug: string;
+  model: string;
+  speed: number;
+  spin: number;
+  hardness: number;
+  fit: L;
+};
+export type ExpertEntry = {
+  verdict: L;
+  official: L;
+  ratings: ExpertRating[];
+  features: L[];
+  descriptionSections: { title: L; body: L }[];
+  audienceFor: L[];
+  audienceNotFor: L[];
+  expert: L;
+  faq: ExpertFaq[];
+  comparison?: ComparisonRow[];
+  comboHref?: string;
+};
+
+const R = {
+  speed: { ua: "Швидкість", ru: "Скорость" },
+  spin: { ua: "Обертання", ru: "Вращение" },
+  control: { ua: "Контроль", ru: "Контроль" },
+  hard: { ua: "Жорсткість", ru: "Жёсткость" },
+  demand: { ua: "Вимогливість до техніки", ru: "Требовательность к технике" },
+};
+
+// Порівняння лінійки Dignics (офіційні числа Butterfly). Спільне для всіх 4 карток.
+const DIGNICS_COMPARISON: ComparisonRow[] = [
+  { slug: "dignics-05", model: "Dignics 05", speed: 135, spin: 120, hardness: 40, fit: { ua: "Спін-атака, універсал", ru: "Спин-атака, универсал" } },
+  { slug: "dignics-09c", model: "Dignics 09C", speed: 130, spin: 130, hardness: 44, fit: { ua: "Макс. спін, pro", ru: "Макс. спин, pro" } },
+  { slug: "dignics-64", model: "Dignics 64", speed: 140, spin: 110, hardness: 40, fit: { ua: "Швидкість, бекхенд", ru: "Скорость, бэкхенд" } },
+  { slug: "dignics-80", model: "Dignics 80", speed: 135, spin: 115, hardness: 40, fit: { ua: "Баланс, універсал", ru: "Баланс, универсал" } },
+];
+
+const COMBO = "/rakety";
+
+export const expertContent: Record<string, ExpertEntry> = {
+  "dignics-05": {
+    descriptionSections: [
+      {
+        title: { ua: "Огляд", ru: "Обзор" },
+        body: {
+          ua: "Dignics 05 — флагманська нелипка накладка Butterfly і прямий розвиток легендарної Tenergy 05. Її ключова риса — найвище обертання в усій лінійці Dignics у поєднанні з потужним, але контрольованим відскоком. Це накладка для гравця, який будує гру навколо топспіну: важкі накати, контр-топспін і стабільний блок біля столу та з середньої дистанції.",
+          ru: "Dignics 05 — флагманская нелипкая накладка Butterfly и прямое развитие легендарной Tenergy 05. Её ключевая черта — наивысшее вращение во всей линейке Dignics в сочетании с мощным, но контролируемым отскоком. Это накладка для игрока, который строит игру вокруг топспина: тяжёлые накаты, контр-топспин и стабильный блок у стола и со средней дистанции.",
+        },
+      },
+      {
+        title: { ua: "Технології та конструкція", ru: "Технологии и конструкция" },
+        body: {
+          ua: "В основі — губка Spring Sponge X жорсткістю 40°: вона пружніша за класичну Spring Sponge серії Tenergy й дає виражений катапультний ефект. Топшит High Tension дуже чіпкий, але без липкості — саме він відповідає за глибоке зчеплення з м'ячем і високе обертання. Геометрія шипів така ж, як у Tenergy 05, тож фірмовий характер збережено, але з більшою потужністю й помітно довшим строком служби.",
+          ru: "В основе — губка Spring Sponge X жёсткостью 40°: она упруже классической Spring Sponge серии Tenergy и даёт выраженный катапультный эффект. Топшит High Tension очень цепкий, но без липкости — именно он отвечает за глубокое сцепление с мячом и высокое вращение. Геометрия шипов такая же, как у Tenergy 05, поэтому фирменный характер сохранён, но с большей мощностью и заметно большим сроком службы.",
+        },
+      },
+      {
+        title: { ua: "Гра: форхенд і бекхенд", ru: "Игра: форхенд и бэкхенд" },
+        body: {
+          ua: "На форхенді Dignics 05 розкривається в активному топспіні: м'яч лягає по високій і довгій дузі, прощаючи неточність кута ракетки. На бекхенді накладка дає передбачуваний, «склеєний» контакт — нею комфортно блокувати й контратакувати (саме на бекхенді її використовує Тімо Болл). У короткій грі 05 трохи повільніша за Tenergy, що додає контролю на прийомі та скиданнях.",
+          ru: "На форхенде Dignics 05 раскрывается в активном топспине: мяч ложится по высокой и длинной дуге, прощая неточность угла ракетки. На бэкхенде накладка даёт предсказуемый, «склеенный» контакт — ею удобно блокировать и контратаковать (именно на бэкхенде её использует Тимо Болл). В короткой игре 05 чуть медленнее Tenergy, что добавляет контроля на приёме и подставках.",
+        },
+      },
+      {
+        title: { ua: "Що варто врахувати", ru: "Что стоит учесть" },
+        body: {
+          ua: "Губка 40° — це рівень впевненого аматора й вище: початківцю вона може здатися жорсткою й вимогливою до техніки. Дуга трохи нижча, ніж у м'якших накладок, тож над сіткою м'яч варто «вести» свідомо. Найповніше Dignics 05 розкривається на карбонових ALC-основах (Viscaria, Timo Boll ALC).",
+          ru: "Губка 40° — это уровень уверенного любителя и выше: новичку она может показаться жёсткой и требовательной к технике. Дуга чуть ниже, чем у мягких накладок, поэтому над сеткой мяч стоит «вести» осознанно. Полнее всего Dignics 05 раскрывается на карбоновых ALC-основаниях (Viscaria, Timo Boll ALC).",
+        },
+      },
+    ],
+    verdict: {
+      ua: "Еталонна нелипка накладка для топспіну: найвище обертання в лінійці Dignics і пружний відскік Spring Sponge X. Для гри важким обертанням біля столу та з середньої дистанції.",
+      ru: "Эталонная нелипкая накладка для топспина: наивысшее вращение в линейке Dignics и пружинистый отскок Spring Sponge X. Для игры тяжёлым вращением у стола и со средней дистанции.",
+    },
+    official: {
+      ua: "Офіційні дані Butterfly: швидкість 135, обертання 120, твердість губки 40°, Spring Sponge X, топшит High Tension. Зроблено в Японії.",
+      ru: "Официальные данные Butterfly: скорость 135, вращение 120, твёрдость губки 40°, Spring Sponge X, топшит High Tension. Сделано в Японии.",
+    },
+    ratings: [
+      { label: R.speed, value: 9.2 },
+      { label: R.spin, value: 9.6 },
+      { label: R.control, value: 7.8 },
+      { label: R.hard, value: 8.5 },
+      { label: R.demand, value: 8.0 },
+    ],
+    features: [
+      { ua: "Spring Sponge X — пружніша за класичну Spring Sponge, потужний катапультний ефект.", ru: "Spring Sponge X — упругее классической Spring Sponge, мощный катапультный эффект." },
+      { ua: "Чіпкий High Tension топшит — максимальне зчеплення без липкості.", ru: "Цепкий High Tension топшит — максимальное сцепление без липкости." },
+      { ua: "Найвище обертання серед Dignics, високий і довгий виліт м'яча.", ru: "Наивысшее вращение среди Dignics, высокий и длинный вылет мяча." },
+      { ua: "Подовжений контакт із м'ячем — стабільний блок і контргра.", ru: "Удлинённый контакт с мячом — стабильный блок и контригра." },
+      { ua: "Висока зносостійкість — служить помітно довше за Tenergy.", ru: "Высокая износостойкость — служит заметно дольше Tenergy." },
+    ],
+    audienceFor: [
+      { ua: "Граєте активним топспіном і контр-топспіном.", ru: "Играете активным топспином и контр-топспином." },
+      { ua: "Хочете максимальне обертання нелипкою накладкою.", ru: "Хотите максимальное вращение нелипкой накладкой." },
+      { ua: "Граєте біля столу та з середньої дистанції.", ru: "Играете у стола и со средней дистанции." },
+      { ua: "Рівень — впевнений аматор і вище.", ru: "Уровень — уверенный любитель и выше." },
+    ],
+    audienceNotFor: [
+      { ua: "Тільки починаєте — губка 40° вимоглива.", ru: "Только начинаете — губка 40° требовательна." },
+      { ua: "Шукаєте максимальний контроль і м'якість.", ru: "Ищете максимальный контроль и мягкость." },
+      { ua: "Граєте захисним стилем.", ru: "Играете защитным стилем." },
+    ],
+    expert: {
+      ua: "Dignics 05 — топова універсальна накладка лінійки й прямий нащадок легендарної Tenergy 05. Рекомендований рівень: від впевненого аматора до професіонала; стиль — атака обертанням. У лінійці Butterfly це «золотий стандарт» для гри навколо топспіну; якщо вагаєтесь у виборі Dignics — починайте саме з 05.",
+      ru: "Dignics 05 — топовая универсальная накладка линейки и прямой наследник легендарной Tenergy 05. Рекомендуемый уровень: от уверенного любителя до профессионала; стиль — атака вращением. В линейке Butterfly это «золотой стандарт» для игры вокруг топспина; если сомневаетесь в выборе Dignics — начинайте именно с 05.",
+    },
+    faq: [
+      { q: { ua: "Чим Dignics 05 відрізняється від Tenergy 05?", ru: "Чем Dignics 05 отличается от Tenergy 05?" }, a: { ua: "Твердіша губка (40° проти 36°) і чіпкіший топшит: 05 трохи повільніша в короткій грі, але стабільніша, з вищим обертанням і довшим строком служби.", ru: "Более твёрдая губка (40° против 36°) и цепче топшит: 05 чуть медленнее в короткой игре, но стабильнее, с более высоким вращением и большим сроком службы." } },
+      { q: { ua: "Яку товщину губки обрати?", ru: "Какую толщину губки выбрать?" }, a: { ua: "Для атаки беруть максимальну (Special/2.1 мм). Тонша губка дає трохи більше контролю й меншу вагу.", ru: "Для атаки берут максимальную (Special/2.1 мм). Более тонкая губка даёт чуть больше контроля и меньший вес." } },
+      { q: { ua: "З якою основою поєднується найкраще?", ru: "С каким основанием сочетается лучше всего?" }, a: { ua: "З ALC-основами Butterfly (Viscaria, Timo Boll ALC) — вони підкреслюють швидкість і обертання. Доступні й готові ракетки у зборі.", ru: "С ALC-основаниями Butterfly (Viscaria, Timo Boll ALC) — они подчёркивают скорость и вращение. Доступны и готовые ракетки в сборе." } },
+      { q: { ua: "Підійде для бекхенду?", ru: "Подойдёт для бэкхенда?" }, a: { ua: "Так. Тімо Болл, наприклад, використовує Dignics 05 саме на бекхенді.", ru: "Да. Тимо Болл, например, использует Dignics 05 именно на бэкхенде." } },
+    ],
+    comparison: DIGNICS_COMPARISON,
+    comboHref: COMBO,
+  },
+
+  "dignics-09c": {
+    descriptionSections: [
+      {
+        title: { ua: "Огляд", ru: "Обзор" },
+        body: {
+          ua: "Dignics 09C — липка накладка преміумкласу, створена за участі Тімо Болла для ери пластикового м'яча. Це найспіновіша й найтвердіша накладка лінійки (губка 44°), що поєднує азійську липкість топшита з європейською катапультою Spring Sponge X. Вибір для потужної атаки першим темпом і небезпечних, важко читаних подач.",
+          ru: "Dignics 09C — липкая накладка премиум-класса, созданная при участии Тимо Болла для эры пластикового мяча. Это самая спиновая и твёрдая накладка линейки (губка 44°), сочетающая азиатскую липкость топшита с европейской катапультой Spring Sponge X. Выбор для мощной атаки первым темпом и опасных, трудночитаемых подач.",
+        },
+      },
+      {
+        title: { ua: "Технології та конструкція", ru: "Технологии и конструкция" },
+        body: {
+          ua: "Липкий топшит чіпляє м'яч навіть на повільних, пасивних ударах — звідси екстремальне обертання на подачах і коротких м'ячах. Губка 44° — найтвердіша серед Dignics: вона тримає енергію й вимагає впевненого, прискореного руху, щоб «продавити» м'яч. Це не класична китайська накладка й не європейський тенсор, а гібрид із власним характером.",
+          ru: "Липкий топшит цепляет мяч даже на медленных, пассивных ударах — отсюда экстремальное вращение на подачах и коротких мячах. Губка 44° — самая твёрдая среди Dignics: она держит энергию и требует уверенного, ускоренного движения, чтобы «продавить» мяч. Это не классическая китайская накладка и не европейский тензор, а гибрид со своим характером.",
+        },
+      },
+      {
+        title: { ua: "Гра: форхенд і бекхенд", ru: "Игра: форхенд и бэкхенд" },
+        body: {
+          ua: "На форхенді 09C — зброя для спінової атаки: важкі топспіни, які різко падають і вистрілюють від столу суперника. У пасиві накладка сильно гасить вхідну енергію, даючи довгий контакт і точні, безпечні контрудари. Через жорсткість і липкість вона спін-чутлива: на прийомі обертання суперника треба свідомо компенсувати кутом ракетки.",
+          ru: "На форхенде 09C — оружие для спиновой атаки: тяжёлые топспины, которые резко падают и выстреливают от стола соперника. В пассиве накладка сильно гасит входящую энергию, давая длинный контакт и точные, безопасные контрудары. Из-за жёсткости и липкости она спин-чувствительна: на приёме вращение соперника нужно осознанно компенсировать углом ракетки.",
+        },
+      },
+      {
+        title: { ua: "Що варто врахувати", ru: "Что стоит учесть" },
+        body: {
+          ua: "Це накладка pro-рівня — початківцям і середнім аматорам її важко контролювати. Свій потенціал 09C розкриває лише у звʼязці зі швидкою карбоновою основою (Viscaria, Apolonia ZLC) і правильною технікою. Базова швидкість нижча, ніж у 05 чи 64 — вона про обертання й контроль, а не про «легку» швидкість.",
+          ru: "Это накладка pro-уровня — новичкам и средним любителям её трудно контролировать. Свой потенциал 09C раскрывает только в связке с быстрым карбоновым основанием (Viscaria, Apolonia ZLC) и правильной техникой. Базовая скорость ниже, чем у 05 или 64 — она про вращение и контроль, а не про «лёгкую» скорость.",
+        },
+      },
+    ],
+    verdict: {
+      ua: "Липка накладка преміумкласу для екстремального обертання. Найтвердіша губка лінійки (44°) і чіпкий топшит — для потужної атаки першим темпом і небезпечних подач.",
+      ru: "Липкая накладка премиум-класса для экстремального вращения. Самая твёрдая губка линейки (44°) и цепкий топшит — для мощной атаки первым темпом и опасных подач.",
+    },
+    official: {
+      ua: "Офіційні дані Butterfly: швидкість 130, обертання 130, твердість 44°, липкий топшит, Spring Sponge X. Зроблено в Японії.",
+      ru: "Официальные данные Butterfly: скорость 130, вращение 130, твёрдость 44°, липкий топшит, Spring Sponge X. Сделано в Японии.",
+    },
+    ratings: [
+      { label: R.speed, value: 8.8 },
+      { label: R.spin, value: 9.8 },
+      { label: R.control, value: 7.5 },
+      { label: R.hard, value: 9.5 },
+      { label: R.demand, value: 9.2 },
+    ],
+    features: [
+      { ua: "Липкий топшит — максимальний спін на подачах і пасивних м'ячах.", ru: "Липкий топшит — максимальный спин на подачах и пассивных мячах." },
+      { ua: "Найтвердіша губка Dignics (44°) для потужної атаки.", ru: "Самая твёрдая губка Dignics (44°) для мощной атаки." },
+      { ua: "Розроблено за участі Тімо Болла для ери пластикового м'яча.", ru: "Разработана при участии Тимо Болла для эры пластикового мяча." },
+      { ua: "Довгий контакт — точні й безпечні контрудари.", ru: "Длинный контакт — точные и безопасные контрудары." },
+      { ua: "Унікальне поєднання азійської липкості й катапульти Spring Sponge X.", ru: "Уникальное сочетание азиатской липкости и катапульты Spring Sponge X." },
+    ],
+    audienceFor: [
+      { ua: "Будуєте гру на важкому обертанні й подачах.", ru: "Строите игру на тяжёлом вращении и подачах." },
+      { ua: "Атакуєте першим темпом біля столу.", ru: "Атакуете первым темпом у стола." },
+      { ua: "Граєте швидкою карбоновою основою.", ru: "Играете быстрым карбоновым основанием." },
+      { ua: "Рівень — досвідчений спортсмен/професіонал.", ru: "Уровень — опытный спортсмен/профессионал." },
+    ],
+    audienceNotFor: [
+      { ua: "Початківці й аматори середнього рівня — це накладка pro-рівня.", ru: "Новички и любители среднего уровня — это накладка pro-уровня." },
+      { ua: "Граєте повільною або гнучкою основою.", ru: "Играете медленным или гибким основанием." },
+      { ua: "Хочете легкий, невимогливий інвентар.", ru: "Хотите лёгкий, нетребовательный инвентарь." },
+      { ua: "Шукаєте високу базову швидкість.", ru: "Ищете высокую базовую скорость." },
+    ],
+    expert: {
+      ua: "Dignics 09C — найспіновіша й найвимогливіша накладка лінійки, фактично новий орієнтир серед топспінових покриттів із липким топшитом. Рекомендований рівень: досвідчений і вище; стиль — спін-атака першим темпом. Розкривається лише на швидкій карбоновій основі та з правильною технікою.",
+      ru: "Dignics 09C — самая спиновая и требовательная накладка линейки, фактически новый ориентир среди топспиновых покрытий с липким топшитом. Рекомендуемый уровень: опытный и выше; стиль — спин-атака первым темпом. Раскрывается только на быстром карбоновом основании и с правильной техникой.",
+    },
+    faq: [
+      { q: { ua: "Чим відрізняється від Dignics 05?", ru: "Чем отличается от Dignics 05?" }, a: { ua: "09C липка й твердіша (44° проти 40°): більше сирого обертання на подачах і пасиві, але нижча базова швидкість і вища вимогливість.", ru: "09C липкая и твёрже (44° против 40°): больше сырого вращения на подачах и пассиве, но ниже базовая скорость и выше требовательность." } },
+      { q: { ua: "Для якого рівня підходить?", ru: "Для какого уровня подходит?" }, a: { ua: "Pro-рівень. Початківцям і середнім аматорам важко контролювати — краще почати з Dignics 05 або 80.", ru: "Pro-уровень. Новичкам и средним любителям тяжело контролировать — лучше начать с Dignics 05 или 80." } },
+      { q: { ua: "Яку основу обрати?", ru: "Какое основание выбрать?" }, a: { ua: "Швидку карбонову — Viscaria, Apolonia ZLC: 09C потребує жорсткості основи, щоб розкрити потенціал.", ru: "Быстрое карбоновое — Viscaria, Apolonia ZLC: 09C требует жёсткости основания, чтобы раскрыть потенциал." } },
+      { q: { ua: "Чи зберігається липкість?", ru: "Сохраняется ли липкость?" }, a: { ua: "Топшит чіпкий; для збереження зчеплення накладку варто накривати захисною плівкою після гри.", ru: "Топшит цепкий; для сохранения сцепления накладку стоит накрывать защитной плёнкой после игры." } },
+    ],
+    comparison: DIGNICS_COMPARISON,
+    comboHref: COMBO,
+  },
+
+  "dignics-64": {
+    descriptionSections: [
+      {
+        title: { ua: "Огляд", ru: "Обзор" },
+        body: {
+          ua: "Dignics 64 — найшвидша накладка лінійки. Тонші шипи дають максимальну динаміку й прискорення, а відчуття — найм'якше й найкомфортніше серед Dignics. Це вибір під швидку гру в темп, контр-топспін і завершальні удари, особливо на бекхенді.",
+          ru: "Dignics 64 — самая быстрая накладка линейки. Более тонкие шипы дают максимальную динамику и ускорение, а ощущение — самое мягкое и комфортное среди Dignics. Это выбор под быструю игру в темп, контр-топспин и завершающие удары, особенно на бэкхенде.",
+        },
+      },
+      {
+        title: { ua: "Технології та конструкція", ru: "Технологии и конструкция" },
+        body: {
+          ua: "Та сама губка Spring Sponge X 40°, що й у 05/80, але з геометрією шипів коду 64: тонші шипи піднімають швидкість і чутливість до руху кистю. Через це 64 суб'єктивно «м'якша» і дає більше зворотного зв'язку в пасивних ударах, лишаючись потужною в активній грі.",
+          ru: "Та же губка Spring Sponge X 40°, что и у 05/80, но с геометрией шипов кода 64: более тонкие шипы поднимают скорость и чувствительность к движению кистью. Из-за этого 64 субъективно «мягче» и даёт больше обратной связи в пассивных ударах, оставаясь мощной в активной игре.",
+        },
+      },
+      {
+        title: { ua: "Гра: форхенд і бекхенд", ru: "Игра: форхенд и бэкхенд" },
+        body: {
+          ua: "На бекхенді 64 — один із найкомфортніших варіантів Dignics: легкий блок, накат, швидке завершення кистю без потреби «ловити» м'яч у верхній точці. На форхенді вона винагороджує швидкий, плоскіший удар у темп. Обертання нижче, ніж у 05 і 80, — це усвідомлений компроміс на користь швидкості.",
+          ru: "На бэкхенде 64 — один из самых комфортных вариантов Dignics: лёгкий блок, накат, быстрое завершение кистью без необходимости «ловить» мяч в верхней точке. На форхенде она вознаграждает быстрый, более плоский удар в темп. Вращение ниже, чем у 05 и 80, — это осознанный компромисс в пользу скорости.",
+        },
+      },
+      {
+        title: { ua: "Що варто врахувати", ru: "Что стоит учесть" },
+        body: {
+          ua: "Якщо ваша гра побудована на максимальному обертанні й важких дугах — дивіться на 05 або 80. 64 найкраще працює з гнучкими дерев'яними чи ALC-основами, які додають їй обертання. Завдяки контролю й м'якшому відгуку заходить легше за 09C — підходить від середнього рівня.",
+          ru: "Если ваша игра построена на максимальном вращении и тяжёлых дугах — смотрите на 05 или 80. 64 лучше всего работает с гибкими деревянными или ALC-основаниями, которые добавляют ей вращения. Благодаря контролю и более мягкому отклику осваивается легче 09C — подходит от среднего уровня.",
+        },
+      },
+    ],
+    verdict: {
+      ua: "Найшвидша накладка лінійки Dignics. Тонші шипи дають швидкість і динаміку, м'якший відгук — для гри в темп і контр-топспіну, особливо на бекхенді.",
+      ru: "Самая быстрая накладка линейки Dignics. Более тонкие шипы дают скорость и динамику, мягче отклик — для игры в темп и контр-топспина, особенно на бэкхенде.",
+    },
+    official: {
+      ua: "Офіційні дані Butterfly: швидкість 140, обертання 110, твердість 40°, Spring Sponge X. Зроблено в Японії.",
+      ru: "Официальные данные Butterfly: скорость 140, вращение 110, твёрдость 40°, Spring Sponge X. Сделано в Японии.",
+    },
+    ratings: [
+      { label: R.speed, value: 9.6 },
+      { label: R.spin, value: 8.5 },
+      { label: R.control, value: 8.2 },
+      { label: R.hard, value: 8.5 },
+      { label: R.demand, value: 7.5 },
+    ],
+    features: [
+      { ua: "Найвища швидкість серед Dignics — для гри першим темпом.", ru: "Наивысшая скорость среди Dignics — для игры первым темпом." },
+      { ua: "Тонші шипи коду 64 — динаміка й прискорення кистю.", ru: "Более тонкие шипы кода 64 — динамика и ускорение кистью." },
+      { ua: "М'якший, найкомфортніший відгук у лінійці.", ru: "Более мягкий, самый комфортный отклик в линейке." },
+      { ua: "Легкі блок, накат і скидка — зрозуміла поведінка.", ru: "Лёгкие блок, накат и подставка — понятное поведение." },
+      { ua: "Один із найкращих варіантів Dignics для бекхенду.", ru: "Один из лучших вариантов Dignics для бэкхенда." },
+    ],
+    audienceFor: [
+      { ua: "Любите швидку атаку, накат, завершення.", ru: "Любите быструю атаку, накат, завершение." },
+      { ua: "Граєте в темп біля столу й з півдистанції.", ru: "Играете в темп у стола и с полудистанции." },
+      { ua: "Хочете швидку накладку, що зберігає контроль.", ru: "Хотите быструю накладку, сохраняющую контроль." },
+      { ua: "Підійде від середнього рівня.", ru: "Подойдёт от среднего уровня." },
+    ],
+    audienceNotFor: [
+      { ua: "Будуєте гру на максимальному обертанні (тоді 05/09C).", ru: "Строите игру на максимальном вращении (тогда 05/09C)." },
+      { ua: "Граєте суто захисний стиль.", ru: "Играете сугубо защитный стиль." },
+      { ua: "Хочете найвищу дугу вильоту.", ru: "Хотите наивысшую дугу вылета." },
+    ],
+    expert: {
+      ua: "Dignics 64 — найшвидша й найбільш «доступна» за відчуттями накладка лінійки. Рекомендований рівень: від середнього; стиль — швидка атака й контргра. У лінійці Butterfly це вибір під швидкість і бекхенд; обертання поступається 05 і 80, тож для спінової гри дивіться в їхній бік.",
+      ru: "Dignics 64 — самая быстрая и самая «доступная» по ощущениям накладка линейки. Рекомендуемый уровень: от среднего; стиль — быстрая атака и контригра. В линейке Butterfly это выбор под скорость и бэкхенд; вращение уступает 05 и 80, поэтому для спиновой игры смотрите в их сторону.",
+    },
+    faq: [
+      { q: { ua: "Чим відрізняється від Dignics 05?", ru: "Чем отличается от Dignics 05?" }, a: { ua: "64 швидша, але з меншим обертанням і нижчою дугою; відчувається м'якшою. 05 — для спіну, 64 — для швидкості.", ru: "64 быстрее, но с меньшим вращением и ниже дугой; ощущается мягче. 05 — для спина, 64 — для скорости." } },
+      { q: { ua: "Підійде для бекхенду?", ru: "Подойдёт для бэкхенда?" }, a: { ua: "Так, це один із найкращих варіантів Dignics для бекхенду завдяки катапульті й м'якшому відгуку.", ru: "Да, это один из лучших вариантов Dignics для бэкхенда благодаря катапульте и более мягкому отклику." } },
+      { q: { ua: "Для якого рівня?", ru: "Для какого уровня?" }, a: { ua: "Від середнього й вище; завдяки контролю заходить легше за 09C.", ru: "От среднего и выше; благодаря контролю осваивается легче 09C." } },
+      { q: { ua: "Яку основу обрати?", ru: "Какое основание выбрать?" }, a: { ua: "Гнучкі дерев'яні або ALC-основи — вони додадуть обертання, якого 64 дає менше.", ru: "Гибкие деревянные или ALC-основания — они добавят вращения, которого 64 даёт меньше." } },
+    ],
+    comparison: DIGNICS_COMPARISON,
+    comboHref: COMBO,
+  },
+
+  "dignics-80": {
+    descriptionSections: [
+      {
+        title: { ua: "Огляд", ru: "Обзор" },
+        body: {
+          ua: "Dignics 80 — найуніверсальніша накладка лінійки, золота середина між спіновою 05 і швидкісною 64. Вона поєднує високу швидкість, потужне обертання й високу дугу з усіх позицій, тож годиться для різнопланової атаки без вузької спеціалізації.",
+          ru: "Dignics 80 — самая универсальная накладка линейки, золотая середина между спиновой 05 и скоростной 64. Она сочетает высокую скорость, мощное вращение и высокую дугу со всех позиций, поэтому подходит для разноплановой атаки без узкой специализации.",
+        },
+      },
+      {
+        title: { ua: "Технології та конструкція", ru: "Технологии и конструкция" },
+        body: {
+          ua: "Spring Sponge X 40° і геометрія шипів коду 80: топшит дає збалансований профіль, де ні швидкість, ні обертання не «перетягують ковдру». Порівняно з 05 вона гнучкіша й варіативніша, а порівняно з 64 — спіновіша й стабільніша майже в усьому, крім чистої швидкості.",
+          ru: "Spring Sponge X 40° и геометрия шипов кода 80: топшит даёт сбалансированный профиль, где ни скорость, ни вращение не «перетягивают одеяло». По сравнению с 05 она гибче и вариативнее, а по сравнению с 64 — спиновее и стабильнее почти во всём, кроме чистой скорости.",
+        },
+      },
+      {
+        title: { ua: "Гра: форхенд і бекхенд", ru: "Игра: форхенд и бэкхенд" },
+        body: {
+          ua: "Висока дуга з будь-якої позиції робить 80 передбачуваною і прощаючою: нею зручно і завершувати з усієї сили, і вести тонку спінову гру. На форхенді це надійний універсал, на бекхенді — впевнений атакувальний варіант. Багато гравців обирають саме 80, коли не хочуть жертвувати ні спіном, ні швидкістю.",
+          ru: "Высокая дуга с любой позиции делает 80 предсказуемой и прощающей: ею удобно и завершать со всей силы, и вести тонкую спиновую игру. На форхенде это надёжный универсал, на бэкхенде — уверенный атакующий вариант. Многие игроки выбирают именно 80, когда не хотят жертвовать ни спином, ни скоростью.",
+        },
+      },
+      {
+        title: { ua: "Що варто врахувати", ru: "Что стоит учесть" },
+        body: {
+          ua: "Якщо потрібен абсолютний максимум обертання — це 05/09C; якщо гранична швидкість — 64. 80 — для тих, хто цінує баланс і варіативність. Найкраще розкривається на універсальних карбонових ALC-основах Butterfly. Підходить від середнього рівня завдяки прощаючому характеру.",
+          ru: "Если нужен абсолютный максимум вращения — это 05/09C; если предельная скорость — 64. 80 — для тех, кто ценит баланс и вариативность. Лучше всего раскрывается на универсальных карбоновых ALC-основаниях Butterfly. Подходит от среднего уровня благодаря прощающему характеру.",
+        },
+      },
+    ],
+    verdict: {
+      ua: "Збалансована накладка лінійки: швидкість і обертання в одному, висока дуга з усіх позицій. Універсал для різнопланової атаки.",
+      ru: "Сбалансированная накладка линейки: скорость и вращение в одном, высокая дуга со всех позиций. Универсал для разноплановой атаки.",
+    },
+    official: {
+      ua: "Офіційні дані Butterfly: швидкість 135, обертання 115, твердість 40°, Spring Sponge X. Зроблено в Японії.",
+      ru: "Официальные данные Butterfly: скорость 135, вращение 115, твёрдость 40°, Spring Sponge X. Сделано в Японии.",
+    },
+    ratings: [
+      { label: R.speed, value: 9.3 },
+      { label: R.spin, value: 9.0 },
+      { label: R.control, value: 8.0 },
+      { label: R.hard, value: 8.5 },
+      { label: R.demand, value: 7.6 },
+    ],
+    features: [
+      { ua: "Баланс швидкості та обертання — золота середина між 05 і 64.", ru: "Баланс скорости и вращения — золотая середина между 05 и 64." },
+      { ua: "Висока дуга з усіх позицій — варіативність ударів.", ru: "Высокая дуга со всех позиций — вариативность ударов." },
+      { ua: "Гнучкіша й збалансованіша за 05.", ru: "Более гибкая и сбалансированная, чем 05." },
+      { ua: "Перевершує 64 майже в усьому, крім чистої швидкості.", ru: "Превосходит 64 почти во всём, кроме чистой скорости." },
+      { ua: "Підходить і для завершальних, і для тонких спінових ударів.", ru: "Подходит и для завершающих, и для тонких спиновых ударов." },
+    ],
+    audienceFor: [
+      { ua: "Хочете універсал «швидкість + обертання».", ru: "Хотите универсал «скорость + вращение»." },
+      { ua: "Граєте різнопланово біля столу й з дистанції.", ru: "Играете разнопланово у стола и с дистанции." },
+      { ua: "Не хочете обирати між спіном і швидкістю.", ru: "Не хотите выбирать между спином и скоростью." },
+      { ua: "Підійде від середнього рівня.", ru: "Подойдёт от среднего уровня." },
+    ],
+    audienceNotFor: [
+      { ua: "Потрібен абсолютний максимум обертання (тоді 05/09C).", ru: "Нужен абсолютный максимум вращения (тогда 05/09C)." },
+      { ua: "Потрібна гранична швидкість (тоді 64).", ru: "Нужна предельная скорость (тогда 64)." },
+      { ua: "Граєте суто захисний стиль.", ru: "Играете сугубо защитный стиль." },
+    ],
+    expert: {
+      ua: "Dignics 80 — найуніверсальніша накладка лінійки й часта порада на форхенд, коли потрібен баланс. Рекомендований рівень: від середнього; стиль — атака з обертанням і темпом. У лінійці Butterfly це безпечний вибір, якщо не хочете вузької спеціалізації 05 чи 64.",
+      ru: "Dignics 80 — самая универсальная накладка линейки и частый совет на форхенд, когда нужен баланс. Рекомендуемый уровень: от среднего; стиль — атака с вращением и темпом. В линейке Butterfly это безопасный выбор, если не хотите узкой специализации 05 или 64.",
+    },
+    faq: [
+      { q: { ua: "Чим відрізняється від Dignics 05?", ru: "Чем отличается от Dignics 05?" }, a: { ua: "80 трохи швидша й з вищою дугою, але з трохи меншим піковим обертанням. 05 — спін-максимум, 80 — баланс і варіативність.", ru: "80 чуть быстрее и с более высокой дугой, но с чуть меньшим пиковым вращением. 05 — спин-максимум, 80 — баланс и вариативность." } },
+      { q: { ua: "Dignics 80 чи 64?", ru: "Dignics 80 или 64?" }, a: { ua: "80 збалансованіша й спіновіша, 64 — швидша й м'якша. Для універсальної гри — 80, для чистої швидкості/бекхенду — 64.", ru: "80 сбалансированнее и спиновее, 64 — быстрее и мягче. Для универсальной игры — 80, для чистой скорости/бэкхенда — 64." } },
+      { q: { ua: "Для якого рівня?", ru: "Для какого уровня?" }, a: { ua: "Від середнього; завдяки балансу прощає більше за 09C.", ru: "От среднего; благодаря балансу прощает больше, чем 09C." } },
+      { q: { ua: "Яку основу обрати?", ru: "Какое основание выбрать?" }, a: { ua: "Універсальні ALC-основи Butterfly (Viscaria, Timo Boll ALC) найкраще розкривають баланс 80.", ru: "Универсальные ALC-основания Butterfly (Viscaria, Timo Boll ALC) лучше всего раскрывают баланс 80." } },
+    ],
+    comparison: DIGNICS_COMPARISON,
+    comboHref: COMBO,
+  },
+};
+
+export const getExpert = (slug: string): ExpertEntry | undefined => expertContent[slug];
+EXPERT_EOF
+echo "  ✓ src/data/catalog/expert.ts"
+
+mkdir -p "$(dirname "src/components/catalog/ExpertSections.tsx")"
+cat > 'src/components/catalog/ExpertSections.tsx' <<'EXPSEC_EOF'
+// src/components/catalog/ExpertSections.tsx
+// Розширена «топ-карточка»: вердикт → опис → оцінка → кому підійде → думка →
+// порівняння → FAQ → готова ракетка. Серверний компонент, без клієнтського JS,
+// mobile-first, високий контраст тексту на темному тлі (читабельність/WCAG).
+import Link from "next/link";
+import type { Locale } from "@/i18n/config";
+import type { ExpertEntry } from "@/data/catalog/expert";
+
+function Check() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
+      <path d="M3.5 8.5l3 3 6-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function Cross() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" aria-hidden="true">
+      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ExpertSections({
+  entry,
+  locale,
+  currentSlug,
+}: {
+  entry: ExpertEntry;
+  locale: Locale;
+  currentSlug: string;
+}) {
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
+  const h3 = "mb-1.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-ink sm:text-base";
+
+  return (
+    <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-12">
+      {/* 1 · Короткий вердикт */}
+      <section className="rounded-3xl border border-accent/25 bg-accent/[0.05] p-5 sm:p-7">
+        <div className="mb-2.5 font-display text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+          {L("Короткий вердикт", "Краткий вердикт")}
+        </div>
+        <p className="font-body text-[15px] leading-[1.7] text-white/90 sm:text-lg sm:leading-[1.6]">
+          {entry.verdict[locale]}
+        </p>
+        <p className="mt-3.5 border-t border-accent/15 pt-3.5 font-body text-[13px] leading-relaxed text-ink-muted">
+          {entry.official[locale]}
+        </p>
+      </section>
+
+      {/* 2 · Опис */}
+      <section>
+        <h2 className={h2}>{L("Опис", "Описание")}</h2>
+        <div className="mt-5 max-w-[68ch] space-y-6">
+          {entry.descriptionSections.map((s, i) => (
+            <div key={i}>
+              <h3 className={h3}>{s.title[locale]}</h3>
+              <p className="font-body text-[15px] leading-[1.75] text-white/80">{s.body[locale]}</p>
+            </div>
+          ))}
+          {entry.features.length > 0 && (
+            <div>
+              <h3 className={h3}>{L("Переваги", "Преимущества")}</h3>
+              <ul className="space-y-2">
+                {entry.features.map((f, i) => (
+                  <li key={i} className="flex gap-3 font-body text-[15px] leading-[1.7] text-white/80">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    <span>{f[locale]}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 3 · Оцінка магазину */}
+      <section>
+        <h2 className={h2}>{L("Оцінка магазину", "Оценка магазина")}</h2>
+        <div className="mt-5 max-w-xl space-y-3.5">
+          {entry.ratings.map((r) => {
+            const pct = Math.max(6, Math.min(100, r.value * 10));
+            return (
+              <div key={r.label[locale]} className="flex items-center gap-3">
+                <span className="w-[42%] shrink-0 font-body text-[13px] text-white/70 sm:w-[34%] sm:text-sm">
+                  {r.label[locale]}
+                </span>
+                <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-white/[0.1]">
+                  <span
+                    className="block h-full rounded-full bg-[linear-gradient(90deg,rgba(232,255,71,0.55),#E8FF47)]"
+                    style={{ width: `${pct}%` }}
+                  />
+                </span>
+                <span className="w-9 shrink-0 text-right font-display text-sm font-bold tabular-nums text-accent">
+                  {r.value.toFixed(1)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <p className="mt-3 font-body text-[11px] leading-relaxed text-ink-muted">
+          {L(
+            "Шкала 0–10. На основі офіційних характеристик Butterfly.",
+            "Шкала 0–10. На основе официальных характеристик Butterfly.",
+          )}
+        </p>
+      </section>
+
+      {/* 4 · Кому підійде / не підійде */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-2xl border border-border-strong bg-white/[0.025] p-5">
+          <div className="mb-3 flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent">
+            <Check />
+            {L("Підійде, якщо", "Подойдёт, если")}
+          </div>
+          <ul className="space-y-2.5">
+            {entry.audienceFor.map((a, i) => (
+              <li key={i} className="font-body text-sm leading-[1.6] text-white/80">{a[locale]}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="rounded-2xl border border-border-strong bg-white/[0.025] p-5">
+          <div className="mb-3 flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-white/55">
+            <Cross />
+            {L("Не підійде, якщо", "Не подойдёт, если")}
+          </div>
+          <ul className="space-y-2.5">
+            {entry.audienceNotFor.map((a, i) => (
+              <li key={i} className="font-body text-sm leading-[1.6] text-white/70">{a[locale]}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 5 · Думка магазину */}
+      <section className="rounded-2xl border-l-2 border-accent bg-white/[0.03] py-5 pl-5 pr-5">
+        <div className="mb-2 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
+          {L("Думка магазину", "Мнение магазина")}
+        </div>
+        <p className="font-body text-[15px] leading-[1.7] text-white/85">{entry.expert[locale]}</p>
+      </section>
+
+      {/* 6 · Порівняння лінійки */}
+      {entry.comparison && entry.comparison.length > 0 && (
+        <section>
+          <h2 className={h2}>{L("Порівняння лінійки Dignics", "Сравнение линейки Dignics")}</h2>
+          <div className="-mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <table className="w-full min-w-[460px] border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">
+                  <th className="py-2.5 pr-3 text-left font-bold">{L("Модель", "Модель")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{L("Швидк.", "Скор.")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{L("Оберт.", "Вращ.")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{L("Тверд.", "Жёст.")}</th>
+                  <th className="py-2.5 pl-2 text-left font-bold">{L("Кому", "Кому")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {entry.comparison.map((row) => {
+                  const cur = row.slug === currentSlug;
+                  return (
+                    <tr key={row.slug} className={`border-b border-border-subtle ${cur ? "bg-accent/[0.08]" : ""}`}>
+                      <td className={`py-3 pr-3 font-semibold ${cur ? "text-accent" : "text-white/90"}`}>
+                        {row.model}
+                        {cur && (
+                          <span className="ml-1.5 align-middle text-[9px] uppercase tracking-wide text-accent/70">
+                            {L("ця", "эта")}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.speed}</td>
+                      <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.spin}</td>
+                      <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.hardness}°</td>
+                      <td className="py-3 pl-2 text-white/65">{row.fit[locale]}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* 7 · FAQ */}
+      {entry.faq.length > 0 && (
+        <section>
+          <h2 className={h2}>{L("Питання й відповіді", "Вопросы и ответы")}</h2>
+          <div className="mt-5 divide-y divide-border-subtle overflow-hidden rounded-2xl border border-border-strong">
+            {entry.faq.map((f, i) => (
+              <details key={i} className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 font-body text-[15px] font-medium text-white/90 [&::-webkit-details-marker]:hidden">
+                  <span>{f.q[locale]}</span>
+                  <span className="shrink-0 text-xl leading-none text-accent transition-transform duration-200 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="px-4 pb-4 font-body text-sm leading-[1.7] text-white/75">{f.a[locale]}</div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 8 · Готова ракетка */}
+      {entry.comboHref && (
+        <Link
+          href={`/${locale}${entry.comboHref}`}
+          className="flex items-center justify-between gap-3 rounded-2xl border border-accent/30 bg-accent/[0.06] px-5 py-4 transition-colors hover:border-accent/55 hover:bg-accent/[0.1]"
+        >
+          <span className="font-display text-sm font-bold uppercase tracking-[0.05em] text-white/90">
+            {L("Готова ракетка з цією накладкою", "Готовая ракетка с этой накладкой")}
+          </span>
+          <span className="shrink-0 font-display text-xl text-accent">→</span>
+        </Link>
+      )}
+    </div>
+  );
+}
+EXPSEC_EOF
+echo "  ✓ src/components/catalog/ExpertSections.tsx"
+
+FILES=( "$PAGE" src/data/catalog/expert.ts src/components/catalog/ExpertSections.tsx )
+if [ "${TTMAX_NO_GIT:-0}" = "1" ]; then
+  echo "▶ TTMAX_NO_GIT=1 — без git."
+else
+  git add "${FILES[@]}"
+  git commit -m "feat(card): розширена топ-картка (Dignics) — рейтинги, кому підійде, думка, порівняння, FAQ+schema" || echo "(нема змін)"
+  git push origin HEAD
+  echo "✓ Запушено."
+fi
+echo ""
+echo "✅ Готово. Дивіться картки: /ua/butterfly/nakladki/dignics-05 (а також 09c, 64, 80)."
