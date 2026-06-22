@@ -149,7 +149,11 @@ export function MediaManager({ entities }: { entities: MediaEntity[] }) {
     const target = index + dir;
     if (!selected || savingOrder || target < 0 || target >= items.length) return;
     const next = items.slice();
-    [next[index], next[target]] = [next[target], next[index]];
+    const a = next[index];
+    const b = next[target];
+    if (!a || !b) return;
+    next[index] = b;
+    next[target] = a;
     setItems(next); // оптимістично
     setSavingOrder(true);
     setError(null);
