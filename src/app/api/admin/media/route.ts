@@ -103,6 +103,52 @@ export async function POST(request: Request) {
   return NextResponse.json({ ok: true, item: row });
 }
 
+const ReorderSchema = z.object({
+  type: z.enum(TYPES),
+  slug: z.string().regex(/^[a-z0-9-]{1,80}$/),
+  order: z.array(z.string().uuid()).min(1).max(100),
+});
+
+// Зберегти порядок фото: sort = позиція в масиві order (scoped по entity для безпеки).
+export async function PATCH(request: Request) {
+  const admin = await getCurrentAdmin();
+  if (!admin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  let json: unknown;
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const parsed = ReorderSchema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Validation failed", details: parsed.error.flatten() },
+      { status: 400 },
+    );
+  }
+
+  const d = db();
+  if (!d) return NextResponse.json({ error: "DB unavailable" }, { status: 500 });
+
+  const { type, slug, order } = parsed.data;
+  for (let i = 0; i < order.length; i++) {
+    const { error } = await d
+      .from("entity_media")
+      .update({ sort: i })
+      .eq("id", order[i])
+      .eq("entity_type", type)
+      .eq("entity_slug", slug);
+    if (error) {
+      return NextResponse.json({ error: "DB error", message: error.message }, { status: 500 });
+    }
+  }
+
+  revalidateTag(MEDIA_TAG);
+  return NextResponse.json({ ok: true });
+}
+
 const DeleteSchema = z.object({ id: z.string().uuid(), publicId: z.string().min(3) });
 
 export async function DELETE(request: Request) {

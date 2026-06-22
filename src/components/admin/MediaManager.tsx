@@ -32,6 +32,7 @@ export function MediaManager({ entities }: { entities: MediaEntity[] }) {
   const [items, setItems] = useState<MediaRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [savingOrder, setSavingOrder] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -144,6 +145,33 @@ export function MediaManager({ entities }: { entities: MediaEntity[] }) {
     }
   };
 
+  const move = async (index: number, dir: -1 | 1) => {
+    const target = index + dir;
+    if (!selected || savingOrder || target < 0 || target >= items.length) return;
+    const next = items.slice();
+    [next[index], next[target]] = [next[target], next[index]];
+    setItems(next); // оптимістично
+    setSavingOrder(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/media", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: selected.type,
+          slug: selected.slug,
+          order: next.map((r) => r.id),
+        }),
+      });
+      if (!res.ok) throw new Error("Не вдалося зберегти порядок");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Помилка збереження порядку");
+      await loadItems(selected); // відкат до стану БД
+    } finally {
+      setSavingOrder(false);
+    }
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       {/* Список сущностей */}
@@ -245,29 +273,59 @@ export function MediaManager({ entities }: { entities: MediaEntity[] }) {
               ) : items.length === 0 ? (
                 <div className="py-6 text-center text-sm text-[#666]">Поки немає зображень</div>
               ) : (
-                <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                  {items.map((row) => (
-                    <li
-                      key={row.id}
-                      className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#0E1117]"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={cldUrl(row.public_id, { w: 300, h: 300 })}
-                        alt={row.alt ?? ""}
-                        loading="lazy"
-                        className="aspect-square w-full object-cover"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => void remove(row)}
-                        className="absolute right-1.5 top-1.5 rounded-md bg-black/70 px-2 py-1 text-[11px] font-bold text-red-300 opacity-0 transition-opacity hover:bg-black/90 group-hover:opacity-100"
+                <>
+                  <div className="mb-2 text-xs text-[#666]">
+                    Порядок = послідовність фото на сайті. Тисни ◀ ▶, щоб переставити (№1 — головне фото).
+                  </div>
+                  <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                    {items.map((row, index) => (
+                      <li
+                        key={row.id}
+                        className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#0E1117]"
                       >
-                        Видалити
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={cldUrl(row.public_id, { w: 300, h: 300 })}
+                          alt={row.alt ?? ""}
+                          loading="lazy"
+                          className="aspect-square w-full object-cover"
+                        />
+                        <span className="absolute left-1.5 top-1.5 flex h-6 min-w-[24px] items-center justify-center rounded-md bg-black/75 px-1.5 text-[11px] font-bold text-[#E8FF47]">
+                          {index + 1}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => void remove(row)}
+                          className="absolute right-1.5 top-1.5 rounded-md bg-black/70 px-2 py-1 text-[11px] font-bold text-red-300 opacity-0 transition-opacity hover:bg-black/90 group-hover:opacity-100"
+                        >
+                          Видалити
+                        </button>
+                        <div className="absolute inset-x-1.5 bottom-1.5 flex items-center justify-between gap-1">
+                          <button
+                            type="button"
+                            disabled={index === 0 || savingOrder}
+                            onClick={() => void move(index, -1)}
+                            title="Перемістити лівіше"
+                            aria-label="Перемістити лівіше"
+                            className="flex h-7 w-7 items-center justify-center rounded-md bg-black/75 text-sm text-white transition-colors hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-25"
+                          >
+                            ◀
+                          </button>
+                          <button
+                            type="button"
+                            disabled={index === items.length - 1 || savingOrder}
+                            onClick={() => void move(index, 1)}
+                            title="Перемістити правіше"
+                            aria-label="Перемістити правіше"
+                            className="flex h-7 w-7 items-center justify-center rounded-md bg-black/75 text-sm text-white transition-colors hover:bg-black/90 disabled:cursor-not-allowed disabled:opacity-25"
+                          >
+                            ▶
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               )}
             </div>
           </>
