@@ -133,6 +133,16 @@ export function MobileMenu({
                     >
                       <div className="overflow-hidden">
                         <div className="py-1.5">
+                          {link.href && (
+                            <Link
+                              href={`/${locale}${link.href}`}
+                              onClick={onClose}
+                              className="flex items-center gap-2 px-5 py-2.5 pl-[52px] font-body text-sm font-semibold text-ink transition-all hover:pl-[60px] hover:text-accent"
+                            >
+                              <span aria-hidden className="h-1 w-1 shrink-0 rounded-full bg-accent" />
+                              {locale === "ru" ? "Все" : "Усі"} {label.toLowerCase()}
+                            </Link>
+                          )}
                           {link.sub.map((s) => (
                             <Link
                               key={s.href}
