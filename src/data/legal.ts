@@ -7,15 +7,16 @@ import { siteConfig } from "@/config/site";
 
 type L = Record<Locale, string>;
 
-export type LegalSection = {
+export type ContentSection = {
   /** Заголовок розділу (h2). */
   h: L;
   /** Абзаци розділу. */
   p: Record<Locale, string[]>;
 };
 
-export type LegalDoc = {
-  slug: "privacy" | "terms";
+export type ContentDoc = {
+  /** Шлях без локалі: "privacy", "about", "delivery" тощо. */
+  slug: string;
   /** H1 на сторінці. */
   title: L;
   /** <title> для SEO (повний, із брендом). */
@@ -24,7 +25,7 @@ export type LegalDoc = {
   /** Дата останнього оновлення (YYYY-MM-DD), однакова для обох мов. */
   updated: string;
   intro: L;
-  sections: LegalSection[];
+  sections: ContentSection[];
 };
 
 const UPDATED = "2026-06-29";
@@ -32,7 +33,7 @@ const EMAIL = siteConfig.email;
 const BRAND = siteConfig.name; // "Butterfly UA"
 const OPERATOR = siteConfig.operator; // "TTMAX"
 
-export const legalDocs: Record<"privacy" | "terms", LegalDoc> = {
+export const legalDocs: Record<"privacy" | "terms", ContentDoc> = {
   privacy: {
     slug: "privacy",
     title: {

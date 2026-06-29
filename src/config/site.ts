@@ -24,11 +24,11 @@ export const siteConfig = {
     { key: "youtube", label: "YT", color: "#FF0000", href: "#" },
     { key: "facebook", label: "FB", color: "#1877F2", href: "#" },
   ],
-  // Schema.org address — placeholder, replace with real data
+  // Schema.org address — магазин у Харкові. TODO: додати точну адресу (streetAddress) + postalCode, коли будуть.
   address: {
-    streetAddress: "",
-    addressLocality: "Kyiv",
-    addressRegion: "",
+    streetAddress: "", // TODO: додати точну адресу магазину в Харкові
+    addressLocality: "Kharkiv",
+    addressRegion: "Kharkivska oblast",
     postalCode: "",
     addressCountry: "UA",
   },

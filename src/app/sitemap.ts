@@ -17,6 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Шляхи без локалі; "" — головна. Лише сторінки, що мають товари (індексовані).
   const paths: { path: string; priority: number; freq: "weekly" | "monthly" }[] = [
     { path: "", priority: 1.0, freq: "weekly" },
+    { path: "/about", priority: 0.5, freq: "monthly" },
+    { path: "/contacts", priority: 0.5, freq: "monthly" },
+    { path: "/delivery", priority: 0.4, freq: "monthly" },
+    { path: "/payment", priority: 0.4, freq: "monthly" },
+    { path: "/returns", priority: 0.4, freq: "monthly" },
     { path: "/privacy", priority: 0.3, freq: "monthly" },
     { path: "/terms", priority: 0.3, freq: "monthly" },
   ];

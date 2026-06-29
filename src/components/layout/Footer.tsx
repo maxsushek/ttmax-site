@@ -93,7 +93,12 @@ export function Footer({
   }));
   // Только Butterfly.
   const brandLinks: FootLink[] = [{ label: "Butterfly", href: `/${locale}/butterfly` }];
-  const infoLinks: FootLink[] = m.infoLinks.map((label) => ({ label, href: "#" }));
+  // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
+  const infoSlugs = ["about", "delivery", "payment", "returns", "contacts"];
+  const infoLinks: FootLink[] = m.infoLinks.map((label, i) => ({
+    label,
+    href: infoSlugs[i] ? `/${locale}/${infoSlugs[i]}` : "#",
+  }));
 
   const columns: FootColumn[] = [
     { key: "catalog", title: m.columns.catalog, links: catalogLinks },

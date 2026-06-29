@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/Section";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import type { Locale } from "@/i18n/config";
-import type { LegalDoc } from "@/data/legal";
+import type { ContentDoc } from "@/data/legal";
 
 const UI: Record<Locale, { home: string; updated: string }> = {
   ua: { home: "Головна", updated: "Оновлено" },
@@ -14,7 +14,7 @@ function formatDate(iso: string): string {
   return `${d}.${m}.${y}`;
 }
 
-export function LegalArticle({ doc, locale }: { doc: LegalDoc; locale: Locale }) {
+export function LegalArticle({ doc, locale }: { doc: ContentDoc; locale: Locale }) {
   const ui = UI[locale];
   const breadcrumb = breadcrumbJsonLd(
     [
