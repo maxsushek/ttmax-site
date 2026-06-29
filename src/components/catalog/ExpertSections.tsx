@@ -33,6 +33,7 @@ export function ExpertSections({
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
   // Назва серії для заголовка таблиці порівняння (Dignics / Tenergy / …) — з даних, не захардкоджено.
   const series = entry.comparison?.[0]?.model.split(" ")[0] ?? "";
+  const cc = entry.comparisonCols; // кастомні підписи колонок (для основ: швидк./жорстк./клас)
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
   const h3 = "mb-1.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-ink sm:text-base";
 
@@ -156,9 +157,9 @@ export function ExpertSections({
               <thead>
                 <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">
                   <th className="py-2.5 pr-3 text-left font-bold">{L("Модель", "Модель")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{L("Швидк./10", "Скор./10")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{L("Оберт./10", "Вращ./10")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{L("Тверд.", "Жёст.")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}</th>
+                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}</th>
                   <th className="py-2.5 pl-2 text-left font-bold">{L("Кому", "Кому")}</th>
                 </tr>
               </thead>
@@ -178,7 +179,7 @@ export function ExpertSections({
                       <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.speed}</td>
                       <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.spin}</td>
                       <td className="px-2 py-3 text-center tabular-nums text-white/75">
-                        {row.hardness != null ? `${row.hardness}°` : "—"}
+                        {row.hardnessText ?? (row.hardness != null ? `${row.hardness}°` : "—")}
                       </td>
                       <td className="py-3 pl-2 text-white/65">{row.fit[locale]}</td>
                     </tr>
@@ -217,7 +218,9 @@ export function ExpertSections({
           className="flex items-center justify-between gap-3 rounded-2xl border border-accent/30 bg-accent/[0.06] px-5 py-4 transition-colors hover:border-accent/55 hover:bg-accent/[0.1]"
         >
           <span className="font-display text-sm font-bold uppercase tracking-[0.05em] text-white/90">
-            {L("Готова ракетка з цією накладкою", "Готовая ракетка с этой накладкой")}
+            {entry.comboLabel
+              ? entry.comboLabel[locale]
+              : L("Готова ракетка з цією накладкою", "Готовая ракетка с этой накладкой")}
           </span>
           <span className="shrink-0 font-display text-xl text-accent">→</span>
         </Link>
