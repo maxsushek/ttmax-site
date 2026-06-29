@@ -995,8 +995,17 @@ function BaseView({
     { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
     { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },
   ];
+  if (base.fiber)
+    rows.push({
+      label: L("Карбон", "Карбон"),
+      value:
+        base.fiber === "outer"
+          ? L("Зовнішній (outer)", "Внешний (outer)")
+          : L("Внутрішній (inner)", "Внутренний (inner)"),
+    });
   if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
-  if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
+  if (base.weight) rows.push({ label: L("Середня вага", "Средний вес"), value: base.weight });
+  else if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
   rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";

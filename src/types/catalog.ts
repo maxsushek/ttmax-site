@@ -176,6 +176,10 @@ export interface BaseSpec {
   plies?: string;
   /** Приблизна вага, г. */
   weightG?: number;
+  /** Середня вага — діапазон з одиницею, напр. "86–90 г". */
+  weight?: string;
+  /** Розташування карбон-шару: "outer" (під верхнім шпоном) або "inner" (біля ядра). */
+  fiber?: "inner" | "outer";
   /** Доступні типи ручки. */
   handles: Handle[];
 }
