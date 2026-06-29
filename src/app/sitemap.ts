@@ -17,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Шляхи без локалі; "" — головна. Лише сторінки, що мають товари (індексовані).
   const paths: { path: string; priority: number; freq: "weekly" | "monthly" }[] = [
     { path: "", priority: 1.0, freq: "weekly" },
+    { path: "/privacy", priority: 0.3, freq: "monthly" },
+    { path: "/terms", priority: 0.3, freq: "monthly" },
   ];
 
   for (const c of getIndexableCategories()) {

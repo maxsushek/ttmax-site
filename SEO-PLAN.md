@@ -142,7 +142,7 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 | P0-4 | **GSC/Bing не верифіковані** | Без GSC немає діагностики індексації, не подати sitemap | Додати `ttmax.ua` у Google Search Console (DNS TXT), подати `sitemap.xml`; повторити для Bing | high / M |
 | P0-5 | **Аналітика мовчки не пише / Ads label порожній** | Запуск без трекінгу; конверсії Google Ads не фіксуються (`google-ads.ts:6`) | Виставити в Vercel env усі 5 ID + conversion label; перевірити GTM Preview / GA4 / Meta Test Events | high / S |
 | P0-6 | **Перевірити гейт `launched` перед публікацією** | `buildMetadata()` (`metadata.ts:42-51`) не гейтить → головна indexable навіть при launched=false | Перед go-live `NEXT_PUBLIC_SITE_LAUNCHED=true`; або пофіксити `buildMetadata()` (див. §8) | med / S |
-| P0-7 | **Зламані /privacy і /terms** | Footer (`Footer.tsx:161-172`) і checkout (`CheckoutForm.tsx:771`) → 404, зрив checkout, биті лінки | Створити `src/app/[locale]/{privacy,terms}/page.tsx` (або тимчасово прибрати лінки) | high / M |
+| P0-7 ✅ | ~~Зламані /privacy і /terms~~ **ЗРОБЛЕНО** | Footer і checkout вели в 404 | ✅ Створено `src/app/[locale]/{privacy,terms}/page.tsx` + контент `src/data/legal.ts` + компонент `LegalArticle`; додано в sitemap. Двомовні, canonical+hreflang через `buildCatalogMetadata`, breadcrumb JSON-LD | high / M |
 | P0-8 | **Backup-таблиці без RLS** | Дані відкриті (див. §5) | DROP або ENABLE RLS + deny-all policy | high / S |
 
 ---
@@ -256,3 +256,4 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 ## Журнал змін
 - **2026-06-29** — створено живий файл; склоновано репо; під'єднано Supabase/Vercel/Ahrefs; keyword research UA; multi-agent SEO-аудит (29 агентів, 51 знахідка) → повний план P0/P1/P2.
 - **2026-06-29** — ✅ **P0-3 виконано:** фікс hreflang у `sitemap.ts` (ключі `uk`/`ru` + `x-default`, URL лишився `/ua`). Перевірено симуляцією логіки.
+- **2026-06-29** — ✅ **P0-7 виконано:** сторінки `/privacy` + `/terms` (двомовні, `src/data/legal.ts` + `LegalArticle` + у sitemap). ⚠️ Контент — базовий шаблон, узгодити реквізити юр-особи (ФОП/ТОВ, ЄДРПОУ) та реальний телефон перед фінальним запуском.
