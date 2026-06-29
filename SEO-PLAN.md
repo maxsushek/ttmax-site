@@ -161,6 +161,7 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 - **Немає og:image / twitter:image на жодній сторінці** — додати в обидва білдери (`metadata.ts:28-36`, `catalog-metadata.ts:31-39`): товари — primary product image (`pickPrimary` + `cldUrl {w:1200,h:630,crop:fill}`); головна/хаби — брендований fallback.
 - **Шаблонні meta descriptions** — у `routing.ts:316-334` для product/brandCategory додати специфіку (count + minPrice + специфікації); патерн авто-доповнення вже є для category в `page.tsx:114-120`.
 - **Тайтли товарів без ключів** — у `routeTitle()`: `{name} — накладка/основа/ракетка для настільного тенісу, купити в Україні | TTMAX`.
+- **LocaleSwitcher: анкери `<a hrefLang="ua">`** (виявлено 2026-06-29) — перемикач мови (`src/components/layout/LocaleSwitcher.tsx`, десктоп+мобайл) ставить на посилання `hrefLang="ua"` замість `uk`. На SEO-сигнал (head `<link rel=alternate>`) НЕ впливає, але варто привести до `localeToLang[l]` для консистентності. Impact low / Effort S.
 
 **Внутрішня перелінковка / контент-паритет:**
 - **Тонкі/дубльовані описи** — 95 ракеток шаблонні, бази (84) і gear (297) без описів. Топ-15 комбо — унікальні 150-200 слів; бази — 100; gear — 80 (патерн `expert.ts`).
