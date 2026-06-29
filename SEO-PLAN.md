@@ -138,7 +138,7 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 |---|----------|--------------|-------------------|-----------------|
 | P0-1 | **Canonical/og/hreflang/sitemap вказують на vercel.app** | Уся органіка та беклінки йдуть на тимчасовий домен; при переїзді вага НЕ передасться | Підключити `ttmax.ua` як custom domain у Vercel; `NEXT_PUBLIC_SITE_URL=https://ttmax.ua` у Vercel env (`src/config/site.ts:11`); ре-деплой; перевірити `sitemap.xml`/`robots.txt` | high / S |
 | P0-2 | **Немає 301-редиректу vercel.app → ttmax.ua** | Обидва домени віддають однаковий контент → дублікати, розпорошення авторитету | Редирект у `next.config.ts` (`redirects()`) або `src/middleware.ts` за `Host`: усі `*.vercel.app` → 301 на `ttmax.ua` | high / M |
-| P0-3 | **Sitemap hreflang = "ua" замість "uk", без x-default** | Невалідний BCP-47 → GSC ігнорує hreflang | `src/app/sitemap.ts:48`: `languages[localeToLang[l]] = …` + додати `languages["x-default"]` | high / S |
+| P0-3 ✅ | ~~Sitemap hreflang = "ua" замість "uk", без x-default~~ **ЗРОБЛЕНО** | Невалідний BCP-47 → GSC ігнорує hreflang | ✅ `src/app/sitemap.ts`: ключі `uk`/`ru` через `localeToLang` + `x-default`. **URL лишився `/ua`** (змінено лише hreflang-код) | high / S |
 | P0-4 | **GSC/Bing не верифіковані** | Без GSC немає діагностики індексації, не подати sitemap | Додати `ttmax.ua` у Google Search Console (DNS TXT), подати `sitemap.xml`; повторити для Bing | high / M |
 | P0-5 | **Аналітика мовчки не пише / Ads label порожній** | Запуск без трекінгу; конверсії Google Ads не фіксуються (`google-ads.ts:6`) | Виставити в Vercel env усі 5 ID + conversion label; перевірити GTM Preview / GA4 / Meta Test Events | high / S |
 | P0-6 | **Перевірити гейт `launched` перед публікацією** | `buildMetadata()` (`metadata.ts:42-51`) не гейтить → головна indexable навіть при launched=false | Перед go-live `NEXT_PUBLIC_SITE_LAUNCHED=true`; або пофіксити `buildMetadata()` (див. §8) | med / S |
@@ -255,3 +255,4 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 
 ## Журнал змін
 - **2026-06-29** — створено живий файл; склоновано репо; під'єднано Supabase/Vercel/Ahrefs; keyword research UA; multi-agent SEO-аудит (29 агентів, 51 знахідка) → повний план P0/P1/P2.
+- **2026-06-29** — ✅ **P0-3 виконано:** фікс hreflang у `sitemap.ts` (ключі `uk`/`ru` + `x-default`, URL лишився `/ua`). Перевірено симуляцією логіки.

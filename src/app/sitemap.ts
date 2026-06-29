@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { locales } from "@/i18n/config";
+import { defaultLocale, locales, localeToLang } from "@/i18n/config";
 import {
   getActiveBrands,
   getAllProducts,
@@ -45,7 +45,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const { path, priority, freq } of paths) {
     const languages: Record<string, string> = {};
-    for (const l of locales) languages[l] = `${siteConfig.url}/${l}${path}`;
+    // hreflang має бути BCP-47 кодом МОВИ (uk), а не кодом локалі в URL (ua).
+    // URL лишається /ua і /ru — змінюється лише ключ alternates (ua→uk, ru→ru) + x-default.
+    for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${path}`;
+    languages["x-default"] = `${siteConfig.url}/${defaultLocale}${path}`;
     for (const locale of locales) {
       entries.push({
         url: `${siteConfig.url}/${locale}${path}`,
