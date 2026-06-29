@@ -31,6 +31,8 @@ export function ExpertSections({
   currentSlug: string;
 }) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  // Назва серії для заголовка таблиці порівняння (Dignics / Tenergy / …) — з даних, не захардкоджено.
+  const series = entry.comparison?.[0]?.model.split(" ")[0] ?? "";
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
   const h3 = "mb-1.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-ink sm:text-base";
 
@@ -144,7 +146,7 @@ export function ExpertSections({
       {/* 6 · Порівняння лінійки */}
       {entry.comparison && entry.comparison.length > 0 && (
         <section>
-          <h2 className={h2}>{L("Порівняння лінійки Dignics", "Сравнение линейки Dignics")}</h2>
+          <h2 className={h2}>{L(`Порівняння лінійки ${series}`, `Сравнение линейки ${series}`)}</h2>
           <div className="mt-5 overflow-x-auto">
             <table className="w-full min-w-[460px] border-collapse text-sm">
               <thead>
