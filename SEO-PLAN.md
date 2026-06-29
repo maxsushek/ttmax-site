@@ -114,6 +114,21 @@ ALTER TABLE public.entity_media_bak_20260622   ENABLE ROW LEVEL SECURITY;
 
 ---
 
+# Статус по напрямах
+
+_Оновлено 2026-06-29. ✅ готово · 🔄 в роботі · 📋 план_
+
+| Напрям | ✅ Зроблено | 🔄 В роботі | 📋 План |
+|---|---|---|---|
+| **SEO** | hreflang sitemap (uk/ru+x-default); /privacy,/terms; категорійні тексти+FAQ; метадані/canonical/JSON-LD | Експертні картки накладок (Dignics+Tenergy ✓, +29) | Домен ttmax.ua+301+GSC; og:image+Product images/sku; столи, гайди, відгуки→зірки |
+| **Контент** | ~430 товарів; картки Dignics(4)+Tenergy(10) | +29 накладок (Sriver/Glayzer/Rozena/Feint…) | Картки основ (Viscaria, Timo Boll ALC…); описи ракеток/екіпір.; наповнення «Столи» |
+| **Адмінка** | Auth; CRM лідів (статуси/нотатки/атрибуція/цінність); замовлення; медіа-менеджер; редактори контенту/цін; налаштування | — | — |
+| **Заявки/Замовлення** | Форма лідів (/api/leads+Supabase+Zod); кошик+checkout+orders; аналітика-події; Telegram (код) | — | Реальні ID аналітики+токен (env); Meta CAPI; збір відгуків→рейтинг |
+| **Блог/Гайди** | — | — | Інфраструктура /guides; «як вибрати стіл/ракетку», ALC vs ZLC; HowTo/FAQ schema |
+| **Інфраструктура** | Next.js 15+Vercel+Supabase+Cloudinary; i18n ua/ru | — | Домен+env; RLS backup-таблиць; реальний телефон+адреса (Харків) |
+
+---
+
 # Повний SEO-план
 
 ## 6. Стан зараз
