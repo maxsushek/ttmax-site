@@ -12,7 +12,7 @@ export type ComparisonRow = {
   model: string;
   speed: number;
   spin: number;
-  hardness: number;
+  hardness?: number;
   fit: L;
 };
 export type ExpertEntry = {
@@ -25,6 +25,7 @@ export type ExpertEntry = {
   audienceNotFor: L[];
   expert: L;
   faq: ExpertFaq[];
+  comparisonTitle?: L;
   comparison?: ComparisonRow[];
   comboHref?: string;
 };
@@ -39,24 +40,527 @@ const R = {
 
 // Порівняння лінійки Dignics (офіційні числа Butterfly). Спільне для всіх 4 карток.
 const DIGNICS_COMPARISON: ComparisonRow[] = [
-  { slug: "dignics-05", model: "Dignics 05", speed: 135, spin: 120, hardness: 40, fit: { ua: "Спін-атака, універсал", ru: "Спин-атака, универсал" } },
-  { slug: "dignics-09c", model: "Dignics 09C", speed: 130, spin: 130, hardness: 44, fit: { ua: "Макс. спін, pro", ru: "Макс. спин, pro" } },
-  { slug: "dignics-64", model: "Dignics 64", speed: 140, spin: 110, hardness: 40, fit: { ua: "Швидкість, бекхенд", ru: "Скорость, бэкхенд" } },
-  { slug: "dignics-80", model: "Dignics 80", speed: 135, spin: 115, hardness: 40, fit: { ua: "Баланс, універсал", ru: "Баланс, универсал" } },
+  {
+    "slug": "dignics-05",
+    "model": "Dignics 05",
+    "speed": 9.2,
+    "spin": 9.6,
+    "hardness": 40,
+    "fit": {
+      "ua": "Топ-спін Dignics",
+      "ru": "Топ-спин Dignics"
+    }
+  },
+  {
+    "slug": "dignics-09c",
+    "model": "Dignics 09C",
+    "speed": 8.8,
+    "spin": 9.8,
+    "hardness": 44,
+    "fit": {
+      "ua": "Топ-липка Dignics",
+      "ru": "Топ-липкая Dignics"
+    }
+  },
+  {
+    "slug": "dignics-64",
+    "model": "Dignics 64",
+    "speed": 9.6,
+    "spin": 8.5,
+    "hardness": 40,
+    "fit": {
+      "ua": "Швидкість, бекхенд",
+      "ru": "Скорость, бэкхенд"
+    }
+  },
+  {
+    "slug": "dignics-80",
+    "model": "Dignics 80",
+    "speed": 9.3,
+    "spin": 9.0,
+    "hardness": 40,
+    "fit": {
+      "ua": "Баланс, універсал",
+      "ru": "Баланс, универсал"
+    }
+  }
 ];
 
 // Порівняння лінійки Tenergy (офіційні числа Butterfly, та сама шкала, що й Dignics). Спільне для карток Tenergy.
 const TENERGY_COMPARISON: ComparisonRow[] = [
-  { slug: "tenergy-05", model: "Tenergy 05", speed: 130, spin: 115, hardness: 36, fit: { ua: "Спін-атака, еталон", ru: "Спин-атака, эталон" } },
-  { slug: "tenergy-05-fx", model: "Tenergy 05 FX", speed: 128, spin: 115, hardness: 32, fit: { ua: "Спін + контроль, м'якша", ru: "Спин + контроль, мягче" } },
-  { slug: "tenergy-05-hard", model: "Tenergy 05 Hard", speed: 132, spin: 113, hardness: 40, fit: { ua: "Спін під силову гру", ru: "Спин под силовую игру" } },
-  { slug: "tenergy-19", model: "Tenergy 19", speed: 132, spin: 118, hardness: 36, fit: { ua: "Спін + темп, нижча дуга", ru: "Спин + темп, ниже дуга" } },
-  { slug: "tenergy-64", model: "Tenergy 64", speed: 135, spin: 110, hardness: 36, fit: { ua: "Швидкість, бекхенд", ru: "Скорость, бэкхенд" } },
-  { slug: "tenergy-64-fx", model: "Tenergy 64 FX", speed: 132, spin: 110, hardness: 32, fit: { ua: "Швидкість, м'якша", ru: "Скорость, мягче" } },
-  { slug: "tenergy-80", model: "Tenergy 80", speed: 133, spin: 113, hardness: 36, fit: { ua: "Баланс, універсал", ru: "Баланс, универсал" } },
-  { slug: "tenergy-80-fx", model: "Tenergy 80 FX", speed: 130, spin: 113, hardness: 32, fit: { ua: "Баланс, м'якша", ru: "Баланс, мягче" } },
-  { slug: "tenergy-25", model: "Tenergy 25", speed: 128, spin: 113, hardness: 36, fit: { ua: "Контроль, нижча дуга", ru: "Контроль, ниже дуга" } },
-  { slug: "tenergy-25-fx", model: "Tenergy 25 FX", speed: 125, spin: 113, hardness: 32, fit: { ua: "Контроль, м'якша", ru: "Контроль, мягче" } },
+  {
+    "slug": "tenergy-05",
+    "model": "Tenergy 05",
+    "speed": 9.0,
+    "spin": 9.4,
+    "hardness": 36,
+    "fit": {
+      "ua": "Еталон Tenergy",
+      "ru": "Эталон Tenergy"
+    }
+  },
+  {
+    "slug": "tenergy-05-fx",
+    "model": "Tenergy 05 FX",
+    "speed": 8.7,
+    "spin": 9.2,
+    "hardness": 32,
+    "fit": {
+      "ua": "Спін + контроль",
+      "ru": "Спин + контроль"
+    }
+  },
+  {
+    "slug": "tenergy-05-hard",
+    "model": "Tenergy 05 Hard",
+    "speed": 9.3,
+    "spin": 9.2,
+    "hardness": 43,
+    "fit": {
+      "ua": "Спін, силова",
+      "ru": "Спин, силовая"
+    }
+  },
+  {
+    "slug": "tenergy-19",
+    "model": "Tenergy 19",
+    "speed": 9.3,
+    "spin": 9.3,
+    "hardness": 36,
+    "fit": {
+      "ua": "Спін + темп",
+      "ru": "Спин + темп"
+    }
+  },
+  {
+    "slug": "tenergy-64",
+    "model": "Tenergy 64",
+    "speed": 9.5,
+    "spin": 8.7,
+    "hardness": 36,
+    "fit": {
+      "ua": "Швидкість, бекхенд",
+      "ru": "Скорость, бэкхенд"
+    }
+  },
+  {
+    "slug": "tenergy-64-fx",
+    "model": "Tenergy 64 FX",
+    "speed": 9.3,
+    "spin": 8.6,
+    "hardness": 32,
+    "fit": {
+      "ua": "Швидкість, м'якша",
+      "ru": "Скорость, мягче"
+    }
+  },
+  {
+    "slug": "tenergy-80",
+    "model": "Tenergy 80",
+    "speed": 9.2,
+    "spin": 9.0,
+    "hardness": 36,
+    "fit": {
+      "ua": "Баланс, універсал",
+      "ru": "Баланс, универсал"
+    }
+  },
+  {
+    "slug": "tenergy-80-fx",
+    "model": "Tenergy 80 FX",
+    "speed": 9.0,
+    "spin": 8.9,
+    "hardness": 32,
+    "fit": {
+      "ua": "Баланс, м'якша",
+      "ru": "Баланс, мягче"
+    }
+  },
+  {
+    "slug": "tenergy-25",
+    "model": "Tenergy 25",
+    "speed": 8.5,
+    "spin": 9.1,
+    "hardness": 36,
+    "fit": {
+      "ua": "Контроль",
+      "ru": "Контроль"
+    }
+  },
+  {
+    "slug": "tenergy-25-fx",
+    "model": "Tenergy 25 FX",
+    "speed": 8.3,
+    "spin": 9.0,
+    "hardness": 32,
+    "fit": {
+      "ua": "Контроль, м'якша",
+      "ru": "Контроль, мягче"
+    }
+  }
+];
+
+const SHORT_PIPS_COMPARISON: ComparisonRow[] = [
+  {
+    "slug": "impartial-xs",
+    "model": "Impartial XS",
+    "speed": 8.0,
+    "spin": 6.0,
+    "hardness": 30,
+    "fit": {
+      "ua": "Шипи, швидкість",
+      "ru": "Шипы, скорость"
+    }
+  },
+  {
+    "slug": "impartial-xb",
+    "model": "Impartial XB",
+    "speed": 6.5,
+    "spin": 4.7,
+    "hardness": 30,
+    "fit": {
+      "ua": "Шипи, універсал",
+      "ru": "Шипы, универсал"
+    }
+  },
+  {
+    "slug": "bugller",
+    "model": "Bugller",
+    "speed": 8.0,
+    "spin": 4.0,
+    "hardness": 42,
+    "fit": {
+      "ua": "Шипи, темп+спін",
+      "ru": "Шипы, темп+спин"
+    }
+  },
+  {
+    "slug": "speedy-po",
+    "model": "Speedy P.O.",
+    "speed": 7.2,
+    "spin": 4.5,
+    "hardness": 35,
+    "fit": {
+      "ua": "Шипи, швидкість",
+      "ru": "Шипы, скорость"
+    }
+  },
+  {
+    "slug": "challenger-attack",
+    "model": "Challenger Attack",
+    "speed": 6.0,
+    "spin": 5.0,
+    "hardness": 35,
+    "fit": {
+      "ua": "Шипи, атака",
+      "ru": "Шипы, атака"
+    }
+  },
+  {
+    "slug": "orthodox",
+    "model": "Orthodox",
+    "speed": 7.5,
+    "spin": 3.0,
+    "fit": {
+      "ua": "Шипи, блок",
+      "ru": "Шипы, блок"
+    }
+  }
+];
+
+const LONG_PIPS_COMPARISON: ComparisonRow[] = [
+  {
+    "slug": "feint-long-ii",
+    "model": "Feint Long II",
+    "speed": 4.0,
+    "spin": 3.0,
+    "fit": {
+      "ua": "Довгі шипи, захист",
+      "ru": "Длинные шипы, защита"
+    }
+  },
+  {
+    "slug": "feint-long-iii",
+    "model": "Feint Long III",
+    "speed": 3.0,
+    "spin": 2.5,
+    "fit": {
+      "ua": "Довгі шипи, захист",
+      "ru": "Длинные шипы, защита"
+    }
+  },
+  {
+    "slug": "feint-ag",
+    "model": "Feint AG",
+    "speed": 4.0,
+    "spin": 2.0,
+    "hardness": 28,
+    "fit": {
+      "ua": "Довгі шипи, активні",
+      "ru": "Длинные шипы, активные"
+    }
+  },
+  {
+    "slug": "feint-soft",
+    "model": "Feint Soft",
+    "speed": 3.0,
+    "spin": 2.0,
+    "hardness": 25,
+    "fit": {
+      "ua": "Довгі шипи, м'які",
+      "ru": "Длинные шипы, мягкие"
+    }
+  },
+  {
+    "slug": "feint-ox",
+    "model": "Feint OX",
+    "speed": 2.0,
+    "spin": 1.5,
+    "fit": {
+      "ua": "Довгі шипи OX",
+      "ru": "Длинные шипы OX"
+    }
+  },
+  {
+    "slug": "ilius-b",
+    "model": "Ilius B",
+    "speed": 3.5,
+    "spin": 2.5,
+    "hardness": 48,
+    "fit": {
+      "ua": "Довгі шипи, блок",
+      "ru": "Длинные шипы, блок"
+    }
+  },
+  {
+    "slug": "ilius-s",
+    "model": "Ilius S",
+    "speed": 3.0,
+    "spin": 3.0,
+    "hardness": 45,
+    "fit": {
+      "ua": "Довгі шипи, обертання",
+      "ru": "Длинные шипы, вращение"
+    }
+  }
+];
+
+const MODERN_COMPARISON: ComparisonRow[] = [
+  {
+    "slug": "dignics-05",
+    "model": "Dignics 05",
+    "speed": 9.2,
+    "spin": 9.6,
+    "hardness": 40,
+    "fit": {
+      "ua": "Топ-спін Dignics",
+      "ru": "Топ-спин Dignics"
+    }
+  },
+  {
+    "slug": "tenergy-05",
+    "model": "Tenergy 05",
+    "speed": 9.0,
+    "spin": 9.4,
+    "hardness": 36,
+    "fit": {
+      "ua": "Еталон Tenergy",
+      "ru": "Эталон Tenergy"
+    }
+  },
+  {
+    "slug": "zyre-03",
+    "model": "Zyre 03",
+    "speed": 8.7,
+    "spin": 9.5,
+    "hardness": 44,
+    "fit": {
+      "ua": "Макс. спін, pro",
+      "ru": "Макс. спин, pro"
+    }
+  },
+  {
+    "slug": "glayzer-09c",
+    "model": "Glayzer 09C",
+    "speed": 7.0,
+    "spin": 8.5,
+    "hardness": 42,
+    "fit": {
+      "ua": "Гібрид, спін pro",
+      "ru": "Гибрид, спин pro"
+    }
+  },
+  {
+    "slug": "glayzer",
+    "model": "Glayzer",
+    "speed": 8.5,
+    "spin": 8.3,
+    "hardness": 38,
+    "fit": {
+      "ua": "Спін, advanced",
+      "ru": "Спин, advanced"
+    }
+  },
+  {
+    "slug": "rozena",
+    "model": "Rozena",
+    "speed": 8.5,
+    "spin": 7.6,
+    "hardness": 35,
+    "fit": {
+      "ua": "Спін, аматор",
+      "ru": "Спин, любитель"
+    }
+  }
+];
+
+const CLASSIC_COMPARISON: ComparisonRow[] = [
+  {
+    "slug": "tenergy-05",
+    "model": "Tenergy 05",
+    "speed": 9.0,
+    "spin": 9.4,
+    "hardness": 36,
+    "fit": {
+      "ua": "Еталон Tenergy",
+      "ru": "Эталон Tenergy"
+    }
+  },
+  {
+    "slug": "bryce-high-speed",
+    "model": "Bryce High Speed",
+    "speed": 9.4,
+    "spin": 6.5,
+    "hardness": 35,
+    "fit": {
+      "ua": "Швидкість",
+      "ru": "Скорость"
+    }
+  },
+  {
+    "slug": "sriver-el",
+    "model": "Sriver EL",
+    "speed": 6.5,
+    "spin": 5.5,
+    "hardness": 35,
+    "fit": {
+      "ua": "Класика, контроль",
+      "ru": "Классика, контроль"
+    }
+  },
+  {
+    "slug": "roundell",
+    "model": "Roundell",
+    "speed": 7.5,
+    "spin": 6.0,
+    "hardness": 35,
+    "fit": {
+      "ua": "Тензор, аматор",
+      "ru": "Тензор, любитель"
+    }
+  },
+  {
+    "slug": "sriver",
+    "model": "Sriver",
+    "speed": 5.5,
+    "spin": 4.5,
+    "hardness": 38,
+    "fit": {
+      "ua": "Класика, контроль",
+      "ru": "Классика, контроль"
+    }
+  },
+  {
+    "slug": "roundell-soft",
+    "model": "Roundell Soft",
+    "speed": 7.0,
+    "spin": 5.0,
+    "hardness": 32,
+    "fit": {
+      "ua": "Тензор, м'який",
+      "ru": "Тензор, мягкий"
+    }
+  },
+  {
+    "slug": "sriver-fx",
+    "model": "Sriver FX",
+    "speed": 4.0,
+    "spin": 4.5,
+    "hardness": 33,
+    "fit": {
+      "ua": "Класика, м'яка",
+      "ru": "Классика, мягкая"
+    }
+  },
+  {
+    "slug": "flextra",
+    "model": "Flextra",
+    "speed": 4.5,
+    "spin": 4.0,
+    "hardness": 32,
+    "fit": {
+      "ua": "Початківець",
+      "ru": "Новичок"
+    }
+  }
+];
+
+const TACKY_COMPARISON: ComparisonRow[] = [
+  {
+    "slug": "dignics-09c",
+    "model": "Dignics 09C",
+    "speed": 8.8,
+    "spin": 9.8,
+    "hardness": 44,
+    "fit": {
+      "ua": "Топ-липка Dignics",
+      "ru": "Топ-липкая Dignics"
+    }
+  },
+  {
+    "slug": "aibiss",
+    "model": "Aibiss",
+    "speed": 8.0,
+    "spin": 9.5,
+    "hardness": 50,
+    "fit": {
+      "ua": "Липка, спін",
+      "ru": "Липкая, спин"
+    }
+  },
+  {
+    "slug": "tackiness-chop-ii",
+    "model": "Tackiness Chop II",
+    "speed": 4.5,
+    "spin": 7.0,
+    "hardness": 41,
+    "fit": {
+      "ua": "Липка, чоп",
+      "ru": "Липкая, чоп"
+    }
+  },
+  {
+    "slug": "tackiness-chop",
+    "model": "Tackiness Chop",
+    "speed": 4.0,
+    "spin": 8.5,
+    "hardness": 32,
+    "fit": {
+      "ua": "Липка, захист",
+      "ru": "Липкая, защита"
+    }
+  },
+  {
+    "slug": "tackiness-drive",
+    "model": "Tackiness Drive",
+    "speed": 4.5,
+    "spin": 6.0,
+    "hardness": 38,
+    "fit": {
+      "ua": "Липка, драйв",
+      "ru": "Липкая, драйв"
+    }
+  }
 ];
 
 const COMBO = "/rakety";
@@ -1218,6 +1722,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Сучасні атакувальні накладки", "ru": "Современные атакующие накладки"}, "comparison": MODERN_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -1417,6 +1922,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Сучасні атакувальні накладки", "ru": "Современные атакующие накладки"}, "comparison": MODERN_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -1616,6 +2122,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Сучасні атакувальні накладки", "ru": "Современные атакующие накладки"}, "comparison": MODERN_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -1815,6 +2322,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Липкі накладки — порівняння", "ru": "Липкие накладки — сравнение"}, "comparison": TACKY_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -2014,6 +2522,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -2213,6 +2722,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Сучасні атакувальні накладки", "ru": "Современные атакующие накладки"}, "comparison": MODERN_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -2412,6 +2922,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -2611,6 +3122,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -2810,6 +3322,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -3009,6 +3522,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -3208,6 +3722,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -3407,6 +3922,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -3606,6 +4122,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -3805,6 +4322,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4000,6 +4518,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4199,6 +4718,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4398,6 +4918,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4597,6 +5118,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4796,6 +5318,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: довгі шипи", "ru": "Сравнение: длинные шипы"}, "comparison": LONG_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -4995,6 +5518,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -5194,6 +5718,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -5393,6 +5918,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -5592,6 +6118,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Порівняння: короткі шипи", "ru": "Сравнение: короткие шипы"}, "comparison": SHORT_PIPS_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -5791,6 +6318,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -5990,6 +6518,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Класичні гладкі накладки", "ru": "Классические гладкие накладки"}, "comparison": CLASSIC_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -6388,6 +6917,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Липкі накладки — порівняння", "ru": "Липкие накладки — сравнение"}, "comparison": TACKY_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -6587,6 +7117,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Липкі накладки — порівняння", "ru": "Липкие накладки — сравнение"}, "comparison": TACKY_COMPARISON,
     "comboHref": "/rakety"
   },
 
@@ -6786,6 +7317,7 @@ export const expertContent: Record<string, ExpertEntry> = {
         }
       }
     ],
+    "comparisonTitle": {"ua": "Липкі накладки — порівняння", "ru": "Липкие накладки — сравнение"}, "comparison": TACKY_COMPARISON,
     "comboHref": "/rakety"
   },
 
