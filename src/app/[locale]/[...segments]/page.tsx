@@ -1000,6 +1000,7 @@ function BaseView({
   rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
+  const expertEntry = getExpert(product.slug);
 
   return (
     <ProductShell
@@ -1011,6 +1012,11 @@ function BaseView({
       locale={locale}
       media={media}
       content={content}
+      extra={
+        expertEntry ? (
+          <ExpertSections entry={expertEntry} locale={locale} currentSlug={product.slug} />
+        ) : null
+      }
     >
       <div className="mt-7">
         <BasePurchasePanel
