@@ -8,7 +8,7 @@ import { HOME_KEYS, homeKey } from "@/lib/homepage/keys";
 type ProductOption = { slug: string; label: string };
 type Status = "idle" | "saving" | "saved" | "error";
 
-type Field = { base: string; label: string; ph?: string };
+type Field = { base: string; label: string; ph?: string; multiline?: boolean };
 type Group = { title: string; hint?: string; fields: Field[] };
 
 // Усі редаговані тексти головної, згруповані за секціями. base → ключі home_<base>_uk/_ru.
@@ -18,7 +18,7 @@ const GROUPS: Group[] = [
     fields: [
       { base: "hero_badge", label: "Бейдж над заголовком", ph: "Офіційний Butterfly в Україні" },
       { base: "hero_title", label: "Заголовок (один рядок)", ph: "Все для настільного тенісу" },
-      { base: "hero_subtitle", label: "Підзаголовок", ph: "Оригінальний інвентар Butterfly…" },
+      { base: "hero_subtitle", label: "Підзаголовок", ph: "Оригінальний інвентар Butterfly…", multiline: true },
     ],
   },
   {
@@ -58,7 +58,7 @@ const GROUPS: Group[] = [
     fields: [
       { base: "cta_kicker", label: "Кікер" },
       { base: "cta_title", label: "Заголовок" },
-      { base: "cta_subtitle", label: "Підзаголовок" },
+      { base: "cta_subtitle", label: "Підзаголовок", multiline: true },
     ],
   },
   {
@@ -143,6 +143,26 @@ export function HomepageEditor({
     "w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white outline-none focus:border-[#E8FF47]/50";
   const lbl = "mb-1 block text-[11px] font-bold uppercase tracking-[0.12em] text-[#888]";
 
+  const renderInput = (key: string, ph?: string, multiline?: boolean) =>
+    multiline ? (
+      <textarea
+        className={`${field} min-h-[68px] resize-y leading-snug`}
+        value={texts[key] ?? ""}
+        onChange={(e) => setText(key, e.target.value)}
+        placeholder={ph}
+        rows={2}
+        maxLength={500}
+      />
+    ) : (
+      <input
+        className={field}
+        value={texts[key] ?? ""}
+        onChange={(e) => setText(key, e.target.value)}
+        placeholder={ph}
+        maxLength={500}
+      />
+    );
+
   const renderField = (f: Field) => {
     const ku = homeKey(f.base, "uk");
     const kr = homeKey(f.base, "ru");
@@ -150,20 +170,11 @@ export function HomepageEditor({
       <div key={f.base} className="grid gap-3 sm:grid-cols-2">
         <div>
           <label className={lbl}>{f.label} (UA)</label>
-          <input
-            className={field}
-            value={texts[ku] ?? ""}
-            onChange={(e) => setText(ku, e.target.value)}
-            placeholder={f.ph}
-          />
+          {renderInput(ku, f.ph, f.multiline)}
         </div>
         <div>
           <label className={lbl}>{f.label} (RU)</label>
-          <input
-            className={field}
-            value={texts[kr] ?? ""}
-            onChange={(e) => setText(kr, e.target.value)}
-          />
+          {renderInput(kr, undefined, f.multiline)}
         </div>
       </div>
     );

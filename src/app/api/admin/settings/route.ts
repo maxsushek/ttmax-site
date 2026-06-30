@@ -27,7 +27,8 @@ function db(): SupabaseClient | null {
 }
 
 const SaveSchema = z.object({
-  settings: z.record(z.string(), z.string().max(200)),
+  // Значення site_settings — короткий текст; 500 з запасом покриває підзаголовки головної.
+  settings: z.record(z.string(), z.string().max(500)),
 });
 
 export async function POST(request: Request) {
