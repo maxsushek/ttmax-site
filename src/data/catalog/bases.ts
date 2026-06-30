@@ -260,7 +260,7 @@ export const catalogBases: CatalogProduct[] = [
     "colors": [],
     "variants": [],
     "images": [],
-    "priority": 2,
+    "priority": 1,
     "priceFrom": 8835,
     "inStock": true,
     "base": {
@@ -642,7 +642,7 @@ export const catalogBases: CatalogProduct[] = [
     "colors": [],
     "variants": [],
     "images": [],
-    "priority": 2,
+    "priority": 1,
     "priceFrom": 5195,
     "inStock": true,
     "base": {
@@ -756,7 +756,7 @@ export const catalogBases: CatalogProduct[] = [
     "colors": [],
     "variants": [],
     "images": [],
-    "priority": 2,
+    "priority": 1,
     "priceFrom": 8835,
     "inStock": true,
     "base": {
@@ -2069,7 +2069,7 @@ export const catalogBases: CatalogProduct[] = [
     "colors": [],
     "variants": [],
     "images": [],
-    "priority": 2,
+    "priority": 1,
     "priceFrom": 9355,
     "inStock": true,
     "base": {
@@ -3072,7 +3072,7 @@ export const catalogBases: CatalogProduct[] = [
     "colors": [],
     "variants": [],
     "images": [],
-    "priority": 2,
+    "priority": 1,
     "priceFrom": 12995,
     "inStock": true,
     "base": {
