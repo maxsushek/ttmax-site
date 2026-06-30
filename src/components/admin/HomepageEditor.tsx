@@ -3,13 +3,14 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HOME_KEYS, homeKey } from "@/lib/homepage/keys";
+import { HOME_KEYS, DEFAULT_HITS, homeKey } from "@/lib/homepage/keys";
+import { CONTACT_KEYS } from "@/lib/contact/keys";
 
 type ProductOption = { slug: string; label: string };
 type Status = "idle" | "saving" | "saved" | "error";
 
 type Field = { base: string; label: string; ph?: string; multiline?: boolean };
-type Group = { title: string; hint?: string; fields: Field[] };
+type Group = { title: string; fields: Field[] };
 
 // Усі редаговані тексти головної, згруповані за секціями. base → ключі home_<base>_uk/_ru.
 const GROUPS: Group[] = [
@@ -70,20 +71,37 @@ const GROUPS: Group[] = [
   },
 ];
 
+// Контакти у футері (телефон / email / соцмережі) — одне значення на поле (не двомовні).
+const CONTACT_FIELDS: { key: string; label: string; ph?: string }[] = [
+  { key: CONTACT_KEYS.phone, label: "Телефон (для кнопки tel:)", ph: "+380501234567" },
+  { key: CONTACT_KEYS.phoneDisplay, label: "Телефон (як показувати)", ph: "+380 50 123 45 67" },
+  { key: CONTACT_KEYS.email, label: "Email", ph: "hello@ttmax.ua" },
+  { key: CONTACT_KEYS.telegram, label: "Telegram (повне посилання)", ph: "https://t.me/…" },
+  { key: CONTACT_KEYS.youtube, label: "YouTube (повне посилання)", ph: "https://youtube.com/@…" },
+  { key: CONTACT_KEYS.facebook, label: "Facebook (повне посилання)", ph: "https://facebook.com/…" },
+];
+
 export function HomepageEditor({
   initial,
   products,
 }: {
-  initial: { texts: Record<string, string>; hits: string[] };
+  initial: {
+    values: Record<string, string>;
+    defaults: Record<string, string>;
+    overridden: string[];
+    hits: string[];
+  };
   products: ProductOption[];
 }) {
   const router = useRouter();
-  const [texts, setTexts] = useState<Record<string, string>>(initial.texts);
+  const { defaults } = initial;
+  const [values, setValues] = useState<Record<string, string>>(initial.values);
   const [hits, setHits] = useState<string[]>(initial.hits);
   const [toAdd, setToAdd] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
+  const wasOverridden = useMemo(() => new Set(initial.overridden), [initial.overridden]);
   const labelBySlug = useMemo(() => {
     const m = new Map<string, string>();
     for (const p of products) m.set(p.slug, p.label);
@@ -92,8 +110,8 @@ export function HomepageEditor({
   const available = useMemo(() => products.filter((p) => !hits.includes(p.slug)), [products, hits]);
 
   const dirty = () => setStatus("idle");
-  const setText = (key: string, v: string) => {
-    setTexts((prev) => ({ ...prev, [key]: v }));
+  const setValue = (key: string, v: string) => {
+    setValues((prev) => ({ ...prev, [key]: v }));
     dirty();
   };
 
@@ -122,9 +140,18 @@ export function HomepageEditor({
     setStatus("saving");
     setError(null);
     try {
+      // Зберігаэмо лише змінене: відмінне від дефолта → переопределення; повернене до
+      // дефолта, але раніше переопределене → порожнэ (видалити рядок, тягнути дефолт коду).
       const settings: Record<string, string> = {};
-      for (const [k, v] of Object.entries(texts)) settings[k] = (v ?? "").trim();
-      settings[HOME_KEYS.hits] = hits.join(",");
+      for (const key of Object.keys(values)) {
+        const v = (values[key] ?? "").trim();
+        const def = (defaults[key] ?? "").trim();
+        if (v !== def) settings[key] = v;
+        else if (wasOverridden.has(key)) settings[key] = "";
+      }
+      const hitsStr = hits.join(",");
+      settings[HOME_KEYS.hits] = hitsStr === DEFAULT_HITS.join(",") ? "" : hitsStr;
+
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -141,41 +168,57 @@ export function HomepageEditor({
 
   const field =
     "w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white outline-none focus:border-[#E8FF47]/50";
-  const lbl = "mb-1 block text-[11px] font-bold uppercase tracking-[0.12em] text-[#888]";
+  const lbl = "block text-[11px] font-bold uppercase tracking-[0.12em] text-[#888]";
 
-  const renderInput = (key: string, ph?: string, multiline?: boolean) =>
-    multiline ? (
-      <textarea
-        className={`${field} min-h-[68px] resize-y leading-snug`}
-        value={texts[key] ?? ""}
-        onChange={(e) => setText(key, e.target.value)}
-        placeholder={ph}
-        rows={2}
-        maxLength={500}
-      />
-    ) : (
-      <input
-        className={field}
-        value={texts[key] ?? ""}
-        onChange={(e) => setText(key, e.target.value)}
-        placeholder={ph}
-        maxLength={500}
-      />
+  // Одна комірка (label + кнопка «↺ дефолт» + поле). Працюэ і для двомовних, і для контактів.
+  const renderCell = (label: string, key: string, ph?: string, multiline?: boolean) => {
+    const v = values[key] ?? "";
+    const def = defaults[key] ?? "";
+    const changed = v.trim() !== def.trim();
+    return (
+      <div>
+        <div className="mb-1 flex items-center justify-between gap-2">
+          <span className={lbl}>{label}</span>
+          {changed && (
+            <button
+              type="button"
+              onClick={() => setValue(key, def)}
+              className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-[#777] transition-colors hover:text-[#E8FF47]"
+              title="Повернути стандартне значення"
+            >
+              ↺ дефолт
+            </button>
+          )}
+        </div>
+        {multiline ? (
+          <textarea
+            className={`${field} min-h-[68px] resize-y leading-snug`}
+            value={v}
+            onChange={(e) => setValue(key, e.target.value)}
+            placeholder={ph}
+            rows={2}
+            maxLength={500}
+          />
+        ) : (
+          <input
+            className={field}
+            value={v}
+            onChange={(e) => setValue(key, e.target.value)}
+            placeholder={ph}
+            maxLength={500}
+          />
+        )}
+      </div>
     );
+  };
 
   const renderField = (f: Field) => {
     const ku = homeKey(f.base, "uk");
     const kr = homeKey(f.base, "ru");
     return (
       <div key={f.base} className="grid gap-3 sm:grid-cols-2">
-        <div>
-          <label className={lbl}>{f.label} (UA)</label>
-          {renderInput(ku, f.ph, f.multiline)}
-        </div>
-        <div>
-          <label className={lbl}>{f.label} (RU)</label>
-          {renderInput(kr, undefined, f.multiline)}
-        </div>
+        {renderCell(`${f.label} (UA)`, ku, f.ph, f.multiline)}
+        {renderCell(`${f.label} (RU)`, kr, undefined, f.multiline)}
       </div>
     );
   };
@@ -193,11 +236,11 @@ export function HomepageEditor({
                 Товари в блоці «Хіти»
               </h3>
               <p className="mb-3 text-xs text-[#888]">
-                Порядок — кнопками ↑/↓. Якщо список порожнэ — показується стандартний набір.
+                Порядок — кнопками ↑/↓. Якщо список порожній — показується стандартний набір.
               </p>
               <div className="mb-3 min-w-[260px]">
-                <label className={lbl}>Додати товар</label>
-                <select className={field} value={toAdd} onChange={(e) => addHit(e.target.value)}>
+                <span className={lbl}>Додати товар</span>
+                <select className={`${field} mt-1`} value={toAdd} onChange={(e) => addHit(e.target.value)}>
                   <option value="">— оберіть товар —</option>
                   {available.map((p) => (
                     <option key={p.slug} value={p.slug}>
@@ -207,7 +250,7 @@ export function HomepageEditor({
                 </select>
               </div>
               {hits.length === 0 ? (
-                <p className="text-xs text-[#666]">Поки порожнэ — буде стандартний набір хітів.</p>
+                <p className="text-xs text-[#666]">Поки порожній — буде стандартний набір хітів.</p>
               ) : (
                 <ul className="space-y-1.5">
                   {hits.map((slug, i) => (
@@ -258,6 +301,20 @@ export function HomepageEditor({
           )}
         </section>
       ))}
+
+      {/* Контакти у футері — телефон, email, соцмережі (показуються на всіх сторінках). */}
+      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
+        <h2 className="mb-1 text-sm font-black uppercase tracking-wide">Контакти й соцмережі (футер)</h2>
+        <p className="mb-4 text-xs text-[#888]">
+          Показуються у футері на всіх сторінках. Повний набір (адреса, параметри доставки) — у
+          розділі «Налаштування → Контакти».
+        </p>
+        <div className="space-y-4">
+          {CONTACT_FIELDS.map((f) => (
+            <div key={f.key}>{renderCell(f.label, f.key, f.ph)}</div>
+          ))}
+        </div>
+      </section>
 
       <div className="sticky bottom-4 flex items-center gap-3 rounded-xl border border-white/10 bg-[#111]/90 p-3 backdrop-blur">
         <button

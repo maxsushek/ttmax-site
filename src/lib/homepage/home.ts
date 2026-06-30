@@ -2,9 +2,44 @@
 // Серверні хелпери головної (читають site_settings). Константи — у ./keys (client-safe).
 import type { SettingsMap } from "@/lib/settings/get";
 import { settingString } from "@/lib/settings/get";
+import { getMessages, t } from "@/i18n";
+import type { Locale } from "@/i18n/config";
+import { heroStats } from "@/data/stats";
 import { HOME_KEYS, DEFAULT_HITS, parseHits, homeKey } from "./keys";
 
 export { HOME_KEYS, HOME_KEY_VALUES, DEFAULT_HITS, parseHits } from "./keys";
+
+/**
+ * Поточні (дефолтні) тексти головної з i18n під локаль — base → значення.
+ * Використовуэться в адмінці, щоб ПОКАЗАТИ реальний контент у полях (а не порожнэ),
+ * і щоб зберігати лише те, що адмін реально змінив (diff проти цих дефолтів).
+ */
+export function homeDefaults(locale: Locale): Record<string, string> {
+  const m = getMessages(locale);
+  const brandsCount = heroStats.brandsTotal;
+  return {
+    hero_badge: m.hero.badge,
+    hero_title: `${m.hero.title1} ${m.hero.title2}`,
+    hero_subtitle: t(m.hero.subtitle, { brandsCount }),
+    cat_kicker: m.categories.kicker,
+    cat_title_muted: m.categories.titleMuted,
+    cat_title_accent: m.categories.titleAccent,
+    prod_kicker: m.products.kicker,
+    prod_title_muted: m.products.titleMuted,
+    prod_title_accent: m.products.titleAccent,
+    brands_kicker: m.brands.kicker,
+    brands_title: m.brands.title,
+    trust_1: m.trustBar.delivery,
+    trust_2: m.trustBar.returns,
+    trust_3: m.trustBar.secure,
+    trust_4: m.trustBar.rating,
+    cta_kicker: m.cta.kicker,
+    cta_title: `${m.cta.title1} ${m.cta.title2}`,
+    cta_subtitle: m.cta.subtitle,
+    faq_kicker: m.faq.kicker,
+    faq_title: m.faq.title,
+  };
+}
 
 /** Резолвлені текстові оверрайди головної (порожнэ "" → секція бере дефолт із i18n). */
 export type HomeOverrides = {

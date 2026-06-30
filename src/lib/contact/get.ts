@@ -21,6 +21,24 @@ function socialDefault(key: string): string {
   return item && item.href !== "#" ? item.href : "";
 }
 
+/** Дефолти коду для контактних ключів (для передзаповнення полів в адмінці + diff при збереженні). */
+export function contactDefaults(): Record<string, string> {
+  return {
+    [CONTACT_KEYS.phone]: siteConfig.phone,
+    [CONTACT_KEYS.phoneDisplay]: siteConfig.phoneDisplay,
+    [CONTACT_KEYS.email]: siteConfig.email,
+    [CONTACT_KEYS.telegram]: socialDefault("telegram"),
+    [CONTACT_KEYS.youtube]: socialDefault("youtube"),
+    [CONTACT_KEYS.facebook]: socialDefault("facebook"),
+    [CONTACT_KEYS.addrStreet]: siteConfig.address.streetAddress,
+    [CONTACT_KEYS.addrLocality]: siteConfig.address.addressLocality,
+    [CONTACT_KEYS.addrRegion]: siteConfig.address.addressRegion,
+    [CONTACT_KEYS.addrPostal]: siteConfig.address.postalCode,
+    [CONTACT_KEYS.freeThreshold]: String(siteConfig.freeShippingThreshold),
+    [CONTACT_KEYS.shippingFee]: "99",
+  };
+}
+
 /** Зливає налаштування з дефолтами коду. Порожнє значення → дефолт. */
 export function resolveContact(m: SettingsMap): ContactInfo {
   return {

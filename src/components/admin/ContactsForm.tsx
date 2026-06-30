@@ -65,10 +65,20 @@ const GROUPS: Group[] = [
   },
 ];
 
-export function ContactsForm({ initial }: { initial: Values }) {
+export function ContactsForm({
+  initial,
+  defaults = {},
+  overridden = [],
+}: {
+  initial: Values;
+  defaults?: Values;
+  overridden?: string[];
+}) {
   const [values, setValues] = useState<Values>(initial);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+
+  const wasOverridden = new Set(overridden);
 
   const update = (key: string, v: string) => {
     setValues((prev) => ({ ...prev, [key]: v }));
@@ -79,10 +89,18 @@ export function ContactsForm({ initial }: { initial: Values }) {
     setStatus("saving");
     setError(null);
     try {
+      // Зберігаэмо лише змінене відносно дефолта; повернене до дефолта (раніше переопределене) → видалити.
+      const settings: Values = {};
+      for (const key of Object.keys(values)) {
+        const v = (values[key] ?? "").trim();
+        const def = (defaults[key] ?? "").trim();
+        if (v !== def) settings[key] = v;
+        else if (wasOverridden.has(key)) settings[key] = "";
+      }
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ settings: values }),
+        body: JSON.stringify({ settings }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatus("saved");
@@ -100,18 +118,34 @@ export function ContactsForm({ initial }: { initial: Values }) {
             {g.title}
           </h2>
           <div className="flex flex-col gap-3">
-            {g.fields.map((f) => (
-              <label key={f.key} className="block">
-                <span className="mb-1 block text-[13px] text-[#aaa]">{f.label}</span>
-                <input
-                  value={values[f.key] ?? ""}
-                  onChange={(e) => update(f.key, e.target.value)}
-                  placeholder={f.placeholder}
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-[#F0F0F0] outline-none placeholder:text-[#555] focus:border-[#E8FF47]/50"
-                />
-                {f.hint && <span className="mt-1 block text-[11px] text-[#666]">{f.hint}</span>}
-              </label>
-            ))}
+            {g.fields.map((f) => {
+              const v = values[f.key] ?? "";
+              const changed = v.trim() !== (defaults[f.key] ?? "").trim();
+              return (
+                <label key={f.key} className="block">
+                  <span className="mb-1 flex items-center justify-between gap-2">
+                    <span className="text-[13px] text-[#aaa]">{f.label}</span>
+                    {changed && (
+                      <button
+                        type="button"
+                        onClick={() => update(f.key, defaults[f.key] ?? "")}
+                        className="shrink-0 text-[10px] font-bold uppercase tracking-wide text-[#777] transition-colors hover:text-[#E8FF47]"
+                        title="Повернути стандартне значення"
+                      >
+                        ↺ дефолт
+                      </button>
+                    )}
+                  </span>
+                  <input
+                    value={v}
+                    onChange={(e) => update(f.key, e.target.value)}
+                    placeholder={f.placeholder}
+                    className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-[#F0F0F0] outline-none placeholder:text-[#555] focus:border-[#E8FF47]/50"
+                  />
+                  {f.hint && <span className="mt-1 block text-[11px] text-[#666]">{f.hint}</span>}
+                </label>
+              );
+            })}
           </div>
         </section>
       ))}
@@ -130,8 +164,8 @@ export function ContactsForm({ initial }: { initial: Values }) {
       </div>
 
       <p className="text-[12px] leading-relaxed text-[#666]">
-        Порожнэ поле = використовується значення з коду (за замовчуванням). Зміни застосовуються на
-        сайті без передеплою.
+        Поля показують поточні значення. Зберігається лише змінене; «↺ дефолт» або очищення поля
+        повертає стандартне значення з коду. Зміни застосовуються на сайті без передеплою.
       </p>
     </div>
   );
