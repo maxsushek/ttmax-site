@@ -180,6 +180,8 @@ export interface BaseSpec {
   weight?: string;
   /** Розташування карбон-шару: "outer" (під верхнім шпоном) або "inner" (біля ядра). */
   fiber?: "inner" | "outer";
+  /** Товщина основи, мм (напр. 5.7). */
+  thicknessMm?: number;
   /** Доступні типи ручки. */
   handles: Handle[];
 }

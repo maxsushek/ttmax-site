@@ -1004,6 +1004,7 @@ function BaseView({
           : L("Внутрішній (inner)", "Внутренний (inner)"),
     });
   if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
+  if (base.thicknessMm) rows.push({ label: L("Товщина", "Толщина"), value: `${base.thicknessMm} мм` });
   if (base.weight) rows.push({ label: L("Середня вага", "Средний вес"), value: base.weight });
   else if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
   rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });

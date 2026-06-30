@@ -247,6 +247,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 8835,
     "inStock": true,
     "base": {
+      "thicknessMm": 5.8,
       "weight": "86–90 г",
       "fiber": "outer",
       "bladeClass": "off-plus",
@@ -609,6 +610,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 5195,
     "inStock": true,
     "base": {
+      "thicknessMm": 5.7,
       "weight": "80–84 г",
       "bladeClass": "off",
       "surface": "caf",
@@ -718,6 +720,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 8835,
     "inStock": true,
     "base": {
+      "thicknessMm": 5.7,
       "weight": "85–90 г",
       "fiber": "outer",
       "bladeClass": "off",
@@ -1944,6 +1947,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9355,
     "inStock": true,
     "base": {
+      "thicknessMm": 6.0,
       "weight": "87–90 г",
       "fiber": "inner",
       "bladeClass": "off",
@@ -2882,6 +2886,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 12995,
     "inStock": true,
     "base": {
+      "thicknessMm": 5.7,
       "weight": "86–93 г",
       "fiber": "inner",
       "bladeClass": "off-plus",
