@@ -2,7 +2,7 @@
 import { requireAdmin } from "@/lib/auth/admin";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { getSettings, settingString } from "@/lib/settings/get";
-import { HomepageForm } from "@/components/admin/HomepageForm";
+import { HomepageEditor } from "@/components/admin/HomepageEditor";
 import { HOME_KEYS, resolveHitSlugs } from "@/lib/homepage/home";
 import { getAllProducts, getBrandBySlug } from "@/data/catalog";
 
@@ -39,7 +39,7 @@ export default async function AdminHomepagePage() {
         <p className="mb-6 text-sm text-[#888]">
           Заголовки головної та блок «Хіти». Зберігаються в базі й застосовуються без передеплою.
         </p>
-        <HomepageForm initial={initial} products={products} />
+        <HomepageEditor initial={initial} products={products} />
       </main>
     </AdminShell>
   );

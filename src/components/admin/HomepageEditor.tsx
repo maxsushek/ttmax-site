@@ -1,5 +1,5 @@
 "use client";
-// src/components/admin/HomepageForm.tsx
+// src/components/admin/HomepageEditor.tsx
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,7 @@ import { HOME_KEYS } from "@/lib/homepage/keys";
 type ProductOption = { slug: string; label: string };
 type Status = "idle" | "saving" | "saved" | "error";
 
-export function HomepageForm({
+export function HomepageEditor({
   initial,
   products,
 }: {
