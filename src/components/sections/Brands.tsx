@@ -2,8 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container, Section, SectionKicker, SectionTitle } from "@/components/ui/Section";
 import { t } from "@/i18n";
-import { getSettings } from "@/lib/settings/get";
-import { brandsTitleOverride } from "@/lib/homepage/home";
+import type { HomeOverrides } from "@/lib/homepage/home";
 import { getMediaMap, pickPrimary } from "@/lib/media/get";
 import { cldUrl } from "@/lib/cloudinary/url";
 import { getProductsBySeries, getProductsByCategory } from "@/data/catalog";
@@ -23,10 +22,18 @@ type Collection = {
   count: number; // к-сть товарів (рахуємо з каталогу, щоб збігалося зі сторінкою)
 };
 
-export async function Brands({ locale, messages }: { locale: Locale; messages: Messages }) {
+export async function Brands({
+  locale,
+  messages,
+  overrides,
+}: {
+  locale: Locale;
+  messages: Messages;
+  overrides: HomeOverrides;
+}) {
   const m = messages.brands;
-  const [settings, media] = await Promise.all([getSettings(), getMediaMap()]);
-  const title = brandsTitleOverride(settings, locale) || m.title;
+  const media = await getMediaMap();
+  const title = overrides.brandsTitle || m.title;
 
   const boards = getProductsByCategory("osnovaniya");
   const countSurfaces = (set: string[]) =>
@@ -48,7 +55,7 @@ export async function Brands({ locale, messages }: { locale: Locale; messages: M
     >
       <Container>
         <div className="mb-11 text-center">
-          <SectionKicker>{m.kicker}</SectionKicker>
+          <SectionKicker>{overrides.brandsKicker || m.kicker}</SectionKicker>
           <SectionTitle id="brands-title">{title}</SectionTitle>
         </div>
         <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">

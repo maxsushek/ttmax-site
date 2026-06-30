@@ -10,6 +10,8 @@ import { FAQ } from "@/components/sections/FAQ";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n";
 import { faqJsonLd } from "@/lib/seo/jsonld";
+import { getSettings } from "@/lib/settings/get";
+import { resolveHomeOverrides } from "@/lib/homepage/home";
 
 // ISR: после загрузки фото в админке кеш витрины инвалидируется тегом и страница пересобирается.
 export const revalidate = 600;
@@ -19,6 +21,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   if (!isLocale(l)) notFound();
   const locale: Locale = l;
   const messages = getMessages(locale);
+  // Текстові оверрайди з адмінки (Головна). Порожнэ значення → секція бере дефолт із i18n.
+  const overrides = resolveHomeOverrides(await getSettings(), locale);
 
   return (
     <>
@@ -28,14 +32,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           __html: JSON.stringify(faqJsonLd(messages.faq.items)),
         }}
       />
-      <Hero messages={messages} locale={locale} />
+      <Hero messages={messages} overrides={overrides} />
       <Marquee />
-      <TrustBar messages={messages} />
-      <Categories locale={locale} messages={messages} />
-      <Products locale={locale} messages={messages} />
-      <Brands locale={locale} messages={messages} />
-      <LeadCTA locale={locale} messages={messages} />
-      <FAQ messages={messages} />
+      <TrustBar messages={messages} overrides={overrides} />
+      <Categories locale={locale} messages={messages} overrides={overrides} />
+      <Products locale={locale} messages={messages} overrides={overrides} />
+      <Brands locale={locale} messages={messages} overrides={overrides} />
+      <LeadCTA locale={locale} messages={messages} overrides={overrides} />
+      <FAQ messages={messages} overrides={overrides} />
     </>
   );
 }

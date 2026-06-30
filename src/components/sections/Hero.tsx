@@ -5,16 +5,19 @@ import { t } from "@/i18n";
 import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
-import { getSettings } from "@/lib/settings/get";
-import { heroTitleOverride } from "@/lib/homepage/home";
+import type { HomeOverrides } from "@/lib/homepage/home";
 import type { Messages } from "@/i18n/messages/types";
-import type { Locale } from "@/i18n/config";
 
-export async function Hero({ messages, locale }: { messages: Messages; locale: Locale }) {
+export async function Hero({
+  messages,
+  overrides,
+}: {
+  messages: Messages;
+  overrides: HomeOverrides;
+}) {
   const m = messages.hero;
   const media = await getMediaMap();
-  const settings = await getSettings();
-  const titleOverride = heroTitleOverride(settings, locale);
+  const titleOverride = overrides.heroTitle;
   const heroAsset = getSiteAsset(media, "hero");
   const heroUrl = heroAsset ? cldUrl(heroAsset.publicId, { w: 600, h: 600, crop: "fit" }) : "";
 
@@ -40,7 +43,7 @@ export async function Hero({ messages, locale }: { messages: Messages; locale: L
                 className="h-1.5 w-1.5 animate-ping-dot rounded-full bg-accent shadow-[0_0_8px_#E8FF47]"
               />
               <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
-                {m.badge}
+                {overrides.heroBadge || m.badge}
               </span>
             </div>
 
@@ -56,7 +59,9 @@ export async function Hero({ messages, locale }: { messages: Messages; locale: L
             </h1>
 
             <p className="mb-9 max-w-[400px] text-pretty font-body text-base leading-[1.75] text-ink-muted">
-              {(() => {
+              {overrides.heroSubtitle ? (
+                overrides.heroSubtitle
+              ) : (() => {
                 const full = t(m.subtitle, { brandsCount: heroStats.brandsTotal });
                 const accent = t(m.brandsAccent, { brandsCount: heroStats.brandsTotal });
                 const idx = full.indexOf(accent);

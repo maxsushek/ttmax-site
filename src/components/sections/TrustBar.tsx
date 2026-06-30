@@ -1,11 +1,18 @@
 import type { Messages } from "@/i18n/messages/types";
+import type { HomeOverrides } from "@/lib/homepage/home";
 
-export function TrustBar({ messages }: { messages: Messages }) {
+export function TrustBar({
+  messages,
+  overrides,
+}: {
+  messages: Messages;
+  overrides: HomeOverrides;
+}) {
   const items = [
-    { icon: "🚚", label: messages.trustBar.delivery },
-    { icon: "↩️", label: messages.trustBar.returns },
-    { icon: "🔒", label: messages.trustBar.secure },
-    { icon: "⭐", label: messages.trustBar.rating },
+    { icon: "🚚", label: overrides.trust1 || messages.trustBar.delivery },
+    { icon: "↩️", label: overrides.trust2 || messages.trustBar.returns },
+    { icon: "🔒", label: overrides.trust3 || messages.trustBar.secure },
+    { icon: "⭐", label: overrides.trust4 || messages.trustBar.rating },
   ];
   return (
     <div className="border-y border-border-subtle bg-white/[0.01] py-4">

@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Container, Section, SectionKicker, SectionTitle } from "@/components/ui/Section";
 import { trackEvent } from "@/lib/analytics/events";
 import type { Messages } from "@/i18n/messages/types";
+import type { HomeOverrides } from "@/lib/homepage/home";
 import { cn } from "@/utils/cn";
 
-export function FAQ({ messages }: { messages: Messages }) {
+export function FAQ({ messages, overrides }: { messages: Messages; overrides: HomeOverrides }) {
   const m = messages.faq;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -14,8 +15,8 @@ export function FAQ({ messages }: { messages: Messages }) {
     <Section ariaLabelledBy="faq-title" className="!py-16 lg:!py-20">
       <Container className="max-w-[740px]">
         <div className="mb-11 text-center">
-          <SectionKicker>{m.kicker}</SectionKicker>
-          <SectionTitle id="faq-title">{m.title}</SectionTitle>
+          <SectionKicker>{overrides.faqKicker || m.kicker}</SectionKicker>
+          <SectionTitle id="faq-title">{overrides.faqTitle || m.title}</SectionTitle>
         </div>
         <ul className="flex flex-col gap-2">
           {m.items.map((item, i) => {

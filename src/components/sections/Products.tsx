@@ -9,6 +9,7 @@ import { resolveHitSlugs } from "@/lib/homepage/home";
 import { formatPrice } from "@/utils/format";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
+import type { HomeOverrides } from "@/lib/homepage/home";
 
 const ACCENTS = ["#E8FF47", "#FF6B81", "#2ED573", "#54A0FF", "#FFA502", "#C77DFF"];
 
@@ -23,9 +24,17 @@ type HitVM = {
   accent: string;
 };
 
-export async function Products({ locale, messages }: { locale: Locale; messages: Messages }) {
+export async function Products({
+  locale,
+  messages,
+  overrides,
+}: {
+  locale: Locale;
+  messages: Messages;
+  overrides: HomeOverrides;
+}) {
   const m = messages.products;
-  const [settings, overrides, media] = await Promise.all([
+  const [settings, catalogOverrides, media] = await Promise.all([
     getSettings(),
     getOverrides(),
     getMediaMap(),
@@ -35,7 +44,7 @@ export async function Products({ locale, messages }: { locale: Locale; messages:
     .map((slug, i) => {
       const base = getProductBySlug(slug);
       if (!base) return null;
-      const p = applyOverrides(base, overrides);
+      const p = applyOverrides(base, catalogOverrides);
       const cat = catalogCategories.find((c) => c.slug === p.categorySlug);
       const img = pickPrimary(media, "product", p.slug);
       return {
@@ -58,10 +67,10 @@ export async function Products({ locale, messages }: { locale: Locale; messages:
       <Container>
         <div className="mb-11 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <SectionKicker>{m.kicker}</SectionKicker>
+            <SectionKicker>{overrides.prodKicker || m.kicker}</SectionKicker>
             <SectionTitle id="products-title">
-              <span className="text-white/60">{m.titleMuted} </span>
-              <span className="text-gradient-accent">{m.titleAccent}</span>
+              <span className="text-white/60">{overrides.prodTitleMuted || m.titleMuted} </span>
+              <span className="text-gradient-accent">{overrides.prodTitleAccent || m.titleAccent}</span>
             </SectionTitle>
           </div>
           <Link

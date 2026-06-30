@@ -6,6 +6,7 @@ import { getMediaMap, pickPrimary } from "@/lib/media/get";
 import { cldUrl } from "@/lib/cloudinary/url";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
+import type { HomeOverrides } from "@/lib/homepage/home";
 
 // showcase-категории (ключи bases/rubbers/apparel/balls) → реальные slug каталога.
 const CATEGORY_SLUG: Record<string, string> = {
@@ -18,9 +19,11 @@ const CATEGORY_SLUG: Record<string, string> = {
 export async function Categories({
   locale,
   messages,
+  overrides,
 }: {
   locale: Locale;
   messages: Messages;
+  overrides: HomeOverrides;
 }) {
   const m = messages.categories;
   const media = await getMediaMap();
@@ -29,10 +32,10 @@ export async function Categories({
       <Container>
         <div className="mb-11 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <SectionKicker>{m.kicker}</SectionKicker>
+            <SectionKicker>{overrides.catKicker || m.kicker}</SectionKicker>
             <SectionTitle id="categories-title">
-              <span className="text-white/60">{m.titleMuted}</span>{" "}
-              <span className="text-gradient-accent">{m.titleAccent}</span>
+              <span className="text-white/60">{overrides.catTitleMuted || m.titleMuted}</span>{" "}
+              <span className="text-gradient-accent">{overrides.catTitleAccent || m.titleAccent}</span>
             </SectionTitle>
           </div>
           <Link

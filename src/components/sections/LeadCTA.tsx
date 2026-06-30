@@ -2,13 +2,16 @@ import { Container, Section } from "@/components/ui/Section";
 import { LeadForm } from "@/components/forms/LeadForm";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
+import type { HomeOverrides } from "@/lib/homepage/home";
 
 export function LeadCTA({
   locale,
   messages,
+  overrides,
 }: {
   locale: Locale;
   messages: Messages;
+  overrides: HomeOverrides;
 }) {
   const m = messages.cta;
   return (
@@ -29,18 +32,24 @@ export function LeadCTA({
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <div>
             <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-black/45">
-              {m.kicker}
+              {overrides.ctaKicker || m.kicker}
             </div>
             <h2
               id="consultation-title"
               className="mb-5 font-display text-display-lg font-black uppercase leading-[0.88] tracking-tight text-bg-base text-balance"
             >
-              {m.title1}
-              <br />
-              {m.title2}
+              {overrides.ctaTitle ? (
+                overrides.ctaTitle
+              ) : (
+                <>
+                  {m.title1}
+                  <br />
+                  {m.title2}
+                </>
+              )}
             </h2>
             <p className="max-w-[350px] font-body text-base leading-[1.78] text-black/55 text-pretty">
-              {m.subtitle}
+              {overrides.ctaSubtitle || m.subtitle}
             </p>
           </div>
           <div className="rounded-3xl bg-black/[0.07] p-7 sm:p-9">
