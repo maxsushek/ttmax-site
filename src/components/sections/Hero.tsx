@@ -6,6 +6,7 @@ import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
 import type { HomeOverrides } from "@/lib/homepage/home";
+import { DEFAULT_HERO_IMAGE_BADGE } from "@/lib/homepage/keys";
 import type { Messages } from "@/i18n/messages/types";
 
 export async function Hero({
@@ -80,18 +81,26 @@ export async function Hero({
 
             <dl className="mt-12 flex flex-wrap gap-x-11 gap-y-6">
               {[
-                { n: heroStats.productsTotal, suffix: "+", l: m.stats.products },
-                { n: heroStats.brandsTotal, suffix: "+", l: m.stats.brands },
-                { n: heroStats.yearsExperience, suffix: "", l: m.stats.experience },
+                {
+                  value: overrides.statValue1 || `${heroStats.productsTotal}+`,
+                  label: overrides.statLabel1 || m.stats.products,
+                },
+                {
+                  value: overrides.statValue2 || `${heroStats.brandsTotal}+`,
+                  label: overrides.statLabel2 || m.stats.brands,
+                },
+                {
+                  value: overrides.statValue3 || `${heroStats.yearsExperience}`,
+                  label: overrides.statLabel3 || m.stats.experience,
+                },
               ].map((stat) => (
-                <div key={stat.l}>
-                  <dt className="sr-only">{stat.l}</dt>
+                <div key={stat.label}>
+                  <dt className="sr-only">{stat.label}</dt>
                   <dd className="font-display text-[34px] font-black leading-none tracking-tight text-accent">
-                    {stat.n}
-                    {stat.suffix}
+                    {stat.value}
                   </dd>
                   <dd className="mt-1 font-body text-[10px] uppercase tracking-[0.12em] text-ink-ghost">
-                    {stat.l}
+                    {stat.label}
                   </dd>
                 </div>
               ))}
@@ -126,7 +135,7 @@ export async function Hero({
                 style={{ backdropFilter: "blur(8px)" }}
               >
                 <span className="text-xs font-bold uppercase tracking-[0.12em] text-accent">
-                  BUTTERFLY · TENERGY 05
+                  {overrides.heroImageBadge || DEFAULT_HERO_IMAGE_BADGE}
                 </span>
               </div>
             </div>

@@ -6,6 +6,9 @@ export const HOME_TEXT_BASES = [
   "hero_badge",
   "hero_title",
   "hero_subtitle",
+  "hero_stat1_label",
+  "hero_stat2_label",
+  "hero_stat3_label",
   "cat_kicker",
   "cat_title_muted",
   "cat_title_accent",
@@ -45,8 +48,21 @@ export const HOME_KEYS = {
   hits: "home_hits",
 } as const;
 
+/** Мовно-нейтральні ключі головної (одне значення на обидві мови): числа статистики + бейдж фото. */
+export const HOME_SINGLE = {
+  stat1Value: "home_hero_stat1_value",
+  stat2Value: "home_hero_stat2_value",
+  stat3Value: "home_hero_stat3_value",
+  imageBadge: "home_hero_image_badge",
+} as const;
+
+export const HOME_SINGLE_KEYS: string[] = Object.values(HOME_SINGLE);
+
+/** Дефолт бейджа під плаваючим фото (на ПК). */
+export const DEFAULT_HERO_IMAGE_BADGE = "BUTTERFLY · TENERGY 05";
+
 /** Усі ключі головної — для whitelist у API настройок. */
-export const HOME_KEY_VALUES: string[] = [...HOME_TEXT_KEYS, HOME_KEYS.hits];
+export const HOME_KEY_VALUES: string[] = [...HOME_TEXT_KEYS, ...HOME_SINGLE_KEYS, HOME_KEYS.hits];
 
 /** Початковий набір хітів (поки адмін не задав свій). */
 export const DEFAULT_HITS: string[] = [

@@ -3,16 +3,18 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HOME_KEYS, DEFAULT_HITS, homeKey } from "@/lib/homepage/keys";
+import { HOME_KEYS, HOME_SINGLE, DEFAULT_HITS, homeKey } from "@/lib/homepage/keys";
 import { CONTACT_KEYS } from "@/lib/contact/keys";
 
 type ProductOption = { slug: string; label: string };
 type Status = "idle" | "saving" | "saved" | "error";
 
-type Field = { base: string; label: string; ph?: string; multiline?: boolean };
-type Group = { title: string; fields: Field[] };
+// Двомовне поле (base → home_<base>_uk/_ru) або мовно-нейтральне (single, один ключ).
+type FieldBi = { kind?: "bi"; base: string; label: string; ph?: string; multiline?: boolean };
+type FieldSingle = { kind: "single"; key: string; label: string; ph?: string; multiline?: boolean };
+type AnyField = FieldBi | FieldSingle;
+type Group = { title: string; note?: string; fields: AnyField[] };
 
-// Усі редаговані тексти головної, згруповані за секціями. base → ключі home_<base>_uk/_ru.
 const GROUPS: Group[] = [
   {
     title: "Hero — перший екран",
@@ -20,6 +22,19 @@ const GROUPS: Group[] = [
       { base: "hero_badge", label: "Бейдж над заголовком", ph: "Офіційний Butterfly в Україні" },
       { base: "hero_title", label: "Заголовок (один рядок)", ph: "Все для настільного тенісу" },
       { base: "hero_subtitle", label: "Підзаголовок", ph: "Оригінальний інвентар Butterfly…", multiline: true },
+    ],
+  },
+  {
+    title: "Hero — статистика та бейдж",
+    note: "Три показники (число + підпис) і бейдж під плаваючим фото (видно на ПК).",
+    fields: [
+      { kind: "single", key: HOME_SINGLE.stat1Value, label: "Показник 1 — число", ph: "340+" },
+      { base: "hero_stat1_label", label: "Показник 1 — підпис" },
+      { kind: "single", key: HOME_SINGLE.stat2Value, label: "Показник 2 — число", ph: "6+" },
+      { base: "hero_stat2_label", label: "Показник 2 — підпис" },
+      { kind: "single", key: HOME_SINGLE.stat3Value, label: "Показник 3 — число", ph: "18" },
+      { base: "hero_stat3_label", label: "Показник 3 — підпис" },
+      { kind: "single", key: HOME_SINGLE.imageBadge, label: "Бейдж під фото (ПК)", ph: "BUTTERFLY · TENERGY 05" },
     ],
   },
   {
@@ -69,16 +84,18 @@ const GROUPS: Group[] = [
       { base: "faq_title", label: "Заголовок" },
     ],
   },
-];
-
-// Контакти у футері (телефон / email / соцмережі) — одне значення на поле (не двомовні).
-const CONTACT_FIELDS: { key: string; label: string; ph?: string }[] = [
-  { key: CONTACT_KEYS.phone, label: "Телефон (для кнопки tel:)", ph: "+380501234567" },
-  { key: CONTACT_KEYS.phoneDisplay, label: "Телефон (як показувати)", ph: "+380 50 123 45 67" },
-  { key: CONTACT_KEYS.email, label: "Email", ph: "hello@ttmax.ua" },
-  { key: CONTACT_KEYS.telegram, label: "Telegram (повне посилання)", ph: "https://t.me/…" },
-  { key: CONTACT_KEYS.youtube, label: "YouTube (повне посилання)", ph: "https://youtube.com/@…" },
-  { key: CONTACT_KEYS.facebook, label: "Facebook (повне посилання)", ph: "https://facebook.com/…" },
+  {
+    title: "Контакти й соцмережі (футер)",
+    note: "Показуються у футері на всіх сторінках. Повний набір (адреса, параметри доставки) — у розділі «Налаштування → Контакти».",
+    fields: [
+      { kind: "single", key: CONTACT_KEYS.phone, label: "Телефон (для кнопки tel:)", ph: "+380501234567" },
+      { kind: "single", key: CONTACT_KEYS.phoneDisplay, label: "Телефон (як показувати)", ph: "+380 50 123 45 67" },
+      { kind: "single", key: CONTACT_KEYS.email, label: "Email", ph: "hello@ttmax.ua" },
+      { kind: "single", key: CONTACT_KEYS.telegram, label: "Telegram (повне посилання)", ph: "https://t.me/…" },
+      { kind: "single", key: CONTACT_KEYS.youtube, label: "YouTube (повне посилання)", ph: "https://youtube.com/@…" },
+      { kind: "single", key: CONTACT_KEYS.facebook, label: "Facebook (повне посилання)", ph: "https://facebook.com/…" },
+    ],
+  },
 ];
 
 export function HomepageEditor({
@@ -170,7 +187,7 @@ export function HomepageEditor({
     "w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white outline-none focus:border-[#E8FF47]/50";
   const lbl = "block text-[11px] font-bold uppercase tracking-[0.12em] text-[#888]";
 
-  // Одна комірка (label + кнопка «↺ дефолт» + поле). Працюэ і для двомовних, і для контактів.
+  // Одна комірка (label + кнопка «↺ дефолт» + поле). Працюэ і для двомовних, і для одиночних полів.
   const renderCell = (label: string, key: string, ph?: string, multiline?: boolean) => {
     const v = values[key] ?? "";
     const def = defaults[key] ?? "";
@@ -212,7 +229,10 @@ export function HomepageEditor({
     );
   };
 
-  const renderField = (f: Field) => {
+  const renderField = (f: AnyField) => {
+    if (f.kind === "single") {
+      return <div key={f.key}>{renderCell(f.label, f.key, f.ph, f.multiline)}</div>;
+    }
     const ku = homeKey(f.base, "uk");
     const kr = homeKey(f.base, "ru");
     return (
@@ -227,8 +247,9 @@ export function HomepageEditor({
     <div className="space-y-6">
       {GROUPS.map((g) => (
         <section key={g.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
-          <h2 className="mb-4 text-sm font-black uppercase tracking-wide">{g.title}</h2>
-          <div className="space-y-4">{g.fields.map(renderField)}</div>
+          <h2 className="mb-1 text-sm font-black uppercase tracking-wide">{g.title}</h2>
+          {g.note && <p className="mb-4 text-xs text-[#888]">{g.note}</p>}
+          <div className={g.note ? "space-y-4" : "mt-3 space-y-4"}>{g.fields.map(renderField)}</div>
 
           {g.title === "Секція «Хіти»" && (
             <div className="mt-6 border-t border-white/[0.06] pt-5">
@@ -301,20 +322,6 @@ export function HomepageEditor({
           )}
         </section>
       ))}
-
-      {/* Контакти у футері — телефон, email, соцмережі (показуються на всіх сторінках). */}
-      <section className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
-        <h2 className="mb-1 text-sm font-black uppercase tracking-wide">Контакти й соцмережі (футер)</h2>
-        <p className="mb-4 text-xs text-[#888]">
-          Показуються у футері на всіх сторінках. Повний набір (адреса, параметри доставки) — у
-          розділі «Налаштування → Контакти».
-        </p>
-        <div className="space-y-4">
-          {CONTACT_FIELDS.map((f) => (
-            <div key={f.key}>{renderCell(f.label, f.key, f.ph)}</div>
-          ))}
-        </div>
-      </section>
 
       <div className="sticky bottom-4 flex items-center gap-3 rounded-xl border border-white/10 bg-[#111]/90 p-3 backdrop-blur">
         <button
