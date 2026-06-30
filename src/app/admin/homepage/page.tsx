@@ -55,7 +55,7 @@ export default async function AdminHomepagePage() {
   const overridden: string[] = [];
   for (const key of Object.keys(defaults)) {
     const override = settingString(settings, key);
-    values[key] = override || defaults[key];
+    values[key] = override || defaults[key] || "";
     if (override) overridden.push(key);
   }
 
