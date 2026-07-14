@@ -39,16 +39,19 @@ export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
       title: meta.title,
       description: meta.description,
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
+    // До офіційного запуску — весь сайт noindex (консистентно з buildCatalogMetadata).
+    robots: siteConfig.launched
+      ? {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
+        }
+      : { index: false, follow: true },
     icons: {
       icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     },

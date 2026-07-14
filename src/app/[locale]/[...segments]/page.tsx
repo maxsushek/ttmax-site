@@ -120,12 +120,21 @@ export async function generateMetadata({
     if (bits.length) description = `${description} ${bits.join(" · ")}`.trim();
   }
 
+  // og:image — реальне фото товару (для листингів беремо перший товар із фото). 1200×630.
+  const media = await getMediaMap();
+  const ogSource = (currentProducts ?? []).find((p) => pickPrimary(media, "product", p.slug));
+  const ogPrimary = ogSource ? pickPrimary(media, "product", ogSource.slug) : null;
+  const ogImage = ogPrimary
+    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "fill" }) || undefined
+    : undefined;
+
   return buildCatalogMetadata({
     locale: l,
     pathname: "/" + segments.join("/"),
     title,
     description,
     index: route.index && !content?.noindex,
+    image: ogImage,
   });
 }
 
@@ -243,11 +252,18 @@ export default async function CatalogPage({
             .filter((n): n is number => typeof n === "number" && n > 0);
           const lowPrice = vPrices.length ? Math.min(...vPrices) : undefined;
           const highPrice = vPrices.length ? Math.max(...vPrices) : undefined;
+          const productImages = pickAll(media, "product", eroute.product.slug)
+            .map((m) => cldUrl(m.publicId, { w: 900, h: 900 }))
+            .filter(Boolean);
+          const productSku =
+            eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
             description: expandTokens(routeDescription(eroute, locale), tctx) ?? "",
             url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
             brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
+            images: productImages,
+            sku: productSku,
             price: getMinPrice(eroute.product),
             currency: "UAH",
             inStock: isInStock(eroute.product),

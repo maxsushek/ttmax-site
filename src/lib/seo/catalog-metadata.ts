@@ -13,8 +13,11 @@ export function buildCatalogMetadata(opts: {
   description: string;
   /** false → noindex (для пустых категорий до наполнения). */
   index?: boolean;
+  /** Абсолютний URL зображення для og:image / twitter (1200×630). */
+  image?: string;
 }): Metadata {
-  const { locale, pathname, title, description, index = true } = opts;
+  const { locale, pathname, title, description, index = true, image } = opts;
+  const ogImages = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
   // До запуску — все сторінки каталогу noindex, навіть наповнені.
   const indexable = siteConfig.launched && index;
 
@@ -36,11 +39,13 @@ export function buildCatalogMetadata(opts: {
       description,
       locale: locale === "ua" ? "uk_UA" : "ru_UA",
       alternateLocale: locale === "ua" ? ["ru_UA"] : ["uk_UA"],
+      ...(ogImages ? { images: ogImages } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      ...(image ? { images: [image] } : {}),
     },
     robots: indexable
       ? {

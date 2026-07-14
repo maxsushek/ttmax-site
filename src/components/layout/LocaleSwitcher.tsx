@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { locales, localeLabels, type Locale } from "@/i18n/config";
+import { locales, localeLabels, localeToLang, type Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 
 export function LocaleSwitcher({ currentLocale }: { currentLocale: Locale }) {
@@ -15,7 +15,7 @@ export function LocaleSwitcher({ currentLocale }: { currentLocale: Locale }) {
         <Link
           key={l}
           href={`/${l}${stripped}`}
-          hrefLang={l}
+          hrefLang={localeToLang[l]}
           aria-current={l === currentLocale ? "true" : undefined}
           className={cn(
             "rounded-md px-2 py-1 font-display text-[11px] font-bold uppercase tracking-[0.08em] transition-colors",
