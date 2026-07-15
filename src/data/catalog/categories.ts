@@ -1,12 +1,43 @@
 // src/data/catalog/categories.ts
 import type { CatalogCategory } from "@/types/catalog";
 
+// ┌──────────────────────────────────────────────────────────────────────────────────────┐
+// │ ⚠️ УВАГА: для частини категорій title/metaDescription ТУТ НЕ РЕНДЕРЯТЬСЯ.             │
+// │                                                                                      │
+// │ Пріоритет: CMS (Supabase content_blocks) ПЕРЕБИВАЄ цей файл — page.tsx:108-110        │
+// │   const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx)        │
+// │ Якщо в content_blocks є рядок для категорії — значення звідси НІКОЛИ не побачить      │
+// │ ні користувач, ні Google. Правка в цьому файлі мовчки нічого не змінить.              │
+// │                                                                                      │
+// │ Станом на 2026-07-14 CMS-оверрайди Є (позначені нижче міткою «CMS»):                  │
+// │   nakladki · myachi · chehly · setki · obuv · odyag · aksessuary                      │
+// │ CMS-оверрайдів НЕМАЄ (цей файл — джерело правди):                                     │
+// │   osnovaniya · rakety · stoly                                                         │
+// │                                                                                      │
+// │ ЯК ПРАВИТИ категорію з міткою «CMS»: тільки через /admin. Не через цей файл і НЕ      │
+// │ через прямий SQL — адмінка робить ДВІ дії: пише в базу І скидає кеш                   │
+// │ (revalidateTag(CONTENT_TAG), api/admin/content/route.ts:127). getContent кешується    │
+// │ на годину (lib/content/get.ts:154, revalidate: 3600), тож запис в обхід адмінки       │
+// │ висить невидимим до 60 хв.                                                            │
+// │                                                                                      │
+// │ ПЕРЕВІРИТИ актуальний список (він може змінитись — будь-який сейв в адмінці створює   │
+// │ рядок і забирає категорію в CMS):                                                     │
+// │   select slug, locale from content_blocks where entity_type='category' order by slug; │
+// │                                                                                      │
+// │ Значення нижче для CMS-категорій — це FALLBACK на випадок видалення рядка в CMS.      │
+// │ Тримаємо title однаковим з базою, а metaDescription НАВМИСНО різним:                  │
+// │   • у CMS — з токенами {{count}}/{{price_from}} (авто-суфікс НЕ додається)            │
+// │   • тут — без токенів, бо page.tsx:114-121 сам допише « N моделей · від X грн»,       │
+// │     і лише коли CMS-опису немає. Продублюєш токени тут — отримаєш задвоєння.          │
+// └──────────────────────────────────────────────────────────────────────────────────────┘
+
 // Категорії каталогу. seoText + faq заповнені за пріоритетом попиту:
 // nakladki/osnovaniya/rakety/setki — повна глибина; obuv/myachi/chehly — середня; aksessuary/odyag — коротка.
 // stoly — поки під майбутній контент (0 товарів).
 export const catalogCategories: CatalogCategory[] = [
   {
     slug: "nakladki",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Накладки", ru: "Накладки" },
     // SEO-таргет (Ahrefs UA, KD 0): head — «накладки на ракетку» 80/міс (CPC $4), далі
     // «накладки для ракеток» 60. Форма «...для настольного тенниса» — лише 30 (CPC $1),
@@ -46,6 +77,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "osnovaniya",
+    // ✅ Без CMS-оверрайду — цей файл є джерелом правди для title/metaDescription.
     name: { ua: "Основи", ru: "Основания" },
     h1: { ua: "Основи для ракеток настільного тенісу", ru: "Основания для ракеток настольного тенниса" },
     title: {
@@ -75,6 +107,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "rakety",
+    // ✅ Без CMS-оверрайду — цей файл є джерелом правди для title/metaDescription.
     name: { ua: "Готові ракетки", ru: "Готовые ракетки" },
     // SEO-таргет: ядро кластера (Ahrefs UA, KD 0) — ru однина «ракетка для настольного тенниса» 2000/міс,
     // ua множина «ракетки для настільного тенісу» 1000/міс. H1 бере протилежну форму (ru 700 / ua 250),
@@ -111,6 +144,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "myachi",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "М'ячі", ru: "Мячи" },
     h1: { ua: "М'ячі для настільного тенісу", ru: "Мячи для настольного тенниса" },
     title: {
@@ -135,6 +169,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "chehly",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Чохли та сумки", ru: "Чехлы и сумки" },
     h1: { ua: "Чохли для ракеток настільного тенісу", ru: "Чехлы для ракеток настольного тенниса" },
     title: {
@@ -158,6 +193,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "setki",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Сітки", ru: "Сетки" },
     h1: { ua: "Сітки для настільного тенісу", ru: "Сетки для настольного тенниса" },
     title: {
@@ -182,6 +218,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "stoly",
+    // ✅ Без CMS-оверрайду — цей файл є джерелом правди для title/metaDescription.
     name: { ua: "Тенісні столи", ru: "Теннисные столы" },
     h1: { ua: "Тенісні столи", ru: "Теннисные столы" },
     title: {
@@ -197,6 +234,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "obuv",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Взуття", ru: "Обувь" },
     h1: { ua: "Взуття для настільного тенісу", ru: "Обувь для настольного тенниса" },
     title: {
@@ -221,6 +259,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "odyag",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Одяг", ru: "Одежда" },
     h1: { ua: "Одяг та взуття для настільного тенісу", ru: "Одежда и обувь для настольного тенниса" },
     title: {
@@ -248,6 +287,7 @@ export const catalogCategories: CatalogCategory[] = [
   },
   {
     slug: "aksessuary",
+    // ⚠️ CMS: title/metaDescription беруться з content_blocks — правки тут НЕ рендеряться. Правити через /admin.
     name: { ua: "Аксесуари", ru: "Аксессуары" },
     h1: { ua: "Аксесуари для настільного тенісу", ru: "Аксессуары для настольного тенниса" },
     title: {
