@@ -42,7 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  for (const p of getAllProducts()) {
+  // Комбо-ракетки мають noindex (routing.ts) — не подаємо їх у sitemap, інакше в GSC
+  // з'явиться 95× «Submitted URL marked noindex» (суперечливі сигнали: «проіндексуй» + «не індексуй»).
+  for (const p of getAllProducts().filter((p) => p.kind !== "racket")) {
     paths.push({
       path: `/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
       priority: 0.6,
