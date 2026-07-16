@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { cldUrl } from "@/lib/cloudinary/url";
 import { type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
@@ -110,12 +111,22 @@ export function ArticleCover({
         <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 sm:mt-9">
           <span className="h-[3px] w-8 shrink-0 rounded-full bg-accent" aria-hidden="true" />
           <Link href={`/${locale}/author/${author.slug}`} className="flex items-center gap-2 group">
-            <span
-              className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/15 font-display text-[11px] font-bold text-accent"
-              aria-hidden="true"
-            >
-              {initials}
-            </span>
+            {author.photoPublicId ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={cldUrl(author.photoPublicId, { w: 56, h: 56, crop: "fill" })}
+                alt=""
+                aria-hidden="true"
+                className="h-7 w-7 rounded-full border border-border-subtle object-cover"
+              />
+            ) : (
+              <span
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/15 font-display text-[11px] font-bold text-accent"
+                aria-hidden="true"
+              >
+                {initials}
+              </span>
+            )}
             <span className="font-body text-[13px] font-bold text-ink group-hover:text-accent">
               {author.name[locale]}
             </span>

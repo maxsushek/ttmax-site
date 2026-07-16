@@ -22,6 +22,7 @@ const UI = {
     relatedHeading: "Читайте також",
     minRead: "хв читання",
     author: "Автор",
+    profiles: "Профілі",
     published: "Опубліковано",
     updated: "Оновлено",
   },
@@ -35,6 +36,7 @@ const UI = {
     relatedHeading: "Читайте также",
     minRead: "мин чтения",
     author: "Автор",
+    profiles: "Профили",
     published: "Опубликовано",
     updated: "Обновлено",
   },
@@ -55,7 +57,28 @@ function readingMinutes(post: BlogPost, locale: Locale): number {
   return Math.max(2, Math.round(words / 180));
 }
 
-function AuthorAvatar({ initials, size }: { initials: string; size: number }) {
+function AuthorAvatar({
+  initials,
+  size,
+  photoUrl,
+  name,
+}: {
+  initials: string;
+  size: number;
+  photoUrl?: string;
+  name?: string;
+}) {
+  if (photoUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={photoUrl}
+        alt={name ?? ""}
+        className="shrink-0 rounded-full border border-border-subtle object-cover"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
   return (
     <span
       className="flex shrink-0 items-center justify-center rounded-full bg-accent/15 font-display font-bold text-accent"
@@ -65,6 +88,21 @@ function AuthorAvatar({ initials, size }: { initials: string; size: number }) {
       {initials}
     </span>
   );
+}
+
+/** Гарна назва профілю за хостом (для карток sameAs). */
+function profileLabel(url: string): string {
+  const host = (() => {
+    try {
+      return new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  })();
+  if (host.includes("uttf")) return "UTTF";
+  if (host.includes("ttwrating")) return "TTW Rating";
+  if (host.includes("tt-kharkiv")) return "TT Kharkiv";
+  return host;
 }
 
 export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }) {
@@ -78,6 +116,9 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
     .map((w) => w[0])
     .slice(0, 2)
     .join("");
+  const authorPhoto = author.photoPublicId
+    ? cldUrl(author.photoPublicId, { w: 120, h: 120, crop: "fill" })
+    : "";
   const heroUrl = post.heroPublicId
     ? cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" })
     : "";
@@ -137,7 +178,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <Link href={`/${locale}${authorPath}`} className="flex items-center gap-2.5 group">
-                  <AuthorAvatar initials={initials} size={34} />
+                  <AuthorAvatar initials={initials} size={34} photoUrl={authorPhoto} name={author.name[locale]} />
                   <span className="font-body text-[13px] leading-tight">
                     <span className="font-bold text-ink group-hover:text-accent">{author.name[locale]}</span>
                     <span className="block text-ink-muted">{author.jobTitle[locale]}</span>
@@ -327,7 +368,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
         )}
 
         <footer className="mt-10 flex items-start gap-4 rounded-2xl border border-border-subtle bg-bg-raised p-5">
-          <AuthorAvatar initials={initials} size={48} />
+          <AuthorAvatar initials={initials} size={48} photoUrl={authorPhoto} name={author.name[locale]} />
           <div className="min-w-0">
             <Link href={`/${locale}${authorPath}`} className="font-display text-[14px] font-bold text-ink hover:text-accent">
               {author.name[locale]}
@@ -343,6 +384,25 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 </span>
               ))}
             </div>
+            {author.sameAs.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                <span className="font-body text-[11px] uppercase tracking-[0.12em] text-ink-dim">
+                  {ui.profiles}
+                </span>
+                {author.sameAs.map((url) => (
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="inline-flex items-center gap-1 font-body text-[12px] text-accent hover:underline"
+                  >
+                    {profileLabel(url)}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </footer>
       </Container>
