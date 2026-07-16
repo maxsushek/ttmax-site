@@ -9,6 +9,8 @@ import {
   getProductsByBrandCategory,
   getProductsByCategory,
 } from "@/data/catalog";
+import { getAllPosts } from "@/data/blog";
+import { allAuthors } from "@/data/authors";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -24,7 +26,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/returns", priority: 0.4, freq: "monthly" },
     { path: "/privacy", priority: 0.3, freq: "monthly" },
     { path: "/terms", priority: 0.3, freq: "monthly" },
+    { path: "/blog", priority: 0.6, freq: "weekly" },
   ];
+
+  // Статті блогу (getAllPosts вже відсіює чернетки) + сторінки авторів.
+  for (const post of getAllPosts()) {
+    paths.push({ path: `/blog/${post.slug}`, priority: 0.6, freq: "monthly" });
+  }
+  for (const author of allAuthors) {
+    paths.push({ path: `/author/${author.slug}`, priority: 0.3, freq: "monthly" });
+  }
 
   for (const c of getIndexableCategories()) {
     if (getProductsByCategory(c.slug).length > 0) {

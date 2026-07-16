@@ -171,3 +171,78 @@ export function productJsonLd(opts: {
   }
   return node;
 }
+
+/** Schema.org Person — автор статті. sameAs (зовнішні профілі) корроборує особу для E-E-A-T. */
+export function personJsonLd(opts: {
+  name: string;
+  /** Абсолютний URL сторінки автора (/author/slug). */
+  url: string;
+  jobTitle?: string;
+  description?: string;
+  image?: string;
+  knowsAbout?: string[];
+  sameAs?: string[];
+}) {
+  const { name, url, jobTitle, description, image, knowsAbout, sameAs } = opts;
+  const node: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name,
+    url,
+  };
+  if (jobTitle) node.jobTitle = jobTitle;
+  if (description) node.description = description;
+  if (image) node.image = image;
+  if (knowsAbout && knowsAbout.length > 0) node.knowsAbout = knowsAbout;
+  if (sameAs && sameAs.length > 0) node.sameAs = sameAs;
+  return node;
+}
+
+/** Schema.org BlogPosting. Дати — ISO 8601, приходять З ДАНИХ статті (не new Date()). */
+export function blogPostingJsonLd(opts: {
+  /** Абсолютний canonical URL статті. */
+  url: string;
+  headline: string;
+  description: string;
+  images?: string[];
+  datePublished: string;
+  dateModified: string;
+  authorName: string;
+  /** Абсолютний URL автора (/author/slug). */
+  authorUrl: string;
+  /** BCP-47: uk | ru. */
+  inLanguage: string;
+}) {
+  const {
+    url,
+    headline,
+    description,
+    images,
+    datePublished,
+    dateModified,
+    authorName,
+    authorUrl,
+    inLanguage,
+  } = opts;
+  const node: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline,
+    description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    datePublished,
+    dateModified,
+    inLanguage,
+    author: { "@type": "Person", name: authorName, url: authorUrl },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      // ⚠️ TODO(власник): public/logo.png ще не існує (у public/ лише favicon.svg).
+      // Потрібен для валідного Article rich result. Той самий логотип, що й в organizationJsonLd.
+      logo: { "@type": "ImageObject", url: `${siteConfig.url}/logo.png` },
+    },
+  };
+  if (images && images.length > 0) node.image = images;
+  return node;
+}

@@ -31,6 +31,7 @@ export const ru: Messages = {
     balls: "Мячи",
     accessories: "Аксессуары",
     brands: "Коллекции",
+    blog: "Блог",
     cart: "Корзина",
     catalog: "Каталог",
     contactUs: "Связаться",

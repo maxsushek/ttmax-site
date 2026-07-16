@@ -68,4 +68,8 @@ export const navigation: ReadonlyArray<NavItem> = [
       { label: "Основи ZLC", href: "/osnovaniya/zlc" },
     ],
   },
+  {
+    key: "blog",
+    href: "/blog",
+  },
 ];

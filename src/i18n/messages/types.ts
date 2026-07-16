@@ -13,6 +13,7 @@ export type Messages = {
     balls: string;
     accessories: string;
     brands: string;
+    blog: string;
     cart: string;
     catalog: string;
     contactUs: string;

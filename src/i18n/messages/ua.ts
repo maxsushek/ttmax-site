@@ -31,6 +31,7 @@ export const ua: Messages = {
     balls: "М'ячі",
     accessories: "Аксесуари",
     brands: "Колекції",
+    blog: "Блог",
     cart: "Кошик",
     catalog: "Каталог",
     contactUs: "Зв'язатися",
