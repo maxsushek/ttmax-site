@@ -9,7 +9,7 @@ import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
 
-const UI: Record<Locale, Record<string, string>> = {
+const UI = {
   ua: {
     home: "Головна",
     blog: "Блог",
@@ -36,7 +36,7 @@ const UI: Record<Locale, Record<string, string>> = {
     published: "Опубликовано",
     updated: "Обновлено",
   },
-};
+} satisfies Record<Locale, Record<string, string>>;
 
 /** YYYY-MM-DD → DD.MM.YYYY */
 function formatDate(iso: string): string {

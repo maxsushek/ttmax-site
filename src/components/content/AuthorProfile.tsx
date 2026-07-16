@@ -8,10 +8,10 @@ import { type Locale } from "@/i18n/config";
 import type { Author } from "@/data/authors";
 import { getAllPosts } from "@/data/blog";
 
-const UI: Record<Locale, Record<string, string>> = {
+const UI = {
   ua: { home: "Головна", blog: "Блог", articles: "Статті автора", profiles: "Профілі" },
   ru: { home: "Главная", blog: "Блог", articles: "Статьи автора", profiles: "Профили" },
-};
+} satisfies Record<Locale, Record<string, string>>;
 
 export function AuthorProfile({ author, locale }: { author: Author; locale: Locale }) {
   const ui = UI[locale];
