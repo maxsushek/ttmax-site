@@ -262,6 +262,19 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
           </section>
         )}
 
+        {post.officialSource && (
+          <p className="mt-8 rounded-xl border border-border-subtle bg-bg-raised px-4 py-3 font-body text-[14px] text-ink-muted">
+            <a
+              href={post.officialSource.url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="text-accent hover:underline"
+            >
+              {post.officialSource.label[locale]} ↗
+            </a>
+          </p>
+        )}
+
         {(post.relatedProducts?.length || related.length > 0) && (
           <section className="mt-10 rounded-2xl border border-border-subtle bg-bg-raised p-5">
             {post.relatedProducts && post.relatedProducts.length > 0 && (
