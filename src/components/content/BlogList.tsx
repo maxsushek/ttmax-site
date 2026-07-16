@@ -53,13 +53,19 @@ export function BlogList({ locale }: { locale: Locale }) {
                   href={`/${locale}/blog/${post.slug}`}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-bg-raised transition-colors hover:border-border-strong"
                 >
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                  <div
+                    className="relative aspect-[16/9] overflow-hidden"
+                    style={{
+                      background:
+                        "radial-gradient(120% 130% at 0% 0%, #16202b 0%, #0E1117 44%, #080A0E 100%)",
+                    }}
+                  >
                     {post.coverSrc ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={post.coverSrc}
                         alt={post.heroAlt[locale]}
-                        className="h-full w-full object-cover object-right"
+                        className="absolute inset-0 h-full w-full object-cover object-right"
                       />
                     ) : thumb ? (
                       <Image
@@ -67,38 +73,36 @@ export function BlogList({ locale }: { locale: Locale }) {
                         alt={post.heroAlt[locale]}
                         width={640}
                         height={360}
-                        className="h-full w-full object-cover"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                     ) : (
-                      <div
-                        className="relative h-full w-full"
-                        style={{
-                          background:
-                            "radial-gradient(120% 130% at 0% 0%, #16202b 0%, #0E1117 44%, #080A0E 100%)",
-                        }}
-                      >
-                        <CoverBackdrop />
-                        <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 font-display text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
-                          Блог
-                        </span>
-                        <div className="relative z-10 flex h-full items-center justify-center p-4">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={siteConfig.logoUrl}
-                            alt={siteConfig.name}
-                            className="h-12 w-auto rounded-md opacity-90"
-                          />
-                        </div>
-                      </div>
+                      <CoverBackdrop />
                     )}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(180deg,rgba(8,10,14,0.05) 0%,rgba(8,10,14,0.35) 52%,rgba(8,10,14,0.94) 100%)",
+                      }}
+                    />
+                    <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 font-display text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
+                      Блог
+                    </span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={siteConfig.logoUrl}
+                      alt={siteConfig.name}
+                      className="absolute right-3 top-3 z-10 h-8 w-auto rounded-md opacity-90"
+                    />
+                    <h2 className="absolute inset-x-0 bottom-0 z-10 line-clamp-2 p-4 font-display text-[17px] font-black uppercase leading-[1.05] text-balance text-ink group-hover:text-accent">
+                      {post.h1[locale]}
+                    </h2>
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <p className="mb-2 font-body text-[12px] uppercase tracking-[0.12em] text-ink-dim">
                       {formatDate(post.datePublished)}
                     </p>
-                    <h2 className="mb-2 font-display text-lg font-bold leading-snug text-ink group-hover:text-accent">
-                      {post.h1[locale]}
-                    </h2>
                     <p className="mb-4 font-body text-[14px] leading-relaxed text-ink-muted">
                       {post.excerpt[locale]}
                     </p>

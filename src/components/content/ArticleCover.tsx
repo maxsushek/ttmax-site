@@ -103,7 +103,7 @@ export function ArticleCover({
           />
         </div>
 
-        <h1 className="max-w-[15ch] font-display text-[clamp(1.9rem,4.4vw,3.2rem)] font-black uppercase leading-[0.98] tracking-[-0.01em] text-balance text-ink">
+        <h1 className="max-w-[88%] font-display text-[clamp(1.45rem,3.2vw,2.4rem)] font-black uppercase leading-[1.06] tracking-[-0.01em] text-balance text-ink sm:max-w-[62%]">
           {post.h1[locale]}
         </h1>
 
