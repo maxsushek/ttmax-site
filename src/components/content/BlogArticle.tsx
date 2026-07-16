@@ -9,6 +9,7 @@ import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
 import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
+import { ArticleCover } from "@/components/content/ArticleCover";
 
 const UI = {
   ua: {
@@ -105,6 +106,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
     post.faq && post.faq.length > 0
       ? faqJsonLd(post.faq.map((f) => ({ q: f.q[locale], a: f.a[locale] })))
       : null;
+  const readMin = readingMinutes(post, locale);
 
   return (
     <article className="py-12 sm:py-16 lg:py-20">
@@ -138,12 +140,12 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               </span>
             </Link>
             <span className="ml-auto font-body text-[12px] text-ink-muted">
-              {formatDate(post.datePublished)} · {readingMinutes(post, locale)} {ui.minRead}
+              {formatDate(post.datePublished)} · {readMin} {ui.minRead}
             </span>
           </div>
         </header>
 
-        {heroUrl && (
+        {heroUrl ? (
           <figure className="mb-8">
             <Image
               src={heroUrl}
@@ -159,6 +161,10 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               </figcaption>
             )}
           </figure>
+        ) : (
+          <div className="mb-8">
+            <ArticleCover post={post} locale={locale} readMinutes={readMin} />
+          </div>
         )}
 
         {post.intro[locale].map((para, i) => (
