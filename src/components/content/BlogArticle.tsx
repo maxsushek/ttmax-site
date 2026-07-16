@@ -9,6 +9,7 @@ import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
 import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
+import { RacketPickerQuiz } from "@/components/content/RacketPickerQuiz";
 import { ArticleCover } from "@/components/content/ArticleCover";
 
 const UI = {
@@ -280,6 +281,19 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   </table>
                 </div>
               )}
+              {s.links && s.links.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {s.links.map((l, i) => (
+                    <Link
+                      key={i}
+                      href={`/${locale}${l.href}`}
+                      className="rounded-full border border-accent/40 px-3 py-1 font-body text-[13px] text-accent hover:bg-accent/10"
+                    >
+                      {l.label[locale]}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </section>
           ))}
         </div>
@@ -295,6 +309,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
         )}
 
         {post.interactive === "playStyle" && <PlayStyleQuiz locale={locale} />}
+        {post.interactive === "racketPicker" && <RacketPickerQuiz locale={locale} />}
 
         {post.faq && post.faq.length > 0 && (
           <section className="mt-10">
