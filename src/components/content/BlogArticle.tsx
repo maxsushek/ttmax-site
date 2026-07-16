@@ -8,6 +8,7 @@ import { localeToLang, type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
+import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
 
 const UI = {
   ua: {
@@ -242,6 +243,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
             <p className="mt-2 font-body text-[12px] text-ink-muted">— {author.name[locale]}</p>
           </aside>
         )}
+
+        {post.interactive === "playStyle" && <PlayStyleQuiz locale={locale} />}
 
         {post.faq && post.faq.length > 0 && (
           <section className="mt-10">

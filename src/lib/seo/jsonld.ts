@@ -13,7 +13,7 @@ export function organizationJsonLd(contact?: ContactInfo) {
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: siteConfig.logoUrl,
     sameAs,
     contactPoint: [
       {
@@ -238,9 +238,7 @@ export function blogPostingJsonLd(opts: {
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
-      // ⚠️ TODO(власник): public/logo.png ще не існує (у public/ лише favicon.svg).
-      // Потрібен для валідного Article rich result. Той самий логотип, що й в organizationJsonLd.
-      logo: { "@type": "ImageObject", url: `${siteConfig.url}/logo.png` },
+      logo: { "@type": "ImageObject", url: siteConfig.logoUrl },
     },
   };
   if (images && images.length > 0) node.image = images;

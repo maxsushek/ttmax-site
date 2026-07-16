@@ -53,6 +53,8 @@ export type BlogPost = {
   relatedProducts?: BlogLink[];
   /** Слаги інших статей для блоку «Читайте також» (стаття → стаття). */
   relatedPosts?: string[];
+  /** Інтерактивний блок для залучення. "playStyle" — квіз «твій стиль гри» → рекомендація + лінки. */
+  interactive?: "playStyle";
   /** true → не рендериться на проді й не потрапляє в sitemap/список. */
   draft?: boolean;
 };
@@ -226,6 +228,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "сітки для столу", ru: "сетки для стола" }, href: "/setki" },
     ],
     relatedPosts: [],
+    interactive: "playStyle",
   },
 };
 

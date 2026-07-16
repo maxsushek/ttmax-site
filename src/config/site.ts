@@ -9,6 +9,9 @@ export const siteConfig = {
   operator: "TTMAX",
   domain: "ttmax.ua",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ttmax.ua",
+  /** Логотип для JSON-LD publisher/Organization (Cloudinary, ≥112px для rich results). */
+  logoUrl:
+    "https://res.cloudinary.com/dh6vuxjko/image/upload/f_auto,q_auto,c_fit,h_200/ttmax/category/site-logo/hndfad14fgl7vipsxont",
   /** false → весь сайт noindex + robots блокує все (до офіційного запуску). Вмикається NEXT_PUBLIC_SITE_LAUNCHED="true". */
   launched: process.env.NEXT_PUBLIC_SITE_LAUNCHED === "true",
   emoji: "🦋",
