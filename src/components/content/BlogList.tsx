@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Section";
 import { cldUrl } from "@/lib/cloudinary/url";
+import { siteConfig } from "@/config/site";
 import { type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
 import { getAllPosts } from "@/data/blog";
+import { CoverBackdrop } from "@/components/content/ArticleCover";
 
 const UI: Record<Locale, { title: string; subtitle: string; empty: string }> = {
   ua: {
@@ -51,7 +53,7 @@ export function BlogList({ locale }: { locale: Locale }) {
                   href={`/${locale}/blog/${post.slug}`}
                   className="group flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-bg-raised transition-colors hover:border-border-strong"
                 >
-                  <div className="aspect-[16/9] overflow-hidden bg-bg-elevated">
+                  <div className="relative aspect-[16/9] overflow-hidden">
                     {thumb ? (
                       <Image
                         src={thumb}
@@ -61,9 +63,26 @@ export function BlogList({ locale }: { locale: Locale }) {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <span className="flex h-full w-full items-center justify-center font-display text-[13px] uppercase tracking-widest text-ink-ghost">
-                        TTMAX
-                      </span>
+                      <div
+                        className="relative h-full w-full"
+                        style={{
+                          background:
+                            "radial-gradient(120% 130% at 0% 0%, #16202b 0%, #0E1117 44%, #080A0E 100%)",
+                        }}
+                      >
+                        <CoverBackdrop />
+                        <span className="absolute left-3 top-3 z-10 inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 font-display text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
+                          Блог
+                        </span>
+                        <div className="relative z-10 flex h-full items-center justify-center p-4">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={siteConfig.logoUrl}
+                            alt={siteConfig.name}
+                            className="h-12 w-auto rounded-md opacity-90"
+                          />
+                        </div>
+                      </div>
                     )}
                   </div>
                   <div className="flex flex-1 flex-col p-5">

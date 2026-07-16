@@ -129,38 +129,41 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
           <span className="text-ink-muted">{post.h1[locale]}</span>
         </nav>
 
-        <header className="mb-6">
-          <h1 className="font-display text-display-md font-black uppercase text-balance">{post.h1[locale]}</h1>
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <Link href={`/${locale}${authorPath}`} className="flex items-center gap-2.5 group">
-              <AuthorAvatar initials={initials} size={34} />
-              <span className="font-body text-[13px] leading-tight">
-                <span className="font-bold text-ink group-hover:text-accent">{author.name[locale]}</span>
-                <span className="block text-ink-muted">{author.jobTitle[locale]}</span>
-              </span>
-            </Link>
-            <span className="ml-auto font-body text-[12px] text-ink-muted">
-              {formatDate(post.datePublished)} · {readMin} {ui.minRead}
-            </span>
-          </div>
-        </header>
-
         {heroUrl ? (
-          <figure className="mb-8">
-            <Image
-              src={heroUrl}
-              alt={post.heroAlt[locale]}
-              width={1200}
-              height={630}
-              priority
-              className="w-full rounded-2xl border border-border-subtle"
-            />
-            {post.heroCaption && (
-              <figcaption className="mt-2 font-body text-[12px] italic text-ink-dim">
-                {post.heroCaption[locale]}
-              </figcaption>
-            )}
-          </figure>
+          <>
+            <header className="mb-6">
+              <h1 className="font-display text-display-md font-black uppercase text-balance">
+                {post.h1[locale]}
+              </h1>
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <Link href={`/${locale}${authorPath}`} className="flex items-center gap-2.5 group">
+                  <AuthorAvatar initials={initials} size={34} />
+                  <span className="font-body text-[13px] leading-tight">
+                    <span className="font-bold text-ink group-hover:text-accent">{author.name[locale]}</span>
+                    <span className="block text-ink-muted">{author.jobTitle[locale]}</span>
+                  </span>
+                </Link>
+                <span className="ml-auto font-body text-[12px] text-ink-muted">
+                  {formatDate(post.datePublished)} · {readMin} {ui.minRead}
+                </span>
+              </div>
+            </header>
+            <figure className="mb-8">
+              <Image
+                src={heroUrl}
+                alt={post.heroAlt[locale]}
+                width={1200}
+                height={630}
+                priority
+                className="w-full rounded-2xl border border-border-subtle"
+              />
+              {post.heroCaption && (
+                <figcaption className="mt-2 font-body text-[12px] italic text-ink-dim">
+                  {post.heroCaption[locale]}
+                </figcaption>
+              )}
+            </figure>
+          </>
         ) : (
           <div className="mb-8">
             <ArticleCover post={post} locale={locale} readMinutes={readMin} />

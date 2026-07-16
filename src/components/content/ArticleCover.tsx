@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
@@ -13,10 +14,31 @@ function formatDate(iso: string): string {
   return `${d}.${m}.${y}`;
 }
 
+/** Фонові декорації бренду (лінії + світіння). Спільні для hero й картки списку. */
+export function CoverBackdrop() {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(115deg, rgba(232,255,71,0.06) 0 1px, transparent 1px 46px)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full"
+        style={{ background: "radial-gradient(circle, rgba(232,255,71,0.16) 0%, transparent 70%)" }}
+      />
+    </>
+  );
+}
+
 /**
- * Фірмова обкладинка статті — рендериться сайтом (шрифт Barlow Condensed, токени, лого).
- * Єдиний шаблон для всіх статей → консистентний UI. Використовується, коли немає heroPublicId.
- * Пропорція ~1200×520 (близько до og 1.91:1). Тема — типографіка бренду, без стокових фото.
+ * Фірмовий hero-заголовок статті — рендерить САЙТ (шрифт Barlow Condensed, токени, лого).
+ * Єдиний шаблон для всіх статей. Гнучка висота: заголовок будь-якої довжини вміщується.
+ * Містить H1 — тому в BlogArticle окремого <header> з H1 у цій гілці немає (без дублю).
  */
 export function ArticleCover({
   post,
@@ -29,32 +51,23 @@ export function ArticleCover({
 }) {
   const ui = UI[locale];
   const author = getAuthor(post.author);
+  const initials = author.name[locale]
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("");
 
   return (
     <div
       className="relative isolate overflow-hidden rounded-2xl border border-border-subtle"
       style={{
-        aspectRatio: "1200 / 520",
-        background:
-          "radial-gradient(120% 120% at 0% 0%, #16202b 0%, #0E1117 42%, #080A0E 100%)",
+        background: "radial-gradient(120% 130% at 0% 0%, #16202b 0%, #0E1117 44%, #080A0E 100%)",
       }}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.5]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, rgba(232,255,71,0.06) 0 1px, transparent 1px 46px)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(232,255,71,0.16) 0%, transparent 70%)" }}
-      />
+      <CoverBackdrop />
 
-      <div className="relative z-10 flex h-full flex-col justify-between p-6 sm:p-8 lg:p-10">
-        <div className="flex items-start justify-between gap-4">
+      <div className="relative z-10 p-6 sm:p-9 lg:p-11">
+        <div className="mb-7 flex items-start justify-between gap-4 sm:mb-9">
           <span className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
             {ui.eyebrow}
           </span>
@@ -62,21 +75,31 @@ export function ArticleCover({
           <img
             src={siteConfig.logoUrl}
             alt={siteConfig.name}
-            className="h-11 w-auto shrink-0 opacity-95 sm:h-14"
+            className="h-11 w-auto shrink-0 rounded-md opacity-95 sm:h-14"
           />
         </div>
 
-        <h2 className="max-w-[85%] font-display text-[clamp(1.6rem,4.6vw,3.1rem)] font-black uppercase leading-[0.98] tracking-[-0.01em] text-ink">
+        <h1 className="max-w-[15ch] font-display text-[clamp(1.9rem,4.4vw,3.2rem)] font-black uppercase leading-[0.98] tracking-[-0.01em] text-balance text-ink">
           {post.h1[locale]}
-        </h2>
+        </h1>
 
-        <div className="flex items-center gap-2.5 font-body text-[12px] text-ink-muted sm:text-[13px]">
-          <span className="h-[3px] w-8 rounded-full bg-accent" aria-hidden="true" />
-          <span className="font-bold text-ink">{author.name[locale]}</span>
+        <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 sm:mt-9">
+          <span className="h-[3px] w-8 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+          <Link href={`/${locale}/author/${author.slug}`} className="flex items-center gap-2 group">
+            <span
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/15 font-display text-[11px] font-bold text-accent"
+              aria-hidden="true"
+            >
+              {initials}
+            </span>
+            <span className="font-body text-[13px] font-bold text-ink group-hover:text-accent">
+              {author.name[locale]}
+            </span>
+          </Link>
           <span className="text-ink-ghost">·</span>
-          <span>{formatDate(post.datePublished)}</span>
+          <span className="font-body text-[13px] text-ink-muted">{formatDate(post.datePublished)}</span>
           <span className="text-ink-ghost">·</span>
-          <span>
+          <span className="font-body text-[13px] text-ink-muted">
             {readMinutes} {ui.min}
           </span>
         </div>
