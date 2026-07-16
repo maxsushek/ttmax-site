@@ -42,6 +42,8 @@ export type BlogPost = {
   author: AuthorSlug;
   /** Cloudinary publicId обкладинки (1200×630 для og). undefined — рендер без фото. */
   heroPublicId?: string;
+  /** Фонове зображення для фірмової обкладинки (public-шлях). Поверх — лого й заголовок кодом. */
+  coverSrc?: string;
   heroAlt: L;
   heroCaption?: L;
   /** Вступні абзаци (над змістом). */
@@ -84,6 +86,7 @@ const POSTS: Record<string, BlogPost> = {
     dateModified: "2026-07-16",
     author: "artem-maksymchuk",
     heroPublicId: undefined,
+    coverSrc: "/blog/pravyla-cover.png",
     heroAlt: {
       ua: "Тенісний стіл із сіткою, ракеткою та м'ячем — розміри за стандартом ITTF",
       ru: "Теннисный стол с сеткой, ракеткой и мячом — размеры по стандарту ITTF",

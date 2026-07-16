@@ -57,16 +57,40 @@ export function ArticleCover({
     .slice(0, 2)
     .join("");
 
+  const hasImage = Boolean(post.coverSrc);
+
   return (
     <div
-      className="relative isolate overflow-hidden rounded-2xl border border-border-subtle"
+      className={`relative isolate flex overflow-hidden rounded-2xl border border-border-subtle ${
+        hasImage ? "min-h-[300px] sm:min-h-[400px] lg:min-h-[440px]" : ""
+      }`}
       style={{
         background: "radial-gradient(120% 130% at 0% 0%, #16202b 0%, #0E1117 44%, #080A0E 100%)",
       }}
     >
-      <CoverBackdrop />
+      {hasImage ? (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.coverSrc}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-right"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg,#080A0E 0%,rgba(8,10,14,0.92) 34%,rgba(8,10,14,0.5) 64%,rgba(8,10,14,0.1) 100%)",
+            }}
+          />
+        </>
+      ) : (
+        <CoverBackdrop />
+      )}
 
-      <div className="relative z-10 p-6 sm:p-9 lg:p-11">
+      <div className="relative z-10 flex w-full flex-col justify-between p-6 sm:p-9 lg:p-11">
         <div className="mb-7 flex items-start justify-between gap-4 sm:mb-9">
           <span className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
             {ui.eyebrow}

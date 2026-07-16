@@ -54,7 +54,14 @@ export function BlogList({ locale }: { locale: Locale }) {
                   className="group flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-bg-raised transition-colors hover:border-border-strong"
                 >
                   <div className="relative aspect-[16/9] overflow-hidden">
-                    {thumb ? (
+                    {post.coverSrc ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={post.coverSrc}
+                        alt={post.heroAlt[locale]}
+                        className="h-full w-full object-cover object-right"
+                      />
+                    ) : thumb ? (
                       <Image
                         src={thumb}
                         alt={post.heroAlt[locale]}
