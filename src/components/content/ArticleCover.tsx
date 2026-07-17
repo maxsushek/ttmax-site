@@ -114,7 +114,7 @@ export function ArticleCover({
             {author.photoPublicId ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={cldUrl(author.photoPublicId, { w: 56, h: 56, crop: "fill" })}
+                src={cldUrl(author.photoPublicId, { w: 56, h: 56, crop: "thumb", gravity: "face", z: 1.3 })}
                 alt=""
                 aria-hidden="true"
                 className="h-7 w-7 rounded-full border border-border-subtle object-cover"

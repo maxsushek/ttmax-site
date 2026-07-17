@@ -17,7 +17,9 @@ export function AuthorProfile({ author, locale }: { author: Author; locale: Loca
   const ui = UI[locale];
   const authorPath = `/author/${author.slug}`;
   const authorUrl = `${siteConfig.url}/${locale}${authorPath}`;
-  const photo = author.photoPublicId ? cldUrl(author.photoPublicId, { w: 240, h: 240, crop: "fill" }) : "";
+  const photo = author.photoPublicId
+    ? cldUrl(author.photoPublicId, { w: 240, h: 240, crop: "thumb", gravity: "face", z: 1.2 })
+    : "";
   const initials = author.name[locale]
     .split(" ")
     .map((w) => w[0])

@@ -118,7 +118,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
     .slice(0, 2)
     .join("");
   const authorPhoto = author.photoPublicId
-    ? cldUrl(author.photoPublicId, { w: 120, h: 120, crop: "fill" })
+    ? cldUrl(author.photoPublicId, { w: 120, h: 120, crop: "thumb", gravity: "face", z: 1.3 })
     : "";
   const heroUrl = post.heroPublicId
     ? cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" })
