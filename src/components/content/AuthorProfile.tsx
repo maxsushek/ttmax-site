@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Section";
 import { personJsonLd, breadcrumbJsonLd } from "@/lib/seo/jsonld";
@@ -52,12 +51,13 @@ export function AuthorProfile({ author, locale }: { author: Author; locale: Loca
       <Container className="max-w-3xl">
         <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
           {photo ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={photo}
               alt={author.name[locale]}
               width={96}
               height={96}
-              className="rounded-full border border-border-subtle"
+              className="h-24 w-24 rounded-full border border-border-subtle object-cover"
             />
           ) : (
             <span
