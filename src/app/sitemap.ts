@@ -17,7 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
 
   // Шляхи без локалі; "" — головна. Лише сторінки, що мають товари (індексовані).
-  const paths: { path: string; priority: number; freq: "weekly" | "monthly" }[] = [
+  // lastMod — РЕАЛЬНА дата зміни (де відома). Без неї Google отримує час білда `now`
+  // на кожному деплої й перестає довіряти датам. Для статей беремо dateModified.
+  const paths: { path: string; priority: number; freq: "weekly" | "monthly"; lastMod?: Date }[] = [
     { path: "", priority: 1.0, freq: "weekly" },
     { path: "/about", priority: 0.5, freq: "monthly" },
     { path: "/contacts", priority: 0.5, freq: "monthly" },
@@ -31,7 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Статті блогу (getAllPosts вже відсіює чернетки) + сторінки авторів.
   for (const post of getAllPosts()) {
-    paths.push({ path: `/blog/${post.slug}`, priority: 0.6, freq: "monthly" });
+    paths.push({
+      path: `/blog/${post.slug}`,
+      priority: 0.6,
+      freq: "monthly",
+      lastMod: new Date(post.dateModified),
+    });
   }
   for (const author of allAuthors) {
     paths.push({ path: `/author/${author.slug}`, priority: 0.3, freq: "monthly" });
@@ -63,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  for (const { path, priority, freq } of paths) {
+  for (const { path, priority, freq, lastMod } of paths) {
     const languages: Record<string, string> = {};
     // hreflang має бути BCP-47 кодом МОВИ (uk), а не кодом локалі в URL (ua).
     // URL лишається /ua і /ru — змінюється лише ключ alternates (ua→uk, ru→ru) + x-default.
@@ -72,7 +79,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const locale of locales) {
       entries.push({
         url: `${siteConfig.url}/${locale}${path}`,
-        lastModified: now,
+        lastModified: lastMod ?? now,
         changeFrequency: freq,
         priority,
         alternates: { languages },

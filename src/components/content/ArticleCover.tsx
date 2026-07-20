@@ -5,9 +5,9 @@ import { type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 
-const UI: Record<Locale, { eyebrow: string; min: string }> = {
-  ua: { eyebrow: "Блог · TTMAX", min: "хв" },
-  ru: { eyebrow: "Блог · TTMAX", min: "мин" },
+const UI: Record<Locale, { eyebrow: string; min: string; updated: string }> = {
+  ua: { eyebrow: "Блог · TTMAX", min: "хв", updated: "оновлено" },
+  ru: { eyebrow: "Блог · TTMAX", min: "мин", updated: "обновлено" },
 };
 
 function formatDate(iso: string): string {
@@ -137,6 +137,14 @@ export function ArticleCover({
           <span className="font-body text-[13px] text-ink-muted">
             {readMinutes} {ui.min}
           </span>
+          {post.dateModified !== post.datePublished && (
+            <>
+              <span className="text-ink-ghost">·</span>
+              <span className="font-body text-[13px] text-ink-dim">
+                {ui.updated} {formatDate(post.dateModified)}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
