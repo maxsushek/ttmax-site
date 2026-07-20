@@ -13,8 +13,11 @@ export function buildBlogMetadata(opts: {
   description: string;
   /** false → noindex (для чернеток/службових). */
   index?: boolean;
-  /** Абсолютний URL обкладинки (1200×630). */
+  /** Абсолютний URL обкладинки. */
   image?: string;
+  /** Розміри обкладинки для og:image (опційно; опускаємо, якщо невідомі). */
+  imageWidth?: number;
+  imageHeight?: number;
   /** Для статей: ISO-дати + автор → og article-теги. */
   article?: {
     publishedTime: string;
@@ -22,7 +25,7 @@ export function buildBlogMetadata(opts: {
     authorUrl: string;
   };
 }): Metadata {
-  const { locale, pathname, title, description, index = true, image, article } = opts;
+  const { locale, pathname, title, description, index = true, image, imageWidth, imageHeight, article } = opts;
   // До запуску — весь сайт noindex (консистентно з buildCatalogMetadata).
   const indexable = siteConfig.launched && index;
 
@@ -31,7 +34,9 @@ export function buildBlogMetadata(opts: {
   for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${pathname}`;
   languages["x-default"] = `${siteConfig.url}/${defaultLocale}${pathname}`;
 
-  const ogImages = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
+  const ogImages = image
+    ? [{ url: image, alt: title, ...(imageWidth && imageHeight ? { width: imageWidth, height: imageHeight } : {}) }]
+    : undefined;
   const ogLocale = locale === "ua" ? "uk_UA" : "ru_UA";
   const ogAlt = locale === "ua" ? ["ru_UA"] : ["uk_UA"];
 

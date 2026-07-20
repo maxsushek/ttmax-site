@@ -124,6 +124,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
   const heroUrl = post.heroPublicId
     ? cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" })
     : "";
+  // Зображення для BlogPosting.image: hero або фірмова обкладинка (абсолютний URL).
+  const ldImage = heroUrl || (post.coverSrc ? `${siteConfig.url}${post.coverSrc}` : "");
   const related = getRelatedPosts(post);
 
   const breadcrumb = breadcrumbJsonLd(
@@ -138,7 +140,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
     url: pageUrl,
     headline: post.h1[locale],
     description: post.metaDescription[locale],
-    images: heroUrl ? [heroUrl] : undefined,
+    images: ldImage ? [ldImage] : undefined,
     datePublished: post.datePublished,
     dateModified: post.dateModified,
     authorName: author.name[locale],

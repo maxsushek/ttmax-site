@@ -79,17 +79,14 @@ export function Footer({
       siteConfig.social.find((s) => s.key === key)?.href) ??
     "#";
 
-  // Каталожные пункты футера → реальные URL категорий.
-  const catalogPaths: Record<string, string> = {
-    Основи: `/${locale}/osnovaniya`,
-    Накладки: `/${locale}/nakladki`,
-    "М'ячі": `/${locale}/myachi`,
-    Одяг: `/${locale}/odyag`,
-    Аксесуари: `/${locale}/aksessuary`,
-  };
-  const catalogLinks: FootLink[] = m.catalogLinks.map((label) => ({
+  // Каталожні пункти футера → реальні URL категорій.
+  // Слаги зіставляємо ЗА ІНДЕКСОМ (як infoSlugs нижче), а не за перекладеним label:
+  // m.catalogLinks локалізований (RU: «Основания», «Мячи»…), тож ключ-по-мітці збігався
+  // лише для «Накладки», і решта RU-пунктів падала у фолбек /nakladki (биті лінки на кожній RU-сторінці).
+  const catalogSlugs = ["osnovaniya", "nakladki", "myachi", "odyag", "aksessuary"];
+  const catalogLinks: FootLink[] = m.catalogLinks.map((label, i) => ({
     label,
-    href: catalogPaths[label] ?? `/${locale}/nakladki`,
+    href: catalogSlugs[i] ? `/${locale}/${catalogSlugs[i]}` : `/${locale}/nakladki`,
   }));
   // Только Butterfly.
   const brandLinks: FootLink[] = [{ label: "Butterfly", href: `/${locale}/butterfly` }];
