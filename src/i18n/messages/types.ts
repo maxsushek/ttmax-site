@@ -11,6 +11,7 @@ export type Messages = {
     rubbers: string;
     apparel: string;
     balls: string;
+    tables: string;
     accessories: string;
     brands: string;
     blog: string;

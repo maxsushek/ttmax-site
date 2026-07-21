@@ -47,6 +47,12 @@ export const navigation: ReadonlyArray<NavItem> = [
     href: "/myachi",
   },
   {
+    // Столи — найбільший попит ніші (~2800/міс). Без пункту в меню категорія не отримує
+    // ані внутрішньої ваги, ані трафіку з навігації.
+    key: "tables",
+    href: "/stoly",
+  },
+  {
     key: "accessories",
     href: "/aksessuary",
     sub: [

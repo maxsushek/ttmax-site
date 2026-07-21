@@ -83,7 +83,7 @@ export function Footer({
   // Слаги зіставляємо ЗА ІНДЕКСОМ (як infoSlugs нижче), а не за перекладеним label:
   // m.catalogLinks локалізований (RU: «Основания», «Мячи»…), тож ключ-по-мітці збігався
   // лише для «Накладки», і решта RU-пунктів падала у фолбек /nakladki (биті лінки на кожній RU-сторінці).
-  const catalogSlugs = ["osnovaniya", "nakladki", "myachi", "odyag", "aksessuary"];
+  const catalogSlugs = ["osnovaniya", "nakladki", "myachi", "stoly", "odyag", "aksessuary"];
   const catalogLinks: FootLink[] = m.catalogLinks.map((label, i) => ({
     label,
     href: catalogSlugs[i] ? `/${locale}/${catalogSlugs[i]}` : `/${locale}/nakladki`,
