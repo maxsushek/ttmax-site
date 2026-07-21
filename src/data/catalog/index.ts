@@ -60,16 +60,40 @@ export const getProductsByBrandCategory = (
 export const getProductsBySeries = (seriesSlug: string): CatalogProduct[] =>
   pool.filter((p) => p.seriesSlug === seriesSlug);
 
-/** Сопутствующие/похожие для блока «з цим купують» / «схожі». */
+/**
+ * Сопутствующие/похожие для блока «з цим купують» / «схожі».
+ *
+ * ⚠️ БУЛО: фолбек завжди йшов у getProductsBySeries(product.seriesSlug). Але у 392 з 519
+ * товарів seriesSlug ПОРОЖНІЙ (усе екіпірування, столи), тож getProductsBySeries("")
+ * повертав той самий список, а slice(0,4) — ті самі 4 товари. Через це блок «Схожі товари»
+ * був ІДЕНТИЧНИЙ на сотнях карток і складав ~51 з ~80 слів сторінки, тобто був головним
+ * джерелом дублювання контенту на найтоншому ярусі сайту.
+ *
+ * СТАЛО: порожня серія → беремо сусідів по КАТЕГОРІЇ, причому вікном, зсунутим на позицію
+ * самого товару. Вибірка лишається детермінованою (стабільний HTML, без розбіжностей
+ * гідратації), але в кожної картки вона своя.
+ */
 export const getCrossSell = (product: CatalogProduct): CatalogProduct[] => {
   if (product.crossSell && product.crossSell.length > 0) {
     return product.crossSell
       .map((slug) => getProductBySlug(slug))
       .filter((p): p is CatalogProduct => Boolean(p));
   }
-  return getProductsBySeries(product.seriesSlug)
-    .filter((p) => p.slug !== product.slug)
-    .slice(0, 4);
+
+  const bySeries = product.seriesSlug
+    ? getProductsBySeries(product.seriesSlug).filter((p) => p.slug !== product.slug)
+    : [];
+  if (bySeries.length >= 4) return bySeries.slice(0, 4);
+
+  // Добираємо сусідами по категорії, щоб не показувати одне й те саме всім.
+  const siblings = getProductsByCategory(product.categorySlug).filter(
+    (p) => p.slug !== product.slug && !bySeries.some((s) => s.slug === p.slug),
+  );
+  if (siblings.length === 0) return bySeries.slice(0, 4);
+
+  const start = Math.max(0, siblings.findIndex((p) => p.slug > product.slug));
+  const rotated = [...siblings.slice(start), ...siblings.slice(0, start)];
+  return [...bySeries, ...rotated].slice(0, 4);
 };
 
 /* ---------- Бренды / серии / категории ---------- */

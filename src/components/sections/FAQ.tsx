@@ -3,30 +3,31 @@
 import { useState } from "react";
 import { Container, Section, SectionKicker, SectionTitle } from "@/components/ui/Section";
 import { trackEvent } from "@/lib/analytics/events";
-import type { Messages } from "@/i18n/messages/types";
 import type { HomeOverrides } from "@/lib/homepage/home";
 import { cn } from "@/utils/cn";
 
+/**
+ * ⚠️ Приймає ЛИШЕ зріз faq, а не весь `messages`. Це клієнтський компонент, тож будь-який
+ * проп серіалізується в RSC-payload — з цілим `messages` туди їхав сирий рядок
+ * «{freeShippingThreshold}» навіть після того, як видимий текст уже підставлявся.
+ */
 export function FAQ({
-  messages,
+  faq,
   overrides,
-  items,
 }: {
-  messages: Messages;
+  /** kicker/title + питання з УЖЕ розгорнутими плейсхолдерами. */
+  faq: { kicker: string; title: string; items: ReadonlyArray<{ q: string; a: string }> };
   overrides: HomeOverrides;
-  /** Питання з уже розгорнутими плейсхолдерами (напр. {freeShippingThreshold}). */
-  items?: ReadonlyArray<{ q: string; a: string }>;
 }) {
-  const m = messages.faq;
-  const list = items ?? m.items;
+  const list = faq.items;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <Section ariaLabelledBy="faq-title" className="!py-16 lg:!py-20">
       <Container className="max-w-[740px]">
         <div className="mb-11 text-center">
-          <SectionKicker>{overrides.faqKicker || m.kicker}</SectionKicker>
-          <SectionTitle id="faq-title">{overrides.faqTitle || m.title}</SectionTitle>
+          <SectionKicker>{overrides.faqKicker || faq.kicker}</SectionKicker>
+          <SectionTitle id="faq-title">{overrides.faqTitle || faq.title}</SectionTitle>
         </div>
         <ul className="flex flex-col gap-2">
           {list.map((item, i) => {

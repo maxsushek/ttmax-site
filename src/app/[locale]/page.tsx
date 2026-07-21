@@ -49,7 +49,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Products locale={locale} messages={messages} overrides={overrides} />
       <Brands locale={locale} messages={messages} overrides={overrides} />
       <LeadCTA locale={locale} messages={messages} overrides={overrides} />
-      <FAQ messages={messages} overrides={overrides} items={faqItems} />
+      <FAQ
+        faq={{ kicker: messages.faq.kicker, title: messages.faq.title, items: faqItems }}
+        overrides={overrides}
+      />
     </>
   );
 }
