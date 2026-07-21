@@ -170,6 +170,7 @@ const GEAR_TYPE_LABEL: Record<string, { ua: string; ru: string }> = {
   "shoe-bag": { ua: "Сумка для взуття", ru: "Сумка для обуви" },
   "ball-bag": { ua: "Сумка для м'ячів", ru: "Сумка для мячей" },
   net: { ua: "Сітка", ru: "Сетка" },
+  table: { ua: "Тенісний стіл", ru: "Теннисный стол" },
 };
 
 const GENDER_LABEL: Record<string, { ua: string; ru: string }> = {
@@ -945,6 +946,31 @@ function GearView({
   if (gear.stars) rows.push({ label: L("Зірковість", "Звёздность"), value: gear.stars });
   if (gear.packSize) rows.push({ label: L("В упаковці", "В упаковке"), value: gear.packSize });
   if (gear.volumeMl) rows.push({ label: L("Об'єм", "Объём"), value: `${gear.volumeMl} мл` });
+  // Столи (gearType: "table")
+  if (gear.tableThicknessMm)
+    rows.push({
+      label: L("Товщина стільниці", "Толщина столешницы"),
+      value: `${gear.tableThicknessMm} мм`,
+    });
+  if (gear.sizeUnfolded)
+    rows.push({ label: L("Розміри (розкладений)", "Размеры (разложенный)"), value: gear.sizeUnfolded });
+  if (gear.sizeFolded)
+    rows.push({ label: L("У складеному вигляді", "В сложенном виде"), value: gear.sizeFolded });
+  if (gear.weightKg) rows.push({ label: L("Вага", "Вес"), value: `${gear.weightKg} кг` });
+  if (gear.usage)
+    rows.push({
+      label: L("Призначення", "Назначение"),
+      value:
+        gear.usage === "indoor"
+          ? L("Для приміщень", "Для помещений")
+          : L("Всепогодній", "Всепогодный"),
+    });
+  if (gear.rollaway)
+    rows.push({
+      label: L("Конструкція", "Конструкция"),
+      value: L("Складна, на колесах", "Складная, на колёсах"),
+    });
+  if (gear.ittf) rows.push({ label: L("Схвалення ITTF", "Одобрение ITTF"), value: L("Так", "Да") });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
 

@@ -205,4 +205,20 @@ export interface GearSpec {
   stars?: string;
   /** Об'єм (клей/очисник), мл. */
   volumeMl?: number;
+
+  /* --- Тенісні столи (gearType: "table"). Значення однакові для ua/ru (числа + «см»/«кг»). --- */
+  /** Товщина стільниці, мм — головний параметр відскоку (12–25). */
+  tableThicknessMm?: number;
+  /** Габарити розкладеного столу, напр. "274 × 152,5 × 76 см". */
+  sizeUnfolded?: string;
+  /** Габарити складеного столу (для зберігання). */
+  sizeFolded?: string;
+  /** Вага, кг. */
+  weightKg?: number;
+  /** Схвалення ITTF (турнірний рівень). */
+  ittf?: boolean;
+  /** Призначення: для приміщень чи всепогодній. */
+  usage?: "indoor" | "outdoor";
+  /** Складна конструкція на колесах (rollaway). */
+  rollaway?: boolean;
 }
