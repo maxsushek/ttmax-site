@@ -7,8 +7,12 @@ export const siteConfig = {
   subBrand: "by TTMAX",
   /** Used in legal footer copyright */
   operator: "TTMAX",
-  domain: "ttmax.ua",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ttmax.ua",
+  // Рішення власника (2026-07-21): основний домен — ttmax.com.ua.
+  // ⚠️ Фактичний URL у canonical/og/hreflang/sitemap бере NEXT_PUBLIC_SITE_URL (на Vercel зараз
+  // vercel-піддомен). Перемикати змінну ТІЛЬКИ ПІСЛЯ того, як домен підключено й відкривається,
+  // інакше canonical показуватиме на домен, який не віддає сайт.
+  domain: "ttmax.com.ua",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ttmax.com.ua",
   /** Логотип для JSON-LD publisher/Organization (Cloudinary, ≥112px для rich results). */
   logoUrl:
     "https://res.cloudinary.com/dh6vuxjko/image/upload/f_auto,q_auto,c_fit,h_200/ttmax/category/site-logo/hndfad14fgl7vipsxont",
@@ -19,7 +23,8 @@ export const siteConfig = {
   featuredBrand: "Butterfly",
   phone: "+380000000000",
   phoneDisplay: "+380 (XX) XXX-XX-XX",
-  email: "hello@ttmax.ua",
+  // Фолбек: реальна пошта задається в /admin (contacts) і перебиває це значення.
+  email: "hello@ttmax.com.ua",
   freeShippingThreshold: 5000,
   yearFounded: 2008,
   social: [
