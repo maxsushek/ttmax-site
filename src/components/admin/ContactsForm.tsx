@@ -26,7 +26,7 @@ const GROUPS: Group[] = [
         label: "Телефон (як показувати)",
         placeholder: "+380 50 123 45 67",
       },
-      { key: CONTACT_KEYS.email, label: "Email", placeholder: "hello@ttmax.ua" },
+      { key: CONTACT_KEYS.email, label: "Email", placeholder: "hello@ttmax.com.ua" },
     ],
   },
   {

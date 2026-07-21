@@ -7,8 +7,18 @@ import type { Messages } from "@/i18n/messages/types";
 import type { HomeOverrides } from "@/lib/homepage/home";
 import { cn } from "@/utils/cn";
 
-export function FAQ({ messages, overrides }: { messages: Messages; overrides: HomeOverrides }) {
+export function FAQ({
+  messages,
+  overrides,
+  items,
+}: {
+  messages: Messages;
+  overrides: HomeOverrides;
+  /** Питання з уже розгорнутими плейсхолдерами (напр. {freeShippingThreshold}). */
+  items?: ReadonlyArray<{ q: string; a: string }>;
+}) {
   const m = messages.faq;
+  const list = items ?? m.items;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
@@ -19,7 +29,7 @@ export function FAQ({ messages, overrides }: { messages: Messages; overrides: Ho
           <SectionTitle id="faq-title">{overrides.faqTitle || m.title}</SectionTitle>
         </div>
         <ul className="flex flex-col gap-2">
-          {m.items.map((item, i) => {
+          {list.map((item, i) => {
             const isOpen = openIndex === i;
             const id = `faq-${i}`;
             return (

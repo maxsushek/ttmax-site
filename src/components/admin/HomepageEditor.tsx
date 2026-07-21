@@ -90,7 +90,7 @@ const GROUPS: Group[] = [
     fields: [
       { kind: "single", key: CONTACT_KEYS.phone, label: "Телефон (для кнопки tel:)", ph: "+380501234567" },
       { kind: "single", key: CONTACT_KEYS.phoneDisplay, label: "Телефон (як показувати)", ph: "+380 50 123 45 67" },
-      { kind: "single", key: CONTACT_KEYS.email, label: "Email", ph: "hello@ttmax.ua" },
+      { kind: "single", key: CONTACT_KEYS.email, label: "Email", ph: "hello@ttmax.com.ua" },
       { kind: "single", key: CONTACT_KEYS.telegram, label: "Telegram (повне посилання)", ph: "https://t.me/…" },
       { kind: "single", key: CONTACT_KEYS.youtube, label: "YouTube (повне посилання)", ph: "https://youtube.com/@…" },
       { kind: "single", key: CONTACT_KEYS.facebook, label: "Facebook (повне посилання)", ph: "https://facebook.com/…" },

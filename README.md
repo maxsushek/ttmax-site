@@ -33,7 +33,7 @@ npm run format     # Prettier write
 Everything is optional in development — code is no-op when keys are missing. Required for production: `NEXT_PUBLIC_SITE_URL`, Supabase keys (for lead capture), at least one of the analytics IDs.
 
 ```
-NEXT_PUBLIC_SITE_URL                       # https://ttmax.ua
+NEXT_PUBLIC_SITE_URL                       # https://ttmax.com.ua
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY                  # server-only — used by /api/leads
