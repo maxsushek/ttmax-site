@@ -658,7 +658,7 @@ function ProductCard({
         {img ? (
           <Image
             src={cldUrl(img.publicId, { w: 480, h: 480 })}
-            alt={img.alt ?? `${brandName} ${product.model}`}
+            alt={img.alt ?? product.name[locale]}
             fill
             sizes="(max-width: 1024px) 50vw, 25vw"
             className="object-cover"
@@ -681,7 +681,10 @@ function ProductCard({
         {brandName}
       </div>
       <div className="mt-0.5 font-display text-[16px] font-extrabold leading-tight tracking-tight text-ink">
-        {product.model}
+        {/* Локалізована назва без бренда (бренд — рядком вище). product.model
+            нелокалізований і в 99 товарів екіпірування українською, тож на /ru
+            SSR-фолбек Suspense віддавав укр. іменник просто в HTML. */}
+        {product.name[locale].replace(brandName, "").replace(/\s{2,}/g, " ").trim() || product.model}
       </div>
       {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
 
