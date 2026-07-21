@@ -56,7 +56,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  // Кореневий layout будує <html lang> із заголовка x-locale (app/layout.tsx), але його
+  // ніхто не ставив — тож фолбек давав lang="uk" НА ВСЬОМУ САЙТІ, включно з /ru.
+  // Половина сайту оголошувала себе українською, суперечачи власному hreflang="ru".
+  const locale = locales.find((loc) => pathname === `/${loc}` || pathname.startsWith(`/${loc}/`));
+  const headers = new Headers(request.headers);
+  if (locale) headers.set("x-locale", locale);
+  return NextResponse.next({ request: { headers } });
 }
 
 export const config = {
