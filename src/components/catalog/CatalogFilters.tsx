@@ -74,8 +74,14 @@ const T = {
   },
 } as const;
 
+/** Відмінювання «товар» за числом (було завжди «товарів» → «Знайдено: 1 товарів»). */
 function plural(n: number, locale: "ua" | "ru") {
-  return locale === "ru" ? "товаров" : "товарів";
+  const m10 = n % 10;
+  const m100 = n % 100;
+  const one = m10 === 1 && m100 !== 11;
+  const few = m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20);
+  if (locale === "ru") return one ? "товар" : few ? "товара" : "товаров";
+  return one ? "товар" : few ? "товари" : "товарів";
 }
 
 /** Будує вибір фасетів із query-параметрів URL (напр. ?bladeClass=off,off-plus). */
