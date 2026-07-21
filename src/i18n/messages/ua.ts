@@ -2,7 +2,7 @@ import type { Messages } from "./types";
 
 export const ua: Messages = {
   meta: {
-    title: "Butterfly UA — офіційний інвентар для настільного тенісу",
+    title: "Настільний теніс — ракетки, накладки, столи | Butterfly UA",
     titleTemplate: "%s | Butterfly UA",
     description:
       "Butterfly Україна (by TTMAX): Tenergy, Dignics, Rozena, Viscaria, основи, накладки, м'ячі, одяг. Тільки оригінал. Доставка по всій Україні.",
@@ -39,8 +39,8 @@ export const ua: Messages = {
   },
   hero: {
     badge: "Офіційний Butterfly в Україні",
-    title1: "BUTTERFLY",
-    title2: "В УКРАЇНІ",
+    title1: "НАСТІЛЬНИЙ ТЕНІС",
+    title2: "BUTTERFLY УКРАЇНА",
     subtitle:
       "Tenergy, Dignics, Rozena, Viscaria та ще {brandsCount}+ колекцій. 100% оригінал. Доставка по всій Україні.",
     brandsAccent: "{brandsCount}+ колекцій",
