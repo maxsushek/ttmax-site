@@ -197,7 +197,10 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     const series = catalogSeries.find((s) => s.slug === b);
     if (cat && series) {
       const products = getProductsBySeries(series.slug).filter((p) => p.categorySlug === cat.slug);
-      return { kind: "series", category: cat, series, products, index: products.length > 0 };
+      // Поріг 2, а не 1: хаб з єдиним товаром дублює title самої картки (Zyre 03, Rozena —
+      // це money-товари) і канібалізує її, нічого не додаючи. Такі хаби лишаємо доступними,
+      // але поза індексом.
+      return { kind: "series", category: cat, series, products, index: products.length >= 2 };
     }
     // /{category}/{surface-group} — напр. /osnovaniya/alc, /osnovaniya/zlc
     const sg = findSurfaceGroup(b);
@@ -304,8 +307,11 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
       return `${cat} ${route.brand.name} — ${tail} | TTMAX`;
     }
     case "series": {
+      // Було «Bryce — купити в Україні | TTMAX»: гола назва серії без жодного ключа —
+      // такий title не відповідає жодному запиту. Додаємо категорійний іменник і бренд.
+      const cat = pickLocalized(route.category.name, locale);
       const tail = locale === "ua" ? "купити в Україні" : "купить в Украине";
-      return `${route.series.name} — ${tail} | TTMAX`;
+      return `${cat} Butterfly ${route.series.name} — ${tail} | TTMAX`;
     }
     case "surfaceGroup":
       return pickLocalized(route.group.title, locale);

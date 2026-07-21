@@ -2,13 +2,16 @@ import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { defaultLocale, locales, localeToLang } from "@/i18n/config";
 import {
+  catalogSeries,
   getActiveBrands,
   getAllProducts,
   getIndexableCategories,
   getProductsByBrand,
   getProductsByBrandCategory,
   getProductsByCategory,
+  getProductsBySeries,
 } from "@/data/catalog";
+import { surfaceGroups } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 
@@ -48,6 +51,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (getProductsByCategory(c.slug).length > 0) {
       paths.push({ path: `/${c.slug}`, priority: 0.8, freq: "weekly" });
     }
+  }
+
+  // Хаби серій (/{category}/{series}) і колекції за волокном (/osnovaniya/alc|zlc).
+  // Роутер їх генерує й індексує, а sitemap про них не знав узагалі — 32 URL були поза мапою,
+  // причому частина з них не має жодного внутрішнього посилання, тобто інакше їх не знайти.
+  // Поріг >= 2 тримаємо однаковий із routing.ts, щоб мапа не суперечила noindex.
+  for (const s of catalogSeries) {
+    for (const c of getIndexableCategories()) {
+      const n = getProductsBySeries(s.slug).filter((p) => p.categorySlug === c.slug).length;
+      if (n >= 2) paths.push({ path: `/${c.slug}/${s.slug}`, priority: 0.6, freq: "weekly" });
+    }
+  }
+  for (const g of surfaceGroups) {
+    const n = getProductsByCategory(g.category).filter((p) =>
+      g.surfaces.includes(p.base?.surface ?? ""),
+    ).length;
+    if (n > 0) paths.push({ path: `/${g.category}/${g.slug}`, priority: 0.6, freq: "weekly" });
   }
 
   for (const brand of getActiveBrands()) {
