@@ -735,6 +735,52 @@ function ProductView({
   );
 }
 
+/**
+ * SEO-блоки під карткою товару (product.seoBlocks): h2 + абзаци + контекстні лінки.
+ * Для сторінок-точок входу з пошуку: текст під запит + передача ваги на money-сторінки.
+ * Повертає null, якщо блоків немає, — решта карток не змінюється.
+ */
+function SeoBlocks({
+  blocks,
+  locale,
+}: {
+  blocks: CatalogProduct["seoBlocks"];
+  locale: Locale;
+}) {
+  if (!blocks || blocks.length === 0) return null;
+  return (
+    <section className="mt-12 flex flex-col gap-8">
+      {blocks.map((b, i) => (
+        <div key={i}>
+          <h2 className="mb-3 font-display text-lg font-bold uppercase tracking-[0.04em] text-ink">
+            {b.h[locale]}
+          </h2>
+          <div className="flex max-w-[70ch] flex-col gap-2.5">
+            {b.p[locale].map((para, j) => (
+              <p key={j} className="font-body text-[15px] leading-relaxed text-ink-muted">
+                {para}
+              </p>
+            ))}
+          </div>
+          {b.links && b.links.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {b.links.map((l, j) => (
+                <Link
+                  key={j}
+                  href={`/${locale}${l.href}`}
+                  className="rounded-full border border-accent/40 px-3 py-1 font-body text-[13px] text-accent hover:bg-accent/10"
+                >
+                  {l.label[locale]}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </section>
+  );
+}
+
 /** Собирает все фото товара из entity_media: url (900×900) + thumb (160×160). */
 function buildGallery(
   media: EntityMediaMap,
@@ -984,6 +1030,7 @@ function GearView({
       locale={locale}
       media={media}
       content={content}
+      extra={<SeoBlocks blocks={product.seoBlocks} locale={locale} />}
     >
       <div className="mt-7">
         <GearPurchasePanel

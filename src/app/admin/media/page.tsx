@@ -27,11 +27,15 @@ export default async function MediaPage() {
     group: "Бренди",
   }));
 
+  // Групуємо за КАТЕГОРІЄЮ товару. Раніше було `p.base ? "основи" : "накладки"`, тож усе,
+  // що не основа (екіпірування, столи, ракетки), звалювалось у групу «Товари — накладки»
+  // на сотні позицій — новий товар було неможливо знайти, щоб залити фото.
+  const catName = new Map(catalogCategories.map((c) => [c.slug, c.name.ua]));
   const products: MediaEntity[] = getAllProducts().map((p) => ({
     type: "product",
     slug: p.slug,
     label: p.model,
-    group: p.base ? "Товари — основи" : "Товари — накладки",
+    group: `Товари — ${catName.get(p.categorySlug) ?? p.categorySlug}`,
   }));
 
   const site: MediaEntity[] = [

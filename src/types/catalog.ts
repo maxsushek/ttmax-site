@@ -100,6 +100,17 @@ export interface CatalogProduct {
   priority: 1 | 2 | 3;
   /** Slug'и сопутствующих/похожих для «з цим купують» / «схожі». */
   crossSell?: string[];
+  /**
+   * SEO-блоки під карткою (h2 + абзаци + контекстні лінки в каталог).
+   * Для сторінок, що працюють як точка входу з пошуку й мають передавати вагу далі.
+   * НЕ конфліктує з CMS: content_blocks рендерить свої intro/sections окремо.
+   */
+  seoBlocks?: {
+    h: Localized;
+    /** Абзаци по локалях (як BlogSection.p), а не масив Localized. */
+    p: Record<Locale, string[]>;
+    links?: { label: Localized; href: string }[];
+  }[];
 }
 
 export interface CatalogBrand {
