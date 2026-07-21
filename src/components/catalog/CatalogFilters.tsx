@@ -12,6 +12,8 @@ export type CatalogCardVM = {
   href: string;
   brandName: string;
   model: string;
+  /** Локалізована повна назва товару — для alt зображення (містить тип товару, напр. «Тенісний стіл …»). */
+  name: string;
   secondary: string;
   /** Отформатированная цена ("від 4 155 ₴") или null. */
   priceLabel: string | null;
@@ -333,7 +335,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={item.imageUrl}
-                      alt={`${item.brandName} ${item.model}`}
+                      alt={item.name || `${item.brandName} ${item.model}`}
                       loading="lazy"
                       className="h-full w-full object-cover"
                     />

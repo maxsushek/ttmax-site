@@ -490,6 +490,7 @@ function buildCardVMs(
       href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
       brandName,
       model: p.model,
+      name: p.name[locale],
       secondary: cardSecondary(p, locale),
       priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
       priceValue: price ?? null,
@@ -922,7 +923,7 @@ function RubberView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
       locale={locale}
       media={media}
@@ -1025,7 +1026,7 @@ function GearView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
       locale={locale}
       media={media}
@@ -1107,7 +1108,7 @@ function BaseView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       visualLabel={brandName}
-      images={buildGallery(media, product.slug, `${brandName} ${product.model}`)}
+      images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
       locale={locale}
       media={media}
