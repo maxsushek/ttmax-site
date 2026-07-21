@@ -7,7 +7,6 @@ import {
   getAllProducts,
   getIndexableCategories,
   getProductsByBrand,
-  getProductsByBrandCategory,
   getProductsByCategory,
   getProductsBySeries,
 } from "@/data/catalog";
@@ -70,14 +69,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (n > 0) paths.push({ path: `/${g.category}/${g.slug}`, priority: 0.6, freq: "weekly" });
   }
 
+  // Бренд-хаб лишається (він може володіти бренд-запитом), а ось /{brand}/{category}
+  // більше НЕ подаємо: каталог однобрендовий, тож це 1:1 дублі money-категорій і вони
+  // тепер index:false (routing.ts). Подавати noindex-URL у sitemap = суперечливі сигнали
+  // й 20× «Submitted URL marked noindex» у GSC.
   for (const brand of getActiveBrands()) {
     if (getProductsByBrand(brand.slug).length === 0) continue;
     paths.push({ path: `/${brand.slug}`, priority: 0.7, freq: "weekly" });
-    for (const c of getIndexableCategories()) {
-      if (getProductsByBrandCategory(brand.slug, c.slug).length > 0) {
-        paths.push({ path: `/${brand.slug}/${c.slug}`, priority: 0.7, freq: "weekly" });
-      }
-    }
   }
 
   // Комбо-ракетки мають noindex (routing.ts) — не подаємо їх у sitemap, інакше в GSC

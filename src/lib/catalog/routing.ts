@@ -189,7 +189,12 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     const category = getCategoryBySlug(b);
     if (brand && category) {
       const products = getProductsByBrandCategory(brand.slug, category.slug);
-      return { kind: "brandCategory", brand, category, products, index: products.length > 0 };
+      // ⚠️ index: false СВІДОМО. Каталог однобрендовий (100% товарів butterfly), тому
+      // /butterfly/{cat} містить РІВНО той самий набір товарів, що й /{cat} — це 1:1 дубль
+      // money-категорії, без власного попиту й з утричі тоншим текстом. Сторінка лишається
+      // доступною (follow), але з індексу виходить, щоб не конкурувати з /{cat}.
+      // НЕ плутати з гілкою `category` вище — вона має лишатися index.
+      return { kind: "brandCategory", brand, category, products, index: false };
     }
 
     // /{category}/{series} — напр. /nakladki/dignics
@@ -413,12 +418,15 @@ export function catalogBreadcrumbs(
         },
       ];
     case "product":
+      // Крихти ведуть у КАТЕГОРІЮ, а не в бренд-дубль. Було home → /butterfly →
+      // /butterfly/{cat} → картка, тобто всі 424 картки × 2 локалі лили внутрішню вагу
+      // в /butterfly/{cat} (85 донорів) замість money-категорії /{cat} (6 донорів) —
+      // при склейці дублів Google цілком міг лишити тоншу сторінку.
       return [
         home,
-        { name: route.brand.name, path: `/${route.brand.slug}` },
         {
           name: pickLocalized(route.category.name, locale),
-          path: `/${route.brand.slug}/${route.category.slug}`,
+          path: `/${route.category.slug}`,
         },
         {
           name: pickLocalized(route.product.name, locale),
