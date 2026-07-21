@@ -28,6 +28,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html
       lang={localeToLang[locale]}
+      data-loc-src={headerLocale ?? "NO-HEADER"}
       className={cn(barlowCondensed.variable, barlow.variable)}
       suppressHydrationWarning
     >
