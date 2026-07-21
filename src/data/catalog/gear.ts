@@ -7195,7 +7195,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "odyag",
     model: "Пов'язка на голову AL II",
     kind: "gear",
-    name: { ua: "Пов'язка на голову Butterfly AL II", ru: "Пов'язка на голову Butterfly AL II" },
+    name: { ua: "Пов'язка на голову Butterfly AL II", ru: "Повязка на голову Butterfly AL II" },
     title: {
       ua: "Пов'язка на голову Butterfly AL II - купити в Україні | TTMAX",
       ru: "Повязка на голову Butterfly AL II - купить в Украине | TTMAX",
@@ -7220,7 +7220,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Altee",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Altee", ru: "Рушник Butterfly Altee" },
+    name: { ua: "Рушник Butterfly Altee", ru: "Полотенце Butterfly Altee" },
     title: {
       ua: "Рушник Butterfly Altee - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Altee - купить в Украине | TTMAX",
@@ -7245,7 +7245,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Big Altee",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Big Altee", ru: "Рушник Butterfly Big Altee" },
+    name: { ua: "Рушник Butterfly Big Altee", ru: "Полотенце Butterfly Big Altee" },
     title: {
       ua: "Рушник Butterfly Big Altee - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Big Altee - купить в Украине | TTMAX",
@@ -7297,7 +7297,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Big Atomis",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Big Atomis", ru: "Рушник Butterfly Big Atomis" },
+    name: { ua: "Рушник Butterfly Big Atomis", ru: "Полотенце Butterfly Big Atomis" },
     title: {
       ua: "Рушник Butterfly Big Atomis - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Big Atomis - купить в Украине | TTMAX",
@@ -7700,7 +7700,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "odyag",
     model: "Спідниця Elistar13",
     kind: "gear",
-    name: { ua: "Спідниця Butterfly Elistar13", ru: "Спідниця Butterfly Elistar13" },
+    name: { ua: "Спідниця Butterfly Elistar13", ru: "Юбка Butterfly Elistar13" },
     title: {
       ua: "Спідниця Butterfly Elistar13 - купити в Україні | TTMAX",
       ru: "Юбка Butterfly Elistar13 - купить в Украине | TTMAX",
@@ -7754,7 +7754,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Esppira",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Esppira", ru: "Рушник Butterfly Esppira" },
+    name: { ua: "Рушник Butterfly Esppira", ru: "Полотенце Butterfly Esppira" },
     title: {
       ua: "Рушник Butterfly Esppira - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Esppira - купить в Украине | TTMAX",
@@ -7779,7 +7779,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Big Esppira",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Big Esppira", ru: "Рушник Butterfly Big Esppira" },
+    name: { ua: "Рушник Butterfly Big Esppira", ru: "Полотенце Butterfly Big Esppira" },
     title: {
       ua: "Рушник Butterfly Big Esppira - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Big Esppira - купить в Украине | TTMAX",
@@ -8047,7 +8047,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "odyag",
     model: "Спідниця Infiria2",
     kind: "gear",
-    name: { ua: "Спідниця Butterfly Infiria2", ru: "Спідниця Butterfly Infiria2" },
+    name: { ua: "Спідниця Butterfly Infiria2", ru: "Юбка Butterfly Infiria2" },
     title: {
       ua: "Спідниця Butterfly Infiria2 - купити в Україні | TTMAX",
       ru: "Юбка Butterfly Infiria2 - купить в Украине | TTMAX",
@@ -8128,7 +8128,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Lasicle",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Lasicle", ru: "Рушник Butterfly Lasicle" },
+    name: { ua: "Рушник Butterfly Lasicle", ru: "Полотенце Butterfly Lasicle" },
     title: {
       ua: "Рушник Butterfly Lasicle - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Lasicle - купить в Украине | TTMAX",
@@ -8153,7 +8153,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Big Lasicle",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Big Lasicle", ru: "Рушник Butterfly Big Lasicle" },
+    name: { ua: "Рушник Butterfly Big Lasicle", ru: "Полотенце Butterfly Big Lasicle" },
     title: {
       ua: "Рушник Butterfly Big Lasicle - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Big Lasicle - купить в Украине | TTMAX",
@@ -8363,7 +8363,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Palest",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Palest", ru: "Рушник Butterfly Palest" },
+    name: { ua: "Рушник Butterfly Palest", ru: "Полотенце Butterfly Palest" },
     title: {
       ua: "Рушник Butterfly Palest - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Palest - купить в Украине | TTMAX",
@@ -8442,7 +8442,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Ramic",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Ramic", ru: "Рушник Butterfly Ramic" },
+    name: { ua: "Рушник Butterfly Ramic", ru: "Полотенце Butterfly Ramic" },
     title: {
       ua: "Рушник Butterfly Ramic - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Ramic - купить в Украине | TTMAX",
@@ -8467,7 +8467,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Big Ramic",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Big Ramic", ru: "Рушник Butterfly Big Ramic" },
+    name: { ua: "Рушник Butterfly Big Ramic", ru: "Полотенце Butterfly Big Ramic" },
     title: {
       ua: "Рушник Butterfly Big Ramic - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Big Ramic - купить в Украине | TTMAX",
@@ -8573,7 +8573,7 @@ export const catalogGear: CatalogProduct[] = [
     categorySlug: "aksessuary",
     model: "Рушник Sarafuwari",
     kind: "gear",
-    name: { ua: "Рушник Butterfly Sarafuwari", ru: "Рушник Butterfly Sarafuwari" },
+    name: { ua: "Рушник Butterfly Sarafuwari", ru: "Полотенце Butterfly Sarafuwari" },
     title: {
       ua: "Рушник Butterfly Sarafuwari - купити в Україні | TTMAX",
       ru: "Полотенце Butterfly Sarafuwari - купить в Украине | TTMAX",
