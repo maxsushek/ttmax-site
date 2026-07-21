@@ -489,7 +489,10 @@ function buildCardVMs(
       slug: p.slug,
       href: `/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
       brandName,
-      model: p.model,
+      // p.model — ОДИН нелокалізований рядок, і в 99 товарів екіпірування він
+      // українською («Кросівки Sunika»), тож лістинг /ru показував укр. іменник.
+      // Беремо локалізовану назву й прибираємо бренд — він і так виводиться окремим рядком.
+      model: p.name[locale].replace(brandName, "").replace(/\s{2,}/g, " ").trim() || p.model,
       name: p.name[locale],
       secondary: cardSecondary(p, locale),
       priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
