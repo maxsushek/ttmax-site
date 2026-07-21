@@ -46,7 +46,7 @@ const LEVELS: LevelDef[] = [
       ua: "Головне — контроль і відчуття м'яча. Бери all-round основу середньої швидкості й м'які гладкі накладки.",
       ru: "Главное — контроль и ощущение мяча. Бери all-round основание средней скорости и мягкие гладкие накладки.",
     },
-    base: { label: { ua: "Petr Korbel (контроль)", ru: "Petr Korbel (контроль)" }, href: "/osnovaniya/petr-korbel" },
+    base: { label: { ua: "Petr Korbel (контроль)", ru: "Petr Korbel (контроль)" }, href: "/butterfly/osnovaniya/petr-korbel" },
     rubbers: { label: { ua: "Rozena / Tenergy 05 FX", ru: "Rozena / Tenergy 05 FX" }, href: "/nakladki" },
   },
   {
@@ -58,7 +58,7 @@ const LEVELS: LevelDef[] = [
       ru: "Тебе подойдёт ALC-основание средней скорости и топовая гладкая накладка — скорость с запасом контроля.",
     },
     base: { label: { ua: "Viscaria / Timo Boll ALC", ru: "Viscaria / Timo Boll ALC" }, href: "/osnovaniya/alc" },
-    rubbers: { label: { ua: "Tenergy 05", ru: "Tenergy 05" }, href: "/nakladki/tenergy-05" },
+    rubbers: { label: { ua: "Tenergy 05", ru: "Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
   },
   {
     key: "pro",
@@ -68,8 +68,8 @@ const LEVELS: LevelDef[] = [
       ua: "Швидка карбонова основа й топові спінові накладки під поставлений удар і атаку першим темпом.",
       ru: "Быстрое карбоновое основание и топовые спиновые накладки под поставленный удар и атаку первым темпом.",
     },
-    base: { label: { ua: "Viscaria", ru: "Viscaria" }, href: "/osnovaniya/viscaria" },
-    rubbers: { label: { ua: "Dignics 09C / Dignics 05", ru: "Dignics 09C / Dignics 05" }, href: "/nakladki/dignics-09c" },
+    base: { label: { ua: "Viscaria", ru: "Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+    rubbers: { label: { ua: "Dignics 09C / Dignics 05", ru: "Dignics 09C / Dignics 05" }, href: "/butterfly/nakladki/dignics-09c" },
   },
 ];
 
