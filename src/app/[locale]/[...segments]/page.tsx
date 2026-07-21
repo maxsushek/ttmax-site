@@ -658,7 +658,7 @@ function ProductCard({
         {img ? (
           <Image
             src={cldUrl(img.publicId, { w: 480, h: 480 })}
-            alt={img.alt ?? product.name[locale]}
+            alt={product.name[locale]}
             fill
             sizes="(max-width: 1024px) 50vw, 25vw"
             className="object-cover"
@@ -794,10 +794,13 @@ function buildGallery(
   slug: string,
   fallbackAlt: string,
 ): GalleryImage[] {
+  // ⚠️ alt беремо з КОДУ (локалізована назва), а не з entity_media.alt: у БД це ОДНА
+  // нелокалізована колонка, заповнена українською (690 з 1057 рядків), тож на /ru вона
+  // давала укр. alt на кожному фото. Локалізована назва коректна для обох мов.
   return pickAll(media, "product", slug).map((m) => ({
     url: cldUrl(m.publicId, { w: 900, h: 900 }),
     thumb: cldUrl(m.publicId, { w: 160, h: 160 }),
-    alt: m.alt ?? fallbackAlt,
+    alt: fallbackAlt,
   }));
 }
 
