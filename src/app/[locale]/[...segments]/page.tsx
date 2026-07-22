@@ -27,6 +27,7 @@ import { resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
+import { filterVisible, isPhotolessHidden } from "@/lib/catalog/hidden";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
 import { CategorySeo } from "@/components/catalog/CategorySeo";
@@ -102,7 +103,11 @@ export async function generateMetadata({
 
   // Токени: живі ціна/кількість/рік підставляються на рендері (з оверрайдами), без ручної правки.
   const overrides = await getOverrides();
-  const currentProducts = route.kind === "product" ? [route.product] : route.products;
+  const media = await getMediaMap();
+  // Для лічильника «N моделей» рахуємо ВИДИМІ товари — приховані (без фото) не показуємо,
+  // тож і в опис не пишемо (інакше було б «160 моделей», а на сторінці 44).
+  const allCurrent = route.kind === "product" ? [route.product] : route.products;
+  const currentProducts = allCurrent.filter((p) => !isPhotolessHidden(p, media));
   const tctx = buildTokenContext({ locale: l, overrides, currentProducts });
 
   const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx) ?? "";
@@ -121,19 +126,21 @@ export async function generateMetadata({
   }
 
   // og:image — реальне фото товару (для листингів беремо перший товар із фото). 1200×630.
-  const media = await getMediaMap();
   const ogSource = (currentProducts ?? []).find((p) => pickPrimary(media, "product", p.slug));
   const ogPrimary = ogSource ? pickPrimary(media, "product", ogSource.slug) : null;
   const ogImage = ogPrimary
     ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "fill" }) || undefined
     : undefined;
 
+  // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
+  const photolessHidden = route.kind === "product" && isPhotolessHidden(route.product, media);
+
   return buildCatalogMetadata({
     locale: l,
     pathname: "/" + segments.join("/"),
     title,
     description,
-    index: route.index && !content?.noindex,
+    index: route.index && !content?.noindex && !photolessHidden,
     image: ogImage,
   });
 }
@@ -377,8 +384,10 @@ function ListingView({
   media: EntityMediaMap;
   content: ContentBlock | null;
 }) {
+  // ⏸️ Ховаємо товари без фото у визначених категоріях (одяг) — оборотно, див. lib/catalog/hidden.
+  const visibleProducts = filterVisible(route.products, media);
   // Пріоритетні товари (priority:1) і в наявності — вище; далі за ціною.
-  const ordered = [...route.products].sort((a, b) => {
+  const ordered = [...visibleProducts].sort((a, b) => {
     const pa = a.priority ?? 3;
     const pb = b.priority ?? 3;
     if (pa !== pb) return pa - pb;
@@ -420,7 +429,7 @@ function ListingView({
             </li>
           ))}
         </ul>
-      ) : route.products.length === 0 ? (
+      ) : ordered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
         </div>
@@ -905,7 +914,7 @@ function RubberView({
 }) {
   const product = route.product;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
+  const related = filterVisible(getCrossSell(product), media);
   const img = pickPrimary(media, "product", product.slug);
 
   const rows: { label: string; value: string }[] = [];
@@ -990,7 +999,7 @@ function GearView({
   const product = route.product;
   const gear = product.gear!;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
+  const related = filterVisible(getCrossSell(product), media);
   const img = pickPrimary(media, "product", product.slug);
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
 
@@ -1086,7 +1095,7 @@ function BaseView({
   const product = route.product;
   const base = product.base!;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = getCrossSell(product);
+  const related = filterVisible(getCrossSell(product), media);
   const img = pickPrimary(media, "product", product.slug);
 
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);

@@ -13,9 +13,13 @@ import {
 import { surfaceGroups } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
+import { getMediaMap } from "@/lib/media/get";
+import { isPhotolessHidden } from "@/lib/catalog/hidden";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  // Потрібна для фільтра прихованих (без фото) товарів — їх не подаємо в sitemap.
+  const media = await getMediaMap();
   const entries: MetadataRoute.Sitemap = [];
 
   // Шляхи без локалі; "" — головна. Лише сторінки, що мають товари (індексовані).
@@ -81,6 +85,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Комбо-ракетки мають noindex (routing.ts) — не подаємо їх у sitemap, інакше в GSC
   // з'явиться 95× «Submitted URL marked noindex» (суперечливі сигнали: «проіндексуй» + «не індексуй»).
   for (const p of getAllProducts().filter((p) => p.kind !== "racket")) {
+    // Приховані (без фото, напр. одяг) — не подаємо: вони noindex, інакше GSC покаже
+    // «Submitted URL marked noindex». З'явиться фото → товар автоматично повернеться сюди.
+    if (isPhotolessHidden(p, media)) continue;
     paths.push({
       path: `/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
       priority: 0.6,
