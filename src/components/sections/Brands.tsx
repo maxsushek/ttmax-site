@@ -44,8 +44,8 @@ export async function Brands({
     { id: "tenergy", name: "Tenergy", emoji: "🔥", href: "/nakladki/tenergy", imageSlug: "tenergy-05", count: getProductsBySeries("tenergy").length },
     { id: "zyre", name: "Zyre", emoji: "⚡", href: "/nakladki/zyre", imageSlug: "zyre-03", count: getProductsBySeries("zyre").length },
     { id: "glayzer", name: "Glayzer", emoji: "✴️", href: "/nakladki/glayzer", imageSlug: "glayzer-09c", count: getProductsBySeries("glayzer").length },
-    { id: "alc", name: "Основи ALC", emoji: "🎯", href: "/osnovaniya/alc", imageSlug: "viscaria", count: countSurfaces(ALC) },
-    { id: "zlc", name: "Основи ZLC", emoji: "🚀", href: "/osnovaniya/zlc", imageSlug: "apolonia-zlc", count: countSurfaces(ZLC) },
+    { id: "alc", name: locale === "ru" ? "Основания ALC" : "Основи ALC", emoji: "🎯", href: "/osnovaniya/alc", imageSlug: "viscaria", count: countSurfaces(ALC) },
+    { id: "zlc", name: locale === "ru" ? "Основания ZLC" : "Основи ZLC", emoji: "🚀", href: "/osnovaniya/zlc", imageSlug: "apolonia-zlc", count: countSurfaces(ZLC) },
   ];
 
   return (
