@@ -40,11 +40,14 @@ export type Brand = {
   productsCount: number;
 };
 
+/** Мітка підпункту меню: рядок (мовно-нейтральний, напр. бренд «Tenergy») або пара локалей. */
+export type NavSubLabel = string | { ua: string; ru: string };
+
 export type NavItem = {
   key: string;
   href: string;
   subKey?: string;
-  sub?: ReadonlyArray<{ label: string; href: string }>;
+  sub?: ReadonlyArray<{ label: NavSubLabel; href: string }>;
 };
 
 export type AttributionData = {

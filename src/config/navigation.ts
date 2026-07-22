@@ -1,5 +1,11 @@
 // src/config/navigation.ts
-import type { NavItem } from "@/types";
+import type { NavItem, NavSubLabel } from "@/types";
+import type { Locale } from "@/i18n/config";
+
+/** Локалізує мітку підпункту: бренди/латиниця лишаються як є, пари {ua,ru} — за локаллю. */
+export function navSubLabel(label: NavSubLabel, locale: Locale): string {
+  return typeof label === "string" ? label : label[locale];
+}
 
 // Пункты ведут на реальные SEO-URL каталога. Подпункты имеют свои адреса:
 //  • основания: группы ALC/ZLC → собственные страницы-коллекции /osnovaniya/{alc|zlc};
@@ -16,30 +22,33 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "bases",
     href: "/osnovaniya",
     sub: [
-      { label: "Основи ALC", href: "/osnovaniya/alc" },
-      { label: "Основи ZLC", href: "/osnovaniya/zlc" },
-      { label: "Атакуючі", href: "/osnovaniya?bladeClass=off,off-plus" },
-      { label: "Захисні", href: "/osnovaniya?bladeClass=def" },
-      { label: "Універсальні", href: "/osnovaniya?bladeClass=all,all-plus,off-minus" },
+      { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
+      { label: { ua: "Атакуючі", ru: "Атакующие" }, href: "/osnovaniya?bladeClass=off,off-plus" },
+      { label: { ua: "Захисні", ru: "Защитные" }, href: "/osnovaniya?bladeClass=def" },
+      {
+        label: { ua: "Універсальні", ru: "Универсальные" },
+        href: "/osnovaniya?bladeClass=all,all-plus,off-minus",
+      },
     ],
   },
   {
     key: "rubbers",
     href: "/nakladki",
     sub: [
-      { label: "Гладкі", href: "/nakladki?surfaceType=gladka" },
-      { label: "Шипи", href: "/nakladki?surfaceType=korotki-shypy" },
-      { label: "Довгі шипи", href: "/nakladki?surfaceType=dovgi-shypy" },
-      { label: "Антиспін", href: "/nakladki?surfaceType=antyspin" },
+      { label: { ua: "Гладкі", ru: "Гладкие" }, href: "/nakladki?surfaceType=gladka" },
+      { label: { ua: "Шипи", ru: "Шипы" }, href: "/nakladki?surfaceType=korotki-shypy" },
+      { label: { ua: "Довгі шипи", ru: "Длинные шипы" }, href: "/nakladki?surfaceType=dovgi-shypy" },
+      { label: { ua: "Антиспін", ru: "Антиспин" }, href: "/nakladki?surfaceType=antyspin" },
     ],
   },
   {
     key: "apparel",
     href: "/odyag",
     sub: [
-      { label: "Футболки", href: "/odyag?gearType=tshirt" },
-      { label: "Шорти", href: "/odyag?gearType=shorts" },
-      { label: "Взуття", href: "/obuv" },
+      { label: { ua: "Футболки", ru: "Футболки" }, href: "/odyag?gearType=tshirt" },
+      { label: { ua: "Шорти", ru: "Шорты" }, href: "/odyag?gearType=shorts" },
+      { label: { ua: "Взуття", ru: "Обувь" }, href: "/obuv" },
     ],
   },
   {
@@ -56,9 +65,9 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "accessories",
     href: "/aksessuary",
     sub: [
-      { label: "Клеї", href: "/aksessuary?gearType=glue" },
-      { label: "Чохли та сумки", href: "/chehly" },
-      { label: "Сітки", href: "/setki" },
+      { label: { ua: "Клеї", ru: "Клеи" }, href: "/aksessuary?gearType=glue" },
+      { label: { ua: "Чохли та сумки", ru: "Чехлы и сумки" }, href: "/chehly" },
+      { label: { ua: "Сітки", ru: "Сетки" }, href: "/setki" },
     ],
   },
   {
@@ -66,12 +75,13 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "brands",
     href: "/butterfly",
     sub: [
+      // Бренди/серії — мовно-нейтральні (латиниця), лишаються рядком.
       { label: "Tenergy", href: "/nakladki/tenergy" },
       { label: "Dignics", href: "/nakladki/dignics" },
       { label: "Zyre", href: "/nakladki/zyre" },
       { label: "Glayzer", href: "/nakladki/glayzer" },
-      { label: "Основи ALC", href: "/osnovaniya/alc" },
-      { label: "Основи ZLC", href: "/osnovaniya/zlc" },
+      { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
     ],
   },
   {

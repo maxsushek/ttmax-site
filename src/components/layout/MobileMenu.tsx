@@ -6,7 +6,7 @@ import { Logo } from "@/components/ui/Logo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Button } from "@/components/ui/Button";
 import { useCart } from "@/components/cart/CartProvider";
-import { navigation } from "@/config/navigation";
+import { navigation, navSubLabel } from "@/config/navigation";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
@@ -160,7 +160,7 @@ export function MobileMenu({
                                 aria-hidden
                                 className="h-1 w-1 shrink-0 rounded-full bg-accent/40"
                               />
-                              {s.label}
+                              {navSubLabel(s.label, locale)}
                             </Link>
                           ))}
                         </div>
