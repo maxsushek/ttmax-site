@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/analytics/events";
 import { CURRENCY } from "@/lib/analytics/ecommerce";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
+import { QuickOrder } from "@/components/catalog/QuickOrder";
 import type { ProductCategory } from "@/types";
 
 type Props = {
@@ -118,7 +119,7 @@ export function RacketComboPanel({
         </div>
       )}
 
-      <div className="mt-7">
+      <div className="mt-7 flex flex-col gap-2.5">
         {soldOut ? (
           <button
             type="button"
@@ -128,29 +129,45 @@ export function RacketComboPanel({
             {t.soldOut}
           </button>
         ) : hasPrice ? (
-          <button
-            type="button"
-            onClick={addToCart}
-            data-cta="catalog-add-to-cart"
-            data-location={slug}
-            className={cn(
-              "w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all active:scale-[0.99]",
-              justAdded
-                ? "bg-success text-white"
-                : "bg-accent text-bg-base shadow-accent-glow hover:brightness-110",
-            )}
-          >
-            {justAdded ? `✓ ${t.added}` : t.addToCart}
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={addToCart}
+              data-cta="catalog-add-to-cart"
+              data-location={slug}
+              className={cn(
+                "w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all active:scale-[0.99]",
+                justAdded
+                  ? "bg-success text-white"
+                  : "bg-accent text-bg-base shadow-accent-glow hover:brightness-110",
+              )}
+            >
+              {justAdded ? `✓ ${t.added}` : t.addToCart}
+            </button>
+            <QuickOrder
+              locale={locale}
+              productSlug={slug}
+              productName={`${brandLabel} ${model}`}
+              variant="secondary"
+            />
+          </>
         ) : (
-          <a
-            href={telHref}
-            data-cta="catalog-request-price"
-            data-location={slug}
-            className="block w-full rounded-xl bg-accent py-3.5 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-bg-base shadow-accent-glow transition-all hover:brightness-110"
-          >
-            {t.request}
-          </a>
+          <>
+            <QuickOrder
+              locale={locale}
+              productSlug={slug}
+              productName={`${brandLabel} ${model}`}
+              variant="primary"
+            />
+            <a
+              href={telHref}
+              data-cta="catalog-request-price"
+              data-location={slug}
+              className="block w-full rounded-xl border border-border-strong py-3 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors hover:border-border hover:text-ink"
+            >
+              {t.request}
+            </a>
+          </>
         )}
       </div>
     </div>

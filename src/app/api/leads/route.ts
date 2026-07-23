@@ -10,7 +10,8 @@ export const dynamic = "force-dynamic";
 const phoneRe = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
 
 const LeadSchema = z.object({
-  name: z.string().trim().min(2).max(120),
+  // Ім'я опційне: швидке замовлення з картки збирає лише телефон (ім'я — бонус).
+  name: z.string().trim().min(2).max(120).optional().nullable(),
   phone: z
     .string()
     .transform((v) => v.replace(/[\s\-()]/g, ""))
@@ -66,15 +67,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, persisted: false });
   }
 
+  // leads.name — NOT NULL. Якщо клієнт не дав ім'я (швидке замовлення), кладемо
+  // локалізовану заглушку, щоб у CRM рядок читався (сам запит — у source + attribution).
+  const name =
+    parsed.data.name?.trim() ||
+    (parsed.data.locale === "ru" ? "Быстрый заказ" : "Швидке замовлення");
+  // Товар зі швидкого замовлення передається в attribution.product → показуємо в Telegram.
+  const attribution = parsed.data.attribution ?? {};
+  const product = typeof attribution.product === "string" ? attribution.product : null;
+
   const { data: leadRow, error } = await supabase
     .from("leads")
     .insert({
-      name: parsed.data.name,
+      name,
       phone: parsed.data.phone,
       email: parsed.data.email ?? null,
       source: parsed.data.source,
       locale: parsed.data.locale,
-      attribution: parsed.data.attribution ?? {},
+      attribution,
     })
     .select("id")
     .single();
@@ -90,11 +100,12 @@ export async function POST(request: NextRequest) {
   const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
   after(async () => {
     await notifyNewLead({
-      name: parsed.data.name,
+      name,
       phone: parsed.data.phone,
       email: parsed.data.email ?? null,
       source: parsed.data.source,
       locale: parsed.data.locale,
+      product,
       adminUrl,
     });
   });

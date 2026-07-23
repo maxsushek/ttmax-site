@@ -132,6 +132,8 @@ export type NewLeadNotification = {
   email?: string | null;
   source: string;
   locale: string;
+  /** Товар (для швидкого замовлення з картки) — щоб менеджер бачив, що замовляють. */
+  product?: string | null;
   /** Посилання на CRM (будується з домену запиту). */
   adminUrl?: string | null;
 };
@@ -147,6 +149,7 @@ export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean>
     `📞 ${esc(lead.phone)}`,
   ];
   if (lead.email) lines.push(`✉️ ${esc(lead.email)}`);
+  if (lead.product) lines.push(`🛒 ${esc(lead.product)}`);
   lines.push("", `🔖 Джерело: ${esc(lead.source)}`, `🌐 ${esc(lead.locale)}`);
   if (lead.adminUrl) lines.push("", `<a href="${lead.adminUrl}">Відкрити в CRM →</a>`);
 
