@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
       customer_phone: data.customer.phone,
       customer_email: data.customer.email ?? null,
       // БД: CHECK (locale IN ('uk','ru')) — мапимо код локалі URL (ua) у код мови (uk).
-      locale: localeToLang[data.locale],
+      locale: localeToLang[data.locale] as "ua" | "ru",
       delivery_method: data.delivery.method,
       delivery_city: data.delivery.city ?? null,
       delivery_branch: data.delivery.branch ?? null,
@@ -228,7 +228,7 @@ export async function POST(request: NextRequest) {
       phone: data.customer.phone,
       email: data.customer.email ?? null,
       source: "order",
-      locale: localeToLang[data.locale],
+      locale: localeToLang[data.locale] as "ua" | "ru",
       attribution,
       value_uah: computedTotal,
       notes: deliveryNote,

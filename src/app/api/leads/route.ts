@@ -77,7 +77,10 @@ export async function POST(request: NextRequest) {
   const product = typeof attribution.product === "string" ? attribution.product : null;
   // ⚠️ БД має CHECK (locale IN ('uk','ru')) — це BCP-47 код мови, а НЕ код локалі в URL
   // ('ua'/'ru'). Без мапи вставка з locale='ua' падала (23514) → форма лідів на /ua ламалась.
-  const dbLocale = localeToLang[parsed.data.locale];
+  // Каст: рукописний тип колонки в supabase/types.ts помилково каже "ua"|"ru", а фактично
+  // (і в наявних рядках) — "uk". Значення коректне для БД; тип лишаємо не чіпати (він
+  // спільний з іншими таблицями, де 'ua' валідний).
+  const dbLocale = localeToLang[parsed.data.locale] as "ua" | "ru";
 
   const { data: leadRow, error } = await supabase
     .from("leads")
