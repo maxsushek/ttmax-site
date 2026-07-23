@@ -28,8 +28,8 @@ function ComparisonTable({ comparison }: { comparison: NonNullable<ContentBlock[
           {heading}
         </h2>
       )}
-      <div className="overflow-x-auto rounded-2xl border border-border-strong">
-        <table className="w-full border-collapse text-sm">
+      <div className="overflow-x-auto rounded-2xl border border-border-strong sm:rounded-2xl">
+        <table className="rtable w-full border-collapse text-sm">
           {columns.length > 0 && (
             <thead>
               <tr>
@@ -48,7 +48,11 @@ function ComparisonTable({ comparison }: { comparison: NonNullable<ContentBlock[
             {rows.map((r, ri) => (
               <tr key={ri} className={ri % 2 === 0 ? "bg-white/[0.02]" : undefined}>
                 {r.cells.map((cell, ci) => (
-                  <td key={ci} className="border-b border-border-subtle px-3 py-2.5 text-ink">
+                  <td
+                    key={ci}
+                    data-label={columns[ci] ?? ""}
+                    className="border-b border-border-subtle px-3 py-2.5 text-ink"
+                  >
                     {ci === 0 && r.href ? (
                       r.href.startsWith("/") ? (
                         <Link href={r.href} className="font-semibold text-accent hover:underline">

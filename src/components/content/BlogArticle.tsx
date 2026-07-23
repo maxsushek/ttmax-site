@@ -253,7 +253,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               </div>
               {s.table && (
                 <div className="mt-4 overflow-x-auto">
-                  <table className="w-full border-collapse font-body text-[14px]">
+                  <table className="rtable w-full border-collapse font-body text-[14px]">
                     <thead>
                       <tr>
                         {s.table.columns.map((c, ci) => (
@@ -273,6 +273,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                           {row.map((cell, cj) => (
                             <td
                               key={cj}
+                              data-label={s.table?.columns[cj]?.[locale] ?? ""}
                               className="border-b border-border-subtle px-3 py-2 text-ink"
                             >
                               {cell[locale]}

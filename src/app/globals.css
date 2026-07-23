@@ -85,6 +85,45 @@
   }
 }
 
+@layer components {
+  /* Адаптивна таблиця: на мобільному НЕ гортається горизонтально, а перебудовується
+     у стек «картка на рядок». Кожен <td> отримує data-label (заголовок стовпця);
+     перша клітинка стає заголовком картки. Застосовується класом .rtable на <table>.
+     Важливо для UX/CRO: на телефоні порівняльні таблиці читаються без горизонтального скролу. */
+  @media (max-width: 640px) {
+    table.rtable {
+      @apply block;
+      min-width: 0 !important;
+    }
+    table.rtable thead {
+      @apply sr-only;
+    }
+    table.rtable tbody {
+      @apply block;
+    }
+    table.rtable tr {
+      @apply mb-2 block rounded-xl border border-border-strong px-3.5 py-1;
+    }
+    table.rtable tr:last-child {
+      @apply mb-0;
+    }
+    table.rtable td {
+      @apply flex items-baseline justify-between gap-4 border-0 py-1.5 text-right;
+    }
+    table.rtable td::before {
+      content: attr(data-label);
+      @apply text-left font-semibold text-ink-muted;
+    }
+    /* Перша клітинка (модель/назва) — заголовок картки, без підпису. */
+    table.rtable td:first-child {
+      @apply block pt-2.5 text-left text-[15px] font-bold text-ink;
+    }
+    table.rtable td:first-child::before {
+      content: none;
+    }
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

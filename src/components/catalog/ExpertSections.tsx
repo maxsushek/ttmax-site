@@ -153,7 +153,7 @@ export function ExpertSections({
               : L(`Порівняння лінійки ${series}`, `Сравнение линейки ${series}`)}
           </h2>
           <div className="mt-5 overflow-x-auto">
-            <table className="w-full min-w-[460px] border-collapse text-sm">
+            <table className="rtable w-full min-w-[460px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">
                   <th className="py-2.5 pr-3 text-left font-bold">{L("Модель", "Модель")}</th>
@@ -176,12 +176,27 @@ export function ExpertSections({
                           </span>
                         )}
                       </td>
-                      <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.speed}</td>
-                      <td className="px-2 py-3 text-center tabular-nums text-white/75">{row.spin}</td>
-                      <td className="px-2 py-3 text-center tabular-nums text-white/75">
+                      <td
+                        data-label={cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}
+                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                      >
+                        {row.speed}
+                      </td>
+                      <td
+                        data-label={cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}
+                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                      >
+                        {row.spin}
+                      </td>
+                      <td
+                        data-label={cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}
+                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                      >
                         {row.hardnessText ?? (row.hardness != null ? `${row.hardness}°` : "—")}
                       </td>
-                      <td className="py-3 pl-2 text-white/65">{row.fit[locale]}</td>
+                      <td data-label={L("Кому", "Кому")} className="py-3 pl-2 text-white/65">
+                        {row.fit[locale]}
+                      </td>
                     </tr>
                   );
                 })}

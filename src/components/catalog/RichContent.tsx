@@ -65,7 +65,7 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
         <section>
           <h2 className={h2}>{L(content.comparison.heading)}</h2>
           <div className="mt-5 overflow-x-auto">
-            <table className="w-full min-w-[460px] border-collapse text-sm">
+            <table className="rtable w-full min-w-[460px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">
                   {content.comparison.columns.map((c, i) => (
@@ -81,6 +81,7 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
                     {r.cells.map((cell, j) => (
                       <td
                         key={j}
+                        data-label={content.comparison?.columns[j] ? L(content.comparison.columns[j]!) : ""}
                         className={`py-3 ${j === 0 ? "pr-3 font-semibold text-white/90" : "px-2 text-white/70"}`}
                       >
                         {j === 0 && r.href ? (
