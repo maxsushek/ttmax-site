@@ -2619,11 +2619,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Куртка Butterfly Maruno (розмір S)",
-      ru: "Куртка Butterfly Maruno (розмір S)",
+      ru: "Куртка Butterfly Maruno (размер S)",
     },
     title: {
       ua: "Куртка Butterfly Maruno (розмір S) - купити в Україні | TTMAX",
-      ru: "Куртка Butterfly Maruno (розмір S) - купить в Украине | TTMAX",
+      ru: "Куртка Butterfly Maruno (размер S) - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2681,11 +2681,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Tano",
-      ru: "Олімпійка Butterfly Tano",
+      ru: "Олимпийка Butterfly Tano",
     },
     title: {
       ua: "Олімпійка Butterfly Tano - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Tano - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Tano - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2712,11 +2712,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Shiro",
-      ru: "Олімпійка Butterfly Shiro",
+      ru: "Олимпийка Butterfly Shiro",
     },
     title: {
       ua: "Олімпійка Butterfly Shiro - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Shiro - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Shiro - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2743,11 +2743,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Naoki",
-      ru: "Олімпійка Butterfly Naoki",
+      ru: "Олимпийка Butterfly Naoki",
     },
     title: {
       ua: "Олімпійка Butterfly Naoki - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Naoki - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Naoki - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2774,11 +2774,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Koba",
-      ru: "Олімпійка Butterfly Koba",
+      ru: "Олимпийка Butterfly Koba",
     },
     title: {
       ua: "Олімпійка Butterfly Koba - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Koba - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Koba - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2805,11 +2805,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Hino (XXL)",
-      ru: "Олімпійка Butterfly Hino (XXL)",
+      ru: "Олимпийка Butterfly Hino (XXL)",
     },
     title: {
       ua: "Олімпійка Butterfly Hino (XXL) - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Hino (XXL) - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Hino (XXL) - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -2836,11 +2836,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Олімпійка Butterfly Hadano",
-      ru: "Олімпійка Butterfly Hadano",
+      ru: "Олимпийка Butterfly Hadano",
     },
     title: {
       ua: "Олімпійка Butterfly Hadano - купити в Україні | TTMAX",
-      ru: "Олімпійка Butterfly Hadano - купить в Украине | TTMAX",
+      ru: "Олимпийка Butterfly Hadano - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4069,11 +4069,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Шльопанці Butterfly",
-      ru: "Шльопанці Butterfly",
+      ru: "Шлёпанцы Butterfly",
     },
     title: {
       ua: "Шльопанці Butterfly - купити в Україні | TTMAX",
-      ru: "Шльопанці Butterfly - купить в Украине | TTMAX",
+      ru: "Шлёпанцы Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4763,11 +4763,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Відновник обертання Butterfly Spin Refresh",
-      ru: "Відновник обертання Butterfly Spin Refresh",
+      ru: "Восстановитель вращения Butterfly Spin Refresh",
     },
     title: {
       ua: "Відновник обертання Butterfly Spin Refresh - купити в Україні | TTMAX",
-      ru: "Відновник обертання Butterfly Spin Refresh - купить в Украине | TTMAX",
+      ru: "Восстановитель вращения Butterfly Spin Refresh - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4879,11 +4879,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Захисна плівка Butterfly",
-      ru: "Захисна плівка Butterfly",
+      ru: "Защитная плёнка Butterfly",
     },
     title: {
       ua: "Захисна плівка Butterfly - купити в Україні | TTMAX",
-      ru: "Захисна плівка Butterfly - купить в Украине | TTMAX",
+      ru: "Защитная плёнка Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4908,11 +4908,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Logo 6мм / 10м",
-      ru: "Торцева стрічка Butterfly Logo 6мм / 10м",
+      ru: "Торцевая лента Butterfly Logo 6мм / 10м",
     },
     title: {
       ua: "Торцева стрічка Butterfly Logo 6мм / 10м - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Logo 6мм / 10м - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Logo 6мм / 10м - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4937,11 +4937,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Logo 12мм / 50м",
-      ru: "Торцева стрічка Butterfly Logo 12мм / 50м",
+      ru: "Торцевая лента Butterfly Logo 12мм / 50м",
     },
     title: {
       ua: "Торцева стрічка Butterfly Logo 12мм / 50м - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Logo 12мм / 50м - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Logo 12мм / 50м - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4966,11 +4966,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Logo 12мм / 1м",
-      ru: "Торцева стрічка Butterfly Logo 12мм / 1м",
+      ru: "Торцевая лента Butterfly Logo 12мм / 1м",
     },
     title: {
       ua: "Торцева стрічка Butterfly Logo 12мм / 1м - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Logo 12мм / 1м - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Logo 12мм / 1м - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -4995,11 +4995,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Logo 12mm / 10m",
-      ru: "Торцева стрічка Butterfly Logo 12mm / 10m",
+      ru: "Торцевая лента Butterfly Logo 12mm / 10m",
     },
     title: {
       ua: "Торцева стрічка Butterfly Logo 12mm / 10m - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Logo 12mm / 10m - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Logo 12mm / 10m - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -5024,11 +5024,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Glayzer",
-      ru: "Торцева стрічка Butterfly Glayzer",
+      ru: "Торцевая лента Butterfly Glayzer",
     },
     title: {
       ua: "Торцева стрічка Butterfly Glayzer - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Glayzer - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Glayzer - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -5053,11 +5053,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Торцева стрічка Butterfly Dignics",
-      ru: "Торцева стрічка Butterfly Dignics",
+      ru: "Торцевая лента Butterfly Dignics",
     },
     title: {
       ua: "Торцева стрічка Butterfly Dignics - купити в Україні | TTMAX",
-      ru: "Торцева стрічка Butterfly Dignics - купить в Украине | TTMAX",
+      ru: "Торцевая лента Butterfly Dignics - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -5111,11 +5111,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Запасні устілки Butterfly",
-      ru: "Запасні устілки Butterfly",
+      ru: "Запасные стельки Butterfly",
     },
     title: {
       ua: "Запасні устілки Butterfly - купити в Україні | TTMAX",
-      ru: "Запасні устілки Butterfly - купить в Украине | TTMAX",
+      ru: "Запасные стельки Butterfly - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -6358,11 +6358,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Валіза Butterfly Yasyo Trolley",
-      ru: "Валіза Butterfly Yasyo Trolley",
+      ru: "Чемодан Butterfly Yasyo Trolley",
     },
     title: {
       ua: "Валіза Butterfly Yasyo Trolley - купити в Україні | TTMAX",
-      ru: "Валіза Butterfly Yasyo Trolley - купить в Украине | TTMAX",
+      ru: "Чемодан Butterfly Yasyo Trolley - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -6387,11 +6387,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Валіза Butterfly Tabi",
-      ru: "Валіза Butterfly Tabi",
+      ru: "Чемодан Butterfly Tabi",
     },
     title: {
       ua: "Валіза Butterfly Tabi - купити в Україні | TTMAX",
-      ru: "Валіза Butterfly Tabi - купить в Украине | TTMAX",
+      ru: "Чемодан Butterfly Tabi - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -6416,11 +6416,11 @@ export const catalogGear: CatalogProduct[] = [
     kind: "gear",
     name: {
       ua: "Валіза Butterfly Black Line",
-      ru: "Валіза Butterfly Black Line",
+      ru: "Чемодан Butterfly Black Line",
     },
     title: {
       ua: "Валіза Butterfly Black Line - купити в Україні | TTMAX",
-      ru: "Валіза Butterfly Black Line - купить в Украине | TTMAX",
+      ru: "Чемодан Butterfly Black Line - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},

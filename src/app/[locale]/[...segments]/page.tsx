@@ -914,7 +914,7 @@ function RubberView({
 }) {
   const product = route.product;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = filterVisible(getCrossSell(product), media);
+  const related = filterVisible(getCrossSell(product), media).slice(0, 4);
   const img = pickPrimary(media, "product", product.slug);
 
   const rows: { label: string; value: string }[] = [];
@@ -999,7 +999,7 @@ function GearView({
   const product = route.product;
   const gear = product.gear!;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = filterVisible(getCrossSell(product), media);
+  const related = filterVisible(getCrossSell(product), media).slice(0, 4);
   const img = pickPrimary(media, "product", product.slug);
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
 
@@ -1095,7 +1095,7 @@ function BaseView({
   const product = route.product;
   const base = product.base!;
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
-  const related = filterVisible(getCrossSell(product), media);
+  const related = filterVisible(getCrossSell(product), media).slice(0, 4);
   const img = pickPrimary(media, "product", product.slug);
 
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
