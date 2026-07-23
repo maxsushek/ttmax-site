@@ -4,7 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewOrder } from "@/lib/telegram/notify";
 import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
-import { locales } from "@/i18n/config";
+import { locales, localeToLang } from "@/i18n/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -165,7 +165,8 @@ export async function POST(request: NextRequest) {
       customer_name: data.customer.name,
       customer_phone: data.customer.phone,
       customer_email: data.customer.email ?? null,
-      locale: data.locale,
+      // БД: CHECK (locale IN ('uk','ru')) — мапимо код локалі URL (ua) у код мови (uk).
+      locale: localeToLang[data.locale],
       delivery_method: data.delivery.method,
       delivery_city: data.delivery.city ?? null,
       delivery_branch: data.delivery.branch ?? null,
@@ -227,7 +228,7 @@ export async function POST(request: NextRequest) {
       phone: data.customer.phone,
       email: data.customer.email ?? null,
       source: "order",
-      locale: data.locale,
+      locale: localeToLang[data.locale],
       attribution,
       value_uah: computedTotal,
       notes: deliveryNote,

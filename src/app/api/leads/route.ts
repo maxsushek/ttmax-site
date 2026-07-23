@@ -2,7 +2,7 @@ import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewLead } from "@/lib/telegram/notify";
-import { locales } from "@/i18n/config";
+import { locales, localeToLang } from "@/i18n/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,6 +75,9 @@ export async function POST(request: NextRequest) {
   // Товар зі швидкого замовлення передається в attribution.product → показуємо в Telegram.
   const attribution = parsed.data.attribution ?? {};
   const product = typeof attribution.product === "string" ? attribution.product : null;
+  // ⚠️ БД має CHECK (locale IN ('uk','ru')) — це BCP-47 код мови, а НЕ код локалі в URL
+  // ('ua'/'ru'). Без мапи вставка з locale='ua' падала (23514) → форма лідів на /ua ламалась.
+  const dbLocale = localeToLang[parsed.data.locale];
 
   const { data: leadRow, error } = await supabase
     .from("leads")
@@ -83,7 +86,7 @@ export async function POST(request: NextRequest) {
       phone: parsed.data.phone,
       email: parsed.data.email ?? null,
       source: parsed.data.source,
-      locale: parsed.data.locale,
+      locale: dbLocale,
       attribution,
     })
     .select("id")
