@@ -15,6 +15,7 @@ import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { getMediaMap } from "@/lib/media/get";
 import { isPhotolessHidden } from "@/lib/catalog/hidden";
+import { cldUrl } from "@/lib/cloudinary/url";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -25,7 +26,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Шляхи без локалі; "" — головна. Лише сторінки, що мають товари (індексовані).
   // lastMod — РЕАЛЬНА дата зміни (де відома). Без неї Google отримує час білда `now`
   // на кожному деплої й перестає довіряти датам. Для статей беремо dateModified.
-  const paths: { path: string; priority: number; freq: "weekly" | "monthly"; lastMod?: Date }[] = [
+  const paths: {
+    path: string;
+    priority: number;
+    freq: "weekly" | "monthly";
+    lastMod?: Date;
+    images?: string[];
+  }[] = [
     { path: "", priority: 1.0, freq: "weekly" },
     { path: "/about", priority: 0.5, freq: "monthly" },
     { path: "/contacts", priority: 0.5, freq: "monthly" },
@@ -39,11 +46,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Статті блогу (getAllPosts вже відсіює чернетки) + сторінки авторів.
   for (const post of getAllPosts()) {
+    // image:image — інакше Google повільно/погано індексує фото з JS-рендера Next.js.
+    // Обкладинка (hero або фірмова) + кожен inline-кадр рекомендації в секціях.
+    const images: string[] = [];
+    if (post.heroPublicId) {
+      const u = cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" });
+      if (u) images.push(u);
+    } else if (post.coverSrc) {
+      images.push(`${siteConfig.url}${post.coverSrc}`);
+    }
+    for (const s of post.sections) {
+      if (!s.rec) continue;
+      const u = cldUrl(s.rec.publicId, { w: 800, h: 800, crop: "fill" });
+      if (u) images.push(u);
+    }
     paths.push({
       path: `/blog/${post.slug}`,
       priority: 0.6,
       freq: "monthly",
       lastMod: new Date(post.dateModified),
+      images: images.length > 0 ? images : undefined,
     });
   }
   for (const author of allAuthors) {
@@ -95,7 +117,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  for (const { path, priority, freq, lastMod } of paths) {
+  for (const { path, priority, freq, lastMod, images } of paths) {
     const languages: Record<string, string> = {};
     // hreflang має бути BCP-47 кодом МОВИ (uk), а не кодом локалі в URL (ua).
     // URL лишається /ua і /ru — змінюється лише ключ alternates (ua→uk, ru→ru) + x-default.
@@ -108,6 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: freq,
         priority,
         alternates: { languages },
+        ...(images && images.length > 0 ? { images } : {}),
       });
     }
   }

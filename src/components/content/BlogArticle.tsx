@@ -19,6 +19,7 @@ const UI = {
     blog: "Блог",
     contents: "Зміст",
     opinion: "Думка магазину",
+    viewModel: "Дивитись модель →",
     faqHeading: "Часті запитання",
     linksHeading: "Корисне в каталозі",
     relatedHeading: "Читайте також",
@@ -33,6 +34,7 @@ const UI = {
     blog: "Блог",
     contents: "Содержание",
     opinion: "Мнение магазина",
+    viewModel: "Смотреть модель →",
     faqHeading: "Частые вопросы",
     linksHeading: "Полезное в каталоге",
     relatedHeading: "Читайте также",
@@ -251,6 +253,33 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   </p>
                 ))}
               </div>
+              {s.rec && (
+                // Редакційна картка-рекомендація: фото товару + вердикт тренера + лінк на money-картку.
+                // Лівий акцент-бордер + курсив-вердикт = «цитата тренера», НЕ product-tile.
+                // БЕЗ ціни, БЕЗ кнопки «Купити» — захист правила формату (стаття ≠ каталог).
+                <Link
+                  href={`/${locale}${s.rec.href}`}
+                  className="mt-4 flex items-center gap-4 rounded-xl border border-border-subtle border-l-[3px] border-l-accent bg-bg-raised px-4 py-3 transition-colors hover:bg-accent/5"
+                >
+                  <Image
+                    src={cldUrl(s.rec.publicId, { w: 240, h: 240, crop: "fill" })}
+                    alt={s.rec.alt[locale]}
+                    width={120}
+                    height={120}
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(max-width: 640px) 84px, 120px"
+                    className="h-auto w-[clamp(84px,20vw,120px)] shrink-0 rounded-lg border border-border-subtle bg-white object-cover"
+                  />
+                  <span className="min-w-0">
+                    <span className="block font-display text-[15px] font-bold text-ink">{s.rec.name[locale]}</span>
+                    <span className="mt-0.5 block font-body text-[13px] italic leading-snug text-ink-muted">
+                      {s.rec.verdict[locale]}
+                    </span>
+                    <span className="mt-1 block font-body text-[13px] font-bold text-accent">{ui.viewModel}</span>
+                  </span>
+                </Link>
+              )}
               {s.table && (
                 <div className="mt-4 overflow-x-auto">
                   <table className="rtable w-full border-collapse font-body text-[14px]">

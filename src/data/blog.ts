@@ -15,6 +15,8 @@ export type BlogSection = {
   h: L;
   p: Record<Locale, string[]>;
   table?: { columns: L[]; rows: L[][] };
+  /** Опційна редакційна картка-рекомендація (фото товару + вердикт). Рендериться під абзацами, над таблицею/лінками. */
+  rec?: BlogRec;
   /** Контекстні лінки на каталог у межах розділу (перелінковка). БЕЗ цін/кнопок. */
   links?: BlogLink[];
 };
@@ -27,6 +29,24 @@ export type BlogOpinion = { body: L };
 
 /** Контекстний лінк на товар/категорію — БЕЗ цін і кнопок (щоб не канібалізувати каталог). */
 export type BlogLink = { label: L; href: string };
+
+/**
+ * Редакційна картка-рекомендація в секції: реальне фото товару + вердикт тренера + лінк на money-картку.
+ * СВІДОМО одинична (не масив) — тип фізично не дає зробити товарну сітку, що ламало б правило формату.
+ * БЕЗ ціни, БЕЗ кнопки «Купити»: фото — ілюстрація до тексту, комерція живе тільки на картці товару.
+ */
+export type BlogRec = {
+  /** Cloudinary publicId кадру (ttmax/product/{slug}/NN). Для унікальності в Google Images краще НЕ /00. */
+  publicId: string;
+  /** Назва товару з брендом. */
+  name: L;
+  /** 1 рядок вердикту тренера (джерело — колонка «Кому» порівняльної таблиці). */
+  verdict: L;
+  /** alt — свій на кожну локаль (кирилиця моделі), 5–15 слів, без слова «купити». */
+  alt: L;
+  /** Money-картка товару. */
+  href: string;
+};
 
 export type BlogPost = {
   /** URL-сегмент: /{locale}/blog/<slug>. Регулярка: /^[a-z0-9-]{1,80}$/. */
@@ -882,6 +902,16 @@ const POSTS: Record<string, BlogPost> = {
             "Tenergy 05 («тенерджи 05») стала брендом сама по себе — это самая известная тензорная накладка в мире и точка отсчёта для остальных. Универсальная: спин, скорость и контроль в балансе. С неё реально начать серьёзную игру. FX — мягче для контроля и перехода, Hard — твёрже под поставленный удар. Tenergy 19 чуть быстрее, Tenergy 80 многие ставят наравне с 05.",
           ],
         },
+        rec: {
+          publicId: "ttmax/product/tenergy-05/00",
+          name: { ua: "Butterfly Tenergy 05", ru: "Butterfly Tenergy 05" },
+          verdict: { ua: "Еталон, універсал під атаку", ru: "Эталон, универсал под атаку" },
+          alt: {
+            ua: "накладка Butterfly Тенерджі 05, універсальний еталон спіну — макрознімок",
+            ru: "накладка Butterfly Тенерджи 05, универсальный эталон спина — макроснимок",
+          },
+          href: "/butterfly/nakladki/tenergy-05",
+        },
         links: [
           { label: { ua: "Tenergy 05", ru: "Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
           { label: { ua: "Tenergy 05 FX", ru: "Tenergy 05 FX" }, href: "/butterfly/nakladki/tenergy-05-fx" },
@@ -898,6 +928,16 @@ const POSTS: Record<string, BlogPost> = {
           ru: [
             "Dignics — более новая линейка на губке Spring Sponge X: больше спина и стабильности при схожей скорости. Самая популярная у игроков — Dignics 09C («дигникс 09с»): липкий верх даёт сумасшедшее вращение на подаче и топ-спине, это выбор №1 среди тех, кто играет вращением. Dignics 05 — прямой наследник Tenergy 05, 64 — самая быстрая под первый темп (ею играют реже), 80 — баланс.",
           ],
+        },
+        rec: {
+          publicId: "ttmax/product/dignics-09c/00",
+          name: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" },
+          verdict: { ua: "Найпопулярніша: липкий топ-спін", ru: "Самая популярная: липкий топ-спин" },
+          alt: {
+            ua: "накладка Butterfly Дігнікс 09C, липкий верх, максимум обертання — макрознімок",
+            ru: "накладка Butterfly Дигникс 09C, липкий верх, максимум вращения — макроснимок",
+          },
+          href: "/butterfly/nakladki/dignics-09c",
         },
         links: [
           { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
@@ -918,8 +958,18 @@ const POSTS: Record<string, BlogPost> = {
             "Это не «новинка на будущее», а зрелая топовая накладка здесь и сейчас — просто самая дорогая в линейке. Поэтому переходят на неё в основном уверенные игроки, осознанно строящие игру на вращении и мощном первом темпе. Если ваш удар уже поставлен и вы хотите максимум спина — это ваш вариант.",
           ],
         },
+        rec: {
+          publicId: "ttmax/product/zyre-03/00",
+          name: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" },
+          verdict: { ua: "Топ-потужність, губка 2,5/2,7 мм", ru: "Топ-мощность, губка 2,5/2,7 мм" },
+          alt: {
+            ua: "накладка Butterfly Зайр 03, губка 2,7 мм, топовий спін — макрознімок",
+            ru: "накладка Butterfly Зайр 03, губка 2,7 мм, топовый спин — макроснимок",
+          },
+          href: "/butterfly/nakladki/zyre-03",
+        },
         links: [
-          { label: { ua: "Zyre 03 — купити", ru: "Zyre 03 — купить" }, href: "/butterfly/nakladki/zyre-03" },
+          { label: { ua: "Огляд Zyre 03 →", ru: "Обзор Zyre 03 →" }, href: "/butterfly/nakladki/zyre-03" },
         ],
       },
       {
@@ -932,6 +982,16 @@ const POSTS: Record<string, BlogPost> = {
           ru: [
             "На старт и бюджет: Rozena — мягкая, прощающая, хотя уже на старших технологиях; Glayzer — доступнее тензорная, но не самая удачная (многие пробовали и вернулись к Tenergy). Glayzer 09C — липкая дешёвая альтернатива ощущению Dignics 09C.",
           ],
+        },
+        rec: {
+          publicId: "ttmax/product/rozena/00",
+          name: { ua: "Butterfly Rozena", ru: "Butterfly Rozena" },
+          verdict: { ua: "М'яка, прощаюча — бюджетний старт", ru: "Мягкая, прощающая — бюджетный старт" },
+          alt: {
+            ua: "накладка Butterfly Розена, м'яка прощаюча — бюджетний старт",
+            ru: "накладка Butterfly Розена, мягкая прощающая — бюджетный старт",
+          },
+          href: "/butterfly/nakladki/rozena",
         },
         links: [
           { label: { ua: "Rozena", ru: "Rozena" }, href: "/butterfly/nakladki/rozena" },
