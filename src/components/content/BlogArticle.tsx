@@ -268,8 +268,11 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     height={120}
                     loading="lazy"
                     decoding="async"
-                    sizes="(max-width: 640px) 84px, 120px"
-                    className="h-auto w-[clamp(84px,20vw,120px)] shrink-0 rounded-lg border border-border-subtle bg-white object-cover"
+                    sizes="(max-width: 640px) 96px, 120px"
+                    className="shrink-0 rounded-lg border border-border-subtle bg-white object-cover"
+                    // Inline-style замість Tailwind arbitrary: clamp() із комами не генерується JIT
+                    // і фото схлопувалось у флексі до 2px. Обидва розміри задані → квадрат, CLS=0.
+                    style={{ width: "clamp(96px, 22vw, 120px)", height: "clamp(96px, 22vw, 120px)" }}
                   />
                   <span className="min-w-0">
                     <span className="block font-display text-[15px] font-bold text-ink">{s.rec.name[locale]}</span>
