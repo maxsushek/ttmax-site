@@ -261,19 +261,23 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   href={`/${locale}${s.rec.href}`}
                   className="mt-4 flex items-center gap-4 rounded-xl border border-border-subtle border-l-[3px] border-l-accent bg-bg-raised px-4 py-3 transition-colors hover:bg-accent/5"
                 >
-                  <Image
-                    src={cldUrl(s.rec.publicId, { w: 240, h: 240, crop: "fill" })}
-                    alt={s.rec.alt[locale]}
-                    width={120}
-                    height={120}
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(max-width: 640px) 96px, 120px"
-                    className="shrink-0 rounded-lg border border-border-subtle bg-white object-cover"
-                    // Inline-style замість Tailwind arbitrary: clamp() із комами не генерується JIT
-                    // і фото схлопувалось у флексі до 2px. Обидва розміри задані → квадрат, CLS=0.
-                    style={{ width: "clamp(96px, 22vw, 120px)", height: "clamp(96px, 22vw, 120px)" }}
-                  />
+                  {/* Фіксований контейнер + fill замість width/height на самому <img>:
+                      replaced-елемент як flex-item ігнорував width по головній осі й схлопувався
+                      до 2px (0 контент + 2px бордер). Сайзинг на span (звичайний блок) тримається. */}
+                  <span
+                    className="relative block shrink-0 overflow-hidden rounded-lg border border-border-subtle bg-white"
+                    style={{ width: 100, height: 100 }}
+                  >
+                    <Image
+                      src={cldUrl(s.rec.publicId, { w: 240, h: 240, crop: "fill" })}
+                      alt={s.rec.alt[locale]}
+                      fill
+                      loading="lazy"
+                      decoding="async"
+                      sizes="100px"
+                      className="object-cover"
+                    />
+                  </span>
                   <span className="min-w-0">
                     <span className="block font-display text-[15px] font-bold text-ink">{s.rec.name[locale]}</span>
                     <span className="mt-0.5 block font-body text-[13px] italic leading-snug text-ink-muted">
