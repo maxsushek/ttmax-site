@@ -804,7 +804,7 @@ const POSTS: Record<string, BlogPost> = {
     dateModified: "2026-07-23",
     author: "artem-maksymchuk",
     heroPublicId: undefined,
-    coverSrc: undefined,
+    coverSrc: "/blog/nakladki-cover.png",
     heroAlt: {
       ua: "Порівняння накладок Butterfly Tenergy та Dignics для настільного тенісу",
       ru: "Сравнение накладок Butterfly Tenergy и Dignics для настольного тенниса",
@@ -1018,7 +1018,7 @@ const POSTS: Record<string, BlogPost> = {
     dateModified: "2026-07-23",
     author: "artem-maksymchuk",
     heroPublicId: undefined,
-    coverSrc: undefined,
+    coverSrc: "/blog/ping-pong-cover.png",
     heroAlt: {
       ua: "Пінг-понг — гра в настільний теніс: стіл, ракетка та м'яч",
       ru: "Пинг-понг — игра в настольный теннис: стол, ракетка и мяч",
