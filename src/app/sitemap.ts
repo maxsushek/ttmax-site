@@ -10,7 +10,7 @@ import {
   getProductsByCategory,
   getProductsBySeries,
 } from "@/data/catalog";
-import { surfaceGroups } from "@/lib/catalog/routing";
+import { surfaceGroups, seriesIndexable } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { getMediaMap } from "@/lib/media/get";
@@ -79,13 +79,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Хаби серій (/{category}/{series}) і колекції за волокном (/osnovaniya/alc|zlc).
-  // Роутер їх генерує й індексує, а sitemap про них не знав узагалі — 32 URL були поза мапою,
-  // причому частина з них не має жодного внутрішнього посилання, тобто інакше їх не знайти.
-  // Поріг >= 2 тримаємо однаковий із routing.ts, щоб мапа не суперечила noindex.
+  // Критерій індексації — seriesIndexable з routing.ts (ОДИН власник істини на обидва файли).
+  // Раніше тут жив власний поріг «>= 2», і мапа розійшлася з реальністю: 6 порожніх хабів
+  // лежали в sitemap, а наповнені zyre і rozena — ні.
   for (const s of catalogSeries) {
     for (const c of getIndexableCategories()) {
       const n = getProductsBySeries(s.slug).filter((p) => p.categorySlug === c.slug).length;
-      if (n >= 2) paths.push({ path: `/${c.slug}/${s.slug}`, priority: 0.6, freq: "weekly" });
+      if (seriesIndexable(s.slug, c.slug, n))
+        paths.push({ path: `/${c.slug}/${s.slug}`, priority: 0.6, freq: "weekly" });
     }
   }
   for (const g of surfaceGroups) {

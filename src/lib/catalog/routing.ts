@@ -27,6 +27,42 @@ export function pickLocalized(value: Localized, locale: Locale): string {
   return value[locale];
 }
 
+/**
+ * Серії, що мають ВЛАСНИЙ унікальний текст (content_blocks, entity_type='series').
+ * Станом на 25.07.2026: tenergy 3738, dignics 2958, zyre 1697, glayzer 1531, rozena 1233 знаки.
+ * Решта 9 серій (sriver, roundell, tackiness, feint, ilius, impartial, bryce, aibiss, flextra)
+ * тексту не мають узагалі — це порожні лістинги на 123-268 знаків службової обгортки.
+ *
+ * ⚠️ Список СВІДОМО статичний, а не «select із content_blocks»: індексація — редакційне
+ * рішення, а не автоматичний наслідок появи рядка в CMS. Написав текст новій серії → додай slug.
+ */
+const SERIES_WITH_CONTENT = new Set(["tenergy", "dignics", "glayzer", "rozena", "zyre"]);
+
+/**
+ * ЄДИНЕ правило індексації хаба серії — один власник істини для routing і sitemap.
+ * Раніше поріг «>= 2 товари» жив окремо в обох файлах і розійшовся з реальністю:
+ * у sitemap лежали 6 порожніх хабів (feint, tackiness, sriver, impartial, roundell, ilius),
+ * а наповнені zyre (1697 знаків) і rozena (1233) були поза ним.
+ *
+ * Три умови, кожна закриває свій клас дефекту:
+ *  1) < 2 товарів — хаб дублює саму картку й нічого не додає;
+ *  2) slug серії збігається зі slug товару в тій самій категорії — хаб і картка бʼються
+ *     за ОДИН запит (glayzer, rozena, sriver, roundell, aibiss, flextra);
+ *  3) немає власного тексту — тонка сторінка під запит із нульовим попитом.
+ *
+ * Сторінка лишається доступною і FOLLOW — вага йде далі на картки, лінки в навігації живі.
+ */
+export function seriesIndexable(
+  seriesSlug: string,
+  categorySlug: string,
+  productCount: number,
+): boolean {
+  if (productCount < 2) return false;
+  const twin = getProductBySlug(seriesSlug);
+  if (twin && twin.categorySlug === categorySlug) return false;
+  return SERIES_WITH_CONTENT.has(seriesSlug);
+}
+
 /** Локализованная подпись значения фильтра (тип поверхности, уровень, цвет, бакеты). */
 export function labelFor(key: string, value: string, locale: Locale): string {
   const def = rubberFilters.find((f) => f.key === key);
@@ -202,10 +238,14 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     const series = catalogSeries.find((s) => s.slug === b);
     if (cat && series) {
       const products = getProductsBySeries(series.slug).filter((p) => p.categorySlug === cat.slug);
-      // Поріг 2, а не 1: хаб з єдиним товаром дублює title самої картки (Zyre 03, Rozena —
-      // це money-товари) і канібалізує її, нічого не додаючи. Такі хаби лишаємо доступними,
-      // але поза індексом.
-      return { kind: "series", category: cat, series, products, index: products.length >= 2 };
+      // Правило індексації — у seriesIndexable (спільне з sitemap.ts), див. коментар там.
+      return {
+        kind: "series",
+        category: cat,
+        series,
+        products,
+        index: seriesIndexable(series.slug, cat.slug, products.length),
+      };
     }
     // /{category}/{surface-group} — напр. /osnovaniya/alc, /osnovaniya/zlc
     const sg = findSurfaceGroup(b);
