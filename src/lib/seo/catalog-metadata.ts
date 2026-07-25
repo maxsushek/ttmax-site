@@ -15,8 +15,15 @@ export function buildCatalogMetadata(opts: {
   index?: boolean;
   /** Абсолютний URL зображення для og:image / twitter (1200×630). */
   image?: string;
+  /**
+   * Опис для og/twitter, якщо він має бути ДОВШИЙ за meta description.
+   * Соцмережі не ріжуть на 155, тож картка товару віддає туди повний вердикт експерта.
+   * Не задано — використовується description.
+   */
+  ogDescription?: string;
 }): Metadata {
   const { locale, pathname, title, description, index = true, image } = opts;
+  const ogDescription = opts.ogDescription || description;
   const ogImages = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
   // До запуску — все сторінки каталогу noindex, навіть наповнені.
   const indexable = siteConfig.launched && index;
@@ -36,7 +43,7 @@ export function buildCatalogMetadata(opts: {
       url,
       siteName: siteConfig.name,
       title,
-      description,
+      description: ogDescription,
       locale: locale === "ua" ? "uk_UA" : "ru_UA",
       alternateLocale: locale === "ua" ? ["ru_UA"] : ["uk_UA"],
       ...(ogImages ? { images: ogImages } : {}),
@@ -44,7 +51,7 @@ export function buildCatalogMetadata(opts: {
     twitter: {
       card: "summary_large_image",
       title,
-      description,
+      description: ogDescription,
       ...(image ? { images: [image] } : {}),
     },
     robots: indexable

@@ -18,8 +18,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Zhang Jike ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Zhang Jike ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Zhang Jike ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Zhang Jike ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Zhang Jike ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -57,8 +57,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Zhang Jike T5000"
     },
     "title": {
-      "ua": "Основа Butterfly Zhang Jike T5000 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Zhang Jike T5000 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Zhang Jike T5000 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Zhang Jike T5000 — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -96,8 +96,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Zhang Jike Super ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Zhang Jike Super ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Zhang Jike Super ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Zhang Jike Super ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Zhang Jike Super ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -135,8 +135,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Zhang Jike ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Zhang Jike ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Zhang Jike ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Zhang Jike ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Zhang Jike ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -174,8 +174,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly XSTAR V"
     },
     "title": {
-      "ua": "Основа Butterfly XSTAR V — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly XSTAR V — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly XSTAR V — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly XSTAR V — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -212,8 +212,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Viscaria Super ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Viscaria Super ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Viscaria Super ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Viscaria Super ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Viscaria Super ALC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -251,8 +251,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Viscaria"
     },
     "title": {
-      "ua": "Основа Butterfly Viscaria — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Viscaria — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Viscaria — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Viscaria — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -290,8 +290,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll ZLF"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll ZLF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll ZLF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll ZLF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll ZLF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -329,8 +329,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -368,8 +368,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Spirit Off"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Spirit Off — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Spirit Off — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Spirit Off — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Spirit Off — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -406,8 +406,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Offensive"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Offensive — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Offensive — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Offensive — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Offensive — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -444,8 +444,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Mezzoforte"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Mezzoforte — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Mezzoforte — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Mezzoforte — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Mezzoforte — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -482,8 +482,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Fortissimo"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Fortissimo — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Fortissimo — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Fortissimo — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Fortissimo — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -520,8 +520,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Forte"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Forte — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Forte — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Forte — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Forte — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -558,8 +558,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Forte III"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Forte III — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Forte III — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Forte III — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Forte III — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -595,8 +595,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Control"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Control — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Control — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Control — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Control — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -633,8 +633,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll CAF"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll CAF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll CAF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll CAF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll CAF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -671,8 +671,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Anniversary Wood"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Anniversary Wood — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Anniversary Wood — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Anniversary Wood — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Anniversary Wood — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -709,8 +709,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll Allround"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll Allround — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll Allround — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll Allround — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll Allround — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -747,8 +747,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Timo Boll ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Timo Boll ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Timo Boll ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Timo Boll ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Timo Boll ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -786,8 +786,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly SK Carbon"
     },
     "title": {
-      "ua": "Основа Butterfly SK Carbon — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly SK Carbon — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly SK Carbon — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly SK Carbon — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -825,8 +825,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Revoldia CNF"
     },
     "title": {
-      "ua": "Основа Butterfly Revoldia CNF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Revoldia CNF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Revoldia CNF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Revoldia CNF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -864,8 +864,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Primorac"
     },
     "title": {
-      "ua": "Основа Butterfly Primorac — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Primorac — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Primorac — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Primorac — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -902,8 +902,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Primorac (Japan)"
     },
     "title": {
-      "ua": "Основа Butterfly Primorac (Japan) — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Primorac (Japan) — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Primorac (Japan) — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Primorac (Japan) — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -940,8 +940,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Primorac Carbon"
     },
     "title": {
-      "ua": "Основа Butterfly Primorac Carbon — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Primorac Carbon — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Primorac Carbon — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Primorac Carbon — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -979,8 +979,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Petr Korbel"
     },
     "title": {
-      "ua": "Основа Butterfly Petr Korbel — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Petr Korbel — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Petr Korbel — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Petr Korbel — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1017,8 +1017,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Petr Korbel (Japan)"
     },
     "title": {
-      "ua": "Основа Butterfly Petr Korbel (Japan) — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Petr Korbel (Japan) — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Petr Korbel (Japan) — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Petr Korbel (Japan) — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1055,8 +1055,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Ovtcharov S2"
     },
     "title": {
-      "ua": "Основа Butterfly Ovtcharov S2 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Ovtcharov S2 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Ovtcharov S2 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Ovtcharov S2 — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1093,8 +1093,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Ovtcharov S1"
     },
     "title": {
-      "ua": "Основа Butterfly Ovtcharov S1 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Ovtcharov S1 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Ovtcharov S1 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Ovtcharov S1 — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1131,8 +1131,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Outerforce ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Outerforce ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Outerforce ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Outerforce ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Outerforce ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1170,8 +1170,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Outerforce CAF"
     },
     "title": {
-      "ua": "Основа Butterfly Outerforce CAF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Outerforce CAF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Outerforce CAF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Outerforce CAF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1209,8 +1209,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Outerforce ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Outerforce ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Outerforce ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Outerforce ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Outerforce ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1248,8 +1248,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Omar Assar ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Omar Assar ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Omar Assar ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Omar Assar ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Omar Assar ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1287,8 +1287,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Omar Assar"
     },
     "title": {
-      "ua": "Основа Butterfly Omar Assar — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Omar Assar — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Omar Assar — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Omar Assar — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1325,8 +1325,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Offensive"
     },
     "title": {
-      "ua": "Основа Butterfly Offensive — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Offensive — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Offensive — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Offensive — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1363,8 +1363,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Mizutani ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Mizutani ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Mizutani ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Mizutani ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Mizutani ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1402,8 +1402,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Maze Performance"
     },
     "title": {
-      "ua": "Основа Butterfly Maze Performance — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Maze Performance — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Maze Performance — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Maze Performance — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1440,8 +1440,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Maze Magic"
     },
     "title": {
-      "ua": "Основа Butterfly Maze Magic — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Maze Magic — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Maze Magic — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Maze Magic — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -1478,8 +1478,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Maze Advance"
     },
     "title": {
-      "ua": "Основа Butterfly Maze Advance — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Maze Advance — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Maze Advance — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Maze Advance — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1516,8 +1516,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Liu Shiwen"
     },
     "title": {
-      "ua": "Основа Butterfly Liu Shiwen — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Liu Shiwen — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Liu Shiwen — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Liu Shiwen — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1555,8 +1555,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Lin Yun-Ju Super ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Lin Yun-Ju Super ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Lin Yun-Ju Super ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Lin Yun-Ju Super ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Lin Yun-Ju Super ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1594,8 +1594,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly LIN Gaoyuan ALC"
     },
     "title": {
-      "ua": "Основа Butterfly LIN Gaoyuan ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly LIN Gaoyuan ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly LIN Gaoyuan ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly LIN Gaoyuan ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1633,8 +1633,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Korbel SK7"
     },
     "title": {
-      "ua": "Основа Butterfly Korbel SK7 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Korbel SK7 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Korbel SK7 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Korbel SK7 — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1671,8 +1671,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Kenta Matsudaira ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Kenta Matsudaira ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Kenta Matsudaira ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Kenta Matsudaira ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Kenta Matsudaira ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1710,8 +1710,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Mizutani Super ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Mizutani Super ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Mizutani Super ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Mizutani Super ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Mizutani Super ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1749,8 +1749,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Innershield"
     },
     "title": {
-      "ua": "Основа Butterfly Innershield — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Innershield — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Innershield — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Innershield — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1787,8 +1787,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Innerforce Layer ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Innerforce Layer ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Innerforce Layer ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Innerforce Layer ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Innerforce Layer ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1826,8 +1826,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Innerforce Layer ZLF"
     },
     "title": {
-      "ua": "Основа Butterfly Innerforce Layer ZLF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Innerforce Layer ZLF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Innerforce Layer ZLF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Innerforce Layer ZLF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1865,8 +1865,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Innerforce Layer ALC.S"
     },
     "title": {
-      "ua": "Основа Butterfly Innerforce Layer ALC.S — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Innerforce Layer ALC.S — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Innerforce Layer ALC.S — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Innerforce Layer ALC.S — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1904,8 +1904,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Innerforce Layer ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Innerforce Layer ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Innerforce Layer ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Innerforce Layer ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Innerforce Layer ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -1943,8 +1943,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Harimoto Tomokazu Super ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Harimoto Tomokazu Super ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Harimoto Tomokazu Super ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Harimoto Tomokazu Super ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Harimoto Tomokazu Super ALC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -1982,8 +1982,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Harimoto Tomokazu Innerforce ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Harimoto Tomokazu Innerforce ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Harimoto Tomokazu Innerforce ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Harimoto Tomokazu Innerforce ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Harimoto Tomokazu Innerforce ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2021,8 +2021,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Harimoto Tomokazu Innerforce Super ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Harimoto Tomokazu Innerforce Super ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Harimoto Tomokazu Innerforce Super ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Harimoto Tomokazu Innerforce Super ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Harimoto Tomokazu Innerforce Super ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2060,8 +2060,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Harimoto Tomokazu ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Harimoto Tomokazu ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Harimoto Tomokazu ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Harimoto Tomokazu ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Harimoto Tomokazu ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2099,8 +2099,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadrawshield"
     },
     "title": {
-      "ua": "Основа Butterfly Hadrawshield — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadrawshield — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadrawshield — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadrawshield — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2137,8 +2137,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadraw VR"
     },
     "title": {
-      "ua": "Основа Butterfly Hadraw VR — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadraw VR — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadraw VR — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadraw VR — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2175,8 +2175,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadraw VK"
     },
     "title": {
-      "ua": "Основа Butterfly Hadraw VK — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadraw VK — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadraw VK — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadraw VK — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2213,8 +2213,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadraw SR"
     },
     "title": {
-      "ua": "Основа Butterfly Hadraw SR — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadraw SR — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadraw SR — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadraw SR — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2251,8 +2251,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadraw SK"
     },
     "title": {
-      "ua": "Основа Butterfly Hadraw SK — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadraw SK — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadraw SK — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadraw SK — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2289,8 +2289,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Hadraw 5"
     },
     "title": {
-      "ua": "Основа Butterfly Hadraw 5 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Hadraw 5 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Hadraw 5 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Hadraw 5 — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2327,8 +2327,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Gionis Carbon OFF"
     },
     "title": {
-      "ua": "Основа Butterfly Gionis Carbon OFF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Gionis Carbon OFF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Gionis Carbon OFF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Gionis Carbon OFF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2366,8 +2366,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Gionis Carbon Def"
     },
     "title": {
-      "ua": "Основа Butterfly Gionis Carbon Def — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Gionis Carbon Def — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Gionis Carbon Def — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Gionis Carbon Def — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2404,8 +2404,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Gionis Carbon All+"
     },
     "title": {
-      "ua": "Основа Butterfly Gionis Carbon All+ — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Gionis Carbon All+ — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Gionis Carbon All+ — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Gionis Carbon All+ — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -2443,8 +2443,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Garaydia ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Garaydia ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Garaydia ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Garaydia ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Garaydia ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2482,8 +2482,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Garaydia T5000"
     },
     "title": {
-      "ua": "Основа Butterfly Garaydia T5000 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Garaydia T5000 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Garaydia T5000 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Garaydia T5000 — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2521,8 +2521,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Garaydia ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Garaydia ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Garaydia ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Garaydia ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Garaydia ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2560,8 +2560,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fukuhara Ai Pro ZLF"
     },
     "title": {
-      "ua": "Основа Butterfly Fukuhara Ai Pro ZLF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fukuhara Ai Pro ZLF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fukuhara Ai Pro ZLF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fukuhara Ai Pro ZLF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2599,8 +2599,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Freitas ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Freitas ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Freitas ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Freitas ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Freitas ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2638,8 +2638,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Franziska Innerforce ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Franziska Innerforce ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Franziska Innerforce ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Franziska Innerforce ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Franziska Innerforce ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2677,8 +2677,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fan Zhendong ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Fan Zhendong ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fan Zhendong ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fan Zhendong ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fan Zhendong ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2716,8 +2716,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fan Zhendong Super ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Fan Zhendong Super ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fan Zhendong Super ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fan Zhendong Super ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fan Zhendong Super ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2755,8 +2755,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fan Zhendong Super ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Fan Zhendong Super ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fan Zhendong Super ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fan Zhendong Super ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fan Zhendong Super ALC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -2794,8 +2794,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fan Zhendong ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Fan Zhendong ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fan Zhendong ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fan Zhendong ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fan Zhendong ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2833,8 +2833,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Falcima"
     },
     "title": {
-      "ua": "Основа Butterfly Falcima — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Falcima — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Falcima — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Falcima — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2871,8 +2871,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Diode V"
     },
     "title": {
-      "ua": "Основа Butterfly Diode V — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Diode V — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Diode V — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Diode V — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2909,8 +2909,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Diode Pro"
     },
     "title": {
-      "ua": "Основа Butterfly Diode Pro — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Diode Pro — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Diode Pro — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Diode Pro — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2947,8 +2947,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Dimitrij Ovtcharov Innerforce ALC"
     },
     "title": {
-      "ua": "Основа Butterfly Dimitrij Ovtcharov Innerforce ALC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Dimitrij Ovtcharov Innerforce ALC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Dimitrij Ovtcharov Innerforce ALC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Dimitrij Ovtcharov Innerforce ALC — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -2986,8 +2986,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Balsa X7"
     },
     "title": {
-      "ua": "Основа Butterfly Balsa X7 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Balsa X7 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Balsa X7 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Balsa X7 — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -3024,8 +3024,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Balsa Carbo X5"
     },
     "title": {
-      "ua": "Основа Butterfly Balsa Carbo X5 — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Balsa Carbo X5 — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Balsa Carbo X5 — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Balsa Carbo X5 — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -3063,8 +3063,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Apolonia ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Apolonia ZLC — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Apolonia ZLC — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Apolonia ZLC — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Apolonia ZLC — купить в Украине | TTMAX"
     },
     "level": "pro",
     "specs": {},
@@ -3102,8 +3102,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Andrzej Grubba All+"
     },
     "title": {
-      "ua": "Основа Butterfly Andrzej Grubba All+ — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Andrzej Grubba All+ — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Andrzej Grubba All+ — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Andrzej Grubba All+ — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -3140,8 +3140,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Andrej Mazunov"
     },
     "title": {
-      "ua": "Основа Butterfly Andrej Mazunov — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Andrej Mazunov — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Andrej Mazunov — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Andrej Mazunov — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},
@@ -3178,8 +3178,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Allround"
     },
     "title": {
-      "ua": "Основа Butterfly Allround — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Allround — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Allround — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Allround — купить в Украине | TTMAX"
     },
     "level": "amateur",
     "specs": {},
@@ -3216,8 +3216,8 @@ export const catalogBases: CatalogProduct[] = [
       "ru": "Butterfly Fan Zhendong CNF"
     },
     "title": {
-      "ua": "Основа Butterfly Fan Zhendong CNF — купити в Україні | ціна, відгуки",
-      "ru": "Основание Butterfly Fan Zhendong CNF — купить в Украине | цена, отзывы"
+      "ua": "Основа Butterfly Fan Zhendong CNF — купити в Україні | TTMAX",
+      "ru": "Основание Butterfly Fan Zhendong CNF — купить в Украине | TTMAX"
     },
     "level": "advanced",
     "specs": {},

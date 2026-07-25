@@ -300,6 +300,9 @@ export function catalogStaticParams(): { segments: string[] }[] {
 
 /* ---------- SEO-тексты по типу страницы ---------- */
 
+/** Поріг довжини <title>: далі Google ріже сніпет. */
+const TITLE_CAP = 60;
+
 export function routeTitle(route: CatalogRoute, locale: Locale): string {
   switch (route.kind) {
     case "category":
@@ -320,8 +323,15 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
     }
     case "surfaceGroup":
       return pickLocalized(route.group.title, locale);
-    case "product":
-      return pickLocalized(route.product.title, locale);
+    case "product": {
+      const t = pickLocalized(route.product.title, locale);
+      // Google ріже title ~60 символів. 5 найдовших моделей (Tackiness Chop II, Challenger
+      // Attack, Bryce High Speed, Tenergy 05 Hard, Tackiness Drive) вилазять на 61–63 —
+      // у них відкидаємо гео-хвіст: модель і «купити» важливіші за «в Україні».
+      if (t.length <= TITLE_CAP) return t;
+      const short = t.replace(locale === "ua" ? " в Україні" : " в Украине", "");
+      return short.length < t.length ? short : t;
+    }
   }
 }
 

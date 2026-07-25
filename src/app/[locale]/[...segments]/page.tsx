@@ -51,6 +51,11 @@ import {
   type SurfaceGroup,
 } from "@/lib/catalog/routing";
 import { buildCatalogMetadata } from "@/lib/seo/catalog-metadata";
+import {
+  productMetaDescription,
+  productOgDescription,
+  productLdDescription,
+} from "@/lib/seo/product-copy";
 import { getContent, type ContentBlock, type ContentEntityType } from "@/lib/content/get";
 import {
   buildTokenContext,
@@ -111,8 +116,17 @@ export async function generateMetadata({
   const tctx = buildTokenContext({ locale: l, overrides, currentProducts });
 
   const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx) ?? "";
+  // Картка товару: опис будуємо з ЕКСПЕРТНОГО вердикту, а не з шаблону routeDescription
+  // (інакше 620 із 622 карток отримують один рядок «Купити … Характеристики, ціна, відгуки»).
+  // CMS-опис, якщо він заданий вручну, лишається пріоритетним.
+  const expertDesc = route.kind === "product" ? productMetaDescription(route.product, l) : null;
   let description =
-    expandTokens(content?.metaDescription || routeDescription(route, l), tctx) ?? "";
+    expandTokens(content?.metaDescription || expertDesc || routeDescription(route, l), tctx) ?? "";
+  // og/twitter не ріжуться на 155 → віддаємо повний вердикт (лише коли опис не з CMS).
+  const ogDescription =
+    !content?.metaDescription && route.kind === "product"
+      ? (expandTokens(productOgDescription(route.product, l) ?? "", tctx) || undefined)
+      : undefined;
 
   // Авто-числа в СГЕНЕРОВАНИХ (неавторських) описах категорій/серій — щоб нові сторінки
   // мали актуальну ціну/кількість без ручного редагування.
@@ -142,6 +156,7 @@ export async function generateMetadata({
     description,
     index: route.index && !content?.noindex && !photolessHidden,
     image: ogImage,
+    ogDescription,
   });
 }
 
@@ -267,7 +282,13 @@ export default async function CatalogPage({
             eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
-            description: expandTokens(routeDescription(eroute, locale), tctx) ?? "",
+            // Найдовший з трьох описів: вердикт + офіційні характеристики Butterfly.
+            // schema.org не має ліміту на description, тож ріжемо тут лише через фолбек.
+            description:
+              expandTokens(
+                productLdDescription(eroute.product, locale) ?? routeDescription(eroute, locale),
+                tctx,
+              ) ?? "",
             url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
             brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
             images: productImages,
