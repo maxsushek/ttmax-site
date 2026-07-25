@@ -329,8 +329,13 @@ export function routeTitle(route: CatalogRoute, locale: Locale): string {
       // Attack, Bryce High Speed, Tenergy 05 Hard, Tackiness Drive) вилазять на 61–63 —
       // у них відкидаємо гео-хвіст: модель і «купити» важливіші за «в Україні».
       if (t.length <= TITLE_CAP) return t;
+      // 1) гео-хвіст: модель і «купити» важливіші за «в Україні»
       const short = t.replace(locale === "ua" ? " в Україні" : " в Украине", "");
-      return short.length < t.length ? short : t;
+      if (short.length <= TITLE_CAP) return short;
+      // 2) у 5 моделей сама назва займає ~58 символів (Harimoto Tomokazu Innerforce Super ZLC) —
+      // жоден варіант у 60 не влазить. Знімаємо бренд-суфікс: Google його однаково ріже,
+      // а назва моделі (те, під що сторінка ранжується) лишається цілою.
+      return short.replace(" | TTMAX", "");
     }
   }
 }
