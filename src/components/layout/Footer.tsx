@@ -83,7 +83,22 @@ export function Footer({
   // Слаги зіставляємо ЗА ІНДЕКСОМ (як infoSlugs нижче), а не за перекладеним label:
   // m.catalogLinks локалізований (RU: «Основания», «Мячи»…), тож ключ-по-мітці збігався
   // лише для «Накладки», і решта RU-пунктів падала у фолбек /nakladki (биті лінки на кожній RU-сторінці).
-  const catalogSlugs = ["osnovaniya", "nakladki", "myachi", "stoly", "odyag", "aksessuary"];
+  // ⚠️ ПОРЯДОК має збігатися з m.catalogLinks (зіставлення за індексом!).
+  // /rakety стоїть першим свідомо: це найбільший запит сайту (RU 2000 + UA 1000), а в футері
+  // його не було взагалі — при тому що хвостові /odyag і /myachi мали по 3 розміщення.
+  // Додані також obuv, chehly, setki — раніше їх у футері не було.
+  const catalogSlugs = [
+    "rakety",
+    "osnovaniya",
+    "nakladki",
+    "myachi",
+    "stoly",
+    "odyag",
+    "obuv",
+    "chehly",
+    "setki",
+    "aksessuary",
+  ];
   const catalogLinks: FootLink[] = m.catalogLinks.map((label, i) => ({
     label,
     href: catalogSlugs[i] ? `/${locale}/${catalogSlugs[i]}` : `/${locale}/nakladki`,
@@ -91,7 +106,9 @@ export function Footer({
   // Только Butterfly.
   const brandLinks: FootLink[] = [{ label: "Butterfly", href: `/${locale}/butterfly` }];
   // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
-  const infoSlugs = ["about", "delivery", "payment", "returns", "contacts"];
+  // ⚠️ ПОРЯДОК = m.infoLinks. «Блог» доданий другим: статей уже 5, вони збирають інфо-трафік
+  // і ведуть на money-картки, а в футері блогу не було зовсім (лише в хедері).
+  const infoSlugs = ["about", "blog", "delivery", "payment", "returns", "contacts"];
   const infoLinks: FootLink[] = m.infoLinks.map((label, i) => ({
     label,
     href: infoSlugs[i] ? `/${locale}/${infoSlugs[i]}` : "#",

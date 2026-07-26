@@ -8,10 +8,25 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Section } from "@/components/ui/Section";
 import { isLocale, type Locale } from "@/i18n/config";
-import { getBrandBySlug, getCrossSell, getMinPrice, getProductsByCategory, isInStock } from "@/data/catalog";
+import {
+  catalogSeries,
+  getBrandBySlug,
+  getCrossSell,
+  getMinPrice,
+  getProductsByCategory,
+  getProductsBySeries,
+  isInStock,
+} from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
-import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
+import type {
+  CatalogProduct,
+  CatalogBrand,
+  CatalogCategory,
+  CatalogSeries,
+  BladeClass,
+  BladeSurface,
+} from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
@@ -45,6 +60,7 @@ import {
   resolveSegments,
   routeDescription,
   routeH1,
+  seriesIndexable,
   routeTitle,
   surfaceGroups,
   type CatalogRoute,
@@ -438,18 +454,12 @@ function ListingView({
       </header>
 
       {route.kind === "brand" ? (
-        <ul className="flex flex-wrap gap-2.5">
-          {route.categories.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={`/${locale}/${route.brand.slug}/${c.slug}`}
-                className="inline-flex rounded-xl border border-border-strong bg-bg-raised px-4 py-2.5 font-display text-sm font-bold uppercase tracking-[0.04em] text-ink transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
-              >
-                {pickLocalized(c.name, locale)}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        // Бренд-хаб — сайтвайдний анкор «Колекції» з ~700 URL, тобто один із найсильніших
+        // вузлів сайту. Раніше ВСІ його 10 лінків вели на /{brand}/{category} — а це шар
+        // noindex (1:1 дублі money-категорій, викинуті з sitemap), тож /nakladki і
+        // /osnovaniya з нього не отримували НІЧОГО. Тепер сітка веде на канонічні категорії,
+        // плюс блоки серій і груп основ — вага йде туди, де вона заробляє.
+        <BrandHubLinks brand={route.brand} categories={route.categories} locale={locale} />
       ) : ordered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
@@ -489,6 +499,95 @@ function ListingView({
         );
       })()}
     </>
+  );
+}
+
+/** Плитка-лінк бренд-хаба. */
+function HubTile({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="inline-flex rounded-xl border border-border-strong bg-bg-raised px-4 py-2.5 font-display text-sm font-bold uppercase tracking-[0.04em] text-ink transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+      >
+        {label}
+      </Link>
+    </li>
+  );
+}
+
+/**
+ * Навігація бренд-хаба: категорії + серії + групи основ.
+ * ⚠️ Лінки ведуть на КАНОНІЧНІ /{locale}/{category}, а не на /{brand}/{category} (той шар
+ * noindex і поза sitemap). Серії показуємо лише індексовні (seriesIndexable) — інакше
+ * найсильніший вузол сайту знову годував би сторінки, які не можуть ранжуватись.
+ */
+function BrandHubLinks({
+  brand,
+  categories,
+  locale,
+}: {
+  brand: CatalogBrand;
+  categories: CatalogCategory[];
+  locale: Locale;
+}) {
+  const series = catalogSeries
+    .map((s) => {
+      const prods = getProductsBySeries(s.slug);
+      const cat = prods[0]?.categorySlug;
+      return cat && seriesIndexable(s.slug, cat, prods.length) ? { s, cat } : null;
+    })
+    .filter((x): x is { s: CatalogSeries; cat: string } => x !== null);
+
+  return (
+    <div className="flex flex-col gap-7">
+      <section>
+        <h2 className="mb-3 font-display text-[12px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          {catalogUi.brandCategories[locale]}
+        </h2>
+        <ul className="flex flex-wrap gap-2.5">
+          {categories.map((c) => (
+            <HubTile
+              key={c.slug}
+              href={`/${locale}/${c.slug}`}
+              label={pickLocalized(c.name, locale)}
+            />
+          ))}
+        </ul>
+      </section>
+
+      {series.length > 0 && (
+        <section>
+          <h2 className="mb-3 font-display text-[12px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+            {catalogUi.brandSeries[locale]}
+          </h2>
+          <ul className="flex flex-wrap gap-2.5">
+            {series.map(({ s, cat }) => (
+              <HubTile
+                key={s.slug}
+                href={`/${locale}/${cat}/${s.slug}`}
+                label={`${brand.name} ${s.name}`}
+              />
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section>
+        <h2 className="mb-3 font-display text-[12px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          {catalogUi.brandSurfaces[locale]}
+        </h2>
+        <ul className="flex flex-wrap gap-2.5">
+          {surfaceGroups.map((g) => (
+            <HubTile
+              key={g.slug}
+              href={`/${locale}/${g.category}/${g.slug}`}
+              label={pickLocalized(g.name, locale)}
+            />
+          ))}
+        </ul>
+      </section>
+    </div>
   );
 }
 

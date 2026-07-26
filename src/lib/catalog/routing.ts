@@ -130,8 +130,8 @@ export const surfaceGroups: SurfaceGroup[] = [
     name: { ua: "Основи ALC", ru: "Основания ALC" },
     h1: { ua: "Основи Butterfly ALC", ru: "Основания Butterfly ALC" },
     title: {
-      ua: "Основи Butterfly ALC — купити в Україні | ціна, відгуки | TTMAX",
-      ru: "Основания Butterfly ALC — купить в Украине | цена, отзывы | TTMAX",
+      ua: "Основи Butterfly ALC — купити в Україні | TTMAX",
+      ru: "Основания Butterfly ALC — купить в Украине | TTMAX",
     },
     metaDescription: {
       ua: "Основи Butterfly з арилат-карбоном (ALC): Viscaria, Timo Boll ALC, Harimoto ALC. Баланс швидкості та контролю для атаки. Гарантія, доставка по Україні.",
@@ -159,8 +159,8 @@ export const surfaceGroups: SurfaceGroup[] = [
     name: { ua: "Основи ZLC", ru: "Основания ZLC" },
     h1: { ua: "Основи Butterfly ZLC", ru: "Основания Butterfly ZLC" },
     title: {
-      ua: "Основи Butterfly ZLC — купити в Україні | ціна, відгуки | TTMAX",
-      ru: "Основания Butterfly ZLC — купить в Украине | цена, отзывы | TTMAX",
+      ua: "Основи Butterfly ZLC — купити в Україні | TTMAX",
+      ru: "Основания Butterfly ZLC — купить в Украине | TTMAX",
     },
     metaDescription: {
       ua: "Основи Butterfly із Zylon-карбоном (ZLC): Apolonia ZLC, Zhang Jike ZLC та інші. Максимальна швидкість для гри першим темпом. Гарантія, доставка по Україні.",
@@ -511,4 +511,7 @@ export const catalogUi = {
     ua: "Вибір варіанта та кошик — на наступному кроці",
     ru: "Выбор варианта и корзина — на следующем шаге",
   },
+  brandCategories: { ua: "Категорії", ru: "Категории" },
+  brandSeries: { ua: "Серії накладок", ru: "Серии накладок" },
+  brandSurfaces: { ua: "Основи за волокном", ru: "Основания по волокну" },
 } satisfies Record<string, Localized>;
