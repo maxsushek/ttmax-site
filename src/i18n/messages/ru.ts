@@ -49,7 +49,7 @@ export const ru: Messages = {
     stats: {
       products: "Моделей Butterfly",
       brands: "Коллекций",
-      experience: "Лет с Butterfly",
+      experience: "Год основания",
     },
     scroll: "scroll",
   },
@@ -235,7 +235,7 @@ export const ru: Messages = {
     agreement: "Необходимо согласие",
   },
   footer: {
-    tagline: "Официальный Butterfly в Украине. by TTMAX — работаем с 2008 года.",
+    tagline: "Официальный Butterfly в Украине. by TTMAX — работаем с 2026 года.",
     phone: "+380 (XX) XXX-XX-XX",
     columns: {
       catalog: "Каталог",
@@ -247,7 +247,7 @@ export const ru: Messages = {
     infoLinks: ["О нас", "Блог", "Доставка", "Оплата", "Возврат", "Контакты"],
     privacy: "Конфиденциальность",
     terms: "Соглашение",
-    copyright: "©2008–2026 TTMAX · Butterfly UA. Все права защищены.",
+    copyright: "©2026 TTMAX · Butterfly UA. Все права защищены.",
   },
   common: {
     open: "Открыть",

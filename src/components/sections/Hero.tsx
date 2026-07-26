@@ -90,7 +90,7 @@ export async function Hero({
                   label: overrides.statLabel2 || m.stats.brands,
                 },
                 {
-                  value: overrides.statValue3 || `${heroStats.yearsExperience}`,
+                  value: overrides.statValue3 || `${heroStats.foundedYear}`,
                   label: overrides.statLabel3 || m.stats.experience,
                 },
               ].map((stat) => (

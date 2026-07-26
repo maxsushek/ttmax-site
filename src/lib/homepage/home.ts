@@ -56,7 +56,7 @@ export function homeSingleDefaults(): Record<string, string> {
   return {
     [HOME_SINGLE.stat1Value]: `${heroStats.productsTotal}+`,
     [HOME_SINGLE.stat2Value]: `${heroStats.brandsTotal}+`,
-    [HOME_SINGLE.stat3Value]: `${heroStats.yearsExperience}`,
+    [HOME_SINGLE.stat3Value]: `${heroStats.foundedYear}`,
     [HOME_SINGLE.imageBadge]: DEFAULT_HERO_IMAGE_BADGE,
   };
 }
@@ -102,7 +102,11 @@ export function resolveHomeOverrides(settings: SettingsMap, locale: "ua" | "ru")
     heroSubtitle: g("hero_subtitle"),
     statValue1: settingString(settings, HOME_SINGLE.stat1Value),
     statValue2: settingString(settings, HOME_SINGLE.stat2Value),
-    statValue3: settingString(settings, HOME_SINGLE.stat3Value),
+    // Значення статів зазвичай числові («340+», «6+»), тому ключ один на обидві локалі.
+    // Але власник поставив у 3-й слот ТЕКСТ («Тільки орігінал») — і той самий український
+    // рядок їхав на /ru. Тепер спершу шукаємо локалізований ключ (home_hero_stat3_value_uk/_ru),
+    // а якщо його немає — падаємо на спільний, тобто стара поведінка для чисел не змінилась.
+    statValue3: g("hero_stat3_value") || settingString(settings, HOME_SINGLE.stat3Value),
     statLabel1: g("hero_stat1_label"),
     statLabel2: g("hero_stat2_label"),
     statLabel3: g("hero_stat3_label"),

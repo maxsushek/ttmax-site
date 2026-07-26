@@ -32,7 +32,7 @@ export const siteConfig = {
   // Фолбек: реальна пошта задається в /admin (contacts) і перебиває це значення.
   email: "hello@ttmax.com.ua",
   freeShippingThreshold: 5000,
-  yearFounded: 2008,
+  yearFounded: 2026,
   social: [
     { key: "telegram", label: "TG", color: "#229ED9", href: "#" },
     { key: "youtube", label: "YT", color: "#FF0000", href: "#" },

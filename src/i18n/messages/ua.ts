@@ -49,7 +49,7 @@ export const ua: Messages = {
     stats: {
       products: "Моделей Butterfly",
       brands: "Колекцій",
-      experience: "Років з Butterfly",
+      experience: "Рік заснування",
     },
     scroll: "scroll",
   },
@@ -247,7 +247,7 @@ export const ua: Messages = {
     agreement: "Необхідна згода",
   },
   footer: {
-    tagline: "Офіційний Butterfly в Україні. by TTMAX — працюємо з 2008 року.",
+    tagline: "Офіційний Butterfly в Україні. by TTMAX — працюємо з 2026 року.",
     phone: "+380 (XX) XXX-XX-XX",
     columns: {
       catalog: "Каталог",
@@ -259,7 +259,7 @@ export const ua: Messages = {
     infoLinks: ["Про нас", "Блог", "Доставка", "Оплата", "Повернення", "Контакти"],
     privacy: "Конфіденційність",
     terms: "Угода",
-    copyright: "©2008–2026 TTMAX · Butterfly UA. Всі права захищені.",
+    copyright: "©2026 TTMAX · Butterfly UA. Всі права захищені.",
   },
   common: {
     open: "Відкрити",
