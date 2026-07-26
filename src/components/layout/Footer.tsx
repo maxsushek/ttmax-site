@@ -146,6 +146,11 @@ export function Footer({
             >
               {m.phone}
             </a>
+            {/* Реальна адреса магазину — на кожній сторінці (trust-сигнал + локальний SEO
+                під «настільний теніс Харків»). Джерело одне: siteConfig.addressDisplay. */}
+            <address className="max-w-[240px] text-right font-body text-[13px] not-italic leading-relaxed text-ink-muted">
+              {siteConfig.addressDisplay[locale]}
+            </address>
           </div>
         </div>
 

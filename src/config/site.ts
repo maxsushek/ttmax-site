@@ -38,13 +38,21 @@ export const siteConfig = {
     { key: "youtube", label: "YT", color: "#FF0000", href: "#" },
     { key: "facebook", label: "FB", color: "#1877F2", href: "#" },
   ],
-  // Schema.org address — магазин у Харкові. TODO: додати точну адресу (streetAddress) + postalCode, коли будуть.
+  // Schema.org address (PostalAddress) — реальна адреса магазину, задана власником 25.07.2026.
+  // Пишемо українською: для українського бізнесу локальна форма коректніша за транслітерацію
+  // і збігається з тим, як адресу вводять у Google Business / картах.
+  // postalCode свідомо порожній — не вигадуємо індекс; поле необовʼязкове для PostalAddress.
   address: {
-    streetAddress: "", // TODO: додати точну адресу магазину в Харкові
-    addressLocality: "Kharkiv",
-    addressRegion: "Kharkivska oblast",
+    streetAddress: "вул. Ньютона, 143Б",
+    addressLocality: "Харків",
+    addressRegion: "Харківська область",
     postalCode: "",
     addressCountry: "UA",
+  },
+  /** Готовий рядок адреси для видимого тексту (контакти, футер). */
+  addressDisplay: {
+    ua: "вул. Ньютона, 143Б, Харків",
+    ru: "ул. Ньютона, 143Б, Харьков",
   },
 } as const;
 

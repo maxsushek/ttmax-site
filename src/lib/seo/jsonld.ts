@@ -15,6 +15,15 @@ export function organizationJsonLd(contact?: ContactInfo) {
     url: siteConfig.url,
     logo: siteConfig.logoUrl,
     sameAs,
+    // PostalAddress реальної адреси магазину. Раніше адреси в JSON-LD не було ВЗАГАЛІ:
+    // єдина функція з address (localBusinessJsonLd) ніде не викликалась.
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.address.streetAddress,
+      addressLocality: siteConfig.address.addressLocality,
+      addressRegion: siteConfig.address.addressRegion,
+      addressCountry: siteConfig.address.addressCountry,
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
