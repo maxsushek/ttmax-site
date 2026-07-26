@@ -41,6 +41,36 @@ function clean(s: string | undefined): string | null {
   return v ? v : null;
 }
 
+/**
+ * Гард префікса локалі у внутрішніх лінках контенту.
+ *
+ * Історія: у 9 категорій/серій накопичилось 176 лінків на неіснуючий префікс `/uk/`
+ * (94 markdown `](/uk/…)` у body + 82 `"href": "/uk/…"` у comparison). Кожен віддавав 308
+ * на `/ua/…`, тобто money-гілка мала 88 redirect-хопів на живих сторінках, а контекстні
+ * анкори («Dignics», «Tenergy») з'їдалися редиректом.
+ *
+ * ⚠️ СВІДОМО кидаємо помилку, а НЕ нормалізуємо тихо: автозаміна префікса на поточну локаль
+ * мовчки перебила б навмисні крос-локальні лінки (напр. посилання з /ua на /ru-версію).
+ * Редактор має побачити конкретний URL і виправити його сам.
+ *
+ * Дозволені префікси — рівно ті, що є в URL сайту: /ua/ і /ru/.
+ */
+const LOCALE_PREFIX_RE = /(?:\]\(|"|')(\/([a-z]{2})\/[^)"'\s]*)/g;
+const ALLOWED_PREFIXES = new Set(["ua", "ru"]);
+
+function badLocaleLinks(...texts: Array<string | null | undefined>): string[] {
+  const bad = new Set<string>();
+  for (const t of texts) {
+    if (!t) continue;
+    for (const m of t.matchAll(LOCALE_PREFIX_RE)) {
+      const url = m[1];
+      const prefix = m[2];
+      if (url && prefix && !ALLOWED_PREFIXES.has(prefix)) bad.add(url);
+    }
+  }
+  return [...bad];
+}
+
 /** Нормалізуємо comparison у { columns, rows, heading?, note? } або null. */
 function normComparison(v: unknown): unknown | null {
   if (!v || typeof v !== "object") return null;
@@ -105,6 +135,24 @@ export async function POST(request: Request) {
   const faq = p.faq?.filter((f) => f.q.trim() && f.a.trim()) ?? [];
   const comparison = normComparison(p.comparison);
   const noindex = p.noindex === true;
+
+  // Гард префікса локалі — див. badLocaleLinks(). Перевіряємо всі текстові поля + comparison.
+  const bad = badLocaleLinks(
+    intro,
+    body,
+    JSON.stringify(faq),
+    comparison ? JSON.stringify(comparison) : null,
+  );
+  if (bad.length > 0) {
+    return NextResponse.json(
+      {
+        error: "Bad locale prefix",
+        message: `Внутрішні лінки мають починатися з /ua/ або /ru/. Виправте: ${bad.slice(0, 5).join(", ")}${bad.length > 5 ? ` (ще ${bad.length - 5})` : ""}`,
+        urls: bad,
+      },
+      { status: 400 },
+    );
+  }
 
   const empty =
     !meta_title &&
