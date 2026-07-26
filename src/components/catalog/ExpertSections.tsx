@@ -233,9 +233,18 @@ export function ExpertSections({
           className="flex items-center justify-between gap-3 rounded-2xl border border-accent/30 bg-accent/[0.06] px-5 py-4 transition-colors hover:border-accent/55 hover:bg-accent/[0.1]"
         >
           <span className="font-display text-sm font-bold uppercase tracking-[0.05em] text-white/90">
+            {/* Анкор навмисно НЕ «готова ракетка»: цієї фрази в Ahrefs ua не існує (порожня
+                видача по «готова ракетка» і «готовая ракетка»), а нею було побудовано
+                232 із 235 контекстних анкорів на /rakety — найбільшу money-категорію сайту.
+                Тепер анкор несе реальну head-форму: ru «ракетка для настольного тенниса»
+                2000/міс, ua «ракетка для настільного тенісу» 250/міс.
+                ⚠️ Сам CTA НЕ прибирати: він дає 127 зі 139 контекстних inbound на /rakety. */}
             {entry.comboLabel
               ? entry.comboLabel[locale]
-              : L("Готова ракетка з цією накладкою", "Готовая ракетка с этой накладкой")}
+              : L(
+                  "Ракетка для настільного тенісу з цією накладкою",
+                  "Ракетка для настольного тенниса с этой накладкой",
+                )}
           </span>
           <span className="shrink-0 font-display text-xl text-accent">→</span>
         </Link>
