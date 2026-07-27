@@ -119,7 +119,10 @@ export function QuickOrder({
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (honey) return; // бот
+    // ⚠️ Клієнтську перевірку лишаємо (економить зайвий запит), але вона НЕ є захистом:
+    // бот шле POST напряму, минаючи цей код. Тому honeypot тепер їде на сервер у полі
+    // `company` і відсіюється там (api/leads/route.ts).
+    if (honey) return;
     if (status === "submitting") return;
 
     const cleanPhone = phone.replace(/[\s\-()]/g, "");
@@ -137,6 +140,8 @@ export function QuickOrder({
         body: JSON.stringify({
           name: name.trim() || null,
           phone: cleanPhone,
+          // Honeypot на сервер: у людини поле лишається порожнім, бот його заповнює.
+          company: honey,
           source: "quick-order",
           locale,
           attribution: { ...getAttribution(), product: productName, productSlug },

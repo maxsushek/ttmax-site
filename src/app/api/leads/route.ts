@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewLead } from "@/lib/telegram/notify";
 import { locales, localeToLang } from "@/i18n/config";
+import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,7 +20,24 @@ const LeadSchema = z.object({
   email: z.string().email().optional().nullable(),
   source: z.string().max(60),
   locale: z.enum(locales),
-  attribution: z.record(z.string(), z.unknown()).optional(),
+  /**
+   * ⚠️ Раніше було z.record(z.string(), z.unknown()) — тобто jsonb БУДЬ-ЯКОГО розміру
+   * (до платформного ліміту ~4.5 МБ на запит) писався в БД без обмежень. Кілька сотень
+   * таких запитів вичерпують квоту Supabase, після чого перестають зберігатись СПРАВЖНІ
+   * замовлення. Тепер — білий список ключів + ліміт довжини кожного значення.
+   *
+   * ⚠️ Список має покривати ВСЕ, що реально пише getAttribution() (attribution.ts:7-16, 51-53)
+   * плюс поля, які додають форми (product, productName, productSlug). Забути ключ = тихо
+   * втратити атрибуцію реклами, тому нові ключі додавати сюди СИНХРОННО.
+   */
+  attribution: AttributionSchema.optional(),
+  /**
+   * Honeypot. ⚠️ Раніше перевірка жила ТІЛЬКИ в браузері (QuickOrder.tsx:122 `if (honey) return`),
+   * і поле навіть не надсилалось — тобто прямий POST обходив її повністю.
+   * Тепер поле їде на сервер: заповнене = бот, відповідаємо 200 «ок» без запису (мовчазне
+   * відхилення, щоб бот не підбирав обхід).
+   */
+  company: z.string().max(200).optional(),
 });
 
 const buckets = new Map<string, { count: number; reset: number }>();
@@ -59,6 +77,12 @@ export async function POST(request: NextRequest) {
       { error: "Validation failed", details: parsed.error.flatten() },
       { status: 400 },
     );
+  }
+
+  // Honeypot спрацював — це бот. Відповідаємо як на успіх і НІЧОГО не пишемо:
+  // мовчазне відхилення не дає боту зрозуміти, що його відсіяли, і підбирати обхід.
+  if (parsed.data.company && parsed.data.company.trim() !== "") {
+    return NextResponse.json({ ok: true });
   }
 
   const supabase = getSupabaseServerClient({ useServiceRole: true });

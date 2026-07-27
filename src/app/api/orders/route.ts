@@ -5,6 +5,8 @@ import { notifyNewOrder } from "@/lib/telegram/notify";
 import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
 import { locales, localeToLang } from "@/i18n/config";
+import { getContact } from "@/lib/contact/get";
+import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -47,7 +49,7 @@ const OrderSchema = z.object({
   comment: z.string().max(2000).optional().nullable(),
   agreed: z.boolean(),
   locale: z.enum(locales),
-  attribution: z.record(z.string(), z.unknown()).optional(),
+  attribution: AttributionSchema.optional(),
 });
 
 const buckets = new Map<string, { count: number; reset: number }>();
@@ -98,7 +100,16 @@ export async function POST(request: NextRequest) {
   for (const it of data.items) {
     const slug = it.productId.split("__")[0];
     const product = slug ? getProductBySlug(slug) : undefined;
-    if (!product) continue; // не з каталогу — не валідуємо
+    // ⚠️ Було `continue` — позиція, якої НЕМАЄ в каталозі, приймалась із ціною клієнта.
+    // Тобто можна було замовити вигаданий товар за будь-яку суму. Тепер відхиляємо:
+    // клієнт не має права замовляти те, чого в каталозі не існує.
+    if (!product) {
+      console.warn("[orders] unknown productId — rejecting", { productId: it.productId });
+      return NextResponse.json(
+        { error: "Unknown product", productId: it.productId },
+        { status: 400 },
+      );
+    }
 
     const eff = applyOverrides(product, overrides);
     const variant = eff.variants.find(
@@ -130,7 +141,22 @@ export async function POST(request: NextRequest) {
     (s, i) => s + Math.round(i.price * i.qty * 100) / 100,
     0,
   );
-  const computedTotal = Math.round((computedSubtotal + data.totals.shipping) * 100) / 100;
+
+  // ⚠️ Вартість доставки раніше бралась із тіла запиту (data.totals.shipping) і потрапляла
+  // і в суму, і в БД — тобто клієнт міг проставити 0 і платити менше. Рахуємо на сервері
+  // за тим самим правилом, що й у CheckoutForm.tsx:74 (total >= поріг ? 0 : тариф),
+  // з тих самих налаштувань (site_settings через getContact), тож суми не розійдуться.
+  const contact = await getContact();
+  const computedShipping =
+    computedSubtotal >= contact.freeShippingThreshold ? 0 : contact.shippingFee;
+  if (Math.abs(computedShipping - data.totals.shipping) > 0.01) {
+    console.warn("[orders] shipping mismatch — using server value", {
+      client: data.totals.shipping,
+      server: computedShipping,
+    });
+  }
+
+  const computedTotal = Math.round((computedSubtotal + computedShipping) * 100) / 100;
   const clientTotal = Math.round(data.totals.total * 100) / 100;
 
   if (Math.abs(computedTotal - clientTotal) > 0.01) {
@@ -172,7 +198,7 @@ export async function POST(request: NextRequest) {
       delivery_branch: data.delivery.branch ?? null,
       payment_method: data.payment.method,
       subtotal_uah: computedSubtotal,
-      shipping_uah: data.totals.shipping,
+      shipping_uah: computedShipping,
       total_uah: computedTotal,
       items_count: itemsCount,
       comment: data.comment ?? null,
@@ -259,7 +285,7 @@ export async function POST(request: NextRequest) {
         lineTotal: Math.round(i.price * i.qty * 100) / 100,
       })),
       subtotal: computedSubtotal,
-      shipping: data.totals.shipping,
+      shipping: computedShipping,
       total: computedTotal,
       delivery: data.delivery,
       payment: data.payment,
