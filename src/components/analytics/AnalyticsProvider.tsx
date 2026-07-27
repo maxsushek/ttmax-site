@@ -4,9 +4,15 @@ import { useEffect } from "react";
 import Script from "next/script";
 import { captureAttribution } from "@/lib/analytics/attribution";
 import { setAnalyticsIds } from "@/lib/analytics/runtime";
-import type { AnalyticsIds } from "@/lib/analytics/ids";
+import { sanitizeAnalyticsIds, type AnalyticsIds } from "@/lib/analytics/ids";
 
-export function AnalyticsProvider({ ids }: { ids: AnalyticsIds }) {
+export function AnalyticsProvider({ ids: rawIds }: { ids: AnalyticsIds }) {
+  // ⚠️ ОСТАННІЙ РУБІЖ. Ці значення підставляються в ТІЛО inline-<script> нижче, тобто стають
+  // виконуваним кодом. Значення приходять із site_settings (редагується через адмінку), тому
+  // будь-хто, хто отримав адмін-доступ, міг би лишити перманентний скімер у всіх відвідувачів.
+  // Валідація на записі (api/admin/settings) вже є, але тут перевіряємо ще раз: у БД можуть
+  // лежати значення, збережені ДО появи тієї перевірки. Не пройшло формат — лічильник вимкнено.
+  const ids = sanitizeAnalyticsIds(rawIds);
   // Робимо id доступними подієвому шару (gtagConversion/fbqTrack) до перших подій.
   setAnalyticsIds(ids);
 

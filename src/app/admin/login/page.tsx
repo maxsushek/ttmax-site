@@ -24,6 +24,20 @@ export default async function AdminLoginPage({
 
   const params = await searchParams;
 
+  // Відкритий редирект: ?next= підставлявся в router.push() без перевірки, тож посилання
+  // /admin/login?next=https://evil.example відправляло адміна на чужий сайт ОДРАЗУ ПІСЛЯ
+  // успішного входу — ідеальна обгортка для фішингу («сесія злетіла, увійдіть ще раз»).
+  // Пускаємо лише внутрішні шляхи всередині адмінки:
+  //   /admin…            — ок
+  //   //evil.com         — ні (protocol-relative)
+  //   /\evil.com         — ні (деякі браузери трактують \ як /)
+  //   https://evil.com   — ні
+  const rawNext = params.next ?? "";
+  const safeNext =
+    rawNext.startsWith("/admin") && !rawNext.startsWith("//") && !rawNext.startsWith("/\\")
+      ? rawNext
+      : "/admin/leads";
+
   let initialError: string | undefined;
   if (params.error === "not_admin") {
     initialError = "Этот аккаунт не имеет доступа к админке";
@@ -48,10 +62,7 @@ export default async function AdminLoginPage({
           </div>
         </div>
 
-        <LoginForm
-          next={params.next ?? "/admin/leads"}
-          initialError={initialError}
-        />
+        <LoginForm next={safeNext} initialError={initialError} />
 
         <div className="mt-6 text-center text-[11px] text-[#3a3a3a] font-['Barlow',sans-serif]">
           🔒 Только для авторизованных администраторов

