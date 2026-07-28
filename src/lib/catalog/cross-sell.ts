@@ -233,10 +233,23 @@ export function buildCrossSellGraph(pool: CatalogProduct[]): Map<string, string[
           }
           if (at < 0) continue;
 
-          const displaced = list[at];
+          // ⚠️ ЗАМІНА, а не вставка. Тут був баг, через який лічильник розходився з
+          // реальністю: код робив splice(at, 0, …) — тобто ВСТАВЛЯВ, і з видимої четвірки
+          // випадав той, хто стояв на позиції 3, а зменшували ми лічильник у list[at].
+          // При at < 3 це різні товари: list[at] лишався видимим, але «втрачав» посилання
+          // на папері. Внутрішня статистика показувала ідеальні 7-10 і нуль просілих,
+          // а на сайті було 3-12 і дев'ять карток нижче підлоги.
+          // Тепер прибираємо саме того, кого обрали (найзавантаженішого), і ставимо
+          // новачка на його місце — облік збігається з тим, що бачить користувач.
+          const [displaced] = list.splice(at, 1);
           list.splice(at, 0, orphan.slug);
           inDegree.set(orphan.slug, (inDegree.get(orphan.slug) ?? 0) + 1);
-          if (displaced) inDegree.set(displaced, (inDegree.get(displaced) ?? 0) - 1);
+          if (displaced) {
+            inDegree.set(displaced, (inDegree.get(displaced) ?? 0) - 1);
+            // Витіснений лишається в хвості пулу — щоб було чим замінити, якщо когось
+            // із видимої четвірки приховають (товар без фото).
+            if (!list.includes(displaced)) list.push(displaced);
+          }
           if (list.length > POOL_SIZE) list.length = POOL_SIZE;
           progressed = true;
           break;
