@@ -16,6 +16,7 @@ import { catalogRackets } from "./rackets";
 import { catalogBrands, catalogSeries } from "./brands";
 import { catalogCategories } from "./categories";
 import { rubberFilters } from "./filters";
+import { buildCrossSellGraph } from "@/lib/catalog/cross-sell";
 
 export {
   catalogProducts,
@@ -63,35 +64,27 @@ export const getProductsBySeries = (seriesSlug: string): CatalogProduct[] =>
 /**
  * Кандидати для блоку «з цим купують» / «схожі товари».
  *
+ * Логіка підбору — у src/lib/catalog/cross-sell.ts (скоринг за сумісністю + вирівнювання
+ * графа). Раніше сусіди бралися за алфавітом слага, через що блок радив несумісні товари
+ * (OFF+ флагман → OFF− універсал утричі дешевший), а 14 money-карток мали нуль вхідних.
+ *
  * ⚠️ ВАЖЛИВО: повертає ШИРШИЙ пул (не рівно 4). Викликач сам застосовує filterVisible()
  * (ховає товари без фото) і вже ПОТІМ бере перші 4 — `getCrossSell(...).slice(0, 4)`.
  * Якщо різати до 4 тут, у прихованих категоріях (одяг) ті 4 сусіди часто ВСІ приховані →
  * після filterVisible блок порожній (баг: 46 з 47 карток одягу лишались без крос-селу).
- *
- * Дедуп-логіка проти дублювання контенту: у 392 з 519 товарів seriesSlug порожній, тож
- * фолбек бере сусідів по КАТЕГОРІЇ. Сусіди СОРТУЮТЬСЯ за slug — інакше findIndex по
- * pool-порядку майже завжди давав start=0 → ті самі 4 товари на більшості карток.
- * Після сортування вікно зсувається на позицію товару → у кожної картки свій набір.
  */
-export const getCrossSell = (product: CatalogProduct): CatalogProduct[] => {
-  if (product.crossSell && product.crossSell.length > 0) {
-    return product.crossSell
-      .map((slug) => getProductBySlug(slug))
-      .filter((p): p is CatalogProduct => Boolean(p));
-  }
+let crossSellGraph: Map<string, string[]> | null = null;
 
-  const bySeries = product.seriesSlug
-    ? getProductsBySeries(product.seriesSlug).filter((p) => p.slug !== product.slug)
-    : [];
+/** Граф будується один раз на процес — скоринг по всьому пулу недешевий. */
+function graph(): Map<string, string[]> {
+  if (!crossSellGraph) crossSellGraph = buildCrossSellGraph(pool);
+  return crossSellGraph;
+}
 
-  const siblings = getProductsByCategory(product.categorySlug)
-    .filter((p) => p.slug !== product.slug && !bySeries.some((s) => s.slug === p.slug))
-    .sort((a, b) => a.slug.localeCompare(b.slug));
-  const idx = siblings.findIndex((p) => p.slug > product.slug);
-  const rotated = idx > 0 ? [...siblings.slice(idx), ...siblings.slice(0, idx)] : siblings;
-
-  return [...bySeries, ...rotated];
-};
+export const getCrossSell = (product: CatalogProduct): CatalogProduct[] =>
+  (graph().get(product.slug) ?? [])
+    .map((slug) => getProductBySlug(slug))
+    .filter((p): p is CatalogProduct => Boolean(p));
 
 /* ---------- Бренды / серии / категории ---------- */
 
