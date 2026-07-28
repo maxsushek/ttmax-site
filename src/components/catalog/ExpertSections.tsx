@@ -5,6 +5,38 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { ExpertEntry } from "@/data/catalog/expert";
+import { getAuthor } from "@/data/authors";
+
+/**
+ * Підпис експерта під оцінками й думкою.
+ *
+ * ⚠️ НАВІЩО: оцінки й «думка» писала конкретна людина — Артем Максимчук, КМС і тренер
+ * із трьома підтвердженими зовнішніми профілями (UTTF, TTW Rating, TT Kharkiv), — але на
+ * картках товарів його імені не було ніде, лише безлике «магазин». Для нового домену без
+ * історії й відгуків верифікована особа за рекомендаціями — один із небагатьох доступних
+ * сигналів експертизи, і водночас це найсильніший аргумент довіри для покупця.
+ *
+ * ⚠️ У РОЗМІТКУ Product НІЧОГО НЕ ДОДАЄМО. У schema.org Product немає властивості `author`
+ * (є brand / manufacturer / review / offers) — Google просто проігнорує. А оформити власну
+ * оцінку як Review з автором НЕ МОЖНА: самообзори заборонені для розширених сніпетів,
+ * це ризик санкцій, а не буст. Сигнал дає ВИДИМИЙ підпис + посилання на сторінку автора,
+ * де вже є повноцінний Person із sameAs.
+ */
+function ExpertByline({ locale, compact }: { locale: Locale; compact?: boolean }) {
+  const author = getAuthor("artem-maksymchuk");
+  return (
+    <Link
+      href={`/${locale}/author/${author.slug}`}
+      className="group inline-flex flex-wrap items-baseline gap-x-1.5 font-body text-[12px] text-ink-muted transition-colors hover:text-ink"
+    >
+      {!compact && <span>{locale === "ua" ? "Оцінює" : "Оценивает"}</span>}
+      <span className="font-bold text-white/80 group-hover:text-accent">
+        {author.name[locale]}
+      </span>
+      <span>— {author.jobTitle[locale]}</span>
+    </Link>
+  );
+}
 
 function Check() {
   return (
@@ -78,9 +110,12 @@ export function ExpertSections({
         </div>
       </section>
 
-      {/* 3 · Оцінка магазину */}
+      {/* 3 · Оцінка експерта */}
       <section>
-        <h2 className={h2}>{L("Оцінка магазину", "Оценка магазина")}</h2>
+        <h2 className={h2}>{L("Оцінка експерта", "Оценка эксперта")}</h2>
+        <div className="mt-1">
+          <ExpertByline locale={locale} />
+        </div>
         <div className="mt-5 max-w-xl space-y-3.5">
           {entry.ratings.map((r) => {
             const pct = Math.max(6, Math.min(100, r.value * 10));
@@ -136,12 +171,15 @@ export function ExpertSections({
         </div>
       </section>
 
-      {/* 5 · Думка магазину */}
+      {/* 5 · Думка експерта */}
       <section className="rounded-2xl border-l-2 border-accent bg-white/[0.03] py-5 pl-5 pr-5">
         <div className="mb-2 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
-          {L("Думка магазину", "Мнение магазина")}
+          {L("Думка експерта", "Мнение эксперта")}
         </div>
         <p className="font-body text-[15px] leading-[1.7] text-white/85">{entry.expert[locale]}</p>
+        <div className="mt-3">
+          <ExpertByline locale={locale} compact />
+        </div>
       </section>
 
       {/* 6 · Порівняння лінійки */}
