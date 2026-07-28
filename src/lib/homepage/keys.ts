@@ -65,15 +65,29 @@ export const DEFAULT_HERO_IMAGE_BADGE = "BUTTERFLY · TENERGY 05";
 export const HOME_KEY_VALUES: string[] = [...HOME_TEXT_KEYS, ...HOME_SINGLE_KEYS, HOME_KEYS.hits];
 
 /** Початковий набір хітів (поки адмін не задав свій). */
+/**
+ * Фолбек-список хітів (реальний живе в site_settings.home_hits, правиться в /admin).
+ * Це ті самі 15 пріоритетних товарів власника, що й у data/catalog/priority.ts —
+ * головна є найсильнішою сторінкою сайту, тож посилання звідси найцінніші.
+ * Порядок — за реальним попитом (Ahrefs), щоб найсильніші були вище згину.
+ * ⚠️ Міняєте список пріоритетів — оновіть обидва місця.
+ */
 export const DEFAULT_HITS: string[] = [
   "tenergy-05",
-  "viscaria",
-  "dignics-05",
-  "timo-boll-alc",
   "dignics-09c",
-  "apolonia-zlc",
+  "dignics-05",
+  "viscaria",
+  "timo-boll-alc",
   "zyre-03",
+  "apolonia-zlc",
   "harimoto-tomokazu-alc",
+  "dignics-80",
+  "dignics-64",
+  "tenergy-19",
+  "tenergy-05-fx",
+  "tenergy-05-hard",
+  "timo-boll-caf",
+  "feint-long-iii",
 ];
 
 /** Парсить рядок "slug1, slug2" у масив slug. */
