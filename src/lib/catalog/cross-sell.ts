@@ -5,19 +5,20 @@
 // несумісні речі й ліпив дорогі флагмани поруч із дешевими універсалами:
 //   apolonia-zlc (ZLC-флагман, OFF+ атака, 12 995 ₴) → dimitrij-ovtcharov (OFF− універсал)
 //   viscaria     (OFF+ атака,  8 835 ₴)              → xstar-v (OFF− універсал, 2 595 ₴)
-//   mizutani-super-zlc                               → рівно 4 наступні слаги за алфавітом
-// Плюс граф виходив нерівним: 14 money-товарів мали НУЛЬ вхідних посилань (5 із 7
-// накладок — Tenergy, тобто саме та серія, куди треба заганяти вагу).
+// Плюс граф виходив украй нерівним: 14 money-товарів мали НУЛЬ вхідних посилань.
 //
-// ЯК ПРАЦЮЄ ЗАРАЗ — два проходи:
-//   1) СКОРИНГ. Кожен кандидат отримує бали за реальну сумісність (серія, волокно,
-//      клас основи, тип поверхні, жорсткість, близькість ціни). Маржа власника —
-//      лише невеликий тайбрейкер (priority.ts), а не головний фактор.
-//   2) ВИРІВНЮВАННЯ ГРАФА. Після скорингу товари з нестачею вхідних посилань
-//      примусово підставляються в топ до найрелевантніших сусідів, у яких надлишок.
-//      Без цього кроку жорсткий фільтр лише стягує граф у щільні кластери, а «сироти»
-//      (напр. timo-boll-control/forte/fortissimo — ALL/ALL+ серед моря OFF) лишаються
-//      з нулем назавжди.
+// ЯК ПРАЦЮЄ ЗАРАЗ.
+// Ключова ідея: слоти роздаються З УРАХУВАННЯМ ПОТОЧНОГО НАВАНТАЖЕННЯ кандидата, а не
+// «спершу порахували релевантність, потім латаємо дірки». До балів релевантності
+// додається (а) бонус пріоритетним товарам власника, (б) бонус за НЕДОБІР до цілі,
+// (в) ШТРАФ за перебір. Штраф більший за бонус — інакше товар, релевантний багатьом
+// (Tenergy 05 підходить до 10 своїх же моделей), виграє слот за слотом і забирає вагу
+// в решти пріоритетного списку. Саме через це перша версія давала розкид 5-14 всередині
+// списку власника; тепер коридор 7-10.
+//
+// Далі два ремонтні проходи: спершу ПІДЛОГА для всіх money-карток (щоб ніхто не лишився
+// нижче MIN_IN_DEGREE), потім добір пріоритетних до їхньої цілі. Порядок важливий —
+// якщо навпаки, пріоритетні розбирають донорські слоти й звичайні падають нижче підлоги.
 //
 // Модуль СВІДОМО чистий (приймає pool аргументом і не імпортує data/catalog/index),
 // інакше вийшов би цикл імпортів.
@@ -26,7 +27,9 @@ import {
   MARGIN_PRIORITY,
   PRIORITY_BONUS,
   MIN_IN_DEGREE,
-  PRIORITY_MIN_IN_DEGREE,
+  PRIORITY_TARGET_IN_DEGREE,
+  DEFICIT_WEIGHT,
+  SURPLUS_PENALTY,
 } from "@/data/catalog/priority";
 
 /** Скільки кандидатів тримаємо в пулі. Викликач ріже до 4 ПІСЛЯ filterVisible(). */
@@ -127,128 +130,127 @@ export function buildCrossSellGraph(pool: CatalogProduct[]): Map<string, string[
     else byCategory.set(p.categorySlug, [p]);
   }
 
-  // Прохід 1 — скоринг.
-  const graph = new Map<string, string[]>();
-  for (const p of pool) {
-    if (p.crossSell && p.crossSell.length > 0) {
-      graph.set(p.slug, [...p.crossSell]);
-      continue;
-    }
-    const ranked = (byCategory.get(p.categorySlug) ?? [])
-      .filter((c) => c.slug !== p.slug)
-      .map((c) => ({ slug: c.slug, s: score(p, c) }))
-      // Тайбрейк за slug — щоб порядок був стабільним між білдами (інакше
-      // однакові за балами товари тасувалися б і ламали кеш сторінок).
-      .sort((x, y) => y.s - x.s || x.slug.localeCompare(y.slug))
-      .slice(0, POOL_SIZE)
-      .map((x) => x.slug);
-    graph.set(p.slug, ranked);
-  }
-
-  // Прохід 2 — вирівнювання: жодна картка money-категорій не лишається без вхідних.
   const MONEY = new Set(["nakladki", "osnovaniya"]);
   const inDegree = new Map<string, number>();
   for (const p of pool) inDegree.set(p.slug, 0);
-  for (const [, list] of graph) {
-    for (const slug of list.slice(0, VISIBLE_SLOTS)) {
-      inDegree.set(slug, (inDegree.get(slug) ?? 0) + 1);
-    }
-  }
 
-  /** Видає товару РІВНО одне вхідне посилання. true — вдалося. */
-  const grantOne = (orphan: CatalogProduct, floor: (slug: string) => number): boolean => {
-    const neighbours = (byCategory.get(orphan.categorySlug) ?? []).filter(
-      (c) => c.slug !== orphan.slug,
-    );
+  /** Скільки вхідних посилань «належить» товару. */
+  const targetOf = (slug: string) =>
+    priority.has(slug) ? PRIORITY_TARGET_IN_DEGREE : MIN_IN_DEGREE;
 
-    /**
-     * @param evictRichest false — витісняємо рівно 4-ту позицію (зберігає порядок
-     * релевантності). true — витісняємо того з видимої четвірки, у кого НАЙБІЛЬШЕ
-     * вхідних: без цього «багаті» товари (14 вхідних) сидять на 1-3 місцях і лишаються
-     * недосяжними, ємність графа виглядає вичерпаною, хоча насправді вона є.
-     */
-    const take = (c: CatalogProduct, evictRichest: boolean): boolean => {
-      const list = graph.get(c.slug);
-      if (!list || list.includes(orphan.slug)) return false;
-      // Явний crossSell — авторський вибір, не чіпаємо.
-      if (c.crossSell && c.crossSell.length > 0) return false;
-
-      let at = VISIBLE_SLOTS - 1;
-      if (evictRichest) {
-        let best = -1;
-        for (let i = 0; i < Math.min(VISIBLE_SLOTS, list.length); i += 1) {
-          const slug = list[i];
-          if (!slug) continue;
-          const deg = inDegree.get(slug) ?? 0;
-          if (deg > floor(slug) && deg > best) {
-            best = deg;
-            at = i;
-          }
-        }
-        if (best < 0) return false;
-      }
-
-      const displaced = list[at];
-      // Донор не віддає посилання, якщо витіснений впаде нижче підлоги — інакше,
-      // витягуючи одного, ми створюємо нову сироту.
-      if (displaced && (inDegree.get(displaced) ?? 0) <= floor(displaced)) return false;
-
-      list.splice(at, 0, orphan.slug);
-      inDegree.set(orphan.slug, (inDegree.get(orphan.slug) ?? 0) + 1);
-      if (displaced) inDegree.set(displaced, (inDegree.get(displaced) ?? 0) - 1);
-      if (list.length > POOL_SIZE) list.length = POOL_SIZE;
-      return true;
-    };
-
-    // Прохід А — найрелевантніші сусіди. Дає осмислені рекомендації.
-    const byRelevance = neighbours
-      .map((c) => ({ c, s: score(orphan, c) }))
-      .sort((x, y) => y.s - x.s || x.c.slug.localeCompare(y.c.slug));
-    for (const { c } of byRelevance) if (take(c, false)) return true;
-
-    // Прохід Б — резерв: витісняємо найбагатшого з видимої четвірки. Потрібен, бо прохід А
-    // впирається в підлогу (донор із рівно 3 вхідними віддати не може), і товар лишається
-    // нижче норми, хоча вільна ємність у графі є — просто в інших вузлах.
-    for (const { c } of byRelevance) if (take(c, true)) return true;
-    return false;
+  /** Бонус за недобір / штраф за перебір — те, що вирівнює розподіл. */
+  const loadAdjust = (slug: string) => {
+    const diff = targetOf(slug) - (inDegree.get(slug) ?? 0);
+    return diff > 0 ? diff * DEFICIT_WEIGHT : diff * SURPLUS_PENALTY;
   };
 
+  const graph = new Map<string, string[]>();
+
+  // Прохід 1 — роздача слотів із урахуванням навантаження.
+  // Порядок карток фіксований (за slug), щоб результат не «плавав» між білдами.
+  for (const p of [...pool].sort((a, b) => a.slug.localeCompare(b.slug))) {
+    if (p.crossSell && p.crossSell.length > 0) {
+      graph.set(p.slug, [...p.crossSell]);
+      for (const slug of p.crossSell.slice(0, VISIBLE_SLOTS)) {
+        inDegree.set(slug, (inDegree.get(slug) ?? 0) + 1);
+      }
+      continue;
+    }
+
+    const candidates = (byCategory.get(p.categorySlug) ?? []).filter((c) => c.slug !== p.slug);
+    const picked: string[] = [];
+
+    for (let slot = 0; slot < Math.min(VISIBLE_SLOTS, candidates.length); slot += 1) {
+      let bestSlug: string | null = null;
+      let bestScore = -Infinity;
+      for (const c of candidates) {
+        if (picked.includes(c.slug)) continue;
+        const total =
+          score(p, c) + (priority.has(c.slug) ? PRIORITY_BONUS : 0) + loadAdjust(c.slug);
+        // Тайбрейк за slug — стабільність між білдами.
+        if (total > bestScore || (total === bestScore && bestSlug && c.slug < bestSlug)) {
+          bestScore = total;
+          bestSlug = c.slug;
+        }
+      }
+      if (!bestSlug) break;
+      picked.push(bestSlug);
+      inDegree.set(bestSlug, (inDegree.get(bestSlug) ?? 0) + 1);
+    }
+
+    // Хвіст пулу — чиста релевантність. Викликач ріже до 4 ПІСЛЯ filterVisible(),
+    // тож запас потрібен на випадок, коли частину кандидатів приховано (товари без фото).
+    const tail = candidates
+      .filter((c) => !picked.includes(c.slug))
+      .map((c) => ({ slug: c.slug, s: score(p, c) }))
+      .sort((x, y) => y.s - x.s || x.slug.localeCompare(y.slug))
+      .slice(0, POOL_SIZE - picked.length)
+      .map((x) => x.slug);
+
+    graph.set(p.slug, [...picked, ...tail]);
+  }
+
   /**
-   * Тягне товари категорій MONEY до цільового мінімуму.
-   *
-   * ⚠️ ДВА РАУНДИ, І ПОРЯДОК ВАЖЛИВИЙ. Спершу підлога для ВСІХ (MIN_IN_DEGREE), і лише
-   * потім бонус пріоритетним. Якщо навпаки — пріоритетні розбирають донорські слоти
-   * першими, і звичайні товари провалюються нижче підлоги (перевірено симуляцією:
-   * 11 карток падали до 1-2 вхідних).
-   *
-   * ⚠️ РОЗДАЄМО ПО КОЛУ, а не «кожен добирає все й одразу»: жадібний порядок віддавав усю
-   * ємність першим у черзі, і останні (Dignics — серія з 4 моделей проти 10 у Tenergy)
-   * лишались на підлозі. За один прохід кожен бере МАКСИМУМ одне посилання.
-   * Цикл спиняється, коли прохід не дав приросту — вільної ємності справді не лишилось.
+   * Ремонт: тягне money-картки до цілі, витісняючи найзавантаженішого з видимої четвірки.
+   * `floor` захищає донора — нижче нього не опускаємо, інакше витягуючи одного
+   * створюємо нову сироту.
    */
-  const topUp = (target: (slug: string) => number, floor: (slug: string) => number) => {
-    const candidates = pool.filter((p) => MONEY.has(p.categorySlug) && target(p.slug) > 0);
-    for (let guard = 0; guard < 50; guard += 1) {
-      const needy = candidates
-        .filter((p) => (inDegree.get(p.slug) ?? 0) < target(p.slug))
+  const repair = (target: (slug: string) => number, floor: (slug: string) => number) => {
+    for (let guard = 0; guard < 60; guard += 1) {
+      const needy = pool
+        .filter((p) => MONEY.has(p.categorySlug) && (inDegree.get(p.slug) ?? 0) < target(p.slug))
         .sort(
           (a, b) =>
-            (inDegree.get(a.slug) ?? 0) / target(a.slug) -
-            (inDegree.get(b.slug) ?? 0) / target(b.slug),
+            (inDegree.get(a.slug) ?? 0) - target(a.slug) - ((inDegree.get(b.slug) ?? 0) - target(b.slug)),
         );
       if (needy.length === 0) break;
+
       let progressed = false;
-      for (const orphan of needy) if (grantOne(orphan, floor)) progressed = true;
+      for (const orphan of needy) {
+        const donors = (byCategory.get(orphan.categorySlug) ?? [])
+          .filter((c) => c.slug !== orphan.slug)
+          .map((c) => ({ c, s: score(orphan, c) }))
+          .sort((x, y) => y.s - x.s || x.c.slug.localeCompare(y.c.slug));
+
+        for (const { c } of donors) {
+          const list = graph.get(c.slug);
+          if (!list || list.includes(orphan.slug)) continue;
+          // Явний crossSell — авторський вибір, не чіпаємо.
+          if (c.crossSell && c.crossSell.length > 0) continue;
+
+          // Витісняємо НАЙЗАВАНТАЖЕНІШОГО з видимої четвірки — так вага йде від тих,
+          // у кого надлишок, а не від першого-ліпшого.
+          let at = -1;
+          let richest = -Infinity;
+          for (let i = 0; i < Math.min(VISIBLE_SLOTS, list.length); i += 1) {
+            const slug = list[i];
+            if (!slug) continue;
+            const deg = inDegree.get(slug) ?? 0;
+            if (deg > floor(slug) && deg > richest) {
+              richest = deg;
+              at = i;
+            }
+          }
+          if (at < 0) continue;
+
+          const displaced = list[at];
+          list.splice(at, 0, orphan.slug);
+          inDegree.set(orphan.slug, (inDegree.get(orphan.slug) ?? 0) + 1);
+          if (displaced) inDegree.set(displaced, (inDegree.get(displaced) ?? 0) - 1);
+          if (list.length > POOL_SIZE) list.length = POOL_SIZE;
+          progressed = true;
+          break;
+        }
+      }
       if (!progressed) break;
     }
   };
 
-  const base = () => MIN_IN_DEGREE;
-  // Раунд 1 — підлога для всіх.
-  topUp(base, base);
-  // Раунд 2 — пріоритетні товари власника добираються до підвищеного мінімуму.
-  // Це і є «перелінковка в пріоритеті на них». Підлога лишається базовою — нікого не обвалюємо.
-  topUp((slug) => (priority.has(slug) ? PRIORITY_MIN_IN_DEGREE : 0), base);
+  const floorAll = () => MIN_IN_DEGREE;
+  // Спершу підлога для ВСІХ money-карток…
+  repair(floorAll, floorAll);
+  // …і лише потім добір пріоритетних до цілі. Підлога лишається базовою — нікого не обвалюємо.
+  repair((slug) => (priority.has(slug) ? PRIORITY_TARGET_IN_DEGREE : 0), floorAll);
 
   return graph;
 }
