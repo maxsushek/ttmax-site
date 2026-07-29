@@ -77,6 +77,19 @@ export function expandTokens(text: string | undefined, ctx: TokenContext): strin
         return String(ctx.year);
       case "count":
         return String(arg ? productsForSlug(arg).length : ctx.current.count);
+      // ⚠️ {{models}} і {{items}} — число РАЗОМ зі скло­ненним словом.
+      // Навіщо: у CMS-шаблонах форма іменника була зашита текстом («{{count}} моделей»),
+      // тож вона була правильною лише для частини чисел. На /nakladki з 43 товарами
+      // у видачу йшло «43 моделей» замість «43 моделі» — обома мовами.
+      // Тепер слово узгоджується з числом автоматично й не ламається, коли асортимент росте.
+      case "models": {
+        const n = arg ? productsForSlug(arg).length : ctx.current.count;
+        return `${n} ${pluralModels(n, ctx.locale)}`;
+      }
+      case "items": {
+        const n = arg ? productsForSlug(arg).length : ctx.current.count;
+        return `${n} ${pluralItems(n, ctx.locale)}`;
+      }
       case "price_from": {
         const v = arg ? minPriceOf(productsForSlug(arg), ctx.overrides) : ctx.current.minPrice;
         return v != null ? formatPrice(v) : "";
@@ -122,6 +135,20 @@ export function expandContentBlock(
         }
       : undefined,
   };
+}
+
+/** Множина для «позиція/позиції/позицій» (uk) та «позиция/позиции/позиций» (ru). */
+export function pluralItems(n: number, locale: Locale): string {
+  const m10 = n % 10;
+  const m100 = n % 100;
+  if (locale === "ru") {
+    if (m10 === 1 && m100 !== 11) return "позиция";
+    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return "позиции";
+    return "позиций";
+  }
+  if (m10 === 1 && m100 !== 11) return "позиція";
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return "позиції";
+  return "позицій";
 }
 
 /** Множина для «модель/моделі/моделей» (uk) та «модель/модели/моделей» (ru). */
