@@ -15,6 +15,7 @@ import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { getMediaMap } from "@/lib/media/get";
 import { isPhotolessHidden } from "@/lib/catalog/hidden";
+import { productIndexable } from "@/lib/catalog/indexability";
 import { cldUrl } from "@/lib/cloudinary/url";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -105,9 +106,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     paths.push({ path: `/${brand.slug}`, priority: 0.7, freq: "weekly" });
   }
 
-  // Комбо-ракетки мають noindex (routing.ts) — не подаємо їх у sitemap, інакше в GSC
-  // з'явиться 95× «Submitted URL marked noindex» (суперечливі сигнали: «проіндексуй» + «не індексуй»).
-  for (const p of getAllProducts().filter((p) => p.kind !== "racket")) {
+  // Подаємо лише те, що справді індексується: productIndexable() — та сама функція, яку
+  // читає routing.ts (комбо-ракетки + екіпірування без власного тексту). Інакше в GSC
+  // сипле «Submitted URL marked noindex» — суперечливі сигнали «проіндексуй» + «не індексуй».
+  for (const p of getAllProducts().filter(productIndexable)) {
     // Приховані (без фото, напр. одяг) — не подаємо: вони noindex, інакше GSC покаже
     // «Submitted URL marked noindex». З'явиться фото → товар автоматично повернеться сюди.
     if (isPhotolessHidden(p, media)) continue;

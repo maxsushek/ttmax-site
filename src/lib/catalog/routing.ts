@@ -22,6 +22,7 @@ import {
   getProductsBySeries,
   rubberFilters,
 } from "@/data/catalog";
+import { productIndexable } from "@/lib/catalog/indexability";
 
 export function pickLocalized(value: Localized, locale: Locale): string {
   return value[locale];
@@ -281,14 +282,9 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
       product.brandSlug === brand.slug &&
       product.categorySlug === category.slug
     ) {
-      // Комбо-ракетки («основа + накладка») — noindex, follow. Власного попиту в них немає
-      // (Ahrefs UA: «купить viscaria», «накладка dignics 05» — відсутні в базі; 40/міс на всі 95),
-      // а в title стоїть та сама назва, що й у картки компонента → кожна основа конкурує з 19 комбо,
-      // топ-накладка — з 25. follow лишає прокачку ваги на картки компонентів.
-      // Сторінки лишаються живими й продають: рендер не читає index (page.tsx — notFound лише при route===null).
-      // ⚠️ ПАРНА ЗМІНА: sitemap.ts фільтрує ці ж товари — інакше GSC дасть «Submitted URL marked noindex».
-      const isCombo = product.kind === "racket" && product.categorySlug === "rakety";
-      return { kind: "product", brand, category, product, index: !isCombo };
+      // Правило індексації картки винесено в productIndexable() — воно спільне з sitemap.ts,
+      // щоб два місця не розійшлися (див. коментар у indexability.ts).
+      return { kind: "product", brand, category, product, index: productIndexable(product) };
     }
     return null;
   }
