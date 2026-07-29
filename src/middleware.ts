@@ -1,11 +1,56 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { locales } from "@/i18n/config";
+import { siteConfig } from "@/config/site";
 
 const DEFAULT_LOCALE = locales[0]; // 'ua'
 
+/**
+ * Канонічний хост — той, що заданий у NEXT_PUBLIC_SITE_URL (через siteConfig.url).
+ * Порожній рядок, якщо URL некоректний, — тоді канонізація просто не вмикається.
+ */
+const CANONICAL_HOST = (() => {
+  try {
+    return new URL(siteConfig.url).host;
+  } catch {
+    return "";
+  }
+})();
+
+/**
+ * Чи маємо примусово зводити трафік на канонічний хост.
+ *
+ * ⚠️ НАВІЩО: після підключення ttmax.com.ua прод-аліас ttmax-site-z2za.vercel.app
+ * НЕ зникає — він і далі віддає ПОВНУ копію сайту (682 URL). Для Google це два
+ * однакові сайти: він обирає канонічний сам, і не факт що правильно, а вага ділиться.
+ * Тому 308 з будь-якого іншого хоста на канонічний.
+ *
+ * ⚠️ ТРИ ЗАПОБІЖНИКИ, без яких це б зламало роботу:
+ *  1) Лише VERCEL_ENV === "production". Прев'ю-деплої (*-git-*.vercel.app) мають лишатись
+ *     доступними — саме на них перевіряють зміни ПЕРЕД флипом noindex.
+ *  2) Лише якщо канонічний хост уже НЕ vercel.app. Доки домену немає, редирект
+ *     зациклився б сам на себе.
+ *  3) Локальна розробка (VERCEL_ENV undefined) не зачіпається взагалі.
+ */
+const ENFORCE_CANONICAL_HOST =
+  process.env.VERCEL_ENV === "production" &&
+  CANONICAL_HOST !== "" &&
+  !CANONICAL_HOST.endsWith(".vercel.app");
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // ===== Канонічний хост (має бути ПЕРШИМ, до будь-якої іншої логіки) =====
+  if (ENFORCE_CANONICAL_HOST) {
+    const host = request.headers.get("host");
+    if (host && host !== CANONICAL_HOST) {
+      const url = request.nextUrl.clone();
+      url.host = CANONICAL_HOST;
+      url.port = "";
+      url.protocol = "https:";
+      return NextResponse.redirect(url, 308);
+    }
+  }
 
   // ===== /admin/* — авторизация =====
   if (pathname.startsWith("/admin")) {

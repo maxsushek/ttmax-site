@@ -1,6 +1,48 @@
 import type { NextConfig } from "next";
 
 /**
+ * ЗАПОБІЖНИК ЗАПУСКУ: не даємо зібрати «відкритий для індексації» сайт на прев'ю-домені.
+ *
+ * ⚠️ НАВІЩО: у момент запуску треба зробити дві незалежні дії — підключити домен
+ * (NEXT_PUBLIC_SITE_URL) і зняти noindex (NEXT_PUBLIC_SITE_LAUNCHED). Якщо переплутати
+ * порядок і зняти noindex РАНІШЕ, ніж заданий домен, Google проіндексує 682 URL на
+ * ttmax-site-z2za.vercel.app — домені зі списку публічних суфіксів. Далі це лікується
+ * лише повною 301-міграцією всіх URL із просадкою. Помилка тиха: збірка зелена,
+ * сайт працює, а наслідок видно через тижні.
+ *
+ * Тому — падаємо на збірці. Краще червоний деплой на хвилину, ніж міграція на місяці.
+ */
+function assertLaunchConfigSane(): void {
+  if (process.env.NEXT_PUBLIC_SITE_LAUNCHED !== "true") return;
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  let host = "";
+  try {
+    host = new URL(raw).host;
+  } catch {
+    /* нижче впаде на порожньому host */
+  }
+  if (!host || host.endsWith(".vercel.app")) {
+    throw new Error(
+      [
+        "",
+        "❌ ЗБІРКУ ЗУПИНЕНО: сайт відкрито для індексації на прев'ю-домені.",
+        "",
+        `   NEXT_PUBLIC_SITE_LAUNCHED = true`,
+        `   NEXT_PUBLIC_SITE_URL      = ${raw || "(не задано)"}`,
+        "",
+        "   Спершу задайте справжній домен у NEXT_PUBLIC_SITE_URL (напр. https://ttmax.com.ua),",
+        "   і лише ПОТІМ вмикайте NEXT_PUBLIC_SITE_LAUNCHED=true.",
+        "   Інакше 682 URL підуть в індекс на *.vercel.app, і це виправляється",
+        "   лише повною 301-міграцією.",
+        "",
+      ].join("\n"),
+    );
+  }
+}
+
+assertLaunchConfigSane();
+
+/**
  * Content-Security-Policy — поки що в режимі REPORT-ONLY.
  *
  * ⚠️ Свідомо Report-Only, а не enforce: цей заголовок нічого НЕ блокує, лише повідомляє
