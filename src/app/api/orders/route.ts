@@ -122,7 +122,22 @@ export async function POST(request: NextRequest) {
           ? eff.priceFrom
           : (getMinPrice(eff) ?? null);
 
-    if (expected == null) continue; // ціну не визначено в каталозі — пропускаємо
+    // ⚠️ Було `continue` — тобто позиція, для якої каталог не знає ціни, приймалася з
+    // ціною КЛІЄНТА. Таких позицій 64 (odyag 47, aksessuary 11, nakladki 4 та ін.), і
+    // замовити їх можна було за будь-яку суму, хоч за гривню.
+    // Відхиляємо: товар без ціни в каталозі не продається через кошик за визначенням —
+    // у панелі покупки addToCart() виходить одразу, якщо ціни немає (hasPrice === false),
+    // тож жоден легітимний сценарій сюди не потрапляє. Такі позиції купують через
+    // «Швидке замовлення» — заявка й дзвінок, а не онлайн-оплата.
+    if (expected == null) {
+      console.warn("[orders] item without catalog price — rejecting", {
+        productId: it.productId,
+      });
+      return NextResponse.json(
+        { error: "Price unavailable", productId: it.productId },
+        { status: 400 },
+      );
+    }
 
     if (Math.abs(expected - it.price) > 0.01) {
       console.warn("[orders] price mismatch — rejecting", {
