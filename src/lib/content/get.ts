@@ -138,6 +138,20 @@ async function load(
 }
 
 /**
+ * ⚠️ БУМПНУТИ ПРИ БУДЬ-ЯКІЙ ПРАВЦІ content_blocks НАПРЯМУ ЧЕРЕЗ SQL.
+ *
+ * Data Cache на Vercel НЕ скидається редеплоєм — він спільний для деплоїв. Тому запис
+ * в обхід адмінки (яка кличе revalidateTag(CONTENT_TAG)) висить невидимим до години:
+ * білд читає з того ж кеша й запікає стару HTML, і виглядає це як «правка не доїхала».
+ * Саме на цьому згоріла правка числівників (#37): у БД уже {{models}}, а сторінка
+ * ще віддавала «43 моделей» зі старого шаблону.
+ *
+ * Версія входить у ключ кеша, тож інкремент = гарантований промах = свіже читання з БД
+ * на першому ж запиті після деплою. Тег CONTENT_TAG лишається — він обслуговує адмінку.
+ */
+const CONTENT_CACHE_VERSION = "v2";
+
+/**
  * Кешований опис для (тип, slug, мова). null — нічого не рендеримо.
  * Кеш на ключ + спільний тег CONTENT_TAG (revalidateTag у адмінці застосовує зміни без передеплою).
  */
@@ -148,7 +162,7 @@ export function getContent(
 ): Promise<ContentBlock | null> {
   return unstable_cache(
     () => load(entityType, slug, locale),
-    ["content-block", entityType, slug, locale],
+    ["content-block", CONTENT_CACHE_VERSION, entityType, slug, locale],
     {
       tags: [CONTENT_TAG],
       revalidate: 3600,
