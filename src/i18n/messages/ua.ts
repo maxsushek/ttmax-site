@@ -191,7 +191,7 @@ export const ua: Messages = {
       contact: "Контактні дані",
       np: { label: "Нова Пошта", sub: "1–2 дні · ~50–80 ₴" },
       ukrposhta: { label: "Укрпошта", sub: "3–5 днів · ~30 ₴" },
-      pickup: { label: "Самовивіз", sub: "Безкоштовно · Київ" },
+      pickup: { label: "Самовивіз", sub: "Безкоштовно · Харків" },
       fields: {
         fullName: "Ім'я та прізвище",
         fullNamePlaceholder: "Іван Петров",

@@ -179,7 +179,7 @@ export const ru: Messages = {
       contact: "Контактные данные",
       np: { label: "Новая Почта", sub: "1–2 дня · ~50–80 ₴" },
       ukrposhta: { label: "Укрпочта", sub: "3–5 дней · ~30 ₴" },
-      pickup: { label: "Самовывоз", sub: "Бесплатно · Киев" },
+      pickup: { label: "Самовывоз", sub: "Бесплатно · Харьков" },
       fields: {
         fullName: "Имя и фамилия",
         fullNamePlaceholder: "Иван Петров",

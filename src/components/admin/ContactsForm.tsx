@@ -41,8 +41,8 @@ const GROUPS: Group[] = [
     title: "Адреса (для SEO / контактів)",
     fields: [
       { key: CONTACT_KEYS.addrStreet, label: "Вулиця, будинок", placeholder: "вул. Хрещатик, 1" },
-      { key: CONTACT_KEYS.addrLocality, label: "Місто", placeholder: "Київ" },
-      { key: CONTACT_KEYS.addrRegion, label: "Область", placeholder: "Київська обл." },
+      { key: CONTACT_KEYS.addrLocality, label: "Місто", placeholder: "Харків" },
+      { key: CONTACT_KEYS.addrRegion, label: "Область", placeholder: "Харківська обл." },
       { key: CONTACT_KEYS.addrPostal, label: "Індекс", placeholder: "01001" },
     ],
   },
