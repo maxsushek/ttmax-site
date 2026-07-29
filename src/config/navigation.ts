@@ -78,8 +78,14 @@ export const navigation: ReadonlyArray<NavItem> = [
       // Бренди/серії — мовно-нейтральні (латиниця), лишаються рядком.
       { label: "Tenergy", href: "/nakladki/tenergy" },
       { label: "Dignics", href: "/nakladki/dignics" },
-      { label: "Zyre", href: "/nakladki/zyre" },
-      { label: "Glayzer", href: "/nakladki/glayzer" },
+      // ⚠️ Zyre і Glayzer ведуть на КАРТКИ, а не на хаби серій. Хаби в цих двох випадках
+      // не індексуються (seriesIndexable у routing.ts): у Zyre всього 1 товар — хаб просто
+      // дублює картку; у Glayzer slug серії збігається зі slug товару, тобто хаб і картка
+      // бились за один запит. Меню ж рендериться на КОЖНІЙ сторінці — це було 684 посилання
+      // (по 2 на сторінку: десктоп + мобільне) у сторінки, які не можуть ранжуватись.
+      // Тепер той самий обсяг ваги йде на money-картки, обидві є в sitemap.
+      { label: "Zyre", href: "/butterfly/nakladki/zyre-03" },
+      { label: "Glayzer", href: "/butterfly/nakladki/glayzer" },
       { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
     ],
