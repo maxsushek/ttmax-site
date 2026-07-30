@@ -55,8 +55,18 @@ async function loadAll(): Promise<EntityMediaMap> {
   return map;
 }
 
-/** Кешированная карта всех картинок. Безопасно вызывать в любом серверном компоненте. */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v1"], {
+/**
+ * ⚠️ БУМПНУТИ ВЕРСІЮ В КЛЮЧІ ПРИ ПРАВЦІ entity_media НАПРЯМУ ЧЕРЕЗ SQL.
+ *
+ * Та сама пастка, що і в content/get.ts: Data Cache на Vercel спільний для деплоїв, тож
+ * редеплой його НЕ скидає. Запис в обхід адмінки (яка кличе revalidateTag(MEDIA_TAG))
+ * лишається невидимим до години — фото вже в БД, а сторінка далі малює порожню галерею.
+ * Інкремент версії = гарантований промах = свіже читання з БД на першому ж запиті.
+ *
+ * v2: додано фото 5 клеїв Free Chack / Free Chack Pro II (залиті власником у Cloudinary,
+ * рядки entity_media проставлені SQL-ом).
+ */
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v2"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
