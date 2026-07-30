@@ -42,7 +42,7 @@ import { resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
-import { filterVisible, isPhotolessHidden } from "@/lib/catalog/hidden";
+import { filterVisible, isHidden, isWithdrawn } from "@/lib/catalog/hidden";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
 import { CategorySeo } from "@/components/catalog/CategorySeo";
@@ -128,7 +128,7 @@ export async function generateMetadata({
   // Для лічильника «N моделей» рахуємо ВИДИМІ товари — приховані (без фото) не показуємо,
   // тож і в опис не пишемо (інакше було б «160 моделей», а на сторінці 44).
   const allCurrent = route.kind === "product" ? [route.product] : route.products;
-  const currentProducts = allCurrent.filter((p) => !isPhotolessHidden(p, media));
+  const currentProducts = allCurrent.filter((p) => !isHidden(p, media));
   const tctx = buildTokenContext({ locale: l, overrides, currentProducts });
 
   const title = expandTokens(content?.metaTitle || routeTitle(route, l), tctx) ?? "";
@@ -163,14 +163,14 @@ export async function generateMetadata({
     : undefined;
 
   // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
-  const photolessHidden = route.kind === "product" && isPhotolessHidden(route.product, media);
+  const hiddenProduct = route.kind === "product" && isHidden(route.product, media);
 
   return buildCatalogMetadata({
     locale: l,
     pathname: "/" + segments.join("/"),
     title,
     description,
-    index: route.index && !content?.noindex && !photolessHidden,
+    index: route.index && !content?.noindex && !hiddenProduct,
     image: ogImage,
     ogDescription,
   });
@@ -265,6 +265,13 @@ export default async function CatalogPage({
 
   const route = resolveSegments(segments);
   if (!route) notFound();
+
+  // ⛔ Товар знято з продажу (WITHDRAWN_SLUGS) — картка віддає 404.
+  // СВІДОМО жорсткіше, ніж приховування «без фото»: там товар існує й продається, просто
+  // не сфотографований, тому пряме посилання лишається робочим. Тут товару в асортименті
+  // НЕМАЄ — якби картка відкривалась, на ній працювала б кнопка «В кошик» і магазин
+  // отримував би замовлення на те, чого не продає. Оборотно: прибрати slug зі списку.
+  if (route.kind === "product" && isWithdrawn(route.product)) notFound();
 
   const media = await getMediaMap();
   const overrides = await getOverrides();

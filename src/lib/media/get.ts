@@ -67,8 +67,9 @@ async function loadAll(): Promise<EntityMediaMap> {
  * рядки entity_media проставлені SQL-ом).
  * v3: + Free Chack Pro II 500 ml.
  * v4: + Free Chack 500 ml (avif; поле format ніде не читається, лише зберігається).
+ * v5: + Freechack PRO 37 ml.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v4"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v5"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
