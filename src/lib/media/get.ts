@@ -66,8 +66,9 @@ async function loadAll(): Promise<EntityMediaMap> {
  * v2: додано фото 5 клеїв Free Chack / Free Chack Pro II (залиті власником у Cloudinary,
  * рядки entity_media проставлені SQL-ом).
  * v3: + Free Chack Pro II 500 ml.
+ * v4: + Free Chack 500 ml (avif; поле format ніде не читається, лише зберігається).
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v3"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v4"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
