@@ -477,9 +477,14 @@ function ListingView({
       ) : (route.kind === "category" || route.kind === "brandCategory") && route.category.slug === "rakety" ? (
         <RacketGrid products={route.products} locale={locale} media={media} />
       ) : (
-        <Suspense
-          fallback={<ProductGrid products={ordered} locale={locale} media={media} />}
-        >
+        // ⚠️ ФОЛБЕК — СКЕЛЕТ, А НЕ СІТКА. CatalogFilters клієнтський і читає useSearchParams,
+        // тому React обгортає його в Suspense і СТРІМИТЬ у два заходи: спершу в HTML летить
+        // фолбек, потім — справжній вміст, і вбудований скрипт $RC їх міняє місцями.
+        // Обидва лишаються в HTML. Коли фолбеком була та сама <ProductGrid>, сітка з 43
+        // карток приїжджала ДВІЧІ: /osnovaniya віддавала 720 КБ, /nakladki — 417 КБ.
+        // Скелет важить одиниці кілобайт, а справжня сітка в HTML нікуди не зникає —
+        // тобто ні краулер, ні користувач без JS нічого не втрачають.
+        <Suspense fallback={<GridSkeleton count={Math.min(ordered.length, 8)} />}>
           <CatalogFilters
             locale={locale}
             items={buildCardVMs(ordered, locale, media)}
@@ -837,6 +842,30 @@ function ProductCard({
 }
 
 /** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
+/**
+ * Легкий фолбек для Suspense навколо CatalogFilters. Свідомо БЕЗ даних товарів:
+ * усе, що сюди потрапить, продублюється в HTML поруч зі справжньою сіткою (React
+ * стрімить фолбек і вміст окремо). Тримає ту саму сітку 2/4 колонки й ту саму
+ * пропорцію картки, щоб при підміні не стрибав лейаут.
+ */
+function GridSkeleton({ count }: { count: number }) {
+  return (
+    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4" aria-hidden>
+      {Array.from({ length: count }, (_, i) => (
+        <li
+          key={i}
+          className="h-full animate-pulse rounded-2xl border border-border-strong bg-bg-raised p-3 sm:p-4"
+        >
+          <div className="mb-3 aspect-square rounded-xl bg-white/[0.04]" />
+          <div className="mb-2 h-3 w-1/3 rounded bg-white/[0.04]" />
+          <div className="mb-3 h-4 w-2/3 rounded bg-white/[0.05]" />
+          <div className="h-4 w-1/4 rounded bg-white/[0.04]" />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function ProductGrid({
   products,
   locale,
