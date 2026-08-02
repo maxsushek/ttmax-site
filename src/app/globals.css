@@ -4,8 +4,13 @@
 
 @layer base {
   :root {
-    --font-display: "Barlow Condensed", system-ui, sans-serif;
-    --font-body: "Barlow", system-ui, sans-serif;
+    /* ⚠️ ТУТ НЕ МОЖНА ОГОЛОШУВАТИ --font-display / --font-body.
+       Їх задає next/font класами __variable_* на <html> (layout.tsx). Ці два рядки
+       раніше містили Barlow і ПЕРЕБИВАЛИ їх: у Tailwind v3 `@layer base` — директива
+       збірки, а не нативний CSS-шар, тож правила виходять звичайним CSS. Специфічність
+       `:root` дорівнює специфічності класу, і перемагає те, що йде пізніше, — globals.css.
+       Наслідок був тихий і злий: Oswald завантажувався (99 КБ), а сторінка малювалась
+       системним шрифтом, бо просила «Barlow Condensed», якого вже немає. */
     color-scheme: dark;
   }
 
