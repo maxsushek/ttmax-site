@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Oswald, Roboto } from "next/font/google";
+import { Roboto, Tektur } from "next/font/google";
 import { headers } from "next/headers";
 import { defaultLocale, isLocale, localeToLang } from "@/i18n/config";
 import { cn } from "@/utils/cn";
@@ -21,10 +21,13 @@ import "./globals.css";
  * Підмножини — тільки latin і cyrillic. latin-ext, vietnamese і greek не потрібні:
  * у каталозі немає ані діакритики, ані грецької.
  *
- * ⚠️ Oswald має вісь ваги 200-700, тож tailwind-класи font-black (900) і font-extrabold (800)
- * браузер затискає до 700. Це навмисно краще за синтетичне жирніння — воно спотворює літери.
+ * ЧОМУ TEKTUR, А НЕ OSWALD (стояв до нього): у Oswald кирилична «У» має ПРЯМИЙ
+ * вертикальний хвіст замість діагонального — власник відразу за неї зачепився, і форма
+ * справді нетипова. Tektur обрано з дев'яти кандидатів із кирилицею: єдиний, що має
+ * характер (квадратна техно-пластика, впізнавані цифри «340+») і водночас лишається
+ * вузьким, тож заголовок не розповзається. Кирилична підмножина важить 5 КБ.
  */
-const oswald = Oswald({
+const tektur = Tektur({
   subsets: ["latin", "cyrillic"],
   variable: "--font-display",
   display: "swap",
@@ -45,7 +48,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html
       lang={localeToLang[locale]}
-      className={cn(oswald.variable, roboto.variable)}
+      className={cn(tektur.variable, roboto.variable)}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg-base text-ink">{children}</body>
