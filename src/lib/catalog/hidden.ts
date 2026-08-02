@@ -41,8 +41,14 @@ export function isWithdrawn(product: CatalogProduct): boolean {
  */
 export const HIDE_PHOTOLESS = true;
 
-/** Категорії, де ховаємо товари без фото. Додати slug → правило пошириться на категорію. */
-export const HIDE_PHOTOLESS_CATEGORIES: ReadonlySet<string> = new Set(["odyag"]);
+/**
+ * Категорії, де ховаємо товари без фото. Додати slug → правило пошириться на категорію.
+ *
+ * myachi додано 01.08.2026 на прохання власника: 6 із 8 мʼячів уже мають фото, лишились
+ * Easy Ball 40+ (120 шт) і Master Quality 40+ (72 шт). Правило САМОЛІКУВАЛЬНЕ — щойно
+ * власник заллє їм фото, вони повернуться в лістинг і sitemap самі, без правки коду.
+ */
+export const HIDE_PHOTOLESS_CATEGORIES: ReadonlySet<string> = new Set(["odyag", "myachi"]);
 
 /** true → товар треба тимчасово сховати (потрапляє під правило й не має фото). */
 export function isPhotolessHidden(product: CatalogProduct, media: EntityMediaMap): boolean {
