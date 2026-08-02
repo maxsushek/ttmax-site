@@ -68,8 +68,9 @@ async function loadAll(): Promise<EntityMediaMap> {
  * v3: + Free Chack Pro II 500 ml.
  * v4: + Free Chack 500 ml (avif; поле format ніде не читається, лише зберігається).
  * v5: + Freechack PRO 37 ml.
+ * v6: + усі 3 сітки (Elite Clip, Europa, National League) — категорія закрита повністю.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v5"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v6"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
