@@ -159,7 +159,7 @@ export async function generateMetadata({
   const ogSource = (currentProducts ?? []).find((p) => pickPrimary(media, "product", p.slug));
   const ogPrimary = ogSource ? pickPrimary(media, "product", ogSource.slug) : null;
   const ogImage = ogPrimary
-    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "fill" }) || undefined
+    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "fill", wm: true }) || undefined
     : undefined;
 
   // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
@@ -298,8 +298,11 @@ export default async function CatalogPage({
             .filter((n): n is number => typeof n === "number" && n > 0);
           const lowPrice = vPrices.length ? Math.min(...vPrices) : undefined;
           const highPrice = vPrices.length ? Math.max(...vPrices) : undefined;
+          // ⚠️ wm:true і тут, і в галереї — параметри однакові, тож URL виходить ТОЙ САМИЙ.
+          // Google має бачити рівно ту саму картинку, що й покупець; розбіжність між
+          // видимим фото і фото в розмітці читалась би як підміна контенту для робота.
           const productImages = pickAll(media, "product", eroute.product.slug)
-            .map((m) => cldUrl(m.publicId, { w: 900, h: 900 }))
+            .map((m) => cldUrl(m.publicId, { w: 900, h: 900, wm: true }))
             .filter(Boolean);
           const productSku =
             eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
@@ -934,7 +937,9 @@ function buildGallery(
   // нелокалізована колонка, заповнена українською (690 з 1057 рядків), тож на /ru вона
   // давала укр. alt на кожному фото. Локалізована назва коректна для обох мов.
   return pickAll(media, "product", slug).map((m) => ({
-    url: cldUrl(m.publicId, { w: 900, h: 900 }),
+    // Знак лише на великому кадрі. Мініатюра (160px) лишається чистою: там напис
+    // перетворився б на пляму, а поруч і так стоїть позначене головне фото.
+    url: cldUrl(m.publicId, { w: 900, h: 900, wm: true }),
     thumb: cldUrl(m.publicId, { w: 160, h: 160 }),
     alt: fallbackAlt,
   }));
