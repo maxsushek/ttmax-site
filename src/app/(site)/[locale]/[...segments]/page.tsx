@@ -50,7 +50,6 @@ import { RichContent } from "@/components/catalog/RichContent";
 import { getRichContent } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
 import { cldUrl } from "@/lib/cloudinary/url";
-import Image from "next/image";
 import {
   catalogBreadcrumbs,
   catalogStaticParams,
@@ -477,14 +476,26 @@ function ListingView({
       ) : (route.kind === "category" || route.kind === "brandCategory") && route.category.slug === "rakety" ? (
         <RacketGrid products={route.products} locale={locale} media={media} />
       ) : (
-        // ⚠️ ФОЛБЕК — СКЕЛЕТ, А НЕ СІТКА. CatalogFilters клієнтський і читає useSearchParams,
-        // тому React обгортає його в Suspense і СТРІМИТЬ у два заходи: спершу в HTML летить
-        // фолбек, потім — справжній вміст, і вбудований скрипт $RC їх міняє місцями.
-        // Обидва лишаються в HTML. Коли фолбеком була та сама <ProductGrid>, сітка з 43
-        // карток приїжджала ДВІЧІ: /osnovaniya віддавала 720 КБ, /nakladki — 417 КБ.
-        // Скелет важить одиниці кілобайт, а справжня сітка в HTML нікуди не зникає —
-        // тобто ні краулер, ні користувач без JS нічого не втрачають.
-        <Suspense fallback={<GridSkeleton count={Math.min(ordered.length, 8)} />}>
+        // ⚠️ ФОЛБЕК МУСИТЬ БУТИ СПРАВЖНЬОЮ СІТКОЮ. Не міняти на скелет — перевірено двічі.
+        //
+        // CatalogFilters клієнтський і читає useSearchParams. На СТАТИЧНОМУ пререндері цей
+        // хук зупиняє рендер назовсім, тому в готовий .html лягає ЛИШЕ фолбек — самого
+        // CatalogFilters у файлі немає взагалі (grep 'catalog-sort' по .next/server/app → 0
+        // з 1176 файлів). Зі скелетом у фолбеку статика віддавала краулеру нуль карток і
+        // нуль посилань на товари.
+        //
+        // Історична пастка: на ДИНАМІЧНОМУ рендері (як було до переїзду в групи маршрутів)
+        // поведінка протилежна — React стрімив і фолбек, і вміст, обидва лишались у HTML,
+        // сітка приїжджала двічі й роздувала сторінку (/osnovaniya 720 КБ). Саме тому тут
+        // колись стояв скелет. Зі статикою дублювання зникло само, а скелет став шкідливим.
+        //
+        // ⚠️ Що цей фолбек НЕ вміє: query-параметри (?surfaceType=…) у ключ статичного кеша
+        // не входять, тож усі фільтровані URL віддають ОДИН і той самий нефільтрований HTML,
+        // а звужується список уже після гідратації. На ці URL веде 10 пунктів меню
+        // (src/config/navigation.ts). Індексації це не шкодить — канонікал відкидає query, —
+        // але холодний вхід дає стрибок контенту. Правильне лікування: перевести пресети
+        // на реальні сегменти маршруту, як зроблено для основ ALC/ZLC у lib/catalog/routing.ts.
+        <Suspense fallback={<ProductGrid products={ordered} locale={locale} media={media} />}>
           <CatalogFilters
             locale={locale}
             items={buildCardVMs(ordered, locale, media)}
@@ -794,18 +805,48 @@ function ProductCard({
   return (
     <Link
       href={`/${locale}/${product.brandSlug}/${product.categorySlug}/${product.slug}`}
+      /**
+       * ⚠️ prefetch={false} тут обов'язковий — саме на картках, не на навігації.
+       *
+       * Після переходу на SSG префетч статичного маршруту тягне ПОВНИЙ payload сторінки
+       * (~27 КБ gzip), а не заглушку в ~200 Б, як було на динамічному main. Next префетчить
+       * усе, що потрапляє у в'юпорт, тож людина, яка просто гортає категорію з 43 карток,
+       * підтягувала б ~1,1 МБ сторінок, які не відкриє. На /osnovaniya (84 картки) — удвічі більше.
+       *
+       * У навігації (шапка, меню, хлібні крихти) префетч ЛИШАЄТЬСЯ: там одиниці посилань
+       * і перехід має бути миттєвим.
+       *
+       * ⚠️ У Next 15.5 prefetch={false} вимикає і префетч по наведенню теж
+       * (client/app-dir/link.js:105 prefetchEnabled = prefetchProp !== false, далі
+       * onMouseEnter/onTouchStart виходять достроково). Тобто клік по картці = звичайний
+       * перехід за статичним файлом із CDN. Це свідомий розмін на користь мобільного трафіку.
+       */
+      prefetch={false}
       className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
       data-cta="catalog-product"
       data-location={product.slug}
     >
       <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]">
         {img ? (
-          <Image
+          /**
+           * ⚠️ Тут свідомо звичайний <img>, а НЕ next/image — і міняти назад не можна.
+           *
+           * Ця сама картка малюється двічі: спершу сервером (ця гілка, фолбек Suspense),
+           * потім клієнтським CatalogFilters після гідратації. Якщо тут стоїть next/image,
+           * src перетворюється на /_next/image?url=…, а CatalogFilters ставить прямий
+           * res.cloudinary.com — рядки різні, і браузер тягне КОЖНЕ фото лістингу двічі.
+           * На /osnovaniya це 84 зайві завантаження і стільки ж платних трансформацій
+           * Vercel Image Optimization за один перегляд.
+           *
+           * Оптимізатор тут і не потрібен: cldUrl уже віддає f_auto + q_auto (див.
+           * lib/cloudinary/url.ts). Розмітка навмисно збігається з CatalogFilters.tsx:336.
+           */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={cldUrl(img.publicId, { w: 480, h: 480 })}
             alt={product.name[locale]}
-            fill
-            sizes="(max-width: 1024px) 50vw, 25vw"
-            className="object-cover"
+            loading="lazy"
+            className="h-full w-full object-cover"
           />
         ) : (
           <span
@@ -841,31 +882,16 @@ function ProductCard({
   );
 }
 
-/** Серверная сетка карточек — используется блоком «Схожі товари» (без фильтров). */
 /**
- * Легкий фолбек для Suspense навколо CatalogFilters. Свідомо БЕЗ даних товарів:
- * усе, що сюди потрапить, продублюється в HTML поруч зі справжньою сіткою (React
- * стрімить фолбек і вміст окремо). Тримає ту саму сітку 2/4 колонки й ту саму
- * пропорцію картки, щоб при підміні не стрибав лейаут.
+ * Серверна сітка карток. Використовується і блоком «Схожі товари», і — важливо —
+ * як фолбек Suspense навколо CatalogFilters.
+ *
+ * ⚠️ НЕ підміняти цей фолбек скелетом. Пробував: CatalogFilters читає
+ * useSearchParams(), а на статичному пререндері цей хук призупиняє рендер — тому
+ * в HTML файл потрапляє САМЕ ФОЛБЕК. Зі скелетом статика віддавала нуль карток і
+ * нуль посилань на товари, тобто вся сітка зникала для краулера. З ProductGrid у
+ * фолбеку в .html лежать усі 43 картки, а фільтри доганяють після гідратації.
  */
-function GridSkeleton({ count }: { count: number }) {
-  return (
-    <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4" aria-hidden>
-      {Array.from({ length: count }, (_, i) => (
-        <li
-          key={i}
-          className="h-full animate-pulse rounded-2xl border border-border-strong bg-bg-raised p-3 sm:p-4"
-        >
-          <div className="mb-3 aspect-square rounded-xl bg-white/[0.04]" />
-          <div className="mb-2 h-3 w-1/3 rounded bg-white/[0.04]" />
-          <div className="mb-3 h-4 w-2/3 rounded bg-white/[0.05]" />
-          <div className="h-4 w-1/4 rounded bg-white/[0.04]" />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 function ProductGrid({
   products,
   locale,
@@ -1521,6 +1547,10 @@ async function RacketComboView({
                 <li key={`${part.slug}-${i}`}>
                   <Link
                     href={`/${locale}/${part.brandSlug}/${part.categorySlug}/${part.slug}`}
+                    // ⚠️ prefetch={false} з тієї ж причини, що й на картках каталогу: на /rakety
+                    // цих посилань 101 (склад кожної збірки), і на SSG кожне тягнуло б повний
+                    // payload сторінки товару (~27 КБ gzip) при потраплянні у в'юпорт.
+                    prefetch={false}
                     className="flex items-center justify-between gap-3 rounded-xl border border-border-strong bg-white/[0.02] px-4 py-3 transition-colors hover:border-accent/40"
                   >
                     <span className="min-w-0">

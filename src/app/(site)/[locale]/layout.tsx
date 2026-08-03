@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
+import { Roboto, Tektur } from "next/font/google";
 import { notFound } from "next/navigation";
+import { cn } from "@/utils/cn";
+import { localeToLang } from "@/i18n/config";
+import "../../globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
@@ -16,6 +20,38 @@ import { getSettings, settingString } from "@/lib/settings/get";
 import { resolveContact } from "@/lib/contact/get";
 import { COUNTER_KEYS, type AnalyticsIds } from "@/lib/analytics/ids";
 import type { Metadata } from "next";
+
+/**
+ * ⚠️ ЦЕ КОРЕНЕВИЙ LAYOUT ГРУПИ (site) — саме тут <html> і <body>.
+ *
+ * Раніше вони жили в app/layout.tsx, який читав локаль із заголовка `x-locale`
+ * через `await headers()`. Одне це звернення переводило ВСЕ дерево в динамічний рендер:
+ * у білді виходило 0 файлів .html і 2 маршрути в prerender-manifest — попри
+ * generateStaticParams() і revalidate = 600. Наслідок на живому: кожна сторінка
+ * рендерилась на кожен запит, `cache-control: private, no-cache, no-store`,
+ * `x-vercel-cache: MISS` завжди. Заміряна ціна — ~155 мс зайвих на кожному запиті
+ * (HTML 305 мс проти 150 мс у файлу з CDN).
+ *
+ * Тепер локаль береться з params маршруту — заголовок не потрібен, дерево статичне.
+ * Адмінка має власний кореневий layout у групі (admin), тому app/layout.tsx не потрібен
+ * узагалі: Next дозволяє кілька кореневих layout, коли маршрути розведені по групах.
+ *
+ * ⚠️ Шрифти теж переїхали сюди: змінні --font-display/--font-body ставляться класами
+ * на <html>, а <html> тепер тут.
+ */
+const tektur = Tektur({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-display",
+  display: "swap",
+  preload: true,
+});
+
+const roboto = Roboto({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-body",
+  display: "swap",
+  preload: true,
+});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -79,27 +115,33 @@ export default async function LocaleLayout({
   const contact = resolveContact(settings);
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(contact)) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale)) }}
-      />
-      <AnalyticsProvider ids={analyticsIds} />
-      <CartProvider
-        freeShippingThreshold={contact.freeShippingThreshold}
-        shippingFee={contact.shippingFee}
-      >
-        <Header locale={locale} messages={messages} logoUrl={logoUrl} />
-        <main id="main" className="pt-16">
-          {children}
-        </main>
-        <Footer locale={locale} messages={messages} logoUrl={logoUrl} contact={contact} />
-        <CartDrawer messages={messages} locale={locale} logoUrl={logoUrl} />
-      </CartProvider>
-    </>
+    <html
+      lang={localeToLang[locale]}
+      className={cn(tektur.variable, roboto.variable)}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-bg-base text-ink">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(contact)) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale)) }}
+        />
+        <AnalyticsProvider ids={analyticsIds} />
+        <CartProvider
+          freeShippingThreshold={contact.freeShippingThreshold}
+          shippingFee={contact.shippingFee}
+        >
+          <Header locale={locale} messages={messages} logoUrl={logoUrl} />
+          <main id="main" className="pt-16">
+            {children}
+          </main>
+          <Footer locale={locale} messages={messages} logoUrl={logoUrl} contact={contact} />
+          <CartDrawer messages={messages} locale={locale} logoUrl={logoUrl} />
+        </CartProvider>
+      </body>
+    </html>
   );
 }

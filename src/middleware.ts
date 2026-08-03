@@ -82,6 +82,28 @@ export async function middleware(request: NextRequest) {
 
     return response;
   }
+  /**
+   * Верхній регістр у шляху → 308 на канонічний нижній.
+   *
+   * Усі наші slug — нижнім регістром, тож /ua/Nakladki це та сама сторінка, записана інакше.
+   * Досі такий URL просто рендерився як 404. Дві причини завернути його:
+   *
+   * 1. Дублікати для пошуковиків: зовнішній сайт цілком може послатись із «красивою» великою
+   *    літерою, і замість ваги на канонічну сторінку ми отримували 404.
+   * 2. ⚠️ Практичніша: після переходу на SSG `next start` пише ISR-кеш у ФАЙЛИ під
+   *    .next/server/app. На macOS файлова система нечутлива до регістру, тому запит
+   *    /ua/Myachi створював запис у тому самому myachi.html — і ЗАТИРАВ закешовану живу
+   *    сторінку 404-кою. Відтворено: /ua/myachi віддавав 200, після одного /ua/Myachi
+   *    почав віддавати 404, файл схуд з 283 КБ до 162 КБ. На Vercel (Linux + не файловий
+   *    кеш) не відтворюється, але будь-яка локальна перевірка збірки на Mac псувалась тихо.
+   */
+  const lower = pathname.toLowerCase();
+  if (lower !== pathname) {
+    const url = request.nextUrl.clone();
+    url.pathname = lower;
+    return NextResponse.redirect(url, 308);
+  }
+
   // Старая локаль /uk/* -> /ua/* (постоянный редирект)
   if (pathname === "/uk" || pathname.startsWith("/uk/")) {
     const url = request.nextUrl.clone();
@@ -101,13 +123,18 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Кореневий layout будує <html lang> із заголовка x-locale (app/layout.tsx), але його
-  // ніхто не ставив — тож фолбек давав lang="uk" НА ВСЬОМУ САЙТІ, включно з /ru.
-  // Половина сайту оголошувала себе українською, суперечачи власному hreflang="ru".
-  const locale = locales.find((loc) => pathname === `/${loc}` || pathname.startsWith(`/${loc}/`));
-  const headers = new Headers(request.headers);
-  if (locale) headers.set("x-locale", locale);
-  return NextResponse.next({ request: { headers } });
+  // ⚠️ ТУТ БІЛЬШЕ НІЧОГО НЕ РОБИМО — і заголовок x-locale повертати не треба.
+  //
+  // Раніше middleware ставив x-locale, а кореневий app/layout.tsx читав його через
+  // await headers(), щоб зібрати <html lang>. Це коштувало дорого: одне звернення до
+  // headers() переводило ВСЕ дерево в динамічний рендер — у білді виходило 0 файлів .html
+  // попри generateStaticParams() і revalidate, а на живому кожна сторінка рендерилась
+  // на кожен запит із cache-control: private, no-cache, no-store.
+  //
+  // Тепер локаль береться з params маршруту в app/(site)/[locale]/layout.tsx, заголовок
+  // не потрібен нікому (git grep x-locale → лише цей коментар), а сторінки статичні.
+  // Повернути set("x-locale") = повернути динамічний рендер усього сайту.
+  return NextResponse.next();
 }
 
 export const config = {

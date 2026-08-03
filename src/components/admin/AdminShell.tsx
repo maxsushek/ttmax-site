@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useTransition, type ReactNode } from "react";
-import { signOutAction } from "@/app/admin/actions";
+import { signOutAction } from "@/app/(admin)/admin/actions";
 import { adminNav } from "@/config/admin-nav";
 import { useAdminLogo } from "@/components/admin/AdminLogoContext";
 import { cn } from "@/utils/cn";

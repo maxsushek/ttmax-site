@@ -326,6 +326,12 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
             <li key={item.slug} className="h-full">
               <Link
                 href={item.href}
+                // ⚠️ prefetch={false} — те саме, що й у серверній картці
+                // (app/(site)/[locale]/[...segments]/page.tsx, ProductCard): на SSG префетч
+                // тягне повний payload сторінки, а карток у в'юпорті десятки. Обидві гілки
+                // рендера мусять поводитись однаково, інакше після гідратації почнеться
+                // префетч того, чого не префетчив сервер.
+                prefetch={false}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
                 data-cta="catalog-product"
                 data-location={item.slug}
