@@ -110,6 +110,18 @@ export async function Products({
                     <img
                       src={p.image}
                       alt={`${p.brand} ${p.model}`}
+                      /**
+                       * ⚠️ loading="lazy" тут обов'язковий. Це блок «Хіти» — 15 фото по
+                       * 7-8 КБ, разом ~110 КБ, і на мобільному в екран потрапляє від сили
+                       * два. Без цього атрибута браузер качав усі одразу й забивав канал
+                       * саме тоді, коли сторінка малюється (заміряно PageSpeed: 118 КБ
+                       * Cloudinary на першому екрані).
+                       *
+                       * Стрибка верстки не буде: контейнер вище має фіксовану висоту
+                       * h-[140px], тож місце під фото зарезервоване. CLS = 0 і лишається.
+                       */
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-[120px] w-auto object-contain transition-transform duration-500 group-hover:scale-[1.08]"
                     />
                   ) : (

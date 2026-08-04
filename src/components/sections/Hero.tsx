@@ -143,6 +143,17 @@ export async function Hero({
                 <img
                   src={heroUrl}
                   alt=""
+                  /**
+                   * ⚠️ loading="lazy" — і це НЕ помилка для картинки «над згином».
+                   *
+                   * Уся ця колонка має клас hidden ... lg:flex, тобто на мобільному фото
+                   * героя не показується взагалі — а Chrome усе одно качав його (17 КБ),
+                   * бо <img> присутній у DOM. Ліниве завантаження прибирає ці 17 КБ саме
+                   * там, де вони найдорожчі, і нічого не коштує на десктопі: там картинка
+                   * одразу в зоні видимості, тож вантажиться негайно.
+                   */
+                  loading="lazy"
+                  decoding="async"
                   className="h-[220px] w-[220px] animate-float rounded-3xl border border-accent/20 bg-white/[0.03] object-contain shadow-[0_0_44px_rgba(232,255,71,0.12)]"
                 />
               ) : (
