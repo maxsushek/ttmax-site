@@ -158,6 +158,8 @@ export type Messages = {
       method: string;
       apple: { label: string; sub: string };
       cod: { label: string; sub: string };
+      /** Підпис до «оплати при отриманні», коли обрано самовивіз (платять у магазині). */
+      codPickup: string;
       card: { label: string; sub: string };
       cardNum: string;
       cardExp: string;

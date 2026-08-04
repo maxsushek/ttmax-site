@@ -6,6 +6,7 @@ import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
 import { locales, localeToLang } from "@/i18n/config";
 import { getContact } from "@/lib/contact/get";
+import { AVAILABLE_PAYMENT_METHODS, PAYMENT_METHODS } from "@/config/payment";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 
 export const runtime = "nodejs";
@@ -38,7 +39,19 @@ const OrderSchema = z.object({
     branch: z.string().max(240).optional().nullable(),
   }),
   payment: z.object({
-    method: z.enum(["apple", "cod", "card"]),
+    /**
+     * ⚠️ Перелік береться з config/payment.ts, а НЕ зашитий тут.
+     *
+     * Сховати спосіб лише в UI недостатньо: чекаут — звичайний fetch, і підроблений
+     * POST із method:"card" створив би замовлення, помічене як оплачене карткою, хоча
+     * платіжного шлюзу не існує. Сервер мусить відхиляти те, чого магазин не приймає.
+     * Коли онлайн-оплату ввімкнуть у конфігу — цей enum розшириться сам.
+     */
+    method: z
+      .enum(PAYMENT_METHODS)
+      .refine((v) => AVAILABLE_PAYMENT_METHODS.includes(v), {
+        message: "Payment method is not available",
+      }),
   }),
   items: z.array(OrderItemSchema).min(1).max(50),
   totals: z.object({

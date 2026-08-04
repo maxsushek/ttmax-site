@@ -7,6 +7,7 @@ import { useCart } from "@/components/cart/CartProvider";
 import { formatPrice, formatCardExp, formatCardNumber, formatPhone } from "@/utils/format";
 import { validators, type FieldKey } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
+import { AVAILABLE_PAYMENT_METHODS, DEFAULT_PAYMENT_METHOD } from "@/config/payment";
 import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { siteConfig } from "@/config/site";
@@ -58,7 +59,9 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     city: "",
     npBranch: "",
     delivery: "np",
-    payment: "cod",
+    // Не «cod» рядком: дефолт іде з конфігу, щоб при поверненні онлайн-оплати
+    // не лишився вибраним спосіб, якого вже немає в переліку (або навпаки).
+    payment: DEFAULT_PAYMENT_METHOD,
     cardNum: "",
     cardExp: "",
     cardCvv: "",
@@ -580,11 +583,27 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                   {m.payment.method}
                 </div>
                 <div className="mb-5 flex flex-col gap-2">
+                  {/**
+                   * ⚠️ Перелік фільтрується по AVAILABLE_PAYMENT_METHODS, а не задається тут.
+                   * Онлайн-оплата вимкнена (config/payment.ts): картка й Apple Pay збирали дані,
+                   * але нікуди їх не надсилали — покупець думав, що заплатив, а гроші не
+                   * списувались. Не додавати способи прямо в цей масив: список мусить лишатись
+                   * похідним від конфігу, інакше UI розійдеться з валідацією в /api/orders.
+                   */}
                   {[
                     { v: "apple" as const, icon: "📱", ...m.payment.apple },
-                    { v: "cod" as const, icon: "💵", ...m.payment.cod },
+                    {
+                      v: "cod" as const,
+                      icon: "💵",
+                      ...m.payment.cod,
+                      // При самовивозі «оплата при отриманні в НП» — неправда: людина платить
+                      // у магазині. Підпис іде за обраною доставкою, щоб текст не суперечив дії.
+                      sub: form.delivery === "pickup" ? m.payment.codPickup : m.payment.cod.sub,
+                    },
                     { v: "card" as const, icon: "💳", ...m.payment.card },
-                  ].map((opt) => (
+                  ]
+                    .filter((opt) => AVAILABLE_PAYMENT_METHODS.includes(opt.v))
+                    .map((opt) => (
                     <button
                       key={opt.v}
                       type="button"
