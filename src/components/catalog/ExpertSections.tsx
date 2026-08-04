@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { ExpertEntry } from "@/data/catalog/expert";
 import { getAuthor } from "@/data/authors";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 /**
  * Підпис експерта під оцінками й думкою.
@@ -284,7 +285,7 @@ export function ExpertSections({
                   "Ракетка для настольного тенниса с этой накладкой",
                 )}
           </span>
-          <span className="shrink-0 font-display text-xl text-accent">→</span>
+          <ArrowRight className="shrink-0 text-xl text-accent" />
         </Link>
       )}
     </div>

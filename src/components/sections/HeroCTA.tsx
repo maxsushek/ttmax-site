@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/analytics/events";
 import type { Messages } from "@/i18n/messages/types";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 export function HeroCTA({ messages }: { messages: Messages }) {
   const m = messages.hero;
@@ -26,7 +27,8 @@ export function HeroCTA({ messages }: { messages: Messages }) {
         data-cta="view-catalog"
         data-location="hero"
       >
-        {m.ctaPrimary} →
+        {m.ctaPrimary}
+        <ArrowRight />
       </Button>
       <Button
         variant="ghost"

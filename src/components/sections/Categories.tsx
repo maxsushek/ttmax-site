@@ -7,6 +7,7 @@ import { cldUrl } from "@/lib/cloudinary/url";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import type { HomeOverrides } from "@/lib/homepage/home";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 // showcase-категории (ключи bases/rubbers/apparel/balls) → реальные slug каталога.
 const CATEGORY_SLUG: Record<string, string> = {
@@ -42,7 +43,8 @@ export async function Categories({
             href={`/${locale}/butterfly`}
             className="nav-link font-display text-[13px] font-bold uppercase tracking-[0.1em] text-accent"
           >
-            {m.seeAll} →
+            {m.seeAll}
+            <ArrowRight />
           </Link>
         </div>
 
@@ -93,7 +95,7 @@ export async function Categories({
                   >
                     {m.cta}{" "}
                     <span className="inline-block transition-transform group-hover:translate-x-1.5">
-                      →
+                      <ArrowRight />
                     </span>
                   </span>
                 </Link>

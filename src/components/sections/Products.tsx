@@ -10,6 +10,7 @@ import { formatPrice } from "@/utils/format";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import type { HomeOverrides } from "@/lib/homepage/home";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 const ACCENTS = ["#E8FF47", "#FF6B81", "#2ED573", "#54A0FF", "#FFA502", "#C77DFF"];
 
@@ -77,7 +78,8 @@ export async function Products({
             href={`/${locale}/butterfly`}
             className="inline-flex items-center gap-1.5 rounded-xl border border-accent/40 bg-accent/10 px-4 py-2.5 font-display text-[13px] font-bold uppercase tracking-[0.1em] text-accent transition-all hover:-translate-y-0.5 hover:bg-accent hover:text-bg-base"
           >
-            {m.seeAll} →
+            {m.seeAll}
+            <ArrowRight />
           </Link>
         </div>
 
@@ -133,7 +135,8 @@ export async function Products({
                           : "Ціна за запитом"}
                     </span>
                     <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-accent whitespace-nowrap">
-                      <span className="hidden sm:inline">{m.viewProduct} </span>→
+                      <span className="hidden sm:inline">{m.viewProduct} </span>
+                      <ArrowRight />
                     </span>
                   </div>
                 </div>
