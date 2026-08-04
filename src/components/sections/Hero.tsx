@@ -48,7 +48,25 @@ export async function Hero({
               </span>
             </div>
 
-            <h1 className="mb-7 text-balance font-display text-display-xl font-black uppercase tracking-tight">
+            {/**
+             * ⚠️ Розмір на lg свідомо МЕНШИЙ за базовий, і повертати 8vw сюди не можна.
+             *
+             * text-display-xl — це clamp(2.5rem, 8vw, 6rem), тобто до 96px, і vw міряється
+             * від УСЬОГО вікна. Але з lg герой стає двоколонковим: контейнер max-w-1200
+             * мінус px-8 мінус gap-14, поділити навпіл — колонка виходить 452px при вікні
+             * 1024 і 540px при 1200+. «BUTTERFLY» — одне слово з дев'яти літер, воно не
+             * переноситься, тож на 96px просто вилазило за колонку й обрізалось праворуч.
+             *
+             * Раніше цього не було видно: Barlow Condensed — ВУЗЬКИЙ шрифт, те саме слово
+             * займало приблизно на третину менше. Після переходу на Tektur (звичайної
+             * ширини) старі розміри стали завеликими. Класична пастка зміни гарнітури:
+             * ламається не там, де міняли, а там, де покладались на ширину гліфів.
+             *
+             * clamp(2.5rem, 6vw, 4.5rem): при 1024 → 61px, при 1200+ → 72px. Із запасом
+             * ~18% навіть якщо метрики Tektur ширші за розрахунок.
+             * Нижче lg герой одноколонковий на всю ширину — там базовий розмір коректний.
+             */}
+            <h1 className="mb-7 text-balance font-display text-display-xl font-black uppercase tracking-tight lg:text-[clamp(2.5rem,6vw,4.5rem)]">
               {titleOverride ? (
                 <span className="text-gradient-accent block py-[0.14em] -my-[0.14em]">{titleOverride}</span>
               ) : (
