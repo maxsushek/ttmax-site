@@ -122,6 +122,16 @@ export async function Products({
                        */
                       loading="lazy"
                       decoding="async"
+                      /**
+                       * fetchPriority="low" — щоб ці 14 фото не змагалися за канал зі
+                       * шрифтами й CSS. loading="lazy" сам по собі не рятує: у Chrome на
+                       * повільному з'єднанні поріг передзавантаження щедрий, і всі 14
+                       * усе одно качаються (заміряно PageSpeed: 96 КБ Cloudinary на
+                       * першому екрані навіть після lazy). Низький пріоритет не забороняє
+                       * завантаження, а лише ставить його в чергу ПІСЛЯ критичних
+                       * ресурсів — саме тих, від яких залежить відмальовка тексту LCP.
+                       */
+                      fetchPriority="low"
                       className="max-h-[120px] w-auto object-contain transition-transform duration-500 group-hover:scale-[1.08]"
                     />
                   ) : (
