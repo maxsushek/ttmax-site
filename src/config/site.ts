@@ -27,8 +27,13 @@ export const siteConfig = {
   emoji: "🦋",
   /** Featured brand on the storefront (used in Hero, FAQ, JSON-LD) */
   featuredBrand: "Butterfly",
-  phone: "+380000000000",
-  phoneDisplay: "+380 (XX) XXX-XX-XX",
+  // Реальний номер магазину, заданий власником 04.08.2026 (був плейсхолдер +380000000000).
+  // phone — строго E.164 без пробілів: іде в tel: і в ContactPoint.telephone (JSON-LD).
+  // phoneDisplay — те, що бачить людина; ЄДИНЕ джерело підпису в шапці, підвалі й на /contacts.
+  // ⚠️ Обидва можна перебити з адмінки (site_settings → contact_phone / contact_phone_display),
+  // ці значення лише фолбек коду.
+  phone: "+380966726136",
+  phoneDisplay: "+38 (096) 672-61-36",
   // Фолбек: реальна пошта задається в /admin (contacts) і перебиває це значення.
   email: "hello@ttmax.com.ua",
   freeShippingThreshold: 5000,

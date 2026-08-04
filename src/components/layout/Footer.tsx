@@ -87,6 +87,15 @@ export function Footer({
 }) {
   const m = messages.footer;
   const phoneHref = contact?.phone ?? siteConfig.phone;
+  /**
+   * ⚠️ Підпис телефона беремо з ТОГО САМОГО джерела, що й посилання.
+   *
+   * Раніше href брався з site_settings, а видимий текст — із словника (messages.footer.phone),
+   * де номер був зашитий рядком. Тобто зміна номера в адмінці правила tel:, але людина
+   * бачила старий номер. Класична тиха розбіжність: обидва місця «працюють», а разом брешуть.
+   * Тепер обидва йдуть з contact (фолбек — siteConfig), а ключ footer.phone зі словників прибрано.
+   */
+  const phoneLabel = contact?.phoneDisplay || siteConfig.phoneDisplay;
   const socialHref = (key: string): string =>
     (contact?.social[key as "telegram" | "youtube" | "facebook"] ||
       siteConfig.social.find((s) => s.key === key)?.href) ??
@@ -174,7 +183,7 @@ export function Footer({
               onClick={() => trackEvent({ name: "phone_click", params: { location: "footer" } })}
               className="font-display text-base font-bold text-ink-muted transition-colors hover:text-ink"
             >
-              {m.phone}
+              {phoneLabel}
             </a>
             {/* Реальна адреса магазину — на кожній сторінці (trust-сигнал + локальний SEO
                 під «настільний теніс Харків»). Джерело одне: siteConfig.addressDisplay. */}

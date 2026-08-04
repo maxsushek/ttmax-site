@@ -5,12 +5,15 @@
 // ✅ Адреса є: вул. Ньютона, 143Б, Харків (задана власником 25.07.2026) — єдине джерело
 //    siteConfig.addressDisplay + siteConfig.address (PostalAddress в Organization JSON-LD).
 //
+// ✅ Телефон є: власник задав +38 (096) 672-61-36 04.08.2026. Раніше тут стояв плейсхолдер
+//    «+380 (XX) XXX-XX-XX», через що телефон свідомо НЕ виводився на цій сторінці, а в підвалі
+//    рендерився неробочий tel:+380000000000. Тепер номер виводиться і тут, і в підвалі, і в
+//    ContactPoint (Organization JSON-LD) — з одного джерела siteConfig.phoneDisplay/phone,
+//    яке перебивається з адмінки (site_settings → contact_phone / contact_phone_display).
+//
 // ⚠️ TODO (лишилось):
-//   1. Реальний номер телефону (siteConfig.phoneDisplay / site_settings) — зараз ПЛЕЙСХОЛДЕР
-//      «+380 (XX) XXX-XX-XX», тому на сторінці «Контакти» телефон НЕ виводимо, лише e-mail.
-//      У футері він, на жаль, ще рендериться як клікабельний tel: — це передзапусковий блокер.
-//   2. Після появи телефону — розглянути LocalBusiness/Store schema на /contacts, але ЛИШЕ
-//      якщо за адресою реально приймають відвідувачів (інакше це порушення гайдлайнів Google).
+//   1. Розглянути LocalBusiness/Store schema на /contacts — але ЛИШЕ якщо за адресою реально
+//      приймають відвідувачів (інакше це порушення гайдлайнів Google). Питання до власника.
 import type { Locale } from "@/i18n/config";
 import type { ContentDoc } from "@/data/legal";
 import { siteConfig } from "@/config/site";
@@ -19,6 +22,8 @@ type L = Record<Locale, string>;
 
 const UPDATED = "2026-06-29";
 const EMAIL = siteConfig.email;
+// Фолбек коду; в адмінці перебивається ключем contact_phone_display.
+const PHONE = siteConfig.phoneDisplay;
 const BRAND = siteConfig.name; // "Butterfly UA"
 const OPERATOR = siteConfig.operator; // "TTMAX"
 const CITY: L = { ua: "Харків", ru: "Харьков" };
@@ -305,10 +310,12 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
         h: { ua: "Зв'язок", ru: "Связь" },
         p: {
           ua: [
+            `Телефон: ${PHONE}`,
             `E-mail: ${EMAIL}`,
             "Соцмережі (Telegram, YouTube, Facebook) — посилання у шапці та футері сайту.",
           ],
           ru: [
+            `Телефон: ${PHONE}`,
             `E-mail: ${EMAIL}`,
             "Соцсети (Telegram, YouTube, Facebook) — ссылки в шапке и футере сайта.",
           ],

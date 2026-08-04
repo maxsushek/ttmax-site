@@ -248,7 +248,9 @@ export const ua: Messages = {
   },
   footer: {
     tagline: "Офіційний Butterfly в Україні. by TTMAX — працюємо з 2026 року.",
-    phone: "+380 (XX) XXX-XX-XX",
+    // ⚠️ Ключа phone тут БІЛЬШЕ НЕМА і повертати його не треба: номер — не переклад.
+    // Підпис телефона в підвалі береться з contact.phoneDisplay (site_settings → siteConfig),
+    // з того самого джерела, що й tel:. Раніше номер жив у словниках і розходився з посиланням.
     columns: {
       catalog: "Каталог",
       brands: "Колекції",

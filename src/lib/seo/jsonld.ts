@@ -3,7 +3,15 @@ import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
 
 export function organizationJsonLd(contact?: ContactInfo) {
-  const telephone = contact?.phoneDisplay ?? siteConfig.phoneDisplay;
+  /**
+   * ⚠️ У розмітку йде E.164 (phone), а НЕ phoneDisplay.
+   *
+   * Це поле читає машина, а не людина: Google звіряє його з номером у Business Profile і
+   * використовує для дзвінка. «+38 (096) 672-61-36» з дужками й пробілами доводиться
+   * нормалізувати здогадкою, «+380966726136» — однозначний.
+   * Людський підпис лишається у видимому тексті (phoneDisplay у підвалі й на /contacts).
+   */
+  const telephone = contact?.phone ?? siteConfig.phone;
   const email = contact?.email ?? siteConfig.email;
   const sameAs = contact
     ? Object.values(contact.social).filter((h) => h && h !== "#")
@@ -58,7 +66,8 @@ export function localBusinessJsonLd() {
     "@type": "Store",
     name: siteConfig.name,
     url: siteConfig.url,
-    telephone: siteConfig.phoneDisplay,
+    // E.164, не phoneDisplay — з тієї ж причини, що й в organizationJsonLd вище.
+    telephone: siteConfig.phone,
     address: {
       "@type": "PostalAddress",
       ...siteConfig.address,
@@ -98,6 +107,67 @@ export function breadcrumbJsonLd(
   };
 }
 
+/**
+ * Доставка й повернення для Offer — умови магазину в машиночитному вигляді.
+ *
+ * НАВІЩО: без цих двох блоків товар не має права на merchant listings у Google, тобто на
+ * показ ціни, наявності й строків доставки прямо у видачі. Перевірено по живому топ-10 UA
+ * за «tenergy 05»: з усіх конкурентів це є ЛИШЕ в одного (meryl), а сторінка на першому
+ * місці взагалі не має Product-розмітки. Тобто це дешева перевага, а не наздоганяння.
+ *
+ * ⚠️ ВСІ ЦИФРИ ТУТ МУСЯТЬ ЗБІГАТИСЯ З ТЕКСТОМ НА /delivery і /returns. Розмітка, яка
+ * суперечить видимому тексту, — це підстава для ручних санкцій, а не просто помилка.
+ * Джерело правди: src/data/info.ts (delivery: відправка 1–2 робочих дні, доставка 1–3 дні;
+ * returns: 14 днів за Законом «Про захист прав споживачів»).
+ */
+const SHIPPING_HANDLING_DAYS = { min: 1, max: 2 } as const; // збирання й відправка замовлення
+const SHIPPING_TRANSIT_DAYS = { min: 1, max: 3 } as const; // перевізник по Україні
+const RETURN_DAYS = 14; // ст. 9 ЗУ «Про захист прав споживачів»
+
+function shippingDetailsNode(shippingFee: number, currency: string) {
+  return {
+    "@type": "OfferShippingDetails",
+    shippingRate: { "@type": "MonetaryAmount", value: shippingFee, currency },
+    shippingDestination: { "@type": "DefinedRegion", addressCountry: "UA" },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: SHIPPING_HANDLING_DAYS.min,
+        maxValue: SHIPPING_HANDLING_DAYS.max,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: SHIPPING_TRANSIT_DAYS.min,
+        maxValue: SHIPPING_TRANSIT_DAYS.max,
+        unitCode: "DAY",
+      },
+    },
+  };
+}
+
+/**
+ * ⚠️ returnFees свідомо CustomerResponsibility — тобто зворотну пересилку оплачує покупець.
+ * Це стандарт для товару НАЛЕЖНОЇ якості за українським законом і збігається з тим, що
+ * описано на /returns. Якщо власник вирішить возити повернення за свій рахунок — міняти
+ * тут на FreeReturn і ОДНОЧАСНО правити текст на /returns, інакше розмітка почне брехати.
+ */
+function returnPolicyNode() {
+  return {
+    "@type": "MerchantReturnPolicy",
+    applicableCountry: "UA",
+    returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: RETURN_DAYS,
+    returnMethod: "https://schema.org/ReturnByMail",
+    // ⚠️ Саме ReturnFeesCustomerResponsibility, а НЕ ReturnShippingFees: друге значення
+    // вимагає ще й returnShippingFeesAmount із конкретною сумою, а в нас пересилка йде
+    // за тарифом перевізника й фіксованої суми немає. Вказати ReturnShippingFees без суми =
+    // невалідна розмітка.
+    returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+  };
+}
+
 /** Schema.org Product для сторінки товару. Якщо ціни немає — блок offers не додається. */
 export function productJsonLd(opts: {
   name: string;
@@ -119,6 +189,13 @@ export function productJsonLd(opts: {
   /** Напр. "UAH". */
   currency?: string;
   inStock?: boolean;
+  /**
+   * Вартість доставки, грн. Береться з site_settings (delivery_shipping_fee) через
+   * resolveContact — те саме число, що показано на /delivery. Якщо не передати,
+   * блоки shippingDetails і hasMerchantReturnPolicy не додаються взагалі: краще без
+   * розмітки, ніж із вигаданою цифрою.
+   */
+  shippingFee?: number;
 }) {
   const {
     name,
@@ -134,7 +211,17 @@ export function productJsonLd(opts: {
     priceValidUntil,
     currency = "UAH",
     inStock,
+    shippingFee,
   } = opts;
+
+  // Доставку й повернення чіпляємо лише коли вартість доставки реально відома.
+  const offerExtras =
+    typeof shippingFee === "number" && shippingFee >= 0
+      ? {
+          shippingDetails: shippingDetailsNode(shippingFee, currency),
+          hasMerchantReturnPolicy: returnPolicyNode(),
+        }
+      : {};
 
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -166,6 +253,7 @@ export function productJsonLd(opts: {
       availability,
       itemCondition,
       ...(priceValidUntil ? { priceValidUntil } : {}),
+      ...offerExtras,
     };
   } else if (typeof price === "number" && price > 0) {
     node.offers = {
@@ -176,6 +264,7 @@ export function productJsonLd(opts: {
       availability,
       itemCondition,
       ...(priceValidUntil ? { priceValidUntil } : {}),
+      ...offerExtras,
     };
   }
   return node;

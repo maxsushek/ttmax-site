@@ -42,6 +42,8 @@ import { resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
+import { getSettings } from "@/lib/settings/get";
+import { resolveContact } from "@/lib/contact/get";
 import { filterVisible, isHidden, isWithdrawn } from "@/lib/catalog/hidden";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
@@ -274,6 +276,11 @@ export default async function CatalogPage({
 
   const media = await getMediaMap();
   const overrides = await getOverrides();
+  // Вартість доставки для shippingDetails у Product JSON-LD. Джерело те саме, що й для
+  // тексту на /delivery і для кошика (site_settings → resolveContact), тому розмітка не
+  // може розійтися з тим, що бачить покупець. Виклик кешований і тегований site-settings,
+  // тож зміна суми в адмінці перебудує й ці сторінки.
+  const shippingFee = resolveContact(await getSettings()).shippingFee;
   // Накладаємо ціну/наявність із Supabase поверх коду один раз — далі всі читання
   // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
   const eroute = withOverrides(route, overrides);
@@ -325,6 +332,7 @@ export default async function CatalogPage({
             highPrice,
             offerCount: eroute.product.variants.length,
             priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+            shippingFee,
           });
         })()
       : null;

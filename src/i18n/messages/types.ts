@@ -194,7 +194,10 @@ export type Messages = {
   };
   footer: {
     tagline: string;
-    phone: string;
+    // ⚠️ Ключа phone тут свідомо НЕМА. Номер телефону — не переклад: він однаковий для обох
+    // мов і має єдине джерело (site_settings → siteConfig.phoneDisplay). Коли він жив тут,
+    // підпис у підвалі розходився з посиланням tel:, бо посилання вже бралось із налаштувань,
+    // а підпис — зі словника. Не повертати.
     columns: {
       catalog: string;
       brands: string;
