@@ -47,7 +47,18 @@ export function Header({
         <div className="container-page flex h-16 items-center gap-6">
           <Logo locale={locale} imageUrl={logoUrl} />
 
-          <nav aria-label="Primary" className="hidden flex-1 items-center gap-5 lg:flex">
+          {/**
+             * ⚠️ Десктопне меню з xl (1280), а НЕ з lg (1024) — і опускати назад не можна.
+             *
+             * Дев'ять пунктів меню плюс перемикач мови й кошик при 1024 не вміщаються:
+             * кнопку кошика обрізало правим краєм. Це той самий наслідок зміни гарнітури,
+             * що й у заголовку героя — Barlow Condensed був ВУЗЬКИЙ, Tektur звичайної
+             * ширини, і те саме меню стало приблизно на третину довшим. Зафіксовано
+             * скріншотами: при 1280 усе вміщається із запасом, при 1024 — вилітає.
+             *
+             * У проміжку 1024–1279 показуємо бургер — так само, як на планшетах.
+             */}
+            <nav aria-label="Primary" className="hidden flex-1 items-center gap-5 xl:flex">
             {navigation.map((link) => {
               const label = messages.nav[link.key as keyof Messages["nav"]];
               return (
@@ -123,7 +134,7 @@ export function Header({
               aria-expanded={menuOpen}
               aria-label="Menu"
               className={cn(
-                "flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-xl border border-border lg:hidden",
+                "flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-xl border border-border xl:hidden",
                 scrolled ? "bg-white/[0.07]" : "bg-white/10",
               )}
             >
