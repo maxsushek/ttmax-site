@@ -25,7 +25,7 @@ export default function NotFound() {
         .nf-root{min-height:100vh;display:flex;flex-direction:column;align-items:center;
           justify-content:center;gap:8px;padding:96px 24px;text-align:center;
           background:#080A0E;color:#F0F0F0;
-          font-family:var(--font-body),ui-sans-serif,system-ui,sans-serif}
+          font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
         .nf-code{margin:0;font-size:72px;line-height:1;font-weight:900;letter-spacing:-.02em;
           color:#D9FF3D;font-family:var(--font-display),ui-sans-serif,system-ui,sans-serif}
         .nf-title{margin:8px 0 0;font-size:24px;font-weight:900;text-transform:uppercase;

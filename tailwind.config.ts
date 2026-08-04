@@ -44,7 +44,30 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        /**
+         * ⚠️ ОСНОВНИЙ ТЕКСТ — СИСТЕМНИЙ ШРИФТ, БЕЗ ВЕБШРИФТА. Не повертати Roboto.
+         *
+         * Елементом LCP на головній був звичайний абзац у font-body. TTFB 10 мс, текст
+         * приїжджав миттєво, але відмальовка чекала завантаження Roboto — саме через це
+         * LCP тримався на 2,9-3,2 с при FCP 1,1 с. Прибирання шрифта знімає залежність
+         * зовсім: абзац малюється одразу.
+         *
+         * Візуально на Android НІЧОГО не змінюється — system-ui там і є Roboto, тільки
+         * вже встановлений. На iOS буде SF Pro, на Windows Segoe UI.
+         * Мінус 55 КБ (Roboto latin 36 + cyrillic 19).
+         *
+         * Фірмовий характер лишається за Tektur: заголовки, меню, кнопки, ціни — усе,
+         * що має клас font-display.
+         */
+        body: [
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif",
+        ],
       },
       fontSize: {
         // Responsive display sizes using clamp

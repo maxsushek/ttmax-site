@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { Roboto, Tektur } from "next/font/google";
+import { Tektur } from "next/font/google";
 import { notFound } from "next/navigation";
-import { cn } from "@/utils/cn";
 import { localeToLang } from "@/i18n/config";
 import "../../globals.css";
 import { Header } from "@/components/layout/Header";
@@ -36,19 +35,13 @@ import type { Metadata } from "next";
  * Адмінка має власний кореневий layout у групі (admin), тому app/layout.tsx не потрібен
  * узагалі: Next дозволяє кілька кореневих layout, коли маршрути розведені по групах.
  *
- * ⚠️ Шрифти теж переїхали сюди: змінні --font-display/--font-body ставляться класами
- * на <html>, а <html> тепер тут.
+ * ⚠️ Шрифт теж переїхав сюди: змінна --font-display ставиться класом на <html>,
+ * а <html> тепер тут. Основний текст вебшрифта НЕ використовує — див. коментар
+ * до fontFamily.body у tailwind.config.ts.
  */
 const tektur = Tektur({
   subsets: ["latin", "cyrillic"],
   variable: "--font-display",
-  display: "swap",
-  preload: true,
-});
-
-const roboto = Roboto({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-body",
   display: "swap",
   preload: true,
 });
@@ -117,7 +110,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={localeToLang[locale]}
-      className={cn(tektur.variable, roboto.variable)}
+      className={tektur.variable}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg-base text-ink">
