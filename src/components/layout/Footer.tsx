@@ -11,7 +11,17 @@ import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 
 type FootLink = { label: string; href: string };
-type FootColumn = { key: string; title: string; links: ReadonlyArray<FootLink> };
+type FootColumn = {
+  key: string;
+  title: string;
+  links: ReadonlyArray<FootLink>;
+  /**
+   * Розкласти посилання у дві колонки на десктопі. Потрібне «Каталогу»: у ньому 10 пунктів
+   * проти 1 у «Колекціях», і в один стовпчик він розтягував підвал удвічі вище за потрібне,
+   * лишаючи поруч порожнечу.
+   */
+  split?: boolean;
+};
 
 function FooterColumn({ column }: { column: FootColumn }) {
   const [open, setOpen] = useState(false);
@@ -44,7 +54,15 @@ function FooterColumn({ column }: { column: FootColumn }) {
         )}
       >
         <div className="overflow-hidden">
-          <div className="flex flex-col gap-0.5 pb-2">
+          <div
+            className={cn(
+              "pb-2",
+              // columns-2, а не grid: CSS-колонки заповнюються ЗВЕРХУ ВНИЗ, тож список
+              // читається двома стовпчиками поспіль. Grid розкладав би 1-2 / 3-4 упоперек,
+              // і порядок пунктів меню розсипався б.
+              column.split ? "lg:columns-2 lg:gap-x-6" : "flex flex-col gap-0.5",
+            )}
+          >
             {column.links.map((l) => (
               <Link
                 key={l.label}
@@ -137,7 +155,9 @@ export function Footer({
   }));
 
   const columns: FootColumn[] = [
-    { key: "catalog", title: m.columns.catalog, links: catalogLinks },
+    // split: у каталозі 10 пунктів проти 1 у «Колекціях» — без розбивки підвал виходив
+    // удвічі вищим, ніж потрібно, з великою порожнечею праворуч.
+    { key: "catalog", title: m.columns.catalog, links: catalogLinks, split: true },
     { key: "brands", title: m.columns.brands, links: brandLinks },
     { key: "info", title: m.columns.info, links: infoLinks },
   ];
@@ -193,9 +213,17 @@ export function Footer({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 py-5 lg:grid-cols-3">
+        {/**
+         * ⚠️ Не три рівні третини. У «Каталозі» 10 пунктів, у «Колекціях» — один, тож
+         * рівні колонки давали і зайву висоту, і величезну порожнечу праворуч від
+         * єдиного посилання. Каталог займає дві частки з чотирьох і всередині ділиться
+         * на два стовпчики; решта тримається зліва, а не розтягується на всю ширину.
+         */}
+        <div className="grid grid-cols-1 gap-x-8 py-5 lg:grid-cols-4">
           {columns.map((col) => (
-            <FooterColumn key={col.key} column={col} />
+            <div key={col.key} className={cn(col.split && "lg:col-span-2")}>
+              <FooterColumn column={col} />
+            </div>
           ))}
         </div>
       </div>

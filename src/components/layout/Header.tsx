@@ -57,10 +57,26 @@ export function Header({
                     className="nav-link whitespace-nowrap font-display text-[13px] font-semibold uppercase tracking-[0.07em] text-ink-muted"
                   >
                     {label}
+                    {/**
+                     * Позначка «тут є підменю». Раніше тут стояв гліф ▾ у 8px — на такому
+                     * кеглі трикутник вироджувався в пляму й читався як випадкова крапка
+                     * після одних пунктів і відсутня після інших. SVG лишається чітким за
+                     * будь-якого розміру й повертається при наведенні, тобто прямо показує,
+                     * що пункт розкривається.
+                     */}
                     {link.sub && (
-                      <span aria-hidden className="ml-1 align-middle text-[8px] text-accent">
-                        ▾
-                      </span>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 10 6"
+                        className="ml-1.5 inline-block h-[5px] w-[9px] align-middle text-ink-dim transition-transform duration-200 group-hover:rotate-180 group-hover:text-accent"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M1 1l4 4 4-4" />
+                      </svg>
                     )}
                   </Link>
                   {link.sub && (
