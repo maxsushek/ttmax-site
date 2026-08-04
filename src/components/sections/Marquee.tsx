@@ -14,7 +14,7 @@ export function Marquee() {
             key={`${b.id}-${i}`}
             className="flex shrink-0 items-center gap-2.5 font-display text-xs font-bold uppercase tracking-[0.13em] text-ink-ghost"
           >
-            <span>{b.flag}</span>
+            <span className="emoji">{b.flag}</span>
             {b.name}
             {/* Роздільник намальовано CSS, а не символом ◆: цих ромбів на головній 18, і вони
                 робили кандидатом підмножину «symbols» у Roboto (18 КБ), якої немає серед

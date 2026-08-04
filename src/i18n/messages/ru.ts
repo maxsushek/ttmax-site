@@ -64,7 +64,7 @@ export const ru: Messages = {
       bases: { label: "Основания", desc: "Viscaria, Timo Boll, Hadraw и другие" },
       rubbers: { label: "Накладки", desc: "Tenergy, Dignics, Rozena" },
       apparel: { label: "Одежда", desc: "Butterfly Wear — форма и обувь" },
-      balls: { label: "Мячи", desc: "3★ ITTF и тренировочные G40+" },
+      balls: { label: "Мячи", desc: "3 звезды ITTF и тренировочные G40+" },
     },
   },
   products: {

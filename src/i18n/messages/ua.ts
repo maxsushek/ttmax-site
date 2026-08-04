@@ -75,7 +75,7 @@ export const ua: Messages = {
       },
       balls: {
         label: "М'ячі",
-        desc: "3★ ITTF та тренувальні G40+",
+        desc: "3 зірки ITTF та тренувальні G40+",
       },
     },
   },

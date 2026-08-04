@@ -19,7 +19,7 @@ export function TrustBar({
       <div className="container-page grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
         {items.map((item) => (
           <div key={item.label} className="flex items-center gap-2.5">
-            <span aria-hidden className="text-lg">
+            <span aria-hidden className="emoji text-lg">
               {item.icon}
             </span>
             <span className="font-body text-[12px] text-ink-muted sm:text-[13px]">

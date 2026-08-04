@@ -82,7 +82,7 @@ export async function Brands({
                   ) : (
                     <span
                       aria-hidden
-                      className="mb-2.5 text-[26px] transition-transform duration-[400ms] group-hover:rotate-[8deg] group-hover:scale-[1.28]"
+                      className="emoji mb-2.5 text-[26px] transition-transform duration-[400ms] group-hover:rotate-[8deg] group-hover:scale-[1.28]"
                     >
                       {c.emoji}
                     </span>
