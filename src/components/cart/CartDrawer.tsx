@@ -11,6 +11,7 @@ import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
+import { CloseIcon } from "@/components/ui/CloseIcon";
 
 type Props = {
   messages: Messages;
@@ -78,7 +79,7 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
             aria-label={messages.common.close}
             className="flex h-8 w-8 items-center justify-center rounded-[10px] border border-border bg-white/[0.06] text-base text-ink-dim transition-colors hover:bg-danger/15 hover:text-danger"
           >
-            ✕
+            <CloseIcon />
           </button>
         </div>
 
@@ -172,7 +173,7 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
                       aria-label={messages.common.close}
                       className="p-1 text-sm text-ink-ghost transition-colors hover:text-danger"
                     >
-                      ✕
+                      <CloseIcon />
                     </button>
                     <div className="font-display text-base font-black text-accent">
                       {formatPrice(item.price * item.qty)}

@@ -49,7 +49,7 @@ const CONTENT: Record<string, RichContent> = {
           ru: "Арилат-карбон — золотой стандарт атаки: скорость плюс увеличенная «зона комфорта» при сохранении контроля. Универсальный выбор. Модели: Viscaria, Timo Boll ALC.",
         },
         href: "/osnovaniya/alc",
-        linkLabel: { ua: "Дивитись ALC →", ru: "Смотреть ALC →" },
+        linkLabel: { ua: "Дивитись ALC", ru: "Смотреть ALC" },
       },
       {
         title: { ua: "Карбон ZLC", ru: "Карбон ZLC" },
@@ -58,7 +58,7 @@ const CONTENT: Record<string, RichContent> = {
           ru: "Цилон-карбон — быстрее и жёстче ALC, для силовой игры первым темпом. Требуют лучшей техники. Модель: Apolonia ZLC.",
         },
         href: "/osnovaniya/zlc",
-        linkLabel: { ua: "Дивитись ZLC →", ru: "Смотреть ZLC →" },
+        linkLabel: { ua: "Дивитись ZLC", ru: "Смотреть ZLC" },
       },
       {
         title: { ua: "Inner проти Outer", ru: "Inner против Outer" },
@@ -185,7 +185,7 @@ const CONTENT: Record<string, RichContent> = {
       },
     ],
     comparison: {
-      heading: { ua: "Рівень → яка зв'язка", ru: "Уровень → какая связка" },
+      heading: { ua: "Рівень — яка зв'язка", ru: "Уровень — какая связка" },
       columns: [
         { ua: "Рівень", ru: "Уровень" },
         { ua: "Основа", ru: "Основание" },
@@ -236,7 +236,7 @@ const CONTENT: Record<string, RichContent> = {
           ru: "ALC — баланс скорости и контроля, универсал для большинства. ZLC жёстче и быстрее, для опытных силовиков.",
         },
         href: "/osnovaniya/zlc",
-        linkLabel: { ua: "Дивитись ZLC →", ru: "Смотреть ZLC →" },
+        linkLabel: { ua: "Дивитись ZLC", ru: "Смотреть ZLC" },
       },
       {
         title: { ua: "ALC проти Super ALC", ru: "ALC против Super ALC" },
@@ -322,7 +322,7 @@ const CONTENT: Record<string, RichContent> = {
           ru: "ZLC жёстче и быстрее: ниже, быстрее полёт. ALC мягче и контролируемее. ZLC — для силовой атаки.",
         },
         href: "/osnovaniya/alc",
-        linkLabel: { ua: "Дивитись ALC →", ru: "Смотреть ALC →" },
+        linkLabel: { ua: "Дивитись ALC", ru: "Смотреть ALC" },
       },
       {
         title: { ua: "ZLC проти Super ZLC", ru: "ZLC против Super ZLC" },

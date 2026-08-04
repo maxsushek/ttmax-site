@@ -5,6 +5,7 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { RichContent as RC } from "@/data/catalog/categoryContent";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 export function RichContent({ content, locale }: { content: RC; locale: Locale }) {
   const L = (x: Record<Locale, string>) => (locale === "ru" ? x.ru : x.ua);
@@ -40,6 +41,10 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
                     className="mt-3 inline-block font-display text-xs font-bold uppercase tracking-[0.04em] text-accent hover:underline"
                   >
                     {L(c.linkLabel)}
+                    {/* Стрілку домальовує SVG, а не символ → у самій мітці: текстова
+                        стрілка робила кандидатом дві підмножини Roboto (37 + 18 КБ),
+                        яких немає серед префетчених шрифтів. */}
+                    <ArrowRight />
                   </Link>
                 )}
               </div>

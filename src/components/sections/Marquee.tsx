@@ -16,7 +16,10 @@ export function Marquee() {
           >
             <span>{b.flag}</span>
             {b.name}
-            <span className="text-[7px] text-accent">◆</span>
+            {/* Роздільник намальовано CSS, а не символом ◆: цих ромбів на головній 18, і вони
+                робили кандидатом підмножину «symbols» у Roboto (18 КБ), якої немає серед
+                префетчених шрифтів. Квадрат, повернутий на 45°, виглядає так само. */}
+            <span aria-hidden className="h-[5px] w-[5px] rotate-45 bg-accent" />
           </span>
         ))}
       </div>

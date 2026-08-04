@@ -10,6 +10,8 @@ import { trackEvent } from "@/lib/analytics/events";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { type Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
+import { CloseIcon } from "@/components/ui/CloseIcon";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 // Той самий валідатор укр. номера, що й на бекенді (/api/leads) — щоб не пропускати сміття.
 const PHONE_RE = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
@@ -197,7 +199,7 @@ export function QuickOrder({
                 className="shrink-0 rounded-lg p-1.5 text-ink-dim transition-colors hover:bg-white/[0.06] hover:text-ink"
               >
                 <span aria-hidden className="text-xl leading-none">
-                  ✕
+                  <CloseIcon />
                 </span>
               </button>
             </div>
@@ -289,7 +291,14 @@ export function QuickOrder({
                   data-cta="quick-order-submit"
                   data-location={productSlug}
                 >
-                  {status === "submitting" ? t.submitting : `${t.submit} →`}
+                  {status === "submitting" ? (
+                    t.submitting
+                  ) : (
+                    <>
+                      {t.submit}
+                      <ArrowRight />
+                    </>
+                  )}
                 </Button>
 
                 {status === "error" && (

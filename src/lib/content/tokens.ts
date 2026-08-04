@@ -9,7 +9,7 @@
 //   {{price:dignics-05}}           — ціна конкретного товару за slug
 //   {{count}} / {{count:tenergy}}  — кількість моделей у поточній / іншій сутності
 //   {{year}}                       — поточний рік
-// formatPrice вже містить символ ₴ — у тексті пишемо "від {{price_from}}" (без ручного ₴).
+// formatPrice уже дописує «грн» — у тексті пишемо "від {{price_from}}" (без ручної валюти).
 import type { Locale } from "@/i18n/config";
 import type { CatalogProduct } from "@/types/catalog";
 import { formatPrice } from "@/utils/format";

@@ -9,6 +9,7 @@ import { getAttribution } from "@/lib/analytics/attribution";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 type FormState = { name: string; phone: string; email: string };
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -158,7 +159,14 @@ export function LeadForm({
         data-cta="lead-submit"
         data-location="consultation"
       >
-        {status === "submitting" ? m.submitting : `${m.submit} →`}
+        {status === "submitting" ? (
+          m.submitting
+        ) : (
+          <>
+            {m.submit}
+            <ArrowRight />
+          </>
+        )}
       </Button>
 
       {status === "error" && (

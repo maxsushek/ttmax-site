@@ -48,12 +48,12 @@ function esc(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-/** "12 500 ₴" — грошова сума без залежності від Intl/ICU. */
+/** "12 500 грн" — грошова сума без залежності від Intl/ICU. */
 function uah(n: number): string {
   const grouped = Math.round(n)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return `${grouped} ₴`;
+  return `${grouped} грн`;
 }
 
 /** Низькорівнева відправка повідомлення. Повертає true при успіху. */

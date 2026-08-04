@@ -14,6 +14,7 @@ import { siteConfig } from "@/config/site";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
+import { CloseIcon } from "@/components/ui/CloseIcon";
 
 type Delivery = "np" | "ukrposhta" | "pickup";
 type Payment = "apple" | "cod" | "card";
@@ -317,7 +318,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
           aria-label={messages.common.close}
           className="p-1 text-lg text-ink-dim transition-colors hover:text-ink"
         >
-          ✕
+          <CloseIcon />
         </button>
       </div>
 

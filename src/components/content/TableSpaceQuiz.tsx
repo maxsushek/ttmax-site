@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { type Locale } from "@/i18n/config";
+import { ArrowRight } from "@/components/ui/ArrowRight";
 
 type SpaceKey = "room" | "garage" | "hall" | "outdoor";
 type L = Record<Locale, string>;
@@ -147,7 +148,8 @@ export function TableSpaceQuiz({ locale }: { locale: Locale }) {
             href={`/${locale}${chosen.href}`}
             className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-accent/40 px-3 py-2 font-body text-[13px] font-bold text-accent hover:bg-accent/10"
           >
-            {ui.cta} →
+            {ui.cta}
+            <ArrowRight />
           </Link>
           <button
             type="button"

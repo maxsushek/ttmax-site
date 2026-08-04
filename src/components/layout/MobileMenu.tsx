@@ -10,6 +10,7 @@ import { navigation, navSubLabel } from "@/config/navigation";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
+import { CloseIcon } from "@/components/ui/CloseIcon";
 
 export function MobileMenu({
   open,
@@ -77,7 +78,7 @@ export function MobileMenu({
             aria-label={messages.common.close}
             className="p-1 text-xl text-ink-dim transition-colors hover:text-ink"
           >
-            ✕
+            <CloseIcon />
           </button>
         </div>
 
