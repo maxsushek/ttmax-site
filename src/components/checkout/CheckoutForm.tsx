@@ -795,16 +795,38 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     </div>
                   </div>
                 </div>
+                {/**
+                  * Згода дається самим оформленням — окремої галочки немає й не було.
+                  * Раніше тут стояло «Я погоджуюсь з умовами використання» і текст
+                  * збирався через .replace(): формулювання від першої особи читалось як
+                  * підпис під галочкою, а сам трюк ламався б від будь-якої правки тексту.
+                  * Тепер речення з плейсхолдерами {terms} і {privacy} — обидва стають
+                  * посиланнями. Політика конфіденційності тут потрібна не менше за умови:
+                  * на цьому кроці збираються персональні дані.
+                  */}
                 <p className="mb-4 font-body text-[13px] leading-relaxed text-ink-muted">
-                  {m.confirm.agreement.replace(m.confirm.agreementLink, "")}
-                  <a
-                    href={`/${locale}/terms`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent underline-offset-2 hover:underline"
-                  >
-                    {m.confirm.agreementLink}
-                  </a>
+                  {(() => {
+                    const link = (href: string, label: string) => (
+                      <a
+                        key={href}
+                        href={`/${locale}${href}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent underline-offset-2 hover:underline"
+                      >
+                        {label}
+                      </a>
+                    );
+                    return m.confirm.agreement
+                      .split(/(\{terms\}|\{privacy\})/)
+                      .map((part, i) =>
+                        part === "{terms}"
+                          ? link("/terms", m.confirm.agreementTerms)
+                          : part === "{privacy}"
+                            ? link("/privacy", m.confirm.agreementPrivacy)
+                            : <span key={i}>{part}</span>,
+                      );
+                  })()}
                 </p>
                 {submitError && (
                   <div className="mb-2.5 font-body text-[12px] text-danger" role="alert">

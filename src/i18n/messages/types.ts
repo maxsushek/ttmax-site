@@ -168,8 +168,10 @@ export type Messages = {
       next: string;
     };
     confirm: {
+      /** Речення зі згодою; містить плейсхолдери {terms} і {privacy}. */
       agreement: string;
-      agreementLink: string;
+      agreementTerms: string;
+      agreementPrivacy: string;
       submit: string;
     };
     success: {
