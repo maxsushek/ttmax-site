@@ -296,7 +296,15 @@ export default async function CatalogPage({
   const rawContent = ck ? await getContent(ck.entityType, ck.slug, locale) : null;
 
   // Токени контенту: живі значення (ціна з оверрайдами, кількість, рік) у всіх текстах блоку.
-  const currentProducts = eroute.kind === "product" ? [eroute.product] : eroute.products;
+  //
+  // ⚠️ ФІЛЬТР isHidden ОБОВʼЯЗКОВИЙ і мусить збігатися з таким самим у generateMetadata
+  // (див. вище). Коли його тут не було, ті самі токени рахувались ДВІЧІ по-різному:
+  // у meta description — по видимих товарах (47), а у видимому тексті сторінки — по всіх,
+  // разом із прихованими без фото (160). Покупець читав «160 моделей від 208 грн», бачив
+  // 47 карток і жодної ціни. Одне число, порахуване двома способами, — той самий клас
+  // помилки, що й ціна доставки у словнику.
+  const allCurrentForTokens = eroute.kind === "product" ? [eroute.product] : eroute.products;
+  const currentProducts = allCurrentForTokens.filter((p) => !isHidden(p, media));
   const tctx = buildTokenContext({ locale, overrides, currentProducts });
   const content = expandContentBlock(rawContent, tctx);
 

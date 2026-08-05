@@ -123,11 +123,11 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
         h: { ua: "Способи доставки", ru: "Способы доставки" },
         p: {
           ua: [
-            "Доставка по Україні службами доставки («Нова Пошта» та ін.) — на відділення або кур'єром.",
+            "Доставка по Україні Новою Поштою або Укрпоштою — на відділення перевізника.",
             `Самовивіз у ${CITY.ua} — за попередньою домовленістю.`,
           ],
           ru: [
-            "Доставка по Украине службами доставки («Новая Почта» и др.) — на отделение или курьером.",
+            "Доставка по Украине Новой Почтой или Укрпочтой — на отделение перевозчика.",
             `Самовывоз в ${CITY.ru} — по предварительной договорённости.`,
           ],
         },
@@ -146,11 +146,17 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
       {
         h: { ua: "Вартість", ru: "Стоимость" },
         p: {
+          // ⚠️ {npFee} і {ukrposhtaFee} — ТОКЕНИ, їх підставляє сторінка з site_settings
+          // (той самий resolveContact, яким рахує чекаут). Не замінювати на числа:
+          // зашита цифра тут розійдеться з рахунком, як це вже було з «~30 грн»
+          // у підписі Укрпошти. Джерело правди одне — налаштування.
           ua: [
-            `Вартість доставки — за тарифами перевізника. Замовлення від ${FREE} грн — доставляємо безкоштовно.`,
+            "Нова Пошта — {npFee} грн, Укрпошта — {ukrposhtaFee} грн, самовивіз — безкоштовно.",
+            `Замовлення від ${FREE} грн — доставляємо безкоштовно будь-яким перевізником.`,
           ],
           ru: [
-            `Стоимость доставки — по тарифам перевозчика. Заказы от ${FREE} грн — доставляем бесплатно.`,
+            "Новая Почта — {npFee} грн, Укрпочта — {ukrposhtaFee} грн, самовывоз — бесплатно.",
+            `Заказы от ${FREE} грн — доставляем бесплатно любым перевозчиком.`,
           ],
         },
       },
@@ -349,3 +355,37 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
     ],
   },
 };
+
+/**
+ * Підставляє реальні тарифи доставки в текст /delivery.
+ *
+ * ⚠️ НАВІЩО ЦЕ ВЗАГАЛІ. infoDocs — статичні дані, а тарифи живуть у site_settings
+ * і правляться з адмінки. Коли числа стояли просто текстом, сторінка розходилася
+ * з рахунком і покупець бачив одне, а платив інше. Тепер у тексті лише токени,
+ * а число приходить рівно звідти ж, звідки його бере computeShipping на чекауті.
+ *
+ * Якщо додаси новий токен — додай його і сюди, інакше він поїде на сторінку як є.
+ */
+export function fillDeliveryTokens(
+  doc: ContentDoc,
+  contact: { shippingFee: number; ukrposhtaFee: number; freeShippingThreshold: number },
+): ContentDoc {
+  const map: Record<string, string> = {
+    "{npFee}": String(contact.shippingFee),
+    "{ukrposhtaFee}": String(contact.ukrposhtaFee),
+    "{freeThreshold}": String(contact.freeShippingThreshold),
+  };
+  const fill = (t: string) =>
+    Object.entries(map).reduce((acc, [k, v]) => acc.split(k).join(v), t);
+  const fillL = (l: L): L => ({ ua: fill(l.ua), ru: fill(l.ru) });
+
+  return {
+    ...doc,
+    intro: doc.intro ? fillL(doc.intro) : doc.intro,
+    sections: doc.sections.map((sec) => ({
+      ...sec,
+      h: fillL(sec.h),
+      p: { ua: sec.p.ua.map(fill), ru: sec.p.ru.map(fill) },
+    })),
+  };
+}

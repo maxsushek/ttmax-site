@@ -52,11 +52,11 @@ export function websiteJsonLd(locale: Locale) {
     name: siteConfig.name,
     url: `${siteConfig.url}/${locale}`,
     inLanguage: localeToLang[locale],
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${siteConfig.url}/${locale}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+    // ⚠️ SearchAction тут НЕ оголошуємо, і повертати його не треба, поки на сайті
+    // немає сторінки пошуку. Було: target на /{locale}/search?q=… — а /ua/search
+    // віддає 404. Тобто розмітка на всіх 316 сторінках обіцяла Google пошук, який
+    // веде в нікуди. Зʼявиться реальна сторінка пошуку — тоді й повернути,
+    // ОДНОЧАСНО з нею, а не «про запас».
   };
 }
 

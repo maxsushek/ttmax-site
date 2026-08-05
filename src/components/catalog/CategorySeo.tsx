@@ -1,6 +1,7 @@
 // src/components/catalog/CategorySeo.tsx
 // SEO-низ категорії: текст + FAQ (+FAQPage schema емітиться в page.tsx) + перелінковка
 // на топ-товари та суміжні категорії. Серверний компонент, без JS, mobile-first.
+import { renderInlineMarkdown } from "@/lib/content/markdown";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { CatalogCategory } from "@/types/catalog";
@@ -91,10 +92,17 @@ export function CategorySeo({
       {!linksOnly && paras.length > 0 && (
         <section>
           <div className="max-w-[70ch] space-y-4">
+            {/*
+              ⚠️ Через renderInlineMarkdown, а не {p}: у seoText є markdown-посилання,
+              і без розбору вони виводились на сторінку буквально — «[накладки](/ua/nakladki)».
+              HTML тут екранований усередині рендерера, тож вставка безпечна.
+            */}
             {paras.map((p, i) => (
-              <p key={i} className="font-body text-[15px] leading-[1.75] text-white/80">
-                {p}
-              </p>
+              <p
+                key={i}
+                className="font-body text-[15px] leading-[1.75] text-white/80 [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2"
+                dangerouslySetInnerHTML={{ __html: renderInlineMarkdown(p) }}
+              />
             ))}
           </div>
         </section>

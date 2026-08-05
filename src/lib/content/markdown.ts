@@ -29,6 +29,21 @@ function inline(s: string): string {
   return out;
 }
 
+/**
+ * Тільки РЯДКОВЕ форматування (посилання, жирний, курсив) — без обгортки в <p>.
+ *
+ * ⚠️ Потрібно там, де абзаци вже розбиті й обгорнуті самим компонентом (CategorySeo).
+ * Було: seoText категорій виводився як звичайний текст, тож markdown-посилання
+ * з`являлись на сторінці буквально — «[готової зібраної ракетки](/ua/rakety)».
+ * Це і виглядало як недоробка, і з`їдало 4 внутрішні посилання на /stoly.
+ *
+ * Екранування тут таке саме, як у renderMarkdown: спершу гасимо весь HTML,
+ * і лише потім вмикаємо дозволений набір. Не міняти порядок — це захист від XSS.
+ */
+export function renderInlineMarkdown(md: string): string {
+  return inline(escapeHtml(md));
+}
+
 /** Повертає безпечний HTML-рядок. Порожній вхід → "". */
 export function renderMarkdown(md: string): string {
   const text = escapeHtml(md.replace(/\r\n/g, "\n").trim());

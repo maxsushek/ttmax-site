@@ -174,7 +174,15 @@ export function Footer({
           </div>
           <div className="flex flex-col items-end gap-3">
             <div className="flex gap-2">
-              {siteConfig.social.map((s) => (
+              {/*
+                ⚠️ Фільтр обовʼязковий: у конфігу href="#" — заглушка для профілів,
+                яких поки немає. Без фільтра підвал кожної з ~870 сторінок містив
+                три посилання в нікуди, а /contacts ще й відправляв за ними покупця.
+                Щойно власник впише реальні URL — іконки зʼявляться самі.
+              */}
+              {siteConfig.social
+                .filter((s) => socialHref(s.key) && socialHref(s.key) !== "#")
+                .map((s) => (
                 <a
                   key={s.key}
                   href={socialHref(s.key)}

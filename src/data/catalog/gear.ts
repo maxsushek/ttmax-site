@@ -35,7 +35,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1450.8,
+    priceFrom: 1451,
   },
   {
     id: "futbolka-z-dovhym-rukavom-butterfly-suribu",
@@ -66,7 +66,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "futbolka-butterfly-yasu-cotton",
@@ -97,7 +97,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1814.8,
+    priceFrom: 1815,
   },
   {
     id: "futbolka-butterfly-yao-lady",
@@ -128,7 +128,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1664.0,
+    priceFrom: 1664,
   },
   {
     id: "futbolka-butterfly-yao",
@@ -159,7 +159,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2184.0,
+    priceFrom: 2184,
   },
   {
     id: "futbolka-butterfly-yaizu",
@@ -190,7 +190,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-xero",
@@ -221,7 +221,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1040.0,
+    priceFrom: 1040,
   },
   {
     id: "futbolka-butterfly-ukraine",
@@ -252,7 +252,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1040.0,
+    priceFrom: 1040,
   },
   {
     id: "futbolka-butterfly-toyama",
@@ -283,7 +283,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-tosy-lady",
@@ -314,7 +314,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "futbolka-butterfly-tosy",
@@ -345,7 +345,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "futbolka-butterfly-tori",
@@ -376,7 +376,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-tori-lady",
@@ -407,7 +407,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-toka",
@@ -438,7 +438,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "futbolka-butterfly-toka-lady",
@@ -469,7 +469,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1560.0,
+    priceFrom: 1560,
   },
   {
     id: "futbolka-butterfly-toc",
@@ -500,7 +500,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "futbolka-butterfly-tenergy-s-m-l",
@@ -531,7 +531,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["S", "M", "L"],
     },
-    priceFrom: 1040.0,
+    priceFrom: 1040,
   },
   {
     id: "futbolka-butterfly-tenergy-lady-l",
@@ -562,7 +562,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["L"],
     },
-    priceFrom: 1040.0,
+    priceFrom: 1040,
   },
   {
     id: "futbolka-butterfly-tano",
@@ -623,7 +623,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-sutairu",
@@ -654,7 +654,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-stripe",
@@ -685,7 +685,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "futbolka-butterfly-shiro",
@@ -716,7 +716,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 884.0,
+    priceFrom: 884,
   },
   {
     id: "futbolka-butterfly-santo",
@@ -747,7 +747,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-saijo",
@@ -778,7 +778,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "futbolka-butterfly-puro",
@@ -809,7 +809,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-puren",
@@ -840,7 +840,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1658.8,
+    priceFrom: 1659,
   },
   {
     id: "futbolka-butterfly-naomi-lady",
@@ -871,7 +871,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2080.0,
+    priceFrom: 2080,
   },
   {
     id: "futbolka-butterfly-nagoya",
@@ -902,7 +902,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-nagano",
@@ -933,7 +933,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-mira-lady",
@@ -964,7 +964,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2080.0,
+    priceFrom: 2080,
   },
   {
     id: "futbolka-butterfly-kosay",
@@ -995,7 +995,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-kosay-lady",
@@ -1026,7 +1026,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-kitao",
@@ -1057,7 +1057,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-kisa",
@@ -1088,7 +1088,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2080.0,
+    priceFrom: 2080,
   },
   {
     id: "futbolka-butterfly-kido",
@@ -1119,7 +1119,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2080.0,
+    priceFrom: 2080,
   },
   {
     id: "futbolka-butterfly-kariya",
@@ -1150,7 +1150,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-izumo-lady",
@@ -1181,7 +1181,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-izumo",
@@ -1212,7 +1212,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-ikoma",
@@ -1243,7 +1243,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "futbolka-butterfly-higo-lady",
@@ -1274,7 +1274,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-daito",
@@ -1305,7 +1305,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3120.0,
+    priceFrom: 3120,
   },
   {
     id: "futbolka-butterfly-bamboo",
@@ -1336,7 +1336,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2600.0,
+    priceFrom: 2600,
   },
   {
     id: "futbolka-butterfly-atamy",
@@ -1367,7 +1367,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-higo",
@@ -1398,7 +1398,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-antei",
@@ -1429,7 +1429,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "futbolka-butterfly-aino-lady-xl",
@@ -1460,7 +1460,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XL"],
     },
-    priceFrom: 1040.0,
+    priceFrom: 1040,
   },
   {
     id: "futbolka-butterfly-ageo",
@@ -1491,7 +1491,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "futbolka-butterfly-abiko",
@@ -1522,7 +1522,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "futbolka-butterfly-70th-anniversary-retro",
@@ -1553,7 +1553,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1560.0,
+    priceFrom: 1560,
   },
   {
     id: "shorty-butterfly-tosy",
@@ -1584,7 +1584,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1398.8,
+    priceFrom: 1399,
   },
   {
     id: "shorty-butterfly-toka",
@@ -1615,7 +1615,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "shorty-butterfly-riso",
@@ -1646,7 +1646,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "shorty-butterfly-puro",
@@ -1677,7 +1677,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1918.8,
+    priceFrom: 1919,
   },
   {
     id: "shorty-butterfly-niiza-lady",
@@ -1708,7 +1708,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "shorty-butterfly-mino",
@@ -1739,7 +1739,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "shorty-butterfly-kariya",
@@ -1770,7 +1770,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1918.8,
+    priceFrom: 1919,
   },
   {
     id: "shorty-butterfly-izumo",
@@ -1801,7 +1801,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1918.8,
+    priceFrom: 1919,
   },
   {
     id: "shorty-butterfly-higo",
@@ -1832,7 +1832,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1814.8,
+    priceFrom: 1815,
   },
   {
     id: "shorty-butterfly-apego",
@@ -1863,7 +1863,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1710.8,
+    priceFrom: 1711,
   },
   {
     id: "kostium-butterfly-yao-lady",
@@ -1894,7 +1894,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "kostium-butterfly-yao",
@@ -1925,7 +1925,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "kostium-butterfly-xero-new",
@@ -1956,7 +1956,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 4160.0,
+    priceFrom: 4160,
   },
   {
     id: "kostium-butterfly-xero",
@@ -1987,7 +1987,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-tosy",
@@ -2018,7 +2018,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 4680.0,
+    priceFrom: 4680,
   },
   {
     id: "kostium-butterfly-tori",
@@ -2049,7 +2049,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "kostium-butterfly-taori",
@@ -2080,7 +2080,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "kostium-butterfly-takeo",
@@ -2111,7 +2111,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-shiro",
@@ -2142,7 +2142,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3380.0,
+    priceFrom: 3380,
   },
   {
     id: "kostium-butterfly-santo",
@@ -2173,7 +2173,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "kostium-butterfly-ninyo",
@@ -2204,7 +2204,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-mira-lady",
@@ -2235,7 +2235,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-kitao",
@@ -2266,7 +2266,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-kisa",
@@ -2297,7 +2297,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "kostium-butterfly-kido",
@@ -2328,7 +2328,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-kano",
@@ -2359,7 +2359,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-kano-lady",
@@ -2390,7 +2390,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "kostium-butterfly-izumo",
@@ -2421,7 +2421,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 6749.6,
+    priceFrom: 6750,
   },
   {
     id: "kostium-butterfly-higo",
@@ -2452,7 +2452,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3900.0,
+    priceFrom: 3900,
   },
   {
     id: "kostium-butterfly-atamy",
@@ -2483,7 +2483,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "kurtka-butterfly-uruma",
@@ -2514,7 +2514,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3634.8,
+    priceFrom: 3635,
   },
   {
     id: "kurtka-butterfly-taku",
@@ -2545,7 +2545,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 6234.8,
+    priceFrom: 6235,
   },
   {
     id: "kurtka-butterfly-sorano",
@@ -2576,7 +2576,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2860.0,
+    priceFrom: 2860,
   },
   {
     id: "kurtka-butterfly-otaru",
@@ -2607,7 +2607,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 6240.0,
+    priceFrom: 6240,
   },
   {
     id: "kurtka-butterfly-maruno-rozmir-s",
@@ -2638,7 +2638,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["S"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "kurtka-butterfly-azura",
@@ -2669,7 +2669,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3114.8,
+    priceFrom: 3115,
   },
   {
     id: "olimpiika-butterfly-tano",
@@ -2700,7 +2700,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3374.8,
+    priceFrom: 3375,
   },
   {
     id: "olimpiika-butterfly-shiro",
@@ -2731,7 +2731,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 2600.0,
+    priceFrom: 2600,
   },
   {
     id: "olimpiika-butterfly-naoki",
@@ -2762,7 +2762,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3640.0,
+    priceFrom: 3640,
   },
   {
     id: "olimpiika-butterfly-koba",
@@ -2793,7 +2793,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 3120.0,
+    priceFrom: 3120,
   },
   {
     id: "olimpiika-butterfly-hino-xxl",
@@ -2824,7 +2824,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XXL"],
     },
-    priceFrom: 2340.0,
+    priceFrom: 2340,
   },
   {
     id: "olimpiika-butterfly-hadano",
@@ -2855,7 +2855,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "kofta-butterfly-ninyo-lady-xs",
@@ -2886,7 +2886,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS"],
     },
-    priceFrom: 2860.0,
+    priceFrom: 2860,
   },
   {
     id: "spidnytsia-butterfly-chiara",
@@ -2917,7 +2917,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "women",
       sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     },
-    priceFrom: 1710.8,
+    priceFrom: 1711,
   },
   {
     id: "shkarpetky-butterfly-seto-socks",
@@ -2946,7 +2946,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "shkarpetky-butterfly-seto-sneaker",
@@ -2975,7 +2975,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 462.8,
+    priceFrom: 463,
   },
   {
     id: "shkarpetky-butterfly-kijun-socks",
@@ -3004,7 +3004,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "shkarpetky-butterfly-kijun-sneaker",
@@ -3033,7 +3033,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "shkarpetky-butterfly-kado-socks",
@@ -3062,7 +3062,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "shkarpetky-butterfly-kado-sneaker",
@@ -3091,7 +3091,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 462.8,
+    priceFrom: 463,
   },
   {
     id: "shkarpetky-butterfly-jiro",
@@ -3120,7 +3120,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "shkarpetky-butterfly-iwagy-socks",
@@ -3149,7 +3149,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "shkarpetky-butterfly-iwagy-sneaker",
@@ -3178,7 +3178,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "shkarpetky-butterfly-hisa-sneaker",
@@ -3207,7 +3207,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 358.8,
+    priceFrom: 359,
   },
   {
     id: "shkarpetky-butterfly-hisa",
@@ -3236,7 +3236,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 358.8,
+    priceFrom: 359,
   },
   {
     id: "shkarpetky-butterfly-ebina",
@@ -3265,7 +3265,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "shkarpetky-butterfly-anjo",
@@ -3294,7 +3294,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "socks",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "kepka-butterfly-1950",
@@ -3323,7 +3323,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "cap",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "pov-iazka-na-holovu-butterfly-streak",
@@ -3352,7 +3352,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "band",
     },
-    priceFrom: 260.0,
+    priceFrom: 260,
   },
   {
     id: "pov-iazka-na-holovu-butterfly-hachimaki",
@@ -3381,7 +3381,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "band",
     },
-    priceFrom: 670.8,
+    priceFrom: 671,
   },
   {
     id: "pov-iazka-na-holovu-butterfly",
@@ -3410,7 +3410,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "band",
     },
-    priceFrom: 260.0,
+    priceFrom: 260,
   },
   {
     id: "napulsnyk-butterfly-yao",
@@ -3439,7 +3439,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "band",
     },
-    priceFrom: 208.0,
+    priceFrom: 208,
   },
   {
     id: "napulsnyk-butterfly-streak",
@@ -3468,7 +3468,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "band",
     },
-    priceFrom: 260.0,
+    priceFrom: 260,
   },
   {
     id: "krosivky-butterfly-vilight",
@@ -3499,7 +3499,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "krosivky-butterfly-vilata",
@@ -3530,7 +3530,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4674.8,
+    priceFrom: 4675,
   },
   {
     id: "krosivky-butterfly-sunika",
@@ -3561,7 +3561,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "krosivky-butterfly-radial-cross",
@@ -3592,7 +3592,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4160.0,
+    priceFrom: 4160,
   },
   {
     id: "krosivky-butterfly-mach",
@@ -3623,7 +3623,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "krosivky-butterfly-lezoline-zero",
@@ -3654,7 +3654,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 3374.8,
+    priceFrom: 3375,
   },
   {
     id: "krosivky-butterfly-lezoline-unizes-2",
@@ -3685,7 +3685,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "krosivky-butterfly-lezoline-unizes",
@@ -3716,7 +3716,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "krosivky-butterfly-lezoline-trynex",
@@ -3747,7 +3747,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 3634.8,
+    priceFrom: 3635,
   },
   {
     id: "krosivky-butterfly-lezoline-sal",
@@ -3778,7 +3778,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "krosivky-butterfly-lezoline-rifones-syni",
@@ -3809,7 +3809,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 6234.8,
+    priceFrom: 6235,
   },
   {
     id: "krosivky-butterfly-lezoline-rifones-chorni",
@@ -3840,7 +3840,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 6234.8,
+    priceFrom: 6235,
   },
   {
     id: "krosivky-butterfly-lezoline-rifones",
@@ -3871,7 +3871,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 6234.8,
+    priceFrom: 6235,
   },
   {
     id: "krosivky-butterfly-lezoline-nine",
@@ -3902,7 +3902,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "krosivky-butterfly-lezoline-levalis",
@@ -3933,7 +3933,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 6754.8,
+    priceFrom: 6755,
   },
   {
     id: "krosivky-butterfly-lezoline-groovy-syni-44r",
@@ -3964,7 +3964,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["44"],
     },
-    priceFrom: 3640.0,
+    priceFrom: 3640,
   },
   {
     id: "krosivky-butterfly-lezoline-groovy-rozhevi",
@@ -3995,7 +3995,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 3640.0,
+    priceFrom: 3640,
   },
   {
     id: "krosivky-butterfly-lezoline-groovy-chorni",
@@ -4026,7 +4026,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 4674.8,
+    priceFrom: 4675,
   },
   {
     id: "krosivky-butterfly-lezoline-gigu",
@@ -4057,7 +4057,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "shlopantsi-butterfly",
@@ -4088,7 +4088,7 @@ export const catalogGear: CatalogProduct[] = [
       gender: "men",
       sizes: ["38", "39", "40", "41", "42", "43", "44", "45", "46"],
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "m-iachi-butterfly-training-ball-40-6sht-v-up",
@@ -4119,7 +4119,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "6шт",
       stars: "трен.",
     },
-    priceFrom: 260.0,
+    priceFrom: 260,
   },
   {
     id: "m-iachi-butterfly-training-ball-40-120sht-v-up",
@@ -4150,7 +4150,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "120шт",
       stars: "трен.",
     },
-    priceFrom: 3114.8,
+    priceFrom: 3115,
   },
   {
     id: "m-iachi-butterfly-s40-3-ittf-3-sht-v-up",
@@ -4181,7 +4181,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "3 шт",
       stars: "3*",
     },
-    priceFrom: 416.0,
+    priceFrom: 416,
   },
   {
     id: "m-iachi-butterfly-r40-3-3sht-v-up",
@@ -4212,7 +4212,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "3шт",
       stars: "3*",
     },
-    priceFrom: 416.0,
+    priceFrom: 416,
   },
   {
     id: "m-iachi-butterfly-r40-3-12sht-v-up",
@@ -4243,7 +4243,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "12шт",
       stars: "3*",
     },
-    priceFrom: 1560.0,
+    priceFrom: 1560,
   },
   {
     id: "m-iachi-butterfly-master-quality-ball-40-72-sht",
@@ -4273,7 +4273,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "balls",
       packSize: "72 шт.",
     },
-    priceFrom: 2594.8,
+    priceFrom: 2595,
   },
   {
     id: "m-iachi-butterfly-easy-ball-40-6-sht",
@@ -4304,7 +4304,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "6 шт",
       stars: "трен.",
     },
-    priceFrom: 202.8,
+    priceFrom: 203,
   },
   {
     id: "m-iachi-butterfly-easy-ball-40-120-sht",
@@ -4335,7 +4335,7 @@ export const catalogGear: CatalogProduct[] = [
       packSize: "120 шт",
       stars: "трен.",
     },
-    priceFrom: 3114.8,
+    priceFrom: 3115,
   },
   {
     id: "klei-butterfly-freechack-pro-ii-90ml",
@@ -4365,7 +4365,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 90,
     },
-    priceFrom: 1034.8,
+    priceFrom: 1035,
   },
   {
     id: "klei-butterfly-freechack-pro-ii-50ml",
@@ -4395,7 +4395,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 50,
     },
-    priceFrom: 826.8,
+    priceFrom: 827,
   },
   {
     id: "klei-butterfly-freechack-pro-90ml",
@@ -4425,7 +4425,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 90,
     },
-    priceFrom: 878.8,
+    priceFrom: 879,
   },
   {
     id: "klei-butterfly-freechack-pro-ii-500ml",
@@ -4455,7 +4455,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 500,
     },
-    priceFrom: 2854.8,
+    priceFrom: 2855,
   },
   {
     id: "klei-butterfly-freechack-pro-37ml",
@@ -4485,7 +4485,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 37,
     },
-    priceFrom: 618.8,
+    priceFrom: 619,
   },
   {
     id: "klei-butterfly-free-chack-90-ml",
@@ -4515,7 +4515,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 90,
     },
-    priceFrom: 826.8,
+    priceFrom: 827,
   },
   {
     id: "klei-butterfly-free-chack-500-ml",
@@ -4545,7 +4545,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 500,
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "klei-butterfly-free-chack-50ml",
@@ -4575,7 +4575,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 50,
     },
-    priceFrom: 670.8,
+    priceFrom: 671,
   },
   {
     id: "klei-butterfly-free-chack-37-ml",
@@ -4605,7 +4605,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 37,
     },
-    priceFrom: 462.8,
+    priceFrom: 463,
   },
   {
     id: "klei-butterfly-free-chack-30-ml",
@@ -4635,7 +4635,7 @@ export const catalogGear: CatalogProduct[] = [
       gearType: "glue",
       volumeMl: 30,
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "ochysnyk-dlia-nakladok-butterfly-combi-cleaner",
@@ -4664,7 +4664,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "cleaner",
     },
-    priceFrom: 312.0,
+    priceFrom: 312,
   },
   {
     id: "ochyshchuvach-dlia-stolu-butterfly-table-cleaner",
@@ -4693,7 +4693,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "cleaner",
     },
-    priceFrom: 468.0,
+    priceFrom: 468,
   },
   {
     id: "ochyshchuvach-dlia-nakladok-butterfly-rubber-cleaner",
@@ -4722,7 +4722,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "cleaner",
     },
-    priceFrom: 416.0,
+    priceFrom: 416,
   },
   {
     id: "ochyshchuvach-dlia-nakladok-butterfly-cure-water",
@@ -4751,7 +4751,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "cleaner",
     },
-    priceFrom: 462.8,
+    priceFrom: 463,
   },
   {
     id: "vidnovnyk-obertannia-butterfly-spin-refresh",
@@ -4780,7 +4780,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "care",
     },
-    priceFrom: 462.8,
+    priceFrom: 463,
   },
   {
     id: "hubka-butterfly-rubber-care",
@@ -4809,7 +4809,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "sponge",
     },
-    priceFrom: 156.0,
+    priceFrom: 156,
   },
   {
     id: "bavovniana-hubka-butterfly",
@@ -4838,7 +4838,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "sponge",
     },
-    priceFrom: 182.0,
+    priceFrom: 182,
   },
   {
     id: "obmotka-na-ruchku-raketky-butterfly-overgrip",
@@ -4867,7 +4867,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "overgrip",
     },
-    priceFrom: 358.8,
+    priceFrom: 359,
   },
   {
     id: "zakhysna-plivka-butterfly",
@@ -4896,7 +4896,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "film",
     },
-    priceFrom: 208.0,
+    priceFrom: 208,
   },
   {
     id: "tortseva-strichka-butterfly-logo-6mm-10m",
@@ -4925,7 +4925,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 364.0,
+    priceFrom: 364,
   },
   {
     id: "tortseva-strichka-butterfly-logo-12mm-50m",
@@ -4954,7 +4954,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 1196.0,
+    priceFrom: 1196,
   },
   {
     id: "tortseva-strichka-butterfly-logo-12mm-1m",
@@ -4983,7 +4983,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 130.0,
+    priceFrom: 130,
   },
   {
     id: "tortseva-strichka-butterfly-logo-12mm-10m",
@@ -5012,7 +5012,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 468.0,
+    priceFrom: 468,
   },
   {
     id: "tortseva-strichka-butterfly-glayzer",
@@ -5041,7 +5041,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 468.0,
+    priceFrom: 468,
   },
   {
     id: "tortseva-strichka-butterfly-dignics",
@@ -5070,7 +5070,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "edge-tape",
     },
-    priceFrom: 468.0,
+    priceFrom: 468,
   },
   {
     id: "tubus-dlia-m-iachiv-butterfly",
@@ -5099,7 +5099,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "ball-tube",
     },
-    priceFrom: 202.8,
+    priceFrom: 203,
   },
   {
     id: "zapasni-ustilky-butterfly",
@@ -5128,7 +5128,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "insole",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "rushnyk-butterfly-yao-midi",
@@ -5157,7 +5157,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 514.8,
+    priceFrom: 515,
   },
   {
     id: "rushnyk-butterfly-taoru",
@@ -5186,7 +5186,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 878.8,
+    priceFrom: 879,
   },
   {
     id: "rushnyk-butterfly-stripe",
@@ -5215,7 +5215,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 826.8,
+    priceFrom: 827,
   },
   {
     id: "rushnyk-butterfly-streak",
@@ -5244,7 +5244,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 826.8,
+    priceFrom: 827,
   },
   {
     id: "rushnyk-butterfly-sign",
@@ -5273,7 +5273,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 728.0,
+    priceFrom: 728,
   },
   {
     id: "rushnyk-butterfly-handa",
@@ -5302,7 +5302,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 774.8,
+    priceFrom: 775,
   },
   {
     id: "rushnyk-butterfly-germany",
@@ -5331,7 +5331,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 670.8,
+    priceFrom: 671,
   },
   {
     id: "rushnyk-butterfly-dignics",
@@ -5360,7 +5360,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 728.0,
+    priceFrom: 728,
   },
   {
     id: "rushnyk-butterfly-borussia",
@@ -5389,7 +5389,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 670.8,
+    priceFrom: 671,
   },
   {
     id: "rushnyk-butterfly-big-yao",
@@ -5418,7 +5418,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "rushnyk-butterfly-big-taoru",
@@ -5447,7 +5447,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 1398.8,
+    priceFrom: 1399,
   },
   {
     id: "rushnyk-butterfly-big-streak",
@@ -5476,7 +5476,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "towel",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "pliashka-butterfly-tenergy",
@@ -5505,7 +5505,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bottle",
     },
-    priceFrom: 254.8,
+    priceFrom: 255,
   },
   {
     id: "pliashka-butterfly-borussia",
@@ -5534,7 +5534,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bottle",
     },
-    priceFrom: 254.8,
+    priceFrom: 255,
   },
   {
     id: "pliashka-butterfly-22",
@@ -5563,7 +5563,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bottle",
     },
-    priceFrom: 358.8,
+    priceFrom: 359,
   },
   {
     id: "pliashka-butterfly",
@@ -5592,7 +5592,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bottle",
     },
-    priceFrom: 254.8,
+    priceFrom: 255,
   },
   {
     id: "sumka-dlia-vzuttia-butterfly",
@@ -5621,7 +5621,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "shoe-bag",
     },
-    priceFrom: 254.8,
+    priceFrom: 255,
   },
   {
     id: "sumka-dlia-m-iachiv-butterfly",
@@ -5650,7 +5650,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "ball-bag",
     },
-    priceFrom: 1034.8,
+    priceFrom: 1035,
   },
   {
     id: "sumka-butterfly-yasyo-sportbag",
@@ -5679,7 +5679,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "sumka-butterfly-yasyo-midi",
@@ -5708,7 +5708,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 3634.8,
+    priceFrom: 3635,
   },
   {
     id: "sumka-butterfly-yasyo-maxi-bag",
@@ -5737,7 +5737,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 7794.8,
+    priceFrom: 7795,
   },
   {
     id: "sumka-butterfly-sportbag-wheels",
@@ -5766,7 +5766,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 4674.8,
+    priceFrom: 4675,
   },
   {
     id: "sumka-butterfly-sendai-dufflebag",
@@ -5795,7 +5795,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 2854.8,
+    priceFrom: 2855,
   },
   {
     id: "sumka-butterfly-otomo-sportbag",
@@ -5824,7 +5824,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 3374.8,
+    priceFrom: 3375,
   },
   {
     id: "sumka-butterfly-otomo-midi",
@@ -5853,7 +5853,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 2594.8,
+    priceFrom: 2595,
   },
   {
     id: "sumka-butterfly-kitami-sportbag",
@@ -5882,7 +5882,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 3894.8,
+    priceFrom: 3895,
   },
   {
     id: "sumka-butterfly-kitami-midi",
@@ -5911,7 +5911,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 2854.8,
+    priceFrom: 2855,
   },
   {
     id: "sumka-butterfly-kashiwa-sportbag",
@@ -5940,7 +5940,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 4674.8,
+    priceFrom: 4675,
   },
   {
     id: "sumka-butterfly-kashiwa-midi",
@@ -5969,7 +5969,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 3894.8,
+    priceFrom: 3895,
   },
   {
     id: "sumka-butterfly-kanoy-sportbag",
@@ -5998,7 +5998,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 5714.8,
+    priceFrom: 5715,
   },
   {
     id: "sumka-butterfly-kaban-sportbag",
@@ -6027,7 +6027,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 3374.8,
+    priceFrom: 3375,
   },
   {
     id: "sumka-butterfly-kaban-midi",
@@ -6056,7 +6056,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 2594.8,
+    priceFrom: 2595,
   },
   {
     id: "sumka-butterfly-black-line-maxibag",
@@ -6085,7 +6085,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 6754.8,
+    priceFrom: 6755,
   },
   {
     id: "sumka-butterfly-tokai-midi",
@@ -6114,7 +6114,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 2854.8,
+    priceFrom: 2855,
   },
   {
     id: "sumka-riukzak-butterfly-kanoy",
@@ -6143,7 +6143,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 4154.8,
+    priceFrom: 4155,
   },
   {
     id: "riukzak-butterfly-yasyo",
@@ -6172,7 +6172,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 3634.8,
+    priceFrom: 3635,
   },
   {
     id: "riukzak-butterfly-tokai",
@@ -6201,7 +6201,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 3114.8,
+    priceFrom: 3115,
   },
   {
     id: "riukzak-butterfly-sendai-rolltop",
@@ -6230,7 +6230,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 2074.8,
+    priceFrom: 2075,
   },
   {
     id: "riukzak-butterfly-otomo",
@@ -6259,7 +6259,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 2594.8,
+    priceFrom: 2595,
   },
   {
     id: "riukzak-butterfly-kitami",
@@ -6288,7 +6288,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 2334.8,
+    priceFrom: 2335,
   },
   {
     id: "riukzak-butterfly-kashiwa",
@@ -6317,7 +6317,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 3374.8,
+    priceFrom: 3375,
   },
   {
     id: "riukzak-butterfly-kanoy",
@@ -6346,7 +6346,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "backpack",
     },
-    priceFrom: 4414.8,
+    priceFrom: 4415,
   },
   {
     id: "valiza-butterfly-yasyo-trolley",
@@ -6375,7 +6375,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 6754.8,
+    priceFrom: 6755,
   },
   {
     id: "valiza-butterfly-tabi",
@@ -6404,7 +6404,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 6754.8,
+    priceFrom: 6755,
   },
   {
     id: "valiza-butterfly-black-line",
@@ -6433,7 +6433,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "bag",
     },
-    priceFrom: 6240.0,
+    priceFrom: 6240,
   },
   {
     id: "podviinyi-chokhol-butterfly-otomo",
@@ -6462,7 +6462,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1398.8,
+    priceFrom: 1399,
   },
   {
     id: "podviinyi-chokhol-butterfly-logo-2019",
@@ -6491,7 +6491,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1034.8,
+    priceFrom: 1035,
   },
   {
     id: "podviinyi-chokhol-butterfly-kitami",
@@ -6520,7 +6520,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1398.8,
+    priceFrom: 1399,
   },
   {
     id: "podviinyi-chokhol-butterfly-kashiwa",
@@ -6549,7 +6549,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "podviinyi-chokhol-butterfly-kanoy",
@@ -6578,7 +6578,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "odynarnyi-chokhol-butterfly-otomo",
@@ -6607,7 +6607,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1190.8,
+    priceFrom: 1191,
   },
   {
     id: "odynarnyi-chokhol-butterfly-logo-2019-oval",
@@ -6636,7 +6636,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 618.8,
+    priceFrom: 619,
   },
   {
     id: "odynarnyi-chokhol-butterfly-logo-2019",
@@ -6665,7 +6665,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 878.8,
+    priceFrom: 879,
   },
   {
     id: "odynarnyi-chokhol-butterfly-kitami",
@@ -6694,7 +6694,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1138.8,
+    priceFrom: 1139,
   },
   {
     id: "odynarnyi-chokhol-butterfly-kashiwa",
@@ -6723,7 +6723,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "odynarnyi-chokhol-butterfly-kanoy",
@@ -6752,7 +6752,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "chokhol-podviinyi-butterfly-yasyo",
@@ -6781,7 +6781,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1554.8,
+    priceFrom: 1555,
   },
   {
     id: "chokhol-podviinyi-butterfly-kaban",
@@ -6810,7 +6810,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1398.8,
+    priceFrom: 1399,
   },
   {
     id: "chokhol-odynarnyi-butterfly-yasyo",
@@ -6839,7 +6839,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "chokhol-odynarnyi-butterfly-kaban",
@@ -6868,7 +6868,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1138.8,
+    priceFrom: 1139,
   },
   {
     id: "chokhol-odynarnyi-butterfly-black-line",
@@ -6897,7 +6897,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "chokhol-keis-butterfly-kibako",
@@ -6926,7 +6926,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 5200.0,
+    priceFrom: 5200,
   },
   {
     id: "chokhol-butterfly-full-hard-case",
@@ -6955,7 +6955,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 1294.8,
+    priceFrom: 1295,
   },
   {
     id: "chokhol-butterfly-easy-case",
@@ -6984,7 +6984,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 774.8,
+    priceFrom: 775,
   },
   {
     id: "chokhol-butterfly-cell-case-2",
@@ -7013,7 +7013,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 988.0,
+    priceFrom: 988,
   },
   {
     id: "chokhol-butterfly-cell-case-1",
@@ -7042,7 +7042,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 884.0,
+    priceFrom: 884,
   },
   {
     id: "chokhol-butterfly-1950",
@@ -7071,7 +7071,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "case",
     },
-    priceFrom: 5194.8,
+    priceFrom: 5195,
   },
   {
     id: "sitka-butterfly-national-league",
@@ -7100,7 +7100,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "net",
     },
-    priceFrom: 2808.0,
+    priceFrom: 2808,
   },
   {
     id: "sitka-butterfly-europa",
@@ -7129,7 +7129,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "net",
     },
-    priceFrom: 3640.0,
+    priceFrom: 3640,
   },
   {
     id: "sitka-butterfly-elite-clip",
@@ -7158,7 +7158,7 @@ export const catalogGear: CatalogProduct[] = [
     gear: {
       gearType: "net",
     },
-    priceFrom: 2028.0,
+    priceFrom: 2028,
   },
   {
     id: "futbolka-butterfly-adross",

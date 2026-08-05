@@ -872,7 +872,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     ["🔒", "SSL"],
                     ["🚚", messages.trustBar.delivery],
                     ["↩️", messages.trustBar.returns],
-                    ["⭐", "4.9/5"],
+                    ["🇯🇵", "Оригінал Butterfly"],
                   ].map(([ic, tx]) => (
                     <span
                       key={tx}
