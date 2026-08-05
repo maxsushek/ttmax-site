@@ -69,9 +69,44 @@ export function buildTokenContext(params: {
 
 const TOKEN_RE = /\{\{\s*([a-z_]+)(?::([a-z0-9-]+))?\s*\}\}/gi;
 
+/**
+ * ⚠️ Ціни може НЕ БУТИ — і тоді фразу треба прибрати цілком, а не лишати огризок.
+ *
+ * {{price_from}} у шаблонах майже завжди стоїть після прийменника: «моделей від
+ * {{price_from}}», «Одяг Butterfly - від {{price_from}}». Коли ціни немає (уся
+ * категорія «Ціна за запитом»), токен розкривався в порожній рядок і на сторінку
+ * їхало «47 моделей від .» та «Одяг Butterfly - .» — з висячим прийменником і тире.
+ *
+ * Тому спершу прибираємо ВСЮ фразу разом із прийменником і роздільником перед ним,
+ * і лише потім розкриваємо решту токенів. Якщо ціна є — нічого не чіпаємо.
+ */
+// ⚠️ БЕЗ \b перед «від»: у JavaScript \b рахується по \w = [A-Za-z0-9_], тож перед
+// кирилицею межі слова НЕМАЄ і шаблон просто не спрацьовує (перевірено — фраза
+// лишалась на місці). Тому явно перелічуємо, що може стояти перед прийменником:
+// початок рядка, тире-роздільник або пробіл.
+const PRICE_PHRASE_RE =
+  /(?:^|\s*[-–—]\s*|\s+)(?:від|от)\s+\{\{\s*price_from(?::([a-z0-9-]+))?\s*\}\}/gi;
+
 export function expandTokens(text: string | undefined, ctx: TokenContext): string | undefined {
   if (!text) return text;
-  return text.replace(TOKEN_RE, (whole, nameRaw: string, arg: string | undefined) => {
+  let removedPrice = false;
+  let withPrice = text.replace(PRICE_PHRASE_RE, (whole, arg: string | undefined) => {
+    const v = arg ? minPriceOf(productsForSlug(arg), ctx.overrides) : ctx.current.minPrice;
+    if (v != null) return whole;
+    removedPrice = true;
+    return "";
+  });
+  // Прибирання фрази лишає осиротілу пунктуацію: «Від {{price_from}}. Ціна залежить…»
+  // перетворилось би на «. Ціна залежить…». Чистимо ЛИШЕ там, де щось справді
+  // вирізали, щоб не чіпати звичайні тексти.
+  if (removedPrice) {
+    withPrice = withPrice
+      .replace(/\s+([.,;:!?])/g, "$1")
+      .replace(/^[\s.,;:—–-]+/, "")
+      .replace(/ {2,}/g, " ")
+      .trim();
+  }
+  return withPrice.replace(TOKEN_RE, (whole, nameRaw: string, arg: string | undefined) => {
     switch (nameRaw.toLowerCase()) {
       case "year":
         return String(ctx.year);
