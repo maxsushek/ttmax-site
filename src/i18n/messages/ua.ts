@@ -189,8 +189,8 @@ export const ua: Messages = {
     delivery: {
       method: "Спосіб доставки",
       contact: "Контактні дані",
-      np: { label: "Нова Пошта", sub: "1–2 дні · ~50–80 грн" },
-      ukrposhta: { label: "Укрпошта", sub: "3–5 днів · ~30 грн" },
+      np: { label: "Нова Пошта", sub: "1–2 дні · за тарифом" },
+      ukrposhta: { label: "Укрпошта", sub: "3–5 днів · за тарифом" },
       pickup: { label: "Самовивіз", sub: "Безкоштовно · Харків" },
       fields: {
         fullName: "Ім'я та прізвище",

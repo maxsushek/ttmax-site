@@ -15,6 +15,7 @@ import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
+import { computeShipping } from "@/lib/checkout/shipping";
 
 type Delivery = "np" | "ukrposhta" | "pickup";
 type Payment = "apple" | "cod" | "card";
@@ -75,7 +76,16 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     }
   }, []);
 
-  const shipping = cart.total >= cart.freeShippingThreshold ? 0 : cart.shippingFee;
+  // ⚠️ Рахуємо через спільну computeShipping — ту саму, якою рахує /api/orders.
+  // Раніше тут була формула без урахування способу доставки, тож «Самовивіз ·
+  // Безкоштовно» усе одно додавав 90 грн до рахунку. Не повертати локальну формулу:
+  // щойно клієнт і сервер порахують по-різному, замовлення почнуть відхилятись.
+  const shipping = computeShipping({
+    method: form.delivery,
+    subtotal: cart.total,
+    freeShippingThreshold: cart.freeShippingThreshold,
+    shippingFee: cart.shippingFee,
+  });
   const total = cart.total + shipping;
 
   const validate1 = () => {

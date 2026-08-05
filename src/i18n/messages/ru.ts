@@ -177,8 +177,8 @@ export const ru: Messages = {
     delivery: {
       method: "Способ доставки",
       contact: "Контактные данные",
-      np: { label: "Новая Почта", sub: "1–2 дня · ~50–80 грн" },
-      ukrposhta: { label: "Укрпочта", sub: "3–5 дней · ~30 грн" },
+      np: { label: "Новая Почта", sub: "1–2 дня · по тарифу" },
+      ukrposhta: { label: "Укрпочта", sub: "3–5 дней · по тарифу" },
       pickup: { label: "Самовывоз", sub: "Бесплатно · Харьков" },
       fields: {
         fullName: "Имя и фамилия",

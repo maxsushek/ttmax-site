@@ -4,6 +4,8 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewOrder } from "@/lib/telegram/notify";
 import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
+import { resolveCombo } from "@/lib/catalog/racket";
+import { computeShipping } from "@/lib/checkout/shipping";
 import { locales, localeToLang } from "@/i18n/config";
 import { getContact } from "@/lib/contact/get";
 import { AVAILABLE_PAYMENT_METHODS, PAYMENT_METHODS } from "@/config/payment";
@@ -128,12 +130,40 @@ export async function POST(request: NextRequest) {
     const variant = eff.variants.find(
       (v) => `${eff.slug}__${v.thickness}__${v.color}` === it.productId,
     );
+
+    /**
+     * ⚠️ ЗБІРНІ РАКЕТКИ РАХУЮТЬСЯ ОКРЕМО — і цю гілку не можна прибирати.
+     *
+     * У 95 готових ракеток `variants: []` і немає priceFrom: їхня ціна не зберігається
+     * в товарі, а рахується в resolveCombo як сума компонентів мінус знижка
+     * (lib/catalog/racket.ts). Тому пошук за варіантом нічого не знаходить, priceFrom
+     * undefined, getMinPrice на порожніх variants теж undefined — expected виходив null.
+     *
+     * Наслідок був важкий: перевірка нижче відхиляла ЛЮБЕ замовлення з ракеткою з
+     * помилкою «Price unavailable», тобто найдорожча категорія сайту (10 283–22 345 грн,
+     * перший пункт меню) не продавалась узагалі. Покупець проходив три кроки чекауту й
+     * отримував «Не вдалося оформити замовлення» — завжди, до кінця. У GA4 це не видно:
+     * подія purchase шлеться лише після успіху, тож у статистиці був би трафік і нуль
+     * замовлень без жодного сигналу про причину.
+     *
+     * ⚠️ Це наслідок правки #36, де `continue` замінили на відмову. Сама правка була
+     * потрібна (без неї 64 позиції без ціни купувались за будь-яку суму), але ракетки
+     * тоді не врахували: у них ціна Є, просто живе в іншому місці.
+     *
+     * Рахуємо тим самим resolveCombo, яким рендериться панель покупки — щоб сервер і
+     * вітрина фізично не могли розійтись у числі.
+     */
+    const comboPrice =
+      eff.combo != null ? (resolveCombo(eff, overrides).promoPrice ?? null) : null;
+
     const expected =
       variant && typeof variant.price === "number"
         ? variant.price
-        : typeof eff.priceFrom === "number"
-          ? eff.priceFrom
-          : (getMinPrice(eff) ?? null);
+        : comboPrice != null
+          ? comboPrice
+          : typeof eff.priceFrom === "number"
+            ? eff.priceFrom
+            : (getMinPrice(eff) ?? null);
 
     // ⚠️ Було `continue` — тобто позиція, для якої каталог не знає ціни, приймалася з
     // ціною КЛІЄНТА. Таких позицій 64 (odyag 47, aksessuary 11, nakladki 4 та ін.), і
@@ -175,8 +205,15 @@ export async function POST(request: NextRequest) {
   // за тим самим правилом, що й у CheckoutForm.tsx:74 (total >= поріг ? 0 : тариф),
   // з тих самих налаштувань (site_settings через getContact), тож суми не розійдуться.
   const contact = await getContact();
-  const computedShipping =
-    computedSubtotal >= contact.freeShippingThreshold ? 0 : contact.shippingFee;
+  // ⚠️ Та сама computeShipping, що й на чекауті — щоб числа не розійшлись.
+  // Спосіб доставки береться з тіла запиту, але СУМА рахується тут: клієнтському
+  // totals.shipping не довіряємо, інакше можна надіслати нуль.
+  const computedShipping = computeShipping({
+    method: data.delivery.method,
+    subtotal: computedSubtotal,
+    freeShippingThreshold: contact.freeShippingThreshold,
+    shippingFee: contact.shippingFee,
+  });
   if (Math.abs(computedShipping - data.totals.shipping) > 0.01) {
     console.warn("[orders] shipping mismatch — using server value", {
       client: data.totals.shipping,
