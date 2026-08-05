@@ -12,6 +12,14 @@ export type CldOptions = {
   gravity?: "auto" | "center" | "face";
   /** Зум для thumb/fill (напр. 1.3 — тісніше до обличчя). */
   z?: number;
+  /**
+   * Колір полів для crop:"pad" — "auto" (Cloudinary бере колір із самої картинки)
+   * або hex без решітки ("F5F5F5"). Ігнорується для інших режимів кадрування.
+   *
+   * ⚠️ Без нього Cloudinary заливає поля ЧОРНИМ, і світле фото товару отримує
+   * дві чорні смуги. З "auto" поля зливаються з фоном фото — шва не видно.
+   */
+  bg?: "auto" | string;
   /** Водяний знак TTMAX. За замовчуванням ВИМКНЕНО — див. коментар до watermarkChain(). */
   wm?: boolean;
 };
@@ -56,7 +64,7 @@ function watermarkChain(w: number, h: number): string {
 /** Строит оптимизированный URL по public_id. Пустая строка, если cloud name не задан. */
 export function cldUrl(publicId: string, opts: CldOptions = {}): string {
   if (!CLOUD || !publicId) return "";
-  const { w, h, crop = "fill", gravity = "auto", z, wm } = opts;
+  const { w, h, crop = "fill", gravity = "auto", z, wm, bg } = opts;
   // g_auto/g_face валідні лише для кадрувальних режимів (fill, thumb).
   // Для fit/limit/pad gravity не застосовується — інакше Cloudinary повертає
   // помилку (саме через c_fit + g_auto ламались логотип / hero / favicon).
@@ -66,6 +74,8 @@ export function cldUrl(publicId: string, opts: CldOptions = {}): string {
     "q_auto",
     `c_${crop}`,
     usesGravity ? `g_${gravity}` : "",
+    // Поля мають сенс лише там, де вони взагалі зʼявляються.
+    crop === "pad" && bg ? (bg === "auto" ? "b_auto" : `b_rgb:${bg}`) : "",
     z ? `z_${z}` : "",
     w ? `w_${w}` : "",
     h ? `h_${h}` : "",

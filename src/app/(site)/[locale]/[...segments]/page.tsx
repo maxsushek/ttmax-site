@@ -157,10 +157,15 @@ export async function generateMetadata({
   }
 
   // og:image — реальне фото товару (для листингів беремо перший товар із фото). 1200×630.
+  //
+  // ⚠️ crop:"pad", а НЕ "fill". Усі фото товарів квадратні (1:1), а картка соцмережі —
+  // 1.91:1, тож "fill" вирізав із кадру 48% по висоті: у Telegram коробка накладки та
+  // ручка основи виглядали обрізаними знизу. "pad" вписує фото цілком і доповнює полями.
+  // bg:"auto" бере колір із самої картинки (фон фото — #F5F5F5), тому межа полів не видно.
   const ogSource = (currentProducts ?? []).find((p) => pickPrimary(media, "product", p.slug));
   const ogPrimary = ogSource ? pickPrimary(media, "product", ogSource.slug) : null;
   const ogImage = ogPrimary
-    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "fill", wm: true }) || undefined
+    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "pad", bg: "auto", wm: true }) || undefined
     : undefined;
 
   // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
