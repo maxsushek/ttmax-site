@@ -225,6 +225,7 @@ export async function POST(request: NextRequest) {
     subtotal: computedSubtotal,
     freeShippingThreshold: contact.freeShippingThreshold,
     shippingFee: contact.shippingFee,
+    ukrposhtaFee: contact.ukrposhtaFee,
   });
   if (Math.abs(computedShipping - data.totals.shipping) > 0.01) {
     console.warn("[orders] shipping mismatch — using server value", {

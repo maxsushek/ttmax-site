@@ -35,7 +35,8 @@ export function contactDefaults(): Record<string, string> {
     [CONTACT_KEYS.addrRegion]: siteConfig.address.addressRegion,
     [CONTACT_KEYS.addrPostal]: siteConfig.address.postalCode,
     [CONTACT_KEYS.freeThreshold]: String(siteConfig.freeShippingThreshold),
-    [CONTACT_KEYS.shippingFee]: "99",
+    [CONTACT_KEYS.shippingFee]: "90",
+    [CONTACT_KEYS.ukrposhtaFee]: "80",
   };
 }
 
@@ -61,7 +62,8 @@ export function resolveContact(m: SettingsMap): ContactInfo {
       settingString(m, CONTACT_KEYS.freeThreshold),
       siteConfig.freeShippingThreshold,
     ),
-    shippingFee: num(settingString(m, CONTACT_KEYS.shippingFee), 99),
+    shippingFee: num(settingString(m, CONTACT_KEYS.shippingFee), 90),
+    ukrposhtaFee: num(settingString(m, CONTACT_KEYS.ukrposhtaFee), 80),
   };
 }
 

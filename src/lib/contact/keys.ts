@@ -16,7 +16,11 @@ export const CONTACT_KEYS = {
   addrRegion: "address_region",
   addrPostal: "address_postal",
   freeThreshold: "delivery_free_threshold",
+  // ⚠️ Тариф у КОЖНОГО перевізника свій, і одного числа тут замало.
+  // delivery_shipping_fee — це Нова Пошта (історична назва ключа; не перейменовуємо,
+  // бо значення вже лежить у site_settings на проді й перейменування його загубить).
   shippingFee: "delivery_shipping_fee",
+  ukrposhtaFee: "delivery_ukrposhta_fee",
 } as const;
 
 export type ContactInfo = {
@@ -26,5 +30,8 @@ export type ContactInfo = {
   social: { telegram: string; youtube: string; facebook: string };
   address: { street: string; locality: string; region: string; postal: string; country: string };
   freeShippingThreshold: number;
+  /** Тариф Нової Пошти, грн. */
   shippingFee: number;
+  /** Тариф Укрпошти, грн. Зазвичай дешевший за НП — тому окреме число, а не те саме. */
+  ukrposhtaFee: number;
 };

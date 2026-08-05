@@ -4,6 +4,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { defaultLocale, locales, localeToLang, type Locale } from "@/i18n/config";
+import { ogImages as brandOgImages } from "./og-image";
 
 export function buildCatalogMetadata(opts: {
   locale: Locale;
@@ -24,7 +25,14 @@ export function buildCatalogMetadata(opts: {
 }): Metadata {
   const { locale, pathname, title, description, index = true, image } = opts;
   const ogDescription = opts.ogDescription || description;
-  const ogImages = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
+  // ⚠️ Фолбек ОБОВʼЯЗКОВИЙ. Цей білдер обслуговує не лише картки товару (де фото є),
+  // а й /about, /delivery, /payment, /returns, /terms, /privacy, /contacts — там
+  // картинки немає взагалі, і в Telegram вони йшли голим текстом. Дефолт із
+  // buildMetadata сюди НЕ доїжджає: openGraph сторінки замінює батьківський цілком,
+  // а не зливається з ним по полях.
+  const ogImages = image
+    ? [{ url: image, width: 1200, height: 630, alt: title }]
+    : brandOgImages(locale);
   // До запуску — все сторінки каталогу noindex, навіть наповнені.
   const indexable = siteConfig.launched && index;
 
@@ -46,13 +54,13 @@ export function buildCatalogMetadata(opts: {
       description: ogDescription,
       locale: locale === "ua" ? "uk_UA" : "ru_UA",
       alternateLocale: locale === "ua" ? ["ru_UA"] : ["uk_UA"],
-      ...(ogImages ? { images: ogImages } : {}),
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: ogDescription,
-      ...(image ? { images: [image] } : {}),
+      images: ogImages,
     },
     robots: indexable
       ? {

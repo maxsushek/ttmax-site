@@ -4,6 +4,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { defaultLocale, locales, localeToLang, type Locale } from "@/i18n/config";
+import { ogImages as brandOgImages } from "./og-image";
 
 export function buildBlogMetadata(opts: {
   locale: Locale;
@@ -34,9 +35,11 @@ export function buildBlogMetadata(opts: {
   for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${pathname}`;
   languages["x-default"] = `${siteConfig.url}/${defaultLocale}${pathname}`;
 
+  // Стаття без обкладинки й /blog взагалі — теж мусять мати прев'ю (див. коментар
+  // у catalog-metadata.ts: власний openGraph замінює дефолт із buildMetadata).
   const ogImages = image
     ? [{ url: image, alt: title, ...(imageWidth && imageHeight ? { width: imageWidth, height: imageHeight } : {}) }]
-    : undefined;
+    : brandOgImages(locale);
   const ogLocale = locale === "ua" ? "uk_UA" : "ru_UA";
   const ogAlt = locale === "ua" ? ["ru_UA"] : ["uk_UA"];
 
@@ -50,7 +53,7 @@ export function buildBlogMetadata(opts: {
         description,
         locale: ogLocale,
         alternateLocale: ogAlt,
-        ...(ogImages ? { images: ogImages } : {}),
+        images: ogImages,
         publishedTime: article.publishedTime,
         modifiedTime: article.modifiedTime,
         authors: [article.authorUrl],
@@ -63,7 +66,7 @@ export function buildBlogMetadata(opts: {
         description,
         locale: ogLocale,
         alternateLocale: ogAlt,
-        ...(ogImages ? { images: ogImages } : {}),
+        images: ogImages,
       };
 
   return {
@@ -75,7 +78,7 @@ export function buildBlogMetadata(opts: {
       card: "summary_large_image",
       title,
       description,
-      ...(image ? { images: [image] } : {}),
+      images: ogImages,
     },
     robots: indexable
       ? {

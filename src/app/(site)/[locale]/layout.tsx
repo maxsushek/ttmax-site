@@ -126,6 +126,7 @@ export default async function LocaleLayout({
         <CartProvider
           freeShippingThreshold={contact.freeShippingThreshold}
           shippingFee={contact.shippingFee}
+          ukrposhtaFee={contact.ukrposhtaFee}
         >
           <Header locale={locale} messages={messages} logoUrl={logoUrl} />
           <main id="main" className="pt-16">

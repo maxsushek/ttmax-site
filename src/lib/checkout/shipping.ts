@@ -25,12 +25,22 @@ export function computeShipping(opts: {
   method: DeliveryMethod;
   subtotal: number;
   freeShippingThreshold: number;
+  /** Тариф Нової Пошти, грн (site_settings → delivery_shipping_fee). */
   shippingFee: number;
+  /** Тариф Укрпошти, грн (site_settings → delivery_ukrposhta_fee). */
+  ukrposhtaFee: number;
 }): number {
-  const { method, subtotal, freeShippingThreshold, shippingFee } = opts;
+  const { method, subtotal, freeShippingThreshold, shippingFee, ukrposhtaFee } = opts;
 
   // Самовивіз нічого не коштує за визначенням: перевізник не задіяний.
   if (method === "pickup") return 0;
 
-  return subtotal >= freeShippingThreshold ? 0 : shippingFee;
+  // Безкоштовна доставка від порогу діє в обох перевізників однаково.
+  if (subtotal >= freeShippingThreshold) return 0;
+
+  // ⚠️ Тариф залежить від перевізника, і одного числа на двох не буває.
+  // Укрпошта з 01.04.2026 рахує за об'ємом (Малий ≤8000 см³ — 80 грн), Нова Пошта
+  // від 13.04.2026 бере фіксовані 90 грн за посилку до 2 кг. Наші відправлення —
+  // накладки, основи, м'ячі — потрапляють саме в ці категорії.
+  return method === "ukrposhta" ? ukrposhtaFee : shippingFee;
 }

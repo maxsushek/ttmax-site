@@ -85,8 +85,22 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     subtotal: cart.total,
     freeShippingThreshold: cart.freeShippingThreshold,
     shippingFee: cart.shippingFee,
+    ukrposhtaFee: cart.ukrposhtaFee,
   });
   const total = cart.total + shipping;
+
+  // Ціна біля кожного способу доставки — рахуємо тією ж computeShipping, а не пишемо
+  // числом у словнику. ⚠️ Саме через зашите в словник число підпис «Укрпошта · ~30 грн»
+  // місяцями розходився з реальними 90 грн у рахунку. Тепер підпис фізично не може
+  // розійтись із сумою: обидва беруться з однієї функції та одних налаштувань.
+  const feeFor = (method: Delivery) =>
+    computeShipping({
+      method,
+      subtotal: cart.total,
+      freeShippingThreshold: cart.freeShippingThreshold,
+      shippingFee: cart.shippingFee,
+      ukrposhtaFee: cart.ukrposhtaFee,
+    });
 
   const validate1 = () => {
     const errs: Partial<Record<FieldKey, string>> = {};
@@ -441,6 +455,15 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                         <span className="mt-0.5 block font-body text-xs text-ink-dim">
                           {opt.sub}
                         </span>
+                      </span>
+                      {/* Ціна саме цього способу — з computeShipping, не зі словника. */}
+                      <span
+                        className={cn(
+                          "shrink-0 whitespace-nowrap font-display text-[13px] font-bold",
+                          feeFor(opt.v) === 0 ? "text-accent" : "text-ink-muted",
+                        )}
+                      >
+                        {feeFor(opt.v) === 0 ? messages.cart.free : formatPrice(feeFor(opt.v))}
                       </span>
                       <span
                         aria-hidden

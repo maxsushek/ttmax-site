@@ -190,12 +190,16 @@ export function productJsonLd(opts: {
   currency?: string;
   inStock?: boolean;
   /**
-   * Вартість доставки, грн. Береться з site_settings (delivery_shipping_fee) через
-   * resolveContact — те саме число, що показано на /delivery. Якщо не передати,
-   * блоки shippingDetails і hasMerchantReturnPolicy не додаються взагалі: краще без
-   * розмітки, ніж із вигаданою цифрою.
+   * Тарифи доставки, грн — по одному на перевізника (Нова Пошта, Укрпошта). Беруться
+   * з site_settings через resolveContact, тобто ті самі числа, що покупець бачить на
+   * чекауті. Якщо не передати, блоки shippingDetails і hasMerchantReturnPolicy не
+   * додаються взагалі: краще без розмітки, ніж із вигаданою цифрою.
+   *
+   * ⚠️ Було одне число на весь сайт, поки доставка коштувала однаково в усіх. Щойно
+   * в Укрпошти зʼявився свій тариф (80 проти 90), розмітка почала занижувати вибір
+   * покупця до однієї ставки. Тепер перелічуємо всі — Google показує найдешевшу.
    */
-  shippingFee?: number;
+  shippingFees?: number[];
 }) {
   const {
     name,
@@ -211,14 +215,23 @@ export function productJsonLd(opts: {
     priceValidUntil,
     currency = "UAH",
     inStock,
-    shippingFee,
+    shippingFees,
   } = opts;
 
-  // Доставку й повернення чіпляємо лише коли вартість доставки реально відома.
+  // Доставку й повернення чіпляємо лише коли тарифи реально відомі.
+  // Дублікати прибираємо: якщо перевізники беруть однаково, двічі писати те саме нема сенсу.
+  const rates = Array.from(
+    new Set((shippingFees ?? []).filter((f) => typeof f === "number" && f >= 0)),
+  ).sort((a, b) => a - b);
   const offerExtras =
-    typeof shippingFee === "number" && shippingFee >= 0
+    rates.length > 0
       ? {
-          shippingDetails: shippingDetailsNode(shippingFee, currency),
+          shippingDetails: (() => {
+            const nodes = rates.map((f) => shippingDetailsNode(f, currency));
+            // Один тариф — обʼєкт, кілька — масив: обидві форми валідні, але з одним
+            // перевізником масив на один елемент виглядає як недороблена розмітка.
+            return nodes.length === 1 ? nodes[0] : nodes;
+          })(),
           hasMerchantReturnPolicy: returnPolicyNode(),
         }
       : {};

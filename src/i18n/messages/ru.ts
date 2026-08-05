@@ -177,9 +177,10 @@ export const ru: Messages = {
     delivery: {
       method: "Способ доставки",
       contact: "Контактные данные",
-      np: { label: "Новая Почта", sub: "1–2 дня · по тарифу" },
-      ukrposhta: { label: "Укрпочта", sub: "3–5 дней · по тарифу" },
-      pickup: { label: "Самовывоз", sub: "Бесплатно · Харьков" },
+      // ⚠️ В подписях намеренно НЕТ суммы: цену рисует CheckoutForm из computeShipping.
+      np: { label: "Новая Почта", sub: "1–2 дня · отделение или почтомат" },
+      ukrposhta: { label: "Укрпочта", sub: "3–5 дней · отделение" },
+      pickup: { label: "Самовывоз", sub: "Харьков · забрать в магазине" },
       fields: {
         fullName: "Имя и фамилия",
         fullNamePlaceholder: "Иван Петров",

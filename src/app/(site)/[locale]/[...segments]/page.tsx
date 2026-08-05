@@ -280,7 +280,8 @@ export default async function CatalogPage({
   // тексту на /delivery і для кошика (site_settings → resolveContact), тому розмітка не
   // може розійтися з тим, що бачить покупець. Виклик кешований і тегований site-settings,
   // тож зміна суми в адмінці перебудує й ці сторінки.
-  const shippingFee = resolveContact(await getSettings()).shippingFee;
+  const deliveryContact = resolveContact(await getSettings());
+  const shippingFees = [deliveryContact.shippingFee, deliveryContact.ukrposhtaFee];
   // Накладаємо ціну/наявність із Supabase поверх коду один раз — далі всі читання
   // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
   const eroute = withOverrides(route, overrides);
@@ -332,7 +333,7 @@ export default async function CatalogPage({
             highPrice,
             offerCount: eroute.product.variants.length,
             priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
-            shippingFee,
+            shippingFees,
           });
         })()
       : null;

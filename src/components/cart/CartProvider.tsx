@@ -62,6 +62,7 @@ type CartContextValue = {
   freeShipRemaining: number;
   hasFreeShip: boolean;
   shippingFee: number;
+  ukrposhtaFee: number;
   freeShippingThreshold: number;
   isOpen: boolean;
   justAddedId: string | null;
@@ -78,11 +79,15 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({
   children,
   freeShippingThreshold = siteConfig.freeShippingThreshold,
-  shippingFee = 99,
+  shippingFee = 90,
+  ukrposhtaFee = 80,
 }: {
   children: ReactNode;
   freeShippingThreshold?: number;
+  /** Тариф Нової Пошти, грн. */
   shippingFee?: number;
+  /** Тариф Укрпошти, грн. Дефолти тут — лише страховка: реальні числа йдуть із site_settings. */
+  ukrposhtaFee?: number;
 }) {
   const [state, dispatch] = useReducer(reducer, { items: [], hydrated: false });
   const [isOpen, setIsOpen] = useState(false);
@@ -198,6 +203,7 @@ export function CartProvider({
     freeShipRemaining,
     hasFreeShip,
     shippingFee,
+    ukrposhtaFee,
     freeShippingThreshold: threshold,
     isOpen,
     justAddedId,
