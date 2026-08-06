@@ -17,8 +17,10 @@ function num(s: string, fallback: number): number {
 }
 
 function socialDefault(key: string): string {
-  const item = siteConfig.social.find((x) => x.key === key);
-  return item && item.href !== "#" ? item.href : "";
+  // Явний тип string, а не літерал із конфігу: інакше TS вважає порівняння з "#"
+  // неможливим і падає, щойно всі href стають конкретними адресами.
+  const href: string = siteConfig.social.find((x) => x.key === key)?.href ?? "";
+  return href === "#" ? "" : href;
 }
 
 /** Дефолти коду для контактних ключів (для передзаповнення полів в адмінці + diff при збереженні). */
@@ -28,6 +30,7 @@ export function contactDefaults(): Record<string, string> {
     [CONTACT_KEYS.phoneDisplay]: siteConfig.phoneDisplay,
     [CONTACT_KEYS.email]: siteConfig.email,
     [CONTACT_KEYS.telegram]: socialDefault("telegram"),
+    [CONTACT_KEYS.instagram]: socialDefault("instagram"),
     [CONTACT_KEYS.youtube]: socialDefault("youtube"),
     [CONTACT_KEYS.facebook]: socialDefault("facebook"),
     [CONTACT_KEYS.addrStreet]: siteConfig.address.streetAddress,
@@ -48,6 +51,7 @@ export function resolveContact(m: SettingsMap): ContactInfo {
     email: settingString(m, CONTACT_KEYS.email) || siteConfig.email,
     social: {
       telegram: settingString(m, CONTACT_KEYS.telegram) || socialDefault("telegram"),
+      instagram: settingString(m, CONTACT_KEYS.instagram) || socialDefault("instagram"),
       youtube: settingString(m, CONTACT_KEYS.youtube) || socialDefault("youtube"),
       facebook: settingString(m, CONTACT_KEYS.facebook) || socialDefault("facebook"),
     },

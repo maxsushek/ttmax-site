@@ -32,7 +32,11 @@ const GROUPS: Group[] = [
   {
     title: "Соцмережі (повні посилання)",
     fields: [
-      { key: CONTACT_KEYS.telegram, label: "Telegram", placeholder: "https://t.me/…" },
+      // ⚠️ Вписувати ВЛАСНИЙ профіль магазину зі шляхом (instagram.com/ваш_акаунт),
+      // а не корінь платформи: лише тоді адреса потрапить у sameAs розмітки й скаже
+      // Google, що акаунт належить саме нам. Порожнє поле = лишиться заглушка.
+      { key: CONTACT_KEYS.instagram, label: "Instagram", placeholder: "https://www.instagram.com/ваш_акаунт" },
+      { key: CONTACT_KEYS.telegram, label: "Telegram", placeholder: "https://t.me/ваш_канал" },
       { key: CONTACT_KEYS.youtube, label: "YouTube", placeholder: "https://youtube.com/@…" },
       { key: CONTACT_KEYS.facebook, label: "Facebook", placeholder: "https://facebook.com/…" },
     ],

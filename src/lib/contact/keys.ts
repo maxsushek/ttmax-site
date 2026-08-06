@@ -9,6 +9,7 @@ export const CONTACT_KEYS = {
   phoneDisplay: "contact_phone_display",
   email: "contact_email",
   telegram: "social_telegram",
+  instagram: "social_instagram",
   youtube: "social_youtube",
   facebook: "social_facebook",
   addrStreet: "address_street",
@@ -27,7 +28,7 @@ export type ContactInfo = {
   phone: string;
   phoneDisplay: string;
   email: string;
-  social: { telegram: string; youtube: string; facebook: string };
+  social: { telegram: string; youtube: string; facebook: string; instagram: string };
   address: { street: string; locality: string; region: string; postal: string; country: string };
   freeShippingThreshold: number;
   /** Тариф Нової Пошти, грн. */

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-import { siteConfig } from "@/config/site";
+import { siteConfig, isOwnProfileUrl } from "@/config/site";
 import { trackEvent } from "@/lib/analytics/events";
 import type { ContactInfo } from "@/lib/contact/keys";
 import type { Messages } from "@/i18n/messages/types";
@@ -175,10 +175,11 @@ export function Footer({
           <div className="flex flex-col items-end gap-3">
             <div className="flex gap-2">
               {/*
-                ⚠️ Фільтр обовʼязковий: у конфігу href="#" — заглушка для профілів,
-                яких поки немає. Без фільтра підвал кожної з ~870 сторінок містив
-                три посилання в нікуди, а /contacts ще й відправляв за ними покупця.
-                Щойно власник впише реальні URL — іконки зʼявляться самі.
+                ⚠️ "#" не рендеримо взагалі — це посилання в нікуди на ~870 сторінках.
+                Корені платформ (instagram.com/) — тимчасові заглушки, поки в магазину
+                немає власних профілів: показуємо, але з rel="nofollow", бо це не наша
+                сторінка. Реальний профіль (зі шляхом) отримує звичайний rel і сам
+                потрапляє в sameAs розмітки — див. isOwnProfileUrl() у config/site.ts.
               */}
               {siteConfig.social
                 .filter((s) => socialHref(s.key) && socialHref(s.key) !== "#")
@@ -186,7 +187,12 @@ export function Footer({
                 <a
                   key={s.key}
                   href={socialHref(s.key)}
-                  rel="noopener noreferrer"
+                  target="_blank"
+                  rel={
+                    isOwnProfileUrl(socialHref(s.key))
+                      ? "noopener noreferrer"
+                      : "nofollow noopener noreferrer"
+                  }
                   aria-label={s.key}
                   className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-white/[0.12] text-[11px] font-bold text-ink-muted transition-all hover:-translate-y-0.5"
                   onMouseEnter={(e) => {

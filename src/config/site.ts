@@ -38,10 +38,25 @@ export const siteConfig = {
   email: "hello@ttmax.com.ua",
   freeShippingThreshold: 5000,
   yearFounded: 2026,
+  /**
+   * Соцмережі в підвалі.
+   *
+   * ⚠️ Зараз тут КОРЕНІ платформ — тимчасові заглушки, поки в магазину немає
+   * власних профілів. Вони свідомо НЕ потрапляють у `sameAs` розмітки Organization:
+   * `sameAs` означає «ця сама організація також живе за цією адресою», тож
+   * "https://www.instagram.com/" там заявив би, що TTMAX — це і є Instagram.
+   *
+   * Правило розрізнення — `isOwnProfileUrl()` нижче: у профілю Є шлях
+   * (instagram.com/ttmax_ua), у кореня платформи його немає. Тому щойно власник
+   * впише реальний профіль — він потрапить у `sameAs` САМ, без правок коду.
+   *
+   * Реальні адреси зручніше вписувати в адмінці (Контакти), а не тут.
+   */
   social: [
-    { key: "telegram", label: "TG", color: "#229ED9", href: "#" },
-    { key: "youtube", label: "YT", color: "#FF0000", href: "#" },
-    { key: "facebook", label: "FB", color: "#1877F2", href: "#" },
+    { key: "instagram", label: "IG", color: "#E1306C", href: "https://www.instagram.com/" },
+    { key: "telegram", label: "TG", color: "#229ED9", href: "https://t.me/" },
+    { key: "youtube", label: "YT", color: "#FF0000", href: "https://www.youtube.com/" },
+    { key: "facebook", label: "FB", color: "#1877F2", href: "https://www.facebook.com/" },
   ],
   // Schema.org address (PostalAddress) — реальна адреса магазину, задана власником 25.07.2026.
   // Пишемо українською: для українського бізнесу локальна форма коректніша за транслітерацію
@@ -62,3 +77,23 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+/**
+ * Чи це ВЛАСНИЙ профіль магазину, а не корінь платформи-заглушки.
+ *
+ * ⚠️ Від цього залежить `sameAs` у розмітці Organization. Туди можна писати лише
+ * сторінки, які справді представляють ЦЮ організацію: "instagram.com/ttmax_ua" —
+ * можна, "instagram.com/" — ні, бо це заявка на те, що магазин і є Instagram.
+ *
+ * Критерій навмисно структурний, а не список винятків: у профілю є шлях, у кореня
+ * платформи — немає. Тож нова платформа не вимагатиме правки цієї функції, а щойно
+ * власник впише реальний профіль — той потрапить у `sameAs` автоматично.
+ */
+export function isOwnProfileUrl(href: string | undefined): boolean {
+  if (!href || href === "#") return false;
+  try {
+    return new URL(href).pathname.replace(/\/+$/, "").length > 0;
+  } catch {
+    return false;
+  }
+}

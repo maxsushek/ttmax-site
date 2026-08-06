@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { siteConfig, isOwnProfileUrl } from "@/config/site";
 import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
 
@@ -13,9 +13,11 @@ export function organizationJsonLd(contact?: ContactInfo) {
    */
   const telephone = contact?.phone ?? siteConfig.phone;
   const email = contact?.email ?? siteConfig.email;
-  const sameAs = contact
-    ? Object.values(contact.social).filter((h) => h && h !== "#")
-    : siteConfig.social.map((s) => s.href).filter((h) => h !== "#");
+  // ⚠️ У sameAs — ЛИШЕ власні профілі. Корені платформ (instagram.com/) — заглушки
+  // в підвалі, і тут вони означали б, що TTMAX і є Instagram. Див. isOwnProfileUrl().
+  const sameAs = (
+    contact ? Object.values(contact.social) : siteConfig.social.map((s) => s.href)
+  ).filter(isOwnProfileUrl);
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
