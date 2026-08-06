@@ -62,5 +62,17 @@ export function buildMetadata(locale: Locale, pathname: string = ""): Metadata {
     icons: {
       icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     },
+    other: {
+      /**
+       * Маркер збірки — короткий SHA коміта, з якого зібрано те, що зараз живе.
+       *
+       * ⚠️ Навіщо: правки, які не змінюють видимий вивід (гейти збірки, фільтри
+       * sitemap, серверна логіка), ззовні НЕ відрізнити. Через це неможливо було
+       * довести, що деплой доїхав, а не впав, лишивши в ефірі попередню збірку —
+       * зовні обидва випадки виглядають однаково: сайт працює. Тепер це перевірка
+       * в один curl. Vercel підставляє VERCEL_GIT_COMMIT_SHA автоматично.
+       */
+      "x-build": process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local",
+    },
   };
 }
