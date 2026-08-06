@@ -74,7 +74,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const c of getIndexableCategories()) {
-    if (getProductsByCategory(c.slug).length > 0) {
+    // ⚠️ Рахуємо ВИДИМІ товари, а не всі. Нижче в цьому ж файлі цикл по товарах уже
+    // фільтрує isHidden — асиметрія всередині одного файлу й давала збій: категорія,
+    // де всі товари приховані (немає фото), лишалась у карті та в index, хоч на
+    // сторінці нуль карток. Порожня сторінка, ЯКУ МИ САМІ ПОДАЛИ, — гірший сигнал,
+    // ніж просто порожня сторінка.
+    if (getProductsByCategory(c.slug).filter((p) => !isHidden(p, media)).length > 0) {
       paths.push({ path: `/${c.slug}`, priority: 0.8, freq: "weekly" });
     }
   }

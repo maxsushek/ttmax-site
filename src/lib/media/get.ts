@@ -24,9 +24,34 @@ type Row = {
   sort: number | null;
 };
 
+/**
+ * ⚠️ Порожня карта картинок — це НЕ безпечний фолбек, а тиха катастрофа.
+ *
+ * Від неї залежить `isPhotolessHidden`: товар без рядка в entity_media вважається
+ * «поки без фото» і ховається з лістингу, з sitemap і йде в noindex. Тому збірка,
+ * у якої не було доступу до Supabase, збирає САЙТ БЕЗ ЖОДНОГО ФОТО і з порожніми
+ * категоріями — і виглядає при цьому успішною. Саме так вийшло на локальному
+ * сухому прогоні: /odyag і /myachi зібрались порожніми, хоч на проді там 47 і 7 карток.
+ *
+ * На проді таку збірку Vercel задеплоїв би мовчки. Тому на БІЛДІ падаємо голосно:
+ * зламаний деплой помітно одразу, а сайт без фото в індексі — ні.
+ * У рантаймі (ISR/ревалідація) лишаємо м'яку поведінку: сторінка вже є, і краще
+ * віддати її без свіжих картинок, ніж 500.
+ */
+function onMediaFailure(reason: string): EntityMediaMap {
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    throw new Error(
+      `[media] ${reason}. Збірка зупинена: без entity_media сайт зібрався б без фото ` +
+        `і з порожніми категоріями. Перевір SUPABASE env у Vercel.`,
+    );
+  }
+  console.error(`[media] ${reason} — віддаю порожню карту (рантайм)`);
+  return {};
+}
+
 async function loadAll(): Promise<EntityMediaMap> {
   const client = getSupabaseServerClient(); // anon-чтение (политика public select)
-  if (!client) return {};
+  if (!client) return onMediaFailure("немає клієнта Supabase");
   const db = client as unknown as SupabaseClient;
 
   const { data, error } = await db
@@ -34,7 +59,7 @@ async function loadAll(): Promise<EntityMediaMap> {
     .select("*")
     .order("sort", { ascending: true });
 
-  if (error || !data) return {};
+  if (error || !data) return onMediaFailure(`запит до entity_media не вдався: ${error?.message ?? "порожня відповідь"}`);
 
   const map: EntityMediaMap = {};
   for (const r of data as Row[]) {

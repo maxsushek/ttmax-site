@@ -176,7 +176,10 @@ export async function generateMetadata({
     pathname: "/" + segments.join("/"),
     title,
     description,
-    index: route.index && !content?.noindex && !hiddenProduct,
+    // ⚠️ currentProducts тут уже відфільтровано по isHidden (див. вище). Умова
+    // «є що показати» мусить збігатися з такою самою в sitemap.ts, інакше GSC
+    // отримає суперечливий сигнал: URL подано в карті, а сторінка каже noindex.
+    index: route.index && !content?.noindex && !hiddenProduct && currentProducts.length > 0,
     image: ogImage,
     ogDescription,
   });
