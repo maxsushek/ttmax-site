@@ -11,6 +11,7 @@ import { getRelatedPosts } from "@/data/blog";
 import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
 import { RacketPickerQuiz } from "@/components/content/RacketPickerQuiz";
 import { TableSpaceQuiz } from "@/components/content/TableSpaceQuiz";
+import { RubberPoll } from "@/components/content/RubberPoll";
 import { ArticleCover } from "@/components/content/ArticleCover";
 
 const UI = {
@@ -351,6 +352,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
         {post.interactive === "playStyle" && <PlayStyleQuiz locale={locale} />}
         {post.interactive === "racketPicker" && <RacketPickerQuiz locale={locale} />}
         {post.interactive === "tableSpace" && <TableSpaceQuiz locale={locale} />}
+        {post.interactive === "rubberPoll" && <RubberPoll locale={locale} poll="rubber-2026" />}
 
         {post.faq && post.faq.length > 0 && (
           <section className="mt-10">

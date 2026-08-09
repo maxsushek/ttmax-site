@@ -79,8 +79,12 @@ export type BlogPost = {
   relatedProducts?: BlogLink[];
   /** Слаги інших статей для блоку «Читайте також» (стаття → стаття). */
   relatedPosts?: string[];
-  /** Інтерактивний блок для залучення. playStyle — квіз стилю; racketPicker — підбір ракетки за рівнем; tableSpace — підбір столу під простір. */
-  interactive?: "playStyle" | "racketPicker" | "tableSpace";
+  /**
+   * Інтерактивний блок для залучення. playStyle — квіз стилю; racketPicker — підбір
+   * ракетки за рівнем; tableSpace — підбір столу під простір; rubberPoll — опитування
+   * «чим граєте ви» з живими результатами (єдиний із них зберігає дані в БД).
+   */
+  interactive?: "playStyle" | "racketPicker" | "tableSpace" | "rubberPoll";
   /** true → не рендериться на проді й не потрапляє в sitemap/список. */
   draft?: boolean;
 };
@@ -1492,6 +1496,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05", ru: "Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
     ],
     relatedPosts: ["naykrashchi-nakladki-butterfly", "yak-vybraty-raketku"],
+    interactive: "rubberPoll",
   },
 };
 
