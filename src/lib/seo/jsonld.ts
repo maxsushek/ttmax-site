@@ -248,6 +248,17 @@ export function productJsonLd(opts: {
         }
       : {};
 
+  // ⚠️ Без offers / review / aggregateRating вузол Product НЕ дає права на розширений
+  // сніпет узагалі — Google вимагає хоча б одне з трьох. Тобто для товару без ціни
+  // («Ціна за запитом») ми віддавали розмітку, якою пошуковик скористатись не може,
+  // і отримували за неї попередження «Missing field offers» у Search Console.
+  // Порожній вузол не приносить нічого, а шум у звіті ховає справжні проблеми.
+  // Зʼявиться ціна — розмітка повернеться сама.
+  const hasOffer =
+    (typeof price === "number" && price > 0) ||
+    (typeof lowPrice === "number" && typeof highPrice === "number");
+  if (!hasOffer) return null;
+
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
