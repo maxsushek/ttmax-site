@@ -5,6 +5,7 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { R, type ExpertEntry } from "@/data/catalog/expert";
+import { getProductBySlug } from "@/data/catalog";
 import { getAuthor } from "@/data/authors";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 
@@ -93,6 +94,23 @@ export function ExpertSections({
     // Жорсткість у характеристиках у градусах (32–44°); шкала 0–10 → ділимо на 5.
     if (label.ua === R.hard.ua && typeof specs?.hardnessDeg === "number") return specs.hardnessDeg / 5;
     return null;
+  };
+  /**
+   * Те саме для ТАБЛИЦІ ПОРІВНЯННЯ ЛІНІЙКИ — інакше на одній сторінці лишалось три
+   * різні числа про одне: характеристики 76, оцінка експерта 7.6 і таблиця 9.4.
+   *
+   * Рядок таблиці знає slug, тож беремо швидкість/обертання/жорсткість із того самого
+   * джерела, що й картка того товару. Якщо у товару порожні specs (так у ВСІХ основ —
+   * у них дані живуть в `base`, а не в `specs`), лишаємо значення з expert.ts: там
+   * конкурувати нема з чим, бо на сторінці основи немає таблиці зі швидкістю.
+   */
+  const rowValues = (row: { slug: string; speed: number; spin: number; hardness?: number }) => {
+    const sp = getProductBySlug(row.slug)?.specs;
+    return {
+      speed: typeof sp?.speed === "number" ? sp.speed / 10 : row.speed,
+      spin: typeof sp?.spin === "number" ? sp.spin / 10 : row.spin,
+      hardness: typeof sp?.hardnessDeg === "number" ? sp.hardnessDeg : row.hardness,
+    };
   };
   // Назва серії для заголовка таблиці порівняння (Dignics / Tenergy / …) — з даних, не захардкоджено.
   const series = entry.comparison?.[0]?.model.split(" ")[0] ?? "";
@@ -236,6 +254,7 @@ export function ExpertSections({
               <tbody>
                 {entry.comparison.map((row) => {
                   const cur = row.slug === currentSlug;
+                  const v = rowValues(row);
                   return (
                     <tr key={row.slug} className={`border-b border-border-subtle ${cur ? "bg-accent/[0.08]" : ""}`}>
                       <td className={`py-3 pr-3 font-semibold ${cur ? "text-accent" : "text-white/90"}`}>
@@ -250,19 +269,19 @@ export function ExpertSections({
                         data-label={cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}
                         className="px-2 py-3 text-center tabular-nums text-white/75"
                       >
-                        {row.speed}
+                        {v.speed}
                       </td>
                       <td
                         data-label={cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}
                         className="px-2 py-3 text-center tabular-nums text-white/75"
                       >
-                        {row.spin}
+                        {v.spin}
                       </td>
                       <td
                         data-label={cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}
                         className="px-2 py-3 text-center tabular-nums text-white/75"
                       >
-                        {row.hardnessText ?? (row.hardness != null ? `${row.hardness}°` : "—")}
+                        {row.hardnessText ?? (v.hardness != null ? `${v.hardness}°` : "—")}
                       </td>
                       <td data-label={L("Кому", "Кому")} className="py-3 pl-2 text-white/65">
                         {row.fit[locale]}
