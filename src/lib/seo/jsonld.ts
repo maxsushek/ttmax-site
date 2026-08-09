@@ -188,6 +188,15 @@ export function productJsonLd(opts: {
   offerCount?: number;
   /** YYYY-MM-DD; автообчислюється на стороні виклику (вручну не задається). */
   priceValidUntil?: string;
+  /**
+   * YYYY-MM-DD — з якого числа діє поточна ціна.
+   *
+   * ⚠️ Пара до priceValidUntil, і Google просить саме її: без validFrom строк дії ціни
+   * закритий лише з одного боку («діє до», але невідомо з якого числа). Джерело дати —
+   * product_overrides.updated_at, якщо ціну перекрито з адмінки, інакше
+   * PRICE_LIST_EFFECTIVE_DATE. Вигадувати дату НЕ можна: це заявлений строк дії ціни.
+   */
+  priceValidFrom?: string;
   /** Напр. "UAH". */
   currency?: string;
   inStock?: boolean;
@@ -215,6 +224,7 @@ export function productJsonLd(opts: {
     highPrice,
     offerCount,
     priceValidUntil,
+    priceValidFrom,
     currency = "UAH",
     inStock,
     shippingFees,
@@ -267,6 +277,7 @@ export function productJsonLd(opts: {
       priceCurrency: currency,
       availability,
       itemCondition,
+      ...(priceValidFrom ? { validFrom: priceValidFrom } : {}),
       ...(priceValidUntil ? { priceValidUntil } : {}),
       ...offerExtras,
     };
@@ -278,6 +289,7 @@ export function productJsonLd(opts: {
       priceCurrency: currency,
       availability,
       itemCondition,
+      ...(priceValidFrom ? { validFrom: priceValidFrom } : {}),
       ...(priceValidUntil ? { priceValidUntil } : {}),
       ...offerExtras,
     };

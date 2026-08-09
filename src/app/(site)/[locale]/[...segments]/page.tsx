@@ -16,6 +16,7 @@ import {
   getProductsByCategory,
   getProductsBySeries,
   isInStock,
+  PRICE_LIST_EFFECTIVE_DATE,
 } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
@@ -349,6 +350,19 @@ export default async function CatalogPage({
             highPrice,
             offerCount: eroute.product.variants.length,
             priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+            // ⚠️ Дата НЕ вигадується. Якщо ціну перекрито з адмінки — беремо точну
+            // дату зміни рядка в product_overrides; інакше дату прайсу з коду.
+            // Перевіряємо і варіант-рівень, і товар-рівень — той самий порядок
+            // пріоритету, що й у applyOverrides, інакше дата розійдеться з ціною.
+            priceValidFrom:
+              overrides[eroute.product.slug]?.updatedAt ??
+              eroute.product.variants
+                .map(
+                  (v) =>
+                    overrides[`${eroute.product.slug}__${v.thickness}__${v.color}`]?.updatedAt,
+                )
+                .find(Boolean) ??
+              PRICE_LIST_EFFECTIVE_DATE,
             shippingFees,
           });
         })()

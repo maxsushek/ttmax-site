@@ -138,3 +138,16 @@ export const getVariant = (
   color: Color,
 ): CatalogVariant | undefined =>
   product.variants.find((v) => v.thickness === thickness && v.color === color);
+
+/**
+ * Дата, з якої діють ціни каталогу, YYYY-MM-DD → йде в `validFrom` розмітки Offer.
+ *
+ * ⚠️ ОНОВЛЮВАТИ РАЗОМ ІЗ ПРАЙСОМ. Google читає `validFrom` як «з якого числа діє ця
+ * ціна», і разом із `priceValidUntil` це заявлений строк дії. Забути її тут — значить
+ * сказати пошуковику, що ціна не мінялась із зазначеної дати, хоча вона вже інша.
+ *
+ * Поточне значення — дата останньої зміни цін у даних каталогу (округлення
+ * екіпірування до гривні, `git log` по gear.ts). Для товарів, у яких ціна перекрита
+ * через адмінку, береться точніша дата з `product_overrides.updated_at`.
+ */
+export const PRICE_LIST_EFFECTIVE_DATE = "2026-08-06";

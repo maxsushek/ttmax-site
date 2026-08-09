@@ -39,13 +39,27 @@ type Row = {
  * віддати її без свіжих картинок, ніж 500.
  */
 function onMediaFailure(reason: string): EntityMediaMap {
-  if (process.env.NEXT_PHASE === "phase-production-build") {
+  const isBuild = process.env.NEXT_PHASE === "phase-production-build";
+  // ⚠️ Падаємо лише на СПРАВЖНЬОМУ деплої (Vercel виставляє VERCEL=1), а не на
+  // будь-якій продакшн-збірці. Перша версія цієї перевірки була ширшою й зламала
+  // локальні збірки для перевірки розмітки — а це інструмент, яким я користуюсь
+  // постійно. Захист має закривати шлях у прод, а не роботу.
+  if (isBuild && process.env.VERCEL === "1") {
     throw new Error(
       `[media] ${reason}. Збірка зупинена: без entity_media сайт зібрався б без фото ` +
         `і з порожніми категоріями. Перевір SUPABASE env у Vercel.`,
     );
   }
-  console.error(`[media] ${reason} — віддаю порожню карту (рантайм)`);
+  if (isBuild) {
+    console.warn(
+      `\n⚠️  [media] ${reason}.\n` +
+        `   ЛОКАЛЬНА ЗБІРКА БЕЗ ФОТО: товари odyag/myachi сховаються, категорії\n` +
+        `   зберуться порожніми, Product-розмітка піде без image. Не робити з цього\n` +
+        `   артефакту висновків про прод — там дані інші.\n`,
+    );
+  } else {
+    console.error(`[media] ${reason} — віддаю порожню карту (рантайм)`);
+  }
   return {};
 }
 

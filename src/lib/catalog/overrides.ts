@@ -9,7 +9,15 @@ import type { CatalogProduct } from "@/types/catalog";
 
 export const PRODUCT_OVERRIDES_TAG = "product-overrides";
 
-export type Override = { price?: number; inStock?: boolean };
+export type Override = {
+  price?: number;
+  inStock?: boolean;
+  /**
+   * Дата останньої зміни рядка, YYYY-MM-DD. Потрібна для `validFrom` у розмітці Offer:
+   * Google хоче знати, З ЯКОГО ЧИСЛА діє поточна ціна. Тут дата точна, бо БД її пише сама.
+   */
+  updatedAt?: string;
+};
 export type OverridesMap = Record<string, Override>;
 
 async function loadOverrides(): Promise<OverridesMap> {
@@ -18,7 +26,9 @@ async function loadOverrides(): Promise<OverridesMap> {
   if (!client) return {};
   const db = client as unknown as SupabaseClient;
 
-  const { data, error } = await db.from("product_overrides").select("key, price, in_stock");
+  const { data, error } = await db
+    .from("product_overrides")
+    .select("key, price, in_stock, updated_at");
   if (error || !data) return {};
 
   const map: OverridesMap = {};
@@ -26,10 +36,13 @@ async function loadOverrides(): Promise<OverridesMap> {
     key: string;
     price: number | string | null;
     in_stock: boolean | null;
+    updated_at: string | null;
   }[]) {
     map[row.key] = {
       price: row.price == null ? undefined : Number(row.price),
       inStock: typeof row.in_stock === "boolean" ? row.in_stock : undefined,
+      // Тільки дата, без часу: у розмітці потрібен саме день.
+      updatedAt: row.updated_at ? row.updated_at.slice(0, 10) : undefined,
     };
   }
   return map;
