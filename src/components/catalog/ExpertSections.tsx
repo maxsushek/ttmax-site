@@ -4,7 +4,7 @@
 // mobile-first, високий контраст тексту на темному тлі (читабельність/WCAG).
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
-import type { ExpertEntry } from "@/data/catalog/expert";
+import { R, type ExpertEntry } from "@/data/catalog/expert";
 import { getAuthor } from "@/data/authors";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 
@@ -58,12 +58,42 @@ export function ExpertSections({
   entry,
   locale,
   currentSlug,
+  specs,
 }: {
   entry: ExpertEntry;
   locale: Locale;
   currentSlug: string;
+  /** Характеристики товару — ЄДИНЕ джерело для швидкості/обертання/жорсткості. */
+  specs?: { speed?: number; spin?: number; hardnessDeg?: number };
 }) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+
+  /**
+   * ⚠️ ШВИДКІСТЬ, ОБЕРТАННЯ І ЖОРСТКІСТЬ БЕРЕМО З ХАРАКТЕРИСТИК ТОВАРУ, а не з expert.ts.
+   *
+   * Було дві незалежні шкали, і обидві бачив покупець на ОДНІЙ сторінці: у «Характеристиках»
+   * Tenergy 05 мав обертання 76, а нижче в «Оцінці експерта» — 9.4 з підписом «на основі
+   * офіційних характеристик Butterfly». 76 і 94 не можуть бути однією офіційною цифрою.
+   * Розходились 33 моделі з 36, місцями на 84 пункти (aibiss: 11 проти 95).
+   *
+   * Гірше за розбіжність те, що оцінка підписана імʼям живого тренера (КМС) — тобто
+   * суперечність била саме по тому сигналу довіри, заради якого підпис і додавали.
+   *
+   * Тепер число одне й розійтись не може. Контроль і вимогливість до техніки лишаються
+   * з expert.ts: у характеристиках їх немає, це справжня оцінка людини — і саме вона
+   * тепер і є внеском експерта, а не переписані іншим шрифтом ті самі цифри.
+   */
+  // ⚠️ Звіряємо по ТЕКСТУ українського підпису, а не по посиланню на обʼєкт.
+  // Частина записів expert.ts написана руками через спільні константи R.*, а частина
+  // прийшла з JSON з інлайновими підписами — для других `label === R.speed` завжди false.
+  // Саме на цьому Zyre 03 лишився зі старим обертанням 9.5 замість 10.0 із характеристик.
+  const fromSpecs = (label: { ua: string }): number | null => {
+    if (label.ua === R.speed.ua && typeof specs?.speed === "number") return specs.speed / 10;
+    if (label.ua === R.spin.ua && typeof specs?.spin === "number") return specs.spin / 10;
+    // Жорсткість у характеристиках у градусах (32–44°); шкала 0–10 → ділимо на 5.
+    if (label.ua === R.hard.ua && typeof specs?.hardnessDeg === "number") return specs.hardnessDeg / 5;
+    return null;
+  };
   // Назва серії для заголовка таблиці порівняння (Dignics / Tenergy / …) — з даних, не захардкоджено.
   const series = entry.comparison?.[0]?.model.split(" ")[0] ?? "";
   const cc = entry.comparisonCols; // кастомні підписи колонок (для основ: швидк./жорстк./клас)
@@ -119,7 +149,8 @@ export function ExpertSections({
         </div>
         <div className="mt-5 max-w-xl space-y-3.5">
           {entry.ratings.map((r) => {
-            const pct = Math.max(6, Math.min(100, r.value * 10));
+            const value = fromSpecs(r.label) ?? r.value;
+            const pct = Math.max(6, Math.min(100, value * 10));
             return (
               <div key={r.label[locale]} className="flex items-center gap-3">
                 <span className="w-[42%] shrink-0 font-body text-[13px] text-white/70 sm:w-[34%] sm:text-sm">
@@ -132,7 +163,7 @@ export function ExpertSections({
                   />
                 </span>
                 <span className="w-9 shrink-0 text-right font-display text-sm font-bold tabular-nums text-accent">
-                  {r.value.toFixed(1)}
+                  {value.toFixed(1)}
                 </span>
               </div>
             );
@@ -140,8 +171,8 @@ export function ExpertSections({
         </div>
         <p className="mt-3 font-body text-[11px] leading-relaxed text-ink-muted">
           {L(
-            "Шкала 0–10. На основі офіційних характеристик Butterfly.",
-            "Шкала 0–10. На основе официальных характеристик Butterfly.",
+            "Шкала 0–10. Швидкість, обертання і жорсткість — з характеристик Butterfly; контроль і вимогливість до техніки — оцінка тренера.",
+            "Шкала 0–10. Скорость, вращение и жёсткость — из характеристик Butterfly; контроль и требовательность к технике — оценка тренера.",
           )}
         </p>
       </section>

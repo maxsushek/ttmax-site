@@ -1174,7 +1174,12 @@ function RubberView({
       content={content}
       extra={
         expertEntry ? (
-          <ExpertSections entry={expertEntry} locale={locale} currentSlug={product.slug} />
+          <ExpertSections
+            entry={expertEntry}
+            locale={locale}
+            currentSlug={product.slug}
+            specs={product.specs}
+          />
         ) : null
       }
     >
@@ -1359,7 +1364,12 @@ function BaseView({
       content={content}
       extra={
         expertEntry ? (
-          <ExpertSections entry={expertEntry} locale={locale} currentSlug={product.slug} />
+          <ExpertSections
+            entry={expertEntry}
+            locale={locale}
+            currentSlug={product.slug}
+            specs={product.specs}
+          />
         ) : null
       }
     >
