@@ -370,6 +370,38 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
           </section>
         )}
 
+        {post.sources && post.sources.length > 0 && (
+          <section className="mt-10">
+            <h2 className="mb-3 font-display text-lg font-bold uppercase tracking-wide text-ink">
+              {locale === "ua" ? "Джерела" : "Источники"}
+            </h2>
+            <ol className="space-y-2">
+              {post.sources.map((src, i) => (
+                <li key={i} className="flex gap-2.5 font-body text-[13px] leading-relaxed">
+                  <span className="shrink-0 tabular-nums text-ink-dim">{i + 1}.</span>
+                  <span>
+                    <a
+                      href={src.url}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      className="text-accent hover:underline"
+                    >
+                      {src.label[locale]} ↗
+                    </a>
+                    <span className="ml-2 text-ink-dim">
+                      {src.kind === "official"
+                        ? locale === "ua" ? "офіційне" : "официальное"
+                        : src.kind === "forum"
+                          ? locale === "ua" ? "форум" : "форум"
+                          : locale === "ua" ? "огляд" : "обзор"}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
         {post.officialSource && (
           <p className="mt-8 rounded-xl border border-border-subtle bg-bg-raised px-4 py-3 font-body text-[14px] text-ink-muted">
             <a
