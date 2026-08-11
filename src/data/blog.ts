@@ -1514,13 +1514,6 @@ const POSTS: Record<string, BlogPost> = {
         },
       },
     ],
-    officialSource: {
-      label: {
-        ua: "Офіційна сторінка Butterfly Zyre 03",
-        ru: "Официальная страница Butterfly Zyre 03",
-      },
-      url: "https://www.butterfly-global.com/en/product/zyre03/",
-    },
     sources: [
       { label: { ua: "Butterfly: хронологія технологій, 1997–2025", ru: "Butterfly: хронология технологий, 1997–2025" }, url: "https://www.butterfly-global.com/en/about/history/", kind: "official" },
       { label: { ua: "Butterfly: технології накладок — High Tension, Spring Sponge, Ricosheet", ru: "Butterfly: технологии накладок — High Tension, Spring Sponge, Ricosheet" }, url: "https://www.butterfly-global.com/en/products/rubber/technology.html", kind: "official" },
