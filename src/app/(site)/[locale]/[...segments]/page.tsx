@@ -364,6 +364,7 @@ export default async function CatalogPage({
                 .find(Boolean) ??
               PRICE_LIST_EFFECTIVE_DATE,
             shippingFees,
+            freeShippingThreshold: deliveryContact.freeShippingThreshold,
           });
         })()
       : null;

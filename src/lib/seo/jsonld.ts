@@ -44,6 +44,14 @@ export function organizationJsonLd(contact?: ContactInfo) {
         availableLanguage: ["uk", "ru"],
       },
     ],
+    /**
+     * ⚠️ Політика повернення ДУБЛЮЄТЬСЯ тут свідомо, хоча вона є і в кожному Offer.
+     * Документація Google прямо радить давати ГЛОБАЛЬНУ політику магазину саме через
+     * Organization, а не лише на рівні товару: «We recommend you provide a global return
+     * policy for your business under Organization markup instead». Умови ті самі —
+     * повертає той самий returnPolicyNode(), тож розійтися вони не можуть.
+     */
+    hasMerchantReturnPolicy: returnPolicyNode(),
   };
 }
 
@@ -155,6 +163,8 @@ function shippingDetailsNode(shippingFee: number, currency: string) {
  * описано на /returns. Якщо власник вирішить возити повернення за свій рахунок — міняти
  * тут на FreeReturn і ОДНОЧАСНО правити текст на /returns, інакше розмітка почне брехати.
  */
+// Використовується і в Offer, і в Organization (див. hasMerchantReturnPolicy вище).
+// Оголошення функції піднімається, тож виклик вище за визначення тут коректний.
 function returnPolicyNode() {
   return {
     "@type": "MerchantReturnPolicy",
@@ -201,6 +211,17 @@ export function productJsonLd(opts: {
   currency?: string;
   inStock?: boolean;
   /**
+   * Поріг безкоштовної доставки, грн (site_settings → delivery_free_threshold).
+   *
+   * ⚠️ Якщо ціна товару досягає порогу, доставка ДІЙСНО безкоштовна, і тоді в розмітку
+   * йде єдина ставка 0 — саме так Google очікує «безкоштовну доставку» (freeShippingThreshold
+   * у специфікації немає, потрібен shippingRate зі значенням 0).
+   *
+   * ⚠️ Для дешевших товарів нуль писати НЕ МОЖНА: доставка платна, і це була б неправда
+   * у сніпеті — рівно той клас тверджень, який ми з сайту прибирали.
+   */
+  freeShippingThreshold?: number;
+  /**
    * Тарифи доставки, грн — по одному на перевізника (Нова Пошта, Укрпошта). Беруться
    * з site_settings через resolveContact, тобто ті самі числа, що покупець бачить на
    * чекауті. Якщо не передати, блоки shippingDetails і hasMerchantReturnPolicy не
@@ -228,13 +249,24 @@ export function productJsonLd(opts: {
     currency = "UAH",
     inStock,
     shippingFees,
+    freeShippingThreshold,
   } = opts;
 
   // Доставку й повернення чіпляємо лише коли тарифи реально відомі.
   // Дублікати прибираємо: якщо перевізники беруть однаково, двічі писати те саме нема сенсу.
-  const rates = Array.from(
-    new Set((shippingFees ?? []).filter((f) => typeof f === "number" && f >= 0)),
-  ).sort((a, b) => a - b);
+  // Ціна, за якою вирішуємо, чи дотягує товар до безкоштовної доставки: для діапазону
+  // беремо НИЖНЮ межу — інакше дешевший варіант отримав би обіцянку не за своєю ціною.
+  const cheapest = typeof price === "number" ? price : lowPrice;
+  const shipsFree =
+    typeof freeShippingThreshold === "number" &&
+    typeof cheapest === "number" &&
+    cheapest >= freeShippingThreshold;
+
+  const rates = shipsFree
+    ? [0]
+    : Array.from(
+        new Set((shippingFees ?? []).filter((f) => typeof f === "number" && f >= 0)),
+      ).sort((a, b) => a - b);
   const offerExtras =
     rates.length > 0
       ? {
