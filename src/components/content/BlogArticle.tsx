@@ -288,6 +288,26 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   </span>
                 </Link>
               )}
+              {s.image && (
+                <figure className="mt-5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={s.image.src[locale]}
+                    alt={s.image.alt[locale]}
+                    width={1200}
+                    height={780}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full rounded-2xl border border-border-subtle"
+                  />
+                  {s.image.caption && (
+                    <figcaption className="mt-2 font-body text-[13px] leading-relaxed text-ink-muted">
+                      {s.image.caption[locale]}
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+
               {s.table && (
                 <div className="mt-4 overflow-x-auto">
                   <table className="rtable w-full border-collapse font-body text-[14px]">
