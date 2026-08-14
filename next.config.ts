@@ -102,6 +102,22 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
+    /**
+     * ⚠️ ОПТИМІЗАТОР VERCEL ВИМКНЕНО СВІДОМО. Не вмикати назад.
+     *
+     * Усі картинки сайту йдуть через Cloudinary з `f_auto,q_auto` — тобто вже
+     * віддаються в AVIF/WebP і вже стиснуті. Прогін їх ЩЕ РАЗ через /_next/image —
+     * подвійна обробка того самого файлу: якості не додає, а квоту Vercel їсть.
+     *
+     * Чим це закінчилось: квота вичерпалась, і оптимізатор почав віддавати
+     * 402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED. Причому непомітно — сторінки,
+     * відкриті раніше, працювали з кешу, а будь-яка НЕ відкрита раніше показувала
+     * биті картинки. Знайшлось на картках одягу лише тому, що їх ніхто не відкривав.
+     *
+     * unoptimized змушує next/image рендерити звичайний <img> з вихідним src:
+     * розмітка й пропси (fill, sizes, className) лишаються, посередник зникає.
+     */
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
