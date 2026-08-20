@@ -1640,6 +1640,7 @@ const POSTS: Record<string, BlogPost> = {
     datePublished: "2026-08-19",
     dateModified: "2026-08-19",
     author: "artem-maksymchuk",
+    coverSrc: "/blog/tenergy-dignics-cover.svg",
     heroAlt: {
       ua: "Порівняння накладок Butterfly Tenergy і Dignics",
       ru: "Сравнение накладок Butterfly Tenergy и Dignics",
@@ -1830,6 +1831,7 @@ const POSTS: Record<string, BlogPost> = {
     datePublished: "2026-08-19",
     dateModified: "2026-08-19",
     author: "artem-maksymchuk",
+    coverSrc: "/blog/novachok-cover.svg",
     heroAlt: {
       ua: "Накладки Butterfly для початківців",
       ru: "Накладки Butterfly для начинающих",
@@ -2017,6 +2019,7 @@ const POSTS: Record<string, BlogPost> = {
     datePublished: "2026-08-19",
     dateModified: "2026-08-19",
     author: "artem-maksymchuk",
+    coverSrc: "/blog/tovshchyna-cover.svg",
     heroAlt: {
       ua: "Товщина губки накладки для настільного тенісу",
       ru: "Толщина губки накладки для настольного тенниса",
@@ -2194,6 +2197,7 @@ const POSTS: Record<string, BlogPost> = {
     datePublished: "2026-08-19",
     dateModified: "2026-08-19",
     author: "artem-maksymchuk",
+    coverSrc: "/blog/lypki-tenzorni-cover.svg",
     heroAlt: {
       ua: "Липкі й тензорні накладки Butterfly — порівняння",
       ru: "Липкие и тензорные накладки Butterfly — сравнение",
