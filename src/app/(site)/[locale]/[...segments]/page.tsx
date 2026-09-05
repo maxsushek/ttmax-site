@@ -1291,7 +1291,11 @@ function GearView({
           model={product.model}
           cartCategory={cartCategory}
           accentColor="#E8FF47"
-          sizes={gear.sizes}
+          {...(gear.sizes?.length
+            ? { options: gear.sizes, optionKind: "size" as const }
+            : gear.colorways?.length
+              ? { options: gear.colorways.map((c) => c[locale]), optionKind: "color" as const }
+              : {})}
           priceFrom={product.priceFrom}
           inStock={product.inStock}
           phone={siteConfig.phone}

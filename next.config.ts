@@ -123,6 +123,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
+  /**
+   * 301 зі знятих URL. Тримати список тут, а не «забути» — прибраний товар,
+   * на який десь лишилось посилання, інакше віддає 404 і губить вагу.
+   *
+   * BG Case: спершу завели чотирма окремими товарами (по товару на колір), потім
+   * звели в одну картку з вибором кольору. Три слаги встигли побувати на проді.
+   */
+  async redirects() {
+    const gone = ["salatovyi", "blakytnyi", "fioletovyi"];
+    return gone.flatMap((c) =>
+      (["ua", "ru"] as const).map((l) => ({
+        source: `/${l}/butterfly/chehly/chokhol-butterfly-bg-case-${c}`,
+        destination: `/${l}/butterfly/chehly/chokhol-butterfly-bg-case`,
+        permanent: true,
+      })),
+    );
+  },
   async headers() {
     return [
       {

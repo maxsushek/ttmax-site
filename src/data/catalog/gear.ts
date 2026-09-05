@@ -6963,15 +6963,15 @@ export const catalogGear: CatalogProduct[] = [
     brandSlug: "butterfly",
     seriesSlug: "",
     categorySlug: "chehly",
-    model: "Чохол BG Case (золотий)",
+    model: "Чохол BG Case",
     kind: "gear",
     name: {
-      ua: "Чохол Butterfly BG Case (золотий)",
-      ru: "Чехол Butterfly BG Case (золотой)",
+      ua: "Чохол Butterfly BG Case",
+      ru: "Чехол Butterfly BG Case",
     },
     title: {
-      ua: "Чохол Butterfly BG Case золотий - купити в Україні | TTMAX",
-      ru: "Чехол Butterfly BG Case золотой - купить в Украине | TTMAX",
+      ua: "Чохол Butterfly BG Case - купити в Україні | TTMAX",
+      ru: "Чехол Butterfly BG Case - купить в Украине | TTMAX",
     },
     level: "amateur",
     specs: {},
@@ -6983,106 +6983,15 @@ export const catalogGear: CatalogProduct[] = [
     inStock: true,
     gear: {
       gearType: "case",
+      // Одна картка на всі розфарбування: обраний колір іде в cartId і в назву
+      // позиції замовлення, тож менеджер бачить у заявці конкретний варіант.
+      colorways: [
+        { ua: "золотий", ru: "золотой" },
+        { ua: "салатовий", ru: "салатовый" },
+        { ua: "блакитний", ru: "голубой" },
+        { ua: "фіолетовий", ru: "фиолетовый" },
+      ],
     },
-    // ⚠️ seriesSlug порожній, тому crossSell ЯВНИЙ: інакше фолбек підтягне
-    // випадкове спорядження, і покупець не побачить інших кольорів моделі.
-    crossSell: ["chokhol-butterfly-bg-case-salatovyi", "chokhol-butterfly-bg-case-blakytnyi", "chokhol-butterfly-bg-case-fioletovyi", "chokhol-butterfly-easy-case"],
-    priceFrom: 2300,
-  },
-  {
-    id: "chokhol-butterfly-bg-case-salatovyi",
-    slug: "chokhol-butterfly-bg-case-salatovyi",
-    brandSlug: "butterfly",
-    seriesSlug: "",
-    categorySlug: "chehly",
-    model: "Чохол BG Case (салатовий)",
-    kind: "gear",
-    name: {
-      ua: "Чохол Butterfly BG Case (салатовий)",
-      ru: "Чехол Butterfly BG Case (салатовый)",
-    },
-    title: {
-      ua: "Чохол Butterfly BG Case салатовий - купити в Україні | TTMAX",
-      ru: "Чехол Butterfly BG Case салатовый - купить в Украине | TTMAX",
-    },
-    level: "amateur",
-    specs: {},
-    thicknessOptions: [],
-    colors: [],
-    variants: [],
-    images: [],
-    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
-    inStock: true,
-    gear: {
-      gearType: "case",
-    },
-    // ⚠️ seriesSlug порожній, тому crossSell ЯВНИЙ: інакше фолбек підтягне
-    // випадкове спорядження, і покупець не побачить інших кольорів моделі.
-    crossSell: ["chokhol-butterfly-bg-case", "chokhol-butterfly-bg-case-blakytnyi", "chokhol-butterfly-bg-case-fioletovyi", "chokhol-butterfly-easy-case"],
-    priceFrom: 2300,
-  },
-  {
-    id: "chokhol-butterfly-bg-case-blakytnyi",
-    slug: "chokhol-butterfly-bg-case-blakytnyi",
-    brandSlug: "butterfly",
-    seriesSlug: "",
-    categorySlug: "chehly",
-    model: "Чохол BG Case (блакитний)",
-    kind: "gear",
-    name: {
-      ua: "Чохол Butterfly BG Case (блакитний)",
-      ru: "Чехол Butterfly BG Case (голубой)",
-    },
-    title: {
-      ua: "Чохол Butterfly BG Case блакитний - купити в Україні | TTMAX",
-      ru: "Чехол Butterfly BG Case голубой - купить в Украине | TTMAX",
-    },
-    level: "amateur",
-    specs: {},
-    thicknessOptions: [],
-    colors: [],
-    variants: [],
-    images: [],
-    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
-    inStock: true,
-    gear: {
-      gearType: "case",
-    },
-    // ⚠️ seriesSlug порожній, тому crossSell ЯВНИЙ: інакше фолбек підтягне
-    // випадкове спорядження, і покупець не побачить інших кольорів моделі.
-    crossSell: ["chokhol-butterfly-bg-case", "chokhol-butterfly-bg-case-salatovyi", "chokhol-butterfly-bg-case-fioletovyi", "chokhol-butterfly-easy-case"],
-    priceFrom: 2300,
-  },
-  {
-    id: "chokhol-butterfly-bg-case-fioletovyi",
-    slug: "chokhol-butterfly-bg-case-fioletovyi",
-    brandSlug: "butterfly",
-    seriesSlug: "",
-    categorySlug: "chehly",
-    model: "Чохол BG Case (фіолетовий)",
-    kind: "gear",
-    name: {
-      ua: "Чохол Butterfly BG Case (фіолетовий)",
-      ru: "Чехол Butterfly BG Case (фиолетовый)",
-    },
-    title: {
-      ua: "Чохол Butterfly BG Case фіолетовий - купити в Україні | TTMAX",
-      ru: "Чехол Butterfly BG Case фиолетовый - купить в Украине | TTMAX",
-    },
-    level: "amateur",
-    specs: {},
-    thicknessOptions: [],
-    colors: [],
-    variants: [],
-    images: [],
-    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
-    inStock: true,
-    gear: {
-      gearType: "case",
-    },
-    // ⚠️ seriesSlug порожній, тому crossSell ЯВНИЙ: інакше фолбек підтягне
-    // випадкове спорядження, і покупець не побачить інших кольорів моделі.
-    crossSell: ["chokhol-butterfly-bg-case", "chokhol-butterfly-bg-case-salatovyi", "chokhol-butterfly-bg-case-blakytnyi", "chokhol-butterfly-easy-case"],
     priceFrom: 2300,
   },
   {

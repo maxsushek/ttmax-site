@@ -17,8 +17,17 @@ type Props = {
   model: string;
   cartCategory: ProductCategory;
   accentColor: string;
-  /** Розміри (одяг/взуття). Якщо порожньо — без вибору розміру. */
-  sizes?: string[];
+  /**
+   * Значення єдиного селектора: розміри (одяг/взуття) АБО кольори (інвентар,
+   * що йде в кількох розфарбуваннях). Порожньо — селектора немає.
+   */
+  options?: string[];
+  /**
+   * Що саме обирають. Впливає лише на підпис і на текст позиції в замовленні —
+   * механіка одна: обране значення входить у cartId і в назву позиції, тож
+   * менеджер бачить у заявці конкретний варіант, а не просто модель.
+   */
+  optionKind?: "size" | "color";
   priceFrom?: number;
   inStock?: boolean;
   phone: string;
@@ -28,6 +37,7 @@ type Props = {
 const LABELS = {
   ua: {
     size: "Розмір",
+    color: "Колір",
     addToCart: "В кошик",
     added: "Додано в кошик",
     request: "Запитати ціну",
@@ -35,9 +45,11 @@ const LABELS = {
     priceOnRequest: "Ціна за запитом",
     inStock: "В наявності",
     pickSize: "Оберіть розмір",
+    pickColor: "Оберіть колір",
   },
   ru: {
     size: "Размер",
+    color: "Цвет",
     addToCart: "В корзину",
     added: "Добавлено в корзину",
     request: "Узнать цену",
@@ -45,6 +57,7 @@ const LABELS = {
     priceOnRequest: "Цена по запросу",
     inStock: "В наличии",
     pickSize: "Выберите размер",
+    pickColor: "Выберите цвет",
   },
 } as const;
 
@@ -55,7 +68,8 @@ export function GearPurchasePanel({
   model,
   cartCategory,
   accentColor,
-  sizes,
+  options,
+  optionKind = "size",
   priceFrom,
   inStock,
   phone,
@@ -63,8 +77,9 @@ export function GearPurchasePanel({
 }: Props) {
   const t = LABELS[locale];
   const cart = useCart();
-  const hasSizes = Array.isArray(sizes) && sizes.length > 0;
-  const [size, setSize] = useState<string>(hasSizes ? (sizes as string[])[0]! : "");
+  const hasOptions = Array.isArray(options) && options.length > 0;
+  const optLabel = optionKind === "color" ? t.color : t.size;
+  const [opt, setOpt] = useState<string>(hasOptions ? (options as string[])[0]! : "");
 
   // GA4 view_item
   useEffect(() => {
@@ -82,7 +97,7 @@ export function GearPurchasePanel({
 
   const hasPrice = typeof priceFrom === "number" && priceFrom > 0;
   const soldOut = inStock === false;
-  const cartId = hasSizes ? `${slug}__${size}` : slug;
+  const cartId = hasOptions ? `${slug}__${opt}` : slug;
   const justAdded = cart.justAddedId === cartId;
 
   const addToCart = () => {
@@ -90,7 +105,7 @@ export function GearPurchasePanel({
     cart.add({
       id: cartId,
       brand: brandLabel,
-      model: hasSizes ? `${model} · ${t.size} ${size}` : model,
+      model: hasOptions ? `${model} · ${optLabel} ${opt}` : model,
       category: cartCategory,
       price: priceFrom as number,
       accentColor,
@@ -115,19 +130,19 @@ export function GearPurchasePanel({
         )}
       </div>
 
-      {hasSizes && (
+      {hasOptions && (
         <div className="mt-7">
           <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
-            {t.size}
+            {optLabel}
           </div>
           <div className="flex flex-wrap gap-2">
-            {(sizes as string[]).map((s) => {
-              const active = s === size;
+            {(options as string[]).map((s) => {
+              const active = s === opt;
               return (
                 <button
                   key={s}
                   type="button"
-                  onClick={() => setSize(s)}
+                  onClick={() => setOpt(s)}
                   aria-pressed={active}
                   className={cn(
                     "min-w-[44px] rounded-xl border px-3.5 py-2 text-center font-display text-sm font-bold transition-all",
@@ -194,7 +209,11 @@ export function GearPurchasePanel({
             </a>
           </>
         )}
-        {hasSizes && <p className="text-center text-[11px] text-ink-dim">{t.pickSize}</p>}
+        {hasOptions && (
+          <p className="text-center text-[11px] text-ink-dim">
+            {optionKind === "color" ? t.pickColor : t.pickSize}
+          </p>
+        )}
       </div>
     </div>
   );
