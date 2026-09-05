@@ -6979,7 +6979,7 @@ export const catalogGear: CatalogProduct[] = [
     colors: [],
     variants: [],
     images: [],
-    priority: 3,
+    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
     inStock: true,
     gear: {
       gearType: "case",
@@ -7011,7 +7011,7 @@ export const catalogGear: CatalogProduct[] = [
     colors: [],
     variants: [],
     images: [],
-    priority: 3,
+    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
     inStock: true,
     gear: {
       gearType: "case",
@@ -7043,7 +7043,7 @@ export const catalogGear: CatalogProduct[] = [
     colors: [],
     variants: [],
     images: [],
-    priority: 3,
+    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
     inStock: true,
     gear: {
       gearType: "case",
@@ -7075,7 +7075,7 @@ export const catalogGear: CatalogProduct[] = [
     colors: [],
     variants: [],
     images: [],
-    priority: 3,
+    priority: 1, // новинка — тримаємо першою в лістингу (сортування: priority → наявність → ціна)
     inStock: true,
     gear: {
       gearType: "case",
