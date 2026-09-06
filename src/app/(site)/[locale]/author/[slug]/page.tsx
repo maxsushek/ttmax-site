@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { isLocale, locales, type Locale } from "@/i18n/config";
+import { clampDescription } from "@/lib/seo/meta-length";
 import { buildBlogMetadata } from "@/lib/seo/blog-metadata";
 import { AuthorProfile } from "@/components/content/AuthorProfile";
 import { allAuthors, authors } from "@/data/authors";
@@ -22,12 +23,16 @@ export async function generateMetadata({
   if (!isLocale(l)) return {};
   const author = resolveAuthor(slug);
   if (!author) return { robots: { index: false, follow: false } };
-  const title = `${author.name[l]} — ${author.jobTitle[l]} | TTMAX`;
+  // ⚠️ Без « | TTMAX»: із суфіксом виходило 66 символів, Google ріже на 60.
+  // Ім'я автора саме по собі впізнаване, бренд у сніпеті дає домен.
+  const title = `${author.name[l]} — ${author.jobTitle[l]}`;
   return buildBlogMetadata({
     locale: l,
     pathname: `/author/${author.slug}`,
     title,
-    description: author.description[l],
+    // ⚠️ Біографія на сторінці лишається повною — ріжемо ЛИШЕ meta:
+    // повний текст давав 232 символи, Google обрізав його на півслові.
+    description: clampDescription(author.description[l]),
   });
 }
 

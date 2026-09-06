@@ -36,8 +36,8 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
     slug: "about",
     title: { ua: "Про нас", ru: "О нас" },
     metaTitle: {
-      ua: "Про нас — магазин настільного тенісу Butterfly у Харкові | Butterfly UA",
-      ru: "О нас — магазин настольного тенниса Butterfly в Харькове | Butterfly UA",
+      ua: "Про нас — магазин Butterfly у Харкові | Butterfly UA",
+      ru: "О нас — магазин Butterfly в Харькове | Butterfly UA",
     },
     metaDescription: {
       ua: `${BRAND} (${OPERATOR}) — магазин інвентарю для настільного тенісу в Харкові. Оригінал Butterfly, експертний підбір, доставка по всій Україні з 2026 року.`,

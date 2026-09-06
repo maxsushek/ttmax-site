@@ -91,8 +91,8 @@ export const catalogCategories: CatalogCategory[] = [
       ru: "Основание для ракетки — купить в Украине | Butterfly | TTMAX",
     },
     metaDescription: {
-      ua: "Основи Butterfly для настільного тенісу: Viscaria, Timo Boll ALC, Apolonia ZLC, Korbel. ALC/ZLC і дерево, різні класи швидкості. Гарантія, доставка по Україні.",
-      ru: "Основания Butterfly для настольного тенниса: Viscaria, Timo Boll ALC, Apolonia ZLC, Korbel. ALC/ZLC и дерево, разные классы скорости. Гарантия, доставка по Украине.",
+      ua: "Основи Butterfly: Viscaria, Timo Boll ALC, Apolonia ZLC, Korbel. ALC/ZLC і дерево, різні класи швидкості.",
+      ru: "Основания Butterfly: Viscaria, Timo Boll ALC, Apolonia ZLC, Korbel. ALC/ZLC и дерево, разные классы скорости.",
     },
     intro: {
       ua: "Основи Butterfly під різні стилі: ALC, ZLC, дерево. Від універсальних до атакувальних моделей профі-рівня.",

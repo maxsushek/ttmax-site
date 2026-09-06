@@ -6,8 +6,8 @@ export const catalogBrands: CatalogBrand[] = [
     slug: "butterfly",
     name: "Butterfly",
     title: {
-      ua: "Butterfly — накладки, основи, ракетки | офіційний інвентар в Україні",
-      ru: "Butterfly — накладки, основания, ракетки | официальный инвентарь в Украине",
+      ua: "Butterfly — накладки, основи, ракетки в Україні | TTMAX",
+      ru: "Butterfly — накладки, основания, ракетки в Украине | TTMAX",
     },
     description: {
       ua: "Butterfly в Україні: накладки (Tenergy, Dignics, Zyre, Rozena), основи, готові ракетки, аксесуари. Офіційний товар, гарантія, доставка.",

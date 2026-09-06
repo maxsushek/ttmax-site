@@ -26,8 +26,8 @@ export const catalogTables: CatalogProduct[] = [
       ru: "Теннисный стол Butterfly Timo Boll Space Saver 22 ITTF | TTMAX",
     },
     description: {
-      ua: "Професійний тенісний стіл Butterfly Timo Boll Space Saver 22: стільниця 22 мм, схвалення ITTF, складна конструкція на колесах, сітка в комплекті. Ціна за запитом.",
-      ru: "Профессиональный теннисный стол Butterfly Timo Boll Space Saver 22: столешница 22 мм, одобрение ITTF, складная конструкция на колёсах, сетка в комплекте. Цена по запросу.",
+      ua: "Тенісний стіл Butterfly Timo Boll Space Saver 22: стільниця 22 мм, схвалення ITTF, складна конструкція на колесах, сітка в комплекті.",
+      ru: "Теннисный стол Butterfly Timo Boll Space Saver 22: столешница 22 мм, одобрение ITTF, складная конструкция на колёсах, сетка в комплекте.",
     },
     level: "pro",
     specs: {},
