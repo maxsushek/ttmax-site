@@ -109,8 +109,12 @@ async function loadAll(): Promise<EntityMediaMap> {
  * v5: + Freechack PRO 37 ml.
  * v6: + усі 3 сітки (Elite Clip, Europa, National League) — категорія закрита повністю.
  * v7: + 2 мʼячі (Training Ball 40+ 6шт, S40+ 3* ITTF 3шт).
+ * v8: + 4 фото чохла BG Case (усі розфарбування в одній галереї). Власник залив їх
+ *     сам через веб-інтерфейс Cloudinary, тому public_id лежать у КОРЕНІ й мають
+ *     випадкові імена (2026-09-05_21.44.52_c7ao1p тощо), а не ttmax/product/<slug>/NN.
+ *     Для рендера це байдуже — cldUrl бере public_id як є.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v7"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v8"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
