@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useGallerySync } from "./GallerySync";
 import { useCart } from "@/components/cart/CartProvider";
 import { trackEvent } from "@/lib/analytics/events";
 import { CURRENCY } from "@/lib/analytics/ecommerce";
@@ -79,7 +80,28 @@ export function GearPurchasePanel({
   const cart = useCart();
   const hasOptions = Array.isArray(options) && options.length > 0;
   const optLabel = optionKind === "color" ? t.color : t.size;
-  const [opt, setOpt] = useState<string>(hasOptions ? (options as string[])[0]! : "");
+
+  /**
+   * Для кольорів індекс спільний із галереєю: вибрав «салатовий» — побачив
+   * салатовий кадр, гортнув галерею — перемкнувся чип. Для розмірів синхронізувати
+   * нічого (фото не залежить від розміру), тож там завжди локальний стан.
+   *
+   * ⚠️ КОНТРАКТ ДАНИХ: кольорові кадри йдуть ПЕРШИМИ й у тому самому порядку, що
+   * gear.colorways. Перевірити просто — в entity_media.alt кожного кадру записано
+   * назву кольору. Якщо додати кадр-деталізацію, ставити його ПІСЛЯ кольорових.
+   */
+  const sync = useGallerySync();
+  const syncColors = optionKind === "color" && sync !== null && hasOptions;
+  const [localIdx, setLocalIdx] = useState(0);
+  const optCount = hasOptions ? (options as string[]).length : 0;
+  const idx = syncColors
+    ? Math.min((sync as { index: number }).index, optCount - 1)
+    : Math.min(localIdx, Math.max(optCount - 1, 0));
+  const opt = hasOptions ? ((options as string[])[idx] ?? (options as string[])[0]!) : "";
+  const pick = (i: number) => {
+    if (syncColors) sync.setIndex(i);
+    else setLocalIdx(i);
+  };
 
   // GA4 view_item
   useEffect(() => {
@@ -136,13 +158,13 @@ export function GearPurchasePanel({
             {optLabel}
           </div>
           <div className="flex flex-wrap gap-2">
-            {(options as string[]).map((s) => {
-              const active = s === opt;
+            {(options as string[]).map((s, i) => {
+              const active = i === idx;
               return (
                 <button
                   key={s}
                   type="button"
-                  onClick={() => setOpt(s)}
+                  onClick={() => pick(i)}
                   aria-pressed={active}
                   className={cn(
                     "min-w-[44px] rounded-xl border px-3.5 py-2 text-center font-display text-sm font-bold transition-all",

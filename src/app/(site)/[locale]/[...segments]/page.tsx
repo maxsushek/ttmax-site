@@ -47,6 +47,7 @@ import { getSettings } from "@/lib/settings/get";
 import { resolveContact } from "@/lib/contact/get";
 import { filterVisible, isHidden, isWithdrawn } from "@/lib/catalog/hidden";
 import { ProductGallery, type GalleryImage } from "@/components/catalog/ProductGallery";
+import { GallerySyncProvider } from "@/components/catalog/GallerySync";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
 import { CategorySeo } from "@/components/catalog/CategorySeo";
 import { RichContent } from "@/components/catalog/RichContent";
@@ -143,7 +144,7 @@ export async function generateMetadata({
   // og/twitter не ріжуться на 155 → віддаємо повний вердикт (лише коли опис не з CMS).
   const ogDescription =
     !content?.metaDescription && route.kind === "product"
-      ? (expandTokens(productOgDescription(route.product, l) ?? "", tctx) || undefined)
+      ? expandTokens(productOgDescription(route.product, l) ?? "", tctx) || undefined
       : undefined;
 
   // Авто-числа в СГЕНЕРОВАНИХ (неавторських) описах категорій/серій — щоб нові сторінки
@@ -166,7 +167,8 @@ export async function generateMetadata({
   const ogSource = (currentProducts ?? []).find((p) => pickPrimary(media, "product", p.slug));
   const ogPrimary = ogSource ? pickPrimary(media, "product", ogSource.slug) : null;
   const ogImage = ogPrimary
-    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "pad", bg: "auto", wm: true }) || undefined
+    ? cldUrl(ogPrimary.publicId, { w: 1200, h: 630, crop: "pad", bg: "auto", wm: true }) ||
+      undefined
     : undefined;
 
   // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
@@ -328,8 +330,7 @@ export default async function CatalogPage({
           const productImages = pickAll(media, "product", eroute.product.slug)
             .map((m) => cldUrl(m.publicId, { w: 900, h: 900, wm: true }))
             .filter(Boolean);
-          const productSku =
-            eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
+          const productSku = eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
             // Найдовший з трьох описів: вердикт + офіційні характеристики Butterfly.
@@ -358,8 +359,7 @@ export default async function CatalogPage({
               overrides[eroute.product.slug]?.updatedAt ??
               eroute.product.variants
                 .map(
-                  (v) =>
-                    overrides[`${eroute.product.slug}__${v.thickness}__${v.color}`]?.updatedAt,
+                  (v) => overrides[`${eroute.product.slug}__${v.thickness}__${v.color}`]?.updatedAt,
                 )
                 .find(Boolean) ??
               PRICE_LIST_EFFECTIVE_DATE,
@@ -372,8 +372,7 @@ export default async function CatalogPage({
   // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
   // schema й допомагає AI/Copilot розбирати Q&A. Тримаємо за прапором; розмітка = видимий FAQ.
   const EMIT_FAQ_JSONLD = true;
-  const expertFaq =
-    eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
+  const expertFaq = eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
   const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
   const groupFaq = eroute.kind === "surfaceGroup" ? eroute.group.faq : undefined;
   const richFaqSlug =
@@ -480,7 +479,9 @@ function ListingView({
     const sa = isInStock(a) ? 0 : 1;
     const sb = isInStock(b) ? 0 : 1;
     if (sa !== sb) return sa - sb;
-    return (getMinPrice(a) ?? Number.MAX_SAFE_INTEGER) - (getMinPrice(b) ?? Number.MAX_SAFE_INTEGER);
+    return (
+      (getMinPrice(a) ?? Number.MAX_SAFE_INTEGER) - (getMinPrice(b) ?? Number.MAX_SAFE_INTEGER)
+    );
   });
 
   const routeIntro =
@@ -513,7 +514,8 @@ function ListingView({
         <div className="rounded-2xl border border-dashed border-border-strong bg-white/[0.015] p-10 text-center">
           <p className="font-body text-sm text-ink-muted">{catalogUi.emptySoon[locale]}</p>
         </div>
-      ) : (route.kind === "category" || route.kind === "brandCategory") && route.category.slug === "rakety" ? (
+      ) : (route.kind === "category" || route.kind === "brandCategory") &&
+        route.category.slug === "rakety" ? (
         <RacketGrid products={route.products} locale={locale} media={media} />
       ) : (
         // ⚠️ ФОЛБЕК МУСИТЬ БУТИ СПРАВЖНЬОЮ СІТКОЮ. Не міняти на скелет — перевірено двічі.
@@ -553,11 +555,16 @@ function ListingView({
               : null;
         const rich = richSlug ? getRichContent(richSlug) : undefined;
         if (rich) return <RichContent content={rich} locale={locale} />;
-        const cmsRich = !!(content && ((content.body?.length ?? 0) > 0 || (content.faq?.length ?? 0) > 0));
+        const cmsRich = !!(
+          content &&
+          ((content.body?.length ?? 0) > 0 || (content.faq?.length ?? 0) > 0)
+        );
         return (
           <>
             <ContentSections block={content} locale={locale} />
-            {route.kind === "surfaceGroup" && <SurfaceGroupSeo group={route.group} locale={locale} />}
+            {route.kind === "surfaceGroup" && (
+              <SurfaceGroupSeo group={route.group} locale={locale} />
+            )}
             {route.kind === "category" && (
               <CategorySeo category={route.category} locale={locale} linksOnly={cmsRich} />
             )}
@@ -687,7 +694,11 @@ function buildCardVMs(
       // p.model — ОДИН нелокалізований рядок, і в 99 товарів екіпірування він
       // українською («Кросівки Sunika»), тож лістинг /ru показував укр. іменник.
       // Беремо локалізовану назву й прибираємо бренд — він і так виводиться окремим рядком.
-      model: p.name[locale].replace(brandName, "").replace(/\s{2,}/g, " ").trim() || p.model,
+      model:
+        p.name[locale]
+          .replace(brandName, "")
+          .replace(/\s{2,}/g, " ")
+          .trim() || p.model,
       name: p.name[locale],
       secondary: cardSecondary(p, locale),
       priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
@@ -909,7 +920,10 @@ function ProductCard({
         {/* Локалізована назва без бренда (бренд — рядком вище). product.model
             нелокалізований і в 99 товарів екіпірування українською, тож на /ru
             SSR-фолбек Suspense віддавав укр. іменник просто в HTML. */}
-        {product.name[locale].replace(brandName, "").replace(/\s{2,}/g, " ").trim() || product.model}
+        {product.name[locale]
+          .replace(brandName, "")
+          .replace(/\s{2,}/g, " ")
+          .trim() || product.model}
       </div>
       {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
 
@@ -981,13 +995,7 @@ function ProductView({
  * Для сторінок-точок входу з пошуку: текст під запит + передача ваги на money-сторінки.
  * Повертає null, якщо блоків немає, — решта карток не змінюється.
  */
-function SeoBlocks({
-  blocks,
-  locale,
-}: {
-  blocks: CatalogProduct["seoBlocks"];
-  locale: Locale;
-}) {
+function SeoBlocks({ blocks, locale }: { blocks: CatalogProduct["seoBlocks"]; locale: Locale }) {
   if (!blocks || blocks.length === 0) return null;
   return (
     <section className="mt-12 flex flex-col gap-8">
@@ -1023,11 +1031,7 @@ function SeoBlocks({
 }
 
 /** Собирает все фото товара из entity_media: url (900×900) + thumb (160×160). */
-function buildGallery(
-  media: EntityMediaMap,
-  slug: string,
-  fallbackAlt: string,
-): GalleryImage[] {
+function buildGallery(media: EntityMediaMap, slug: string, fallbackAlt: string): GalleryImage[] {
   // ⚠️ alt беремо з КОДУ (локалізована назва), а не з entity_media.alt: у БД це ОДНА
   // нелокалізована колонка, заповнена українською (690 з 1057 рядків), тож на /ru вона
   // давала укр. alt на кожному фото. Локалізована назва коректна для обох мов.
@@ -1064,47 +1068,55 @@ function ProductShell({
   extra?: React.ReactNode;
 }) {
   return (
-    <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-      <div className="min-w-0">
-        {images.length > 0 ? (
-          <ProductGallery images={images} />
-        ) : (
-          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
-            <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
-            <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
-              {visualLabel}
-            </span>
+    /**
+     * GallerySyncProvider тримає спільний «активний кадр» для галереї й селектора
+     * кольору — вони тут сусіди по сітці, але різні клієнтські компоненти.
+     * Клієнтський провайдер із серверними children безпечний: діти приходять уже
+     * відрендереними пропсами й серверними лишаються.
+     */
+    <GallerySyncProvider>
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+        <div className="min-w-0">
+          {images.length > 0 ? (
+            <ProductGallery images={images} />
+          ) : (
+            <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[28px] border border-border-strong bg-white/[0.03]">
+              <div className="pointer-events-none absolute right-[18%] top-0 h-full w-px bg-[linear-gradient(to_bottom,transparent,rgba(232,255,71,0.12)_45%,transparent)] [transform:skewX(-18deg)]" />
+              <span className="font-display text-sm font-bold uppercase tracking-[0.3em] text-ink-ghost">
+                {visualLabel}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
+            {brandName}
+          </div>
+          <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
+            {h1}
+          </h1>
+          <ContentIntro text={content?.intro} />
+          {children}
+        </div>
+
+        {extra && <div className="min-w-0 lg:col-span-2">{extra}</div>}
+
+        {related.length > 0 && (
+          <div className="lg:col-span-2">
+            <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
+              {catalogUi.related[locale]}
+            </h2>
+            <ProductGrid products={related} locale={locale} media={media} />
+          </div>
+        )}
+        {content && (
+          <div className="lg:col-span-2">
+            <ContentSections block={content} locale={locale} />
           </div>
         )}
       </div>
-
-      <div>
-        <div className="font-display text-xs font-bold uppercase tracking-[0.16em] text-ink-muted">
-          {brandName}
-        </div>
-        <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
-          {h1}
-        </h1>
-        <ContentIntro text={content?.intro} />
-        {children}
-      </div>
-
-      {extra && <div className="min-w-0 lg:col-span-2">{extra}</div>}
-
-      {related.length > 0 && (
-        <div className="lg:col-span-2">
-          <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
-            {catalogUi.related[locale]}
-          </h2>
-          <ProductGrid products={related} locale={locale} media={media} />
-        </div>
-      )}
-      {content && (
-        <div className="lg:col-span-2">
-          <ContentSections block={content} locale={locale} />
-        </div>
-      )}
-    </div>
+    </GallerySyncProvider>
   );
 }
 
@@ -1250,7 +1262,10 @@ function GearView({
       value: `${gear.tableThicknessMm} мм`,
     });
   if (gear.sizeUnfolded)
-    rows.push({ label: L("Розміри (розкладений)", "Размеры (разложенный)"), value: gear.sizeUnfolded });
+    rows.push({
+      label: L("Розміри (розкладений)", "Размеры (разложенный)"),
+      value: gear.sizeUnfolded,
+    });
   if (gear.sizeFolded)
     rows.push({ label: L("У складеному вигляді", "В сложенном виде"), value: gear.sizeFolded });
   if (gear.weightKg) rows.push({ label: L("Вага", "Вес"), value: `${gear.weightKg} кг` });
@@ -1426,7 +1441,12 @@ function ComboTriptych({
     const url = m ? cldUrl(m.publicId, { ...dim, crop: "fit" }) : null;
     return url ? (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={url} alt={p?.model ?? ""} loading="lazy" className="h-full w-full object-contain p-1" />
+      <img
+        src={url}
+        alt={p?.model ?? ""}
+        loading="lazy"
+        className="h-full w-full object-contain p-1"
+      />
     ) : (
       <span className="px-1 text-center font-display text-[9px] font-bold uppercase leading-tight tracking-[0.1em] text-ink-ghost">
         {p?.model ?? "Butterfly"}
@@ -1435,7 +1455,7 @@ function ComboTriptych({
   };
   return (
     <div className="flex gap-2 rounded-2xl border border-border-strong bg-white/[0.02] p-2">
-      <div className="relative flex aspect-[3/4] basis-[56%] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
+      <div className="relative flex aspect-[3/4] shrink-0 basis-[56%] items-center justify-center overflow-hidden rounded-xl bg-white/[0.03]">
         {tile(blade, true)}
       </div>
       <div className="flex grow flex-col gap-2">
@@ -1651,11 +1671,12 @@ function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Local
     .map((s) => s.trim())
     .filter(Boolean);
   const faq = group.faq ?? [];
-  const sibling = surfaceGroups.find(
-    (g) => g.slug !== group.slug && g.category === group.category,
-  );
+  const sibling = surfaceGroups.find((g) => g.slug !== group.slug && g.category === group.category);
   const links: { label: string; href: string }[] = [
-    { label: L("Усі основи Butterfly", "Все основания Butterfly"), href: `/${locale}/${group.category}` },
+    {
+      label: L("Усі основи Butterfly", "Все основания Butterfly"),
+      href: `/${locale}/${group.category}`,
+    },
   ];
   if (sibling) {
     links.push({
@@ -1663,7 +1684,10 @@ function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Local
       href: `/${locale}/${sibling.category}/${sibling.slug}`,
     });
   }
-  links.push({ label: L("Готові ракетки у зборі", "Готовые ракетки в сборе"), href: `/${locale}/rakety` });
+  links.push({
+    label: L("Готові ракетки у зборі", "Готовые ракетки в сборе"),
+    href: `/${locale}/rakety`,
+  });
   links.push({ label: L("Накладки Butterfly", "Накладки Butterfly"), href: `/${locale}/nakladki` });
 
   return (

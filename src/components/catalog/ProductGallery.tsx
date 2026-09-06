@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useGallerySync } from "./GallerySync";
 
 export type GalleryImage = {
   url: string;
@@ -10,15 +11,25 @@ export type GalleryImage = {
 };
 
 export function ProductGallery({ images }: { images: GalleryImage[] }) {
-  const [active, setActive] = useState(0);
+  // Якщо картка обгорнута GallerySyncProvider (товар із розфарбуваннями) — активний
+  // кадр живе там, спільно з селектором кольору. Інакше — власний стан, як було.
+  const sync = useGallerySync();
+  const [localActive, setLocalActive] = useState(0);
+  const active = sync ? sync.index : localActive;
+  const setActive = sync ? sync.setIndex : setLocalActive;
   const touchStartX = useRef<number | null>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
 
   const count = images.length;
 
+  // ⚠️ Рахуємо від `active`, а не через setState(prev => …): у режимі синхронізації
+  // сеттер приходить ззовні й функціональної форми не приймає.
   const go = useCallback(
-    (next: number) => setActive((prev) => (count ? (next + count) % count : prev)),
-    [count],
+    (next: number) => {
+      if (!count) return;
+      setActive(((next % count) + count) % count);
+    },
+    [count, setActive],
   );
 
   useEffect(() => {
