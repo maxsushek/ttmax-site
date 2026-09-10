@@ -2,10 +2,10 @@ import type { Messages } from "./types";
 
 export const ua: Messages = {
   meta: {
-    title: "Настільний теніс — ракетки, накладки, столи | Butterfly UA",
+    title: "Магазин настільного тенісу Butterfly — накладки, основи",
     titleTemplate: "%s | Butterfly UA",
     description:
-      "Butterfly Україна (by TTMAX): Tenergy, Dignics, Rozena, Viscaria, основи, накладки, м'ячі, одяг. Тільки оригінал. Доставка по всій Україні.",
+      "TTMAX — магазин інвентарю для настільного тенісу: накладки Tenergy й Dignics, основи Viscaria та Timo Boll, ракетки, столи. Оригінал Butterfly, доставка.",
     keywords: [
       "Butterfly",
       "Butterfly Україна",
