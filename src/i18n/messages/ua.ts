@@ -5,7 +5,7 @@ export const ua: Messages = {
     title: "Магазин настільного тенісу Butterfly — накладки, основи",
     titleTemplate: "%s | Butterfly UA",
     description:
-      "TTMAX — магазин інвентарю для настільного тенісу: накладки Tenergy й Dignics, основи Viscaria та Timo Boll, ракетки, столи. Оригінал Butterfly, доставка.",
+      "TTMAX — магазин інвентарю для настільного тенісу: накладки Tenergy й Dignics, основи Viscaria та Timo Boll. ✓ Оригінал Butterfly ✓ Доставка по Україні",
     keywords: [
       "Butterfly",
       "Butterfly Україна",
