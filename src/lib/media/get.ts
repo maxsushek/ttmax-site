@@ -113,8 +113,13 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     сам через веб-інтерфейс Cloudinary, тому public_id лежать у КОРЕНІ й мають
  *     випадкові імена (2026-09-05_21.44.52_c7ao1p тощо), а не ttmax/product/<slug>/NN.
  *     Для рендера це байдуже — cldUrl бере public_id як є.
+ * v9: + 6 кадрів Omar Assar Innerforce ZLC (1000×1000, теж залиті власником, теж у корені).
+ *     Старе фото 550×550 ЛИШИЛОСЬ у галереї — це інший ракурс, а не дубль (силуети
+ *     збігаються лише на 0.84 при 0.98 у контрольному тесті «той самий кадр»), тож
+ *     видаляти його не було за що. Воно пішло в кінець сортуванням, першим став
+ *     кадр 1000 px — з нього ж беруться og:image, Product-розмітка й картка лістингу.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v8"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v9"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
