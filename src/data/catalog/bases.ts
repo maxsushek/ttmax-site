@@ -1263,7 +1263,11 @@ export const catalogBases: CatalogProduct[] = [
     "base": {
       "weight": "85–90 г",
       "fiber": "inner",
-      "thicknessMm": 5.7,
+      "thicknessMm": 6.2,
+      "sizeMm": "158×152 мм",
+      "reaction": 12.0,
+      "vibration": 10.6,
+      "madeIn": { "ua": "Японія", "ru": "Япония" },
       "bladeClass": "off-plus",
       "surface": "zlc",
       "plies": "5+2",

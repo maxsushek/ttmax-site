@@ -1365,8 +1365,18 @@ function BaseView({
   if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
   if (base.thicknessMm)
     rows.push({ label: L("Товщина", "Толщина"), value: `${base.thicknessMm.toFixed(1)} мм` });
+  if (base.sizeMm) rows.push({ label: L("Розмір лопаті", "Размер лопасти"), value: base.sizeMm });
+  // ⚠️ Числа Butterfly, а не наша оцінка: показуємо як є, з двома знаками —
+  // виробник публікує саме так (12.00, а не 12), і округлення тут виглядало б
+  // як інша характеристика.
+  if (typeof base.reaction === "number")
+    rows.push({ label: L("Реакція", "Реакция"), value: base.reaction.toFixed(2) });
+  if (typeof base.vibration === "number")
+    rows.push({ label: L("Вібрація", "Вибрация"), value: base.vibration.toFixed(2) });
   if (base.weight) rows.push({ label: L("Середня вага", "Средний вес"), value: base.weight });
   else if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
+  if (base.madeIn)
+    rows.push({ label: L("Виробництво", "Производство"), value: base.madeIn[locale] });
   rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
