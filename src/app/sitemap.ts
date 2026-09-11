@@ -19,7 +19,6 @@ import { productIndexable } from "@/lib/catalog/indexability";
 import { cldUrl } from "@/lib/cloudinary/url";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
   // Потрібна для фільтра прихованих (без фото) товарів — їх не подаємо в sitemap.
   const media = await getMediaMap();
   const entries: MetadataRoute.Sitemap = [];
@@ -134,7 +133,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       entries.push({
         url: `${siteConfig.url}/${locale}${path}`,
-        lastModified: lastMod ?? now,
+        /**
+         * ⚠️ БЕЗ ДАТИ — ЗНАЧИТЬ БЕЗ lastmod, а не `new Date()`.
+         *
+         * Раніше тут був фолбек на час рендера: 302 з 322 записів мали однаковий lastmod =
+         * момент перегенерації. Два наслідки. SEO: Google бачить, що «змінилось усе й завжди»,
+         * і перестає довіряти lastmod узагалі — зокрема й справжнім датам статей. Квота: кожна
+         * перегенерація sitemap давала НОВІ байти, тобто ISR-запис щогодини. Порожній lastmod
+         * Google приймає нормально — поле необовʼязкове.
+         */
+        ...(lastMod ? { lastModified: lastMod } : {}),
         changeFrequency: freq,
         priority,
         alternates: { languages },

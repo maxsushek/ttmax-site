@@ -71,7 +71,12 @@ async function loadAll(): Promise<EntityMediaMap> {
   const { data, error } = await db
     .from("entity_media")
     .select("*")
-    .order("sort", { ascending: true });
+    .order("sort", { ascending: true })
+    // Другий ключ — щоб порядок був ОДНОЗНАЧНИЙ. При однакових sort (фото, вставлені
+    // SQL-ом зі значенням за замовчуванням) Postgres вільний віддавати рядки як завгодно:
+    // галерея переставлялась би, а «головне» фото (перше) могло б мінятись саме по собі —
+    // разом з og:image, картинкою в лістингу й байтами сторінки (зайвий ISR-запис).
+    .order("id", { ascending: true });
 
   if (error || !data) return onMediaFailure(`запит до entity_media не вдався: ${error?.message ?? "порожня відповідь"}`);
 
