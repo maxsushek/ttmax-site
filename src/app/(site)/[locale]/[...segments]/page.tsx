@@ -747,6 +747,10 @@ function buildCardVMs(
         const old = promoOldPrice(p.slug, price);
         return old ? formatPrice(old) : null;
       })(),
+      saveLabel: (() => {
+        const old = promoOldPrice(p.slug, price);
+        return old && price !== undefined ? `−${formatPrice(old - price)}` : null;
+      })(),
       inStock: isInStock(p),
       imageUrl: img ? cldUrl(img.publicId, { w: 480, h: 480 }) : null,
       facets: {
@@ -896,6 +900,8 @@ function ProductCard({
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
   const secondary = cardSecondary(product, locale);
   const img = pickPrimary(media, "product", product.slug);
+  // Розмітка акції навмисно та сама, що в CatalogFilters: ця картка — його SSR-фолбек.
+  const oldPrice = promoOldPrice(product.slug, price);
 
   return (
     <Link
@@ -951,6 +957,11 @@ function ProductCard({
             {brandName}
           </span>
         )}
+        {oldPrice && price !== undefined && (
+          <span className="absolute left-2 top-2 rounded-md bg-danger px-2 py-0.5 font-display text-xs font-black text-white">
+            −{formatPrice(oldPrice - price)}
+          </span>
+        )}
         <div
           className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
           aria-hidden
@@ -971,10 +982,17 @@ function ProductCard({
       </div>
       {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
 
-      <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
-        {price !== undefined
-          ? `${catalogUi.from[locale]} ${formatPrice(price)}`
-          : catalogUi.priceOnRequest[locale]}
+      <div className="mt-auto flex flex-wrap items-baseline gap-x-2 pt-3">
+        <span className="font-display text-sm font-black text-accent">
+          {price !== undefined
+            ? `${catalogUi.from[locale]} ${formatPrice(price)}`
+            : catalogUi.priceOnRequest[locale]}
+        </span>
+        {oldPrice && (
+          <span className="font-body text-xs font-semibold text-ink-muted line-through decoration-danger decoration-2">
+            {formatPrice(oldPrice)}
+          </span>
+        )}
       </div>
     </Link>
   );

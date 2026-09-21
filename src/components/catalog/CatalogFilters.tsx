@@ -21,6 +21,8 @@ export type CatalogCardVM = {
   priceValue: number | null;
   /** Закреслена стара ціна при акції ("4 100 грн") або null. */
   oldPriceLabel: string | null;
+  /** Бейдж знижки на фото ("−150 грн") або null. */
+  saveLabel: string | null;
   inStock: boolean;
   /** Готовый URL картинки (Cloudinary) или null → плейсхолдер. */
   imageUrl: string | null;
@@ -352,6 +354,11 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                       {item.brandName}
                     </span>
                   )}
+                  {item.saveLabel && (
+                    <span className="absolute left-2 top-2 rounded-md bg-danger px-2 py-0.5 font-display text-xs font-black text-white">
+                      {item.saveLabel}
+                    </span>
+                  )}
                   <div
                     className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-accent/60 transition-transform duration-[400ms] group-hover:scale-x-100"
                     aria-hidden
@@ -373,7 +380,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                     {item.priceLabel ?? t.priceOnRequest}
                   </span>
                   {item.oldPriceLabel && (
-                    <span className="font-body text-xs text-ink-dim line-through">
+                    <span className="font-body text-xs font-semibold text-ink-muted line-through decoration-danger decoration-2">
                       {item.oldPriceLabel}
                     </span>
                   )}

@@ -46,6 +46,7 @@ const LABELS = {
     priceOnRequest: "Ціна за запитом",
     inStock: "В наявності",
     pickNote: "Оберіть колір і товщину",
+    sale: "Акція",
   },
   ru: {
     color: "Цвет",
@@ -57,6 +58,7 @@ const LABELS = {
     priceOnRequest: "Цена по запросу",
     inStock: "В наличии",
     pickNote: "Выберите цвет и толщину",
+    sale: "Акция",
   },
 } as const;
 
@@ -141,16 +143,9 @@ export function ProductPurchasePanel({
           {hasPrice ? formatPrice(selected!.price as number) : t.priceOnRequest}
         </span>
         {showOld && (
-          <>
-            <span className="mb-1 font-body text-lg text-ink-dim line-through">
-              {formatPrice(oldPrice as number)}
-            </span>
-            {/* Знижка сумою, а не відсотком: 150 з 4 100 — це 3,66%, і круглий «−4%»
-                на ціннику був би неправдою. */}
-            <span className="mb-1.5 rounded-md bg-accent px-2 py-0.5 font-display text-xs font-black text-bg-base">
-              −{formatPrice(save)}
-            </span>
-          </>
+          <span className="mb-0.5 font-body text-xl font-semibold text-ink-muted line-through decoration-danger decoration-2">
+            {formatPrice(oldPrice as number)}
+          </span>
         )}
         {hasPrice && !soldOut && (
           <span className="mb-1 inline-flex items-center gap-1.5 text-xs font-semibold text-success">
@@ -159,6 +154,15 @@ export function ProductPurchasePanel({
           </span>
         )}
       </div>
+
+      {/* Акція — окремим яскравим рядком: сірий закреслений текст поруч із ціною
+          покупці не помічали (скрін власника з мобільного). Знижка сумою, а не
+          відсотком: 150 з 4 100 — це 3,66%, круглий «−4%» був би неправдою. */}
+      {showOld && (
+        <div className="mt-3 inline-flex items-center gap-2 rounded-xl bg-danger px-3 py-1.5 font-display text-sm font-black uppercase tracking-[0.06em] text-white">
+          {t.sale} −{formatPrice(save)}
+        </div>
+      )}
 
       {/* Колір */}
       <div className="mt-7">

@@ -7,6 +7,7 @@ import { cldUrl } from "@/lib/cloudinary/url";
 import { getSettings } from "@/lib/settings/get";
 import { resolveHitSlugs } from "@/lib/homepage/home";
 import { formatPrice } from "@/utils/format";
+import { promoOldPrice } from "@/data/catalog/promos";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import type { HomeOverrides } from "@/lib/homepage/home";
@@ -21,6 +22,8 @@ type HitVM = {
   category: string;
   model: string;
   price: number | undefined;
+  /** Стара ціна при акції (закреслюється) — src/data/catalog/promos.ts. */
+  oldPrice: number | undefined;
   image: string | null;
   accent: string;
 };
@@ -55,6 +58,7 @@ export async function Products({
         category: cat?.name[locale] ?? "",
         model: p.model,
         price: getMinPrice(p),
+        oldPrice: promoOldPrice(p.slug, getMinPrice(p)),
         image: img ? cldUrl(img.publicId, { w: 320, h: 320, crop: "fit" }) : null,
         accent: ACCENTS[i % ACCENTS.length] as string,
       } satisfies HitVM;
@@ -99,12 +103,20 @@ export async function Products({
                   style={{ background: `linear-gradient(90deg,${p.accent},transparent)` }}
                 />
                 <div className="relative flex h-[140px] items-center justify-center border-b border-white/[0.08] bg-white/[0.02] py-6">
-                  <span
-                    className="absolute right-3 top-3 rounded-md px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.1em] text-bg-base"
-                    style={{ backgroundColor: p.accent }}
-                  >
-                    {m.badges.hit}
-                  </span>
+                  {/* Акційний товар — замість «Хіт» яскравий бейдж знижки: на мобільному
+                      інакше акцію не було видно зовсім (скрін власника). */}
+                  {p.oldPrice && typeof p.price === "number" ? (
+                    <span className="absolute right-3 top-3 rounded-md bg-danger px-2.5 py-0.5 font-display text-[11px] font-black text-white">
+                      −{formatPrice(p.oldPrice - p.price)}
+                    </span>
+                  ) : (
+                    <span
+                      className="absolute right-3 top-3 rounded-md px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.1em] text-bg-base"
+                      style={{ backgroundColor: p.accent }}
+                    >
+                      {m.badges.hit}
+                    </span>
+                  )}
                   {p.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -149,12 +161,19 @@ export async function Products({
                     {p.model}
                   </div>
                   <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-                    <span className="font-display text-xl font-black text-accent whitespace-nowrap">
-                      {typeof p.price === "number"
-                        ? formatPrice(p.price)
-                        : locale === "ru"
-                          ? "Цена по запросу"
-                          : "Ціна за запитом"}
+                    <span className="flex flex-col">
+                      {p.oldPrice && (
+                        <span className="font-body text-xs font-semibold text-ink-muted line-through decoration-danger decoration-2">
+                          {formatPrice(p.oldPrice)}
+                        </span>
+                      )}
+                      <span className="font-display text-xl font-black text-accent whitespace-nowrap">
+                        {typeof p.price === "number"
+                          ? formatPrice(p.price)
+                          : locale === "ru"
+                            ? "Цена по запросу"
+                            : "Ціна за запитом"}
+                      </span>
                     </span>
                     <span className="font-display text-[12px] font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors group-hover:text-accent whitespace-nowrap">
                       <span className="hidden sm:inline">{m.viewProduct} </span>
