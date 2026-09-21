@@ -31,6 +31,8 @@ type Props = {
   variants: PanelVariant[];
   phone: string;
   imageUrl?: string;
+  /** Стара ціна для закреслення (акція, src/data/catalog/promos.ts). Ціна та сама для всіх варіантів. */
+  oldPrice?: number;
 };
 
 const LABELS = {
@@ -80,6 +82,7 @@ export function ProductPurchasePanel({
   variants,
   phone,
   imageUrl,
+  oldPrice,
 }: Props) {
   const t = LABELS[locale];
   const cart = useCart();
@@ -107,6 +110,9 @@ export function ProductPurchasePanel({
   const selected = variants.find((v) => v.thickness === thickness && v.color === color);
   const hasPrice = typeof selected?.price === "number" && selected.price > 0;
   const soldOut = selected?.inStock === false;
+  // Закреслюємо лише якщо стара ціна справді вища за ціну обраного варіанта.
+  const showOld = hasPrice && typeof oldPrice === "number" && oldPrice > (selected!.price as number);
+  const save = showOld ? (oldPrice as number) - (selected!.price as number) : 0;
 
   const cartId = `${slug}__${thickness}__${color}`;
   const justAdded = cart.justAddedId === cartId;
@@ -130,10 +136,22 @@ export function ProductPurchasePanel({
   return (
     <div>
       {/* Цена */}
-      <div className="flex items-end gap-3">
+      <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
         <span className="font-display text-[34px] font-black leading-none tracking-tight text-accent">
           {hasPrice ? formatPrice(selected!.price as number) : t.priceOnRequest}
         </span>
+        {showOld && (
+          <>
+            <span className="mb-1 font-body text-lg text-ink-dim line-through">
+              {formatPrice(oldPrice as number)}
+            </span>
+            {/* Знижка сумою, а не відсотком: 150 з 4 100 — це 3,66%, і круглий «−4%»
+                на ціннику був би неправдою. */}
+            <span className="mb-1.5 rounded-md bg-accent px-2 py-0.5 font-display text-xs font-black text-bg-base">
+              −{formatPrice(save)}
+            </span>
+          </>
+        )}
         {hasPrice && !soldOut && (
           <span className="mb-1 inline-flex items-center gap-1.5 text-xs font-semibold text-success">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />

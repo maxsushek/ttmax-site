@@ -19,6 +19,8 @@ export type CatalogCardVM = {
   priceLabel: string | null;
   /** Числовая цена для сортировки/фильтра (минимальная). */
   priceValue: number | null;
+  /** Закреслена стара ціна при акції ("4 100 грн") або null. */
+  oldPriceLabel: string | null;
   inStock: boolean;
   /** Готовый URL картинки (Cloudinary) или null → плейсхолдер. */
   imageUrl: string | null;
@@ -366,8 +368,15 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                   <div className="mt-1 font-body text-[11px] text-ink-dim">{item.secondary}</div>
                 )}
 
-                <div className="mt-auto pt-3 font-display text-sm font-black text-accent">
-                  {item.priceLabel ?? t.priceOnRequest}
+                <div className="mt-auto flex flex-wrap items-baseline gap-x-2 pt-3">
+                  <span className="font-display text-sm font-black text-accent">
+                    {item.priceLabel ?? t.priceOnRequest}
+                  </span>
+                  {item.oldPriceLabel && (
+                    <span className="font-body text-xs text-ink-dim line-through">
+                      {item.oldPriceLabel}
+                    </span>
+                  )}
                 </div>
               </Link>
             </li>

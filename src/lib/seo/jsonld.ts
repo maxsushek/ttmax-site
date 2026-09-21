@@ -207,6 +207,11 @@ export function productJsonLd(opts: {
    * PRICE_LIST_EFFECTIVE_DATE. Вигадувати дату НЕ можна: це заявлений строк дії ціни.
    */
   priceValidFrom?: string;
+  /**
+   * Попередня ціна при акції — Google показує її закресленою в результатах пошуку.
+   * Лише справжня попередня ціна з сайту (src/data/catalog/promos.ts), не «рекомендована».
+   */
+  strikethroughPrice?: number;
   /** Напр. "UAH". */
   currency?: string;
   inStock?: boolean;
@@ -246,6 +251,7 @@ export function productJsonLd(opts: {
     offerCount,
     priceValidUntil,
     priceValidFrom,
+    strikethroughPrice,
     currency = "UAH",
     inStock,
     shippingFees,
@@ -332,6 +338,16 @@ export function productJsonLd(opts: {
       priceCurrency: currency,
       availability,
       itemCondition,
+      ...(typeof strikethroughPrice === "number" && strikethroughPrice > price
+        ? {
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              priceType: "https://schema.org/StrikethroughPrice",
+              price: strikethroughPrice,
+              priceCurrency: currency,
+            },
+          }
+        : {}),
       ...(priceValidFrom ? { validFrom: priceValidFrom } : {}),
       ...(priceValidUntil ? { priceValidUntil } : {}),
       ...offerExtras,

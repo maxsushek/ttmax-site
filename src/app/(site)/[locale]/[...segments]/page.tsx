@@ -30,6 +30,7 @@ import type {
 } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
+import { promoOldPrice } from "@/data/catalog/promos";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
 import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
 import {
@@ -383,6 +384,7 @@ export default async function CatalogPage({
             images: productImages,
             sku: productSku,
             price: getMinPrice(eroute.product),
+            strikethroughPrice: promoOldPrice(eroute.product.slug, getMinPrice(eroute.product)),
             currency: "UAH",
             inStock: isInStock(eroute.product),
             lowPrice,
@@ -741,6 +743,10 @@ function buildCardVMs(
       secondary: cardSecondary(p, locale),
       priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
       priceValue: price ?? null,
+      oldPriceLabel: (() => {
+        const old = promoOldPrice(p.slug, price);
+        return old ? formatPrice(old) : null;
+      })(),
       inStock: isInStock(p),
       imageUrl: img ? cldUrl(img.publicId, { w: 480, h: 480 }) : null,
       facets: {
@@ -1252,6 +1258,7 @@ function RubberView({
           }))}
           phone={siteConfig.phone}
           imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+          oldPrice={promoOldPrice(product.slug, getMinPrice(product))}
         />
       </div>
 
