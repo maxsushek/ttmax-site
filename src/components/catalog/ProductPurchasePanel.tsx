@@ -46,7 +46,6 @@ const LABELS = {
     priceOnRequest: "Ціна за запитом",
     inStock: "В наявності",
     pickNote: "Оберіть колір і товщину",
-    sale: "Акція",
   },
   ru: {
     color: "Цвет",
@@ -58,7 +57,6 @@ const LABELS = {
     priceOnRequest: "Цена по запросу",
     inStock: "В наличии",
     pickNote: "Выберите цвет и толщину",
-    sale: "Акция",
   },
 } as const;
 
@@ -137,16 +135,25 @@ export function ProductPurchasePanel({
 
   return (
     <div>
-      {/* Цена */}
+      {/* Ціна.
+          Знижка — за патерном «було → стало»: стара ціна й розмір знижки дрібним
+          рядком НАД новою, нова лишається головним акцентом. Без слова «акція» і без
+          окремої плашки: пілюля «−150 грн» сама каже, що це знижка. Сумою, а не
+          відсотком: 150 з 4 100 — це 3,66%, круглий «−4%» був би неправдою. */}
+      {showOld && (
+        <div className="mb-2 flex items-center gap-2.5">
+          <span className="font-body text-base text-ink-dim line-through tabular-nums">
+            {formatPrice(oldPrice as number)}
+          </span>
+          <span className="rounded-full bg-danger/15 px-2.5 py-0.5 font-body text-xs font-bold tabular-nums text-danger ring-1 ring-inset ring-danger/30">
+            −{formatPrice(save)}
+          </span>
+        </div>
+      )}
       <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
         <span className="font-display text-[34px] font-black leading-none tracking-tight text-accent">
           {hasPrice ? formatPrice(selected!.price as number) : t.priceOnRequest}
         </span>
-        {showOld && (
-          <span className="mb-0.5 font-body text-xl font-semibold text-ink-muted line-through decoration-danger decoration-2">
-            {formatPrice(oldPrice as number)}
-          </span>
-        )}
         {hasPrice && !soldOut && (
           <span className="mb-1 inline-flex items-center gap-1.5 text-xs font-semibold text-success">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-success" />
@@ -154,15 +161,6 @@ export function ProductPurchasePanel({
           </span>
         )}
       </div>
-
-      {/* Акція — окремим яскравим рядком: сірий закреслений текст поруч із ціною
-          покупці не помічали (скрін власника з мобільного). Знижка сумою, а не
-          відсотком: 150 з 4 100 — це 3,66%, круглий «−4%» був би неправдою. */}
-      {showOld && (
-        <div className="mt-3 inline-flex items-center gap-2 rounded-xl bg-danger px-3 py-1.5 font-display text-sm font-black uppercase tracking-[0.06em] text-white">
-          {t.sale} −{formatPrice(save)}
-        </div>
-      )}
 
       {/* Колір */}
       <div className="mt-7">

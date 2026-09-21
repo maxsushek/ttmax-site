@@ -106,7 +106,7 @@ export async function Products({
                   {/* Акційний товар — замість «Хіт» яскравий бейдж знижки: на мобільному
                       інакше акцію не було видно зовсім (скрін власника). */}
                   {p.oldPrice && typeof p.price === "number" ? (
-                    <span className="absolute right-3 top-3 rounded-md bg-danger px-2.5 py-0.5 font-display text-[11px] font-black text-white">
+                    <span className="absolute right-3 top-3 rounded-md bg-danger px-2.5 py-0.5 text-[10px] font-extrabold tabular-nums tracking-[0.04em] text-white">
                       −{formatPrice(p.oldPrice - p.price)}
                     </span>
                   ) : (
@@ -163,7 +163,7 @@ export async function Products({
                   <div className="mt-auto flex items-center justify-between gap-2 pt-3">
                     <span className="flex flex-col">
                       {p.oldPrice && (
-                        <span className="font-body text-xs font-semibold text-ink-muted line-through decoration-danger decoration-2">
+                        <span className="font-body text-xs text-ink-dim line-through tabular-nums">
                           {formatPrice(p.oldPrice)}
                         </span>
                       )}

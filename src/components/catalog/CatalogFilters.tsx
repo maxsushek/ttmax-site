@@ -355,7 +355,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                     </span>
                   )}
                   {item.saveLabel && (
-                    <span className="absolute left-2 top-2 rounded-md bg-danger px-2 py-0.5 font-display text-xs font-black text-white">
+                    <span className="absolute left-2 top-2 rounded-full bg-danger px-2 py-0.5 font-body text-[11px] font-bold tabular-nums text-white shadow-sm">
                       {item.saveLabel}
                     </span>
                   )}
@@ -375,15 +375,16 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                   <div className="mt-1 font-body text-[11px] text-ink-dim">{item.secondary}</div>
                 )}
 
-                <div className="mt-auto flex flex-wrap items-baseline gap-x-2 pt-3">
-                  <span className="font-display text-sm font-black text-accent">
-                    {item.priceLabel ?? t.priceOnRequest}
-                  </span>
+                {/* «Було → стало»: стара ціна дрібно НАД новою — як на сторінці товару. */}
+                <div className="mt-auto flex flex-col pt-3">
                   {item.oldPriceLabel && (
-                    <span className="font-body text-xs font-semibold text-ink-muted line-through decoration-danger decoration-2">
+                    <span className="font-body text-xs text-ink-dim line-through tabular-nums">
                       {item.oldPriceLabel}
                     </span>
                   )}
+                  <span className="font-display text-sm font-black text-accent">
+                    {item.priceLabel ?? t.priceOnRequest}
+                  </span>
                 </div>
               </Link>
             </li>
