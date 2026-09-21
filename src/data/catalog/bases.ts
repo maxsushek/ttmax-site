@@ -1241,15 +1241,15 @@ export const catalogBases: CatalogProduct[] = [
     "brandSlug": "butterfly",
     "seriesSlug": "omar-assar",
     "categorySlug": "osnovaniya",
-    "model": "Omar Assar ZLC",
+    "model": "Omar Assar Innerforce ZLC",
     "kind": "base",
     "name": {
-      "ua": "Butterfly Omar Assar ZLC",
-      "ru": "Butterfly Omar Assar ZLC"
+      "ua": "Butterfly Omar Assar Innerforce ZLC",
+      "ru": "Butterfly Omar Assar Innerforce ZLC"
     },
     "title": {
-      "ua": "Основа Butterfly Omar Assar ZLC — купити в Україні | TTMAX",
-      "ru": "Основание Butterfly Omar Assar ZLC — купить в Украине | TTMAX"
+      "ua": "Основа Butterfly Omar Assar Innerforce ZLC — купити | TTMAX",
+      "ru": "Основание Butterfly Omar Assar Innerforce ZLC | TTMAX"
     },
     "level": "pro",
     "specs": {},
