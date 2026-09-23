@@ -323,11 +323,13 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
           ua: [
             `Телефон: ${PHONE}`,
             `E-mail: ${EMAIL}`,
+            `Графік роботи: ${siteConfig.hours.display.ua}, без вихідних.`,
             "Соцмережі (Telegram, YouTube, Facebook) — посилання у шапці та футері сайту.",
           ],
           ru: [
             `Телефон: ${PHONE}`,
             `E-mail: ${EMAIL}`,
+            `График работы: ${siteConfig.hours.display.ru}, без выходных.`,
             "Соцсети (Telegram, YouTube, Facebook) — ссылки в шапке и футере сайта.",
           ],
         },

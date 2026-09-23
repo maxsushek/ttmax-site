@@ -84,6 +84,8 @@ function company(contact: ContactInfo): string[] {
     `- Телефон: ${contact.phone}`,
     `- E-mail: ${contact.email}`,
     `- Адреса: ${a.streetAddress}, ${a.addressLocality}, ${a.addressRegion}, ${a.addressCountry}`,
+    `- Графік: ${siteConfig.hours.display[UA]}, без вихідних`,
+    `- Працює з ${siteConfig.foundingYear} року`,
     `- Мови сайту: українська (${url("/ua")}), російська (${url("/ru")})`,
     `- Валюта: UAH. Ціни оновлено: ${PRICE_LIST_EFFECTIVE_DATE}`,
     `- Доставка: Нова Пошта ${contact.shippingFee} грн, Укрпошта ${contact.ukrposhtaFee} грн;` +
@@ -215,6 +217,8 @@ export function buildAiTxt(contact: ContactInfo): string {
     `Contact: ${contact.email}`,
     `Phone: ${contact.phone}`,
     "Business: інтернет-магазин інвентарю для настільного тенісу (Butterfly), Україна",
+    `Founded: ${siteConfig.foundingYear}`,
+    `Hours: ${siteConfig.hours.display[UA]}, без вихідних`,
     "",
     "# Використання вмісту ШІ-асистентами",
     "Allow: citation, summarization, retrieval, answering user questions",

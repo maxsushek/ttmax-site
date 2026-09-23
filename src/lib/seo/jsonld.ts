@@ -29,6 +29,7 @@ export function organizationJsonLd(contact?: ContactInfo) {
     // один опис картинки, і його не треба повторювати в кожному publisher.
     logo: ref(logoId()),
     sameAs,
+    foundingDate: siteConfig.foundingYear,
     // Валюта й зона обслуговування: факти, які ШІ-асистент цитує в «де купити».
     currenciesAccepted: "UAH",
     areaServed: { "@type": "Country", name: "Україна" },
@@ -101,6 +102,15 @@ export function storeJsonLd(contact?: ContactInfo) {
       ...siteConfig.address,
     },
     parentOrganization: ref(orgId()),
+    // Графік — на вузлі ТОЧКИ (Store), а не компанії: працюють години саме магазину.
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [...siteConfig.hours.days],
+        opens: siteConfig.hours.opens,
+        closes: siteConfig.hours.closes,
+      },
+    ],
     currenciesAccepted: "UAH",
     areaServed: { "@type": "Country", name: "Україна" },
   };

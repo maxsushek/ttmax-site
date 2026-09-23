@@ -74,6 +74,23 @@ export const siteConfig = {
     ua: "вул. Ньютона, 143Б, Харків",
     ru: "ул. Ньютона, 143Б, Харьков",
   },
+  /**
+   * Рік заснування й графік — задані власником 23.09.2026. ЄДИНЕ джерело: звідси їх
+   * беруть і розмітка (Organization.foundingDate, Store.openingHoursSpecification),
+   * і сторінка контактів, і файли для ШІ. Розійтися вони не можуть.
+   *
+   * ⚠️ Графік у розмітці має збігатися з видимим на сайті — Google звіряє. Тому рядок
+   * на /contacts і цей обʼєкт правити ТІЛЬКИ разом.
+   */
+  foundingYear: "2026",
+  hours: {
+    opens: "09:00",
+    closes: "20:00",
+    /** Без вихідних. Дні в нотації schema.org. */
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    timeZone: "Europe/Kyiv",
+    display: { ua: "щодня 9:00–20:00 (за Києвом)", ru: "ежедневно 9:00–20:00 (по Киеву)" },
+  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;
