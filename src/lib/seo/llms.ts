@@ -41,10 +41,17 @@ function plural(n: number, one: string, few: string, many: string): string {
   return `${n} ${many}`;
 }
 
-/** Товари, які реально можна купити: не сховані, з власною сторінкою в індексі. */
+/**
+ * Товари, які реально можна купити: усе не сховане (є фото, не знято з продажу).
+ *
+ * ⚠️ НЕ фільтруємо по productIndexable. Мʼячі, чохли, одяг, взуття й аксесуари мають
+ * noindex на рівні КАРТКИ (у них немає власного тексту), але продаються і стоять у
+ * лістингу. Якщо їх прибрати, асистент відповість «у TTMAX немає мʼячів» — а вони є.
+ * Для таких товарів нижче даємо посилання на сторінку РОЗДІЛУ, а не на noindex-картку.
+ */
 function sellable(media: EntityMediaMap, overrides: OverridesMap): CatalogProduct[] {
   return getAllProducts()
-    .filter((p) => productIndexable(p) && !isHidden(p, media))
+    .filter((p) => !isHidden(p, media))
     .map((p) => applyOverrides(p, overrides));
 }
 
@@ -159,7 +166,12 @@ export function buildLlmsFull(opts: {
       out.push(
         `### ${p.name[UA]}`,
         `- Ціна: ${money(getMinPrice(p))}${isInStock(p) ? ", в наявності" : ", під замовлення"}`,
-        `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`,
+        // У товарів без власної сторінки в індексі (екіпірування) посилаємось на розділ:
+        // вести асистента на noindex-картку означало б радити сторінку, яку ми самі
+        // закрили від пошуку.
+        productIndexable(p)
+          ? `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`
+          : `- Розділ: ${url(`/ua/${p.categorySlug}`)} (картка без окремої сторінки)`,
       );
       const specs = specLine(p);
       if (specs) out.push(`- Характеристики: ${specs}`);
