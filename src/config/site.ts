@@ -35,7 +35,7 @@ export const siteConfig = {
   phone: "+380966726136",
   phoneDisplay: "+38 (096) 672-61-36",
   // Фолбек: реальна пошта задається в /admin (contacts) і перебиває це значення.
-  email: "hello@ttmax.com.ua",
+  email: "ttmax.ukraine@gmail.com",
   freeShippingThreshold: 5000,
   yearFounded: 2026,
   /**
