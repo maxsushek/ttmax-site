@@ -1,6 +1,7 @@
 import { siteConfig, isOwnProfileUrl } from "@/config/site";
 import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
+import { orgId, businessId, websiteId, logoId, productId, itemListId, ref } from "@/lib/seo/ids";
 
 export function organizationJsonLd(contact?: ContactInfo) {
   /**
@@ -21,10 +22,16 @@ export function organizationJsonLd(contact?: ContactInfo) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": orgId(),
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: siteConfig.logoUrl,
+    // Логотип — посиланням на вузол #logo (ImageObject), а не рядком: так у графі
+    // один опис картинки, і його не треба повторювати в кожному publisher.
+    logo: ref(logoId()),
     sameAs,
+    // Валюта й зона обслуговування: факти, які ШІ-асистент цитує в «де купити».
+    currenciesAccepted: "UAH",
+    areaServed: { "@type": "Country", name: "Україна" },
     // PostalAddress реальної адреси магазину. Раніше адреси в JSON-LD не було ВЗАГАЛІ:
     // єдина функція з address (localBusinessJsonLd) ніде не викликалась.
     address: {
@@ -59,9 +66,11 @@ export function websiteJsonLd(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": websiteId(),
     name: siteConfig.name,
     url: `${siteConfig.url}/${locale}`,
     inLanguage: localeToLang[locale],
+    publisher: ref(orgId()),
     // ⚠️ SearchAction тут НЕ оголошуємо, і повертати його не треба, поки на сайті
     // немає сторінки пошуку. Було: target на /{locale}/search?q=… — а /ua/search
     // віддає 404. Тобто розмітка на всіх 316 сторінках обіцяла Google пошук, який
@@ -70,18 +79,59 @@ export function websiteJsonLd(locale: Locale) {
   };
 }
 
-export function localBusinessJsonLd() {
+/**
+ * Магазин як ФІЗИЧНА точка. Окремий вузол від Organization свідомо: компанія і торгова
+ * точка — різні сутності, і саме Store несе адресу, телефон і асортимент. Звʼязані через
+ * parentOrganization.
+ *
+ * ⚠️ Раніше ця функція існувала, але НІДЕ не викликалась — адреси в розмітці не було зовсім.
+ */
+export function storeJsonLd(contact?: ContactInfo) {
   return {
-    "@context": "https://schema.org",
     "@type": "Store",
+    "@id": businessId(),
     name: siteConfig.name,
     url: siteConfig.url,
+    image: ref(logoId()),
     // E.164, не phoneDisplay — з тієї ж причини, що й в organizationJsonLd вище.
-    telephone: siteConfig.phone,
+    telephone: contact?.phone ?? siteConfig.phone,
+    email: contact?.email ?? siteConfig.email,
     address: {
       "@type": "PostalAddress",
       ...siteConfig.address,
     },
+    parentOrganization: ref(orgId()),
+    currenciesAccepted: "UAH",
+    areaServed: { "@type": "Country", name: "Україна" },
+  };
+}
+
+/** Логотип окремим вузлом — на нього посилаються Organization, Store і publisher статей. */
+export function logoJsonLd() {
+  return {
+    "@type": "ImageObject",
+    "@id": logoId(),
+    url: siteConfig.logoUrl,
+    contentUrl: siteConfig.logoUrl,
+    caption: siteConfig.name,
+  };
+}
+
+/**
+ * Єдиний граф сайту: компанія + точка + сайт + логотип в одному <script>.
+ *
+ * ⚠️ Віддається на КОЖНІЙ сторінці свідомо: завдяки постійним @id це не 320 компаній,
+ * а 320 згадок ОДНІЄЇ. Сторінкові вузли (Product, BlogPosting, ItemList) не копіюють
+ * поля організації, а посилаються на @id — див. ref() у цьому файлі.
+ */
+export function siteGraphJsonLd(locale: Locale, contact?: ContactInfo) {
+  const org = organizationJsonLd(contact) as Record<string, unknown>;
+  const site = websiteJsonLd(locale) as Record<string, unknown>;
+  delete org["@context"];
+  delete site["@context"];
+  return {
+    "@context": "https://schema.org",
+    "@graph": [org, storeJsonLd(contact), site, logoJsonLd()],
   };
 }
 
@@ -300,11 +350,16 @@ export function productJsonLd(opts: {
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": productId(url),
     name,
     description,
     url,
+    // brand — ВИРОБНИК (Butterfly), продавець — ми. Їх плутають, і тоді магазин
+    // у розмітці виглядає виробником інвентарю.
     brand: { "@type": "Brand", name: brand },
+    offers: undefined,
   };
+  delete node.offers;
   if (images && images.length > 0) node.image = images;
   if (sku) node.sku = sku;
 
@@ -320,6 +375,7 @@ export function productJsonLd(opts: {
     node.offers = {
       "@type": "AggregateOffer",
       url,
+      seller: ref(orgId()),
       lowPrice,
       highPrice,
       offerCount,
@@ -334,6 +390,7 @@ export function productJsonLd(opts: {
     node.offers = {
       "@type": "Offer",
       url,
+      seller: ref(orgId()),
       price,
       priceCurrency: currency,
       availability,
@@ -419,12 +476,57 @@ export function blogPostingJsonLd(opts: {
     dateModified,
     inLanguage,
     author: { "@type": "Person", name: authorName, url: authorUrl },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      logo: { "@type": "ImageObject", url: siteConfig.logoUrl },
-    },
+    // Видавець — посиланням на компанію з графа сайту, а не копією полів.
+    publisher: ref(orgId()),
   };
   if (images && images.length > 0) node.image = images;
   return node;
+}
+
+/**
+ * ItemList категорії: перелік товарів сторінки з цінами.
+ *
+ * ⚠️ Навіщо для ШІ: без нього асистент бачить на сторінці категорії лише текст і може
+ * назвати щонайбільше пару моделей із нього. З ItemList він отримує повний перелік
+ * асортименту з посиланнями — саме те, що цитують у відповідях «що є в магазині».
+ */
+export function itemListJsonLd(opts: {
+  url: string;
+  name: string;
+  items: { url: string; name: string; price?: number; inStock?: boolean; image?: string }[];
+}) {
+  const { url, name, items } = opts;
+  if (items.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": itemListId(url),
+    name,
+    url,
+    numberOfItems: items.length,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        "@id": productId(it.url),
+        name: it.name,
+        url: it.url,
+        ...(it.image ? { image: it.image } : {}),
+        ...(typeof it.price === "number" && it.price > 0
+          ? {
+              offers: {
+                "@type": "Offer",
+                price: it.price,
+                priceCurrency: "UAH",
+                availability: it.inStock
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/OutOfStock",
+                seller: ref(orgId()),
+              },
+            }
+          : {}),
+      },
+    })),
+  };
 }

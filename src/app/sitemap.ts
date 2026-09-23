@@ -13,7 +13,7 @@ import {
 import { surfaceGroups, seriesIndexable } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
-import { getMediaMap } from "@/lib/media/get";
+import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
 import { productIndexable } from "@/lib/catalog/indexability";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -117,10 +117,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Приховані (зняті з продажу або без фото) — не подаємо: вони noindex, інакше GSC покаже
     // «Submitted URL marked noindex». З'явиться фото → товар автоматично повернеться сюди.
     if (isHidden(p, media)) continue;
+    /**
+     * Фото товару подаємо тегами <image:loc> ВСЕРЕДИНІ цього ж <url> — не окремою
+     * картою зображень: інакше аудити лаються на «сторінка в кількох картах», а карту
+     * доводиться переподавати. Для ШІ й Google Images це головний спосіб побачити,
+     * що в магазині є фото конкретної моделі.
+     */
+    const shots = pickAll(media, "product", p.slug)
+      .slice(0, 5)
+      .map((m) => cldUrl(m.publicId, { w: 900, h: 900, wm: true }))
+      .filter(Boolean);
     paths.push({
       path: `/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
       priority: 0.6,
       freq: "monthly",
+      images: shots.length > 0 ? shots : undefined,
     });
   }
 

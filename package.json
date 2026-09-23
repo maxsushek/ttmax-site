@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
-    "check:meta": "node scripts/check-meta.mjs"
+    "check:meta": "node scripts/check-meta.mjs",
+    "check:geo": "node scripts/check-geo.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

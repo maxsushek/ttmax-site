@@ -170,6 +170,14 @@ const nextConfig: NextConfig = {
    * BG Case: спершу завели чотирма окремими товарами (по товару на колір), потім
    * звели в одну картку з вибором кольору. Три слаги встигли побувати на проді.
    */
+  /**
+   * /.well-known/ai.txt → маршрут app/well-known/ai.txt.
+   * App Router ігнорує теки, що починаються з крапки, тож стандартний шлях віддаємо
+   * переписом. Для клієнта й для ботів адреса лишається канонічною — /.well-known/ai.txt.
+   */
+  async rewrites() {
+    return [{ source: "/.well-known/ai.txt", destination: "/well-known/ai.txt" }];
+  },
   async redirects() {
     const gone = ["salatovyi", "blakytnyi", "fioletovyi"];
     return gone.flatMap((c) =>

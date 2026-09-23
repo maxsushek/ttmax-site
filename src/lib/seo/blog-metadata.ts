@@ -72,7 +72,15 @@ export function buildBlogMetadata(opts: {
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: url, languages },
+    alternates: {
+      canonical: url,
+      languages,
+      /**
+       * Atom-стрічка блогу. Без цього рядка стрічку не знайде ні читалка, ні краулер:
+       * посилання на неї більше ніде немає.
+       */
+      types: { "application/atom+xml": `${siteConfig.url}/${locale}/feed.xml` },
+    },
     openGraph,
     twitter: {
       card: "summary_large_image",

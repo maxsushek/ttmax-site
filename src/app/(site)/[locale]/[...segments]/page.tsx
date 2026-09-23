@@ -38,7 +38,7 @@ import {
   type CatalogCardVM,
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
-import { breadcrumbJsonLd, productJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
+import { breadcrumbJsonLd, productJsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
@@ -431,6 +431,32 @@ export default async function CatalogPage({
         : null;
   const faqLd = EMIT_FAQ_JSONLD && faqItems ? faqJsonLd(faqItems) : null;
 
+  /**
+   * ItemList для сторінок-списків. Бере ТОЙ САМИЙ відфільтрований набір, що й видима
+   * сітка (filterVisible), інакше в розмітці зʼявились би сховані товари без фото.
+   */
+  // Канонічний адрес поточного списку — останній елемент хлібних крихт (той самий
+  // обчислювач, що малює навігацію, тож розійтися вони не можуть).
+  const listPath = crumbs[crumbs.length - 1]?.path ?? "/";
+  const listUrl = `${siteConfig.url}/${locale}${listPath === "/" ? "" : listPath}`;
+  const itemListLd =
+    "products" in eroute
+      ? itemListJsonLd({
+          url: listUrl,
+          name: routeTitle(eroute, locale),
+          items: filterVisible(eroute.products, media).map((p) => {
+            const im = pickPrimary(media, "product", p.slug);
+            return {
+              url: `${siteConfig.url}/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`,
+              name: p.name[locale],
+              price: getMinPrice(p),
+              inStock: isInStock(p),
+              image: im ? cldUrl(im.publicId, { w: 900, h: 900, wm: true }) : undefined,
+            };
+          }),
+        })
+      : null;
+
   return (
     <Section as="div" className="pt-10">
       <script
@@ -447,6 +473,12 @@ export default async function CatalogPage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
+      {itemListLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
         />
       )}
       <Container>

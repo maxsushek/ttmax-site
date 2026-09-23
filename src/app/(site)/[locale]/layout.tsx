@@ -11,7 +11,7 @@ import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { isLocale, locales, type Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
+import { siteGraphJsonLd } from "@/lib/seo/jsonld";
 import { getMediaMap } from "@/lib/media/get";
 import { getSiteAsset } from "@/lib/media/site-assets";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -114,13 +114,11 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg-base text-ink">
+        {/* Один граф: #org + #business + #website + #logo із постійними @id.
+            Сторінкові вузли (Product, BlogPosting, ItemList) посилаються на них. */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(contact)) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraphJsonLd(locale, contact)) }}
         />
         <AnalyticsProvider ids={analyticsIds} />
         <CartProvider
