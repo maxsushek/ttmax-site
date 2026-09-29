@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1200" height="780" fill="#0E1117"/>
+<text x="60" y="64" fill="#F2F4F7" font-size="30" font-weight="700" letter-spacing="1">ГДЕ ИСКАТЬ ПРИЗНАКИ ОРИГИНАЛА</text>
+<line x1="60" y1="84" x2="1140" y2="84" stroke="#212832"/>
+<ellipse cx="300" cy="300" rx="190" ry="208" fill="#1A212B" stroke="#39424E" stroke-width="2"/>
+<path d="M483.6 210 Q 492 300 483.6 390" fill="none" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="1.4"/>
+<path d="M485.2 210 Q 496 300 485.2 390" fill="none" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="1.4"/>
+<path d="M486.8 210 Q 500 300 486.8 390" fill="none" stroke="#E8FF47" stroke-opacity="0.55" stroke-width="1.4"/>
+<path d="M488.4 210 Q 504 300 488.4 390" fill="none" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="1.4"/>
+<rect x="230" y="196" width="140" height="10" rx="5" fill="#39424E"/>
+<rect x="205" y="288" width="190" height="16" rx="8" fill="#39424E"/>
+<rect x="245" y="316" width="110" height="9" rx="4.5" fill="#39424E"/>
+<rect x="372" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="383" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="394" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="405" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="416" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="427" y="424" width="7" height="12" rx="1.5" fill="#39424E"/>
+<rect x="262" y="490" width="76" height="212" rx="12" fill="#1A212B" stroke="#39424E" stroke-width="2"/>
+<rect x="278" y="530" width="44" height="60" rx="14" fill="#39424E"/>
+<rect x="262" y="684" width="76" height="18" rx="6" fill="#39424E"/>
+<path d="M300 201 L560 201 L618 150" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="300" cy="201" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="150" r="20" fill="#E8FF47"/>
+<text x="640" y="157" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">1</text>
+<text x="676" y="146" fill="#F2F4F7" font-size="22" font-weight="700">Страна производства</text>
+<text x="676" y="172" fill="#8A93A0" font-size="17">«Made in …» на лопасти = как на butterfly-global.com</text>
+<path d="M300 296 L560 296 L618 242" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="300" cy="296" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="242" r="20" fill="#E8FF47"/>
+<text x="640" y="249" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">2</text>
+<text x="676" y="238" fill="#F2F4F7" font-size="22" font-weight="700">Печать на лопасти</text>
+<text x="676" y="264" fill="#8A93A0" font-size="17">Напечатана на дереве, не наклейка, без перекоса</text>
+<path d="M488 336 L560 336 L618 334" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="488" cy="336" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="334" r="20" fill="#E8FF47"/>
+<text x="640" y="341" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">3</text>
+<text x="676" y="330" fill="#F2F4F7" font-size="22" font-weight="700">Кромка</text>
+<text x="676" y="356" fill="#8A93A0" font-size="17">Ровные слои, толщина по паспорту модели</text>
+<path d="M402 430 L560 430 L618 426" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="402" cy="430" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="426" r="20" fill="#E8FF47"/>
+<text x="640" y="433" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">4</text>
+<text x="676" y="422" fill="#F2F4F7" font-size="22" font-weight="700">Серийный номер</text>
+<text x="676" y="448" fill="#8A93A0" font-size="17">Тот же шрифт; для Китая — как на коробке</text>
+<path d="M300 560 L560 560 L618 518" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="300" cy="560" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="518" r="20" fill="#E8FF47"/>
+<text x="640" y="525" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">5</text>
+<text x="676" y="514" fill="#F2F4F7" font-size="22" font-weight="700">Линза на ручке</text>
+<text x="676" y="540" fill="#8A93A0" font-size="17">Металлическая, встроена вровень, без выцветания</text>
+<path d="M300 693 L560 693 L618 610" fill="none" stroke="#E8FF47" stroke-opacity="0.35" stroke-width="1.4"/>
+<circle cx="300" cy="693" r="7" fill="#E8FF47"/>
+<circle cx="640" cy="610" r="20" fill="#E8FF47"/>
+<text x="640" y="617" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">6</text>
+<text x="676" y="606" fill="#F2F4F7" font-size="22" font-weight="700">Торец ручки</text>
+<text x="676" y="632" fill="#8A93A0" font-size="17">Ровная табличка, чёткое тиснение J.T.T.A.A.</text>
+<circle cx="80" cy="742" r="18" fill="none" stroke="#E8FF47" stroke-width="2"/>
+<text x="80" y="749" fill="#E8FF47" font-size="18" font-weight="700" text-anchor="middle">7</text>
+<text x="110" y="738" fill="#F2F4F7" font-size="18" font-weight="700">Вес</text>
+<text x="110" y="760" fill="#8A93A0" font-size="15">В пределах диапазона модели</text>
+<circle cx="370" cy="742" r="18" fill="none" stroke="#E8FF47" stroke-width="2"/>
+<text x="370" y="749" fill="#E8FF47" font-size="18" font-weight="700" text-anchor="middle">8</text>
+<text x="400" y="738" fill="#F2F4F7" font-size="18" font-weight="700">Продавец</text>
+<text x="400" y="760" fill="#8A93A0" font-size="15">Официальный дистрибьютор страны</text>
+</svg>

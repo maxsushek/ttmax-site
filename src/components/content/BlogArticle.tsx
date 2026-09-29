@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Section";
-import { breadcrumbJsonLd, blogPostingJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
+import { breadcrumbJsonLd, blogPostingJsonLd, faqJsonLd, howToJsonLd } from "@/lib/seo/jsonld";
 import { cldUrl } from "@/lib/cloudinary/url";
 import { siteConfig } from "@/config/site";
 import { localeToLang, type Locale } from "@/i18n/config";
@@ -149,7 +149,25 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
     authorName: author.name[locale],
     authorUrl,
     inLanguage: localeToLang[locale],
+    // Лише посилання на КАРТКИ товарів (/brand/category/slug): у них є вузол Product з @id.
+    mentions: (post.relatedProducts ?? [])
+      .map((l) => l.href)
+      .filter((h) => h.split("/").filter(Boolean).length === 3)
+      .map((h) => `${siteConfig.url}/${locale}${h}`),
+    citations: (post.sources ?? []).map((src) => ({ name: src.label[locale], url: src.url })),
+    about: [{ type: "Brand", name: "Butterfly" }],
   });
+  // HowTo — з першого розділу, де є кроки. Ті самі рядки малюються списком нижче.
+  const howToSection = post.sections.find((s) => s.steps && s.steps.length > 0);
+  const howToLd = howToSection
+    ? howToJsonLd({
+        url: pageUrl,
+        name: howToSection.h[locale],
+        description: howToSection.p[locale][0],
+        inLanguage: localeToLang[locale],
+        steps: (howToSection.steps ?? []).map((st) => ({ name: st.name[locale], text: st.text[locale] })),
+      })
+    : null;
   const faqLd =
     post.faq && post.faq.length > 0
       ? faqJsonLd(post.faq.map((f) => ({ q: f.q[locale], a: f.a[locale] })))
@@ -162,6 +180,9 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
       {faqLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      )}
+      {howToLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
       )}
 
       <Container className="max-w-3xl">
@@ -254,6 +275,31 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   </p>
                 ))}
               </div>
+              {s.steps && s.steps.length > 0 && (
+                // Кроки інструкції. id="krok-N" — на них посилається HowToStep.url у розмітці.
+                <ol className="mt-5 flex flex-col gap-3">
+                  {s.steps.map((st, k) => (
+                    <li
+                      key={k}
+                      id={`krok-${k + 1}`}
+                      className="flex scroll-mt-24 gap-3.5 rounded-xl border border-border-subtle bg-bg-raised px-4 py-3.5"
+                    >
+                      <span
+                        aria-hidden
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-[13px] font-black text-bg-base"
+                      >
+                        {k + 1}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-body text-[15px] font-bold text-ink">{st.name[locale]}</span>
+                        <span className="mt-1 block font-body text-[14px] leading-relaxed text-ink-muted">
+                          {st.text[locale]}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              )}
               {s.rec && (
                 // Редакційна картка-рекомендація: фото товару + вердикт тренера + лінк на money-картку.
                 // Лівий акцент-бордер + курсив-вердикт = «цитата тренера», НЕ product-tile.

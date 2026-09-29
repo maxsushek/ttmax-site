@@ -14,7 +14,8 @@
 //   tenergy-dignics — три пари з ОДНАКОВИМ зсувом (головна теза статті);
 //   novachok        — дві траєкторії з однієї точки: контрольована й та, що вилітає;
 //   tovshchyna      — чотири розрізи різної товщини під стелею правил ITTF;
-//   lypki-tenzorni  — два способи втримати мʼяч: прилипання і продавлювання.
+//   lypki-tenzorni  — два способи втримати мʼяч: прилипання і продавлювання;
+//   versii          — одне джерело, три ОДНАКОВІ основи; підсвічено лише торець ручки.
 //
 // Запуск: node scripts/gen-blog-covers.mjs
 import { writeFileSync } from "node:fs";
@@ -180,11 +181,44 @@ function lypkiTenzorni() {
   );
 }
 
+/* ─── 5. Версії основ: один завод — три ринки ─── */
+function versii() {
+  // ⚠️ ТРИ СИЛУЕТИ ОДНАКОВІ — у цьому теза статті: японські моделі для всіх ринків
+  // сходять з однієї лінії. Акцентом підсвічено лише ТОРЕЦЬ РУЧКИ, бо відмінності
+  // (маркування, номер, тиснення J.T.T.A.A.) живуть саме там, а не в самій основі.
+  const src = { x: 820, y: 525 };
+  const xs = [1010, 1140, 1270];
+  const headY = 425;
+  const rx = 54;
+  const ry = 64;
+  const hw = 24; // ширина ручки
+  const hTop = headY + ry - 8;
+  const hLen = 112;
+  const b = [`<circle cx="1140" cy="${headY}" r="235" fill="url(#halo)"/>`];
+  for (const x of xs) {
+    b.push(
+      `<path d="M${src.x + 26} ${src.y} C ${src.x + 120} ${src.y} ${x - 150} ${headY} ${x - rx - 8} ${headY}" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.32" stroke-width="1.8" stroke-dasharray="7 9"/>`,
+    );
+  }
+  for (const x of xs) {
+    const endY = hTop + hLen;
+    b.push(
+      `<ellipse cx="${x}" cy="${headY}" rx="${rx}" ry="${ry}" fill="${DOT_RING}" fill-opacity="0.42" stroke="${DOT_CORE}" stroke-opacity="0.45" stroke-width="1.6"/>`,
+      `<rect x="${x - hw / 2}" y="${hTop}" width="${hw}" height="${hLen}" rx="5" fill="${DOT_CORE}" fill-opacity="0.42"/>`,
+      `<rect x="${x - hw / 2}" y="${endY - 16}" width="${hw}" height="16" rx="4" fill="${ACCENT}"/>`,
+      `<circle cx="${x}" cy="${endY - 8}" r="26" fill="none" stroke="${ACCENT}" stroke-opacity="0.28" stroke-width="1.6"/>`,
+    );
+  }
+  b.push(dot(src.x, src.y, 26, 0.6));
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
   "tenergy-dignics-cover.svg": tenergyDignics(),
   "novachok-cover.svg": novachok(),
   "tovshchyna-cover.svg": tovshchyna(),
   "lypki-tenzorni-cover.svg": lypkiTenzorni(),
+  "versii-cover.svg": versii(),
 };
 
 for (const [name, svg] of Object.entries(FILES)) {

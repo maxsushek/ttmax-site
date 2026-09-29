@@ -463,6 +463,16 @@ export function blogPostingJsonLd(opts: {
   authorUrl: string;
   /** BCP-47: uk | ru. */
   inLanguage: string;
+  /**
+   * Абсолютні URL товарів, про які йдеться в статті. Ідуть у `mentions` посиланнями на
+   * @id вузлів Product зі сторінок товарів — так асистент звʼязує статтю з конкретними
+   * моделями в каталозі, а не лише з текстом.
+   */
+  mentions?: string[];
+  /** Джерела статті → `citation`. ШІ-асистенти зважають на те, на що спирається текст. */
+  citations?: { name: string; url: string }[];
+  /** Головні теми статті → `about` (напр. бренд). */
+  about?: { type: "Brand" | "Thing"; name: string }[];
 }) {
   const {
     url,
@@ -474,6 +484,9 @@ export function blogPostingJsonLd(opts: {
     authorName,
     authorUrl,
     inLanguage,
+    mentions,
+    citations,
+    about,
   } = opts;
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -488,9 +501,50 @@ export function blogPostingJsonLd(opts: {
     author: { "@type": "Person", name: authorName, url: authorUrl },
     // Видавець — посиланням на компанію з графа сайту, а не копією полів.
     publisher: ref(orgId()),
+    isPartOf: ref(websiteId()),
   };
   if (images && images.length > 0) node.image = images;
+  if (about && about.length > 0) node.about = about.map((a) => ({ "@type": a.type, name: a.name }));
+  if (mentions && mentions.length > 0) node.mentions = mentions.map((u) => ref(productId(u)));
+  if (citations && citations.length > 0)
+    node.citation = citations.map((c) => ({ "@type": "CreativeWork", name: c.name, url: c.url }));
   return node;
+}
+
+/**
+ * HowTo — покрокова інструкція зі статті.
+ *
+ * ⚠️ Кроки мусять бути ВИДИМІ на сторінці тим самим текстом (BlogArticle малює їх
+ * нумерованим списком із того ж масиву). Розмітка, якої немає в тексті, — порушення
+ * правил Google, і за неї знімають розширені результати з усього сайту.
+ *
+ * Google прибрав розширений сніпет HowTo з видачі, але тип лишається валідним і
+ * саме такий формат ШІ-асистенти найохочіше розбирають і цитують кроками.
+ */
+export function howToJsonLd(opts: {
+  url: string;
+  name: string;
+  description?: string;
+  inLanguage: string;
+  steps: { name: string; text: string }[];
+}) {
+  const { url, name, description, inLanguage, steps } = opts;
+  if (steps.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${url}#howto`,
+    name,
+    ...(description ? { description } : {}),
+    inLanguage,
+    step: steps.map((st, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: st.name,
+      text: st.text,
+      url: `${url}#krok-${i + 1}`,
+    })),
+  };
 }
 
 /**

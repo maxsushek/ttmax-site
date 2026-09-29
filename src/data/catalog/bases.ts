@@ -265,6 +265,10 @@ export const catalogBases: CatalogProduct[] = [
     "inStock": true,
     "base": {
       "thicknessMm": 5.8,
+      "sizeMm": "157×150 мм",
+      "reaction": 11.8,
+      "vibration": 10.3,
+      "madeIn": { "ua": "Японія", "ru": "Япония" },
       "weight": "86–90 г",
       "fiber": "outer",
       "bladeClass": "off-plus",
@@ -1306,9 +1310,10 @@ export const catalogBases: CatalogProduct[] = [
     "base": {
       "weight": "86–90 г",
       "thicknessMm": 5.8,
+      "madeIn": { "ua": "Європа", "ru": "Европа" },
       "bladeClass": "off-minus",
-      "surface": "wood",
-      "plies": "5",
+      "surface": "carbon",
+      "plies": "5+2",
       "handles": [
         "fl",
         "st",
