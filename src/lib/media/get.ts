@@ -68,20 +68,41 @@ async function loadAll(): Promise<EntityMediaMap> {
   if (!client) return onMediaFailure("немає клієнта Supabase");
   const db = client as unknown as SupabaseClient;
 
-  const { data, error } = await db
-    .from("entity_media")
-    .select("*")
-    .order("sort", { ascending: true })
-    // Другий ключ — щоб порядок був ОДНОЗНАЧНИЙ. При однакових sort (фото, вставлені
-    // SQL-ом зі значенням за замовчуванням) Postgres вільний віддавати рядки як завгодно:
-    // галерея переставлялась би, а «головне» фото (перше) могло б мінятись саме по собі —
-    // разом з og:image, картинкою в лістингу й байтами сторінки (зайвий ISR-запис).
-    .order("id", { ascending: true });
-
-  if (error || !data) return onMediaFailure(`запит до entity_media не вдався: ${error?.message ?? "порожня відповідь"}`);
+  /**
+   * ⚠️ ЧИТАЄМО ПОСТОРІНКОВО. Supabase (PostgREST) віддає за один запит НЕ БІЛЬШЕ 1000 рядків
+   * і мовчки обрізає решту — без помилки. Поки фото було менше тисячі, один запит працював.
+   * Коли таблиця перевалила за 1000 (вересень 2026, на момент виправлення — 1160 рядків),
+   * сайт почав губити хвости галерей: рядки йдуть за sort, тож відрізались кадри №8 і далі
+   * в усіх товарів — 160 фото зникли з сайту непомітно. Помітили на сумці Kitami: у базі
+   * 9 фото, на сторінці 7.
+   *
+   * ⚠️ Гірший сценарій, від якого це теж захищає: коли рядків стане достатньо, обріжуться й
+   * ГОЛОВНІ фото (sort 0) — і товари зникнуть із лістингу та підуть у noindex як «без фото».
+   */
+  const PAGE = 1000;
+  const data: Row[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data: chunk, error } = await db
+      .from("entity_media")
+      .select("*")
+      .order("sort", { ascending: true })
+      // Другий ключ — щоб порядок був ОДНОЗНАЧНИЙ. При однакових sort (фото, вставлені
+      // SQL-ом зі значенням за замовчуванням) Postgres вільний віддавати рядки як завгодно:
+      // галерея переставлялась би, а «головне» фото (перше) могло б мінятись саме по собі —
+      // разом з og:image, картинкою в лістингу й байтами сторінки (зайвий ISR-запис).
+      // Для посторінкового читання однозначний порядок ще й обовʼязковий: інакше рядки
+      // на межі сторінок дублювались би або губились.
+      .order("id", { ascending: true })
+      .range(from, from + PAGE - 1);
+    if (error || !chunk) {
+      return onMediaFailure(`запит до entity_media не вдався: ${error?.message ?? "порожня відповідь"}`);
+    }
+    data.push(...(chunk as Row[]));
+    if (chunk.length < PAGE) break;
+  }
 
   const map: EntityMediaMap = {};
-  for (const r of data as Row[]) {
+  for (const r of data) {
     const item: EntityMedia = {
       id: r.id,
       entityType: r.entity_type,
@@ -127,8 +148,10 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     Kibako). Джерело — офіційний дистриб'ютор Butterfly Adria і pingpong.ee, залиті
  *     скриптом у ttmax/product/<slug>/NN. Рюкзак Kashiwa свідомо пропущено: у прайсі
  *     постачальника його не було в наявності.
+ * v11: читання посторінково (обріз PostgREST на 1000 рядків — див. loadAll). Кеш v10
+ *     зберіг ОБРІЗАНУ карту, тому ключ міняємо: інакше виправлення не видно до години.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v10"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v11"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
