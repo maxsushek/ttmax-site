@@ -30,8 +30,10 @@ export function organizationJsonLd(contact?: ContactInfo) {
     logo: ref(logoId()),
     sameAs,
     foundingDate: siteConfig.foundingYear,
-    // Валюта й зона обслуговування: факти, які ШІ-асистент цитує в «де купити».
-    currenciesAccepted: "UAH",
+    // Зона обслуговування — факт, який ШІ-асистент цитує в «де купити».
+    // ⚠️ currenciesAccepted тут НЕ ставити: у schema.org це властивість LocalBusiness (Store),
+    // а не Organization. Валідатор давав 3 попередження — по одному на кожне місце, де граф
+    // підтягує компанію (publisher, isPartOf, parentOrganization). Валюта живе на #business.
     areaServed: { "@type": "Country", name: "Україна" },
     // PostalAddress реальної адреси магазину. Раніше адреси в JSON-LD не було ВЗАГАЛІ:
     // єдина функція з address (localBusinessJsonLd) ніде не викликалась.

@@ -17,6 +17,7 @@ import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
 import { productIndexable } from "@/lib/catalog/indexability";
 import { cldUrl } from "@/lib/cloudinary/url";
+import { blogOgImage } from "@/lib/seo/blog-og";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Потрібна для фільтра прихованих (без фото) товарів — їх не подаємо в sitemap.
@@ -53,7 +54,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const u = cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" });
       if (u) images.push(u);
     } else if (post.coverSrc) {
-      images.push(`${siteConfig.url}${post.coverSrc}`);
+      // SVG-обкладинку підміняємо растровою копією з заголовком (lib/seo/blog-og.ts):
+      // та сама картинка, що в og:image і BlogPosting.image.
+      const og = blogOgImage(post, "ua");
+      if (og) images.push(og.url);
     }
     for (const s of post.sections) {
       if (!s.rec) continue;

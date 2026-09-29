@@ -1,3 +1,4 @@
+import { blogOgImage } from "@/lib/seo/blog-og";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Section";
@@ -127,8 +128,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
   const heroUrl = post.heroPublicId
     ? cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" })
     : "";
-  // Зображення для BlogPosting.image: hero або фірмова обкладинка (абсолютний URL).
-  const ldImage = heroUrl || (post.coverSrc ? `${siteConfig.url}${post.coverSrc}` : "");
+  // Зображення для BlogPosting.image — те саме, що в og:image (растр, не SVG).
+  const ldImage = blogOgImage(post, locale)?.url ?? "";
   const related = getRelatedPosts(post);
 
   const breadcrumb = breadcrumbJsonLd(

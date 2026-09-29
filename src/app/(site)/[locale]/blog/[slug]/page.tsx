@@ -1,8 +1,8 @@
+import { blogOgImage } from "@/lib/seo/blog-og";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { isLocale, locales, type Locale } from "@/i18n/config";
 import { siteConfig } from "@/config/site";
-import { cldUrl } from "@/lib/cloudinary/url";
 import { buildBlogMetadata } from "@/lib/seo/blog-metadata";
 import { BlogArticle } from "@/components/content/BlogArticle";
 import { getPost, getAllPosts } from "@/data/blog";
@@ -21,17 +21,11 @@ export async function generateMetadata({
   const post = getPost(slug);
   if (!post) return { robots: { index: false, follow: false } };
 
-  // og/twitter/JSON-LD зображення: спершу Cloudinary-hero (точні 1200×630), інакше —
-  // фірмова обкладинка coverSrc (абсолютний URL). Без цього стаття з code-cover їхала
-  // без og:image і картка «summary_large_image» деградувала в порожню.
-  const image = post.heroPublicId
-    ? cldUrl(post.heroPublicId, { w: 1200, h: 630, crop: "fill" }) || undefined
-    : post.coverSrc
-      ? `${siteConfig.url}${post.coverSrc}`
-      : undefined;
-  // Розміри лишаємо тільки для hero (рівно 1200×630). Обкладинки різного розміру —
-  // og:image:width/height опускаємо (валідно; краще без розмірів, ніж із хибними).
-  const imageDims = post.heroPublicId ? { imageWidth: 1200, imageHeight: 630 } : {};
+  // og/twitter зображення: hero з Cloudinary, растрова копія SVG-обкладинки або растрова
+  // обкладинка — правило в lib/seo/blog-og.ts (спільне з розміткою й sitemap).
+  const og = blogOgImage(post, l);
+  const image = og?.url;
+  const imageDims = og?.width && og?.height ? { imageWidth: og.width, imageHeight: og.height } : {};
 
   return buildBlogMetadata({
     locale: l,
