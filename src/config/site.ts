@@ -39,24 +39,27 @@ export const siteConfig = {
   freeShippingThreshold: 5000,
   yearFounded: 2026,
   /**
-   * Соцмережі в підвалі.
+   * Профілі магазину в соцмережах — задані власником 29.09.2026. ЄДИНЕ джерело для
+   * підвалу, сторінки /contacts, `sameAs` розмітки Organization і файлів для ШІ.
+   * Порядок тут = порядок іконок на сайті.
    *
-   * ⚠️ Зараз тут КОРЕНІ платформ — тимчасові заглушки, поки в магазину немає
-   * власних профілів. Вони свідомо НЕ потрапляють у `sameAs` розмітки Organization:
-   * `sameAs` означає «ця сама організація також живе за цією адресою», тож
-   * "https://www.instagram.com/" там заявив би, що TTMAX — це і є Instagram.
+   * Показується й іде в `sameAs` лише ВЛАСНИЙ профіль (зі шляхом) — див. `isOwnProfileUrl()`.
+   * Порожній href = профілю немає, платформа прихована. Раніше тут стояли корені платформ
+   * (instagram.com/) як заглушки — посилання «в нікуди» на кожній сторінці.
    *
-   * Правило розрізнення — `isOwnProfileUrl()` нижче: у профілю Є шлях
-   * (instagram.com/ttmax_ua), у кореня платформи його немає. Тому щойно власник
-   * впише реальний профіль — він потрапить у `sameAs` САМ, без правок коду.
-   *
-   * Реальні адреси зручніше вписувати в адмінці (Контакти), а не тут.
+   * Будь-яку адресу можна перебити в адмінці (Контакти → Соцмережі), не чіпаючи коду.
+   * ⚠️ Нова платформа = рядок тут + ключ у CONTACT_KEYS (lib/contact/keys.ts) + іконка
+   * в SocialIcon. TS не дасть забути ключ: ContactInfo.social будується з цього списку.
    */
   social: [
-    { key: "instagram", label: "IG", color: "#E1306C", href: "https://www.instagram.com/" },
-    { key: "telegram", label: "TG", color: "#229ED9", href: "https://t.me/" },
-    { key: "youtube", label: "YT", color: "#FF0000", href: "https://www.youtube.com/" },
-    { key: "facebook", label: "FB", color: "#1877F2", href: "https://www.facebook.com/" },
+    { key: "instagram", name: "Instagram", color: "#E1306C", href: "https://www.instagram.com/ttmax_butterfly/" },
+    { key: "facebook", name: "Facebook", color: "#1877F2", href: "https://www.facebook.com/profile.php?id=61594769786271" },
+    // Колір X — чорний, на темному підвалі він зник би; беремо світлий колір тексту X.
+    { key: "x", name: "X (Twitter)", color: "#E7E9EA", href: "https://x.com/ttmax_official" },
+    { key: "linkedin", name: "LinkedIn", color: "#0A66C2", href: "https://www.linkedin.com/in/tt-max/" },
+    { key: "reddit", name: "Reddit", color: "#FF4500", href: "https://www.reddit.com/user/ttmax_oficial/" },
+    { key: "telegram", name: "Telegram", color: "#229ED9", href: "" },
+    { key: "youtube", name: "YouTube", color: "#FF0000", href: "" },
   ],
   // Schema.org address (PostalAddress) — реальна адреса магазину, задана власником 25.07.2026.
   // Пишемо українською: для українського бізнесу локальна форма коректніша за транслітерацію
@@ -94,6 +97,19 @@ export const siteConfig = {
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+
+export type SocialKey = (typeof siteConfig.social)[number]["key"];
+export type SocialProfile = { key: SocialKey; name: string; color: string; href: string };
+
+/**
+ * Профілі, які реально показуємо: код + перевизначення з адмінки, лише власні (зі шляхом).
+ * Спільне для підвалу, /contacts, `sameAs` і llms — щоб ці місця не розійшлися.
+ */
+export function socialProfiles(overrides?: Partial<Record<SocialKey, string>>): SocialProfile[] {
+  return siteConfig.social
+    .map((s) => ({ key: s.key, name: s.name, color: s.color, href: overrides?.[s.key] || s.href }))
+    .filter((s) => isOwnProfileUrl(s.href));
+}
 
 /**
  * Чи це ВЛАСНИЙ профіль магазину, а не корінь платформи-заглушки.

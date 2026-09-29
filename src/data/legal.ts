@@ -3,7 +3,7 @@
 // Базовий шаблон — ПЕРЕД фінальним запуском узгодити з реальними реквізитами юр-особи (ФОП/ТОВ, ЄДРПОУ)
 // та, бажано, з юристом. Дати оновлюються вручну в полі `updated`.
 import type { Locale } from "@/i18n/config";
-import { siteConfig } from "@/config/site";
+import { siteConfig, type SocialKey } from "@/config/site";
 
 type L = Record<Locale, string>;
 
@@ -12,6 +12,11 @@ export type ContentSection = {
   h: L;
   /** Абзаци розділу. */
   p: Record<Locale, string[]>;
+  /**
+   * ВЛАСНІ профілі магазину списком під абзацами (соцмережі на /contacts). Малюються з
+   * rel="me" — тому сюди лише наші акаунти, не довільні зовнішні посилання.
+   */
+  profiles?: { label: string; href: string; icon?: SocialKey }[];
 };
 
 export type ContentDoc = {

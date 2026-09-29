@@ -21,9 +21,13 @@ const CONTACT_FIELD_KEYS: string[] = [
   CONTACT_KEYS.phone,
   CONTACT_KEYS.phoneDisplay,
   CONTACT_KEYS.email,
+  CONTACT_KEYS.instagram,
+  CONTACT_KEYS.facebook,
+  CONTACT_KEYS.x,
+  CONTACT_KEYS.linkedin,
+  CONTACT_KEYS.reddit,
   CONTACT_KEYS.telegram,
   CONTACT_KEYS.youtube,
-  CONTACT_KEYS.facebook,
 ];
 
 export default async function AdminHomepagePage() {

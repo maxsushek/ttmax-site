@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Section";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import type { Locale } from "@/i18n/config";
 import type { ContentDoc } from "@/data/legal";
@@ -57,6 +58,23 @@ export function LegalArticle({ doc, locale }: { doc: ContentDoc; locale: Locale 
                   </p>
                 ))}
               </div>
+              {s.profiles && s.profiles.length > 0 && (
+                <ul className="mt-3.5 flex flex-wrap gap-2">
+                  {s.profiles.map((l) => (
+                    <li key={l.href}>
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="me noopener noreferrer"
+                        className="inline-flex min-h-[44px] items-center gap-2.5 rounded-[10px] border border-white/[0.12] px-3.5 font-body text-[14px] font-semibold text-ink transition-colors hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent"
+                      >
+                        {l.icon && <SocialIcon name={l.icon} />}
+                        {l.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
           ))}
         </div>

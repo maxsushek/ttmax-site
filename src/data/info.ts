@@ -16,7 +16,7 @@
 //      приймають відвідувачів (інакше це порушення гайдлайнів Google). Питання до власника.
 import type { Locale } from "@/i18n/config";
 import type { ContentDoc } from "@/data/legal";
-import { siteConfig } from "@/config/site";
+import { siteConfig, socialProfiles } from "@/config/site";
 
 type L = Record<Locale, string>;
 
@@ -26,8 +26,12 @@ const EMAIL = siteConfig.email;
 const PHONE = siteConfig.phoneDisplay;
 const BRAND = siteConfig.name; // "Butterfly UA"
 const OPERATOR = siteConfig.operator; // "TTMAX"
-const CITY: L = { ua: "Харків", ru: "Харьков" };
+// Назва міста в потрібному відмінку: «у Харкові», «з Харкова». Раніше всюди стояв називний
+// («Ми у Харків», «відправляємо з Харків») — граматична помилка на трьох сторінках.
+const CITY_IN: L = { ua: "Харкові", ru: "Харькове" };
+const CITY_FROM: L = { ua: "Харкова", ru: "Харькова" };
 const FREE = siteConfig.freeShippingThreshold; // 5000
+const capitalize = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
 export type InfoSlug = "about" | "delivery" | "payment" | "returns" | "contacts";
 
@@ -92,10 +96,10 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
         h: { ua: "Доставка й контакти", ru: "Доставка и контакты" },
         p: {
           ua: [
-            `Ми у ${CITY.ua}, доставляємо по всій Україні. Деталі — на сторінках «Доставка» та «Контакти».`,
+            `Ми у ${CITY_IN.ua}, доставляємо по всій Україні. Деталі — на сторінках «Доставка» та «Контакти».`,
           ],
           ru: [
-            `Мы в ${CITY.ru}, доставляем по всей Украине. Детали — на страницах «Доставка» и «Контакты».`,
+            `Мы в ${CITY_IN.ru}, доставляем по всей Украине. Детали — на страницах «Доставка» и «Контакты».`,
           ],
         },
       },
@@ -115,8 +119,8 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
     },
     updated: UPDATED,
     intro: {
-      ua: `Ми відправляємо замовлення з ${CITY.ua} по всій Україні. Нижче — способи, терміни та вартість доставки.`,
-      ru: `Мы отправляем заказы из ${CITY.ru} по всей Украине. Ниже — способы, сроки и стоимость доставки.`,
+      ua: `Ми відправляємо замовлення з ${CITY_FROM.ua} по всій Україні. Нижче — способи, терміни та вартість доставки.`,
+      ru: `Мы отправляем заказы из ${CITY_FROM.ru} по всей Украине. Ниже — способы, сроки и стоимость доставки.`,
     },
     sections: [
       {
@@ -124,11 +128,11 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
         p: {
           ua: [
             "Доставка по Україні Новою Поштою або Укрпоштою — на відділення перевізника.",
-            `Самовивіз у ${CITY.ua} — за попередньою домовленістю.`,
+            `Самовивіз у ${CITY_IN.ua} — за попередньою домовленістю.`,
           ],
           ru: [
             "Доставка по Украине Новой Почтой или Укрпочтой — на отделение перевозчика.",
-            `Самовывоз в ${CITY.ru} — по предварительной договорённости.`,
+            `Самовывоз в ${CITY_IN.ru} — по предварительной договорённости.`,
           ],
         },
       },
@@ -311,28 +315,27 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
       ua: `Зв'язатися з магазином Butterfly UA: адреса ${siteConfig.addressDisplay.ua}, e-mail, соцмережі. Доставка по всій Україні.`,
       ru: `Связаться с магазином Butterfly UA: адрес ${siteConfig.addressDisplay.ru}, e-mail, соцсети. Доставка по всей Украине.`,
     },
-    updated: UPDATED,
+    updated: "2026-09-29", // соцмережі + графік з siteConfig.hours
     intro: {
-      ua: `Зв'яжіться з нами зручним способом. Ми у ${CITY.ua}, доставляємо по всій Україні.`,
-      ru: `Свяжитесь с нами удобным способом. Мы в ${CITY.ru}, доставляем по всей Украине.`,
+      ua: `Зв'яжіться з нами зручним способом. Ми у ${CITY_IN.ua}, доставляємо по всій Україні.`,
+      ru: `Свяжитесь с нами удобным способом. Мы в ${CITY_IN.ru}, доставляем по всей Украине.`,
     },
     sections: [
       {
         h: { ua: "Зв'язок", ru: "Связь" },
         p: {
-          ua: [
-            `Телефон: ${PHONE}`,
-            `E-mail: ${EMAIL}`,
-            `Графік роботи: ${siteConfig.hours.display.ua}, без вихідних.`,
-            "Соцмережі (Telegram, YouTube, Facebook) — посилання у шапці та футері сайту.",
-          ],
-          ru: [
-            `Телефон: ${PHONE}`,
-            `E-mail: ${EMAIL}`,
-            `График работы: ${siteConfig.hours.display.ru}, без выходных.`,
-            "Соцсети (Telegram, YouTube, Facebook) — ссылки в шапке и футере сайта.",
-          ],
+          ua: [`Телефон: ${PHONE}`, `E-mail: ${EMAIL}`],
+          ru: [`Телефон: ${PHONE}`, `E-mail: ${EMAIL}`],
         },
+      },
+      {
+        h: { ua: "Ми в соцмережах", ru: "Мы в соцсетях" },
+        p: {
+          ua: ["Новинки, наявність і поради з підбору інвентарю — у наших профілях:"],
+          ru: ["Новинки, наличие и советы по подбору инвентаря — в наших профилях:"],
+        },
+        // Той самий список, що в підвалі й у sameAs розмітки (socialProfiles).
+        profiles: socialProfiles().map((s) => ({ label: s.name, href: s.href, icon: s.key })),
       },
       {
         h: { ua: "Де ми", ru: "Где мы" },
@@ -349,9 +352,18 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
       },
       {
         h: { ua: "Графік роботи", ru: "График работы" },
+        // ⚠️ Лише з siteConfig.hours — те саме джерело, що Store.openingHoursSpecification.
+        // Тут довго висів старий рядок «Пн–Сб 10:00–19:00, Нд вихідний» поруч із новим
+        // графіком: сторінка суперечила сама собі й розмітці, яку Google з нею звіряє.
         p: {
-          ua: ["Пн–Сб: 10:00–19:00. Нд: вихідний.", "Замовлення на сайті приймаємо цілодобово."],
-          ru: ["Пн–Сб: 10:00–19:00. Вс: выходной.", "Заказы на сайте принимаем круглосуточно."],
+          ua: [
+            `${capitalize(siteConfig.hours.display.ua)}, без вихідних.`,
+            "Замовлення на сайті приймаємо цілодобово.",
+          ],
+          ru: [
+            `${capitalize(siteConfig.hours.display.ru)}, без выходных.`,
+            "Заказы на сайте принимаем круглосуточно.",
+          ],
         },
       },
     ],

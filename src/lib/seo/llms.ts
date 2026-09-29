@@ -10,7 +10,7 @@
 // наявність, характеристики виробника, доставка з налаштувань, FAQ із карток і статей.
 // Рік заснування, ЄДРПОУ, «кращий магазин України» тощо — не додавати, поки власник не
 // дасть підтверджених даних: вигадка в цьому файлі поїде в цитати асистентів як факт.
-import { siteConfig } from "@/config/site";
+import { siteConfig, socialProfiles } from "@/config/site";
 import type { Locale } from "@/i18n/config";
 import {
   getAllProducts,
@@ -86,6 +86,9 @@ function company(contact: ContactInfo): string[] {
     `- Адреса: ${a.streetAddress}, ${a.addressLocality}, ${a.addressRegion}, ${a.addressCountry}`,
     `- Графік: ${siteConfig.hours.display[UA]}, без вихідних`,
     `- Працює з ${siteConfig.foundingYear} року`,
+    // Офіційні профілі — щоб асистент міг звʼязати акаунти з магазином і не прийняв
+    // сторонній акаунт із схожою назвою за наш. Ті самі адреси, що в sameAs розмітки.
+    ...socialProfiles(contact.social).map((s) => `- ${s.name}: ${s.href}`),
     `- Мови сайту: українська (${url("/ua")}), російська (${url("/ru")})`,
     `- Валюта: UAH. Ціни оновлено: ${PRICE_LIST_EFFECTIVE_DATE}`,
     `- Доставка: Нова Пошта ${contact.shippingFee} грн, Укрпошта ${contact.ukrposhtaFee} грн;` +
@@ -219,6 +222,7 @@ export function buildAiTxt(contact: ContactInfo): string {
     "Business: інтернет-магазин інвентарю для настільного тенісу (Butterfly), Україна",
     `Founded: ${siteConfig.foundingYear}`,
     `Hours: ${siteConfig.hours.display[UA]}, без вихідних`,
+    ...socialProfiles(contact.social).map((s) => `Profile: ${s.href}`),
     "",
     "# Використання вмісту ШІ-асистентами",
     "Allow: citation, summarization, retrieval, answering user questions",

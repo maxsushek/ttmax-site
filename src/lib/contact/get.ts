@@ -23,16 +23,20 @@ function socialDefault(key: string): string {
   return href === "#" ? "" : href;
 }
 
+/** Соцмережі: для кожної платформи з конфігу — значення з адмінки або дефолт коду. */
+function resolveSocial(m: SettingsMap): ContactInfo["social"] {
+  return Object.fromEntries(
+    siteConfig.social.map((s) => [s.key, settingString(m, CONTACT_KEYS[s.key]) || socialDefault(s.key)]),
+  ) as ContactInfo["social"];
+}
+
 /** Дефолти коду для контактних ключів (для передзаповнення полів в адмінці + diff при збереженні). */
 export function contactDefaults(): Record<string, string> {
   return {
     [CONTACT_KEYS.phone]: siteConfig.phone,
     [CONTACT_KEYS.phoneDisplay]: siteConfig.phoneDisplay,
     [CONTACT_KEYS.email]: siteConfig.email,
-    [CONTACT_KEYS.telegram]: socialDefault("telegram"),
-    [CONTACT_KEYS.instagram]: socialDefault("instagram"),
-    [CONTACT_KEYS.youtube]: socialDefault("youtube"),
-    [CONTACT_KEYS.facebook]: socialDefault("facebook"),
+    ...Object.fromEntries(siteConfig.social.map((s) => [CONTACT_KEYS[s.key], socialDefault(s.key)])),
     [CONTACT_KEYS.addrStreet]: siteConfig.address.streetAddress,
     [CONTACT_KEYS.addrLocality]: siteConfig.address.addressLocality,
     [CONTACT_KEYS.addrRegion]: siteConfig.address.addressRegion,
@@ -49,12 +53,7 @@ export function resolveContact(m: SettingsMap): ContactInfo {
     phone: settingString(m, CONTACT_KEYS.phone) || siteConfig.phone,
     phoneDisplay: settingString(m, CONTACT_KEYS.phoneDisplay) || siteConfig.phoneDisplay,
     email: settingString(m, CONTACT_KEYS.email) || siteConfig.email,
-    social: {
-      telegram: settingString(m, CONTACT_KEYS.telegram) || socialDefault("telegram"),
-      instagram: settingString(m, CONTACT_KEYS.instagram) || socialDefault("instagram"),
-      youtube: settingString(m, CONTACT_KEYS.youtube) || socialDefault("youtube"),
-      facebook: settingString(m, CONTACT_KEYS.facebook) || socialDefault("facebook"),
-    },
+    social: resolveSocial(m),
     address: {
       street: settingString(m, CONTACT_KEYS.addrStreet) || siteConfig.address.streetAddress,
       locality: settingString(m, CONTACT_KEYS.addrLocality) || siteConfig.address.addressLocality,

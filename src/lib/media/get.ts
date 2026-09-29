@@ -150,8 +150,14 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     постачальника його не було в наявності.
  * v11: читання посторінково (обріз PostgREST на 1000 рядків — див. loadAll). Кеш v10
  *     зберіг ОБРІЗАНУ карту, тому ключ міняємо: інакше виправлення не видно до години.
+ * v12: «Чохли та сумки» закрито повністю — +108 фото на решту 37 карток (Yasyo, Otomo,
+ *     Kanoy, Kaban, Black Line, Sendai, Tabi, Logo 2019, Easy/Cell/Full Hard/1950, рюкзак
+ *     Kashiwa). Джерела — офіційні файли Butterfly з дзеркал дилерів (Butterfly KSA,
+ *     vsenastolnitenis.cz, RevSpin, Tees Sport, pingpong.ee, sporttrend24), кожне звірене
+ *     з моделлю. Рядки вставлено SQL-ом 29.09; на проді вони з'явились і без бампу (revalidate
+ *     3600), бамп лише гарантує свіже читання на першому запиті нового деплою.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v11"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v12"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });

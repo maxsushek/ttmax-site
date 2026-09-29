@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-import { siteConfig, isOwnProfileUrl } from "@/config/site";
+import { siteConfig, socialProfiles } from "@/config/site";
+import { SocialIcon } from "@/components/ui/SocialIcon";
 import { trackEvent } from "@/lib/analytics/events";
 import type { ContactInfo } from "@/lib/contact/keys";
 import type { Messages } from "@/i18n/messages/types";
@@ -114,10 +115,7 @@ export function Footer({
    * Тепер обидва йдуть з contact (фолбек — siteConfig), а ключ footer.phone зі словників прибрано.
    */
   const phoneLabel = contact?.phoneDisplay || siteConfig.phoneDisplay;
-  const socialHref = (key: string): string =>
-    (contact?.social[key as "telegram" | "youtube" | "facebook"] ||
-      siteConfig.social.find((s) => s.key === key)?.href) ??
-    "#";
+  const socials = socialProfiles(contact?.social);
 
   // Каталожні пункти футера → реальні URL категорій.
   // Слаги зіставляємо ЗА ІНДЕКСОМ (як infoSlugs нижче), а не за перекладеним label:
@@ -172,44 +170,36 @@ export function Footer({
               {m.tagline}
             </p>
           </div>
-          <div className="flex flex-col items-end gap-3">
-            <div className="flex gap-2">
-              {/*
-                ⚠️ "#" не рендеримо взагалі — це посилання в нікуди на ~870 сторінках.
-                Корені платформ (instagram.com/) — тимчасові заглушки, поки в магазину
-                немає власних профілів: показуємо, але з rel="nofollow", бо це не наша
-                сторінка. Реальний профіль (зі шляхом) отримує звичайний rel і сам
-                потрапляє в sameAs розмітки — див. isOwnProfileUrl() у config/site.ts.
-              */}
-              {siteConfig.social
-                .filter((s) => socialHref(s.key) && socialHref(s.key) !== "#")
-                .map((s) => (
-                <a
-                  key={s.key}
-                  href={socialHref(s.key)}
-                  target="_blank"
-                  rel={
-                    isOwnProfileUrl(socialHref(s.key))
-                      ? "noopener noreferrer"
-                      : "nofollow noopener noreferrer"
-                  }
-                  aria-label={s.key}
-                  className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-white/[0.12] text-[11px] font-bold text-ink-muted transition-all hover:-translate-y-0.5"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = s.color;
-                    e.currentTarget.style.color = s.color;
-                    e.currentTarget.style.background = `${s.color}22`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "";
-                    e.currentTarget.style.color = "";
-                    e.currentTarget.style.background = "";
-                  }}
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
+          {/* На телефоні блок переноситься під лого, тож рівняємо ліворуч, як і лого; праворуч — з sm. */}
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            {/*
+              Лише власні профілі магазину (socialProfiles): платформа без профілю не
+              показується зовсім — раніше тут були корені платформ як заглушки, тобто
+              посилання в нікуди на кожній сторінці. Ті самі адреси йдуть у sameAs.
+              rel="me" — стандартна позначка «це мій профіль»: за нею платформи й
+              асистенти звʼязують акаунт із сайтом.
+              Фірмовий колір — через CSS-змінну, а не JS-обробники: так підсвічування
+              працює і для клавіатури (focus-visible), а не лише для мишки.
+            */}
+            {socials.length > 0 && (
+              <ul className="flex flex-wrap gap-2 sm:justify-end">
+                {socials.map((s) => (
+                  <li key={s.key}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="me noopener noreferrer"
+                      aria-label={`${siteConfig.operator} — ${s.name}`}
+                      title={s.name}
+                      style={{ "--brand": s.color } as CSSProperties}
+                      className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-white/[0.12] text-ink-muted transition-all hover:-translate-y-0.5 hover:border-[var(--brand)] hover:bg-[color-mix(in_srgb,var(--brand)_14%,transparent)] hover:text-[var(--brand)] focus-visible:border-[var(--brand)] focus-visible:text-[var(--brand)]"
+                    >
+                      <SocialIcon name={s.key} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
             <a
               href={`tel:${phoneHref}`}
               data-cta="phone"
@@ -221,7 +211,7 @@ export function Footer({
             </a>
             {/* Реальна адреса магазину — на кожній сторінці (trust-сигнал + локальний SEO
                 під «настільний теніс Харків»). Джерело одне: siteConfig.addressDisplay. */}
-            <address className="max-w-[240px] text-right font-body text-[13px] not-italic leading-relaxed text-ink-muted">
+            <address className="max-w-[240px] text-left font-body sm:text-right text-[13px] not-italic leading-relaxed text-ink-muted">
               {siteConfig.addressDisplay[locale]}
             </address>
           </div>

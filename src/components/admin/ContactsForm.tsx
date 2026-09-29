@@ -33,12 +33,15 @@ const GROUPS: Group[] = [
     title: "Соцмережі (повні посилання)",
     fields: [
       // ⚠️ Вписувати ВЛАСНИЙ профіль магазину зі шляхом (instagram.com/ваш_акаунт),
-      // а не корінь платформи: лише тоді адреса потрапить у sameAs розмітки й скаже
-      // Google, що акаунт належить саме нам. Порожнє поле = лишиться заглушка.
+      // а не корінь платформи: лише тоді адреса потрапить у підвал і в sameAs розмітки.
+      // Порожнє поле = адреса з коду (config/site.ts); немає й там — платформа прихована.
       { key: CONTACT_KEYS.instagram, label: "Instagram", placeholder: "https://www.instagram.com/ваш_акаунт" },
+      { key: CONTACT_KEYS.facebook, label: "Facebook", placeholder: "https://facebook.com/…" },
+      { key: CONTACT_KEYS.x, label: "X (Twitter)", placeholder: "https://x.com/…" },
+      { key: CONTACT_KEYS.linkedin, label: "LinkedIn", placeholder: "https://www.linkedin.com/…" },
+      { key: CONTACT_KEYS.reddit, label: "Reddit", placeholder: "https://www.reddit.com/user/…" },
       { key: CONTACT_KEYS.telegram, label: "Telegram", placeholder: "https://t.me/ваш_канал" },
       { key: CONTACT_KEYS.youtube, label: "YouTube", placeholder: "https://youtube.com/@…" },
-      { key: CONTACT_KEYS.facebook, label: "Facebook", placeholder: "https://facebook.com/…" },
     ],
   },
   {
