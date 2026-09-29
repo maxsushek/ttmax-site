@@ -123,8 +123,12 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     збігаються лише на 0.84 при 0.98 у контрольному тесті «той самий кадр»), тож
  *     видаляти його не було за що. Воно пішло в кінець сортуванням, першим став
  *     кадр 1000 px — з нього ж беруться og:image, Product-розмітка й картка лістингу.
+ * v10: + 71 фото на 13 карток «Чохли та сумки» (Kitami, Kashiwa, Tokai, Logo 2019 Oval,
+ *     Kibako). Джерело — офіційний дистриб'ютор Butterfly Adria і pingpong.ee, залиті
+ *     скриптом у ttmax/product/<slug>/NN. Рюкзак Kashiwa свідомо пропущено: у прайсі
+ *     постачальника його не було в наявності.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v9"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v10"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
