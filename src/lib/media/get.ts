@@ -156,8 +156,16 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     vsenastolnitenis.cz, RevSpin, Tees Sport, pingpong.ee, sporttrend24), кожне звірене
  *     з моделлю. Рядки вставлено SQL-ом 29.09; на проді вони з'явились і без бампу (revalidate
  *     3600), бамп лише гарантує свіже читання на першому запиті нового деплою.
+ * v13: «Одяг» і «Взуття» — +461 фото на 121 картку (30.09). Уся європейська лінійка
+ *     2015–2025, зокрема зняті моделі (Yao, Xero, Kido, Kisa, Kitao, Tori, Shiro…): офіційні
+ *     файли з vsenastolnitenis.cz (архів «akční nabídka»), Butterfly Adria, Tees Sport, KSA,
+ *     pingpong.ee. Розфарбування — в одній галереї (рішення власника). Без фото лишились
+ *     6 карток: Groovy чорні й сині, Ukraine, Suribu, Koba, кепка 1950.
+ *     Того ж дня: «Аксесуари» +54 фото на 35 карток (рушники, торцеві стрічки, очищувачі,
+ *     пляшки, губки) і 2 мʼячі (Easy Ball 120, Master Quality 72). Без фото: Free Chack 30 ml,
+ *     пляшка Borussia. Решта каталогу (накладки, основи, сітки, стіл) вже була з фото.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v12"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v13"], {
   tags: [MEDIA_TAG],
   revalidate: 3600,
 });
