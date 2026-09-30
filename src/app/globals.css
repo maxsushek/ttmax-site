@@ -88,6 +88,89 @@
   .nav-link:hover::after {
     @apply w-full;
   }
+
+  /**
+   * Кнопки дії («В кошик», «Оформити замовлення», «Замовити дзвінок»): при наведенні
+   * по кнопці один раз пробігає м'який відблиск, кнопка ледь піднімається, світіння
+   * теплішає. Один прохід, без повторів і пульсації — ефект помітний, але не смикає.
+   *
+   * Як влаштовано:
+   * - відблиск — ::after ПІД текстом: isolation робить кнопку контекстом накладання, а
+   *   z-index:-1 кладе смугу між фоном кнопки й написом, тож текст лишається чітким;
+   * - назад смуга повертається миттєво й невидимо (transition лише на прямий хід), тож
+   *   кожне нове наведення програє ефект знову;
+   * - лише для пристроїв із наведенням (hover: hover): на телефоні «липкий» hover після
+   *   тапу виглядав би як завислий відблиск; там лишається тільки натискання;
+   * - prefers-reduced-motion — без руху взагалі.
+   */
+  .cta-sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .cta-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 28%,
+      rgba(255, 255, 255, 0.5) 46%,
+      rgba(255, 255, 255, 0.12) 54%,
+      transparent 68%
+    );
+    transform: translateX(-130%);
+  }
+  .cta-sheen svg {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) {
+    .cta-sheen:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 34px rgba(232, 255, 71, 0.42);
+    }
+    .cta-sheen:not(:disabled):hover::after {
+      transform: translateX(130%);
+      transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .cta-sheen:not(:disabled):hover svg {
+      transform: translateX(3px);
+    }
+  }
+  /* Тихіший варіант для контурної кнопки («Швидке замовлення»): фон прозорий, тож білий
+     відблиск читався б як пляма — замість нього напівпрозорий акцентний, і світіння слабше. */
+  .cta-sheen--soft::after {
+    background: linear-gradient(
+      110deg,
+      transparent 28%,
+      rgba(232, 255, 71, 0.16) 46%,
+      rgba(232, 255, 71, 0.04) 54%,
+      transparent 68%
+    );
+  }
+  @media (hover: hover) {
+    .cta-sheen--soft:not(:disabled):hover {
+      box-shadow: 0 8px 26px rgba(232, 255, 71, 0.16);
+    }
+  }
+  .cta-sheen:focus-visible::after {
+    transform: translateX(130%);
+    transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .cta-sheen:not(:disabled):active {
+    transform: translateY(0) scale(0.985);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta-sheen::after {
+      display: none;
+    }
+    .cta-sheen:not(:disabled):hover,
+    .cta-sheen:not(:disabled):active {
+      transform: none;
+    }
+  }
 }
 
 @layer components {

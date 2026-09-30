@@ -167,6 +167,9 @@ export function QuickOrder({
         variant={variant === "primary" ? "primary" : "outline"}
         size="lg"
         fullWidth
+        // Контурна кнопка — теж «замовити», тож той самий відблиск, але тихіший
+        // (primary вже має cta-sheen з варіанта Button).
+        className={variant === "primary" ? undefined : "cta-sheen cta-sheen--soft"}
         onClick={openModal}
         data-cta="quick-order"
         data-location={productSlug}

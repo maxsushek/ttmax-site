@@ -7,8 +7,9 @@ export type ButtonVariant = "primary" | "outline" | "ghost" | "dark";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-accent text-bg-base hover:shadow-accent-glow active:scale-[0.98] disabled:bg-accent/40 disabled:cursor-not-allowed",
+  // cta-sheen (globals.css) — відблиск, підйом і світіння при наведенні, стиснення при
+  // натисканні. Тому тут немає hover:/active: класів: вони б перебили той самий transform.
+  primary: "cta-sheen bg-accent text-bg-base disabled:bg-accent/40 disabled:cursor-not-allowed",
   outline:
     "bg-transparent text-accent border border-accent/50 hover:bg-accent/10 active:scale-[0.98]",
   ghost: "bg-white/[0.07] text-ink/80 hover:bg-white/[0.12] active:scale-[0.98]",

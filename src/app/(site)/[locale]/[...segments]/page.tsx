@@ -773,7 +773,11 @@ function buildCardVMs(
           .trim() || p.model,
       name: p.name[locale],
       secondary: cardSecondary(p, locale),
-      priceLabel: price !== undefined ? `${catalogUi.from[locale]} ${formatPrice(price)}` : null,
+      // ⚠️ Без «від»: у кожного товару ОДНА ціна (у жодного варіанти не різняться за ціною —
+      // перевірено по всьому каталогу 30.09). «від 1 555 грн» на картці читалось як «буде
+      // дорожче» і підривало довіру. «від» лишається лише там, де це справді діапазон:
+      // фільтр ціни й опис категорії («42 моделі · від 1 040 грн»).
+      priceLabel: price !== undefined ? formatPrice(price) : null,
       priceValue: price ?? null,
       oldPriceLabel: (() => {
         const old = promoOldPrice(p.slug, price);
@@ -1021,9 +1025,8 @@ function ProductCard({
           </span>
         )}
         <span className="font-display text-sm font-black text-accent">
-          {price !== undefined
-            ? `${catalogUi.from[locale]} ${formatPrice(price)}`
-            : catalogUi.priceOnRequest[locale]}
+          {/* Без «від» — див. коментар до priceLabel у buildCardVMs. */}
+          {price !== undefined ? formatPrice(price) : catalogUi.priceOnRequest[locale]}
         </span>
       </div>
     </Link>

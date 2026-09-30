@@ -178,10 +178,11 @@ export function BasePurchasePanel({
               data-cta="catalog-add-to-cart"
               data-location={slug}
               className={cn(
-                "w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all active:scale-[0.99]",
+                // cta-sheen (globals.css): відблиск і підйом при наведенні, стиснення при натисканні.
+                "cta-sheen w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all",
                 justAdded
                   ? "bg-success text-white"
-                  : "bg-accent text-bg-base shadow-accent-glow hover:brightness-110",
+                  : "bg-accent text-bg-base shadow-accent-glow",
               )}
             >
               {justAdded ? `✓ ${t.added}` : t.addToCart}
