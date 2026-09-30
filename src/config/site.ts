@@ -54,12 +54,13 @@ export const siteConfig = {
   social: [
     { key: "instagram", name: "Instagram", color: "#E1306C", href: "https://www.instagram.com/ttmax_butterfly/" },
     { key: "facebook", name: "Facebook", color: "#1877F2", href: "https://www.facebook.com/profile.php?id=61594769786271" },
+    // YouTube додано 30.09.2026.
+    { key: "youtube", name: "YouTube", color: "#FF0000", href: "https://www.youtube.com/@ttmax.com.ua_official" },
     // Колір X — чорний, на темному підвалі він зник би; беремо світлий колір тексту X.
     { key: "x", name: "X (Twitter)", color: "#E7E9EA", href: "https://x.com/ttmax_official" },
     { key: "linkedin", name: "LinkedIn", color: "#0A66C2", href: "https://www.linkedin.com/in/tt-max/" },
     { key: "reddit", name: "Reddit", color: "#FF4500", href: "https://www.reddit.com/user/ttmax_oficial/" },
     { key: "telegram", name: "Telegram", color: "#229ED9", href: "" },
-    { key: "youtube", name: "YouTube", color: "#FF0000", href: "" },
   ],
   // Schema.org address (PostalAddress) — реальна адреса магазину, задана власником 25.07.2026.
   // Пишемо українською: для українського бізнесу локальна форма коректніша за транслітерацію
