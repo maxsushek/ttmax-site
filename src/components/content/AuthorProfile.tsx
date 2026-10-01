@@ -97,7 +97,8 @@ export function AuthorProfile({ author, locale }: { author: Author; locale: Loca
                   key={url}
                   href={url}
                   target="_blank"
-                  rel="noopener noreferrer nofollow"
+                  // rel="me": профілі самого автора (те саме, що sameAs у розмітці Person).
+                  rel="me noopener"
                   className="font-body text-[13px] text-accent hover:underline"
                 >
                   {new URL(url).hostname.replace(/^www\./, "")}

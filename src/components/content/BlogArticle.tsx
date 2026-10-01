@@ -447,10 +447,16 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 <li key={i} className="flex gap-2.5 font-body text-[13px] leading-relaxed">
                   <span className="shrink-0 tabular-nums text-ink-dim">{i + 1}.</span>
                   <span>
+                    {/*
+                      Без nofollow: це редакційні цитати — ми самі обрали ці джерела й
+                      ручаємось за них. nofollow на власних цитатах каже Google «не
+                      довіряємо» й підточує довіру до самої статті (E-E-A-T). nofollow
+                      лишаємо для реклами й того, що пишуть користувачі, — тут такого немає.
+                    */}
                     <a
                       href={src.url}
                       target="_blank"
-                      rel="noopener noreferrer nofollow"
+                      rel="noopener"
                       className="text-accent hover:underline"
                     >
                       {src.label[locale]} ↗
@@ -474,7 +480,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
             <a
               href={post.officialSource.url}
               target="_blank"
-              rel="noopener noreferrer nofollow"
+              rel="noopener"
               className="text-accent hover:underline"
             >
               {post.officialSource.label[locale]} ↗
@@ -551,7 +557,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     key={url}
                     href={url}
                     target="_blank"
-                    rel="noopener noreferrer nofollow"
+                    // rel="me": це профілі самого автора — зв'язуємо особу з її акаунтами.
+                    rel="me noopener"
                     className="inline-flex items-center gap-1 font-body text-[12px] text-accent hover:underline"
                   >
                     {profileLabel(url)}
