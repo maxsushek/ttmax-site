@@ -5,6 +5,7 @@
 import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { noClient, queryFailed } from "@/lib/supabase/load-failure";
 
 export const SETTINGS_TAG = "site-settings";
 
@@ -13,11 +14,12 @@ export type SettingsMap = Record<string, unknown>;
 async function loadAll(): Promise<SettingsMap> {
   // service role: site_settings закрита RLS, читаємо лише на сервері
   const client = getSupabaseServerClient({ useServiceRole: true });
-  if (!client) return {};
+  // Збій — виняток, не {}: порожня карта лягла б у кеш без таймера (supabase/load-failure.ts).
+  if (!client) return noClient("settings", {});
   const db = client as unknown as SupabaseClient;
 
   const { data, error } = await db.from("site_settings").select("key, value");
-  if (error || !data) return {};
+  if (error || !data) queryFailed("settings", error?.message ?? "порожня відповідь");
 
   const map: SettingsMap = {};
   for (const row of data as { key: string; value: unknown }[]) {
@@ -27,9 +29,11 @@ async function loadAll(): Promise<SettingsMap> {
 }
 
 /** Кешована карта всіх налаштувань. Безпечно викликати в будь-якому серверному компоненті. */
-export const getSettings = unstable_cache(loadAll, ["site-settings-map-v1"], {
+// v2: без таймера (revalidate: false — див. [...segments]/page.tsx). Зміни — лише через
+// адмінку (revalidateTag); SQL-правка site_settings повз адмінку = бамп версії + деплой.
+export const getSettings = unstable_cache(loadAll, ["site-settings-map-v2"], {
   tags: [SETTINGS_TAG],
-  revalidate: 3600,
+  revalidate: false,
 });
 
 /** Значення-рядок за ключем або "" (порожнє трактуэться як «не задано»). */

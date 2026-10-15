@@ -14,11 +14,11 @@ import { getSettings } from "@/lib/settings/get";
 import { resolveHomeOverrides } from "@/lib/homepage/home";
 import { getContact } from "@/lib/contact/get";
 
-// ISR: після завантаження фото в адмінці кеш вітрини інвалідується тегом і сторінка перезбирається.
-// 600 → 3600 разом з каталогом: див. розгорнуте пояснення в [...segments]/page.tsx.
-// Головна — лише 2 URL і на квоту майже не впливає, але тримаємо вікно однаковим,
+// ISR без таймера: після правки в адмінці кеш вітрини інвалідується тегом і сторінка
+// перезбирається; інакше — лише після деплою. Пояснення в [...segments]/page.tsx.
+// Головна — лише 2 URL і на квоту майже не впливає, але тримаємо однаково з каталогом,
 // щоб вітрина й картки не розʼїжджались за свіжістю.
-export const revalidate = 3600;
+export const revalidate = false;
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: l } = await params;

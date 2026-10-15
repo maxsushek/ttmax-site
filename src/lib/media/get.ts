@@ -5,6 +5,7 @@
 import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { noClient, queryFailed } from "@/lib/supabase/load-failure";
 import type { EntityMedia, EntityType } from "./types";
 
 export const MEDIA_TAG = "entity-media";
@@ -33,39 +34,25 @@ type Row = {
  * категоріями — і виглядає при цьому успішною. Саме так вийшло на локальному
  * сухому прогоні: /odyag і /myachi зібрались порожніми, хоч на проді там 47 і 7 карток.
  *
- * На проді таку збірку Vercel задеплоїв би мовчки. Тому на БІЛДІ падаємо голосно:
- * зламаний деплой помітно одразу, а сайт без фото в індексі — ні.
- * У рантаймі (ISR/ревалідація) лишаємо м'яку поведінку: сторінка вже є, і краще
- * віддати її без свіжих картинок, ніж 500.
+ * Тому на Vercel збій — виняток і на білді, і в рантаймі (supabase/load-failure.ts).
+ * Раніше рантайм був мʼяким («краще без свіжих фото, ніж 500»), але з revalidate: false
+ * порожня карта лягла б у кеш назавжди. Локально — фолбек із попередженням нижче.
  */
-function onMediaFailure(reason: string): EntityMediaMap {
-  const isBuild = process.env.NEXT_PHASE === "phase-production-build";
-  // ⚠️ Падаємо лише на СПРАВЖНЬОМУ деплої (Vercel виставляє VERCEL=1), а не на
-  // будь-якій продакшн-збірці. Перша версія цієї перевірки була ширшою й зламала
-  // локальні збірки для перевірки розмітки — а це інструмент, яким я користуюсь
-  // постійно. Захист має закривати шлях у прод, а не роботу.
-  if (isBuild && process.env.VERCEL === "1") {
-    throw new Error(
-      `[media] ${reason}. Збірка зупинена: без entity_media сайт зібрався б без фото ` +
-        `і з порожніми категоріями. Перевір SUPABASE env у Vercel.`,
-    );
-  }
-  if (isBuild) {
+function localNoClient(): EntityMediaMap {
+  if (process.env.NEXT_PHASE === "phase-production-build" && process.env.VERCEL !== "1") {
     console.warn(
-      `\n⚠️  [media] ${reason}.\n` +
+      `\n⚠️  [media] немає клієнта Supabase.\n` +
         `   ЛОКАЛЬНА ЗБІРКА БЕЗ ФОТО: товари odyag/myachi сховаються, категорії\n` +
         `   зберуться порожніми, Product-розмітка піде без image. Не робити з цього\n` +
         `   артефакту висновків про прод — там дані інші.\n`,
     );
-  } else {
-    console.error(`[media] ${reason} — віддаю порожню карту (рантайм)`);
   }
-  return {};
+  return noClient("media", {});
 }
 
 async function loadAll(): Promise<EntityMediaMap> {
   const client = getSupabaseServerClient(); // anon-чтение (политика public select)
-  if (!client) return onMediaFailure("немає клієнта Supabase");
+  if (!client) return localNoClient();
   const db = client as unknown as SupabaseClient;
 
   /**
@@ -95,7 +82,7 @@ async function loadAll(): Promise<EntityMediaMap> {
       .order("id", { ascending: true })
       .range(from, from + PAGE - 1);
     if (error || !chunk) {
-      return onMediaFailure(`запит до entity_media не вдався: ${error?.message ?? "порожня відповідь"}`);
+      queryFailed("media", `entity_media: ${error?.message ?? "порожня відповідь"}`);
     }
     data.push(...(chunk as Row[]));
     if (chunk.length < PAGE) break;
@@ -164,10 +151,17 @@ async function loadAll(): Promise<EntityMediaMap> {
  *     Того ж дня: «Аксесуари» +54 фото на 35 карток (рушники, торцеві стрічки, очищувачі,
  *     пляшки, губки) і 2 мʼячі (Easy Ball 120, Master Quality 72). Без фото: Free Chack 30 ml,
  *     пляшка Borussia. Решта каталогу (накладки, основи, сітки, стіл) вже була з фото.
+ * v14: кеш без таймера (revalidate: false) і збій бази — виняток замість порожньої карти.
+ *
+ * ⚠️ БЕЗ ТАЙМЕРА SQL-ПРАВКА НЕ ПІДТЯГНЕТЬСЯ САМА — ні за годину, ні взагалі. Після вставки
+ * фото SQL-ом: або кнопка «Скинути кеш фото» в адмінці (/api/admin/revalidate-media →
+ * revalidateTag), або бамп версії тут + деплой. Кнопка дешевша: деплой — повний перезапис
+ * ISR-кешу всього сайту.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v13"], {
+export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v14"], {
   tags: [MEDIA_TAG],
-  revalidate: 3600,
+  // false — див. [...segments]/page.tsx: таймер = перегенерації = ISR-записи.
+  revalidate: false,
 });
 
 /** Главное (первое по сортировке) изображение сущности или null. */

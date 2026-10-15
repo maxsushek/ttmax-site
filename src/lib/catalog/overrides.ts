@@ -5,6 +5,7 @@
 import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { noClient, queryFailed } from "@/lib/supabase/load-failure";
 import type { CatalogProduct } from "@/types/catalog";
 
 export const PRODUCT_OVERRIDES_TAG = "product-overrides";
@@ -23,13 +24,15 @@ export type OverridesMap = Record<string, Override>;
 async function loadOverrides(): Promise<OverridesMap> {
   // service role: таблиця закрита RLS, читаємо лише на сервері
   const client = getSupabaseServerClient({ useServiceRole: true });
-  if (!client) return {};
+  // Збій — виняток, не {}: інакше в кеш без таймера ліг би каталог із цінами з коду замість
+  // адмінських (supabase/load-failure.ts).
+  if (!client) return noClient("overrides", {});
   const db = client as unknown as SupabaseClient;
 
   const { data, error } = await db
     .from("product_overrides")
     .select("key, price, in_stock, updated_at");
-  if (error || !data) return {};
+  if (error || !data) queryFailed("overrides", error?.message ?? "порожня відповідь");
 
   const map: OverridesMap = {};
   for (const row of data as {
@@ -49,9 +52,11 @@ async function loadOverrides(): Promise<OverridesMap> {
 }
 
 /** Кешована карта переопределень. Безпечно викликати в серверних компонентах. */
-export const getOverrides = unstable_cache(loadOverrides, ["product-overrides-map-v1"], {
+// v2: без таймера (revalidate: false — див. [...segments]/page.tsx). Ціни міняються лише
+// через адмінку (revalidateTag); SQL-правка product_overrides повз неї = бамп версії + деплой.
+export const getOverrides = unstable_cache(loadOverrides, ["product-overrides-map-v2"], {
   tags: [PRODUCT_OVERRIDES_TAG],
-  revalidate: 3600,
+  revalidate: false,
 });
 
 /**

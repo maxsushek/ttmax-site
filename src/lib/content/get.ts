@@ -5,6 +5,7 @@
 import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { noClient, queryFailed } from "@/lib/supabase/load-failure";
 import type { Locale } from "@/i18n/config";
 
 export const CONTENT_TAG = "content-blocks";
@@ -125,7 +126,7 @@ async function load(
   locale: Locale,
 ): Promise<ContentBlock | null> {
   const client = db();
-  if (!client) return null;
+  if (!client) return noClient("content", null);
   const { data, error } = await client
     .from("content_blocks")
     .select("meta_title, meta_description, intro, body, faq, comparison, noindex")
@@ -133,7 +134,11 @@ async function load(
     .eq("slug", slug)
     .eq("locale", locale)
     .maybeSingle();
-  if (error || !data) return null;
+  // Помилка — виняток (supabase/load-failure.ts): null ліг би в кеш без таймера, і сторінка
+  // назавжди лишилась би без опису. А от «рядка немає» (data === null без помилки) — це
+  // нормальна відповідь: опису для цієї сутності просто не задано.
+  if (error) queryFailed("content", error.message);
+  if (!data) return null;
   return mapRow(data as Row);
 }
 
@@ -149,7 +154,9 @@ async function load(
  * Версія входить у ключ кеша, тож інкремент = гарантований промах = свіже читання з БД
  * на першому ж запиті після деплою. Тег CONTENT_TAG лишається — він обслуговує адмінку.
  */
-const CONTENT_CACHE_VERSION = "v2";
+// v3: без таймера (revalidate: false — див. [...segments]/page.tsx). Тепер SQL-правка повз
+// адмінку без бампу не видна НЕ «до години», а до наступної правки в адмінці або деплою.
+const CONTENT_CACHE_VERSION = "v3";
 
 /**
  * Кешований опис для (тип, slug, мова). null — нічого не рендеримо.
@@ -165,7 +172,7 @@ export function getContent(
     ["content-block", CONTENT_CACHE_VERSION, entityType, slug, locale],
     {
       tags: [CONTENT_TAG],
-      revalidate: 3600,
+      revalidate: false,
     },
   )();
 }
