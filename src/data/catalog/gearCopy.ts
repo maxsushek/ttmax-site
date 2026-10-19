@@ -9,13 +9,14 @@
 //    фірмові картки Butterfly у ритейлерів) і нашого каталогу. Технології (B-Absorber,
 //    Wingrip…) пишемо тільки тим моделям, у яких їх називає виробник;
 //  • якщо даних про модель немає — копі НЕ пишемо, картка лишається закритою. Так свідомо
-//    лишились Trynex, мʼячі S40+, Combi Cleaner, тубус, захисна плівка й дрібні аксесуари
+//    лишились мʼячі S40+, Combi Cleaner, тубус, бавовняна губка, шльопанці й дрібні аксесуари
 //    без опису виробника (19.10.2026);
 //  • однаковий товар в іншому обʼємі чи кольорі (клей 37/50/500 мл, Rifones сині/чорні) не
 //    відкриваємо — це дублі основної картки; їхній попит забирає основна картка й хаб.
 //
 // Розміри взуття 38–46 — ті, що на картці (вибір розміру); інших не обіцяємо.
 import type { CatalogProduct, Localized } from "@/types/catalog";
+import { wearCopy } from "./gearExpertWear";
 
 type Copy = {
   /**
@@ -791,6 +792,24 @@ const COPY: Record<string, Copy> = {
   },
 
   /* =========== Партія 4: взуття, мʼячі, дрібні аксесуари =========== */
+  "krosivky-butterfly-lezoline-trynex": {
+    description: {
+      ua: "Кросівки Butterfly Lezoline Trynex — наступник Utop: сучасний спортивний дизайн, зручна посадка й чіпка підошва. 270 г у розмірі 43. Розміри 38–46.",
+      ru: "Кроссовки Butterfly Lezoline Trynex — преемник Utop: современный спортивный дизайн, удобная посадка и цепкая подошва. 270 г в размере 43. Размеры 38–46.",
+    },
+    links: [shoe("krosivky-butterfly-lezoline-zero", "Lezoline Zero", "Lezoline Zero"), shoe("krosivky-butterfly-lezoline-gigu", "Lezoline Gigu — більше амортизації", "Lezoline Gigu — больше амортизации"), ...L_SHOES],
+  },
+  "zakhysna-plivka-butterfly": {
+    name: { ua: "Захисна плівка Butterfly Rubber Film IV", ru: "Защитная плёнка Butterfly Rubber Film IV" },
+    description: {
+      ua: "Захисна плівка Butterfly Rubber Film IV — неклейка, Японія. Накладають на очищену й просохлу накладку, щоб зберегти поверхню до наступного тренування.",
+      ru: "Защитная плёнка Butterfly Rubber Film IV — неклеящаяся, Япония. Накладывают на очищенную и просохшую накладку, чтобы сохранить поверхность до тренировки.",
+    },
+    links: [
+      { label: { ua: "Spin Refresh — очищувач", ru: "Spin Refresh — очиститель" }, href: "/butterfly/aksessuary/vidnovnyk-obertannia-butterfly-spin-refresh" },
+      ...L_CARE,
+    ],
+  },
   "krosivky-butterfly-lezoline-sal": {
     description: {
       ua: "Кросівки Butterfly Lezoline Sal — тенісне взуття турнірного рівня: сітчастий верх, легка амортизація. Для гравців легкої й середньої ваги. Розміри 38–46.",
@@ -878,7 +897,7 @@ const COPY: Record<string, Copy> = {
 
 /** Накладає власний копі на товар, якщо він є (інакше повертає той самий обʼєкт). */
 export function withGearCopy(p: CatalogProduct): CatalogProduct {
-  const c = COPY[p.slug];
+  const c = COPY[p.slug] ?? wearCopy[p.slug];
   if (!c) return p;
   return {
     ...p,
