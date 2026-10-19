@@ -60,12 +60,15 @@ export function ExpertSections({
   locale,
   currentSlug,
   specs,
+  related,
 }: {
   entry: ExpertEntry;
   locale: Locale;
   currentSlug: string;
   /** Характеристики товару — ЄДИНЕ джерело для швидкості/обертання/жорсткості. */
   specs?: { speed?: number; spin?: number; hardnessDeg?: number };
+  /** «Дивіться також» — хаб і суміжні розділи (поки лише екіпірування). */
+  related?: { label: { ua: string; ru: string }; href: string }[];
 }) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
 
@@ -104,7 +107,7 @@ export function ExpertSections({
    * у них дані живуть в `base`, а не в `specs`), лишаємо значення з expert.ts: там
    * конкурувати нема з чим, бо на сторінці основи немає таблиці зі швидкістю.
    */
-  const rowValues = (row: { slug: string; speed: number; spin: number; hardness?: number }) => {
+  const rowValues = (row: { slug: string; speed?: number; spin?: number; hardness?: number }) => {
     const sp = getProductBySlug(row.slug)?.specs;
     return {
       speed: typeof sp?.speed === "number" ? sp.speed / 10 : row.speed,
@@ -115,6 +118,8 @@ export function ExpertSections({
   // Назва серії для заголовка таблиці порівняння (Dignics / Tenergy / …) — з даних, не захардкоджено.
   const series = entry.comparison?.[0]?.model.split(" ")[0] ?? "";
   const cc = entry.comparisonCols; // кастомні підписи колонок (для основ: швидк./жорстк./клас)
+  // Текстові колонки (екіпірування) вирівнюємо вліво разом із заголовками.
+  const textCols = Boolean(entry.comparison?.some((r) => r.cells));
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
   const h3 = "mb-1.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-ink sm:text-base";
 
@@ -159,7 +164,8 @@ export function ExpertSections({
         </div>
       </section>
 
-      {/* 3 · Оцінка експерта */}
+      {/* 3 · Оцінка експерта — лише коли її дав тренер (для екіпірування поки немає) */}
+      {entry.ratings && entry.ratings.length > 0 && (
       <section>
         <h2 className={h2}>{L("Оцінка експерта", "Оценка эксперта")}</h2>
         <div className="mt-1">
@@ -194,6 +200,7 @@ export function ExpertSections({
           )}
         </p>
       </section>
+      )}
 
       {/* 4 · Кому підійде / не підійде */}
       <section className="grid gap-4 sm:grid-cols-2">
@@ -221,7 +228,8 @@ export function ExpertSections({
         </div>
       </section>
 
-      {/* 5 · Думка експерта */}
+      {/* 5 · Думка експерта — підписана тренером, тож лише коли вона справді є */}
+      {entry.expert && (
       <section className="rounded-2xl border-l-2 border-accent bg-white/[0.03] py-5 pl-5 pr-5">
         <div className="mb-2 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
           {L("Думка експерта", "Мнение эксперта")}
@@ -231,6 +239,7 @@ export function ExpertSections({
           <ExpertByline locale={locale} compact />
         </div>
       </section>
+      )}
 
       {/* 6 · Порівняння лінійки */}
       {entry.comparison && entry.comparison.length > 0 && (
@@ -245,9 +254,9 @@ export function ExpertSections({
               <thead>
                 <tr className="border-b border-border-strong font-display text-[11px] uppercase tracking-[0.06em] text-white/55">
                   <th className="py-2.5 pr-3 text-left font-bold">{L("Модель", "Модель")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}</th>
-                  <th className="px-2 py-2.5 text-center font-bold">{cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}</th>
+                  <th className={`px-2 py-2.5 font-bold ${textCols ? "text-left" : "text-center"}`}>{cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}</th>
+                  <th className={`px-2 py-2.5 font-bold ${textCols ? "text-left" : "text-center"}`}>{cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}</th>
+                  <th className={`px-2 py-2.5 font-bold ${textCols ? "text-left" : "text-center"}`}>{cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}</th>
                   <th className="py-2.5 pl-2 text-left font-bold">{L("Кому", "Кому")}</th>
                 </tr>
               </thead>
@@ -258,7 +267,21 @@ export function ExpertSections({
                   return (
                     <tr key={row.slug} className={`border-b border-border-subtle ${cur ? "bg-accent/[0.08]" : ""}`}>
                       <td className={`py-3 pr-3 font-semibold ${cur ? "text-accent" : "text-white/90"}`}>
-                        {row.model}
+                        {/* Модель у таблиці — посилання на її картку: перелінковка всієї лінійки
+                            (для поточної моделі посилання не потрібне). */}
+                        {(() => {
+                          const p = cur ? undefined : getProductBySlug(row.slug);
+                          return p ? (
+                            <Link
+                              href={`/${locale}/${p.brandSlug}/${p.categorySlug}/${p.slug}`}
+                              className="underline decoration-white/25 underline-offset-2 transition-colors hover:text-accent hover:decoration-accent/60"
+                            >
+                              {row.model}
+                            </Link>
+                          ) : (
+                            row.model
+                          );
+                        })()}
                         {cur && (
                           <span className="ml-1.5 align-middle text-[9px] uppercase tracking-wide text-accent/70">
                             {L("ця", "эта")}
@@ -267,21 +290,23 @@ export function ExpertSections({
                       </td>
                       <td
                         data-label={cc ? cc.c1[locale] : L("Швидк./10", "Скор./10")}
-                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                        className={row.cells ? "px-2 py-3 text-left text-white/75" : "px-2 py-3 text-center tabular-nums text-white/75"}
                       >
-                        {v.speed}
+                        {row.cells ? row.cells.c1[locale] : v.speed}
                       </td>
                       <td
                         data-label={cc ? cc.c2[locale] : L("Оберт./10", "Вращ./10")}
-                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                        className={row.cells ? "px-2 py-3 text-left text-white/75" : "px-2 py-3 text-center tabular-nums text-white/75"}
                       >
-                        {v.spin}
+                        {row.cells ? row.cells.c2[locale] : v.spin}
                       </td>
                       <td
                         data-label={cc ? cc.c3[locale] : L("Тверд.", "Жёст.")}
-                        className="px-2 py-3 text-center tabular-nums text-white/75"
+                        className={row.cells ? "px-2 py-3 text-left text-white/75" : "px-2 py-3 text-center tabular-nums text-white/75"}
                       >
-                        {row.hardnessText ?? (v.hardness != null ? `${v.hardness}°` : "—")}
+                        {row.cells
+                          ? row.cells.c3[locale]
+                          : (row.hardnessText ?? (v.hardness != null ? `${v.hardness}°` : "—"))}
                       </td>
                       <td data-label={L("Кому", "Кому")} className="py-3 pl-2 text-white/65">
                         {row.fit[locale]}
@@ -310,6 +335,26 @@ export function ExpertSections({
                 </summary>
                 <div className="px-4 pb-4 font-body text-sm leading-[1.7] text-white/75">{f.a[locale]}</div>
               </details>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 7½ · Дивіться також — хаб і суміжні розділи */}
+      {related && related.length > 0 && (
+        <section>
+          <div className="mb-3 font-display text-xs font-bold uppercase tracking-[0.14em] text-ink-muted">
+            {L("Дивіться також", "Смотрите также")}
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            {related.map((l) => (
+              <Link
+                key={l.href}
+                href={`/${locale}${l.href}`}
+                className="rounded-full border border-border-strong bg-white/[0.02] px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.04em] text-white/85 transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                {l.label[locale]}
+              </Link>
             ))}
           </div>
         </section>

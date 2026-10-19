@@ -3,6 +3,7 @@
 // Рейтинги /10 виведені з офіційних чисел Butterfly (Speed/Spin/Hardness) + консенсусу оглядів.
 // Зараз заповнено для серії накладок Dignics; легко розширюється на інші товари за slug.
 import type { Locale } from "@/i18n/config";
+import { gearExpert } from "./gearExpert";
 
 type L = Record<Locale, string>;
 export type ExpertRating = { label: L; value: number };
@@ -10,22 +11,32 @@ export type ExpertFaq = { q: L; a: L };
 export type ComparisonRow = {
   slug: string;
   model: string;
-  speed: number;
-  spin: number;
+  speed?: number;
+  spin?: number;
   hardness?: number;
   /** Якщо задано — у 3-й колонці показується цей текст (напр. клас основи), а не твердість у °. */
   hardnessText?: string;
+  /**
+   * Текстові значення всіх трьох колонок — для товарів, у яких порівнюються не числа, а
+   * властивості (взуття: рівень / технології / особливість). Підписи колонок — comparisonCols.
+   */
+  cells?: { c1: L; c2: L; c3: L };
   fit: L;
 };
 export type ExpertEntry = {
   verdict: L;
   official: L;
-  ratings: ExpertRating[];
+  /**
+   * Оцінка 0–10 і «Думка експерта» ПІДПИСАНІ живою людиною (тренер, див. ExpertSections).
+   * Тому вони необовʼязкові: для екіпірування їх немає, доки тренер не дав власну оцінку —
+   * вигадувати думку від його імені не можна. Без них блоки просто не рендеряться.
+   */
+  ratings?: ExpertRating[];
   features: L[];
   descriptionSections: { title: L; body: L }[];
   audienceFor: L[];
   audienceNotFor: L[];
-  expert: L;
+  expert?: L;
   faq: ExpertFaq[];
   comparisonTitle?: L;
   /** Підписи 3 числових/текстових колонок таблиці порівняння (дефолт — для накладок). */
@@ -32125,4 +32136,10 @@ export const expertContent: Record<string, ExpertEntry> = {
 
 };
 
-export const getExpert = (slug: string): ExpertEntry | undefined => expertContent[slug];
+/**
+ * Експертний контент: накладки й основи — тут, екіпірування — у gearExpert.ts (той самий
+ * формат, але без підписаних тренером оцінок). Один вхід — тож картка, мета, Product
+ * JSON-LD, llms-full і productIndexable бачать обидва джерела однаково.
+ */
+export const getExpert = (slug: string): ExpertEntry | undefined =>
+  expertContent[slug] ?? gearExpert[slug];

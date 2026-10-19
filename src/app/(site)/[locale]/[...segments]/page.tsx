@@ -191,7 +191,12 @@ export async function generateMetadata({
   // Картка товару: опис будуємо з ЕКСПЕРТНОГО вердикту, а не з шаблону routeDescription
   // (інакше 620 із 622 карток отримують один рядок «Купити … Характеристики, ціна, відгуки»).
   // CMS-опис, якщо він заданий вручну, лишається пріоритетним.
-  const expertDesc = route.kind === "product" ? productMetaDescription(route.product, l) : null;
+  // Екіпірування: власний meta-опис (gearCopy.ts) точніший за зібраний із вердикту — у ньому
+  // розміри, обʼєм, упаковка. Для накладок і основ лишається опис із вердикту.
+  const expertDesc =
+    route.kind === "product" && !(route.product.kind === "gear" && route.product.description)
+      ? productMetaDescription(route.product, l)
+      : null;
   let description =
     expandTokens(content?.metaDescription || expertDesc || routeDescription(route, l), tctx) ?? "";
   // og/twitter не ріжуться на 155 → віддаємо повний вердикт (лише коли опис не з CMS).
@@ -1457,6 +1462,7 @@ function GearView({
   if (gear.ittf) rows.push({ label: L("Схвалення ITTF", "Одобрение ITTF"), value: L("Так", "Да") });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
+  const gearExpertEntry = getExpert(product.slug);
 
   return (
     <ProductShell
@@ -1469,13 +1475,24 @@ function GearView({
       media={media}
       content={content}
       extra={
-        <SeoBlocks
-          blocks={product.seoBlocks}
-          // FAQ показуємо лише коли немає CMS-FAQ: розмітка FAQPage бере CMS першим, і
-          // видимий текст мусить збігатися з розміткою.
-          faq={content?.faq?.length ? undefined : product.faq}
-          locale={locale}
-        />
+        // Екіпірування з експертним блоком (data/catalog/gearExpert.ts) — той самий формат,
+        // що й у накладок та основ. Без нього — легкий блок «Про модель» + FAQ.
+        gearExpertEntry ? (
+          <ExpertSections
+            entry={gearExpertEntry}
+            locale={locale}
+            currentSlug={product.slug}
+            related={product.related}
+          />
+        ) : (
+          <SeoBlocks
+            blocks={product.seoBlocks}
+            // FAQ показуємо лише коли немає CMS-FAQ: розмітка FAQPage бере CMS першим, і
+            // видимий текст мусить збігатися з розміткою.
+            faq={content?.faq?.length ? undefined : product.faq}
+            locale={locale}
+          />
+        )
       }
     >
       <div className="mt-7">

@@ -117,6 +117,8 @@ export interface CatalogProduct {
    * перекриває обидва. Відповіді — лише з даних виробника й каталогу.
    */
   faq?: { q: Localized; a: Localized }[];
+  /** «Дивіться також» під експертним блоком картки: хаб і суміжні розділи (gearCopy.ts). */
+  related?: { label: Localized; href: string }[];
 }
 
 export interface CatalogBrand {
