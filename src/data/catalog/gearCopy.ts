@@ -59,6 +59,25 @@ const L_NETS = [
   { label: { ua: "Тенісні столи", ru: "Теннисные столы" }, href: "/stoly" },
   { label: { ua: "Мʼячі Butterfly", ru: "Мячи Butterfly" }, href: "/myachi" },
 ];
+const L_BAGS = [
+  { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
+  { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
+  { label: { ua: "Рюкзаки", ru: "Рюкзаки" }, href: "/chehly/ryukzaky" },
+];
+const L_PACKS = [
+  { label: { ua: "Рюкзаки", ru: "Рюкзаки" }, href: "/chehly/ryukzaky" },
+  { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
+  { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
+];
+const L_CASES = [
+  { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
+  { label: { ua: "Догляд за накладками", ru: "Уход за накладками" }, href: "/aksessuary/doglyad" },
+  { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
+];
+const L_TOWELS = [
+  { label: { ua: "Усі рушники", ru: "Все полотенца" }, href: "/aksessuary/rushnyky" },
+  { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
+];
 const shoe = (slug: string, ua: string, ru: string) => ({
   label: { ua, ru },
   href: `/butterfly/obuv/${slug}`,
@@ -392,6 +411,183 @@ const COPY: Record<string, Copy> = {
       { label: { ua: "Сітка Europa", ru: "Сетка Europa" }, href: "/butterfly/setki/sitka-butterfly-europa" },
       ...L_NETS,
     ],
+  },
+
+  /* =========================== Сумки, рюкзаки, чохли, рушники (партія 2) =========================== */
+  "sumka-butterfly-kitami-sportbag": {
+    description: {
+      ua: "Сумка Butterfly Kitami SportBag — 59 л, 60 × 31 × 32 см, поліестер 900D: дві бічні й передня кишені, мішок для мокрих речей. Для тренувань і турнірів.",
+      ru: "Сумка Butterfly Kitami SportBag — 59 л, 60 × 31 × 32 см, полиэстер 900D: два боковых и передний карман, мешок для мокрых вещей. Для тренировок и турниров.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-kitami-midi": {
+    description: {
+      ua: "Сумка Butterfly Kitami Midi — 36 л, 50 × 36 × 20 см, поліестер 900D. Компактна сумка на тренування: чохол, рушник, форма, взуття й аксесуари.",
+      ru: "Сумка Butterfly Kitami Midi — 36 л, 50 × 36 × 20 см, полиэстер 900D. Компактная сумка на тренировку: чехол, полотенце, форма, обувь и аксессуары.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-kashiwa-sportbag": {
+    description: {
+      ua: "Сумка Butterfly Kashiwa SportBag — 60 л, 70 × 31 × 26 см, щільний поліестер 1680D: багато кишень, мішок для білизни чи взуття. Для турнірів.",
+      ru: "Сумка Butterfly Kashiwa SportBag — 60 л, 70 × 31 × 26 см, плотный полиэстер 1680D: много карманов, мешок для белья или обуви. Для турниров.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-kashiwa-midi": {
+    description: {
+      ua: "Сумка Butterfly Kashiwa Midi — 49 л, 57 × 26 × 28 см, поліестер 1680D: металеві блискавки, зовнішня кишеня, мішок для взуття й мокрого одягу.",
+      ru: "Сумка Butterfly Kashiwa Midi — 49 л, 57 × 26 × 28 см, полиэстер 1680D: металлические молнии, внешний карман, мешок для обуви и мокрой одежды.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-tokai-midi": {
+    description: {
+      ua: "Сумка Butterfly Tokai Midi — 38 л, 50 × 30 × 25 см, поліестер 900D. Сумка на щоденні тренування: місце для чохла, рушника, форми й взуття.",
+      ru: "Сумка Butterfly Tokai Midi — 38 л, 50 × 30 × 25 см, полиэстер 900D. Сумка на ежедневные тренировки: место для чехла, полотенца, формы и обуви.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-black-line-maxibag": {
+    description: {
+      ua: "Сумка Butterfly Black Line Maxibag — 100 л на колесах із висувною ручкою й захищеним нижнім відділенням. Для поїздок і довгих турнірів.",
+      ru: "Сумка Butterfly Black Line Maxibag — 100 л на колёсах с выдвижной ручкой и защищённым нижним отделением. Для поездок и долгих турниров.",
+    },
+    links: L_BAGS,
+  },
+  "sumka-butterfly-yasyo-maxi-bag": {
+    description: {
+      ua: "Сумка Butterfly Yasyo Maxi Bag на колесах із телескопічною ручкою: велике основне й окреме нижнє відділення, близько 80 × 39 × 39 см.",
+      ru: "Сумка Butterfly Yasyo Maxi Bag на колёсах с телескопической ручкой: большое основное и отдельное нижнее отделение, около 80 × 39 × 39 см.",
+    },
+    links: L_BAGS,
+  },
+  "valiza-butterfly-tabi": {
+    description: {
+      ua: "Валіза Butterfly Tabi — твердий корпус, 4 поворотні колеса, замок TSA, розмір ручної поклажі 49 × 36 × 23 см. Для перельотів на турніри.",
+      ru: "Чемодан Butterfly Tabi — жёсткий корпус, 4 поворотных колеса, замок TSA, размер ручной клади 49 × 36 × 23 см. Для перелётов на турниры.",
+    },
+    links: L_BAGS,
+  },
+  "riukzak-butterfly-kitami": {
+    description: {
+      ua: "Рюкзак Butterfly Kitami — 25 л, 48 × 34 × 16 см, поліестер 900D: відділення, зовнішні кишені, регульовані лямки. Для тренувань і поїздок.",
+      ru: "Рюкзак Butterfly Kitami — 25 л, 48 × 34 × 16 см, полиэстер 900D: отделения, внешние карманы, регулируемые лямки. Для тренировок и поездок.",
+    },
+    links: L_PACKS,
+  },
+  "riukzak-butterfly-tokai": {
+    description: {
+      ua: "Рюкзак Butterfly Tokai — 25 л, 48 × 32 × 16 см, поліестер 900D: практичні відділення, зовнішні кишені, регульовані лямки й ручка.",
+      ru: "Рюкзак Butterfly Tokai — 25 л, 48 × 32 × 16 см, полиэстер 900D: практичные отделения, внешние карманы, регулируемые лямки и ручка.",
+    },
+    links: L_PACKS,
+  },
+  "riukzak-butterfly-kashiwa": {
+    description: {
+      ua: "Рюкзак Butterfly Kashiwa — 35 л, 48 × 32 × 16 см, поліестер 1680D: відділення з перегородками, металеві блискавки, регульовані лямки.",
+      ru: "Рюкзак Butterfly Kashiwa — 35 л, 48 × 32 × 16 см, полиэстер 1680D: отделение с перегородками, металлические молнии, регулируемые лямки.",
+    },
+    links: L_PACKS,
+  },
+  "riukzak-butterfly-sendai-rolltop": {
+    description: {
+      ua: "Рюкзак Butterfly Sendai Rolltop — курʼєрське закривання roll-top, поліестер 420D, 38 × 57 × 13 см, внутрішні відділення. Для залу й міста.",
+      ru: "Рюкзак Butterfly Sendai Rolltop — курьерское закрытие roll-top, полиэстер 420D, 38 × 57 × 13 см, внутренние отделения. Для зала и города.",
+    },
+    links: L_PACKS,
+  },
+  "odynarnyi-chokhol-butterfly-kitami": {
+    description: {
+      ua: "Одинарний чохол Butterfly Kitami — поліестер 1680D, 30 × 4 × 21 см, захист від зламу, металева блискавка й ручка. Для однієї ракетки.",
+      ru: "Одинарный чехол Butterfly Kitami — полиэстер 1680D, 30 × 4 × 21 см, защита от излома, металлическая молния и ручка. Для одной ракетки.",
+    },
+    links: L_CASES,
+  },
+  "podviinyi-chokhol-butterfly-kitami": {
+    description: {
+      ua: "Подвійний чохол Butterfly Kitami — два відділення для двох ракеток і аксесуарів, захист від зламу, металеві блискавки, 1680D, 30 × 7 × 21 см.",
+      ru: "Двойной чехол Butterfly Kitami — два отделения для двух ракеток и аксессуаров, защита от излома, металлические молнии, 1680D, 30 × 7 × 21 см.",
+    },
+    links: L_CASES,
+  },
+  "odynarnyi-chokhol-butterfly-kashiwa": {
+    description: {
+      ua: "Одинарний чохол Butterfly Kashiwa для однієї ракетки: захист від зламу, міцні металеві блискавки й ручка. Пасує до сумок Kashiwa.",
+      ru: "Одинарный чехол Butterfly Kashiwa для одной ракетки: защита от излома, прочные металлические молнии и ручка. Подходит к сумкам Kashiwa.",
+    },
+    links: L_CASES,
+  },
+  "podviinyi-chokhol-butterfly-kashiwa": {
+    description: {
+      ua: "Подвійний чохол Butterfly Kashiwa — два окремі відділення для двох ракеток і аксесуарів, захист від зламу, металеві блискавки й ручка.",
+      ru: "Двойной чехол Butterfly Kashiwa — два отдельных отделения для двух ракеток и аксессуаров, защита от излома, металлические молнии и ручка.",
+    },
+    links: L_CASES,
+  },
+  "chokhol-butterfly-easy-case": {
+    description: {
+      ua: "Чохол Butterfly Easy Case для ракетки з окремим відділенням для мʼячів, поліестер 900D. Ракетка й мʼячі завжди разом і в безпеці.",
+      ru: "Чехол Butterfly Easy Case для ракетки с отдельным отделением для мячей, полиэстер 900D. Ракетка и мячи всегда вместе и в безопасности.",
+    },
+    links: L_CASES,
+  },
+  "odynarnyi-chokhol-butterfly-logo-2019": {
+    description: {
+      ua: "Одинарний чохол Butterfly Logo 2019 для однієї ракетки — плаский прямокутний, простий захист накладок від пилу й подряпин у сумці.",
+      ru: "Одинарный чехол Butterfly Logo 2019 для одной ракетки — плоский прямоугольный, простая защита накладок от пыли и царапин в сумке.",
+    },
+    links: L_CASES,
+  },
+  "odynarnyi-chokhol-butterfly-logo-2019-oval": {
+    description: {
+      ua: "Круглий чохол Butterfly Logo 2019 за формою ракетки — компактний захист однієї ракетки від пилу й подряпин за доступною ціною.",
+      ru: "Круглый чехол Butterfly Logo 2019 по форме ракетки — компактная защита одной ракетки от пыли и царапин по доступной цене.",
+    },
+    links: L_CASES,
+  },
+  "podviinyi-chokhol-butterfly-logo-2019": {
+    description: {
+      ua: "Чохол Butterfly Logo 2019 для ракетки з додатковим відділенням для аксесуарів — мʼячів, захисної плівки, торцевої стрічки.",
+      ru: "Чехол Butterfly Logo 2019 для ракетки с дополнительным отделением для аксессуаров — мячей, защитной плёнки, торцевой ленты.",
+    },
+    links: L_CASES,
+  },
+  "rushnyk-butterfly-taoru": {
+    description: {
+      ua: "Рушник Butterfly Taoru — 100% бавовна, 50 × 100 см: ігровий формат, щоб витиратися в паузах біля корту. Є велика версія Big Taoru.",
+      ru: "Полотенце Butterfly Taoru — 100% хлопок, 50 × 100 см: игровой формат, чтобы вытираться в паузах у корта. Есть большая версия Big Taoru.",
+    },
+    links: L_TOWELS,
+  },
+  "rushnyk-butterfly-big-taoru": {
+    description: {
+      ua: "Рушник Butterfly Big Taoru — великий, 70 × 140 см, 100% бавовна. Для душу після тренування; пара до ігрового рушника Taoru.",
+      ru: "Полотенце Butterfly Big Taoru — большое, 70 × 140 см, 100% хлопок. Для душа после тренировки; пара к игровому полотенцу Taoru.",
+    },
+    links: L_TOWELS,
+  },
+  "rushnyk-butterfly-handa": {
+    description: {
+      ua: "Рушник Butterfly Handa — 100% бавовна, 50 × 100 см. Ігровий формат для корту й сумки, щоб витиратися в паузах, дозволених правилами.",
+      ru: "Полотенце Butterfly Handa — 100% хлопок, 50 × 100 см. Игровой формат для корта и сумки, чтобы вытираться в паузах, разрешённых правилами.",
+    },
+    links: L_TOWELS,
+  },
+  "rushnyk-butterfly-dignics": {
+    description: {
+      ua: "Рушник Butterfly Dignics у фірмовому дизайні серії — 100% бавовна, 50 × 100 см. Для гравців на Dignics і як подарунок тенісисту.",
+      ru: "Полотенце Butterfly Dignics в фирменном дизайне серии — 100% хлопок, 50 × 100 см. Для игроков на Dignics и как подарок теннисисту.",
+    },
+    links: L_TOWELS,
+  },
+  "rushnyk-butterfly-borussia": {
+    description: {
+      ua: "Рушник Butterfly Borussia у дизайні клубу — 100% бавовна, 50 × 100 см. Ігровий формат для корту, а ще подарунок уболівальнику.",
+      ru: "Полотенце Butterfly Borussia в дизайне клуба — 100% хлопок, 50 × 100 см. Игровой формат для корта, а ещё подарок болельщику.",
+    },
+    links: L_TOWELS,
   },
 };
 

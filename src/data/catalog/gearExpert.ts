@@ -17,6 +17,7 @@
 // Технології (B-Absorber, Wingrip…) пишемо ЛИШЕ тим моделям, яким їх називає виробник.
 // Чого немає в джерелах — не пишемо: краще коротше, ніж неправда в розмітці й у ШІ-відповідях.
 import type { ComparisonRow, ExpertEntry } from "./expert";
+import { bagsExpert } from "./gearExpertBags";
 
 type L = { ua: string; ru: string };
 const t = (ua: string, ru: string): L => ({ ua, ru });
@@ -255,7 +256,7 @@ const net = (e: Omit<ExpertEntry, "comparison" | "comparisonTitle" | "comparison
 
 /* ================================ ЗАПИСИ ================================ */
 
-export const gearExpert: Record<string, ExpertEntry> = {
+const gearExpertBase: Record<string, ExpertEntry> = {
   /* ---------------- Взуття ---------------- */
   "krosivky-butterfly-lezoline-levalis": shoe({
     verdict: t(
@@ -1678,3 +1679,6 @@ export const gearExpert: Record<string, ExpertEntry> = {
     ],
   }),
 };
+
+/** Усі експертні записи екіпірування: партія 1 (тут) + сумки, чохли, рушники (gearExpertBags.ts). */
+export const gearExpert: Record<string, ExpertEntry> = { ...gearExpertBase, ...bagsExpert };
