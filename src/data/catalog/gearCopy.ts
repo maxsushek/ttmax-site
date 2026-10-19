@@ -793,6 +793,44 @@ const COPY: Record<string, Copy> = {
   },
 
   /* =========== Партія 4: взуття, мʼячі, дрібні аксесуари =========== */
+  "m-iachi-butterfly-s40-3-ittf-3-sht-v-up": {
+    name: { ua: "М'ячі Butterfly S40+ 3* (3 шт)", ru: "Мячи Butterfly S40+ 3* (3 шт)" },
+    description: {
+      ua: "Мʼячі Butterfly S40+ 3*, 3 шт — схвалені ITTF, ABS-пластик: шорсткіша поверхня допомагає закрутити мʼяч, рівна округлість дає стабільний відскік.",
+      ru: "Мячи Butterfly S40+ 3*, 3 шт — одобрены ITTF, ABS-пластик: шероховатая поверхность помогает закрутить мяч, ровная округлость даёт стабильный отскок.",
+    },
+    links: [{ label: { ua: "Мʼячі R40+ 3*", ru: "Мячи R40+ 3*" }, href: "/butterfly/myachi/m-iachi-butterfly-r40-3-3sht-v-up" }, ...L_BALLS],
+  },
+  "pliashka-butterfly-22": {
+    name: { ua: "Пляшка Butterfly '22", ru: "Бутылка Butterfly '22" },
+    description: {
+      ua: "Пляшка Butterfly '22 на 700 мл з біорозкладного пластику на основі рослинного полімеру — екологічна пляшка для води на тренування.",
+      ru: "Бутылка Butterfly '22 на 700 мл из биоразлагаемого пластика на основе растительного полимера — экологичная бутылка для воды на тренировку.",
+    },
+    links: [{ label: { ua: "Пляшка Butterfly 750 мл", ru: "Бутылка Butterfly 750 мл" }, href: "/butterfly/aksessuary/pliashka-butterfly" }, ...L_TOWELS],
+  },
+  "rushnyk-butterfly-stripe": {
+    description: {
+      ua: "Рушник Butterfly Stripe зі 100% бавовни з вбудованим магнітом — кріпиться до краю тенісного столу. 50 × 100 см; чорний, синій чи червоний.",
+      ru: "Полотенце Butterfly Stripe из 100% хлопка со встроенным магнитом — крепится к краю теннисного стола. 50 × 100 см; чёрное, синее или красное.",
+    },
+    links: [{ label: { ua: "Футболка Stripe", ru: "Футболка Stripe" }, href: "/butterfly/odyag/futbolka-butterfly-stripe" }, ...L_TOWELS],
+  },
+  "rushnyk-butterfly-yao-midi": {
+    description: {
+      ua: "Компактний рушник Butterfly Yao Midi зі 100% бавовни, 30 × 50 см: витерти руки й обличчя між розіграшами, займає мало місця в сумці.",
+      ru: "Компактное полотенце Butterfly Yao Midi из 100% хлопка, 30 × 50 см: вытереть руки и лицо между розыгрышами, занимает мало места в сумке.",
+    },
+    links: [{ label: { ua: "Рушник Yao Big", ru: "Полотенце Yao Big" }, href: "/butterfly/aksessuary/rushnyk-butterfly-big-yao" }, ...L_TOWELS],
+  },
+  "rushnyk-butterfly-big-yao": {
+    name: { ua: "Рушник Butterfly Yao Big", ru: "Полотенце Butterfly Yao Big" },
+    description: {
+      ua: "Рушник Butterfly Yao Big зі 100% бавовни з діагональною смугою колекції Yao — ігровий рушник біля корту; менший варіант — Yao Midi 30 × 50 см.",
+      ru: "Полотенце Butterfly Yao Big из 100% хлопка с диагональной полосой коллекции Yao — игровое полотенце у корта; меньший вариант — Yao Midi 30 × 50 см.",
+    },
+    links: [{ label: { ua: "Рушник Yao Midi", ru: "Полотенце Yao Midi" }, href: "/butterfly/aksessuary/rushnyk-butterfly-yao-midi" }, ...L_TOWELS],
+  },
   "ochysnyk-dlia-nakladok-butterfly-combi-cleaner": {
     description: {
       ua: "Очищувач Butterfly Combi Cleaner, 100 мл: засіб і губка в одній упаковці — знімає бруд із накладок, повертає обертання. Наносити після тренування.",
@@ -806,16 +844,16 @@ const COPY: Record<string, Copy> = {
   "chokhol-butterfly-cell-case-1": {
     name: { ua: "Чохол Butterfly Cell Case I", ru: "Чехол Butterfly Cell Case I" },
     description: {
-      ua: "Чохол Butterfly Cell Case I нестандартної форми з якісного матеріалу: одна ракетка й до 4 мʼячів, надійний захист ракетки в дорозі й на тренуванні.",
-      ru: "Чехол Butterfly Cell Case I нестандартной формы из качественного материала: одна ракетка и до 4 мячей, надёжная защита ракетки в дороге и на тренировке.",
+      ua: "Чохол Butterfly Cell Case I незвичної округлої форми з нейлону 600D: одна ракетка й до 4 мʼячів в окремому відділенні, петля для підвішування.",
+      ru: "Чехол Butterfly Cell Case I необычной округлой формы из нейлона 600D: одна ракетка и до 4 мячей в отдельном отделении, петля для подвешивания.",
     },
-    links: [{ label: { ua: "Cell Case II — на 3 мʼячі", ru: "Cell Case II — на 3 мяча" }, href: "/butterfly/chehly/chokhol-butterfly-cell-case-2" }, ...L_CASES],
+    links: [{ label: { ua: "Cell Case II — шестикутний", ru: "Cell Case II — шестиугольный" }, href: "/butterfly/chehly/chokhol-butterfly-cell-case-2" }, ...L_CASES],
   },
   "chokhol-butterfly-cell-case-2": {
     name: { ua: "Чохол Butterfly Cell Case II", ru: "Чехол Butterfly Cell Case II" },
     description: {
-      ua: "Чохол Butterfly Cell Case II нестандартної форми з якісного матеріалу: одна ракетка й 3 мʼячі у відділенні на передній стінці. Захист ракетки.",
-      ru: "Чехол Butterfly Cell Case II нестандартной формы из качественного материала: одна ракетка и 3 мяча в отделении на передней стенке. Защита ракетки.",
+      ua: "Чохол Butterfly Cell Case II незвичної шестикутної форми з нейлону 600D: окреме відділення для мʼячів і петля для підвішування. Захист ракетки.",
+      ru: "Чехол Butterfly Cell Case II необычной шестиугольной формы из нейлона 600D: отдельное отделение для мячей и петля для подвешивания. Защита ракетки.",
     },
     links: [{ label: { ua: "Cell Case I — до 4 мʼячів", ru: "Cell Case I — до 4 мячей" }, href: "/butterfly/chehly/chokhol-butterfly-cell-case-1" }, ...L_CASES],
   },
