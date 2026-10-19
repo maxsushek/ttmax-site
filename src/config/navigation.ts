@@ -7,12 +7,13 @@ export function navSubLabel(label: NavSubLabel, locale: Locale): string {
   return typeof label === "string" ? label : label[locale];
 }
 
-// Пункты ведут на реальные SEO-URL каталога. Подпункты имеют свои адреса:
-//  • основания: группы ALC/ZLC → собственные страницы-коллекции /osnovaniya/{alc|zlc};
-//    стили (атака/защита/универсал) → категория с фасет-параметром (CatalogFilters применяет фильтр);
-//  • накладки → категория с фасет-параметром;
-//  • «Колекції» (Butterfly) → хабы серий и групп основ;
-//  • одяг/аксесуари → пока на родительскую категорию (фасеты появятся позже).
+// Пункты ведут на реальные SEO-URL каталога. Подпункты:
+//  • где есть коллекция-хаб (data/catalog/hubs.ts, /osnovaniya/alc) — на её собственный URL:
+//    это индексируемая страница со своим текстом, а меню на КАЖДОЙ странице — главный
+//    источник внутренних ссылок на неё;
+//  • где хаба нет (защитные основания — 1 модель, гладкие — почти вся категория, антиспин —
+//    1 модель) — на категорию с фасет-параметром: canonical отбрасывает query, в индекс не идёт;
+//  • «Колекції» (Butterfly) → хабы серий и групп основ.
 export const navigation: ReadonlyArray<NavItem> = [
   {
     key: "rackets",
@@ -24,12 +25,9 @@ export const navigation: ReadonlyArray<NavItem> = [
     sub: [
       { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
-      { label: { ua: "Атакуючі", ru: "Атакующие" }, href: "/osnovaniya?bladeClass=off,off-plus" },
+      { label: { ua: "Атакуючі", ru: "Атакующие" }, href: "/osnovaniya/atakuyuchi" },
       { label: { ua: "Захисні", ru: "Защитные" }, href: "/osnovaniya?bladeClass=def" },
-      {
-        label: { ua: "Універсальні", ru: "Универсальные" },
-        href: "/osnovaniya?bladeClass=all,all-plus,off-minus",
-      },
+      { label: { ua: "Універсальні", ru: "Универсальные" }, href: "/osnovaniya/universalni" },
     ],
   },
   {
@@ -37,8 +35,8 @@ export const navigation: ReadonlyArray<NavItem> = [
     href: "/nakladki",
     sub: [
       { label: { ua: "Гладкі", ru: "Гладкие" }, href: "/nakladki?surfaceType=gladka" },
-      { label: { ua: "Шипи", ru: "Шипы" }, href: "/nakladki?surfaceType=korotki-shypy" },
-      { label: { ua: "Довгі шипи", ru: "Длинные шипы" }, href: "/nakladki?surfaceType=dovgi-shypy" },
+      { label: { ua: "Короткі шипи", ru: "Короткие шипы" }, href: "/nakladki/korotki-shypy" },
+      { label: { ua: "Довгі шипи", ru: "Длинные шипы" }, href: "/nakladki/dovgi-shypy" },
       { label: { ua: "Антиспін", ru: "Антиспин" }, href: "/nakladki?surfaceType=antyspin" },
     ],
   },
@@ -46,8 +44,9 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "apparel",
     href: "/odyag",
     sub: [
-      { label: { ua: "Футболки", ru: "Футболки" }, href: "/odyag?gearType=tshirt" },
-      { label: { ua: "Шорти", ru: "Шорты" }, href: "/odyag?gearType=shorts" },
+      { label: { ua: "Футболки", ru: "Футболки" }, href: "/odyag/futbolky" },
+      { label: { ua: "Шорти", ru: "Шорты" }, href: "/odyag/shorty" },
+      { label: { ua: "Костюми", ru: "Костюмы" }, href: "/odyag/kostyumy" },
       { label: { ua: "Взуття", ru: "Обувь" }, href: "/obuv" },
     ],
   },
@@ -65,7 +64,8 @@ export const navigation: ReadonlyArray<NavItem> = [
     key: "accessories",
     href: "/aksessuary",
     sub: [
-      { label: { ua: "Клеї", ru: "Клеи" }, href: "/aksessuary?gearType=glue" },
+      { label: { ua: "Клеї", ru: "Клеи" }, href: "/aksessuary/klei" },
+      { label: { ua: "Рушники", ru: "Полотенца" }, href: "/aksessuary/rushnyky" },
       { label: { ua: "Чохли та сумки", ru: "Чехлы и сумки" }, href: "/chehly" },
       { label: { ua: "Сітки", ru: "Сетки" }, href: "/setki" },
     ],

@@ -10,7 +10,7 @@ import {
   getProductsByCategory,
   getProductsBySeries,
 } from "@/data/catalog";
-import { surfaceGroups, seriesIndexable } from "@/lib/catalog/routing";
+import { surfaceGroups, seriesIndexable, productsInGroup } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { getMediaMap, pickAll } from "@/lib/media/get";
@@ -87,7 +87,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Хаби серій (/{category}/{series}) і колекції за волокном (/osnovaniya/alc|zlc).
+  // Хаби серій (/{category}/{series}).
   // Критерій індексації — seriesIndexable з routing.ts (ОДИН власник істини на обидва файли).
   // Раніше тут жив власний поріг «>= 2», і мапа розійшлася з реальністю: 6 порожніх хабів
   // лежали в sitemap, а наповнені zyre і rozena — ні.
@@ -98,10 +98,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         paths.push({ path: `/${c.slug}/${s.slug}`, priority: 0.6, freq: "weekly" });
     }
   }
+  // Колекції: групи основ за волокном і підкатегорії-хаби. Склад — productsInGroup (те саме
+  // правило, що на сторінці), рахуємо ВИДИМІ товари: хаб, де всі товари сховані без фото,
+  // сторінка віддає з noindex — подавати його в карту було б суперечливим сигналом.
   for (const g of surfaceGroups) {
-    const n = getProductsByCategory(g.category).filter((p) =>
-      g.surfaces.includes(p.base?.surface ?? ""),
-    ).length;
+    const n = productsInGroup(g).filter((p) => !isHidden(p, media)).length;
     if (n > 0) paths.push({ path: `/${g.category}/${g.slug}`, priority: 0.6, freq: "weekly" });
   }
 

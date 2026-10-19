@@ -22,6 +22,7 @@ import {
 import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
 import { productIndexable } from "@/lib/catalog/indexability";
+import { inGroup, surfaceGroups } from "@/lib/catalog/routing";
 import { isHidden } from "@/lib/catalog/hidden";
 import { applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import type { EntityMediaMap } from "@/lib/media/get";
@@ -115,6 +116,18 @@ export function buildLlmsIndex(opts: {
     const from = prices.length ? `від ${Math.min(...prices)} грн` : "";
     const count = plural(inCat.length, "позиція", "позиції", "позицій");
     out.push(`- [${c.name[UA]}](${url(`/ua/${c.slug}`)}) — ${count} ${from}`.trim());
+  }
+
+  // Підкатегорії-хаби й колекції основ — окремі сторінки з текстом і FAQ. Асистенту на запит
+  // «клей для накладок» чи «довгі шипи» краще вести сюди, ніж на всю категорію.
+  out.push("", "## Підкатегорії", "");
+  for (const g of surfaceGroups) {
+    const inG = products.filter((p) => inGroup(p, g));
+    if (inG.length === 0) continue;
+    const prices = inG.map(getMinPrice).filter((n): n is number => typeof n === "number");
+    const from = prices.length ? `від ${Math.min(...prices)} грн` : "";
+    const count = plural(inG.length, "позиція", "позиції", "позицій");
+    out.push(`- [${g.h1[UA]}](${url(`/ua/${g.category}/${g.slug}`)}) — ${count} ${from}`.trim());
   }
 
   out.push("", "## Довідник і поради", "");

@@ -3,11 +3,13 @@
 // Категории / бренд-хаб / бренд×категория / товар — всё определяется по данным каталога.
 import type { Locale } from "@/i18n/config";
 import type {
+  BladeClass,
   CatalogBrand,
   CatalogCategory,
   CatalogProduct,
   CatalogSeries,
   Localized,
+  SurfaceType,
 } from "@/types/catalog";
 import {
   catalogSeries,
@@ -23,6 +25,7 @@ import {
   rubberFilters,
 } from "@/data/catalog";
 import { productIndexable } from "@/lib/catalog/indexability";
+import { subcategoryHubs } from "@/data/catalog/hubs";
 
 export function pickLocalized(value: Localized, locale: Locale): string {
   return value[locale];
@@ -109,11 +112,25 @@ export type CatalogRoute =
       index: boolean;
     };
 
-/** Група основ за типом поверхні (ALC/ZLC) — окрема сторінка-колекція /{category}/{slug}. */
+/**
+ * Колекція /{category}/{slug} — окрема індексовна сторінка зі своїм текстом і FAQ.
+ *
+ * Спершу це були лише групи основ за волокном (ALC/ZLC, поле surfaces). Тепер той самий
+ * механізм обслуговує й підкатегорії-хаби (data/catalog/hubs.ts): атакуючі основи, довгі
+ * шипи, футболки, клеї, чохли… Склад колекції задає ОДНЕ з полів-критеріїв нижче;
+ * товар входить, якщо він із тієї ж категорії й збігся з критерієм (див. inGroup).
+ */
 export type SurfaceGroup = {
   slug: string;
   category: string;
-  surfaces: string[];
+  /** Волокно основи (base.surface): ALC/ZLC. Колекції з цим полем — «Основи за волокном». */
+  surfaces?: string[];
+  /** Клас основи (base.bladeClass): атакуючі / універсальні. */
+  bladeClasses?: BladeClass[];
+  /** Тип поверхні накладки: довгі / короткі шипи. */
+  surfaceTypes?: SurfaceType[];
+  /** Тип екіпірування (gear.gearType): футболки, клеї, чохли… */
+  gearTypes?: string[];
   name: Localized;
   h1: Localized;
   title: Localized;
@@ -123,7 +140,8 @@ export type SurfaceGroup = {
   faq: { q: Localized; a: Localized }[];
 };
 
-export const surfaceGroups: SurfaceGroup[] = [
+/** Групи основ за волокном — найстарші колекції (/osnovaniya/alc, /zlc). */
+const fiberGroups: SurfaceGroup[] = [
   {
     slug: "alc",
     category: "osnovaniya",
@@ -184,8 +202,33 @@ export const surfaceGroups: SurfaceGroup[] = [
   },
 ];
 
+/**
+ * Усі колекції сайту: групи за волокном + підкатегорії-хаби. Порядок = порядок плиток
+ * «Підкатегорії» на сторінці категорії.
+ */
+export const surfaceGroups: SurfaceGroup[] = [...fiberGroups, ...subcategoryHubs];
+
 export const findSurfaceGroup = (slug: string): SurfaceGroup | undefined =>
   surfaceGroups.find((g) => g.slug === slug);
+
+/** Група за волокном (ALC/ZLC) — на бренд-хабі вони йдуть окремим блоком «Основи за волокном». */
+export const isFiberGroup = (g: SurfaceGroup): boolean => Boolean(g.surfaces?.length);
+
+/**
+ * Чи входить товар у колекцію. ЄДИНЕ правило складу — його читають routing (сторінка),
+ * catalogStaticParams (пререндер) і sitemap.ts, тож склад у трьох місцях не розійдеться.
+ */
+export function inGroup(p: CatalogProduct, g: SurfaceGroup): boolean {
+  if (p.categorySlug !== g.category) return false;
+  if (g.surfaces?.includes(p.base?.surface ?? "")) return true;
+  if (p.base && g.bladeClasses?.includes(p.base.bladeClass)) return true;
+  if (p.surfaceType && g.surfaceTypes?.includes(p.surfaceType)) return true;
+  if (p.gear && g.gearTypes?.includes(p.gear.gearType)) return true;
+  return false;
+}
+
+export const productsInGroup = (g: SurfaceGroup): CatalogProduct[] =>
+  getProductsByCategory(g.category).filter((p) => inGroup(p, g));
 
 function activeBrand(slug: string): CatalogBrand | undefined {
   const b = getBrandBySlug(slug);
@@ -251,9 +294,7 @@ export function resolveSegments(segments: string[]): CatalogRoute | null {
     // /{category}/{surface-group} — напр. /osnovaniya/alc, /osnovaniya/zlc
     const sg = findSurfaceGroup(b);
     if (cat && sg && sg.category === cat.slug) {
-      const sgProducts = getProductsByCategory(cat.slug).filter((p) =>
-        sg.surfaces.includes(p.base?.surface ?? ""),
-      );
+      const sgProducts = productsInGroup(sg);
       return {
         kind: "surfaceGroup",
         category: cat,
@@ -335,12 +376,9 @@ export function catalogStaticParams(): { segments: string[] }[] {
     if (cat) params.push({ segments: [cat, s.slug] });
   }
 
-  // Хаби груп поверхонь основ: /osnovaniya/alc, /osnovaniya/zlc
+  // Колекції: групи основ за волокном (/osnovaniya/alc) і підкатегорії-хаби (/odyag/futbolky).
   for (const g of surfaceGroups) {
-    const has = getProductsByCategory(g.category).some((p) =>
-      g.surfaces.includes(p.base?.surface ?? ""),
-    );
-    if (has) params.push({ segments: [g.category, g.slug] });
+    if (productsInGroup(g).length > 0) params.push({ segments: [g.category, g.slug] });
   }
 
   return params;
@@ -536,4 +574,6 @@ export const catalogUi = {
   brandCategories: { ua: "Категорії", ru: "Категории" },
   brandSeries: { ua: "Серії накладок", ru: "Серии накладок" },
   brandSurfaces: { ua: "Основи за волокном", ru: "Основания по волокну" },
+  brandCollections: { ua: "Підкатегорії", ru: "Подкатегории" },
+  subcategories: { ua: "Підкатегорії", ru: "Подкатегории" },
 } satisfies Record<string, Localized>;

@@ -20,6 +20,7 @@ import {
 } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
 import { formatPrice } from "@/utils/format";
+import { cn } from "@/utils/cn";
 import type {
   CatalogProduct,
   CatalogBrand,
@@ -27,6 +28,7 @@ import type {
   CatalogSeries,
   BladeClass,
   BladeSurface,
+  Localized,
 } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
 import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel";
@@ -59,8 +61,10 @@ import {
   catalogBreadcrumbs,
   catalogStaticParams,
   catalogUi,
+  isFiberGroup,
   labelFor,
   pickLocalized,
+  productsInGroup,
   resolveSegments,
   routeDescription,
   routeH1,
@@ -585,6 +589,15 @@ function ListingView({
         <ContentIntro text={introText} />
       </header>
 
+      {(route.kind === "category" || route.kind === "surfaceGroup") && (
+        <SubcategoryChips
+          categorySlug={route.category.slug}
+          current={route.kind === "surfaceGroup" ? route.group.slug : null}
+          locale={locale}
+          media={media}
+        />
+      )}
+
       {route.kind === "brand" ? (
         // Бренд-хаб — сайтвайдний анкор «Колекції» з ~700 URL, тобто один із найсильніших
         // вузлів сайту. Раніше ВСІ його 10 лінків вели на /{brand}/{category} — а це шар
@@ -615,7 +628,7 @@ function ListingView({
         //
         // ⚠️ Що цей фолбек НЕ вміє: query-параметри (?surfaceType=…) у ключ статичного кеша
         // не входять, тож усі фільтровані URL віддають ОДИН і той самий нефільтрований HTML,
-        // а звужується список уже після гідратації. На ці URL веде 10 пунктів меню
+        // а звужується список уже після гідратації. На ці URL веде 4 пункти меню (решту перевели на хаби)
         // (src/config/navigation.ts). Індексації це не шкодить — канонікал відкидає query, —
         // але холодний вхід дає стрибок контенту. Правильне лікування: перевести пресети
         // на реальні сегменти маршруту, як зроблено для основ ALC/ZLC у lib/catalog/routing.ts.
@@ -733,13 +746,32 @@ function BrandHubLinks({
           {catalogUi.brandSurfaces[locale]}
         </h2>
         <ul className="flex flex-wrap gap-2.5">
-          {surfaceGroups.map((g) => (
+          {surfaceGroups.filter(isFiberGroup).map((g) => (
             <HubTile
               key={g.slug}
               href={`/${locale}/${g.category}/${g.slug}`}
               label={pickLocalized(g.name, locale)}
             />
           ))}
+        </ul>
+      </section>
+
+      {/* Підкатегорії-хаби: бренд-хаб — один із найсильніших вузлів сайту (див. вище),
+          тож прямі лінки звідси дають новим хабам вагу з першого дня. */}
+      <section>
+        <h2 className="mb-3 font-display text-[12px] font-bold uppercase tracking-[0.12em] text-ink-muted">
+          {catalogUi.brandCollections[locale]}
+        </h2>
+        <ul className="flex flex-wrap gap-2.5">
+          {surfaceGroups
+            .filter((g) => !isFiberGroup(g))
+            .map((g) => (
+              <HubTile
+                key={g.slug}
+                href={`/${locale}/${g.category}/${g.slug}`}
+                label={pickLocalized(g.name, locale)}
+              />
+            ))}
         </ul>
       </section>
     </div>
@@ -1780,7 +1812,99 @@ async function RacketComboView({
   );
 }
 
-/** SEO-текст + перелінковка для сторінок-колекцій основ за поверхнею (ALC/ZLC). */
+/**
+ * Плитки «Підкатегорії» над сіткою категорії та колекції. Головний вхід у хаби:
+ * категорія → хаб → картка. На сторінці хаба поточна плитка підсвічена (aria-current).
+ * Колекції без жодного видимого товару не показуємо — вони noindex і порожні.
+ */
+function SubcategoryChips({
+  categorySlug,
+  current,
+  locale,
+  media,
+}: {
+  categorySlug: string;
+  current: string | null;
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  const groups = surfaceGroups.filter(
+    (g) => g.category === categorySlug && filterVisible(productsInGroup(g), media).length > 0,
+  );
+  if (groups.length === 0) return null;
+  return (
+    <nav aria-label={catalogUi.subcategories[locale]} className="-mt-3 mb-8">
+      <ul className="flex flex-wrap gap-2">
+        {groups.map((g) => {
+          const active = g.slug === current;
+          return (
+            <li key={g.slug}>
+              <Link
+                href={`/${locale}/${g.category}/${g.slug}`}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "inline-flex rounded-full border px-3.5 py-1.5 font-display text-xs font-bold uppercase tracking-[0.04em] transition-colors",
+                  active
+                    ? "border-accent/60 bg-accent/10 text-accent"
+                    : "border-border-strong bg-white/[0.02] text-white/85 hover:border-accent/40 hover:text-accent",
+                )}
+              >
+                {pickLocalized(g.name, locale)}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+/**
+ * «Дивіться також» для колекцій: лінк на всю категорію + суміжні розділи.
+ * Сусідні колекції тієї ж категорії сюди не дублюються — вони вже є плитками
+ * «Підкатегорії» над сіткою (SubcategoryChips).
+ */
+const COLLECTION_LINKS: Record<string, { all: Localized; related: { label: Localized; path: string }[] }> = {
+  osnovaniya: {
+    all: { ua: "Усі основи Butterfly", ru: "Все основания Butterfly" },
+    related: [
+      { label: { ua: "Готові ракетки у зборі", ru: "Готовые ракетки в сборе" }, path: "/rakety" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, path: "/nakladki" },
+    ],
+  },
+  nakladki: {
+    all: { ua: "Усі накладки Butterfly", ru: "Все накладки Butterfly" },
+    related: [
+      { label: { ua: "Основи Butterfly", ru: "Основания Butterfly" }, path: "/osnovaniya" },
+      { label: { ua: "Готові ракетки у зборі", ru: "Готовые ракетки в сборе" }, path: "/rakety" },
+      { label: { ua: "Клей для накладок", ru: "Клей для накладок" }, path: "/aksessuary/klei" },
+    ],
+  },
+  odyag: {
+    all: { ua: "Увесь одяг Butterfly", ru: "Вся одежда Butterfly" },
+    related: [
+      { label: { ua: "Взуття", ru: "Обувь" }, path: "/obuv" },
+      { label: { ua: "Рушники", ru: "Полотенца" }, path: "/aksessuary/rushnyky" },
+      { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, path: "/chehly/sumky" },
+    ],
+  },
+  aksessuary: {
+    all: { ua: "Усі аксесуари Butterfly", ru: "Все аксессуары Butterfly" },
+    related: [
+      { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, path: "/chehly/chokhly" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, path: "/nakladki" },
+    ],
+  },
+  chehly: {
+    all: { ua: "Усі чохли та сумки", ru: "Все чехлы и сумки" },
+    related: [
+      { label: { ua: "Аксесуари", ru: "Аксессуары" }, path: "/aksessuary" },
+      { label: { ua: "Одяг Butterfly", ru: "Одежда Butterfly" }, path: "/odyag" },
+    ],
+  },
+};
+
+/** SEO-текст + FAQ + перелінковка для сторінок-колекцій (ALC/ZLC і підкатегорії-хаби). */
 function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Locale }) {
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
@@ -1789,24 +1913,13 @@ function SurfaceGroupSeo({ group, locale }: { group: SurfaceGroup; locale: Local
     .map((s) => s.trim())
     .filter(Boolean);
   const faq = group.faq ?? [];
-  const sibling = surfaceGroups.find((g) => g.slug !== group.slug && g.category === group.category);
-  const links: { label: string; href: string }[] = [
-    {
-      label: L("Усі основи Butterfly", "Все основания Butterfly"),
-      href: `/${locale}/${group.category}`,
-    },
-  ];
-  if (sibling) {
-    links.push({
-      label: pickLocalized(sibling.name, locale),
-      href: `/${locale}/${sibling.category}/${sibling.slug}`,
-    });
-  }
-  links.push({
-    label: L("Готові ракетки у зборі", "Готовые ракетки в сборе"),
-    href: `/${locale}/rakety`,
-  });
-  links.push({ label: L("Накладки Butterfly", "Накладки Butterfly"), href: `/${locale}/nakladki` });
+  const cfg = COLLECTION_LINKS[group.category];
+  const links: { label: string; href: string }[] = cfg
+    ? [
+        { label: pickLocalized(cfg.all, locale), href: `/${locale}/${group.category}` },
+        ...cfg.related.map((r) => ({ label: pickLocalized(r.label, locale), href: `/${locale}${r.path}` })),
+      ]
+    : [];
 
   return (
     <div className="mt-14 space-y-10 border-t border-border-subtle pt-10 sm:mt-16">
