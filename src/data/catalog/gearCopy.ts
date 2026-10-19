@@ -9,8 +9,8 @@
 //    фірмові картки Butterfly у ритейлерів) і нашого каталогу. Технології (B-Absorber,
 //    Wingrip…) пишемо тільки тим моделям, у яких їх називає виробник;
 //  • якщо даних про модель немає — копі НЕ пишемо, картка лишається закритою. Так свідомо
-//    лишились Sunika, Radial Cross, Trynex, Lezoline Sal, мʼячі S40+ і Master Quality,
-//    Combi Cleaner, дрібні аксесуари без опису виробника (19.10.2026);
+//    лишились Trynex, мʼячі S40+, Combi Cleaner, тубус, захисна плівка й дрібні аксесуари
+//    без опису виробника (19.10.2026);
 //  • однаковий товар в іншому обʼємі чи кольорі (клей 37/50/500 мл, Rifones сині/чорні) не
 //    відкриваємо — це дублі основної картки; їхній попит забирає основна картка й хаб.
 //
@@ -788,6 +788,91 @@ const COPY: Record<string, Copy> = {
       ru: "Полотенце Butterfly Sign — 100% хлопок, 50 × 100 см. Компактный игровой формат, чтобы вытираться в паузах у корта и носить в сумке.",
     },
     links: L_TOWELS,
+  },
+
+  /* =========== Партія 4: взуття, мʼячі, дрібні аксесуари =========== */
+  "krosivky-butterfly-lezoline-sal": {
+    description: {
+      ua: "Кросівки Butterfly Lezoline Sal — тенісне взуття турнірного рівня: сітчастий верх, легка амортизація. Для гравців легкої й середньої ваги. Розміри 38–46.",
+      ru: "Кроссовки Butterfly Lezoline Sal — теннисная обувь турнирного уровня: сетчатый верх, лёгкая амортизация. Для игроков лёгкого и среднего веса. Размеры 38–46.",
+    },
+    links: [shoe("krosivky-butterfly-lezoline-zero", "Lezoline Zero", "Lezoline Zero"), shoe("krosivky-butterfly-lezoline-gigu", "Lezoline Gigu — більше амортизації", "Lezoline Gigu — больше амортизации"), ...L_SHOES],
+  },
+  "krosivky-butterfly-radial-cross": {
+    description: {
+      ua: "Кросівки Butterfly Radial Cross — для тренерів і спортсменів: тренування, розминка, біг. Дихаючий верх, підошва без слідів, для залу й вулиці. Розміри 38–46.",
+      ru: "Кроссовки Butterfly Radial Cross — для тренеров и спортсменов: тренировки, разминка, бег. Дышащий верх, подошва без следов, для зала и улицы. Размеры 38–46.",
+    },
+    links: [shoe("krosivky-butterfly-lezoline-unizes-2", "Lezoline Unizes II — для гри", "Lezoline Unizes II — для игры"), ...L_SHOES],
+  },
+  "krosivky-butterfly-sunika": {
+    description: {
+      ua: "Кросівки Butterfly Sunika — повсякденна модель з мʼякою амортизованою підошвою: комфорт на щодень і модний вигляд. Не для гри. Розміри 38–46.",
+      ru: "Кроссовки Butterfly Sunika — повседневная модель с мягкой амортизированной подошвой: комфорт на каждый день и модный вид. Не для игры. Размеры 38–46.",
+    },
+    links: [shoe("krosivky-butterfly-lezoline-zero", "Lezoline Zero — для гри", "Lezoline Zero — для игры"), ...L_SHOES],
+  },
+  "m-iachi-butterfly-master-quality-ball-40-72-sht": {
+    name: { ua: "М'ячі Butterfly Master Quality G40+ (72 шт)", ru: "Мячи Butterfly Master Quality G40+ (72 шт)" },
+    description: {
+      ua: "Мʼячі Butterfly Master Quality G40+, 72 шт — тренувальні мʼячі для підготовки до змагань найвищого рівня без втрати якості й довговічності.",
+      ru: "Мячи Butterfly Master Quality G40+, 72 шт — тренировочные мячи для подготовки к соревнованиям высшего уровня без потери качества и долговечности.",
+    },
+    links: [
+      { label: { ua: "Training Ball 40+, 120 шт", ru: "Training Ball 40+, 120 шт" }, href: "/butterfly/myachi/m-iachi-butterfly-training-ball-40-120sht-v-up" },
+      { label: { ua: "Сумка для мʼячів", ru: "Сумка для мячей" }, href: "/butterfly/aksessuary/sumka-dlia-m-iachiv-butterfly" },
+      ...L_BALLS,
+    ],
+  },
+  "zapasni-ustilky-butterfly": {
+    description: {
+      ua: "Запасні устілки Butterfly — стабілізуючі, з пластиковою вставкою для підтримки стопи. Підходять до всіх моделей взуття Butterfly. Розміри S–XL.",
+      ru: "Запасные стельки Butterfly — стабилизирующие, с пластиковой вставкой для поддержки стопы. Подходят ко всем моделям обуви Butterfly. Размеры S–XL.",
+    },
+    links: L_SHOES,
+  },
+  "obmotka-na-ruchku-raketky-butterfly-overgrip": {
+    description: {
+      ua: "Обмотка Butterfly Overgrip на ручку ракетки для настільного тенісу — висока чутливість і надійний хват: ракетка не ковзає в долоні. Чорна.",
+      ru: "Обмотка Butterfly Overgrip на ручку ракетки для настольного тенниса — высокая чувствительность и надёжный хват: ракетка не скользит в ладони. Чёрная.",
+    },
+    links: [
+      { label: { ua: "Основи Butterfly", ru: "Основания Butterfly" }, href: "/osnovaniya" },
+      { label: { ua: "Торцеві стрічки", ru: "Торцевые ленты" }, href: "/aksessuary/tortsevi-strichky" },
+      { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
+    ],
+  },
+  "sumka-dlia-vzuttia-butterfly": {
+    description: {
+      ua: "Сумка для взуття Butterfly — простий тканинний мішечок із логотипом, щоб ігрові кросівки не забруднювали форму й речі в сумці. Чорна.",
+      ru: "Сумка для обуви Butterfly — простой тканевый мешочек с логотипом, чтобы игровые кроссовки не пачкали форму и вещи в сумке. Чёрная.",
+    },
+    links: [...L_SHOES, { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" }],
+  },
+  "sumka-dlia-m-iachiv-butterfly": {
+    name: { ua: "Сумка для м'ячів Butterfly", ru: "Сумка для мячей Butterfly" },
+    description: {
+      ua: "Сумка для мʼячів Butterfly — циліндрична, з блискавкою й плечовим ременем; за даними дистрибʼютора вміщує 144 мʼячі. Для тренера й клубу.",
+      ru: "Сумка для мячей Butterfly — цилиндрическая, с молнией и плечевым ремнём; по данным дистрибьютора вмещает 144 мяча. Для тренера и клуба.",
+    },
+    links: [
+      { label: { ua: "Мʼячі Training Ball, 120 шт", ru: "Мячи Training Ball, 120 шт" }, href: "/butterfly/myachi/m-iachi-butterfly-training-ball-40-120sht-v-up" },
+      ...L_BALLS,
+    ],
+  },
+  "pliashka-butterfly-tenergy": {
+    description: {
+      ua: "Пляшка Butterfly Tenergy для води на тренування — до 750 мл, закручувальна кришка, логотип легендарних накладок Tenergy. Чорна.",
+      ru: "Бутылка Butterfly Tenergy для воды на тренировку — до 750 мл, закручивающаяся крышка, логотип легендарных накладок Tenergy. Чёрная.",
+    },
+    links: [{ label: { ua: "Пляшка Butterfly 750 мл", ru: "Бутылка Butterfly 750 мл" }, href: "/butterfly/aksessuary/pliashka-butterfly" }, ...L_TOWELS],
+  },
+  "pliashka-butterfly": {
+    description: {
+      ua: "Пляшка Butterfly для води на тренування — пластикова, 750 мл, із закручувальною кришкою й логотипом Butterfly: не протікає в сумці.",
+      ru: "Бутылка Butterfly для воды на тренировку — пластиковая, 750 мл, с закручивающейся крышкой и логотипом Butterfly: не протекает в сумке.",
+    },
+    links: [{ label: { ua: "Пляшка Butterfly Tenergy", ru: "Бутылка Butterfly Tenergy" }, href: "/butterfly/aksessuary/pliashka-butterfly-tenergy" }, ...L_TOWELS],
   },
 };
 
