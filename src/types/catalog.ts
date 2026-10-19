@@ -111,6 +111,12 @@ export interface CatalogProduct {
     p: Record<Locale, string[]>;
     links?: { label: Localized; href: string }[];
   }[];
+  /**
+   * FAQ картки для товарів БЕЗ експертного блоку (екіпірування). Показується під seoBlocks
+   * і йде у FAQPage-розмітку — та сама черговість, що й у expert.faq: CMS-FAQ, якщо задано,
+   * перекриває обидва. Відповіді — лише з даних виробника й каталогу.
+   */
+  faq?: { q: Localized; a: Localized }[];
 }
 
 export interface CatalogBrand {

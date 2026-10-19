@@ -122,10 +122,19 @@ export function productOgDescription(product: CatalogProduct, locale: Locale): s
   return `${product.name[locale]} — ${verdict}`;
 }
 
-/** Product JSON-LD description — вердикт + офіційні характеристики Butterfly. */
+/**
+ * Product JSON-LD description — вердикт + офіційні характеристики Butterfly.
+ *
+ * Для екіпірування без експертного блоку — текст «Про модель» із seoBlocks (gearCopy.ts):
+ * без цього в розмітку йшов би короткий meta-опис, а ШІ-асистенти й товарні фіди беруть
+ * опис саме звідси.
+ */
 export function productLdDescription(product: CatalogProduct, locale: Locale): string | null {
   const verdict = verdictOf(product, locale);
-  if (!verdict) return null;
+  if (!verdict) {
+    const paras = product.seoBlocks?.[0]?.p[locale];
+    return paras && paras.length > 0 ? paras.join(" ") : null;
+  }
   const official = getExpert(product.slug)?.official?.[locale]?.trim();
   return official ? `${verdict} ${official}` : verdict;
 }

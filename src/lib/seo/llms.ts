@@ -22,7 +22,7 @@ import {
 import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
 import { productIndexable } from "@/lib/catalog/indexability";
-import { inGroup, surfaceGroups } from "@/lib/catalog/routing";
+import { inGroup, isFiberGroup, surfaceGroups } from "@/lib/catalog/routing";
 import { isHidden } from "@/lib/catalog/hidden";
 import { applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import type { EntityMediaMap } from "@/lib/media/get";
@@ -56,6 +56,15 @@ function sellable(media: EntityMediaMap, overrides: OverridesMap): CatalogProduc
     .map((p) => applyOverrides(p, overrides));
 }
 
+/**
+ * Куди вести асистента для товару без власної сторінки в індексі: у підкатегорію-хаб,
+ * якщо товар у неї входить (клей → /aksessuary/klei), інакше в категорію.
+ */
+function sectionPath(p: CatalogProduct): string {
+  const hub = surfaceGroups.find((g) => !isFiberGroup(g) && inGroup(p, g));
+  return hub ? `/${hub.category}/${hub.slug}` : `/${p.categorySlug}`;
+}
+
 /** Характеристики одним рядком — те, за чим асистент зіставляє моделі. */
 function specLine(p: CatalogProduct): string {
   const bits: string[] = [];
@@ -70,6 +79,9 @@ function specLine(p: CatalogProduct): string {
   if (p.base?.madeIn) bits.push(`виробництво ${p.base.madeIn[UA]}`);
   if (p.thicknessOptions.length > 0) bits.push(`товщини ${p.thicknessOptions.join(" / ")} мм`);
   if (p.gear?.sizes?.length) bits.push(`розміри ${p.gear.sizes.join(", ")}`);
+  if (p.gear?.volumeMl) bits.push(`обʼєм ${p.gear.volumeMl} мл`);
+  if (p.gear?.packSize) bits.push(`в упаковці ${p.gear.packSize}`);
+  if (p.gear?.stars && p.gear.stars !== "трен.") bits.push(`клас ${p.gear.stars}`);
   return bits.join("; ");
 }
 
@@ -189,7 +201,7 @@ export function buildLlmsFull(opts: {
         // закрили від пошуку.
         productIndexable(p)
           ? `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`
-          : `- Розділ: ${url(`/ua/${p.categorySlug}`)} (картка без окремої сторінки)`,
+          : `- Розділ: ${url(`/ua${sectionPath(p)}`)} (картка без окремої сторінки)`,
       );
       const specs = specLine(p);
       if (specs) out.push(`- Характеристики: ${specs}`);
@@ -198,6 +210,10 @@ export function buildLlmsFull(opts: {
         out.push(`- Коротко: ${e.verdict[UA]}`);
         if (e.official[UA]) out.push(`- Дані виробника: ${e.official[UA]}`);
         for (const f of e.faq.slice(0, 4)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
+      } else if (p.seoBlocks?.length) {
+        // Екіпірування з власним текстом (gearCopy.ts) — ті самі факти, що на картці.
+        out.push(`- Коротко: ${p.seoBlocks[0]?.p[UA].join(" ")}`);
+        for (const f of (p.faq ?? []).slice(0, 3)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
       }
       out.push("");
     }

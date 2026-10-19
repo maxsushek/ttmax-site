@@ -10,13 +10,21 @@ import type {
 } from "@/types/catalog";
 import { catalogProducts } from "./products";
 import { catalogBases } from "./bases";
-import { catalogGear } from "./gear";
+import { catalogGear as gearRaw } from "./gear";
+import { withGearCopy } from "./gearCopy";
 import { catalogTables } from "./tables";
 import { catalogRackets } from "./rackets";
 import { catalogBrands, catalogSeries } from "./brands";
 import { catalogCategories } from "./categories";
 import { rubberFilters } from "./filters";
 import { buildCrossSellGraph } from "@/lib/catalog/cross-sell";
+
+/**
+ * Екіпірування з власними текстами (gearCopy.ts): meta-опис, «Про модель», FAQ.
+ * Накладаємо ТУТ, в одній точці входу, — тоді картка, sitemap, llms-full, фід ChatGPT і
+ * правило індексації (productIndexable читає seoBlocks) бачать той самий товар.
+ */
+const catalogGear = gearRaw.map(withGearCopy);
 
 export {
   catalogProducts,

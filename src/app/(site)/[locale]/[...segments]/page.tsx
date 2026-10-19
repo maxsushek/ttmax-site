@@ -426,7 +426,11 @@ export default async function CatalogPage({
   // FAQ JSON-LD: Google прибрав FAQ rich results (07.05.2026), але FAQPage лишається валідною
   // schema й допомагає AI/Copilot розбирати Q&A. Тримаємо за прапором; розмітка = видимий FAQ.
   const EMIT_FAQ_JSONLD = true;
-  const expertFaq = eroute.kind === "product" ? getExpert(eroute.product.slug)?.faq : undefined;
+  // FAQ картки: експертний блок, а якщо його немає — власний FAQ екіпірування (gearCopy.ts).
+  const expertFaq =
+    eroute.kind === "product"
+      ? (getExpert(eroute.product.slug)?.faq ?? eroute.product.faq)
+      : undefined;
   const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
   const groupFaq = eroute.kind === "surfaceGroup" ? eroute.group.faq : undefined;
   const richFaqSlug =
@@ -1134,11 +1138,19 @@ function ProductView({
  * Для сторінок-точок входу з пошуку: текст під запит + передача ваги на money-сторінки.
  * Повертає null, якщо блоків немає, — решта карток не змінюється.
  */
-function SeoBlocks({ blocks, locale }: { blocks: CatalogProduct["seoBlocks"]; locale: Locale }) {
-  if (!blocks || blocks.length === 0) return null;
+function SeoBlocks({
+  blocks,
+  faq,
+  locale,
+}: {
+  blocks: CatalogProduct["seoBlocks"];
+  faq?: CatalogProduct["faq"];
+  locale: Locale;
+}) {
+  if ((!blocks || blocks.length === 0) && (!faq || faq.length === 0)) return null;
   return (
     <section className="mt-12 flex flex-col gap-8">
-      {blocks.map((b, i) => (
+      {(blocks ?? []).map((b, i) => (
         <div key={i}>
           <h2 className="mb-3 font-display text-lg font-bold uppercase tracking-[0.04em] text-ink">
             {b.h[locale]}
@@ -1165,6 +1177,26 @@ function SeoBlocks({ blocks, locale }: { blocks: CatalogProduct["seoBlocks"]; lo
           )}
         </div>
       ))}
+      {faq && faq.length > 0 && (
+        <div>
+          <h2 className="mb-3 font-display text-lg font-bold uppercase tracking-[0.04em] text-ink">
+            {locale === "ru" ? "Вопросы и ответы" : "Питання й відповіді"}
+          </h2>
+          <div className="max-w-[70ch] divide-y divide-border-subtle overflow-hidden rounded-2xl border border-border-strong">
+            {faq.map((f, i) => (
+              <details key={i} className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 font-body text-[15px] font-medium text-white/90 [&::-webkit-details-marker]:hidden">
+                  <span>{f.q[locale]}</span>
+                  <span className="shrink-0 text-xl leading-none text-accent transition-transform duration-200 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="px-4 pb-4 font-body text-sm leading-[1.7] text-white/75">{f.a[locale]}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1436,7 +1468,15 @@ function GearView({
       locale={locale}
       media={media}
       content={content}
-      extra={<SeoBlocks blocks={product.seoBlocks} locale={locale} />}
+      extra={
+        <SeoBlocks
+          blocks={product.seoBlocks}
+          // FAQ показуємо лише коли немає CMS-FAQ: розмітка FAQPage бере CMS першим, і
+          // видимий текст мусить збігатися з розміткою.
+          faq={content?.faq?.length ? undefined : product.faq}
+          locale={locale}
+        />
+      }
     >
       <div className="mt-7">
         <GearPurchasePanel
