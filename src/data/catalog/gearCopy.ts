@@ -9,7 +9,8 @@
 //    фірмові картки Butterfly у ритейлерів) і нашого каталогу. Технології (B-Absorber,
 //    Wingrip…) пишемо тільки тим моделям, у яких їх називає виробник;
 //  • якщо даних про модель немає — копі НЕ пишемо, картка лишається закритою. Так свідомо
-//    лишились мʼячі S40+, Combi Cleaner, тубус, бавовняна губка, шльопанці й дрібні аксесуари
+//    лишились мʼячі S40+, тубус, бавовняна губка (у дилера — замшева, суперечить назві),
+//    шльопанці (у дилера інша модель), рушники Germany/Yao/Stripe, Black Line, BG Case, пляшка 22 й дрібні аксесуари
 //    без опису виробника (19.10.2026);
 //  • однаковий товар в іншому обʼємі чи кольорі (клей 37/50/500 мл, Rifones сині/чорні) не
 //    відкриваємо — це дублі основної картки; їхній попит забирає основна картка й хаб.
@@ -792,6 +793,32 @@ const COPY: Record<string, Copy> = {
   },
 
   /* =========== Партія 4: взуття, мʼячі, дрібні аксесуари =========== */
+  "ochysnyk-dlia-nakladok-butterfly-combi-cleaner": {
+    description: {
+      ua: "Очищувач Butterfly Combi Cleaner, 100 мл: засіб і губка в одній упаковці — знімає бруд із накладок, повертає обертання. Наносити після тренування.",
+      ru: "Очиститель Butterfly Combi Cleaner, 100 мл: средство и губка в одной упаковке — снимает грязь с накладок, возвращает вращение. Наносить после тренировки.",
+    },
+    links: [
+      { label: { ua: "Захисна плівка Rubber Film IV", ru: "Защитная плёнка Rubber Film IV" }, href: "/butterfly/aksessuary/zakhysna-plivka-butterfly" },
+      ...L_CARE,
+    ],
+  },
+  "chokhol-butterfly-cell-case-1": {
+    name: { ua: "Чохол Butterfly Cell Case I", ru: "Чехол Butterfly Cell Case I" },
+    description: {
+      ua: "Чохол Butterfly Cell Case I нестандартної форми з якісного матеріалу: одна ракетка й до 4 мʼячів, надійний захист ракетки в дорозі й на тренуванні.",
+      ru: "Чехол Butterfly Cell Case I нестандартной формы из качественного материала: одна ракетка и до 4 мячей, надёжная защита ракетки в дороге и на тренировке.",
+    },
+    links: [{ label: { ua: "Cell Case II — на 3 мʼячі", ru: "Cell Case II — на 3 мяча" }, href: "/butterfly/chehly/chokhol-butterfly-cell-case-2" }, ...L_CASES],
+  },
+  "chokhol-butterfly-cell-case-2": {
+    name: { ua: "Чохол Butterfly Cell Case II", ru: "Чехол Butterfly Cell Case II" },
+    description: {
+      ua: "Чохол Butterfly Cell Case II нестандартної форми з якісного матеріалу: одна ракетка й 3 мʼячі у відділенні на передній стінці. Захист ракетки.",
+      ru: "Чехол Butterfly Cell Case II нестандартной формы из качественного материала: одна ракетка и 3 мяча в отделении на передней стенке. Защита ракетки.",
+    },
+    links: [{ label: { ua: "Cell Case I — до 4 мʼячів", ru: "Cell Case I — до 4 мячей" }, href: "/butterfly/chehly/chokhol-butterfly-cell-case-1" }, ...L_CASES],
+  },
   "krosivky-butterfly-lezoline-trynex": {
     description: {
       ua: "Кросівки Butterfly Lezoline Trynex — наступник Utop: сучасний спортивний дизайн, зручна посадка й чіпка підошва. 270 г у розмірі 43. Розміри 38–46.",
