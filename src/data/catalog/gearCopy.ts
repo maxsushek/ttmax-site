@@ -841,6 +841,14 @@ const COPY: Record<string, Copy> = {
       ...L_CARE,
     ],
   },
+  "chokhol-butterfly-bg-case": {
+    name: { ua: "Чохол Butterfly BG Case", ru: "Чехол Butterfly BG Case" },
+    description: {
+      ua: "Чохол Butterfly BG Case — новинка 2026: ракетка, 2 мʼячі й засоби догляду на внутрішньому лотку. Поліестер 320D, 21 × 29 × 5 см.",
+      ru: "Чехол Butterfly BG Case — новинка 2026: ракетка, 2 мяча и средства ухода на внутреннем лотке. Полиэстер 320D, 21 × 29 × 5 см.",
+    },
+    links: [{ label: { ua: "Засоби догляду", ru: "Средства ухода" }, href: "/aksessuary/doglyad" }, ...L_CASES],
+  },
   "chokhol-butterfly-cell-case-1": {
     name: { ua: "Чохол Butterfly Cell Case I", ru: "Чехол Butterfly Cell Case I" },
     description: {
