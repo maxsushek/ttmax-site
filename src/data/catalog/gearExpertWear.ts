@@ -92,6 +92,7 @@ const TS_TEAM: ComparisonRow[] = [
   row("futbolka-butterfly-santo", "Santo", t("Honeycomb", "Honeycomb"), t("«College style», круглий комір", "«College style», круглый воротник"), MEN, t("Комплект з костюмом Santo", "Комплект с костюмом Santo")),
   row("futbolka-butterfly-shiro", "Shiro", t("PK Line (100% поліестер)", "PK Line (100% полиэстер)"), t("У парі з шортами Apego", "В паре с шортами Apego"), MEN, t("Комплект з шортами", "Комплект с шортами")),
   row("futbolka-butterfly-atamy", "Atamy", t("MicroDryfit (100% поліестер)", "MicroDryfit (100% полиэстер)"), t("Без коміра, в тон куртці Atamy", "Без воротника, в тон куртке Atamy"), MEN, t("Комплект з костюмом Atamy", "Комплект с костюмом Atamy")),
+  row("futbolka-butterfly-yaizu", "Yaizu", t("Diamond Cool (колекція)", "Diamond Cool (коллекция)"), t("Лімітована колекція 2020, для клубів", "Лимитированная коллекция 2020, для клубов"), MEN, t("Клуб", "Клуб")),
   row("futbolka-butterfly-tori", "Tori", t("Легкий еластичний", "Лёгкий эластичный"), t("Класичні кольори, для клубів", "Классические цвета, для клубов"), MEN, t("Клуб, комплект з костюмом Tori", "Клуб, комплект с костюмом Tori")),
   row("futbolka-butterfly-tori-lady", "Tori Lady", t("Micro DryFit (100% мікроволокно)", "Micro DryFit (100% микроволокно)"), t("Короткий комір, звужений крій", "Короткий воротник, зауженный крой"), WOMEN, t("Клуб", "Клуб")),
   row("futbolka-butterfly-kisa", "Kisa", t("Poly Terry (100% мікроволокно)", "Poly Terry (100% микроволокно)"), t("Комір на ґудзиках, дуже легка", "Воротник на пуговицах, очень лёгкая"), MEN, t("Комплект з костюмом Kisa", "Комплект с костюмом Kisa")),
@@ -1529,6 +1530,18 @@ export const wearExpert: Record<string, ExpertEntry> = {
     audienceNotFor: [t("Хочете на зав'язках — Hachimaki.", "Хотите на завязках — Hachimaki.")],
     faq: [qa("Навіщо пов'язка на голову?", "Зачем повязка на голову?", "Щоб піт із чола не потрапляв в очі й не заважав стежити за мʼячем.", "Чтобы пот со лба не попадал в глаза и не мешал следить за мячом.")],
   }),
+  "futbolka-butterfly-yaizu": tsTeam({
+    verdict: t("Поло Butterfly Yaizu з лімітованої колекції 2020 року: сучасний дизайн, класичні кольори й зручний крій для клубів; еластичний Diamond Cool добре вбирає вологу.", "Поло Butterfly Yaizu из лимитированной коллекции 2020 года: современный дизайн, классические цвета и удобный крой для клубов; эластичный Diamond Cool хорошо впитывает влагу."),
+    official: t("Опис колекції Butterfly: Yaizu — лімітована колекція 2020 року в сучасному дизайні; класичні кольори й зручний крій роблять її ідеальною для клубів; еластичний матеріал Diamond Cool відмінно вбирає вологу.", "Описание коллекции Butterfly: Yaizu — лимитированная коллекция 2020 года в современном дизайне; классические цвета и удобный крой делают её идеальной для клубов; эластичный материал Diamond Cool отлично впитывает влагу."),
+    features: [t("Лімітована колекція 2020.", "Лимитированная коллекция 2020."), t("Для клубів.", "Для клубов."), t("Diamond Cool.", "Diamond Cool.")],
+    descriptionSections: [
+      sec("Огляд", "Обзор", "Yaizu — поло з лімітованої колекції Butterfly 2020 року: синя з чорно-білим шевроном на плечах. Класичні кольори й зручний крій Butterfly адресує клубам.", "Yaizu — поло из лимитированной коллекции Butterfly 2020 года: синяя с чёрно-белым шевроном на плечах. Классические цвета и удобный крой Butterfly адресует клубам."),
+      sec("Матеріал", "Материал", "Колекцію Yaizu Butterfly шила з еластичного Diamond Cool, який добре вбирає вологу.", "Коллекцию Yaizu Butterfly шила из эластичного Diamond Cool, который хорошо впитывает влагу."),
+    ],
+    audienceFor: [t("Клубна форма.", "Клубная форма.")],
+    audienceNotFor: [t("Хочете яскравий принт — Nagano.", "Хотите яркий принт — Nagano.")],
+    faq: [CL_SIZE, CL_ITTF],
+  }),
 };
 
 /* ================================ META Й ПЕРЕЛІНКОВКА ================================ */
@@ -1659,4 +1672,5 @@ export const wearCopy: Record<string, Copy> = {
   "shkarpetky-butterfly-iwagy-socks": { name: t("Шкарпетки Butterfly Iwagy Crew", "Носки Butterfly Iwagy Crew"), description: t("Шкарпетки Butterfly Iwagy Crew з бавовняної суміші з дуже товстою підошвою — мʼякість під стопою на тренуванні. Розміри S (34–37) — XL (45–47).", "Носки Butterfly Iwagy Crew из хлопковой смеси с очень толстой подошвой — мягкость под стопой на тренировке. Размеры S (34–37) — XL (45–47)."), links: [P("shkarpetky-butterfly-iwagy-sneaker", "Iwagy Sneaker — короткі", "Iwagy Sneaker — короткие"), H_SOCK, H_SHOES] },
   "shkarpetky-butterfly-iwagy-sneaker": { description: t("Короткі шкарпетки Butterfly Iwagy Sneaker з бавовняної суміші з дуже товстою підошвою — мʼякі під стопою. Розміри S (34–37) — XL (45–47).", "Короткие носки Butterfly Iwagy Sneaker из хлопковой смеси с очень толстой подошвой — мягкие под стопой. Размеры S (34–37) — XL (45–47)."), links: [P("shkarpetky-butterfly-iwagy-socks", "Iwagy Crew — вищі", "Iwagy Crew — выше"), H_SOCK, H_SHOES] },
   "pov-iazka-na-holovu-butterfly": { name: t("Пов'язка на голову Butterfly Logo", "Повязка на голову Butterfly Logo"), description: t("Пов'язка на голову Butterfly Logo: гнучка махрова пов'язка з бавовни з логотипом Butterfly — вбирає піт із чола. Синя або чорна.", "Повязка на голову Butterfly Logo: гибкая махровая повязка из хлопка с логотипом Butterfly — впитывает пот со лба. Синяя или чёрная."), links: [H_BANDS, P("pov-iazka-na-holovu-butterfly-streak", "Пов'язка Streak", "Повязка Streak"), P("pov-iazka-na-holovu-butterfly-hachimaki", "Пов'язка Hachimaki", "Повязка Hachimaki"), H_SOCK] },
+  "futbolka-butterfly-yaizu": { description: t("Поло Butterfly Yaizu з лімітованої колекції 2020: сучасний дизайн, класичні кольори, зручний крій для клубів; еластичний Diamond Cool вбирає вологу.", "Поло Butterfly Yaizu из лимитированной коллекции 2020: современный дизайн, классические цвета, крой для клубов; эластичный Diamond Cool впитывает влагу."), links: [H_TS, H_SH, H_SUIT] },
 };

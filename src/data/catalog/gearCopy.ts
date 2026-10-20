@@ -793,6 +793,45 @@ const COPY: Record<string, Copy> = {
   },
 
   /* =========== Партія 4: взуття, мʼячі, дрібні аксесуари =========== */
+  "klei-butterfly-freechack-pro-37ml": {
+    name: { ua: "Клей Butterfly Free Chack Pro 37 мл", ru: "Клей Butterfly Free Chack Pro 37 мл" },
+    description: {
+      ua: "Клей Butterfly Free Chack Pro, 37 мл: еластичніший за Free Chack — довший контакт мʼяча з ракеткою й більше обертання. Затискачі й губки в комплекті.",
+      ru: "Клей Butterfly Free Chack Pro, 37 мл: эластичнее Free Chack — дольше контакт мяча с ракеткой и больше вращения. Зажимы и губки в комплекте.",
+    },
+    links: [{ label: { ua: "FreeChack Pro II", ru: "FreeChack Pro II" }, href: "/butterfly/aksessuary/klei-butterfly-freechack-pro-ii-90ml" }, ...L_GLUE],
+  },
+  "bavovniana-hubka-butterfly": {
+    name: { ua: "Бавовняна губка Butterfly (Cotton Sponge)", ru: "Хлопковая губка Butterfly (Cotton Sponge)" },
+    description: {
+      ua: "Бавовняна губка Butterfly (Cotton Sponge) для делікатного чищення накладок разом з очищувачами Butterfly — Spin Refresh, Cure Water, Rubber Cleaner.",
+      ru: "Хлопковая губка Butterfly (Cotton Sponge) для деликатной чистки накладок вместе с очистителями Butterfly — Spin Refresh, Cure Water, Rubber Cleaner.",
+    },
+    links: [{ label: { ua: "Spin Refresh — очищувач", ru: "Spin Refresh — очиститель" }, href: "/butterfly/aksessuary/vidnovnyk-obertannia-butterfly-spin-refresh" }, ...L_CARE],
+  },
+  "tubus-dlia-m-iachiv-butterfly": {
+    name: { ua: "Тубус-ролик Butterfly для м'ячів (Roller/Ball Box)", ru: "Тубус-ролик Butterfly для мячей (Roller/Ball Box)" },
+    description: {
+      ua: "Тубус Butterfly Roller/Ball Box: тверда пластикова туба на 6 мʼячів, що працює й як ролик для прикочування накладки до основи під час поклейки.",
+      ru: "Тубус Butterfly Roller/Ball Box: жёсткая пластиковая туба на 6 мячей, работающая и как ролик для прикатывания накладки к основанию при поклейке.",
+    },
+    links: [{ label: { ua: "Клей для накладок", ru: "Клей для накладок" }, href: "/aksessuary/klei" }, ...L_BALLS],
+  },
+  "rushnyk-butterfly-germany": {
+    description: {
+      ua: "Рушник Butterfly Germany: мʼяка тканина добре вбирає вологу, легкий і міцний — для тренувань, ліги й турнірів. Рожево-чорний дизайн з логотипом.",
+      ru: "Полотенце Butterfly Germany: мягкая ткань хорошо впитывает влагу, лёгкое и прочное — для тренировок, лиги и турниров. Розово-чёрный дизайн с логотипом.",
+    },
+    links: L_TOWELS,
+  },
+  "valiza-butterfly-black-line": {
+    name: { ua: "Валіза Butterfly Black Line Trolley", ru: "Чемодан Butterfly Black Line Trolley" },
+    description: {
+      ua: "Валіза Butterfly Black Line Trolley ≈ 55 × 36 × 20 см для коротких поїздок: просторе відділення, зовнішня кишеня, висувна ручка, міцні колеса.",
+      ru: "Чемодан Butterfly Black Line Trolley ≈ 55 × 36 × 20 см для коротких поездок: просторное отделение, внешний карман, выдвижная ручка, прочные колёса.",
+    },
+    links: [{ label: { ua: "Black Line Maxibag", ru: "Black Line Maxibag" }, href: "/butterfly/chehly/sumka-butterfly-black-line-maxibag" }, ...L_BAGS],
+  },
   "m-iachi-butterfly-s40-3-ittf-3-sht-v-up": {
     name: { ua: "М'ячі Butterfly S40+ 3* (3 шт)", ru: "Мячи Butterfly S40+ 3* (3 шт)" },
     description: {
