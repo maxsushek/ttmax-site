@@ -2,6 +2,7 @@ import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewOrder } from "@/lib/telegram/notify";
+import { productPageUrl, slugFromProductId } from "@/lib/catalog/product-url";
 import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
 import { resolveCombo } from "@/lib/catalog/racket";
@@ -361,6 +362,7 @@ export async function POST(request: NextRequest) {
         model: i.model,
         qty: i.qty,
         lineTotal: Math.round(i.price * i.qty * 100) / 100,
+        url: productPageUrl(slugFromProductId(i.productId)),
       })),
       subtotal: computedSubtotal,
       shipping: computedShipping,

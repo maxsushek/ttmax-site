@@ -14,7 +14,14 @@ export type NewOrderNotification = {
   name: string;
   phone: string;
   email?: string | null;
-  items: { brand: string; model: string; qty: number; lineTotal: number }[];
+  items: {
+    brand: string;
+    model: string;
+    qty: number;
+    lineTotal: number;
+    /** Адреса картки товару (будується на сервері з каталогу) — назва стає посиланням. */
+    url?: string | null;
+  }[];
   subtotal: number;
   shipping: number;
   total: number;
@@ -46,6 +53,11 @@ export function isTelegramConfigured(): boolean {
 /** Екранування під parse_mode=HTML (щоб дані клієнта не ламали розмітку). */
 function esc(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/** Для значення атрибута href: додатково екрануємо лапки. */
+function escAttr(value: string): string {
+  return esc(value).replace(/"/g, "&quot;");
 }
 
 /** "12 500 грн" — грошова сума без залежності від Intl/ICU. */
@@ -104,7 +116,9 @@ export async function notifyNewOrder(order: NewOrderNotification): Promise<boole
 
   lines.push("", "🛒 <b>Товари:</b>");
   for (const it of order.items) {
-    lines.push(`• ${esc(it.brand)} ${esc(it.model)} ×${it.qty} — ${uah(it.lineTotal)}`);
+    const title = `${esc(it.brand)} ${esc(it.model)}`;
+    const named = it.url ? `<a href="${escAttr(it.url)}">${title}</a>` : title;
+    lines.push(`• ${named} ×${it.qty} — ${uah(it.lineTotal)}`);
   }
 
   lines.push(
@@ -134,6 +148,8 @@ export type NewLeadNotification = {
   locale: string;
   /** Товар (для швидкого замовлення з картки) — щоб менеджер бачив, що замовляють. */
   product?: string | null;
+  /** Адреса картки товару (будується на сервері з каталогу). */
+  productUrl?: string | null;
   /** Посилання на CRM (будується з домену запиту). */
   adminUrl?: string | null;
 };
@@ -149,7 +165,12 @@ export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean>
     `📞 ${esc(lead.phone)}`,
   ];
   if (lead.email) lines.push(`✉️ ${esc(lead.email)}`);
-  if (lead.product) lines.push(`🛒 ${esc(lead.product)}`);
+  if (lead.product) {
+    const named = lead.productUrl
+      ? `<a href="${escAttr(lead.productUrl)}">${esc(lead.product)}</a>`
+      : esc(lead.product);
+    lines.push(`🛒 ${named}`);
+  }
   lines.push("", `🔖 Джерело: ${esc(lead.source)}`, `🌐 ${esc(lead.locale)}`);
   if (lead.adminUrl) lines.push("", `<a href="${lead.adminUrl}">Відкрити в CRM →</a>`);
 

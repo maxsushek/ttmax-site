@@ -2,6 +2,7 @@ import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { notifyNewLead } from "@/lib/telegram/notify";
+import { productPageUrl } from "@/lib/catalog/product-url";
 import { locales, localeToLang } from "@/i18n/config";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 
@@ -99,6 +100,10 @@ export async function POST(request: NextRequest) {
   // Товар зі швидкого замовлення передається в attribution.product → показуємо в Telegram.
   const attribution = parsed.data.attribution ?? {};
   const product = typeof attribution.product === "string" ? attribution.product : null;
+  // Посилання на картку — лише для slug, який є в каталозі (productPageUrl це перевіряє).
+  const productUrl = productPageUrl(
+    typeof attribution.productSlug === "string" ? attribution.productSlug : null,
+  );
   // ⚠️ БД має CHECK (locale IN ('uk','ru')) — це BCP-47 код мови, а НЕ код локалі в URL
   // ('ua'/'ru'). Без мапи вставка з locale='ua' падала (23514) → форма лідів на /ua ламалась.
   // Каст: рукописний тип колонки в supabase/types.ts помилково каже "ua"|"ru", а фактично
@@ -136,6 +141,7 @@ export async function POST(request: NextRequest) {
       source: parsed.data.source,
       locale: parsed.data.locale,
       product,
+      productUrl,
       adminUrl,
     });
   });
