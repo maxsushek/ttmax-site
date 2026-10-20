@@ -27,8 +27,6 @@ import type {
   CatalogBrand,
   CatalogCategory,
   CatalogSeries,
-  BladeClass,
-  BladeSurface,
   Localized,
 } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
@@ -43,7 +41,7 @@ import {
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
-import { resolveCombo } from "@/lib/catalog/racket";
+import { isRacket, resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
@@ -59,6 +57,15 @@ import { getRichContent } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
 import { expertFor, variantOf } from "@/data/catalog/variants";
 import { cldUrl } from "@/lib/cloudinary/url";
+import {
+  BLADE_CLASS_LABEL,
+  BLADE_SURFACE_LABEL,
+  baseSpecRows,
+  gearSpecRows,
+  gearTypeLabel,
+  genderLabel,
+  rubberSpecRows,
+} from "@/lib/catalog/spec-rows";
 import {
   catalogBreadcrumbs,
   catalogStaticParams,
@@ -260,49 +267,6 @@ export async function generateMetadata({
 }
 
 /** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
-const GEAR_TYPE_LABEL: Record<string, { ua: string; ru: string }> = {
-  tshirt: { ua: "Футболка", ru: "Футболка" },
-  shorts: { ua: "Шорти", ru: "Шорты" },
-  suit: { ua: "Костюм", ru: "Костюм" },
-  jacket: { ua: "Куртка", ru: "Куртка" },
-  track: { ua: "Олімпійка", ru: "Олимпийка" },
-  sweater: { ua: "Кофта", ru: "Кофта" },
-  pants: { ua: "Штани", ru: "Штаны" },
-  skirt: { ua: "Спідниця", ru: "Юбка" },
-  socks: { ua: "Шкарпетки", ru: "Носки" },
-  cap: { ua: "Кепка", ru: "Кепка" },
-  band: { ua: "Пов'язка", ru: "Повязка" },
-  shoes: { ua: "Кросівки", ru: "Кроссовки" },
-  slippers: { ua: "Шльопанці", ru: "Шлёпанцы" },
-  balls: { ua: "М'ячі", ru: "Мячи" },
-  glue: { ua: "Клей", ru: "Клей" },
-  cleaner: { ua: "Очисник", ru: "Очиститель" },
-  care: { ua: "Догляд", ru: "Уход" },
-  "edge-tape": { ua: "Торцева стрічка", ru: "Торцевая лента" },
-  overgrip: { ua: "Обмотка", ru: "Обмотка" },
-  film: { ua: "Захисна плівка", ru: "Защитная плёнка" },
-  "ball-tube": { ua: "Тубус для м'ячів", ru: "Тубус для мячей" },
-  insole: { ua: "Устілки", ru: "Стельки" },
-  towel: { ua: "Рушник", ru: "Полотенце" },
-  bottle: { ua: "Пляшка", ru: "Бутылка" },
-  bag: { ua: "Сумка", ru: "Сумка" },
-  backpack: { ua: "Рюкзак", ru: "Рюкзак" },
-  case: { ua: "Чохол", ru: "Чехол" },
-  "shoe-bag": { ua: "Сумка для взуття", ru: "Сумка для обуви" },
-  "ball-bag": { ua: "Сумка для м'ячів", ru: "Сумка для мячей" },
-  net: { ua: "Сітка", ru: "Сетка" },
-  table: { ua: "Тенісний стіл", ru: "Теннисный стол" },
-};
-
-const GENDER_LABEL: Record<string, { ua: string; ru: string }> = {
-  men: { ua: "Чоловіча", ru: "Мужская" },
-  women: { ua: "Жіноча", ru: "Женская" },
-  unisex: { ua: "Унісекс", ru: "Унисекс" },
-};
-
-const gearTypeLabel = (v: string, locale: Locale) => GEAR_TYPE_LABEL[v]?.[locale] ?? v;
-const genderLabel = (v: string, locale: Locale) => GENDER_LABEL[v]?.[locale] ?? v;
-
 const CART_CATEGORY: Record<string, ProductCategory> = {
   rakety: "base",
   nakladki: "rubber",
@@ -315,27 +279,6 @@ const CART_CATEGORY: Record<string, ProductCategory> = {
   setki: "net",
 };
 
-/* Подписи характеристик основания (клас / тип волокна). */
-const BLADE_CLASS_LABEL: Record<BladeClass, { ua: string; ru: string }> = {
-  "off-plus": { ua: "OFF+ · атака", ru: "OFF+ · атака" },
-  off: { ua: "OFF", ru: "OFF" },
-  "off-minus": { ua: "OFF− · універсал", ru: "OFF− · универсал" },
-  "all-plus": { ua: "ALL+", ru: "ALL+" },
-  all: { ua: "ALL · контроль", ru: "ALL · контроль" },
-  def: { ua: "DEF · захист", ru: "DEF · защита" },
-};
-const BLADE_SURFACE_LABEL: Record<BladeSurface, string> = {
-  wood: "Дерево",
-  alc: "ALC (арилат-карбон)",
-  "super-alc": "Super ALC",
-  zlc: "ZLC (Zylon-карбон)",
-  "super-zlc": "Super ZLC",
-  zlf: "ZLF (Zylon-fiber)",
-  t5000: "T5000",
-  cnf: "CNF",
-  caf: "CAF / карбон",
-  carbon: "Карбон",
-};
 
 export default async function CatalogPage({
   params,
@@ -395,13 +338,52 @@ export default async function CatalogPage({
             .filter((n): n is number => typeof n === "number" && n > 0);
           const lowPrice = vPrices.length ? Math.min(...vPrices) : undefined;
           const highPrice = vPrices.length ? Math.max(...vPrices) : undefined;
+          // Збірна ракетка: ціни в коді немає, її рахує RacketComboPanel із компонентів
+          // (сума мінус акційна знижка). Без цього гілка нижче отримувала price undefined і
+          // розмітки Offer у 95 ракеток не було взагалі — а Google Merchant Center звіряє
+          // ціну фіду саме з нею. Беремо ту саму пару цін, що бачить покупець.
+          const combo = isRacket(eroute.product) ? resolveCombo(eroute.product, overrides) : null;
           // ⚠️ wm:true і тут, і в галереї — параметри однакові, тож URL виходить ТОЙ САМИЙ.
           // Google має бачити рівно ту саму картинку, що й покупець; розбіжність між
           // видимим фото і фото в розмітці читалась би як підміна контенту для робота.
-          const productImages = pickAll(media, "product", eroute.product.slug)
+          // Своїх фото у збірок немає — сторінка показує фото компонентів.
+          const productImages = (
+            combo
+              ? combo.parts.flatMap((p) => pickAll(media, "product", p.slug).slice(0, 1))
+              : pickAll(media, "product", eroute.product.slug)
+          )
             .map((m) => cldUrl(m.publicId, { w: 900, h: 900, wm: true }))
             .filter(Boolean);
           const productSku = eroute.product.variants.find((v) => v.sku)?.sku ?? eroute.product.slug;
+          // Дата зміни ціни: для збірки — найсвіжіша з дат її компонентів.
+          const overrideDate = (p: CatalogProduct) =>
+            overrides[p.slug]?.updatedAt ??
+            p.variants.map((v) => overrides[`${p.slug}__${v.thickness}__${v.color}`]?.updatedAt).find(Boolean);
+          const comboDate = combo
+            ? combo.parts
+                .map(overrideDate)
+                .filter((d): d is string => Boolean(d))
+                .sort()
+                .pop()
+            : undefined;
+          if (combo) {
+            return productJsonLd({
+              name: pickLocalized(eroute.product.name, locale),
+              description: expandTokens(routeDescription(eroute, locale), tctx) ?? "",
+              url: `${siteConfig.url}/${locale}/${eroute.product.brandSlug}/${eroute.product.categorySlug}/${eroute.product.slug}`,
+              brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
+              images: productImages,
+              sku: productSku,
+              price: combo.promoPrice,
+              strikethroughPrice: combo.oldPrice,
+              currency: "UAH",
+              inStock: isInStock(eroute.product),
+              priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+              priceValidFrom: comboDate ?? PRICE_LIST_EFFECTIVE_DATE,
+              shippingFees,
+              freeShippingThreshold: deliveryContact.freeShippingThreshold,
+            });
+          }
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
             // Найдовший з трьох описів: вердикт + офіційні характеристики Butterfly.
@@ -1345,21 +1327,7 @@ function RubberView({
   const related = filterVisible(getCrossSell(product), media).slice(0, 4);
   const img = pickPrimary(media, "product", product.slug);
 
-  const rows: { label: string; value: string }[] = [];
-  if (product.surfaceType)
-    rows.push({
-      label: catalogUi.surface[locale],
-      value: labelFor("surfaceType", product.surfaceType, locale),
-    });
-  if (product.specs.speed !== undefined)
-    rows.push({ label: catalogUi.speed[locale], value: String(product.specs.speed) });
-  if (product.specs.spin !== undefined)
-    rows.push({ label: catalogUi.spin[locale], value: String(product.specs.spin) });
-  if (product.specs.arc !== undefined)
-    rows.push({ label: catalogUi.arc[locale], value: String(product.specs.arc) });
-  if (product.specs.hardnessDeg !== undefined)
-    rows.push({ label: catalogUi.hardness[locale], value: `${product.specs.hardnessDeg}°` });
-  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+  const rows = rubberSpecRows(product, locale);
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "rubber";
   const expertEntry = getExpert(product.slug);
@@ -1437,42 +1405,7 @@ function GearView({
   const img = pickPrimary(media, "product", product.slug);
   const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
 
-  const rows: { label: string; value: string }[] = [];
-  rows.push({ label: L("Тип", "Тип"), value: gearTypeLabel(gear.gearType, locale) });
-  if (gear.gender) rows.push({ label: L("Стать", "Пол"), value: genderLabel(gear.gender, locale) });
-  if (gear.sizes && gear.sizes.length)
-    rows.push({ label: L("Розміри", "Размеры"), value: gear.sizes.join(", ") });
-  if (gear.stars) rows.push({ label: L("Зірковість", "Звёздность"), value: gear.stars });
-  if (gear.packSize) rows.push({ label: L("В упаковці", "В упаковке"), value: gear.packSize });
-  if (gear.volumeMl) rows.push({ label: L("Об'єм", "Объём"), value: `${gear.volumeMl} мл` });
-  // Столи (gearType: "table")
-  if (gear.tableThicknessMm)
-    rows.push({
-      label: L("Товщина стільниці", "Толщина столешницы"),
-      value: `${gear.tableThicknessMm} мм`,
-    });
-  if (gear.sizeUnfolded)
-    rows.push({
-      label: L("Розміри (розкладений)", "Размеры (разложенный)"),
-      value: gear.sizeUnfolded,
-    });
-  if (gear.sizeFolded)
-    rows.push({ label: L("У складеному вигляді", "В сложенном виде"), value: gear.sizeFolded });
-  if (gear.weightKg) rows.push({ label: L("Вага", "Вес"), value: `${gear.weightKg} кг` });
-  if (gear.usage)
-    rows.push({
-      label: L("Призначення", "Назначение"),
-      value:
-        gear.usage === "indoor"
-          ? L("Для приміщень", "Для помещений")
-          : L("Всепогодній", "Всепогодный"),
-    });
-  if (gear.rollaway)
-    rows.push({
-      label: L("Конструкція", "Конструкция"),
-      value: L("Складна, на колесах", "Складная, на колёсах"),
-    });
-  if (gear.ittf) rows.push({ label: L("Схвалення ITTF", "Одобрение ITTF"), value: L("Так", "Да") });
+  const rows = gearSpecRows(product, locale);
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
   const gearExpertEntry = expertFor(product.slug);
@@ -1584,35 +1517,7 @@ function BaseView({
   const related = filterVisible(getCrossSell(product), media).slice(0, 4);
   const img = pickPrimary(media, "product", product.slug);
 
-  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
-  const rows: { label: string; value: string }[] = [
-    { label: L("Клас", "Класс"), value: BLADE_CLASS_LABEL[base.bladeClass][locale] },
-    { label: L("Тип основи", "Тип основания"), value: BLADE_SURFACE_LABEL[base.surface] },
-  ];
-  if (base.fiber)
-    rows.push({
-      label: L("Карбон", "Карбон"),
-      value:
-        base.fiber === "outer"
-          ? L("Зовнішній (outer)", "Внешний (outer)")
-          : L("Внутрішній (inner)", "Внутренний (inner)"),
-    });
-  if (base.plies) rows.push({ label: L("Шари", "Слои"), value: base.plies });
-  if (base.thicknessMm)
-    rows.push({ label: L("Товщина", "Толщина"), value: `${base.thicknessMm.toFixed(1)} мм` });
-  if (base.sizeMm) rows.push({ label: L("Розмір лопаті", "Размер лопасти"), value: base.sizeMm });
-  // ⚠️ Числа Butterfly, а не наша оцінка: показуємо як є, з двома знаками —
-  // виробник публікує саме так (12.00, а не 12), і округлення тут виглядало б
-  // як інша характеристика.
-  if (typeof base.reaction === "number")
-    rows.push({ label: L("Реакція", "Реакция"), value: base.reaction.toFixed(2) });
-  if (typeof base.vibration === "number")
-    rows.push({ label: L("Вібрація", "Вибрация"), value: base.vibration.toFixed(2) });
-  if (base.weight) rows.push({ label: L("Середня вага", "Средний вес"), value: base.weight });
-  else if (base.weightG) rows.push({ label: L("Вага", "Вес"), value: `${base.weightG} г` });
-  if (base.madeIn)
-    rows.push({ label: L("Виробництво", "Производство"), value: base.madeIn[locale] });
-  rows.push({ label: catalogUi.level[locale], value: labelFor("level", product.level, locale) });
+  const rows = baseSpecRows(product, locale);
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "base";
   const expertEntry = getExpert(product.slug);

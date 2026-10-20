@@ -190,9 +190,11 @@ export function breadcrumbJsonLd(
  * Джерело правди: src/data/info.ts (delivery: відправка 1–2 робочих дні, доставка 1–3 дні;
  * returns: 14 днів за Законом «Про захист прав споживачів»).
  */
-const SHIPPING_HANDLING_DAYS = { min: 1, max: 2 } as const; // збирання й відправка замовлення
-const SHIPPING_TRANSIT_DAYS = { min: 1, max: 3 } as const; // перевізник по Україні
-const RETURN_DAYS = 14; // ст. 9 ЗУ «Про захист прав споживачів»
+// Експортуються для товарного фіду Google Merchant Center (lib/feeds/google-merchant.ts):
+// фід і розмітка сторінки мусять обіцяти ті самі строки.
+export const SHIPPING_HANDLING_DAYS = { min: 1, max: 2 } as const; // збирання й відправка замовлення
+export const SHIPPING_TRANSIT_DAYS = { min: 1, max: 3 } as const; // перевізник по Україні
+export const RETURN_DAYS = 14; // ст. 9 ЗУ «Про захист прав споживачів»
 
 function shippingDetailsNode(shippingFee: number, currency: string) {
   return {

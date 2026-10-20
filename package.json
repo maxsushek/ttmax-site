@@ -11,7 +11,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
     "check:meta": "node scripts/check-meta.mjs",
-    "check:geo": "node scripts/check-geo.mjs"
+    "check:geo": "node scripts/check-geo.mjs",
+    "check:merchant": "node scripts/check-merchant-feed.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
