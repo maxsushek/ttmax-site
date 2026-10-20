@@ -16,6 +16,8 @@
 //   tovshchyna      — чотири розрізи різної товщини під стелею правил ITTF;
 //   lypki-tenzorni  — два способи втримати мʼяч: прилипання і продавлювання;
 //   versii          — одне джерело, три ОДНАКОВІ основи; підсвічено лише торець ручки.
+//   mistse          — план кімнати зверху: стіл і три вкладені зони запасу; підсвічено
+//                     «комфортну» зону й запас за торцем і збоку — те, що стаття вчить міряти.
 //
 // Запуск: node scripts/gen-blog-covers.mjs
 import { writeFileSync } from "node:fs";
@@ -213,12 +215,44 @@ function versii() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 6. Місце під стіл: план зверху, стіл і зони запасу ─── */
+function mistse() {
+  // ⚠️ ПРОПОРЦІЇ ЧЕСНІ (67 px на метр): зони 8×4, 5,5×3 і 4,5×2,5 м навколо столу
+  // 2,74×1,525 м — як на схемі в статті. Але БЕЗ ЧИСЕЛ: це фон, цифри живуть у схемі
+  // (gen-room-space-diagram.mjs) і в таблиці статті.
+  const cx = 1055;
+  const cy = 525;
+  const k = 67;
+  const rect = (l, w, attrs) =>
+    `<rect x="${(cx - (l * k) / 2).toFixed(1)}" y="${(cy - (w * k) / 2).toFixed(1)}" width="${(l * k).toFixed(1)}" height="${(w * k).toFixed(1)}" ${attrs}/>`;
+  const tw = 2.74 * k;
+  const th = 1.525 * k;
+  const comfortEnd = cx + (5.5 * k) / 2;
+  const comfortSide = cy + (3 * k) / 2;
+  return wrap(
+    [
+      `<circle cx="${cx}" cy="${cy}" r="260" fill="url(#halo)"/>`,
+      rect(8, 4, `fill="none" stroke="${DOT_CORE}" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 9"`),
+      rect(4.5, 2.5, `fill="none" stroke="${DOT_CORE}" stroke-opacity="0.45" stroke-width="1.8" stroke-dasharray="4 7"`),
+      rect(5.5, 3, `fill="none" stroke="${ACCENT}" stroke-opacity="0.85" stroke-width="3"`),
+      rect(2.74, 1.525, `rx="3" fill="${DOT_RING}" fill-opacity="0.55" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="2"`),
+      `<line x1="${cx - tw / 2}" y1="${cy}" x2="${cx + tw / 2}" y2="${cy}" stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="1.4"/>`,
+      `<line x1="${cx}" y1="${cy - th / 2 - 10}" x2="${cx}" y2="${cy + th / 2 + 10}" stroke="#FFFFFF" stroke-opacity="0.75" stroke-width="3"/>`,
+      // запас за торцем і збоку — механізм, якого стосується стаття
+      `<line x1="${cx + tw / 2 + 6}" y1="${cy - 22}" x2="${comfortEnd - 6}" y2="${cy - 22}" stroke="${ACCENT}" stroke-opacity="0.8" stroke-width="2.2"/>`,
+      `<line x1="${cx + 60}" y1="${cy + th / 2 + 6}" x2="${cx + 60}" y2="${comfortSide - 6}" stroke="${ACCENT}" stroke-opacity="0.8" stroke-width="2.2"/>`,
+      dotAccent(cx + tw / 2 - 30, cy - th / 4, 9),
+    ].join("\n"),
+  );
+}
+
 const FILES = {
   "tenergy-dignics-cover.svg": tenergyDignics(),
   "novachok-cover.svg": novachok(),
   "tovshchyna-cover.svg": tovshchyna(),
   "lypki-tenzorni-cover.svg": lypkiTenzorni(),
   "versii-cover.svg": versii(),
+  "mistse-cover.svg": mistse(),
 };
 
 for (const [name, svg] of Object.entries(FILES)) {

@@ -84,6 +84,10 @@ export const catalogTables: CatalogProduct[] = [
             label: { ua: "Розміри тенісного столу — докладно", ru: "Размеры теннисного стола — подробно" },
             href: "/blog/rozmiry-tenisnogo-stolu",
           },
+          {
+            label: { ua: "Скільки місця потрібно для столу", ru: "Сколько места нужно для стола" },
+            href: "/blog/mistse-dlya-tenisnogo-stolu",
+          },
         ],
       },
       {

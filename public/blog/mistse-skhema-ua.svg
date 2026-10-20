@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1200" height="640" fill="#0E1117"/>
+<text x="60" y="64" fill="#F2F4F7" font-size="30" font-weight="700" letter-spacing="1">СКІЛЬКИ МІСЦЯ НАВКОЛО СТОЛУ</text>
+<line x1="60" y1="84" x2="1140" y2="84" stroke="#212832"/>
+<line x1="60" y1="150" x2="60" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="107.5" y1="150" x2="107.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="155" y1="150" x2="155" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="202.5" y1="150" x2="202.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="250" y1="150" x2="250" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="297.5" y1="150" x2="297.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="345" y1="150" x2="345" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="392.5" y1="150" x2="392.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="440" y1="150" x2="440" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="487.5" y1="150" x2="487.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="535" y1="150" x2="535" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="582.5" y1="150" x2="582.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="630" y1="150" x2="630" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="677.5" y1="150" x2="677.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="725" y1="150" x2="725" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="772.5" y1="150" x2="772.5" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="820" y1="150" x2="820" y2="530" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="150" x2="820" y2="150" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="197.5" x2="820" y2="197.5" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="245" x2="820" y2="245" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="292.5" x2="820" y2="292.5" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="340" x2="820" y2="340" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="387.5" x2="820" y2="387.5" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="435" x2="820" y2="435" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="482.5" x2="820" y2="482.5" stroke="#212832" stroke-width="1"/>
+<line x1="60" y1="530" x2="820" y2="530" stroke="#212832" stroke-width="1"/>
+<rect x="60" y="150" width="760" height="380" fill="none" stroke="#8A93A0" stroke-opacity="0.7" stroke-width="2" stroke-dasharray="10 8"/>
+<text x="70" y="169" fill="#8A93A0" font-size="15" font-weight="700">8 × 4 м</text>
+<rect x="178.75" y="197.5" width="522.5" height="285" fill="none" stroke="#E8FF47" stroke-opacity="1" stroke-width="3"/>
+<text x="188.75" y="216.5" fill="#E8FF47" font-size="15" font-weight="700">5,5 × 3 м</text>
+<rect x="226.25" y="221.25" width="427.5" height="237.5" fill="none" stroke="#8A93A0" stroke-opacity="0.9" stroke-width="2" stroke-dasharray="4 6"/>
+<text x="236.25" y="240.25" fill="#8A93A0" font-size="15" font-weight="700">4,5 × 2,5 м</text>
+<rect x="309.85" y="267.5625" width="260.3" height="144.875" rx="3" fill="#1F4F8F" fill-opacity="0.55" stroke="#F2F4F7" stroke-opacity="0.75" stroke-width="2"/>
+<line x1="309.85" y1="340" x2="570.1500000000001" y2="340" stroke="#F2F4F7" stroke-opacity="0.45" stroke-width="1.2"/>
+<line x1="440" y1="253.5625" x2="440" y2="426.4375" stroke="#F2F4F7" stroke-opacity="0.9" stroke-width="3"/>
+<text x="440" y="374" fill="#F2F4F7" font-size="14" text-anchor="middle" opacity="0.85">стіл 2,74 × 1,525 м</text>
+<line x1="574.1500000000001" y1="314" x2="697.25" y2="314" stroke="#E8FF47" stroke-width="2"/><path d="M689.1 317.9 L697.25 314 L689.1 310.1" fill="none" stroke="#E8FF47" stroke-width="2"/><path d="M582.3 310.1 L574.1500000000001 314 L582.3 317.9" fill="none" stroke="#E8FF47" stroke-width="2"/>
+<text x="635.7" y="304" fill="#E8FF47" font-size="15" font-weight="700" text-anchor="middle">≈ 1,4 м</text>
+<line x1="510" y1="416.4375" x2="510" y2="478.5" stroke="#E8FF47" stroke-width="2"/><path d="M506.1 470.4 L510 478.5 L513.9 470.4" fill="none" stroke="#E8FF47" stroke-width="2"/><path d="M513.9 424.5 L510 416.4375 L506.1 424.5" fill="none" stroke="#E8FF47" stroke-width="2"/>
+<text x="522" y="452.46875" fill="#E8FF47" font-size="15" font-weight="700">≈ 0,7 м</text>
+<text x="60" y="564" fill="#8A93A0" font-size="14">Вигляд зверху, в масштабі: одна клітинка = 0,5 м</text>
+<line x1="870" y1="144" x2="904" y2="144" stroke="#8A93A0" stroke-opacity="0.7" stroke-width="2" stroke-dasharray="10 8"/>
+<text x="916" y="150" fill="#F2F4F7" font-size="20" font-weight="700">8 × 4 м</text>
+<text x="916" y="172" fill="#8A93A0" font-size="14">тренування й відпочинок</text>
+<text x="916" y="190" fill="#8A93A0" font-size="12" opacity="0.8">мінімум Table Tennis England</text>
+<text x="916" y="210" fill="#F2F4F7" font-size="14" opacity="0.85">≈ 2,6 м за торцем · ≈ 1,2 м збоку</text>
+<line x1="870" y1="258" x2="904" y2="258" stroke="#E8FF47" stroke-opacity="1" stroke-width="3"/>
+<text x="916" y="264" fill="#E8FF47" font-size="20" font-weight="700">5,5 × 3 м</text>
+<text x="916" y="286" fill="#8A93A0" font-size="14">комфортно вдома</text>
+<text x="916" y="306" fill="#F2F4F7" font-size="14" opacity="0.85">≈ 1,4 м за торцем · ≈ 0,7 м збоку</text>
+<line x1="870" y1="354" x2="904" y2="354" stroke="#8A93A0" stroke-opacity="0.9" stroke-width="2" stroke-dasharray="4 6"/>
+<text x="916" y="360" fill="#F2F4F7" font-size="20" font-weight="700">4,5 × 2,5 м</text>
+<text x="916" y="382" fill="#8A93A0" font-size="14">мінімум: гра біля столу</text>
+<text x="916" y="402" fill="#F2F4F7" font-size="14" opacity="0.85">≈ 0,9 м за торцем · ≈ 0,5 м збоку</text>
+<rect x="870" y="436" width="34" height="20" rx="2" fill="#1F4F8F" fill-opacity="0.55" stroke="#F2F4F7" stroke-opacity="0.75"/>
+<text x="916" y="456" fill="#F2F4F7" font-size="20" font-weight="700">2,74 × 1,525 м</text>
+<text x="916" y="478" fill="#8A93A0" font-size="14">стіл за стандартом ITTF</text>
+<text x="916" y="498" fill="#F2F4F7" font-size="14" opacity="0.85">висота 76 см</text>
+<text x="1140" y="616" fill="#39424E" font-size="13" text-anchor="end">ttmax.com.ua</text>
+</svg>
