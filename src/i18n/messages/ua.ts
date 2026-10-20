@@ -1,4 +1,6 @@
 import type { Messages } from "./types";
+// Строки доставки — з config/delivery.ts (ті самі, що на /delivery, у розмітці й фіді).
+import { DELIVERY_DAYS as D, daysLabel } from "@/config/delivery";
 
 export const ua: Messages = {
   meta: {
@@ -194,8 +196,8 @@ export const ua: Messages = {
       contact: "Контактні дані",
       // ⚠️ У підписах свідомо НЕМА суми: ціну малює CheckoutForm із computeShipping.
       // Зашите тут число вже одного разу розійшлось із рахунком («~30 грн» проти 90).
-      np: { label: "Нова Пошта", sub: "1–2 дні · відділення або поштомат" },
-      ukrposhta: { label: "Укрпошта", sub: "3–5 днів · відділення" },
+      np: { label: "Нова Пошта", sub: `${daysLabel(D.np, "ua")} · відділення або поштомат` },
+      ukrposhta: { label: "Укрпошта", sub: `${daysLabel(D.ukrposhta, "ua")} · відділення` },
       pickup: { label: "Самовивіз", sub: "Харків · забрати в магазині" },
       fields: {
         fullName: "Ім'я та прізвище",
@@ -241,7 +243,8 @@ export const ua: Messages = {
       orderNumber: "Номер замовлення:",
       emailNote: "Підтвердження надішлемо на {email}",
       emailFallback: "ваш email",
-      deliveryNote: "Доставка 1–2 дні.",
+      deliveryNote: `Відправимо протягом ${daysLabel(D.handling, "ua", true)} і надішлемо номер ТТН.`,
+      pickupNote: "Звʼяжемося, щоб домовитися про час самовивозу.",
       back: "Повернутися в магазин",
     },
     edit: "Змінити",

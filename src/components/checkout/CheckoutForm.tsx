@@ -290,7 +290,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
           {form.email
             ? m.success.emailNote.replace("{email}", form.email)
             : m.success.emailNote.replace("{email}", m.success.emailFallback)}
-          . {m.success.deliveryNote}
+          . {form.delivery === "pickup" ? m.success.pickupNote : m.success.deliveryNote}
         </p>
         <Button
           variant="primary"

@@ -1,3 +1,4 @@
+import { DELIVERY_DAYS, HANDLING_WEEKDAYS, type DayRange } from "@/config/delivery";
 import { siteConfig, socialProfiles } from "@/config/site";
 import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
@@ -187,32 +188,39 @@ export function breadcrumbJsonLd(
  *
  * ⚠️ ВСІ ЦИФРИ ТУТ МУСЯТЬ ЗБІГАТИСЯ З ТЕКСТОМ НА /delivery і /returns. Розмітка, яка
  * суперечить видимому тексту, — це підстава для ручних санкцій, а не просто помилка.
- * Джерело правди: src/data/info.ts (delivery: відправка 1–2 робочих дні, доставка 1–3 дні;
- * returns: 14 днів за Законом «Про захист прав споживачів»).
+ * Строки доставки — з config/delivery.ts (там само їх бере сторінка /delivery, чекаут, фід
+ * Google Merchant Center і налаштування самого Merchant Center); повернення — 14 днів за
+ * Законом «Про захист прав споживачів» (текст /returns).
  */
-// Експортуються для товарного фіду Google Merchant Center (lib/feeds/google-merchant.ts):
-// фід і розмітка сторінки мусять обіцяти ті самі строки.
-export const SHIPPING_HANDLING_DAYS = { min: 1, max: 2 } as const; // збирання й відправка замовлення
-export const SHIPPING_TRANSIT_DAYS = { min: 1, max: 3 } as const; // перевізник по Україні
+// RETURN_DAYS експортується для товарного фіду (lib/feeds/google-merchant.ts).
 export const RETURN_DAYS = 14; // ст. 9 ЗУ «Про захист прав споживачів»
 
-function shippingDetailsNode(shippingFee: number, currency: string) {
+/** Тариф одного перевізника для розмітки: ціна і строк у дорозі. */
+export type ShippingOption = { fee: number; transit: DayRange };
+
+function shippingDetailsNode(o: ShippingOption, currency: string) {
   return {
     "@type": "OfferShippingDetails",
-    shippingRate: { "@type": "MonetaryAmount", value: shippingFee, currency },
+    shippingRate: { "@type": "MonetaryAmount", value: o.fee, currency },
     shippingDestination: { "@type": "DefinedRegion", addressCountry: "UA" },
     deliveryTime: {
       "@type": "ShippingDeliveryTime",
+      // Замовлення обробляємо лише в робочі дні — те саме «пн–пт», що на /delivery і в
+      // Merchant Center. Без цього Google рахував би строк і по вихідних.
+      businessDays: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: HANDLING_WEEKDAYS.map((d) => `https://schema.org/${d}`),
+      },
       handlingTime: {
         "@type": "QuantitativeValue",
-        minValue: SHIPPING_HANDLING_DAYS.min,
-        maxValue: SHIPPING_HANDLING_DAYS.max,
+        minValue: DELIVERY_DAYS.handling.min,
+        maxValue: DELIVERY_DAYS.handling.max,
         unitCode: "DAY",
       },
       transitTime: {
         "@type": "QuantitativeValue",
-        minValue: SHIPPING_TRANSIT_DAYS.min,
-        maxValue: SHIPPING_TRANSIT_DAYS.max,
+        minValue: o.transit.min,
+        maxValue: o.transit.max,
         unitCode: "DAY",
       },
     },
@@ -281,24 +289,24 @@ export function productJsonLd(opts: {
    * Поріг безкоштовної доставки, грн (site_settings → delivery_free_threshold).
    *
    * ⚠️ Якщо ціна товару досягає порогу, доставка ДІЙСНО безкоштовна, і тоді в розмітку
-   * йде єдина ставка 0 — саме так Google очікує «безкоштовну доставку» (freeShippingThreshold
-   * у специфікації немає, потрібен shippingRate зі значенням 0).
+   * йде ставка 0 для кожного перевізника (строки в них різні, тож вузли лишаються окремі) —
+   * саме так Google очікує «безкоштовну доставку» (freeShippingThreshold у специфікації
+   * немає, потрібен shippingRate зі значенням 0).
    *
    * ⚠️ Для дешевших товарів нуль писати НЕ МОЖНА: доставка платна, і це була б неправда
    * у сніпеті — рівно той клас тверджень, який ми з сайту прибирали.
    */
   freeShippingThreshold?: number;
   /**
-   * Тарифи доставки, грн — по одному на перевізника (Нова Пошта, Укрпошта). Беруться
-   * з site_settings через resolveContact, тобто ті самі числа, що покупець бачить на
-   * чекауті. Якщо не передати, блоки shippingDetails і hasMerchantReturnPolicy не
+   * Тарифи доставки — по одному на перевізника (Нова Пошта, Укрпошта): ціна з site_settings
+   * через resolveContact (ті самі числа, що покупець бачить на чекауті) і строк у дорозі з
+   * config/delivery.ts. Якщо не передати, блоки shippingDetails і hasMerchantReturnPolicy не
    * додаються взагалі: краще без розмітки, ніж із вигаданою цифрою.
    *
-   * ⚠️ Було одне число на весь сайт, поки доставка коштувала однаково в усіх. Щойно
-   * в Укрпошти зʼявився свій тариф (80 проти 90), розмітка почала занижувати вибір
-   * покупця до однієї ставки. Тепер перелічуємо всі — Google показує найдешевшу.
+   * ⚠️ Строк — свій у кожного перевізника: Укрпошта їде 3–5 днів, Нова Пошта 1–3. Колись тут
+   * був один строк на всіх, і розмітка обіцяла Укрпошту за 1–3 дні, хоча чекаут казав 3–5.
    */
-  shippingFees?: number[];
+  shipping?: ShippingOption[];
 }) {
   const {
     name,
@@ -316,7 +324,7 @@ export function productJsonLd(opts: {
     strikethroughPrice,
     currency = "UAH",
     inStock,
-    shippingFees,
+    shipping,
     freeShippingThreshold,
   } = opts;
 
@@ -330,16 +338,20 @@ export function productJsonLd(opts: {
     typeof cheapest === "number" &&
     cheapest >= freeShippingThreshold;
 
-  const rates = shipsFree
-    ? [0]
-    : Array.from(
-        new Set((shippingFees ?? []).filter((f) => typeof f === "number" && f >= 0)),
-      ).sort((a, b) => a - b);
+  // Безкоштовна доставка діє для будь-якого перевізника — ставка 0, строки лишаються свої.
+  const rates = Array.from(
+    new Map(
+      (shipping ?? [])
+        .filter((o) => typeof o.fee === "number" && o.fee >= 0)
+        .map((o) => (shipsFree ? { ...o, fee: 0 } : o))
+        .map((o) => [`${o.fee}|${o.transit.min}|${o.transit.max}`, o] as const),
+    ).values(),
+  ).sort((a, b) => a.fee - b.fee || a.transit.max - b.transit.max);
   const offerExtras =
     rates.length > 0
       ? {
           shippingDetails: (() => {
-            const nodes = rates.map((f) => shippingDetailsNode(f, currency));
+            const nodes = rates.map((o) => shippingDetailsNode(o, currency));
             // Один тариф — обʼєкт, кілька — масив: обидві форми валідні, але з одним
             // перевізником масив на один елемент виглядає як недороблена розмітка.
             return nodes.length === 1 ? nodes[0] : nodes;

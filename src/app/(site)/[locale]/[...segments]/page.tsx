@@ -20,6 +20,7 @@ import {
   PRICE_LIST_EFFECTIVE_DATE,
 } from "@/data/catalog";
 import { siteConfig } from "@/config/site";
+import { DELIVERY_DAYS } from "@/config/delivery";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
 import type {
@@ -306,7 +307,11 @@ export default async function CatalogPage({
   // може розійтися з тим, що бачить покупець. Виклик кешований і тегований site-settings,
   // тож зміна суми в адмінці перебудує й ці сторінки.
   const deliveryContact = resolveContact(await getSettings());
-  const shippingFees = [deliveryContact.shippingFee, deliveryContact.ukrposhtaFee];
+  // Ціна — з налаштувань (як у кошику), строк у дорозі — з config/delivery.ts (як на /delivery).
+  const shippingOptions = [
+    { fee: deliveryContact.shippingFee, transit: DELIVERY_DAYS.np },
+    { fee: deliveryContact.ukrposhtaFee, transit: DELIVERY_DAYS.ukrposhta },
+  ];
   // Накладаємо ціну/наявність із Supabase поверх коду один раз — далі всі читання
   // (JSON-LD, картки, фільтр цін, панелі товару, ціна в кошик) беруть уже перекриті значення.
   const eroute = withOverrides(route, overrides);
@@ -380,7 +385,7 @@ export default async function CatalogPage({
               inStock: isInStock(eroute.product),
               priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
               priceValidFrom: comboDate ?? PRICE_LIST_EFFECTIVE_DATE,
-              shippingFees,
+              shipping: shippingOptions,
               freeShippingThreshold: deliveryContact.freeShippingThreshold,
             });
           }
@@ -417,7 +422,7 @@ export default async function CatalogPage({
                 )
                 .find(Boolean) ??
               PRICE_LIST_EFFECTIVE_DATE,
-            shippingFees,
+            shipping: shippingOptions,
             freeShippingThreshold: deliveryContact.freeShippingThreshold,
           });
         })()

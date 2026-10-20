@@ -10,6 +10,7 @@
 // наявність, характеристики виробника, доставка з налаштувань, FAQ із карток і статей.
 // Рік заснування, ЄДРПОУ, «кращий магазин України» тощо — не додавати, поки власник не
 // дасть підтверджених даних: вигадка в цьому файлі поїде в цитати асистентів як факт.
+import { DELIVERY_DAYS, daysLabel } from "@/config/delivery";
 import { siteConfig, socialProfiles } from "@/config/site";
 import type { Locale } from "@/i18n/config";
 import {
@@ -104,8 +105,10 @@ function company(contact: ContactInfo): string[] {
     ...socialProfiles(contact.social).map((s) => `- ${s.name}: ${s.href}`),
     `- Мови сайту: українська (${url("/ua")}), російська (${url("/ru")})`,
     `- Валюта: UAH. Ціни оновлено: ${PRICE_LIST_EFFECTIVE_DATE}`,
-    `- Доставка: Нова Пошта ${contact.shippingFee} грн, Укрпошта ${contact.ukrposhtaFee} грн;` +
-      ` безкоштовно від ${contact.freeShippingThreshold} грн`,
+    `- Доставка: Нова Пошта ${contact.shippingFee} грн (${daysLabel(DELIVERY_DAYS.np, UA)}),` +
+      ` Укрпошта ${contact.ukrposhtaFee} грн (${daysLabel(DELIVERY_DAYS.ukrposhta, UA)});` +
+      ` безкоштовно від ${contact.freeShippingThreshold} грн; відправка протягом` +
+      ` ${daysLabel(DELIVERY_DAYS.handling, UA, true)} (пн–пт)`,
     "",
   ];
 }

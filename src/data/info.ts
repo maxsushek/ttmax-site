@@ -17,6 +17,7 @@
 import type { Locale } from "@/i18n/config";
 import type { ContentDoc } from "@/data/legal";
 import { siteConfig, socialProfiles } from "@/config/site";
+import { DELIVERY_DAYS as D, ORDER_CUTOFF, daysLabel } from "@/config/delivery";
 
 type L = Record<Locale, string>;
 
@@ -139,11 +140,15 @@ export const infoDocs: Record<InfoSlug, ContentDoc> = {
       {
         h: { ua: "Терміни", ru: "Сроки" },
         p: {
+          // ⚠️ Числа — з config/delivery.ts (там само вони в чекауті, розмітці, фіді й
+          // Google Merchant Center). Не вписувати руками.
           ua: [
-            "Замовлення в наявності відправляємо протягом 1–2 робочих днів. Термін доставки службою — зазвичай 1–3 дні залежно від регіону.",
+            `Замовлення в наявності відправляємо протягом ${daysLabel(D.handling, "ua", true)} (пн–пт). Замовлення, оформлене в робочий день до ${ORDER_CUTOFF} за Києвом, починаємо збирати того ж дня, оформлене у вихідні — у понеділок.`,
+            `Доставка Новою Поштою — зазвичай ${daysLabel(D.np, "ua")}, Укрпоштою — ${daysLabel(D.ukrposhta, "ua")}, залежно від регіону.`,
           ],
           ru: [
-            "Заказы в наличии отправляем в течение 1–2 рабочих дней. Срок доставки службой — обычно 1–3 дня в зависимости от региона.",
+            `Заказы в наличии отправляем в течение ${daysLabel(D.handling, "ru", true)} (пн–пт). Заказ, оформленный в рабочий день до ${ORDER_CUTOFF} по Киеву, начинаем собирать в тот же день, оформленный в выходные — в понедельник.`,
+            `Доставка Новой Почтой — обычно ${daysLabel(D.np, "ru")}, Укрпочтой — ${daysLabel(D.ukrposhta, "ru")}, в зависимости от региона.`,
           ],
         },
       },

@@ -11,7 +11,7 @@
 //   ціна/наявність  → код + product_overrides (applyOverrides), ракетки — resolveCombo;
 //   акція           → promos.ts (накладки) і знижка збірки (ракетки), як на картці;
 //   доставка        → site_settings через resolveContact (те, що бачить покупець у кошику);
-//   строки          → константи jsonld.ts (ті самі, що в розмітці Offer);
+//   строки          → config/delivery.ts (ті самі, що на /delivery, у чекауті й розмітці Offer);
 //   характеристики  → lib/catalog/spec-rows.ts (та сама таблиця, що на картці).
 //
 // ⚠️ ФОТО — БЕЗ водяного знака TTMAX, хоча на сайті він є: Merchant Center відхиляє зображення
@@ -48,7 +48,7 @@ import {
 } from "@/lib/catalog/spec-rows";
 import { pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { productLdDescription } from "@/lib/seo/product-copy";
-import { SHIPPING_HANDLING_DAYS, SHIPPING_TRANSIT_DAYS } from "@/lib/seo/jsonld";
+import { DELIVERY_DAYS } from "@/config/delivery";
 import type { BladeClass, BladeSurface, CatalogProduct, Handle } from "@/types/catalog";
 
 const CURRENCY = "UAH";
@@ -606,17 +606,18 @@ function itemXml(it: MerchantItem, delivery: MerchantFeedInput["delivery"]): str
   const effective = it.salePrice ?? it.price;
   // Безкоштовна доставка від порогу — як у кошику й у розмітці Offer; інакше тариф перевізника.
   const free = effective >= delivery.freeShippingThreshold;
+  // Строк у дорозі — свій у кожного перевізника (config/delivery.ts, як на /delivery і на чекауті).
   const shipping = [
-    ["Нова Пошта", delivery.shippingFee],
-    ["Укрпошта", delivery.ukrposhtaFee],
+    { service: "Нова Пошта", fee: delivery.shippingFee, transit: DELIVERY_DAYS.np },
+    { service: "Укрпошта", fee: delivery.ukrposhtaFee, transit: DELIVERY_DAYS.ukrposhta },
   ]
-    .filter(([, fee]) => Number.isFinite(fee as number) && (fee as number) >= 0)
+    .filter((o) => Number.isFinite(o.fee) && o.fee >= 0)
     .map(
-      ([service, fee]) =>
-        `<g:shipping><g:country>${COUNTRY}</g:country><g:service>${x(String(service))}</g:service>` +
-        `<g:price>${money(free ? 0 : (fee as number))}</g:price>` +
-        `<g:min_transit_time>${SHIPPING_TRANSIT_DAYS.min}</g:min_transit_time>` +
-        `<g:max_transit_time>${SHIPPING_TRANSIT_DAYS.max}</g:max_transit_time></g:shipping>`,
+      (o) =>
+        `<g:shipping><g:country>${COUNTRY}</g:country><g:service>${x(o.service)}</g:service>` +
+        `<g:price>${money(free ? 0 : o.fee)}</g:price>` +
+        `<g:min_transit_time>${o.transit.min}</g:min_transit_time>` +
+        `<g:max_transit_time>${o.transit.max}</g:max_transit_time></g:shipping>`,
     );
 
   const lines = [
@@ -650,8 +651,8 @@ function itemXml(it: MerchantItem, delivery: MerchantFeedInput["delivery"]): str
     ),
     ...shipping,
     `<g:free_shipping_threshold><g:country>${COUNTRY}</g:country><g:price_threshold>${money(delivery.freeShippingThreshold)}</g:price_threshold></g:free_shipping_threshold>`,
-    tag("min_handling_time", SHIPPING_HANDLING_DAYS.min),
-    tag("max_handling_time", SHIPPING_HANDLING_DAYS.max),
+    tag("min_handling_time", DELIVERY_DAYS.handling.min),
+    tag("max_handling_time", DELIVERY_DAYS.handling.max),
     tag("ships_from_country", COUNTRY),
     ...it.customLabels.map((l, i) => tag(`custom_label_${i}`, l)),
   ].filter(Boolean);

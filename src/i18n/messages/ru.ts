@@ -1,4 +1,6 @@
 import type { Messages } from "./types";
+// Строки доставки — з config/delivery.ts (ті самі, що на /delivery, у розмітці й фіді).
+import { DELIVERY_DAYS as D, daysLabel } from "@/config/delivery";
 
 export const ru: Messages = {
   meta: {
@@ -179,8 +181,8 @@ export const ru: Messages = {
       method: "Способ доставки",
       contact: "Контактные данные",
       // ⚠️ В подписях намеренно НЕТ суммы: цену рисует CheckoutForm из computeShipping.
-      np: { label: "Новая Почта", sub: "1–2 дня · отделение или почтомат" },
-      ukrposhta: { label: "Укрпочта", sub: "3–5 дней · отделение" },
+      np: { label: "Новая Почта", sub: `${daysLabel(D.np, "ru")} · отделение или почтомат` },
+      ukrposhta: { label: "Укрпочта", sub: `${daysLabel(D.ukrposhta, "ru")} · отделение` },
       pickup: { label: "Самовывоз", sub: "Харьков · забрать в магазине" },
       fields: {
         fullName: "Имя и фамилия",
@@ -223,7 +225,8 @@ export const ru: Messages = {
       orderNumber: "Номер заказа:",
       emailNote: "Подтверждение отправим на {email}",
       emailFallback: "ваш email",
-      deliveryNote: "Доставка 1–2 дня.",
+      deliveryNote: `Отправим в течение ${daysLabel(D.handling, "ru", true)} и пришлём номер ТТН.`,
+      pickupNote: "Свяжемся, чтобы договориться о времени самовывоза.",
       back: "Вернуться в магазин",
     },
     edit: "Изменить",

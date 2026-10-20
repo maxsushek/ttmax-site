@@ -180,6 +180,8 @@ export type Messages = {
       emailNote: string;
       emailFallback: string;
       deliveryNote: string;
+      /** Для самовивозу замість deliveryNote: «відправимо й надішлемо ТТН» тут неправда. */
+      pickupNote: string;
       back: string;
     };
     edit: string;
