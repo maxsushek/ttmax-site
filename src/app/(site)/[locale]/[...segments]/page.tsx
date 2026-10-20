@@ -13,6 +13,7 @@ import {
   getBrandBySlug,
   getCrossSell,
   getMinPrice,
+  getProductBySlug,
   getProductsByCategory,
   getProductsBySeries,
   isInStock,
@@ -56,6 +57,7 @@ import { CategorySeo } from "@/components/catalog/CategorySeo";
 import { RichContent } from "@/components/catalog/RichContent";
 import { getRichContent } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
+import { expertFor, variantOf } from "@/data/catalog/variants";
 import { cldUrl } from "@/lib/cloudinary/url";
 import {
   catalogBreadcrumbs,
@@ -231,6 +233,10 @@ export async function generateMetadata({
 
   // Прихований (без фото) товар — noindex, щоб тонка картка не потрапила в індекс.
   const hiddenProduct = route.kind === "product" && isHidden(route.product, media);
+  // Варіант моделі (інший колір / обʼєм) — опис основної картки, тож canonical веде на неї.
+  // index лишаємо true: noindex разом із canonical на іншу сторінку — суперечливий сигнал.
+  const variant = route.kind === "product" ? variantOf(route.product.slug) : undefined;
+  const variantMain = variant ? getProductBySlug(variant.main) : undefined;
 
   return buildCatalogMetadata({
     locale: l,
@@ -240,9 +246,16 @@ export async function generateMetadata({
     // ⚠️ currentProducts тут уже відфільтровано по isHidden (див. вище). Умова
     // «є що показати» мусить збігатися з такою самою в sitemap.ts, інакше GSC
     // отримає суперечливий сигнал: URL подано в карті, а сторінка каже noindex.
-    index: route.index && !content?.noindex && !hiddenProduct && currentProducts.length > 0,
+    index:
+      (route.index || Boolean(variantMain)) &&
+      !content?.noindex &&
+      !hiddenProduct &&
+      currentProducts.length > 0,
     image: ogImage,
     ogDescription,
+    canonicalPathname: variantMain
+      ? `/${variantMain.brandSlug}/${variantMain.categorySlug}/${variantMain.slug}`
+      : undefined,
   });
 }
 
@@ -434,7 +447,7 @@ export default async function CatalogPage({
   // FAQ картки: експертний блок, а якщо його немає — власний FAQ екіпірування (gearCopy.ts).
   const expertFaq =
     eroute.kind === "product"
-      ? (getExpert(eroute.product.slug)?.faq ?? eroute.product.faq)
+      ? (expertFor(eroute.product.slug)?.faq ?? eroute.product.faq)
       : undefined;
   const categoryFaq = eroute.kind === "category" ? eroute.category.faq : undefined;
   const groupFaq = eroute.kind === "surfaceGroup" ? eroute.group.faq : undefined;
@@ -1462,7 +1475,10 @@ function GearView({
   if (gear.ittf) rows.push({ label: L("Схвалення ITTF", "Одобрение ITTF"), value: L("Так", "Да") });
 
   const cartCategory = CART_CATEGORY[product.categorySlug] ?? "accessory";
-  const gearExpertEntry = getExpert(product.slug);
+  const gearExpertEntry = expertFor(product.slug);
+  // Варіант моделі (інший колір / обʼєм): опис і «Дивіться також» — від основної картки.
+  const variant = variantOf(product.slug);
+  const variantMain = variant ? getProductBySlug(variant.main) : undefined;
 
   return (
     <ProductShell
@@ -1478,12 +1494,34 @@ function GearView({
         // Екіпірування з експертним блоком (data/catalog/gearExpert.ts) — той самий формат,
         // що й у накладок та основ. Без нього — легкий блок «Про модель» + FAQ.
         gearExpertEntry ? (
-          <ExpertSections
-            entry={gearExpertEntry}
-            locale={locale}
-            currentSlug={product.slug}
-            related={product.related}
-          />
+          <>
+            {variant && variantMain && (
+              <p className="mt-8 rounded-2xl border-l-2 border-accent bg-white/[0.03] px-5 py-4 text-sm leading-relaxed text-white/80">
+                {variant.kind === "color"
+                  ? L("Колірний варіант моделі ", "Цветовой вариант модели ")
+                  : L("Той самий клей, що й ", "Тот же клей, что и ")}
+                <Link
+                  href={`/${locale}/${variantMain.brandSlug}/${variantMain.categorySlug}/${variantMain.slug}`}
+                  className="font-semibold text-accent underline underline-offset-2 hover:text-white"
+                >
+                  {variantMain.name[locale]}
+                </Link>
+                {variant.kind === "color"
+                  ? ` — ${variant.label[locale]}. `
+                  : `, — ${L("в обʼємі", "в объёме")} ${variant.label[locale]}. `}
+                {L(
+                  "Опис, характеристики й відповіді на питання — як у основної моделі.",
+                  "Описание, характеристики и ответы на вопросы — как у основной модели.",
+                )}
+              </p>
+            )}
+            <ExpertSections
+              entry={gearExpertEntry}
+              locale={locale}
+              currentSlug={product.slug}
+              related={product.related ?? variantMain?.related}
+            />
+          </>
         ) : (
           <SeoBlocks
             blocks={product.seoBlocks}

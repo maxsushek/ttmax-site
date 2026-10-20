@@ -8,6 +8,7 @@
 // розійтись фізично не можуть.
 import type { CatalogProduct } from "@/types/catalog";
 import { getExpert } from "@/data/catalog/expert";
+import { variantOf } from "@/data/catalog/variants";
 
 /**
  * Картку можна індексувати, якщо в неї є ВЛАСНИЙ зміст, якого немає на інших сторінках.
@@ -34,6 +35,9 @@ import { getExpert } from "@/data/catalog/expert";
  * на накладки й основи.
  */
 export function productIndexable(product: CatalogProduct): boolean {
+  // Варіант моделі (інший колір / обʼєм): опис позичений в основної картки, тож власного
+  // URL у sitemap він не отримує — canonical сторінки веде на основну (variants.ts).
+  if (variantOf(product.slug)) return false;
   if (product.kind === "racket" && product.categorySlug === "rakety") return false;
   if (product.kind === "gear" && !getExpert(product.slug) && !product.seoBlocks?.length) {
     return false;

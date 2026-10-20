@@ -22,7 +22,7 @@
 // це одне довге речення; тому ріжемо по межі КЛАУЗИ (— : ; ,), і лише в крайньому разі по слову.
 import type { Locale } from "@/i18n/config";
 import type { CatalogProduct } from "@/types/catalog";
-import { getExpert } from "@/data/catalog/expert";
+import { expertFor } from "@/data/catalog/variants";
 import { getMinPrice } from "@/data/catalog";
 import { META_CAP, META_MIN, clauseCut, sentences } from "@/lib/seo/meta-length";
 
@@ -57,7 +57,7 @@ function hasLivePrice(product: CatalogProduct): boolean {
 }
 
 function verdictOf(product: CatalogProduct, locale: Locale): string | null {
-  const v = getExpert(product.slug)?.verdict?.[locale]?.trim();
+  const v = expertFor(product.slug)?.verdict?.[locale]?.trim();
   return v ? v : null;
 }
 
@@ -135,6 +135,6 @@ export function productLdDescription(product: CatalogProduct, locale: Locale): s
     const paras = product.seoBlocks?.[0]?.p[locale];
     return paras && paras.length > 0 ? paras.join(" ") : null;
   }
-  const official = getExpert(product.slug)?.official?.[locale]?.trim();
+  const official = expertFor(product.slug)?.official?.[locale]?.trim();
   return official ? `${verdict} ${official}` : verdict;
 }

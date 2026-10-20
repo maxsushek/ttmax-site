@@ -22,6 +22,11 @@ export function buildCatalogMetadata(opts: {
    * Не задано — використовується description.
    */
   ogDescription?: string;
+  /**
+   * Шлях канонічної сторінки, якщо це НЕ сама сторінка (варіант моделі → основна картка).
+   * Не задано — canonical на себе.
+   */
+  canonicalPathname?: string;
 }): Metadata {
   const { locale, pathname, title, description, index = true, image } = opts;
   const ogDescription = opts.ogDescription || description;
@@ -36,10 +41,11 @@ export function buildCatalogMetadata(opts: {
   // До запуску — все сторінки каталогу noindex, навіть наповнені.
   const indexable = siteConfig.launched && index;
 
-  const url = `${siteConfig.url}/${locale}${pathname}`;
+  const canonicalPath = opts.canonicalPathname ?? pathname;
+  const url = `${siteConfig.url}/${locale}${canonicalPath}`;
   const languages: Record<string, string> = {};
-  for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${pathname}`;
-  languages["x-default"] = `${siteConfig.url}/${defaultLocale}${pathname}`;
+  for (const l of locales) languages[localeToLang[l]] = `${siteConfig.url}/${l}${canonicalPath}`;
+  languages["x-default"] = `${siteConfig.url}/${defaultLocale}${canonicalPath}`;
 
   return {
     // absolute → игнорирует title.template из корневого layout (заголовки уже полные).
