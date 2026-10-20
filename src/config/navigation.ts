@@ -47,6 +47,7 @@ export const navigation: ReadonlyArray<NavItem> = [
       { label: { ua: "Футболки", ru: "Футболки" }, href: "/odyag/futbolky" },
       { label: { ua: "Шорти", ru: "Шорты" }, href: "/odyag/shorty" },
       { label: { ua: "Костюми", ru: "Костюмы" }, href: "/odyag/kostyumy" },
+      { label: { ua: "Жіночий одяг", ru: "Женская одежда" }, href: "/odyag/zhinochyi" },
       { label: { ua: "Взуття", ru: "Обувь" }, href: "/obuv" },
     ],
   },

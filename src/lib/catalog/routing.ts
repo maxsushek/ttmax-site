@@ -8,6 +8,7 @@ import type {
   CatalogCategory,
   CatalogProduct,
   CatalogSeries,
+  Gender,
   Localized,
   SurfaceType,
 } from "@/types/catalog";
@@ -131,6 +132,8 @@ export type SurfaceGroup = {
   surfaceTypes?: SurfaceType[];
   /** Тип екіпірування (gear.gearType): футболки, клеї, чохли… */
   gearTypes?: string[];
+  /** Стать (gear.gender): «Жіночий одяг» збирає Lady-моделі всіх типів одразу. */
+  genders?: Gender[];
   name: Localized;
   h1: Localized;
   title: Localized;
@@ -224,6 +227,7 @@ export function inGroup(p: CatalogProduct, g: SurfaceGroup): boolean {
   if (p.base && g.bladeClasses?.includes(p.base.bladeClass)) return true;
   if (p.surfaceType && g.surfaceTypes?.includes(p.surfaceType)) return true;
   if (p.gear && g.gearTypes?.includes(p.gear.gearType)) return true;
+  if (p.gear?.gender && g.genders?.includes(p.gear.gender)) return true;
   return false;
 }
 
