@@ -4,6 +4,17 @@ import { localeToLang, type Locale } from "@/i18n/config";
 import type { ContactInfo } from "@/lib/contact/get";
 import { orgId, businessId, websiteId, logoId, productId, itemListId, ref } from "@/lib/seo/ids";
 
+/**
+ * Адреса магазину для Organization і Store — одна функція на обидва вузли.
+ * Порожні поля не пишемо: `postalCode: ""` валідатор читає як заявлений, але пустий індекс.
+ */
+function postalAddress() {
+  return {
+    "@type": "PostalAddress",
+    ...Object.fromEntries(Object.entries(siteConfig.address).filter(([, v]) => (v as string) !== "")),
+  };
+}
+
 export function organizationJsonLd(contact?: ContactInfo) {
   /**
    * ⚠️ У розмітку йде E.164 (phone), а НЕ phoneDisplay.
@@ -23,6 +34,9 @@ export function organizationJsonLd(contact?: ContactInfo) {
     "@type": "Organization",
     "@id": orgId(),
     name: siteConfig.name,
+    // Під цим імʼям магазин зареєстровано в Google Merchant Center (і воно ж — домен,
+    // «| TTMAX» у заголовках і копірайт у підвалі). alternateName звʼязує обидві назви.
+    alternateName: siteConfig.operator,
     url: siteConfig.url,
     // Логотип — посиланням на вузол #logo (ImageObject), а не рядком: так у графі
     // один опис картинки, і його не треба повторювати в кожному publisher.
@@ -36,13 +50,7 @@ export function organizationJsonLd(contact?: ContactInfo) {
     areaServed: { "@type": "Country", name: "Україна" },
     // PostalAddress реальної адреси магазину. Раніше адреси в JSON-LD не було ВЗАГАЛІ:
     // єдина функція з address (localBusinessJsonLd) ніде не викликалась.
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: siteConfig.address.streetAddress,
-      addressLocality: siteConfig.address.addressLocality,
-      addressRegion: siteConfig.address.addressRegion,
-      addressCountry: siteConfig.address.addressCountry,
-    },
+    address: postalAddress(),
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -93,15 +101,13 @@ export function storeJsonLd(contact?: ContactInfo) {
     "@type": "Store",
     "@id": businessId(),
     name: siteConfig.name,
+    alternateName: siteConfig.operator,
     url: siteConfig.url,
     image: ref(logoId()),
     // E.164, не phoneDisplay — з тієї ж причини, що й в organizationJsonLd вище.
     telephone: contact?.phone ?? siteConfig.phone,
     email: contact?.email ?? siteConfig.email,
-    address: {
-      "@type": "PostalAddress",
-      ...siteConfig.address,
-    },
+    address: postalAddress(),
     parentOrganization: ref(orgId()),
     // Графік — на вузлі ТОЧКИ (Store), а не компанії: працюють години саме магазину.
     openingHoursSpecification: [
