@@ -50,6 +50,7 @@ const L_GLUE = [
   { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
 ];
 const L_CARE = [
+  { label: { ua: "Як доглядати за накладками — інструкція", ru: "Как ухаживать за накладками — инструкция" }, href: "/blog/doglyad-za-nakladkamy" },
   { label: { ua: "Догляд за накладками", ru: "Уход за накладками" }, href: "/aksessuary/doglyad" },
   { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
 ];
@@ -76,6 +77,7 @@ const L_PACKS = [
 const L_CASES = [
   { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
   { label: { ua: "Догляд за накладками", ru: "Уход за накладками" }, href: "/aksessuary/doglyad" },
+  { label: { ua: "Як зберігати й доглядати ракетку", ru: "Как хранить ракетку и ухаживать за ней" }, href: "/blog/doglyad-za-nakladkamy" },
   { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
 ];
 const L_TOWELS = [

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1200" height="780" fill="#0E1117"/>
+<text x="60" y="64" fill="#F2F4F7" font-size="30" font-weight="700" letter-spacing="1">ДОГЛЯД ЗА НАКЛАДКАМИ ЗА BUTTERFLY</text>
+<line x1="60" y1="84" x2="1140" y2="84" stroke="#212832"/>
+<text x="60" y="124" fill="#E8FF47" font-size="17" font-weight="700" letter-spacing="0.5">Гладкі накладки (шипи всередину)</text>
+<rect x="60" y="140" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="90" cy="170" r="16" fill="#E8FF47"/>
+<text x="90" y="176" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">1</text>
+<ellipse cx="138" cy="232" rx="30" ry="34" fill="#D9532B"/><circle cx="132" cy="228" r="9" fill="#F4F1EA"/><circle cx="145" cy="234" r="7" fill="#F4F1EA"/><circle cx="138" cy="242" r="6" fill="#F4F1EA" opacity="0.9"/>
+<text x="188" y="224" fill="#F2F4F7" font-size="18" font-weight="700">Нанесіть очищувач</text>
+<text x="188" y="250" fill="#8A93A0" font-size="15">Spin Refresh або Cure Water</text>
+<path d="M406 215 l14 0 m-6 -6 l6 6 l-6 6" stroke="#8A93A0" stroke-width="2" fill="none"/>
+<rect x="430" y="140" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="460" cy="170" r="16" fill="#E8FF47"/>
+<text x="460" y="176" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">2</text>
+<ellipse cx="508" cy="232" rx="30" ry="34" fill="#D9532B"/><rect x="486" y="218" width="44" height="16" rx="4" fill="#2B3138"/><rect x="486" y="234" width="44" height="10" rx="3" fill="#F4F1EA"/>
+<text x="558" y="224" fill="#F2F4F7" font-size="18" font-weight="700">Протріть губкою</text>
+<text x="558" y="250" fill="#8A93A0" font-size="15">губка для накладок</text>
+<path d="M776 215 l14 0 m-6 -6 l6 6 l-6 6" stroke="#8A93A0" stroke-width="2" fill="none"/>
+<rect x="800" y="140" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="830" cy="170" r="16" fill="#E8FF47"/>
+<text x="830" y="176" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">3</text>
+<ellipse cx="878" cy="232" rx="30" ry="34" fill="#D9532B"/><ellipse cx="878" cy="232" rx="32" ry="36" fill="#F2F4F7" opacity="0.16" stroke="#F2F4F7" stroke-opacity="0.6" stroke-width="2"/><path d="M892 202 L908 216 L890 220 Z" fill="#F2F4F7" opacity="0.55"/>
+<text x="928" y="224" fill="#F2F4F7" font-size="18" font-weight="700">Плівка, коли висохне</text>
+<text x="928" y="250" fill="#8A93A0" font-size="15">захищає поверхню до гри</text>
+<text x="60" y="336" fill="#E8FF47" font-size="17" font-weight="700" letter-spacing="0.5">Шипи назовні й довгі шипи</text>
+<rect x="60" y="352" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="90" cy="382" r="16" fill="#E8FF47"/>
+<text x="90" y="388" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">1</text>
+<ellipse cx="152" cy="448" rx="26" ry="30" fill="#D9532B"/><circle cx="139" cy="439" r="2.6" fill="#1A1F26"/><circle cx="148" cy="439" r="2.6" fill="#1A1F26"/><circle cx="157" cy="439" r="2.6" fill="#1A1F26"/><circle cx="166" cy="439" r="2.6" fill="#1A1F26"/><circle cx="139" cy="448" r="2.6" fill="#1A1F26"/><circle cx="148" cy="448" r="2.6" fill="#1A1F26"/><circle cx="157" cy="448" r="2.6" fill="#1A1F26"/><circle cx="166" cy="448" r="2.6" fill="#1A1F26"/><circle cx="139" cy="457" r="2.6" fill="#1A1F26"/><circle cx="148" cy="457" r="2.6" fill="#1A1F26"/><circle cx="157" cy="457" r="2.6" fill="#1A1F26"/><circle cx="166" cy="457" r="2.6" fill="#1A1F26"/><rect x="98" y="422" width="18" height="40" rx="4" fill="#E8FF47"/><rect x="102" y="414" width="10" height="9" rx="2" fill="#E8FF47"/><circle cx="122" cy="418" r="2.5" fill="#F4F1EA"/><circle cx="130" cy="422" r="2.5" fill="#F4F1EA"/><circle cx="126" cy="412" r="2" fill="#F4F1EA"/>
+<text x="188" y="436" fill="#F2F4F7" font-size="18" font-weight="700">Розпиліть Cure Water</text>
+<text x="188" y="462" fill="#8A93A0" font-size="15">рівно по всій поверхні</text>
+<path d="M406 427 l14 0 m-6 -6 l6 6 l-6 6" stroke="#8A93A0" stroke-width="2" fill="none"/>
+<rect x="430" y="352" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="460" cy="382" r="16" fill="#E8FF47"/>
+<text x="460" y="388" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">2</text>
+<ellipse cx="508" cy="450" rx="30" ry="30" fill="#D9532B"/><circle cx="494" cy="442" r="2.6" fill="#1A1F26"/><circle cx="503" cy="442" r="2.6" fill="#1A1F26"/><circle cx="512" cy="442" r="2.6" fill="#1A1F26"/><circle cx="521" cy="442" r="2.6" fill="#1A1F26"/><circle cx="494" cy="451" r="2.6" fill="#1A1F26"/><circle cx="503" cy="451" r="2.6" fill="#1A1F26"/><circle cx="512" cy="451" r="2.6" fill="#1A1F26"/><circle cx="521" cy="451" r="2.6" fill="#1A1F26"/><circle cx="494" cy="460" r="2.6" fill="#1A1F26"/><circle cx="503" cy="460" r="2.6" fill="#1A1F26"/><circle cx="512" cy="460" r="2.6" fill="#1A1F26"/><circle cx="521" cy="460" r="2.6" fill="#1A1F26"/><rect x="482" y="410" width="52" height="12" rx="4" fill="#E8FF47"/><line x1="487" y1="422" x2="487" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="493" y1="422" x2="493" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="499" y1="422" x2="499" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="505" y1="422" x2="505" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="511" y1="422" x2="511" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="517" y1="422" x2="517" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="523" y1="422" x2="523" y2="432" stroke="#F4F1EA" stroke-width="2"/><line x1="529" y1="422" x2="529" y2="432" stroke="#F4F1EA" stroke-width="2"/>
+<text x="558" y="436" fill="#F2F4F7" font-size="18" font-weight="700">Пройдіться щіткою</text>
+<text x="558" y="462" fill="#8A93A0" font-size="15">легко, бруд між шипами</text>
+<path d="M776 427 l14 0 m-6 -6 l6 6 l-6 6" stroke="#8A93A0" stroke-width="2" fill="none"/>
+<rect x="800" y="352" width="340" height="150" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="830" cy="382" r="16" fill="#E8FF47"/>
+<text x="830" y="388" fill="#0E1117" font-size="18" font-weight="700" text-anchor="middle">3</text>
+<ellipse cx="878" cy="444" rx="30" ry="34" fill="#D9532B"/><circle cx="900" cy="422" r="15" fill="#E8FF47"/><path d="M893 422 L898 428 L908 416" stroke="#0E1117" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="928" y="436" fill="#F2F4F7" font-size="18" font-weight="700">Дайте висохнути</text>
+<text x="928" y="462" fill="#8A93A0" font-size="15">і догляд завершено</text>
+<rect x="60" y="528" width="1080" height="170" rx="14" fill="none" stroke="#FF8A5B" stroke-opacity="0.7" stroke-width="2"/>
+<text x="88" y="568" fill="#FF8A5B" font-size="20" font-weight="700" letter-spacing="1">КОЛИ МІНЯТИ</text>
+<text x="88" y="610" fill="#F2F4F7" font-size="19" font-weight="700">Гладкі:</text>
+<circle cx="93" cy="635" r="4" fill="#FF8A5B"/>
+<text x="106" y="640" fill="#F2F4F7" font-size="16" opacity="0.9">поверхня втратила зчеплення;</text>
+<circle cx="93" cy="663" r="4" fill="#FF8A5B"/>
+<text x="106" y="668" fill="#F2F4F7" font-size="16" opacity="0.9">блиск зник, поверхня білясто-тьмяна</text>
+<text x="618" y="610" fill="#F2F4F7" font-size="19" font-weight="700">Шипи:</text>
+<circle cx="623" cy="635" r="4" fill="#FF8A5B"/>
+<text x="636" y="640" fill="#F2F4F7" font-size="16" opacity="0.9">шипи почали ламатися;</text>
+<circle cx="623" cy="663" r="4" fill="#FF8A5B"/>
+<text x="636" y="668" fill="#F2F4F7" font-size="16" opacity="0.9">колір тьмяніє, менше відскоку й обертання</text>
+<text x="60" y="752" fill="#8A93A0" font-size="13">За сторінками догляду й заміни накладок butterfly-global.com</text>
+<text x="1140" y="752" fill="#39424E" font-size="13" text-anchor="end">ttmax.com.ua</text>
+</svg>
