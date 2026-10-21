@@ -69,7 +69,7 @@ function uah(n: number): string {
 }
 
 /** Низькорівнева відправка повідомлення. Повертає true при успіху. */
-async function sendMessage(text: string): Promise<boolean> {
+async function sendMessage(text: string, replyMarkup?: Record<string, unknown>): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return false;
@@ -83,6 +83,7 @@ async function sendMessage(text: string): Promise<boolean> {
         text,
         parse_mode: "HTML",
         disable_web_page_preview: true,
+        ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
       }),
       signal: AbortSignal.timeout(8000),
     });
@@ -137,7 +138,14 @@ export async function notifyNewOrder(order: NewOrderNotification): Promise<boole
   );
   if (order.adminUrl) lines.push("", `<a href="${order.adminUrl}">Відкрити в CRM →</a>`);
 
-  return sendMessage(lines.join("\n"));
+  // Кнопка персонального посилання на відгук (обробляє /api/telegram/webhook). Лише коли
+  // відгуки ввімкнені (є REVIEWS_SECRET) — інакше кнопка вела б у нікуди.
+  const reviewButton =
+    process.env.REVIEWS_SECRET && /^TT-\d{8}-\d{3,}$/.test(String(order.orderNumber))
+      ? { inline_keyboard: [[{ text: "⭐ Посилання на відгук", callback_data: `inv:${order.orderNumber}` }]] }
+      : undefined;
+
+  return sendMessage(lines.join("\n"), reviewButton);
 }
 
 export type NewLeadNotification = {

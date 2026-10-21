@@ -313,8 +313,17 @@ export function productJsonLd(opts: {
    * був один строк на всіх, і розмітка обіцяла Укрпошту за 1–3 дні, хоча чекаут казав 3–5.
    */
   shipping?: ShippingOption[];
+  /**
+   * Схвалені відгуки покупців (lib/reviews/data). → aggregateRating + review.
+   *
+   * ⚠️ Лише відгуки ПРО ТОВАР і лише ті, що ВИДНО на сторінці (блок «Відгуки» показує
+   * той самий масив). Google дозволяє зірки для товарних відгуків на сайті продавця;
+   * відгуки про сам магазин сюди не йдуть — для Organization це «self-serving» розмітка.
+   */
+  reviews?: { name: string; date: string; rating: number; body: string; lang: string }[];
 }) {
   const {
+    reviews,
     name,
     description,
     url,
@@ -375,7 +384,8 @@ export function productJsonLd(opts: {
   const hasOffer =
     (typeof price === "number" && price > 0) ||
     (typeof lowPrice === "number" && typeof highPrice === "number");
-  if (!hasOffer) return null;
+  const hasReviews = Boolean(reviews && reviews.length > 0);
+  if (!hasOffer && !hasReviews) return null;
 
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -439,6 +449,25 @@ export function productJsonLd(opts: {
       ...(priceValidUntil ? { priceValidUntil } : {}),
       ...offerExtras,
     };
+  }
+  if (reviews && reviews.length > 0) {
+    const sum = reviews.reduce((a, r) => a + r.rating, 0);
+    node.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: Math.round((sum / reviews.length) * 10) / 10,
+      reviewCount: reviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    };
+    // Перші 10 — досить для сніпета; усі відгуки й так є на сторінці.
+    node.review = reviews.slice(0, 10).map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.name },
+      datePublished: r.date,
+      reviewBody: r.body,
+      inLanguage: r.lang,
+      reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+    }));
   }
   return node;
 }

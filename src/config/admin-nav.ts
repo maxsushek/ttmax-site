@@ -30,6 +30,7 @@ export const adminNav: AdminNavGroup[] = [
     title: "Продажі",
     items: [
       { label: "Заявки", href: "/admin/leads" },
+      { label: "Відгуки", href: "/admin/reviews" },
       { label: "Замовлення", status: "soon" },
     ],
   },

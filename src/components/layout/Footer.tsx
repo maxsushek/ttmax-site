@@ -146,7 +146,7 @@ export function Footer({
   // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
   // ⚠️ ПОРЯДОК = m.infoLinks. «Блог» доданий другим: статей уже 5, вони збирають інфо-трафік
   // і ведуть на money-картки, а в футері блогу не було зовсім (лише в хедері).
-  const infoSlugs = ["about", "blog", "delivery", "payment", "returns", "contacts"];
+  const infoSlugs = ["about", "blog", "vidguky", "delivery", "payment", "returns", "contacts"];
   const infoLinks: FootLink[] = m.infoLinks.map((label, i) => ({
     label,
     href: infoSlugs[i] ? `/${locale}/${infoSlugs[i]}` : "#",

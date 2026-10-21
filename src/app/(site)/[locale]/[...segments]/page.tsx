@@ -41,6 +41,9 @@ import {
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
+import { getProductReviews, reviewSlugFor, summarize as summarizeReviews } from "@/lib/reviews/data";
+import { RatingBadge, ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { isReviewsConfigured } from "@/lib/reviews/secret";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { isRacket, resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
@@ -335,6 +338,18 @@ export default async function CatalogPage({
 
   const crumbs = catalogBreadcrumbs(route, locale);
   const breadcrumbLd = breadcrumbJsonLd(crumbs, locale);
+  // Відгуки моделі для розмітки — той самий кешований масив, що малює блок «Відгуки».
+  // Збірні ракетки блоку відгуків не мають, тож і в розмітку їм нічого не йде.
+  const ldReviews =
+    eroute.kind === "product" && !isRacket(eroute.product)
+      ? (await getProductReviews(eroute.product.slug)).map((r) => ({
+          name: r.name,
+          date: r.date,
+          rating: r.rating,
+          body: r.body,
+          lang: r.lang,
+        }))
+      : undefined;
   const productLd =
     eroute.kind === "product"
       ? (() => {
@@ -424,6 +439,7 @@ export default async function CatalogPage({
               PRICE_LIST_EFFECTIVE_DATE,
             shipping: shippingOptions,
             freeShippingThreshold: deliveryContact.freeShippingThreshold,
+            reviews: ldReviews,
           });
         })()
       : null;
@@ -1223,6 +1239,7 @@ function buildGallery(media: EntityMediaMap, slug: string, fallbackAlt: string):
 function ProductShell({
   brandName,
   h1,
+  reviewSlug,
   visualLabel,
   images,
   children,
@@ -1234,6 +1251,8 @@ function ProductShell({
 }: {
   brandName: string;
   h1: string;
+  /** Slug картки: відгуки моделі (для дублів кольору/обʼєму — основної картки). */
+  reviewSlug?: string;
   visualLabel: string;
   images: GalleryImage[];
   children: React.ReactNode;
@@ -1272,11 +1291,18 @@ function ProductShell({
           <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
             {h1}
           </h1>
+          {reviewSlug && <ProductRating slug={reviewSlug} locale={locale} />}
           <ContentIntro text={content?.intro} />
           {children}
         </div>
 
         {extra && <div className="min-w-0 lg:col-span-2">{extra}</div>}
+
+        {reviewSlug && (
+          <div className="min-w-0 lg:col-span-2">
+            <ProductReviews slug={reviewSlug} locale={locale} />
+          </div>
+        )}
 
         {related.length > 0 && (
           <div className="lg:col-span-2">
@@ -1293,6 +1319,28 @@ function ProductShell({
         )}
       </div>
     </GallerySyncProvider>
+  );
+}
+
+/** Зірки й кількість відгуків під назвою (кеш спільний із блоком нижче — один запит). */
+async function ProductRating({ slug, locale }: { slug: string; locale: Locale }) {
+  const reviews = await getProductReviews(slug);
+  // Без відгуків і без форми запрошення «залишити перший» вело б у порожнечу.
+  if (reviews.length === 0 && !isReviewsConfigured()) return null;
+  return <RatingBadge summary={summarizeReviews(reviews)} locale={locale} />;
+}
+
+/** Блок відгуків картки: підсумок, список, форма. */
+async function ProductReviews({ slug, locale }: { slug: string; locale: Locale }) {
+  const reviews = await getProductReviews(slug);
+  return (
+    <ReviewsSection
+      reviews={reviews}
+      summary={summarizeReviews(reviews)}
+      locale={locale}
+      productSlug={reviewSlugFor(slug)}
+      acceptReviews={isReviewsConfigured()}
+    />
   );
 }
 
@@ -1341,6 +1389,7 @@ function RubberView({
     <ProductShell
       brandName={brandName}
       h1={routeH1(route, locale)}
+      reviewSlug={route.product.slug}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
@@ -1422,6 +1471,7 @@ function GearView({
     <ProductShell
       brandName={brandName}
       h1={routeH1(route, locale)}
+      reviewSlug={route.product.slug}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
@@ -1531,6 +1581,7 @@ function BaseView({
     <ProductShell
       brandName={brandName}
       h1={routeH1(route, locale)}
+      reviewSlug={route.product.slug}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}

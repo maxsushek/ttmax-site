@@ -276,6 +276,46 @@ export type OrdersPendingAdsSyncRow = {
   phone_sha256: string | null;
 };
 
+// ─── REVIEWS ──────────────────────────────────────────────────────
+
+export type ReviewStatus = "pending" | "approved" | "rejected" | "spam";
+
+export type ReviewRow = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  kind: "product" | "store";
+  product_slug: string | null;
+  locale: "uk" | "ru";
+  rating: number;
+  author_name: string;
+  author_city: string | null;
+  body: string;
+  phone: string | null;
+  verified: boolean;
+  order_number: string | null;
+  source: "form" | "invite";
+  status: ReviewStatus;
+  moderated_at: string | null;
+  moderated_by: string | null;
+  reply_body: string | null;
+  reply_at: string | null;
+  tg_chat_id: number | null;
+  tg_message_id: number | null;
+  ip_hash: string | null;
+  user_agent: string | null;
+  flags: string[];
+  meta: Record<string, unknown>;
+};
+
+export type ReviewInsert = Omit<
+  ReviewRow,
+  "id" | "created_at" | "updated_at" | "status" | "moderated_at" | "moderated_by" | "reply_body" | "reply_at" | "tg_chat_id" | "tg_message_id" | "flags" | "meta" | "verified" | "source"
+> &
+  Partial<
+    Pick<ReviewRow, "status" | "moderated_at" | "moderated_by" | "reply_body" | "reply_at" | "tg_chat_id" | "tg_message_id" | "flags" | "meta" | "verified" | "source">
+  >;
+
 // ─── DATABASE TYPE ────────────────────────────────────────────────
 
 export type Database = {
@@ -341,6 +381,12 @@ export type Database = {
           },
         ];
       };
+      reviews: {
+        Row: ReviewRow;
+        Insert: ReviewInsert;
+        Update: Partial<ReviewRow>;
+        Relationships: [];
+      };
     };
     Views: {
       lead_funnel: {
@@ -373,6 +419,7 @@ export type Database = {
     Enums: {
       lead_status: LeadStatus;
       order_status: OrderStatus;
+      review_status: ReviewStatus;
     };
     CompositeTypes: {
       [_ in never]: never;
