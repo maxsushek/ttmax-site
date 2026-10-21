@@ -658,7 +658,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "накладки на ракетку", ru: "накладки на ракетку" }, href: "/nakladki" },
       { label: { ua: "готові ракетки", ru: "готовые ракетки" }, href: "/rakety" },
     ],
-    relatedPosts: ["naykrashchi-nakladki-butterfly", "pravyla-nastilnogo-tenisu", "rozmiry-tenisnogo-stolu", "versii-osnov-butterfly"],
+    relatedPosts: ["naykrashchi-nakladki-butterfly", "pravyla-nastilnogo-tenisu", "rozmiry-tenisnogo-stolu", "versii-osnov-butterfly", "alc-chy-zlc"],
     interactive: "racketPicker",
   },
 
@@ -2117,6 +2117,382 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "готові ракетки", ru: "готовые ракетки" }, href: "/rakety" },
     ],
     relatedPosts: ["nakladka-dlya-pochatkivtsya", "tovshchyna-hubky-nakladky", "lypki-chy-tenzorni-nakladky", "yak-vybraty-raketku"],
+  },
+
+  "alc-chy-zlc": {
+    slug: "alc-chy-zlc",
+    // Карбонові основи: матеріали й розташування волокна. УСІ числа реакції/вібрації/товщини —
+    // офіційні з карток butterfly-global.com (Reaction / Vibration property, дані Butterfly R&D 2026);
+    // ті самі числа 21.10.2026 внесено в bases.ts і в схеми scripts/gen-carbon-diagrams.mjs.
+    // Визначення матеріалів — butterfly-global.com/en/products/blade/fiber.html,
+    // inner/outer — outer_inner_fiber.html, правило 85 % дерева — ITTF 2.4.2.
+    // GSC: запити за моделями Innerforce / Outerforce / Super ZLC (innerforce layer alc.s, outerforce alc…).
+    h1: {
+      ua: "Карбонові основи Butterfly: ALC чи ZLC, inner чи outer",
+      ru: "Карбоновые основания Butterfly: ALC или ZLC, inner или outer",
+    },
+    metaTitle: {
+      ua: "ALC чи ZLC, inner чи outer — карбонові основи | TTMAX",
+      ru: "ALC или ZLC, inner или outer — карбоновые основания | TTMAX",
+    },
+    metaDescription: {
+      ua: "🪵 ALC чи ZLC, inner чи outer: що означають матеріали Butterfly й як вони міняють основу. Офіційні реакція й вібрація для 31 основи, карта й таблиця вибору.",
+      ru: "🪵 ALC или ZLC, inner или outer: что значат материалы Butterfly и как они меняют основание. Реакция и вибрация 31 основания, карта и таблица выбора.",
+    },
+    excerpt: {
+      ua: "Чим відрізняються ALC, ZLC, Super ALC, Super ZLC, CNF, CAF і T5000, що дає волокно під шпоном (outer) чи біля ядра (inner) і як обрати карбонову основу — на офіційних числах Butterfly.",
+      ru: "Чем отличаются ALC, ZLC, Super ALC, Super ZLC, CNF, CAF и T5000, что даёт волокно под шпоном (outer) или у ядра (inner) и как выбрать карбоновое основание — на официальных числах Butterfly.",
+    },
+    datePublished: "2026-10-21",
+    dateModified: "2026-10-21",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/karbon-cover.png",
+    heroAlt: {
+      ua: "Торець основи для настільного тенісу з шарами деревини й прошарком карбонового волокна",
+      ru: "Торец основания для настольного тенниса со слоями древесины и прослойкой карбонового волокна",
+    },
+    intro: {
+      ua: [
+        "Карбонова основа — це деревʼяна основа з двома тонкими шарами штучного волокна. ALC, ZLC, CNF чи T5000 — це назва волокна, а inner чи outer — де саме воно лежить: біля ядра чи одразу під верхнім шпоном. Від обох речей залежить, наскільки швидко основа віддає мʼяч і яким удар відчувається в руці.",
+        "Нижче — що означає кожен матеріал за описом Butterfly, чим inner відрізняється від outer, карта основ за офіційними числами реакції й вібрації, таблиця 31 моделі й підказки, яку основу брати під свій стиль.",
+      ],
+      ru: [
+        "Карбоновое основание — это деревянное основание с двумя тонкими слоями искусственного волокна. ALC, ZLC, CNF или T5000 — это название волокна, а inner или outer — где именно оно лежит: у ядра или сразу под верхним шпоном. От обоих зависит, насколько быстро основание отдаёт мяч и каким удар ощущается в руке.",
+        "Ниже — что значит каждый материал по описанию Butterfly, чем inner отличается от outer, карта оснований по официальным числам реакции и вибрации, таблица 31 модели и подсказки, какое основание брать под свой стиль.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротка відповідь: матеріали в цифрах", ru: "Короткий ответ: материалы в цифрах" },
+        p: {
+          ua: [
+            "Перше число — реакція (базова швидкість), друге — вібрація (наскільки жорстко відчувається удар). Обидва — офіційні значення Butterfly для конкретних моделей.",
+            "Що видно з цифр. Outer-ZLC за реакцією майже така сама, як outer-ALC — 11,7 проти 11,8, — але вібрація в неї вища: 10,8 проти 10,3, тобто удар відчувається жорсткіше. Помітно швидші — Super-версії: Super ALC 12,1, Super ZLC 12,3. Inner-розташування у звичайних ALC і ZLC знижує обидва числа приблизно на одиницю, у Super-версіях — менше.",
+          ],
+          ru: [
+            "Первое число — реакция (базовая скорость), второе — вибрация (насколько жёстко ощущается удар). Оба — официальные значения Butterfly для конкретных моделей.",
+            "Что видно из цифр. Outer-ZLC по реакции почти такая же, как outer-ALC — 11,7 против 11,8, — но вибрация у неё выше: 10,8 против 10,3, то есть удар ощущается жёстче. Заметно быстрее — Super-версии: Super ALC 12,1, Super ZLC 12,3. Inner-расположение в обычных ALC и ZLC снижает оба числа примерно на единицу, в Super-версиях — меньше.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Матеріал", ru: "Материал" },
+            { ua: "Що це (за Butterfly)", ru: "Что это (по Butterfly)" },
+            { ua: "Outer: реакція / вібрація", ru: "Outer: реакция / вибрация" },
+            { ua: "Inner: реакція / вібрація", ru: "Inner: реакция / вибрация" },
+          ],
+          rows: [
+            [{ ua: "ALC", ru: "ALC" }, { ua: "Арилат + карбон: сила, швидкість і контроль", ru: "Арилат + карбон: сила, скорость и контроль" }, { ua: "11,8 / 10,3 (Viscaria)", ru: "11,8 / 10,3 (Viscaria)" }, { ua: "10,7 / 9,4 (Innerforce Layer ALC)", ru: "10,7 / 9,4 (Innerforce Layer ALC)" }],
+            [{ ua: "Super ALC", ru: "Super ALC" }, { ua: "Більше волокна, ніж в ALC: вищий відскок, гнучкість збережено", ru: "Больше волокна, чем в ALC: выше отскок, гибкость сохранена" }, { ua: "12,1 / 10,1 (Viscaria Super ALC)", ru: "12,1 / 10,1 (Viscaria Super ALC)" }, { ua: "11,4 / 9,5 (Harimoto Innerforce Super ALC)", ru: "11,4 / 9,5 (Harimoto Innerforce Super ALC)" }],
+            [{ ua: "ZLC", ru: "ZLC" }, { ua: "Карбон + ZL-волокно: висока реакція, міцність, легкість", ru: "Карбон + ZL-волокно: высокая реакция, прочность, лёгкость" }, { ua: "11,7 / 10,8 (Timo Boll ZLC)", ru: "11,7 / 10,8 (Timo Boll ZLC)" }, { ua: "10,5 / 9,5 (Innerforce Layer ZLC)", ru: "10,5 / 9,5 (Innerforce Layer ZLC)" }],
+            [{ ua: "Super ZLC", ru: "Super ZLC" }, { ua: "У 1,8 раза більше волокна за масою, ніж у ZLC", ru: "В 1,8 раза больше волокна по массе, чем в ZLC" }, { ua: "12,3 / 11,1 (Fan Zhendong Super ZLC)", ru: "12,3 / 11,1 (Fan Zhendong Super ZLC)" }, { ua: "12,0 / 10,5 (Harimoto Innerforce Super ZLC)", ru: "12,0 / 10,5 (Harimoto Innerforce Super ZLC)" }],
+            [{ ua: "CNF", ru: "CNF" }, { ua: "Целюлозне нановолокно: висока реакція при низькій вібрації", ru: "Целлюлозное нановолокно: высокая реакция при низкой вибрации" }, { ua: "11,7 / 9,5 (Revoldia CNF)", ru: "11,7 / 9,5 (Revoldia CNF)" }, { ua: "—", ru: "—" }],
+            [{ ua: "CAF", ru: "CAF" }, { ua: "Волокно з деревини: гнучке, «тримає» мʼяч", ru: "Волокно из древесины: гибкое, «держит» мяч" }, { ua: "11,3 / 9,1 (Outerforce CAF)", ru: "11,3 / 9,1 (Outerforce CAF)" }, { ua: "—", ru: "—" }],
+            [{ ua: "T5000", ru: "T5000" }, { ua: "Чистий карбон: міцний і легкий", ru: "Чистый карбон: прочный и лёгкий" }, { ua: "10,5 / 10,5 (SK Carbon) — 12,5 / 13,3 (Primorac Carbon)", ru: "10,5 / 10,5 (SK Carbon) — 12,5 / 13,3 (Primorac Carbon)" }, { ua: "—", ru: "—" }],
+          ],
+        },
+        rec: {
+          publicId: "ttmax/product/viscaria/05",
+          name: { ua: "Основа Butterfly Viscaria", ru: "Основание Butterfly Viscaria" },
+          verdict: {
+            ua: "Еталонна outer-ALC основа: реакція 11,8, вібрація 10,3 — точка відліку для всіх ALC Butterfly.",
+            ru: "Эталонное outer-ALC основание: реакция 11,8, вибрация 10,3 — точка отсчёта для всех ALC Butterfly.",
+          },
+          alt: {
+            ua: "Основа для настільного тенісу Butterfly Viscaria з арилат-карбоном",
+            ru: "Основание для настольного тенниса Butterfly Viscaria с арилат-карбоном",
+          },
+          href: "/butterfly/osnovaniya/viscaria",
+        },
+      },
+      {
+        id: "materialy",
+        h: { ua: "Що таке ALC, ZLC, CNF, CAF і T5000", ru: "Что такое ALC, ZLC, CNF, CAF и T5000" },
+        p: {
+          ua: [
+            "Правила ITTF вимагають, щоб щонайменше 85 % товщини основи було натуральною деревиною, а армований волокном шар не перевищував 7,5 % товщини або 0,35 мм. Тож «карбонова» основа — насправді деревʼяна з тонким прошарком волокна, і весь ефект дають ці кілька відсотків.",
+            "ALC (Arylate-Carbon) — тканина з арилату й карбону. За описом Butterfly, основи з нею мають силу, швидкість і контроль. Super ALC — та сама тканина з більшою кількістю волокна: відскок вищий, а співвідношення арилату й карбону підібране так, щоб зберегти гнучкість.",
+            "ZLC (ZL-Carbon) — карбон, сплетений із ZL-волокном: карбон дає високу реакцію, ZL-волокно — міцність, пружність і легкість. Саме ZL-волокно (ZLF) Butterfly описує як міцне й пружне, легше за карбон. Super ZLC вміщує в 1,8 раза більше карбону й ZL-волокна за масою, ніж звичайна ZLC.",
+            "T5000 (Tamca 5000) — чистий карбон: за Butterfly, у шість разів міцніший і вп'ятеро легший за сталь. CAF — волокно, отримане з деревини: дуже гнучке, тому «тримає» мʼяч і дає контроль. CNF — целюлозне нановолокно: висока реакція при низькій вібрації й відчуття, що мʼяч «тримається» на основі.",
+          ],
+          ru: [
+            "Правила ITTF требуют, чтобы минимум 85 % толщины основания было натуральной древесиной, а армированный волокном слой не превышал 7,5 % толщины или 0,35 мм. Поэтому «карбоновое» основание — на самом деле деревянное с тонкой прослойкой волокна, и весь эффект дают эти несколько процентов.",
+            "ALC (Arylate-Carbon) — ткань из арилата и карбона. По описанию Butterfly, основания с ней обладают силой, скоростью и контролем. Super ALC — та же ткань с большим количеством волокна: отскок выше, а соотношение арилата и карбона подобрано так, чтобы сохранить гибкость.",
+            "ZLC (ZL-Carbon) — карбон, сплетённый с ZL-волокном: карбон даёт высокую реакцию, ZL-волокно — прочность, упругость и лёгкость. Само ZL-волокно (ZLF) Butterfly описывает как прочное и упругое, легче карбона. Super ZLC содержит в 1,8 раза больше карбона и ZL-волокна по массе, чем обычная ZLC.",
+            "T5000 (Tamca 5000) — чистый карбон: по Butterfly, в шесть раз прочнее и впятеро легче стали. CAF — волокно, полученное из древесины: очень гибкое, поэтому «держит» мяч и даёт контроль. CNF — целлюлозное нановолокно: высокая реакция при низкой вибрации и ощущение, что мяч «держится» на основании.",
+          ],
+        },
+        links: [
+          { label: { ua: "Основи з ALC", ru: "Основания с ALC" }, href: "/osnovaniya/alc" },
+          { label: { ua: "Основи з ZLC", ru: "Основания с ZLC" }, href: "/osnovaniya/zlc" },
+        ],
+      },
+      {
+        id: "inner-outer",
+        h: { ua: "Inner чи outer: де лежить волокно", ru: "Inner или outer: где лежит волокно" },
+        p: {
+          ua: [
+            "Outer (Outerfiber) — волокно одразу під поверхневим шпоном. Це давня класична схема: за Butterfly, вона підсилює відчуття волокна й дає швидші удари. Так зроблені Viscaria, Timo Boll ALC і ZLC, моделі Fan Zhendong, лінійка Outerforce.",
+            "Inner (Innerfiber) — волокно ближче до деревʼяного ядра. Butterfly вперше застосувала цю схему 2009 року: вона дає трохи довше утримання мʼяча на ракетці, зберігаючи характер волокна. Так зроблена лінійка Innerforce.",
+            "У цифрах різниця помітна. Viscaria (outer ALC) — 11,8 / 10,3, Innerforce Layer ALC — 10,7 / 9,4. Timo Boll ZLC — 11,7 / 10,8, Innerforce Layer ZLC — 10,5 / 9,5. Але inner — не завжди повільно: у товстіших моделях 6,2 мм реакція майже як в outer. Harimoto Innerforce Super ZLC — 12,0 / 10,5, Omar Assar Innerforce ZLC — 12,0 / 10,6, Ovtcharov Innerforce ALC — 11,7 / 10,5.",
+          ],
+          ru: [
+            "Outer (Outerfiber) — волокно сразу под поверхностным шпоном. Это давняя классическая схема: по Butterfly, она усиливает ощущение волокна и даёт более быстрые удары. Так сделаны Viscaria, Timo Boll ALC и ZLC, модели Fan Zhendong, линейка Outerforce.",
+            "Inner (Innerfiber) — волокно ближе к деревянному ядру. Butterfly впервые применила эту схему в 2009 году: она даёт чуть более долгое удержание мяча на ракетке, сохраняя характер волокна. Так сделана линейка Innerforce.",
+            "В цифрах разница заметна. Viscaria (outer ALC) — 11,8 / 10,3, Innerforce Layer ALC — 10,7 / 9,4. Timo Boll ZLC — 11,7 / 10,8, Innerforce Layer ZLC — 10,5 / 9,5. Но inner — не всегда медленно: у более толстых моделей 6,2 мм реакция почти как у outer. Harimoto Innerforce Super ZLC — 12,0 / 10,5, Omar Assar Innerforce ZLC — 12,0 / 10,6, Ovtcharov Innerforce ALC — 11,7 / 10,5.",
+          ],
+        },
+        image: {
+          src: { ua: "/blog/karbon-shary-ua.svg", ru: "/blog/karbon-shary-ru.svg" },
+          alt: {
+            ua: "Схема будови основи: волокно під поверхневим шпоном (outer) і біля ядра (inner, Innerforce)",
+            ru: "Схема строения основания: волокно под поверхностным шпоном (outer) и у ядра (inner, Innerforce)",
+          },
+          caption: {
+            ua: "Outer — волокно одразу під верхнім шпоном, inner — біля ядра. Товщина шарів на схемі умовна.",
+            ru: "Outer — волокно сразу под верхним шпоном, inner — у ядра. Толщина слоёв на схеме условная.",
+          },
+        },
+        rec: {
+          publicId: "ttmax/product/innerforce-layer-alc/00",
+          name: { ua: "Основа Butterfly Innerforce Layer ALC", ru: "Основание Butterfly Innerforce Layer ALC" },
+          verdict: {
+            ua: "Inner-ALC: реакція 10,7, вібрація 9,4 — мʼякше й довше тримає мʼяч, ніж outer-ALC.",
+            ru: "Inner-ALC: реакция 10,7, вибрация 9,4 — мягче и дольше держит мяч, чем outer-ALC.",
+          },
+          alt: {
+            ua: "Основа Butterfly Innerforce Layer ALC з волокном біля ядра",
+            ru: "Основание Butterfly Innerforce Layer ALC с волокном у ядра",
+          },
+          href: "/butterfly/osnovaniya/innerforce-layer-alc",
+        },
+      },
+      {
+        id: "karta",
+        h: { ua: "Реакція й вібрація: карта основ Butterfly", ru: "Реакция и вибрация: карта оснований Butterfly" },
+        p: {
+          ua: [
+            "Butterfly описує кожну основу двома числами. Реакція — базова швидкість: чим вона вища, тим швидше мʼяч відлітає після контакту. Вібрація — відчуття удару: низька означає повільніше коливання й мʼякший дотик, висока — жорсткіше відчуття.",
+            "Порівнювати ці числа можна лише між основами Butterfly — це шкала виробника, а не універсальна одиниця. І вони описують саму основу: накладки, їхня товщина й вага ракетки змінять відчуття.",
+          ],
+          ru: [
+            "Butterfly описывает каждое основание двумя числами. Реакция — базовая скорость: чем она выше, тем быстрее мяч улетает после контакта. Вибрация — ощущение удара: низкая означает более медленное колебание и мягкое касание, высокая — более жёсткое ощущение.",
+            "Сравнивать эти числа можно только между основаниями Butterfly — это шкала производителя, а не универсальная единица. И они описывают само основание: накладки, их толщина и вес ракетки изменят ощущение.",
+          ],
+        },
+        image: {
+          src: { ua: "/blog/karbon-matrytsia-ua.svg", ru: "/blog/karbon-matrytsia-ru.svg" },
+          alt: {
+            ua: "Карта карбонових основ Butterfly за реакцією й вібрацією: ALC, Super ALC, ZLC, Super ZLC, CNF, CAF, T5000, inner і outer",
+            ru: "Карта карбоновых оснований Butterfly по реакции и вибрации: ALC, Super ALC, ZLC, Super ZLC, CNF, CAF, T5000, inner и outer",
+          },
+          caption: {
+            ua: "Праворуч — швидші, вгорі — жорсткіші за відчуттям. Кільця — inner, суцільні точки — outer.",
+            ru: "Справа — быстрее, вверху — жёстче по ощущению. Кольца — inner, сплошные точки — outer.",
+          },
+        },
+      },
+      {
+        id: "modeli",
+        h: { ua: "31 карбонова основа Butterfly: таблиця", ru: "31 карбоновое основание Butterfly: таблица" },
+        p: {
+          ua: [
+            "Відсортовано за реакцією — від найконтрольованіших до найшвидших. Inner — волокно біля ядра, outer — під верхнім шпоном. Усі числа — офіційні дані Butterfly; у картках основ на сайті вони ті самі.",
+          ],
+          ru: [
+            "Отсортировано по реакции — от самых контролируемых к самым быстрым. Inner — волокно у ядра, outer — под верхним шпоном. Все числа — официальные данные Butterfly; в карточках оснований на сайте они те же.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Модель", ru: "Модель" },
+            { ua: "Волокно", ru: "Волокно" },
+            { ua: "Реакція", ru: "Реакция" },
+            { ua: "Вібрація", ru: "Вибрация" },
+            { ua: "Товщина", ru: "Толщина" },
+          ],
+          rows: [
+            [{ ua: "Innerforce Layer ALC.S", ru: "Innerforce Layer ALC.S" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "10,1", ru: "10,1" }, { ua: "8,4", ru: "8,4" }, { ua: "5,5 мм", ru: "5,5 мм" }],
+            [{ ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5", ru: "10,5" }, { ua: "9,5", ru: "9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Harimoto Tomokazu Innerforce ZLC", ru: "Harimoto Tomokazu Innerforce ZLC" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5", ru: "10,5" }, { ua: "9,3", ru: "9,3" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Franziska Innerforce ZLC", ru: "Franziska Innerforce ZLC" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5", ru: "10,5" }, { ua: "9,5", ru: "9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5", ru: "10,5" }, { ua: "9,5", ru: "9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "SK Carbon", ru: "SK Carbon" }, { ua: "T5000, outer, 3+2", ru: "T5000, outer, 3+2" }, { ua: "10,5", ru: "10,5" }, { ua: "10,5", ru: "10,5" }, { ua: "5,2 мм", ru: "5,2 мм" }],
+            [{ ua: "Timo Boll CAF", ru: "Timo Boll CAF" }, { ua: "CAF, outer, 3+2", ru: "CAF, outer, 3+2" }, { ua: "10,6", ru: "10,6" }, { ua: "10,4", ru: "10,4" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Innerforce Layer ALC", ru: "Innerforce Layer ALC" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "10,7", ru: "10,7" }, { ua: "9,4", ru: "9,4" }, { ua: "6,0 мм", ru: "6,0 мм" }],
+            [{ ua: "Harimoto Tomokazu Innerforce ALC", ru: "Harimoto Tomokazu Innerforce ALC" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "10,7", ru: "10,7" }, { ua: "9,2", ru: "9,2" }, { ua: "6,0 мм", ru: "6,0 мм" }],
+            [{ ua: "Outerforce CAF", ru: "Outerforce CAF" }, { ua: "CAF, outer", ru: "CAF, outer" }, { ua: "11,3", ru: "11,3" }, { ua: "9,1", ru: "9,1" }, { ua: "6,3 мм", ru: "6,3 мм" }],
+            [{ ua: "Outerforce ZLC", ru: "Outerforce ZLC" }, { ua: "ZLC, outer", ru: "ZLC, outer" }, { ua: "11,3", ru: "11,3" }, { ua: "11,1", ru: "11,1" }, { ua: "5,9 мм", ru: "5,9 мм" }],
+            [{ ua: "Outerforce ALC", ru: "Outerforce ALC" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,4", ru: "11,4" }, { ua: "10,4", ru: "10,4" }, { ua: "6,2 мм", ru: "6,2 мм" }],
+            [{ ua: "Freitas ALC", ru: "Freitas ALC" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,4", ru: "11,4" }, { ua: "10,8", ru: "10,8" }, { ua: "6,0 мм", ru: "6,0 мм" }],
+            [{ ua: "Harimoto Tomokazu Innerforce Super ALC", ru: "Harimoto Tomokazu Innerforce Super ALC" }, { ua: "Super ALC, inner", ru: "Super ALC, inner" }, { ua: "11,4", ru: "11,4" }, { ua: "9,5", ru: "9,5" }, { ua: "5,9 мм", ru: "5,9 мм" }],
+            [{ ua: "Ovtcharov Innerforce ALC", ru: "Ovtcharov Innerforce ALC" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "11,7", ru: "11,7" }, { ua: "10,5", ru: "10,5" }, { ua: "6,2 мм", ru: "6,2 мм" }],
+            [{ ua: "Timo Boll ZLC", ru: "Timo Boll ZLC" }, { ua: "ZLC, outer", ru: "ZLC, outer" }, { ua: "11,7", ru: "11,7" }, { ua: "10,8", ru: "10,8" }, { ua: "5,5 мм", ru: "5,5 мм" }],
+            [{ ua: "Fan Zhendong ZLC", ru: "Fan Zhendong ZLC" }, { ua: "ZLC, outer", ru: "ZLC, outer" }, { ua: "11,7", ru: "11,7" }, { ua: "10,8", ru: "10,8" }, { ua: "5,5 мм", ru: "5,5 мм" }],
+            [{ ua: "Revoldia CNF", ru: "Revoldia CNF" }, { ua: "CNF, outer", ru: "CNF, outer" }, { ua: "11,7", ru: "11,7" }, { ua: "9,5", ru: "9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Fan Zhendong CNF", ru: "Fan Zhendong CNF" }, { ua: "CNF, outer", ru: "CNF, outer" }, { ua: "11,7", ru: "11,7" }, { ua: "9,5", ru: "9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Viscaria", ru: "Viscaria" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8", ru: "11,8" }, { ua: "10,3", ru: "10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8", ru: "11,8" }, { ua: "10,3", ru: "10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8", ru: "11,8" }, { ua: "10,3", ru: "10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Mizutani Jun ZLC", ru: "Mizutani Jun ZLC" }, { ua: "ZLC, outer", ru: "ZLC, outer" }, { ua: "11,8", ru: "11,8" }, { ua: "11,2", ru: "11,2" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Harimoto Tomokazu Innerforce Super ZLC", ru: "Harimoto Tomokazu Innerforce Super ZLC" }, { ua: "Super ZLC, inner", ru: "Super ZLC, inner" }, { ua: "12,0", ru: "12,0" }, { ua: "10,5", ru: "10,5" }, { ua: "6,2 мм", ru: "6,2 мм" }],
+            [{ ua: "Omar Assar Innerforce ZLC", ru: "Omar Assar Innerforce ZLC" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "12,0", ru: "12,0" }, { ua: "10,6", ru: "10,6" }, { ua: "6,2 мм", ru: "6,2 мм" }],
+            [{ ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Super ALC, outer", ru: "Super ALC, outer" }, { ua: "12,1", ru: "12,1" }, { ua: "10,1", ru: "10,1" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Fan Zhendong Super ALC", ru: "Fan Zhendong Super ALC" }, { ua: "Super ALC, outer", ru: "Super ALC, outer" }, { ua: "12,1", ru: "12,1" }, { ua: "10,1", ru: "10,1" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Fan Zhendong Super ZLC", ru: "Fan Zhendong Super ZLC" }, { ua: "Super ZLC, outer", ru: "Super ZLC, outer" }, { ua: "12,3", ru: "12,3" }, { ua: "11,1", ru: "11,1" }, { ua: "5,6 мм", ru: "5,6 мм" }],
+            [{ ua: "Lin Yun-Ju Super ZLC", ru: "Lin Yun-Ju Super ZLC" }, { ua: "Super ZLC, outer", ru: "Super ZLC, outer" }, { ua: "12,3", ru: "12,3" }, { ua: "11,1", ru: "11,1" }, { ua: "5,6 мм", ru: "5,6 мм" }],
+            [{ ua: "Mizutani Jun Super ZLC", ru: "Mizutani Jun Super ZLC" }, { ua: "Super ZLC, outer", ru: "Super ZLC, outer" }, { ua: "12,5", ru: "12,5" }, { ua: "11,6", ru: "11,6" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Primorac Carbon", ru: "Primorac Carbon" }, { ua: "T5000, outer, 3+2", ru: "T5000, outer, 3+2" }, { ua: "12,5", ru: "12,5" }, { ua: "13,3", ru: "13,3" }, { ua: "7,0 мм", ru: "7,0 мм" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Innerforce Layer ALC.S", ru: "Innerforce Layer ALC.S" }, href: "/butterfly/osnovaniya/innerforce-layer-alc-s" },
+          { label: { ua: "Outerforce ALC", ru: "Outerforce ALC" }, href: "/butterfly/osnovaniya/outerforce-alc" },
+          { label: { ua: "Outerforce ZLC", ru: "Outerforce ZLC" }, href: "/butterfly/osnovaniya/outerforce-zlc" },
+          { label: { ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, href: "/butterfly/osnovaniya/innerforce-layer-zlc" },
+          { label: { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, href: "/butterfly/osnovaniya/viscaria-super-alc" },
+          { label: { ua: "Harimoto Innerforce Super ZLC", ru: "Harimoto Innerforce Super ZLC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-innerforce-super-zlc" },
+          { label: { ua: "Fan Zhendong Super ZLC", ru: "Fan Zhendong Super ZLC" }, href: "/butterfly/osnovaniya/fan-zhendong-super-zlc" },
+          { label: { ua: "Revoldia CNF", ru: "Revoldia CNF" }, href: "/butterfly/osnovaniya/revoldia-cnf" },
+        ],
+      },
+      {
+        id: "yak-obraty",
+        h: { ua: "Як обрати карбонову основу", ru: "Как выбрать карбоновое основание" },
+        p: {
+          ua: [
+            "Почніть із того, від чого переходите, і з того, яке відчуття хочете в руці. Числа нижче — діапазони реакції / вібрації моделей із таблиці.",
+            "Пам'ятайте про накладки: швидкі тензорні накладки на швидкій основі складають ракетку, якою важко керувати без поставленої техніки. І про вагу: Butterfly попереджає, що вага основи залежить навіть від вологості й температури, тож одна й та сама модель може відрізнятися на кілька грамів.",
+          ],
+          ru: [
+            "Начните с того, от чего переходите, и с того, какое ощущение хотите в руке. Числа ниже — диапазоны реакции / вибрации моделей из таблицы.",
+            "Помните о накладках: быстрые тензорные накладки на быстром основании складывают ракетку, которой трудно управлять без поставленной техники. И о весе: Butterfly предупреждает, что вес основания зависит даже от влажности и температуры, поэтому одна и та же модель может отличаться на несколько граммов.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Ваша ситуація", ru: "Ваша ситуация" },
+            { ua: "Що шукати", ru: "Что искать" },
+            { ua: "Приклади", ru: "Примеры" },
+          ],
+          rows: [
+            [{ ua: "Переходите з деревʼяної основи", ru: "Переходите с деревянного основания" }, { ua: "Inner або легкий карбон: 10,1–10,7 / 8,4–10,5", ru: "Inner или лёгкий карбон: 10,1–10,7 / 8,4–10,5" }, { ua: "Innerforce Layer ALC.S, Innerforce Layer ALC, SK Carbon, Timo Boll CAF", ru: "Innerforce Layer ALC.S, Innerforce Layer ALC, SK Carbon, Timo Boll CAF" }],
+            [{ ua: "Атака з контролем, «золота середина»", ru: "Атака с контролем, «золотая середина»" }, { ua: "Outer ALC: 11,4–11,8 / 10,3–10,8", ru: "Outer ALC: 11,4–11,8 / 10,3–10,8" }, { ua: "Viscaria, Timo Boll ALC, Fan Zhendong ALC, Outerforce ALC", ru: "Viscaria, Timo Boll ALC, Fan Zhendong ALC, Outerforce ALC" }],
+            [{ ua: "Швидкість, але мʼяке відчуття", ru: "Скорость, но мягкое ощущение" }, { ua: "Super ALC, CNF: 11,7–12,1 / 9,5–10,1", ru: "Super ALC, CNF: 11,7–12,1 / 9,5–10,1" }, { ua: "Viscaria Super ALC, Fan Zhendong Super ALC, Revoldia CNF", ru: "Viscaria Super ALC, Fan Zhendong Super ALC, Revoldia CNF" }],
+            [{ ua: "Жорсткий прямий удар", ru: "Жёсткий прямой удар" }, { ua: "Outer ZLC: 11,3–11,8 / 10,8–11,2", ru: "Outer ZLC: 11,3–11,8 / 10,8–11,2" }, { ua: "Timo Boll ZLC, Fan Zhendong ZLC, Outerforce ZLC", ru: "Timo Boll ZLC, Fan Zhendong ZLC, Outerforce ZLC" }],
+            [{ ua: "Максимум швидкості", ru: "Максимум скорости" }, { ua: "Super ZLC, T5000: 12,3–12,5 / 11,1–13,3", ru: "Super ZLC, T5000: 12,3–12,5 / 11,1–13,3" }, { ua: "Fan Zhendong Super ZLC, Mizutani Jun Super ZLC, Primorac Carbon", ru: "Fan Zhendong Super ZLC, Mizutani Jun Super ZLC, Primorac Carbon" }],
+            [{ ua: "Швидкість із контролем inner", ru: "Скорость с контролем inner" }, { ua: "Inner Super: 11,4–12,0 / 9,5–10,5", ru: "Inner Super: 11,4–12,0 / 9,5–10,5" }, { ua: "Harimoto Innerforce Super ALC, Harimoto Innerforce Super ZLC", ru: "Harimoto Innerforce Super ALC, Harimoto Innerforce Super ZLC" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Атакуючі основи", ru: "Атакующие основания" }, href: "/osnovaniya/atakuyuchi" },
+          { label: { ua: "Універсальні основи", ru: "Универсальные основания" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "Як вибрати ракетку", ru: "Как выбрать ракетку" }, href: "/blog/yak-vybraty-raketku" },
+          { label: { ua: "Японська й європейська версії основ", ru: "Японская и европейская версии оснований" }, href: "/blog/versii-osnov-butterfly" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "ALC чи ZLC — що краще?", ru: "ALC или ZLC — что лучше?" },
+        a: {
+          ua: "Немає кращого — є різне відчуття. За офіційними числами outer-ZLC має майже ту саму реакцію, що outer-ALC (11,7 проти 11,8), але вищу вібрацію (10,8 проти 10,3): удар жорсткіший. ALC — збалансованіша. По швидкість ідуть до Super-версій.",
+          ru: "Лучшего нет — есть разное ощущение. По официальным числам outer-ZLC имеет почти ту же реакцию, что outer-ALC (11,7 против 11,8), но более высокую вибрацию (10,8 против 10,3): удар жёстче. ALC — сбалансированнее. За скоростью идут к Super-версиям.",
+        },
+      },
+      {
+        q: { ua: "Чим inner відрізняється від outer?", ru: "Чем inner отличается от outer?" },
+        a: {
+          ua: "Розташуванням волокна. Outer — одразу під верхнім шпоном, швидше й з відчуттям волокна. Inner — біля ядра, мʼякше й довше утримує мʼяч. У звичайних ALC і ZLC inner знижує реакцію й вібрацію приблизно на одиницю, але товсті inner-моделі (6,2 мм) майже такі ж швидкі, як outer.",
+          ru: "Расположением волокна. Outer — сразу под верхним шпоном, быстрее и с ощущением волокна. Inner — у ядра, мягче и дольше удерживает мяч. В обычных ALC и ZLC inner снижает реакцию и вибрацию примерно на единицу, но толстые inner-модели (6,2 мм) почти такие же быстрые, как outer.",
+        },
+      },
+      {
+        q: { ua: "Що означають Innerforce і Outerforce?", ru: "Что значат Innerforce и Outerforce?" },
+        a: {
+          ua: "Це лінійки Butterfly з різним розташуванням волокна: Innerforce — inner, волокно біля ядра; Outerforce — outer, волокно під поверхневим шпоном.",
+          ru: "Это линейки Butterfly с разным расположением волокна: Innerforce — inner, волокно у ядра; Outerforce — outer, волокно под поверхностным шпоном.",
+        },
+      },
+      {
+        q: { ua: "Що таке Super ALC і Super ZLC?", ru: "Что такое Super ALC и Super ZLC?" },
+        a: {
+          ua: "Версії з більшою кількістю волокна. Super ALC дає вищий відскок за збереженої гнучкості, Super ZLC вміщує в 1,8 раза більше волокна за масою, ніж ZLC. Реакція outer-моделей — 12,1 і 12,3 проти 11,8 і 11,7 у звичайних.",
+          ru: "Версии с большим количеством волокна. Super ALC даёт более высокий отскок при сохранённой гибкости, Super ZLC содержит в 1,8 раза больше волокна по массе, чем ZLC. Реакция outer-моделей — 12,1 и 12,3 против 11,8 и 11,7 у обычных.",
+        },
+      },
+      {
+        q: { ua: "Що таке реакція й вібрація основи?", ru: "Что такое реакция и вибрация основания?" },
+        a: {
+          ua: "Офіційні показники Butterfly. Реакція — базова швидкість основи, вібрація — відчуття удару: що нижча, то мʼякше. Порівнювати їх можна лише між основами Butterfly.",
+          ru: "Официальные показатели Butterfly. Реакция — базовая скорость основания, вибрация — ощущение удара: чем ниже, тем мягче. Сравнивать их можно только между основаниями Butterfly.",
+        },
+      },
+      {
+        q: { ua: "Яка карбонова основа Butterfly найшвидша?", ru: "Какое карбоновое основание Butterfly самое быстрое?" },
+        a: {
+          ua: "Серед основ у таблиці найвища реакція — 12,5 — у Mizutani Jun Super ZLC і Primorac Carbon. Primorac Carbon при цьому найжорсткіша за відчуттям: вібрація 13,3.",
+          ru: "Среди оснований в таблице самая высокая реакция — 12,5 — у Mizutani Jun Super ZLC и Primorac Carbon. Primorac Carbon при этом самое жёсткое по ощущению: вибрация 13,3.",
+        },
+      },
+      {
+        q: { ua: "Яку карбонову основу взяти після деревʼяної?", ru: "Какое карбоновое основание взять после деревянного?" },
+        a: {
+          ua: "З нижчою реакцією й мʼякшим відчуттям: inner-ALC (Innerforce Layer ALC.S — 10,1 / 8,4, Innerforce Layer ALC — 10,7 / 9,4) або SK Carbon і Timo Boll CAF (близько 10,5).",
+          ru: "С более низкой реакцией и мягким ощущением: inner-ALC (Innerforce Layer ALC.S — 10,1 / 8,4, Innerforce Layer ALC — 10,7 / 9,4) или SK Carbon и Timo Boll CAF (около 10,5).",
+        },
+      },
+      {
+        q: { ua: "Чи карбонова основа обовʼязково жорстка?", ru: "Обязательно ли карбоновое основание жёсткое?" },
+        a: {
+          ua: "Ні. Вібрація карбонових основ Butterfly — від 8,4 (Innerforce Layer ALC.S) до 13,3 (Primorac Carbon). Inner-схема, CNF і CAF дають мʼякше відчуття навіть за високої швидкості.",
+          ru: "Нет. Вибрация карбоновых оснований Butterfly — от 8,4 (Innerforce Layer ALC.S) до 13,3 (Primorac Carbon). Inner-схема, CNF и CAF дают более мягкое ощущение даже при высокой скорости.",
+        },
+      },
+      {
+        q: { ua: "Скільки карбону дозволяють правила ITTF?", ru: "Сколько карбона разрешают правила ITTF?" },
+        a: {
+          ua: "Щонайменше 85 % товщини основи — натуральна деревина. Шар, армований волокном, — не більше 7,5 % загальної товщини або 0,35 мм, залежно від того, що менше.",
+          ru: "Минимум 85 % толщины основания — натуральная древесина. Слой, армированный волокном, — не больше 7,5 % общей толщины или 0,35 мм, в зависимости от того, что меньше.",
+        },
+      },
+    ],
+    officialSource: {
+      label: {
+        ua: "Butterfly — штучні волокна в основах (ALC, ZLC, T5000, CAF, CNF)",
+        ru: "Butterfly — искусственные волокна в основаниях (ALC, ZLC, T5000, CAF, CNF)",
+      },
+      url: "https://www.butterfly-global.com/en/products/blade/fiber.html",
+    },
+    sources: [
+      {
+        label: { ua: "Butterfly — Outerfiber і Innerfiber: розташування волокна", ru: "Butterfly — Outerfiber и Innerfiber: расположение волокна" },
+        url: "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — матриця основ: що означають реакція й вібрація", ru: "Butterfly — матрица оснований: что значат реакция и вибрация" },
+        url: "https://www.butterfly-global.com/en/products/blade/matrix.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — каталог основ із характеристиками моделей", ru: "Butterfly — каталог оснований с характеристиками моделей" },
+        url: "https://www.butterfly-global.com/en/products/blade/",
+        kind: "official",
+      },
+      {
+        label: { ua: "Table Tennis England — Laws of Table Tennis 2026–27 (правило 2.4.2 про деревину й волокно)", ru: "Table Tennis England — Laws of Table Tennis 2026–27 (правило 2.4.2 о древесине и волокне)" },
+        url: "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf",
+        kind: "official",
+      },
+    ],
+    relatedProducts: [
+      { label: { ua: "основи для ракетки", ru: "основания для ракетки" }, href: "/osnovaniya" },
+      { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "основи з ZLC", ru: "основания с ZLC" }, href: "/osnovaniya/zlc" },
+    ],
+    relatedPosts: ["versii-osnov-butterfly", "yak-vybraty-raketku", "tenergy-chy-dignics", "yak-nakleity-nakladku"],
   },
 
   "naykrashchi-nakladki-butterfly": {
@@ -4072,7 +4448,7 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Усі основи Butterfly", ru: "Все основания Butterfly" }, href: "/osnovaniya" },
-          { label: { ua: "Основи із Zylon-карбоном (ZLC)", ru: "Основания с Zylon-карбоном (ZLC)" }, href: "/osnovaniya/zlc" },
+          { label: { ua: "Основи з ZL-карбоном (ZLC)", ru: "Основания с ZL-карбоном (ZLC)" }, href: "/osnovaniya/zlc" },
           { label: { ua: "Innerforce Layer ALC", ru: "Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
         ],
       },
@@ -4252,7 +4628,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Zhang Jike ALC", ru: "Butterfly Zhang Jike ALC" }, href: "/butterfly/osnovaniya/zhang-jike-alc" },
       { label: { ua: "Butterfly Innerforce Layer ALC", ru: "Butterfly Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
     ],
-    relatedPosts: ["yak-vybraty-raketku", "naykrashchi-nakladki-butterfly", "tenergy-chy-dignics"],
+    relatedPosts: ["yak-vybraty-raketku", "naykrashchi-nakladki-butterfly", "tenergy-chy-dignics", "alc-chy-zlc"],
   },
 };
 

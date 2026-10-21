@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1200" height="800" fill="#0E1117"/>
+<text x="60" y="64" fill="#F2F4F7" font-size="30" font-weight="700" letter-spacing="1">КАРТА КАРБОНОВЫХ ОСНОВАНИЙ BUTTERFLY</text>
+<line x1="60" y1="84" x2="1140" y2="84" stroke="#212832"/>
+<line x1="163.92857142857133" y1="120" x2="163.92857142857133" y2="640" stroke="#212832"/>
+<text x="163.92857142857133" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">10,0</text>
+<line x1="333.57142857142856" y1="120" x2="333.57142857142856" y2="640" stroke="#212832"/>
+<text x="333.57142857142856" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">10,5</text>
+<line x1="503.2142857142858" y1="120" x2="503.2142857142858" y2="640" stroke="#212832"/>
+<text x="503.2142857142858" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">11,0</text>
+<line x1="672.8571428571429" y1="120" x2="672.8571428571429" y2="640" stroke="#212832"/>
+<text x="672.8571428571429" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">11,5</text>
+<line x1="842.5000000000001" y1="120" x2="842.5000000000001" y2="640" stroke="#212832"/>
+<text x="842.5000000000001" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">12,0</text>
+<line x1="1012.1428571428573" y1="120" x2="1012.1428571428573" y2="640" stroke="#212832"/>
+<text x="1012.1428571428573" y="662" fill="#8A93A0" font-size="13" text-anchor="middle">12,5</text>
+<line x1="130" y1="610.566037735849" x2="1080" y2="610.566037735849" stroke="#212832"/>
+<text x="118" y="615.566037735849" fill="#8A93A0" font-size="13" text-anchor="end">8,5</text>
+<line x1="130" y1="512.4528301886792" x2="1080" y2="512.4528301886792" stroke="#212832"/>
+<text x="118" y="517.4528301886792" fill="#8A93A0" font-size="13" text-anchor="end">9,5</text>
+<line x1="130" y1="414.33962264150944" x2="1080" y2="414.33962264150944" stroke="#212832"/>
+<text x="118" y="419.33962264150944" fill="#8A93A0" font-size="13" text-anchor="end">10,5</text>
+<line x1="130" y1="316.2264150943396" x2="1080" y2="316.2264150943396" stroke="#212832"/>
+<text x="118" y="321.2264150943396" fill="#8A93A0" font-size="13" text-anchor="end">11,5</text>
+<line x1="130" y1="218.1132075471698" x2="1080" y2="218.1132075471698" stroke="#212832"/>
+<text x="118" y="223.1132075471698" fill="#8A93A0" font-size="13" text-anchor="end">12,5</text>
+<line x1="130" y1="120" x2="1080" y2="120" stroke="#212832"/>
+<text x="118" y="125" fill="#8A93A0" font-size="13" text-anchor="end">13,5</text>
+<rect x="130" y="120" width="950" height="520" fill="none" stroke="#39424E"/>
+<text x="605" y="690" fill="#F2F4F7" font-size="15" text-anchor="middle">реакция (скорость) →</text>
+<text x="70" y="380" fill="#F2F4F7" font-size="15" text-anchor="middle" transform="rotate(-90 70 380)">вибрация (жёсткость ощущения) →</text>
+<circle cx="774.6428571428575" cy="433.96226415094327" r="7" fill="#E8FF47"/>
+<text x="762.6428571428575" y="455.96226415094327" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Viscaria · Timo Boll ALC · Fan Zhendong ALC</text>
+<circle cx="638.9285714285716" cy="424.15094339622635" r="7" fill="#E8FF47"/>
+<text x="626.9285714285716" y="428.15094339622635" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Outerforce ALC</text>
+<circle cx="638.9285714285716" cy="384.90566037735834" r="7" fill="#E8FF47"/>
+<text x="626.9285714285716" y="388.90566037735834" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Freitas ALC</text>
+<circle cx="740.7142857142856" cy="414.33962264150944" r="7" fill="#0E1117" stroke="#E8FF47" stroke-width="3"/>
+<text x="728.7142857142856" y="406.33962264150944" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Ovtcharov Innerforce ALC</text>
+<circle cx="401.42857142857116" cy="522.2641509433961" r="7" fill="#0E1117" stroke="#E8FF47" stroke-width="3"/>
+<text x="413.42857142857116" y="526.2641509433961" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Innerforce Layer ALC · Harimoto ALC</text>
+<circle cx="197.85714285714266" cy="620.3773584905659" r="7" fill="#0E1117" stroke="#E8FF47" stroke-width="3"/>
+<text x="209.85714285714266" y="624.3773584905659" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Innerforce Layer ALC.S</text>
+<circle cx="876.4285714285716" cy="453.58490566037733" r="7" fill="#B6F24A"/>
+<text x="888.4285714285716" y="473.58490566037733" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Viscaria Super ALC · Fan Zhendong Super ALC</text>
+<circle cx="638.9285714285716" cy="512.4528301886792" r="7" fill="#0E1117" stroke="#B6F24A" stroke-width="3"/>
+<text x="650.9285714285716" y="530.4528301886792" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Harimoto Innerforce Super ALC</text>
+<circle cx="740.7142857142856" cy="384.90566037735834" r="7" fill="#5AA9FF"/>
+<text x="752.7142857142856" y="388.90566037735834" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Timo Boll ZLC · Fan Zhendong ZLC</text>
+<circle cx="774.6428571428575" cy="345.6603773584906" r="7" fill="#5AA9FF"/>
+<text x="774.6428571428575" y="331.6603773584906" fill="#F2F4F7" font-size="13" text-anchor="middle" opacity="0.92">Mizutani ZLC</text>
+<circle cx="605.0000000000003" cy="355.47169811320754" r="7" fill="#5AA9FF"/>
+<text x="593.0000000000003" y="359.47169811320754" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Outerforce ZLC</text>
+<circle cx="333.57142857142856" cy="512.4528301886792" r="7" fill="#0E1117" stroke="#5AA9FF" stroke-width="3"/>
+<text x="321.57142857142856" y="502.4528301886792" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Innerforce Layer ZLC · Franziska · Apolonia</text>
+<circle cx="944.2857142857148" cy="355.47169811320754" r="7" fill="#B48CFF"/>
+<text x="956.2857142857148" y="359.47169811320754" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Fan Zhendong · Lin Yun-Ju Super ZLC</text>
+<circle cx="1012.1428571428573" cy="306.41509433962267" r="7" fill="#B48CFF"/>
+<text x="1000.1428571428573" y="300.41509433962267" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Mizutani Super ZLC</text>
+<circle cx="842.5000000000001" cy="414.33962264150944" r="7" fill="#0E1117" stroke="#B48CFF" stroke-width="3"/>
+<text x="854.5000000000001" y="429.33962264150944" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Harimoto Innerforce Super ZLC</text>
+<circle cx="842.5000000000001" cy="404.5283018867924" r="7" fill="#0E1117" stroke="#5AA9FF" stroke-width="3"/>
+<text x="854.5000000000001" y="407.5283018867924" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Omar Assar Innerforce ZLC</text>
+<circle cx="740.7142857142856" cy="512.4528301886792" r="7" fill="#3DDC97"/>
+<text x="752.7142857142856" y="516.4528301886792" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Revoldia CNF · Fan Zhendong CNF</text>
+<circle cx="605.0000000000003" cy="551.6981132075472" r="7" fill="#FF9F43"/>
+<text x="617.0000000000003" y="565.6981132075472" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Outerforce CAF</text>
+<circle cx="367.49999999999983" cy="424.15094339622635" r="7" fill="#FF9F43"/>
+<text x="379.49999999999983" y="442.15094339622635" fill="#F2F4F7" font-size="13" text-anchor="start" opacity="0.92">Timo Boll CAF</text>
+<circle cx="1012.1428571428573" cy="139.6226415094339" r="7" fill="#C8CDD3"/>
+<text x="1000.1428571428573" y="143.6226415094339" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">Primorac Carbon</text>
+<circle cx="333.57142857142856" cy="414.33962264150944" r="7" fill="#C8CDD3"/>
+<text x="321.57142857142856" y="410.33962264150944" fill="#F2F4F7" font-size="13" text-anchor="end" opacity="0.92">SK Carbon</text>
+<circle cx="130" cy="727" r="7" fill="#E8FF47"/>
+<text x="144" y="732" fill="#F2F4F7" font-size="15">ALC</text>
+<circle cx="189.5" cy="727" r="7" fill="#B6F24A"/>
+<text x="203.5" y="732" fill="#F2F4F7" font-size="15">Super ALC</text>
+<circle cx="300" cy="727" r="7" fill="#5AA9FF"/>
+<text x="314" y="732" fill="#F2F4F7" font-size="15">ZLC</text>
+<circle cx="359.5" cy="727" r="7" fill="#B48CFF"/>
+<text x="373.5" y="732" fill="#F2F4F7" font-size="15">Super ZLC</text>
+<circle cx="470" cy="727" r="7" fill="#3DDC97"/>
+<text x="484" y="732" fill="#F2F4F7" font-size="15">CNF</text>
+<circle cx="529.5" cy="727" r="7" fill="#FF9F43"/>
+<text x="543.5" y="732" fill="#F2F4F7" font-size="15">CAF</text>
+<circle cx="589" cy="727" r="7" fill="#C8CDD3"/>
+<text x="603" y="732" fill="#F2F4F7" font-size="15">T5000 (карбон)</text>
+<circle cx="762" cy="727" r="7" fill="#8A93A0"/>
+<text x="776" y="732" fill="#8A93A0" font-size="15">outer</text>
+<circle cx="842" cy="727" r="7" fill="#0E1117" stroke="#8A93A0" stroke-width="3"/>
+<text x="856" y="732" fill="#8A93A0" font-size="15">inner</text>
+<text x="60" y="776" fill="#8A93A0" font-size="13">Официальные числа Butterfly (Reaction / Vibration property). Сравниваются только между основаниями Butterfly.</text>
+<text x="1140" y="776" fill="#39424E" font-size="13" text-anchor="end">ttmax.com.ua</text>
+</svg>

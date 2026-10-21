@@ -225,6 +225,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 10915,
     "inStock": true,
     "base": {
+      "vibration": 10.1,
+      "reaction": 12.1,
       "weight": "~89 г",
       "fiber": "outer",
       "thicknessMm": 5.7,
@@ -346,6 +348,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9875,
     "inStock": true,
     "base": {
+      "vibration": 10.8,
+      "reaction": 11.7,
       "weight": "85–91 г",
       "fiber": "outer",
       "thicknessMm": 5.5,
@@ -650,11 +654,14 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 5195,
     "inStock": true,
     "base": {
+      "fiber": "outer",
+      "vibration": 10.4,
+      "reaction": 10.6,
       "thicknessMm": 5.7,
       "weight": "80–84 г",
       "bladeClass": "off",
       "surface": "caf",
-      "plies": "5+2",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -764,7 +771,9 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 8835,
     "inStock": true,
     "base": {
-      "thicknessMm": 5.7,
+      "vibration": 10.3,
+      "reaction": 11.8,
+      "thicknessMm": 5.8,
       "weight": "85–90 г",
       "fiber": "outer",
       "bladeClass": "off",
@@ -803,12 +812,14 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 5195,
     "inStock": true,
     "base": {
+      "vibration": 10.5,
+      "reaction": 10.5,
       "weight": "78–81 г",
       "fiber": "outer",
       "thicknessMm": 5.2,
       "bladeClass": "off",
-      "surface": "caf",
-      "plies": "5+2",
+      "surface": "t5000",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -842,6 +853,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 17155,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 11.7,
       "weight": "88–91 г",
       "fiber": "outer",
       "thicknessMm": 5.7,
@@ -957,12 +970,14 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 6235,
     "inStock": true,
     "base": {
+      "vibration": 13.3,
+      "reaction": 12.5,
       "weight": "88–92 г",
       "fiber": "outer",
-      "thicknessMm": 6.9,
+      "thicknessMm": 7.0,
       "bladeClass": "off",
-      "surface": "carbon",
-      "plies": "5+2",
+      "surface": "t5000",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -1148,6 +1163,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 6755,
     "inStock": true,
     "base": {
+      "vibration": 11.1,
+      "reaction": 11.3,
       "weight": "84–89 г",
       "fiber": "outer",
       "thicknessMm": 5.9,
@@ -1187,6 +1204,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 4155,
     "inStock": true,
     "base": {
+      "vibration": 9.1,
+      "reaction": 11.3,
       "weight": "85–90 г",
       "fiber": "outer",
       "thicknessMm": 6.3,
@@ -1226,6 +1245,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 5715,
     "inStock": true,
     "base": {
+      "vibration": 10.4,
+      "reaction": 11.4,
       "weight": "85–87 г",
       "fiber": "outer",
       "thicknessMm": 6.2,
@@ -1385,6 +1406,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 12475,
     "inStock": true,
     "base": {
+      "vibration": 11.2,
+      "reaction": 11.8,
       "weight": "87–90 г",
       "fiber": "outer",
       "thicknessMm": 5.7,
@@ -1577,6 +1600,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 18195,
     "inStock": true,
     "base": {
+      "vibration": 11.1,
+      "reaction": 12.3,
       "weight": "85–91 г",
       "fiber": "outer",
       "thicknessMm": 5.6,
@@ -1732,6 +1757,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 18195,
     "inStock": true,
     "base": {
+      "vibration": 11.6,
+      "reaction": 12.5,
       "weight": "85–92 г",
       "fiber": "outer",
       "thicknessMm": 5.8,
@@ -1809,6 +1836,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 11435,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 10.5,
       "weight": "85–90 г",
       "fiber": "inner",
       "thicknessMm": 5.7,
@@ -1887,6 +1916,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 7795,
     "inStock": true,
     "base": {
+      "vibration": 8.4,
+      "reaction": 10.1,
       "weight": "88–89 г",
       "fiber": "inner",
       "thicknessMm": 5.5,
@@ -1926,6 +1957,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 7795,
     "inStock": true,
     "base": {
+      "vibration": 9.4,
+      "reaction": 10.7,
       "weight": "84–92 г",
       "fiber": "inner",
       "thicknessMm": 6,
@@ -1965,6 +1998,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 10915,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 11.4,
       "weight": "85–90 г",
       "fiber": "inner",
       "thicknessMm": 5.9,
@@ -2004,6 +2039,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 13515,
     "inStock": true,
     "base": {
+      "vibration": 9.3,
+      "reaction": 10.5,
       "weight": "84–88 г",
       "fiber": "inner",
       "thicknessMm": 5.7,
@@ -2043,6 +2080,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 18715,
     "inStock": true,
     "base": {
+      "vibration": 10.5,
+      "reaction": 12.0,
       "weight": "85–90 г",
       "fiber": "inner",
       "thicknessMm": 6.2,
@@ -2082,6 +2121,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9355,
     "inStock": true,
     "base": {
+      "vibration": 9.2,
+      "reaction": 10.7,
       "thicknessMm": 6.0,
       "weight": "87–90 г",
       "fiber": "inner",
@@ -2621,9 +2662,11 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9355,
     "inStock": true,
     "base": {
+      "vibration": 10.8,
+      "reaction": 11.4,
       "weight": "85–90 г",
       "fiber": "outer",
-      "thicknessMm": 5.9,
+      "thicknessMm": 6.0,
       "bladeClass": "off",
       "surface": "alc",
       "plies": "5+2",
@@ -2660,6 +2703,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 12995,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 10.5,
       "weight": "85–90 г",
       "fiber": "inner",
       "thicknessMm": 5.7,
@@ -2699,6 +2744,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 12475,
     "inStock": true,
     "base": {
+      "vibration": 10.8,
+      "reaction": 11.7,
       "weight": "85–87 г",
       "fiber": "outer",
       "thicknessMm": 5.5,
@@ -2738,6 +2785,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 18195,
     "inStock": true,
     "base": {
+      "vibration": 11.1,
+      "reaction": 12.3,
       "weight": "85–90 г",
       "fiber": "outer",
       "thicknessMm": 5.6,
@@ -2777,6 +2826,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 10915,
     "inStock": true,
     "base": {
+      "vibration": 10.1,
+      "reaction": 12.1,
       "weight": "85–90 г",
       "fiber": "outer",
       "thicknessMm": 5.7,
@@ -2816,6 +2867,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9355,
     "inStock": true,
     "base": {
+      "vibration": 10.3,
+      "reaction": 11.8,
       "weight": "87–90 г",
       "fiber": "outer",
       "thicknessMm": 5.8,
@@ -2969,6 +3022,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 9355,
     "inStock": true,
     "base": {
+      "vibration": 10.5,
+      "reaction": 11.7,
       "weight": "89–91 г",
       "fiber": "inner",
       "thicknessMm": 6.2,
@@ -3085,6 +3140,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 12995,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 10.5,
       "thicknessMm": 5.7,
       "weight": "86–93 г",
       "fiber": "inner",
@@ -3237,6 +3294,8 @@ export const catalogBases: CatalogProduct[] = [
     "priority": 2,
     "inStock": true,
     "base": {
+      "vibration": 9.5,
+      "reaction": 11.7,
       "weight": "85–90 г",
       "fiber": "outer",
       "thicknessMm": 5.7,
