@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 730" width="1200" height="730" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1200" height="730" fill="#0E1117"/>
+<text x="60" y="64" fill="#F2F4F7" font-size="30" font-weight="700" letter-spacing="1">КАК НАКЛЕИТЬ НАКЛАДКУ: 6 ШАГОВ BUTTERFLY</text>
+<line x1="60" y1="84" x2="1140" y2="84" stroke="#212832"/>
+<rect x="60" y="112" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="94" cy="146" r="18" fill="#E8FF47"/>
+<text x="94" y="153" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">1</text>
+<ellipse cx="230" cy="204" rx="34" ry="40" fill="#B88A57" stroke="none" stroke-width="2"/><rect x="222" y="240" width="16" height="30" rx="4" fill="#B88A57" opacity="0.85"/><path d="M210 190 L248 218" stroke="#0E1117" stroke-width="5" stroke-linecap="round" opacity="0.6"/><rect x="250" y="174" width="22" height="14" rx="3" fill="#D9532B" transform="rotate(25 261 181)"/>
+<text x="230" y="308" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">Очистите основание</text>
+<text x="230" y="336" fill="#8A93A0" font-size="15" text-anchor="middle">старый клей — кусочком</text>
+<text x="230" y="357" fill="#8A93A0" font-size="15" text-anchor="middle">старой накладки</text>
+<rect x="430" y="112" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="464" cy="146" r="18" fill="#E8FF47"/>
+<text x="464" y="153" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">2</text>
+<ellipse cx="600" cy="216" rx="38" ry="42" fill="#D9532B"/><circle cx="600" cy="216" r="14" fill="#F4F1EA" opacity="0.92"/>
+<text x="600" y="308" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">Клей на губку накладки</text>
+<text x="600" y="336" fill="#8A93A0" font-size="15" text-anchor="middle">первой: она сохнет дольше;</text>
+<text x="600" y="357" fill="#8A93A0" font-size="15" text-anchor="middle">с монету 20–25 мм</text>
+<rect x="800" y="112" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="834" cy="146" r="18" fill="#E8FF47"/>
+<text x="834" y="153" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">3</text>
+<ellipse cx="970" cy="204" rx="34" ry="40" fill="#B88A57" stroke="none" stroke-width="2"/><rect x="962" y="240" width="16" height="30" rx="4" fill="#B88A57" opacity="0.85"/><ellipse cx="970" cy="204" rx="26" ry="31" fill="#F4F1EA" opacity="0.55"/>
+<text x="970" y="308" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">Клей на основание</text>
+<text x="970" y="336" fill="#8A93A0" font-size="15" text-anchor="middle">тонкий ровный слой</text>
+<text x="970" y="357" fill="#8A93A0" font-size="15" text-anchor="middle">на чистую древесину</text>
+<rect x="60" y="406" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="94" cy="440" r="18" fill="#E8FF47"/>
+<text x="94" y="447" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">4</text>
+<circle cx="230" cy="510" r="38" fill="none" stroke="#E8FF47" stroke-width="4"/><path d="M230 510 L230 484 M230 510 L248 520" stroke="#E8FF47" stroke-width="4" stroke-linecap="round"/><rect x="222" y="464" width="16" height="8" rx="2" fill="#E8FF47"/>
+<text x="230" y="602" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">Ждите ≥ 10 мин</text>
+<text x="230" y="630" fill="#8A93A0" font-size="15" text-anchor="middle">пока клей из молочно-белого</text>
+<text x="230" y="651" fill="#8A93A0" font-size="15" text-anchor="middle">станет прозрачным</text>
+<rect x="430" y="406" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="464" cy="440" r="18" fill="#E8FF47"/>
+<text x="464" y="447" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">5</text>
+<ellipse cx="600" cy="498" rx="34" ry="40" fill="#D9532B" stroke="none" stroke-width="2"/><rect x="592" y="534" width="16" height="30" rx="4" fill="#B88A57" opacity="0.85"/><path d="M600 528 L600 472 M588 486 L600 470 L612 486" stroke="#E8FF47" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="602" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">От ручки вверх</text>
+<text x="600" y="630" fill="#8A93A0" font-size="15" text-anchor="middle">прижмите плотно, без пузырей;</text>
+<text x="600" y="651" fill="#8A93A0" font-size="15" text-anchor="middle">ручку не давите</text>
+<rect x="800" y="406" width="340" height="268" rx="14" fill="#161B22" stroke="#212832"/>
+<circle cx="834" cy="440" r="18" fill="#E8FF47"/>
+<text x="834" y="447" fill="#0E1117" font-size="20" font-weight="700" text-anchor="middle">6</text>
+<ellipse cx="970" cy="498" rx="34" ry="40" fill="#D9532B" stroke="#E8FF47" stroke-width="2"/><rect x="962" y="534" width="16" height="30" rx="4" fill="#B88A57" opacity="0.85"/><ellipse cx="970" cy="498" rx="38" ry="44" fill="none" stroke="#E8FF47" stroke-width="4" stroke-dasharray="10 6"/>
+<text x="970" y="602" fill="#F2F4F7" font-size="21" font-weight="700" text-anchor="middle">Обрежьте и оклейте</text>
+<text x="970" y="630" fill="#8A93A0" font-size="15" text-anchor="middle">острыми ножницами по краю,</text>
+<text x="970" y="651" fill="#8A93A0" font-size="15" text-anchor="middle">торец — лентой</text>
+<text x="60" y="706" fill="#8A93A0" font-size="13">По инструкции Butterfly к водному клею Free Chack</text>
+<text x="1140" y="706" fill="#39424E" font-size="13" text-anchor="end">ttmax.com.ua</text>
+</svg>

@@ -44,6 +44,7 @@ const L_BALLS = [
   { label: { ua: "Сітки для столу", ru: "Сетки для стола" }, href: "/setki" },
 ];
 const L_GLUE = [
+  { label: { ua: "Як наклеїти накладку — інструкція", ru: "Как наклеить накладку — инструкция" }, href: "/blog/yak-nakleity-nakladku" },
   { label: { ua: "Клей для накладок", ru: "Клей для накладок" }, href: "/aksessuary/klei" },
   { label: { ua: "Торцеві стрічки", ru: "Торцевые ленты" }, href: "/aksessuary/tortsevi-strichky" },
   { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
@@ -53,6 +54,7 @@ const L_CARE = [
   { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
 ];
 const L_TAPE = [
+  { label: { ua: "Як наклеїти накладку — інструкція", ru: "Как наклеить накладку — инструкция" }, href: "/blog/yak-nakleity-nakladku" },
   { label: { ua: "Усі торцеві стрічки", ru: "Все торцевые ленты" }, href: "/aksessuary/tortsevi-strichky" },
   { label: { ua: "Клей для накладок", ru: "Клей для накладок" }, href: "/aksessuary/klei" },
 ];
