@@ -24,6 +24,7 @@ import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
 import { productIndexable } from "@/lib/catalog/indexability";
 import { inGroup, isFiberGroup, surfaceGroups } from "@/lib/catalog/routing";
+import { getRichContent } from "@/data/catalog/categoryContent";
 import { isHidden } from "@/lib/catalog/hidden";
 import { applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import type { EntityMediaMap } from "@/lib/media/get";
@@ -142,7 +143,9 @@ export function buildLlmsIndex(opts: {
     const prices = inG.map(getMinPrice).filter((n): n is number => typeof n === "number");
     const from = prices.length ? `від ${Math.min(...prices)} грн` : "";
     const count = plural(inG.length, "позиція", "позиції", "позицій");
-    out.push(`- [${g.h1[UA]}](${url(`/ua/${g.category}/${g.slug}`)}) — ${count} ${from}`.trim());
+    // Перша теза «Коротко» — щоб асистент одразу знав, про що сторінка й кому вона.
+    const gist = getRichContent(g.slug)?.summary?.[0]?.[UA];
+    out.push(`- [${g.h1[UA]}](${url(`/ua/${g.category}/${g.slug}`)}) — ${count} ${from}${gist ? `. ${gist}` : ""}`.trim());
   }
 
   out.push("", "## Довідник і поради", "");
@@ -220,6 +223,19 @@ export function buildLlmsFull(opts: {
       }
       out.push("");
     }
+  }
+
+  // Гайди підкатегорій: «Коротко», таблиця-підсумок і FAQ — готові відповіді на запити
+  // «як обрати довгі шипи», «яку атакуючу основу взяти» тощо (ті самі тексти, що на сторінках).
+  out.push("## Як обрати: гайди підкатегорій", "");
+  for (const g of surfaceGroups) {
+    const rich = getRichContent(g.slug);
+    if (!rich || !products.some((p) => inGroup(p, g))) continue;
+    out.push(`### ${g.h1[UA]} — ${url(`/ua/${g.category}/${g.slug}`)}`);
+    for (const s of rich.summary ?? []) out.push(`- ${s[UA]}`);
+    for (const f of rich.faq.slice(0, 5)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
+    if (rich.updated) out.push(`- Оновлено: ${rich.updated}`);
+    out.push("");
   }
 
   out.push("## Питання й відповіді з довідника", "");

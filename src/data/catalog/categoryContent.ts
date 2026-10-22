@@ -4,6 +4,7 @@
 // Де є цей контент — базовий CategorySeo/SurfaceGroupSeo та CMS-блок не дублюються.
 // Перелінковка зроблена з упором на топ-товари (Viscaria, Timo Boll ALC, Apolonia ZLC, Dignics, Tenergy).
 import type { Locale } from "@/i18n/config";
+import { HUB_CONTENT } from "./hubContent";
 
 type L = Record<Locale, string>;
 export type RichCard = { title: L; body: L; href?: string; linkLabel?: L };
@@ -12,6 +13,15 @@ export type RichRow = { cells: L[]; href?: string };
 export type RichComparison = { heading: L; columns: L[]; rows: RichRow[]; note?: L };
 export type RichContent = {
   lead: L[];
+  /**
+   * «Коротко» — 3–6 тез одразу під вступом: відповідь першою. Саме такі списки ШІ-асистенти
+   * (ChatGPT, Perplexity, Google AI Overviews) цитують найохочіше; людина за 10 секунд бачить суть.
+   */
+  summary?: L[];
+  /** Першоджерела фактів (офіційні сторінки Butterfly, правила ITTF) — видимий блок «Джерела». */
+  sources?: { label: L; url: string }[];
+  /** YYYY-MM-DD — коли текст звіряли з даними (видимо «Оновлено», свіжість для асистентів). */
+  updated?: string;
   cardsHeading?: L;
   cards?: RichCard[];
   sections?: RichSection[];
@@ -394,6 +404,7 @@ const CONTENT: Record<string, RichContent> = {
 };
 
 export function getRichContent(slug: string): RichContent | undefined {
+  if (HUB_CONTENT[slug]) return HUB_CONTENT[slug];
   return CONTENT[slug];
 }
 

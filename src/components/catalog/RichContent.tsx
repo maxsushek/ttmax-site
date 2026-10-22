@@ -26,6 +26,23 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
         </div>
       )}
 
+      {/* Коротко — відповідь першою (для людини й для ШІ-асистентів) */}
+      {content.summary && content.summary.length > 0 && (
+        <section className="max-w-[70ch] rounded-2xl border border-accent/30 bg-accent/[0.04] p-5">
+          <h2 className="mb-3 font-display text-base font-bold uppercase tracking-[0.05em] text-accent">
+            {T("Коротко", "Коротко")}
+          </h2>
+          <ul className="space-y-2">
+            {content.summary.map((s, i) => (
+              <li key={i} className="flex gap-2.5 font-body text-[15px] leading-[1.65] text-white/85">
+                <span aria-hidden className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span>{L(s)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* Картки типів */}
       {content.cards && content.cards.length > 0 && (
         <section>
@@ -58,7 +75,8 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
         <section className="max-w-[70ch] space-y-6">
           {content.sections.map((s, i) => (
             <div key={i}>
-              <h3 className={h3}>{L(s.title)}</h3>
+              {/* h2, а не h3: розділ — самостійна відповідь, асистент і пошук мають бачити її як підрозділ сторінки. */}
+              <h2 className={h3}>{L(s.title)}</h2>
               <p className="font-body text-[15px] leading-[1.75] text-white/80">{L(s.body)}</p>
             </div>
           ))}
@@ -128,6 +146,33 @@ export function RichContent({ content, locale }: { content: RC; locale: Locale }
               </details>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Джерела й дата звірки */}
+      {(content.sources?.length || content.updated) && (
+        <section className="max-w-[70ch]">
+          {content.sources && content.sources.length > 0 && (
+            <>
+              <div className="mb-2 font-display text-xs font-bold uppercase tracking-[0.14em] text-ink-muted">
+                {T("Джерела", "Источники")}
+              </div>
+              <ul className="space-y-1.5">
+                {content.sources.map((s) => (
+                  <li key={s.url} className="font-body text-[13px] leading-relaxed">
+                    <a href={s.url} target="_blank" rel="noopener" className="text-white/70 underline decoration-white/20 underline-offset-2 hover:text-accent">
+                      {L(s.label)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          {content.updated && (
+            <p className="mt-3 font-body text-[12px] text-ink-dim">
+              {T("Оновлено", "Обновлено")}: <time dateTime={content.updated}>{content.updated.split("-").reverse().join(".")}</time>
+            </p>
+          )}
         </section>
       )}
 

@@ -57,7 +57,7 @@ import { GallerySyncProvider } from "@/components/catalog/GallerySync";
 import { ExpertSections } from "@/components/catalog/ExpertSections";
 import { CategorySeo } from "@/components/catalog/CategorySeo";
 import { RichContent } from "@/components/catalog/RichContent";
-import { getRichContent } from "@/data/catalog/categoryContent";
+import { getRichContent, type RichContent as RichContentData } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
 import { expertFor, variantOf } from "@/data/catalog/variants";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -674,7 +674,7 @@ function ListingView({
               ? route.group.slug
               : null;
         const rich = richSlug ? getRichContent(richSlug) : undefined;
-        if (rich) return <RichContent content={rich} locale={locale} />;
+        if (rich) return <RichContent content={withoutHiddenRows(rich, media)} locale={locale} />;
         const cmsRich = !!(
           content &&
           ((content.body?.length ?? 0) > 0 || (content.faq?.length ?? 0) > 0)
@@ -693,6 +693,20 @@ function ListingView({
       })()}
     </>
   );
+}
+
+/**
+ * Таблиця порівняння в хабі не повинна вести на товари, яких немає в сітці (без фото чи
+ * знятих з продажу): рядок із посиланням на сховану картку — прибираємо.
+ */
+function withoutHiddenRows(rich: RichContentData, media: EntityMediaMap): RichContentData {
+  if (!rich.comparison) return rich;
+  const rows = rich.comparison.rows.filter((r) => {
+    const slug = r.href?.split("/").pop();
+    const p = slug ? getProductBySlug(slug) : undefined;
+    return !p || !isHidden(p, media);
+  });
+  return { ...rich, comparison: { ...rich.comparison, rows } };
 }
 
 /** Плитка-лінк бренд-хаба. */
