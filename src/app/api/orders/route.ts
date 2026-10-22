@@ -1,8 +1,7 @@
 import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { notifyNewOrder } from "@/lib/telegram/notify";
-import { productPageUrl, slugFromProductId } from "@/lib/catalog/product-url";
+import { sendOrderCard } from "@/lib/telegram/cards";
 import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { getOverrides, applyOverrides } from "@/lib/catalog/overrides";
 import { resolveCombo } from "@/lib/catalog/racket";
@@ -326,7 +325,7 @@ export async function POST(request: NextRequest) {
     .filter(Boolean)
     .join("\n");
 
-  const { data: leadRow, error: leadError } = await supabase
+  const { error: leadError } = await supabase
     .from("leads")
     .insert({
       name: data.customer.name,
@@ -348,40 +347,13 @@ export async function POST(request: NextRequest) {
     console.error("[orders] lead mirror error:", leadError.message);
   }
 
-  // 4) Telegram-сповіщення. Не блокує результат: notifyNewOrder ловить помилки
-  //    всередині й повертає false, якщо токен/чат не задані або Telegram недоступний.
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const leadId = leadRow?.id ?? null;
-  const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
+  // 4) Telegram: картка замовлення (lib/telegram/cards.ts) з кнопками статусів. Збирається з
+  //    бази — той самий вигляд, що в /status і після зміни статусу. Не блокує відповідь.
   after(async () => {
-    const sent = await notifyNewOrder({
-      orderId: orderRow.id,
-      orderNumber: orderRow.order_number,
-      name: data.customer.name,
-      phone: data.customer.phone,
-      email: data.customer.email ?? null,
-      items: data.items.map((i) => ({
-        brand: i.brand,
-        model: i.model,
-        qty: i.qty,
-        lineTotal: Math.round(i.price * i.qty * 100) / 100,
-        url: productPageUrl(slugFromProductId(i.productId)),
-      })),
-      subtotal: computedSubtotal,
-      shipping: computedShipping,
-      total: computedTotal,
-      delivery: data.delivery,
-      payment: data.payment,
-      comment: data.comment ?? null,
-      locale: data.locale,
-      adminUrl,
-    });
-    // Запамʼятати повідомлення — щоб кнопки статусів можна було перемалювати з CRM.
-    if (sent) {
-      await supabase
-        .from("orders")
-        .update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId })
-        .eq("id", orderRow.id);
+    try {
+      await sendOrderCard(supabase, orderRow.id);
+    } catch (err) {
+      console.error("[orders] telegram card failed:", err instanceof Error ? err.message : err);
     }
   });
 

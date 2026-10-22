@@ -1,8 +1,7 @@
 import { NextResponse, after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { notifyNewLead } from "@/lib/telegram/notify";
-import { productPageUrl } from "@/lib/catalog/product-url";
+import { sendLeadCard } from "@/lib/telegram/cards";
 import { locales, localeToLang } from "@/i18n/config";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 
@@ -97,13 +96,9 @@ export async function POST(request: NextRequest) {
   const name =
     parsed.data.name?.trim() ||
     (parsed.data.locale === "ru" ? "Быстрый заказ" : "Швидке замовлення");
-  // Товар зі швидкого замовлення передається в attribution.product → показуємо в Telegram.
+  // Товар зі швидкого замовлення лежить в attribution (product, productSlug) — картка в Telegram
+  // бере його звідти сама (lib/telegram/cards.ts).
   const attribution = parsed.data.attribution ?? {};
-  const product = typeof attribution.product === "string" ? attribution.product : null;
-  // Посилання на картку — лише для slug, який є в каталозі (productPageUrl це перевіряє).
-  const productUrl = productPageUrl(
-    typeof attribution.productSlug === "string" ? attribution.productSlug : null,
-  );
   // ⚠️ БД має CHECK (locale IN ('uk','ru')) — це BCP-47 код мови, а НЕ код локалі в URL
   // ('ua'/'ru'). Без мапи вставка з locale='ua' падала (23514) → форма лідів на /ua ламалась.
   // Каст: рукописний тип колонки в supabase/types.ts помилково каже "ua"|"ru", а фактично
@@ -129,27 +124,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 
-  // Telegram-сповіщення (no-op без TELEGRAM_*; помилки не валять запит).
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  // Telegram: картка заявки (lib/telegram/cards.ts) з кнопками статусів; помилки не валять запит.
   const leadId = leadRow?.id ?? null;
-  const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
-  after(async () => {
-    const sent = await notifyNewLead({
-      name,
-      phone: parsed.data.phone,
-      email: parsed.data.email ?? null,
-      source: parsed.data.source,
-      locale: parsed.data.locale,
-      product,
-      productUrl,
-      adminUrl,
-      leadId,
-      leadNumber: leadRow?.lead_number ?? null,
+  if (leadId) {
+    after(async () => {
+      try {
+        await sendLeadCard(supabase, leadId);
+      } catch (err) {
+        console.error("[leads] telegram card failed:", err instanceof Error ? err.message : err);
+      }
     });
-    if (sent && leadId) {
-      await supabase.from("leads").update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId }).eq("id", leadId);
-    }
-  });
+  }
 
   return NextResponse.json({ ok: true, persisted: true });
 }

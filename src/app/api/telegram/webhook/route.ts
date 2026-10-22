@@ -18,7 +18,8 @@ import { findInviteRef, findLatestByPhone, normalizePhone, type OrderInfo } from
 import { INVITE_VARIANTS, firstName, inviteCopy, type CopyLang } from "@/lib/reviews/invite-copy";
 import { getProductBySlug } from "@/data/catalog";
 import { botChatId, tg, tgEsc, type InlineKeyboard } from "@/lib/telegram/bot";
-import { leadKeyboardFor, orderKeyboardFor, setLeadStatus, setOrderStatus } from "@/lib/telegram/crm";
+import { setLeadStatus, setOrderStatus } from "@/lib/telegram/crm";
+import { sendLeadCard, sendOrderCard } from "@/lib/telegram/cards";
 import { LEAD_BY_CODE, LEAD_STATUS, ORDER_BY_CODE, ORDER_STATUS } from "@/lib/crm/status";
 import type { ReviewRow } from "@/lib/supabase/types";
 
@@ -112,55 +113,21 @@ async function sendInvite(chatId: number, ref: string, replyTo?: number): Promis
   });
 }
 
-/** Картка заявки/замовлення з кнопками статусів; повідомлення стає «прив'язаним» (його перемальовує CRM). */
+/** /status TT-… | Z-… — свіжа картка з кнопками; вона й стає «живою» (її перемальовує зміна статусу). */
 async function sendStatusCard(chatId: number, num: string, replyTo?: number): Promise<void> {
   const sb = getSupabaseServerClient({ useServiceRole: true });
   if (!sb) return;
+  let ok = false;
   if (num.startsWith("TT-")) {
-    const { data } = await sb
-      .from("orders")
-      .select("id, order_number, customer_name, customer_phone, total_uah, order_items(brand, model, qty)")
-      .eq("order_number", num)
-      .maybeSingle();
-    const o = data as
-      | { id: string; order_number: string; customer_name: string; customer_phone: string; total_uah: number; order_items: { brand: string; model: string; qty: number }[] | null }
-      | null;
-    const kb = o ? await orderKeyboardFor(sb, o.id) : null;
-    if (!o || !kb) {
-      await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `Замовлення ${num} не знайдено.` });
-      return;
-    }
-    const items = (o.order_items ?? []).map((i) => `• ${tgEsc(`${i.brand} ${i.model}`)} ×${i.qty}`).join("\n");
-    const sent = await tg<{ message_id: number; chat: { id: number } }>("sendMessage", {
-      chat_id: chatId,
-      reply_to_message_id: replyTo,
-      parse_mode: "HTML",
-      text: `🧾 <b>Замовлення ${tgEsc(o.order_number)}</b>\n👤 ${tgEsc(o.customer_name)} · 📞 ${tgEsc(o.customer_phone)}\n${items}\n💰 ${Math.round(o.total_uah)} грн`,
-      reply_markup: kb,
-    });
-    if (sent) await sb.from("orders").update({ tg_chat_id: sent.chat.id, tg_message_id: sent.message_id }).eq("id", o.id);
-    return;
+    const { data } = await sb.from("orders").select("id").eq("order_number", num).maybeSingle();
+    if (data) ok = await sendOrderCard(sb, (data as { id: string }).id, replyTo);
+  } else {
+    const { data } = await sb.from("leads").select("id").eq("lead_number", num).maybeSingle();
+    if (data) ok = await sendLeadCard(sb, (data as { id: string }).id, replyTo);
   }
-  const { data } = await sb
-    .from("leads")
-    .select("id, lead_number, name, phone, source, attribution")
-    .eq("lead_number", num)
-    .maybeSingle();
-  const l = data as { id: string; lead_number: string; name: string; phone: string; source: string; attribution: { product?: unknown } | null } | null;
-  const kb = l ? await leadKeyboardFor(sb, l.id) : null;
-  if (!l || !kb) {
-    await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `Заявку ${num} не знайдено.` });
-    return;
+  if (!ok) {
+    await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `${num} не знайдено.` });
   }
-  const product = typeof l.attribution?.product === "string" ? `\n🛒 ${tgEsc(l.attribution.product)}` : "";
-  const sent = await tg<{ message_id: number; chat: { id: number } }>("sendMessage", {
-    chat_id: chatId,
-    reply_to_message_id: replyTo,
-    parse_mode: "HTML",
-    text: `${l.source === "quick-order" ? "⚡" : "📩"} <b>${l.source === "quick-order" ? "Швидке замовлення" : "Заявка"} ${tgEsc(l.lead_number)}</b>\n👤 ${tgEsc(l.name)} · 📞 ${tgEsc(l.phone)}${product}`,
-    reply_markup: kb,
-  });
-  if (sent) await sb.from("leads").update({ tg_chat_id: sent.chat.id, tg_message_id: sent.message_id }).eq("id", l.id);
 }
 
 export async function POST(request: NextRequest) {
