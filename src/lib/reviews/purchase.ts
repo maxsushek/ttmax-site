@@ -27,11 +27,14 @@ export type OrderInfo = {
   createdAt: string;
   /** Основні slug-и моделей у замовленні (без дублів). */
   slugs: string[];
+  /** Імʼя клієнта з замовлення/заявки — для тексту запрошення (не публікується). */
+  customerName: string | null;
 };
 
 const DEAD = ["cancelled", "refunded"];
 
 type OrderWithItems = {
+  customer_name?: string | null;
   order_number: string;
   locale: "uk" | "ru";
   created_at: string;
@@ -44,11 +47,13 @@ const toInfo = (o: OrderWithItems): OrderInfo => ({
   locale: o.locale,
   createdAt: o.created_at,
   slugs: Array.from(new Set((o.order_items ?? []).map((i) => mainSlug(slugFromProductId(i.product_id))).filter(Boolean))),
+  customerName: o.customer_name ?? null,
 });
 
 /** Заявка «швидке замовлення» з товаром (leads.attribution.productSlug). */
 type LeadRow = {
   id: string;
+  name?: string | null;
   locale: string;
   created_at: string;
   status: string;
@@ -64,13 +69,14 @@ const leadInfo = (l: LeadRow): OrderInfo | null => {
     locale: l.locale === "ru" ? "ru" : "uk",
     createdAt: l.created_at,
     slugs: [mainSlug(slug)],
+    customerName: l.name ?? null,
   };
 };
 
 export async function findLead(sb: Sb, leadId: string): Promise<OrderInfo | null> {
   const { data, error } = await sb
     .from("leads")
-    .select("id, locale, created_at, status, attribution")
+    .select("id, name, locale, created_at, status, attribution")
     .eq("id", leadId)
     .maybeSingle();
   if (error || !data) return null;
@@ -91,13 +97,13 @@ export async function findLatestByPhone(sb: Sb, phone: string): Promise<OrderInf
   const [orders, leads] = await Promise.all([
     sb
       .from("orders")
-      .select("order_number, locale, created_at, status, order_items(product_id)")
+      .select("order_number, customer_name, locale, created_at, status, order_items(product_id)")
       .ilike("customer_phone", `%${nine}`)
       .order("created_at", { ascending: false })
       .limit(5),
     sb
       .from("leads")
-      .select("id, locale, created_at, status, attribution")
+      .select("id, name, locale, created_at, status, attribution")
       .ilike("phone", `%${nine}`)
       .order("created_at", { ascending: false })
       .limit(10),
@@ -118,7 +124,7 @@ export async function findLatestByPhone(sb: Sb, phone: string): Promise<OrderInf
 export async function findOrder(sb: Sb, orderNumber: string): Promise<OrderInfo | null> {
   const { data, error } = await sb
     .from("orders")
-    .select("order_number, locale, created_at, status, order_items(product_id)")
+    .select("order_number, customer_name, locale, created_at, status, order_items(product_id)")
     .eq("order_number", orderNumber)
     .maybeSingle();
   if (error || !data) return null;
@@ -134,7 +140,7 @@ export async function findPurchase(sb: Sb, phone: string, slug: string | null): 
   const nine = phone.slice(-9);
   const { data, error } = await sb
     .from("orders")
-    .select("order_number, locale, created_at, status, order_items(product_id)")
+    .select("order_number, customer_name, locale, created_at, status, order_items(product_id)")
     .ilike("customer_phone", `%${nine}`)
     .order("created_at", { ascending: false })
     .limit(20);
@@ -149,7 +155,7 @@ export async function findPurchase(sb: Sb, phone: string, slug: string | null): 
   // інакше будь-хто, хто лишив номер у формі, ставав би «покупцем».
   const { data: leads } = await sb
     .from("leads")
-    .select("id, locale, created_at, status, attribution")
+    .select("id, name, locale, created_at, status, attribution")
     .ilike("phone", `%${nine}`)
     .eq("status", "won")
     .order("created_at", { ascending: false })

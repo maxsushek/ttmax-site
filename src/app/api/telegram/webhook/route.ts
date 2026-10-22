@@ -14,9 +14,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { checkTelegramSecret, inviteUrl, INVITE_DAYS } from "@/lib/reviews/secret";
 import { CODE_ACTION, applyModeration, applyReply, refreshMessage } from "@/lib/reviews/moderation";
-import { findInviteRef, findLatestByPhone, normalizePhone } from "@/lib/reviews/purchase";
+import { findInviteRef, findLatestByPhone, normalizePhone, type OrderInfo } from "@/lib/reviews/purchase";
+import { INVITE_VARIANTS, firstName, inviteCopy, type CopyLang } from "@/lib/reviews/invite-copy";
 import { getProductBySlug } from "@/data/catalog";
-import { botChatId, tg, tgEsc } from "@/lib/telegram/bot";
+import { botChatId, tg, tgEsc, type InlineKeyboard } from "@/lib/telegram/bot";
 import type { ReviewRow } from "@/lib/supabase/types";
 
 export const runtime = "nodejs";
@@ -42,6 +43,46 @@ const isWorkChat = (chatId: number | undefined) => {
   return Boolean(allowed && chatId !== undefined && String(chatId) === String(allowed));
 };
 
+/** Повідомлення-запрошення для менеджера: готовий текст для клієнта + кнопки варіантів і мови. */
+function buildInvite(order: OrderInfo, variant: number, lang: CopyLang): { text: string; reply_markup: InlineKeyboard } | null {
+  const url = inviteUrl(order.orderNumber, lang);
+  if (!url) return null;
+  const products = order.slugs.map((s) => getProductBySlug(s)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const copy = inviteCopy({ lang, name: order.customerName, products, url, variant });
+  const v = ((variant % INVITE_VARIANTS) + INVITE_VARIANTS) % INVITE_VARIANTS;
+  const isLead = order.orderNumber.startsWith("L-");
+  const who = firstName(order.customerName);
+  const l = lang === "ru" ? "r" : "u";
+  const text = [
+    `⭐ <b>Запрошення на відгук — ${isLead ? "швидке замовлення" : tgEsc(order.orderNumber)}</b>`,
+    `${who ? `👤 ${tgEsc(who)} · ` : ""}🛒 ${tgEsc(products.map((p) => p.name.ua).join(", ") || "—")}`,
+    `${lang === "ru" ? "🇷🇺 російською" : "🇺🇦 українською"} · варіант ${v + 1} з ${INVITE_VARIANTS} · посилання діє ${INVITE_DAYS} днів, відгуки за ним — «Покупець»`,
+    "",
+    "<b>Повідомлення</b> для Viber / Telegram — торкніться блоку, щоб скопіювати:",
+    `<pre>${tgEsc(copy.full)}</pre>`,
+    "",
+    "<b>Коротко</b> для SMS:",
+    `<pre>${tgEsc(copy.short)}</pre>`,
+  ].join("\n");
+  return {
+    text,
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: "🔄 Інший варіант", callback_data: `inx:${(v + 1) % INVITE_VARIANTS}:${l}:${order.orderNumber}` },
+          {
+            text: lang === "ru" ? "🇺🇦 Українською" : "🇷🇺 Російською",
+            callback_data: `inx:${v}:${l === "u" ? "r" : "u"}:${order.orderNumber}`,
+          },
+        ],
+      ],
+    },
+  };
+}
+
+/** Стартовий варіант — від номера: різні клієнти отримують різні тексти, той самий — той самий. */
+const variantFor = (ref: string) => [...ref].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % INVITE_VARIANTS;
+
 /** ref — номер замовлення (TT-…), заявка (L-uuid) або телефон (380…). */
 async function sendInvite(chatId: number, ref: string, replyTo?: number): Promise<void> {
   const sb = getSupabaseServerClient({ useServiceRole: true });
@@ -56,28 +97,14 @@ async function sendInvite(chatId: number, ref: string, replyTo?: number): Promis
     });
     return;
   }
-  const url = inviteUrl(order.orderNumber, order.locale);
-  if (!url) return;
-  const ru = order.locale === "ru";
-  const forClient = ru
-    ? `Спасибо за покупку в TTMAX! Будем благодарны за отзыв о товаре — это займёт минуту: ${url}`
-    : `Дякуємо за покупку в TTMAX! Будемо вдячні за відгук про товар — це хвилина часу: ${url}`;
+  const built = buildInvite(order, variantFor(order.orderNumber), order.locale === "ru" ? "ru" : "uk");
+  if (!built) return;
   await tg("sendMessage", {
     chat_id: chatId,
     reply_to_message_id: replyTo,
     parse_mode: "HTML",
     disable_web_page_preview: true,
-    text: [
-      `⭐ <b>Посилання на відгук — ${
-        order.orderNumber.startsWith("L-")
-          ? `швидке замовлення: ${tgEsc(order.slugs.map((s) => getProductBySlug(s)?.name.ua ?? s).join(", "))}`
-          : tgEsc(order.orderNumber)
-      }</b>`,
-      `Діє ${INVITE_DAYS} днів. Відгуки за ним одразу позначаються «Покупець».`,
-      "",
-      "Текст для клієнта (Viber / Telegram / SMS) — натисніть, щоб скопіювати:",
-      `<code>${tgEsc(forClient)}</code>`,
-    ].join("\n"),
+    ...built,
   });
 }
 
@@ -108,6 +135,25 @@ export async function POST(request: NextRequest) {
     if (inv?.[1] && chatId !== undefined) {
       await tg("answerCallbackQuery", { callback_query_id: cq.id });
       await sendInvite(chatId, inv[1], cq.message?.message_id);
+      return ok();
+    }
+
+    // Інший варіант тексту / інша мова — перемальовуємо те саме повідомлення.
+    const inx = /^inx:(\d):([ur]):(TT-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
+    if (inx?.[3] && cq.message) {
+      const sb = getSupabaseServerClient({ useServiceRole: true });
+      const order = sb ? await findInviteRef(sb, inx[3]) : null;
+      const built = order ? buildInvite(order, Number(inx[1]), inx[2] === "r" ? "ru" : "uk") : null;
+      if (built) {
+        await tg("editMessageText", {
+          chat_id: cq.message.chat.id,
+          message_id: cq.message.message_id,
+          parse_mode: "HTML",
+          disable_web_page_preview: true,
+          ...built,
+        });
+      }
+      await tg("answerCallbackQuery", { callback_query_id: cq.id, text: built ? undefined : "Не вдалося" });
       return ok();
     }
 
