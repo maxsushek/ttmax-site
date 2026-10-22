@@ -8,6 +8,7 @@
 import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { noClient, queryFailed } from "@/lib/supabase/load-failure";
+import { buildMemo } from "@/lib/supabase/build-memo";
 import { variantOf } from "@/data/catalog/variants";
 
 export const productReviewsTag = (slug: string) => `reviews:p:${slug}`;
@@ -87,10 +88,39 @@ async function loadProduct(slug: string): Promise<PublicReview[]> {
   return ((data ?? []) as Row[]).map(toPublic);
 }
 
+/** Усі схвалені відгуки про товари — один запит (для збірки, де сторінок ~1600). */
+async function loadAllProduct(): Promise<Map<string, PublicReview[]>> {
+  const sb = getSupabaseServerClient({ useServiceRole: true });
+  if (!sb) return noClient("reviews", new Map());
+  const { data, error } = await sb
+    .from("reviews")
+    .select(PUBLIC_COLUMNS)
+    .eq("status", "approved")
+    .eq("kind", "product")
+    .order("created_at", { ascending: false })
+    .limit(5000);
+  if (error) queryFailed("reviews", error.message);
+  const map = new Map<string, PublicReview[]>();
+  for (const r of (data ?? []) as Row[]) {
+    if (!r.product_slug) continue;
+    const list = map.get(r.product_slug) ?? [];
+    list.push(toPublic(r));
+    map.set(r.product_slug, list);
+  }
+  return map;
+}
+
 /** Схвалені відгуки моделі (нові першими). */
 export function getProductReviews(slug: string): Promise<PublicReview[]> {
   const key = reviewSlugFor(slug);
-  return unstable_cache(() => loadProduct(key), ["reviews-product-v1", key], {
+  // ⚠️ unstable_cache — на кожній картці: так вона отримує тег reviews:p:<slug>, і схвалення
+  // відгуку її перебудовує. Всередині під час збірки — одна вибірка всіх відгуків на процес
+  // (lib/supabase/build-memo.ts) замість запиту на кожну картку; у рантаймі — запит на модель.
+  const load = () =>
+    process.env.NEXT_PHASE === "phase-production-build"
+      ? buildMemo("reviews-all", loadAllProduct).then((m) => m.get(key) ?? [])
+      : loadProduct(key);
+  return unstable_cache(load, ["reviews-product-v1", key], {
     tags: [productReviewsTag(key)],
     revalidate: false,
   })();

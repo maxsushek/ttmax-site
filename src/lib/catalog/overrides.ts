@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { noClient, queryFailed } from "@/lib/supabase/load-failure";
+import { buildMemo } from "@/lib/supabase/build-memo";
 import type { CatalogProduct } from "@/types/catalog";
 
 export const PRODUCT_OVERRIDES_TAG = "product-overrides";
@@ -54,7 +55,9 @@ async function loadOverrides(): Promise<OverridesMap> {
 /** Кешована карта переопределень. Безпечно викликати в серверних компонентах. */
 // v2: без таймера (revalidate: false — див. [...segments]/page.tsx). Ціни міняються лише
 // через адмінку (revalidateTag); SQL-правка product_overrides повз неї = бамп версії + деплой.
-export const getOverrides = unstable_cache(loadOverrides, ["product-overrides-map-v2"], {
+// Мемо — всередині unstable_cache: тег PRODUCT_OVERRIDES_TAG має лягти на кожну сторінку
+// (зміна ціни в адмінці скидає саме їх), а запит до бази під час збірки — один на процес.
+export const getOverrides = unstable_cache(() => buildMemo("overrides", loadOverrides), ["product-overrides-map-v2"], {
   tags: [PRODUCT_OVERRIDES_TAG],
   revalidate: false,
 });

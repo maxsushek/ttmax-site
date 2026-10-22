@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { noClient, queryFailed } from "@/lib/supabase/load-failure";
+import { buildMemo } from "@/lib/supabase/build-memo";
 import type { EntityMedia, EntityType } from "./types";
 
 export const MEDIA_TAG = "entity-media";
@@ -18,7 +19,6 @@ type Row = {
   entity_type: EntityType;
   entity_slug: string;
   public_id: string;
-  format: string | null;
   width: number | null;
   height: number | null;
   alt: string | null;
@@ -71,7 +71,9 @@ async function loadAll(): Promise<EntityMediaMap> {
   for (let from = 0; ; from += PAGE) {
     const { data: chunk, error } = await db
       .from("entity_media")
-      .select("*")
+      // Лише потрібні сайту поля: created_at і format вітрина не читає, а з ними відповідь
+      // (~1800 рядків, кожен деплой) важча приблизно на пʼяту частину.
+      .select("id, entity_type, entity_slug, public_id, width, height, alt, sort")
       .order("sort", { ascending: true })
       // Другий ключ — щоб порядок був ОДНОЗНАЧНИЙ. При однакових sort (фото, вставлені
       // SQL-ом зі значенням за замовчуванням) Postgres вільний віддавати рядки як завгодно:
@@ -95,7 +97,7 @@ async function loadAll(): Promise<EntityMediaMap> {
       entityType: r.entity_type,
       entitySlug: r.entity_slug,
       publicId: r.public_id,
-      format: r.format ?? null,
+      format: null,
       width: r.width ?? null,
       height: r.height ?? null,
       alt: r.alt ?? null,
@@ -158,7 +160,11 @@ async function loadAll(): Promise<EntityMediaMap> {
  * revalidateTag), або бамп версії тут + деплой. Кнопка дешевша: деплой — повний перезапис
  * ISR-кешу всього сайту.
  */
-export const getMediaMap = unstable_cache(loadAll, ["entity-media-map-v14"], {
+// v15: вузький select (без created_at і format) + один запит на процес збірки (build-memo).
+//
+// ⚠️ unstable_cache викликається на КОЖНІЙ сторінці — саме так сторінка отримує тег MEDIA_TAG,
+// за яким її скидає кнопка «Скинути кеш фото». Мемо стоїть ВСЕРЕДИНІ: економить лише сам запит.
+export const getMediaMap = unstable_cache(() => buildMemo("media", loadAll), ["entity-media-map-v15"], {
   tags: [MEDIA_TAG],
   // false — див. [...segments]/page.tsx: таймер = перегенерації = ISR-записи.
   revalidate: false,

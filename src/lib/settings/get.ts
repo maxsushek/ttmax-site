@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { noClient, queryFailed } from "@/lib/supabase/load-failure";
+import { buildMemo } from "@/lib/supabase/build-memo";
 
 export const SETTINGS_TAG = "site-settings";
 
@@ -31,7 +32,9 @@ async function loadAll(): Promise<SettingsMap> {
 /** Кешована карта всіх налаштувань. Безпечно викликати в будь-якому серверному компоненті. */
 // v2: без таймера (revalidate: false — див. [...segments]/page.tsx). Зміни — лише через
 // адмінку (revalidateTag); SQL-правка site_settings повз адмінку = бамп версії + деплой.
-export const getSettings = unstable_cache(loadAll, ["site-settings-map-v2"], {
+// Мемо — всередині unstable_cache: тег SETTINGS_TAG лягає на кожну сторінку, запит під час
+// збірки — один на процес (lib/supabase/build-memo.ts).
+export const getSettings = unstable_cache(() => buildMemo("settings", loadAll), ["site-settings-map-v2"], {
   tags: [SETTINGS_TAG],
   revalidate: false,
 });
