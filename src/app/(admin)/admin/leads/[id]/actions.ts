@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getCurrentAdmin } from "@/lib/auth/admin";
+import { signLeadEvent, syncAfterLeadChange } from "@/lib/telegram/crm";
 import type { LeadStatus } from "@/lib/supabase/types";
 
 type ActionResult = { ok: true } | { ok: false; error: string };
@@ -57,6 +58,11 @@ export async function updateLeadStatusAction(
     console.error("updateLeadStatus failed:", error.code);
     return { ok: false, error: "Не удалось обновить статус" };
   }
+
+  // Історія: хто змінив; Telegram: перемалювати кнопки (і статус замовлення, якщо це його копія).
+  const by = `${auth.admin.email} (CRM)`;
+  await signLeadEvent(auth.supabase, leadId, by);
+  await syncAfterLeadChange(auth.supabase, leadId, by);
 
   revalidate(leadId);
   return { ok: true };

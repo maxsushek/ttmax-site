@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
   const leadId = leadRow?.id ?? null;
   const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
   after(async () => {
-    await notifyNewLead({
+    const sent = await notifyNewLead({
       name,
       phone: parsed.data.phone,
       email: parsed.data.email ?? null,
@@ -146,6 +146,9 @@ export async function POST(request: NextRequest) {
       leadId,
       leadNumber: leadRow?.lead_number ?? null,
     });
+    if (sent && leadId) {
+      await supabase.from("leads").update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId }).eq("id", leadId);
+    }
   });
 
   return NextResponse.json({ ok: true, persisted: true });

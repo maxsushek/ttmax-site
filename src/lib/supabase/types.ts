@@ -18,6 +18,9 @@ export type LeadRow = {
   id: string;
   /** Людський номер: Z-YYYYMMDD-NNNNN (заявка) або TT-… (копія замовлення). Міграція 0009. */
   lead_number: string;
+  /** Повідомлення про заявку в Telegram (кнопки статусів). Міграція 0010. */
+  tg_chat_id?: number | null;
+  tg_message_id?: number | null;
   created_at: string;
   name: string;
   phone: string;
@@ -44,6 +47,8 @@ export type LeadRow = {
 export type LeadInsert = {
   id?: string;
   lead_number?: string;
+  tg_chat_id?: number | null;
+  tg_message_id?: number | null;
   created_at?: string;
   name: string;
   phone: string;
@@ -144,6 +149,9 @@ export type PaymentMethod = "apple" | "cod" | "card";
 export type OrderRow = {
   id: string;
   order_number: string;
+  /** Повідомлення про замовлення в Telegram (кнопки статусів). Міграція 0010. */
+  tg_chat_id?: number | null;
+  tg_message_id?: number | null;
   created_at: string;
   updated_at: string;
   customer_name: string;
@@ -177,6 +185,8 @@ export type OrderRow = {
 export type OrderInsert = {
   id?: string;
   order_number?: string; // авто-генерируется DEFAULT
+  tg_chat_id?: number | null;
+  tg_message_id?: number | null;
   created_at?: string;
   customer_name: string;
   customer_phone: string;

@@ -354,7 +354,8 @@ export async function POST(request: NextRequest) {
   const leadId = leadRow?.id ?? null;
   const adminUrl = host ? `https://${host}/admin/leads${leadId ? `/${leadId}` : ""}` : null;
   after(async () => {
-    await notifyNewOrder({
+    const sent = await notifyNewOrder({
+      orderId: orderRow.id,
       orderNumber: orderRow.order_number,
       name: data.customer.name,
       phone: data.customer.phone,
@@ -375,6 +376,13 @@ export async function POST(request: NextRequest) {
       locale: data.locale,
       adminUrl,
     });
+    // Запамʼятати повідомлення — щоб кнопки статусів можна було перемалювати з CRM.
+    if (sent) {
+      await supabase
+        .from("orders")
+        .update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId })
+        .eq("id", orderRow.id);
+    }
   });
 
   return NextResponse.json({

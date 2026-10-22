@@ -4,6 +4,8 @@
 // Якщо їх немає — функції тихо нічого не роблять (no-op), як і решта інтеграцій.
 // Ніколи не кидає виключення: помилка лише логується, щоб не валити оформлення замовлення.
 
+import { leadKeyboard, orderKeyboard } from "./crm";
+
 const TG_API = "https://api.telegram.org";
 
 type DeliveryMethod = "np" | "ukrposhta" | "pickup";
@@ -31,6 +33,8 @@ export type NewOrderNotification = {
   locale: string;
   /** Посилання на CRM (будується з домену запиту). */
   adminUrl?: string | null;
+  /** uuid замовлення — для кнопок статусів. */
+  orderId?: string | null;
 };
 
 const DELIVERY_LABELS: Record<DeliveryMethod, string> = {
@@ -68,11 +72,13 @@ function uah(n: number): string {
   return `${grouped} грн`;
 }
 
-/** Низькорівнева відправка повідомлення. Повертає true при успіху. */
-async function sendMessage(text: string, replyMarkup?: Record<string, unknown>): Promise<boolean> {
+export type SentMessage = { chatId: number; messageId: number };
+
+/** Низькорівнева відправка повідомлення. Повертає chat/message id (для кнопок статусів) або null. */
+async function sendMessage(text: string, replyMarkup?: Record<string, unknown>): Promise<SentMessage | null> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return false;
+  if (!token || !chatId) return null;
 
   try {
     const res = await fetch(`${TG_API}/bot${token}/sendMessage`, {
@@ -89,18 +95,19 @@ async function sendMessage(text: string, replyMarkup?: Record<string, unknown>):
     });
     if (!res.ok) {
       console.error("[telegram] sendMessage failed:", res.status);
-      return false;
+      return null;
     }
-    return true;
+    const json = (await res.json().catch(() => null)) as { result?: { message_id: number; chat: { id: number } } } | null;
+    return json?.result ? { chatId: json.result.chat.id, messageId: json.result.message_id } : null;
   } catch (err) {
     console.error("[telegram] sendMessage error:", err instanceof Error ? err.message : err);
-    return false;
+    return null;
   }
 }
 
 /** Збирає й відправляє повідомлення про нове замовлення. Безпечно за будь-яких умов. */
-export async function notifyNewOrder(order: NewOrderNotification): Promise<boolean> {
-  if (!isTelegramConfigured()) return false;
+export async function notifyNewOrder(order: NewOrderNotification): Promise<SentMessage | null> {
+  if (!isTelegramConfigured()) return null;
 
   const deliveryExtra = [order.delivery.city, order.delivery.branch]
     .filter(Boolean)
@@ -138,14 +145,12 @@ export async function notifyNewOrder(order: NewOrderNotification): Promise<boole
   );
   if (order.adminUrl) lines.push("", `<a href="${order.adminUrl}">Відкрити в CRM →</a>`);
 
-  // Кнопка персонального посилання на відгук (обробляє /api/telegram/webhook). Лише коли
-  // відгуки ввімкнені (є REVIEWS_SECRET) — інакше кнопка вела б у нікуди.
-  const reviewButton =
-    process.env.REVIEWS_SECRET && /^TT-\d{8}-\d{3,}$/.test(String(order.orderNumber))
-      ? { inline_keyboard: [[{ text: "⭐ Посилання на відгук", callback_data: `inv:${order.orderNumber}` }]] }
-      : undefined;
+  // Кнопки статусів замовлення (як у CRM) + посилання на відгук — обробляє /api/telegram/webhook.
+  const keyboard = order.orderId
+    ? orderKeyboard({ id: order.orderId, status: "pending", orderNumber: String(order.orderNumber) })
+    : undefined;
 
-  return sendMessage(lines.join("\n"), reviewButton);
+  return sendMessage(lines.join("\n"), keyboard);
 }
 
 export type NewLeadNotification = {
@@ -167,8 +172,8 @@ export type NewLeadNotification = {
 };
 
 /** Збирає й відправляє повідомлення про нову заявку (форма-CTA). Безпечно за будь-яких умов. */
-export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean> {
-  if (!isTelegramConfigured()) return false;
+export async function notifyNewLead(lead: NewLeadNotification): Promise<SentMessage | null> {
+  if (!isTelegramConfigured()) return null;
 
   const num = lead.leadNumber ? ` ${esc(lead.leadNumber)}` : "";
   const lines: string[] = [
@@ -187,15 +192,14 @@ export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean>
   lines.push("", `🔖 Джерело: ${esc(lead.source)}`, `🌐 ${esc(lead.locale)}`);
   if (lead.adminUrl) lines.push("", `<a href="${lead.adminUrl}">Відкрити в CRM →</a>`);
 
-  // Швидке замовлення з товаром → кнопка персонального посилання на відгук (після продажу).
-  const reviewButton =
-    process.env.REVIEWS_SECRET && lead.leadId && lead.productUrl
-      ? {
-          inline_keyboard: [
-            [{ text: "⭐ Посилання на відгук", callback_data: `inv:${lead.leadNumber ?? `L-${lead.leadId}`}` }],
-          ],
-        }
-      : undefined;
+  // Кнопки статусів (як у CRM); для швидкого замовлення з товаром — ще й посилання на відгук.
+  const keyboard = lead.leadId
+    ? leadKeyboard({
+        id: lead.leadId,
+        status: "new",
+        reviewRef: lead.productUrl ? (lead.leadNumber ?? `L-${lead.leadId}`) : null,
+      })
+    : undefined;
 
-  return sendMessage(lines.join("\n"), reviewButton);
+  return sendMessage(lines.join("\n"), keyboard);
 }

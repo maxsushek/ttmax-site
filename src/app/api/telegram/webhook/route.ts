@@ -18,6 +18,8 @@ import { findInviteRef, findLatestByPhone, normalizePhone, type OrderInfo } from
 import { INVITE_VARIANTS, firstName, inviteCopy, type CopyLang } from "@/lib/reviews/invite-copy";
 import { getProductBySlug } from "@/data/catalog";
 import { botChatId, tg, tgEsc, type InlineKeyboard } from "@/lib/telegram/bot";
+import { leadKeyboardFor, orderKeyboardFor, setLeadStatus, setOrderStatus } from "@/lib/telegram/crm";
+import { LEAD_BY_CODE, LEAD_STATUS, ORDER_BY_CODE, ORDER_STATUS } from "@/lib/crm/status";
 import type { ReviewRow } from "@/lib/supabase/types";
 
 export const runtime = "nodejs";
@@ -110,6 +112,57 @@ async function sendInvite(chatId: number, ref: string, replyTo?: number): Promis
   });
 }
 
+/** Картка заявки/замовлення з кнопками статусів; повідомлення стає «прив'язаним» (його перемальовує CRM). */
+async function sendStatusCard(chatId: number, num: string, replyTo?: number): Promise<void> {
+  const sb = getSupabaseServerClient({ useServiceRole: true });
+  if (!sb) return;
+  if (num.startsWith("TT-")) {
+    const { data } = await sb
+      .from("orders")
+      .select("id, order_number, customer_name, customer_phone, total_uah, order_items(brand, model, qty)")
+      .eq("order_number", num)
+      .maybeSingle();
+    const o = data as
+      | { id: string; order_number: string; customer_name: string; customer_phone: string; total_uah: number; order_items: { brand: string; model: string; qty: number }[] | null }
+      | null;
+    const kb = o ? await orderKeyboardFor(sb, o.id) : null;
+    if (!o || !kb) {
+      await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `Замовлення ${num} не знайдено.` });
+      return;
+    }
+    const items = (o.order_items ?? []).map((i) => `• ${tgEsc(`${i.brand} ${i.model}`)} ×${i.qty}`).join("\n");
+    const sent = await tg<{ message_id: number; chat: { id: number } }>("sendMessage", {
+      chat_id: chatId,
+      reply_to_message_id: replyTo,
+      parse_mode: "HTML",
+      text: `🧾 <b>Замовлення ${tgEsc(o.order_number)}</b>\n👤 ${tgEsc(o.customer_name)} · 📞 ${tgEsc(o.customer_phone)}\n${items}\n💰 ${Math.round(o.total_uah)} грн`,
+      reply_markup: kb,
+    });
+    if (sent) await sb.from("orders").update({ tg_chat_id: sent.chat.id, tg_message_id: sent.message_id }).eq("id", o.id);
+    return;
+  }
+  const { data } = await sb
+    .from("leads")
+    .select("id, lead_number, name, phone, source, attribution")
+    .eq("lead_number", num)
+    .maybeSingle();
+  const l = data as { id: string; lead_number: string; name: string; phone: string; source: string; attribution: { product?: unknown } | null } | null;
+  const kb = l ? await leadKeyboardFor(sb, l.id) : null;
+  if (!l || !kb) {
+    await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `Заявку ${num} не знайдено.` });
+    return;
+  }
+  const product = typeof l.attribution?.product === "string" ? `\n🛒 ${tgEsc(l.attribution.product)}` : "";
+  const sent = await tg<{ message_id: number; chat: { id: number } }>("sendMessage", {
+    chat_id: chatId,
+    reply_to_message_id: replyTo,
+    parse_mode: "HTML",
+    text: `${l.source === "quick-order" ? "⚡" : "📩"} <b>${l.source === "quick-order" ? "Швидке замовлення" : "Заявка"} ${tgEsc(l.lead_number)}</b>\n👤 ${tgEsc(l.name)} · 📞 ${tgEsc(l.phone)}${product}`,
+    reply_markup: kb,
+  });
+  if (sent) await sb.from("leads").update({ tg_chat_id: sent.chat.id, tg_message_id: sent.message_id }).eq("id", l.id);
+}
+
 export async function POST(request: NextRequest) {
   if (!checkTelegramSecret(request.headers.get("x-telegram-bot-api-secret-token"))) {
     return NextResponse.json({ ok: false }, { status: 401 });
@@ -131,6 +184,31 @@ export async function POST(request: NextRequest) {
       return ok();
     }
     const data = cq.data ?? "";
+
+    if (data === "noop") {
+      await tg("answerCallbackQuery", { callback_query_id: cq.id });
+      return ok();
+    }
+
+    // Статус заявки (як у CRM) / статус замовлення — кнопки лишаються й перемальовуються.
+    const st = /^(ls|os):([a-z]):([0-9a-f-]{36})$/.exec(data);
+    if (st?.[1] && st[2] && st[3]) {
+      const sb = getSupabaseServerClient({ useServiceRole: true });
+      const by = `${who(cq.from)} (Telegram)`;
+      let done = false;
+      let label = "";
+      if (sb && st[1] === "ls" && LEAD_BY_CODE[st[2]]) {
+        const s = LEAD_BY_CODE[st[2]]!;
+        done = await setLeadStatus(sb, st[3], s, by);
+        label = LEAD_STATUS[s].label;
+      } else if (sb && st[1] === "os" && ORDER_BY_CODE[st[2]]) {
+        const s = ORDER_BY_CODE[st[2]]!;
+        done = await setOrderStatus(sb, st[3], s, by);
+        label = ORDER_STATUS[s].label;
+      }
+      await tg("answerCallbackQuery", { callback_query_id: cq.id, text: done ? `Статус: ${label}` : "Не вдалося змінити статус" });
+      return ok();
+    }
 
     // Посилання на відгук із повідомлення про замовлення.
     const inv = /^inv:(TT-\d{8}-\d{3,}|Z-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
@@ -185,6 +263,13 @@ export async function POST(request: NextRequest) {
   const msg = update.message;
   if (!msg || !isWorkChat(msg.chat.id) || !msg.text) return ok();
   const text = msg.text.trim();
+
+  // /status TT-… або /status Z-… — картка з кнопками статусів (для старих заявок без кнопок).
+  const stc = /^\/status(?:@\w+)?\s+((?:TT|Z)-\d{8}-\d{3,})/i.exec(text);
+  if (stc?.[1]) {
+    await sendStatusCard(msg.chat.id, stc[1].toUpperCase(), msg.message_id);
+    return ok();
+  }
 
   // /link TT-20261020-00011 або /link 0671234567 — посилання для старих замовлень і
   // швидких замовлень / консультацій (за телефоном — останній продаж цьому клієнту).
