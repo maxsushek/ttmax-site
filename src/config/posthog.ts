@@ -8,16 +8,17 @@ export const POSTHOG_TOKEN =
   process.env.NEXT_PUBLIC_POSTHOG_KEY || "phc_xgXvJqhZgsxCVBLgdCocgBfoBu5F2oQ2JHzCchE7viF5";
 
 /**
- * Куди браузер шле події.
+ * Куди браузер шле події й звідки довантажує скрипти (запис сеансів тощо) — власний піддомен.
  *
- * Зараз — напряму в EU Cloud. Коли DNS-запис e.ttmax.com.ua (CNAME на керований проксі PostHog)
- * підтвердиться, сюди ставимо https://e.ttmax.com.ua: події з власного піддомену не ріжуть
- * блокувальники реклами, тож статистика повніша.
+ * e.ttmax.com.ua — керований проксі PostHog (CNAME у «Хостинг Україна» → *.cf-prod-eu-proxy.
+ * europehog.com, проксі id 01a1630c-f5b9-0000-415e-bee5e5cd92fd). Події з власного домену
+ * блокувальники реклами ріжуть значно рідше, тож статистика повніша. Якщо проксі колись
+ * зламається — тимчасово повернути https://eu.i.posthog.com (у CSP дозволені обидва).
  *
  * ⚠️ Проксі саме піддоменом, а не rewrites у next.config: для rewrites PostHog вимагає
  * skipTrailingSlashRedirect, а це міняє поведінку слешів на ВСІХ URL сайту (SEO-ризик).
  */
-export const POSTHOG_API_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com";
+export const POSTHOG_API_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://e.ttmax.com.ua";
 export const POSTHOG_UI_HOST = "https://eu.posthog.com";
 
 /** Серверні події (замовлення, заявки, відгуки) — напряму в EU Cloud, проксі їм не потрібен. */
