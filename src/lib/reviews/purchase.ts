@@ -46,6 +46,74 @@ const toInfo = (o: OrderWithItems): OrderInfo => ({
   slugs: Array.from(new Set((o.order_items ?? []).map((i) => mainSlug(slugFromProductId(i.product_id))).filter(Boolean))),
 });
 
+/** Заявка «швидке замовлення» з товаром (leads.attribution.productSlug). */
+type LeadRow = {
+  id: string;
+  locale: string;
+  created_at: string;
+  status: string;
+  attribution: { productSlug?: unknown } | null;
+};
+const DEAD_LEAD = ["lost", "unqualified"];
+
+const leadInfo = (l: LeadRow): OrderInfo | null => {
+  const slug = typeof l.attribution?.productSlug === "string" ? l.attribution.productSlug : null;
+  if (!slug || DEAD_LEAD.includes(l.status)) return null;
+  return {
+    orderNumber: `L-${l.id}`,
+    locale: l.locale === "ru" ? "ru" : "uk",
+    createdAt: l.created_at,
+    slugs: [mainSlug(slug)],
+  };
+};
+
+export async function findLead(sb: Sb, leadId: string): Promise<OrderInfo | null> {
+  const { data, error } = await sb
+    .from("leads")
+    .select("id, locale, created_at, status, attribution")
+    .eq("id", leadId)
+    .maybeSingle();
+  if (error || !data) return null;
+  return leadInfo(data as unknown as LeadRow);
+}
+
+/** Замовлення (TT-…) або заявка (L-…) за посиланням. */
+export async function findInviteRef(sb: Sb, ref: string): Promise<OrderInfo | null> {
+  return ref.startsWith("L-") ? findLead(sb, ref.slice(2)) : findOrder(sb, ref);
+}
+
+/**
+ * Останнє замовлення або заявка зі швидкого замовлення за телефоном — для /link 0671234567.
+ * Заявки беремо будь-які живі (менеджер шле посилання після продажу, статус міг не оновити).
+ */
+export async function findLatestByPhone(sb: Sb, phone: string): Promise<OrderInfo | null> {
+  const nine = phone.slice(-9);
+  const [orders, leads] = await Promise.all([
+    sb
+      .from("orders")
+      .select("order_number, locale, created_at, status, order_items(product_id)")
+      .ilike("customer_phone", `%${nine}`)
+      .order("created_at", { ascending: false })
+      .limit(5),
+    sb
+      .from("leads")
+      .select("id, locale, created_at, status, attribution")
+      .ilike("phone", `%${nine}`)
+      .order("created_at", { ascending: false })
+      .limit(10),
+  ]);
+  const cands: OrderInfo[] = [];
+  for (const o of (orders.data ?? []) as unknown as OrderWithItems[]) {
+    if (!DEAD.includes(o.status)) cands.push(toInfo(o));
+  }
+  for (const l of (leads.data ?? []) as unknown as LeadRow[]) {
+    const i = leadInfo(l);
+    if (i) cands.push(i);
+  }
+  cands.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return cands[0] ?? null;
+}
+
 /** Замовлення за номером (для персонального посилання). */
 export async function findOrder(sb: Sb, orderNumber: string): Promise<OrderInfo | null> {
   const { data, error } = await sb
@@ -76,6 +144,19 @@ export async function findPurchase(sb: Sb, phone: string, slug: string | null): 
     if (DEAD.includes(raw.status)) continue;
     const info = toInfo(raw);
     if (!want || info.slugs.includes(want)) return info;
+  }
+  // Швидке замовлення: «Покупець» лише якщо менеджер позначив заявку виграною (won) —
+  // інакше будь-хто, хто лишив номер у формі, ставав би «покупцем».
+  const { data: leads } = await sb
+    .from("leads")
+    .select("id, locale, created_at, status, attribution")
+    .ilike("phone", `%${nine}`)
+    .eq("status", "won")
+    .order("created_at", { ascending: false })
+    .limit(10);
+  for (const l of (leads ?? []) as unknown as LeadRow[]) {
+    const info = leadInfo(l);
+    if (info && (!want || info.slugs.includes(want))) return info;
   }
   return null;
 }

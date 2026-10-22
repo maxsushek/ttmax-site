@@ -160,6 +160,8 @@ export type NewLeadNotification = {
   productUrl?: string | null;
   /** Посилання на CRM (будується з домену запиту). */
   adminUrl?: string | null;
+  /** id заявки — для кнопки «Посилання на відгук» (лише коли є товар). */
+  leadId?: string | null;
 };
 
 /** Збирає й відправляє повідомлення про нову заявку (форма-CTA). Безпечно за будь-яких умов. */
@@ -182,5 +184,11 @@ export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean>
   lines.push("", `🔖 Джерело: ${esc(lead.source)}`, `🌐 ${esc(lead.locale)}`);
   if (lead.adminUrl) lines.push("", `<a href="${lead.adminUrl}">Відкрити в CRM →</a>`);
 
-  return sendMessage(lines.join("\n"));
+  // Швидке замовлення з товаром → кнопка персонального посилання на відгук (після продажу).
+  const reviewButton =
+    process.env.REVIEWS_SECRET && lead.leadId && lead.productUrl
+      ? { inline_keyboard: [[{ text: "⭐ Посилання на відгук", callback_data: `inv:L-${lead.leadId}` }]] }
+      : undefined;
+
+  return sendMessage(lines.join("\n"), reviewButton);
 }

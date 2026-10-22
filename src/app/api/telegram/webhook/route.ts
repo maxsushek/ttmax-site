@@ -14,7 +14,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { checkTelegramSecret, inviteUrl, INVITE_DAYS } from "@/lib/reviews/secret";
 import { CODE_ACTION, applyModeration, applyReply, refreshMessage } from "@/lib/reviews/moderation";
-import { findOrder } from "@/lib/reviews/purchase";
+import { findInviteRef, findLatestByPhone, normalizePhone } from "@/lib/reviews/purchase";
+import { getProductBySlug } from "@/data/catalog";
 import { botChatId, tg, tgEsc } from "@/lib/telegram/bot";
 import type { ReviewRow } from "@/lib/supabase/types";
 
@@ -41,13 +42,16 @@ const isWorkChat = (chatId: number | undefined) => {
   return Boolean(allowed && chatId !== undefined && String(chatId) === String(allowed));
 };
 
-async function sendInvite(chatId: number, orderNumber: string, replyTo?: number): Promise<void> {
+/** ref — номер замовлення (TT-…), заявка (L-uuid) або телефон (380…). */
+async function sendInvite(chatId: number, ref: string, replyTo?: number): Promise<void> {
   const sb = getSupabaseServerClient({ useServiceRole: true });
-  const order = sb ? await findOrder(sb, orderNumber) : null;
+  const order = !sb ? null : /^380\d{9}$/.test(ref) ? await findLatestByPhone(sb, ref) : await findInviteRef(sb, ref);
   if (!order) {
     await tg("sendMessage", {
       chat_id: chatId,
-      text: `Замовлення ${tgEsc(orderNumber)} не знайдено (або скасоване).`,
+      text: /^380/.test(ref)
+        ? `За номером +${tgEsc(ref)} немає замовлень чи швидких замовлень із товаром.`
+        : `${ref.startsWith("L-") ? "Заявку" : "Замовлення"} ${tgEsc(ref)} не знайдено (або скасоване / без товару).`,
       reply_to_message_id: replyTo,
     });
     return;
@@ -64,7 +68,11 @@ async function sendInvite(chatId: number, orderNumber: string, replyTo?: number)
     parse_mode: "HTML",
     disable_web_page_preview: true,
     text: [
-      `⭐ <b>Посилання на відгук — ${tgEsc(order.orderNumber)}</b>`,
+      `⭐ <b>Посилання на відгук — ${
+        order.orderNumber.startsWith("L-")
+          ? `швидке замовлення: ${tgEsc(order.slugs.map((s) => getProductBySlug(s)?.name.ua ?? s).join(", "))}`
+          : tgEsc(order.orderNumber)
+      }</b>`,
       `Діє ${INVITE_DAYS} днів. Відгуки за ним одразу позначаються «Покупець».`,
       "",
       "Текст для клієнта (Viber / Telegram / SMS) — натисніть, щоб скопіювати:",
@@ -96,7 +104,7 @@ export async function POST(request: NextRequest) {
     const data = cq.data ?? "";
 
     // Посилання на відгук із повідомлення про замовлення.
-    const inv = /^inv:(TT-\d{8}-\d{3,})$/.exec(data);
+    const inv = /^inv:(TT-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
     if (inv?.[1] && chatId !== undefined) {
       await tg("answerCallbackQuery", { callback_query_id: cq.id });
       await sendInvite(chatId, inv[1], cq.message?.message_id);
@@ -130,10 +138,22 @@ export async function POST(request: NextRequest) {
   if (!msg || !isWorkChat(msg.chat.id) || !msg.text) return ok();
   const text = msg.text.trim();
 
-  // /link TT-20261020-00011 — посилання для старих замовлень.
-  const link = /^\/(?:link|vidguk)(?:@\w+)?\s+(TT-\d{8}-\d{3,})/i.exec(text);
+  // /link TT-20261020-00011 або /link 0671234567 — посилання для старих замовлень і
+  // швидких замовлень / консультацій (за телефоном — останній продаж цьому клієнту).
+  const link = /^\/(?:link|vidguk)(?:@\w+)?\s+(.+)$/i.exec(text);
   if (link?.[1]) {
-    await sendInvite(msg.chat.id, link[1].toUpperCase(), msg.message_id);
+    const arg = link[1].trim();
+    const num = /TT-\d{8}-\d{3,}/i.exec(arg)?.[0]?.toUpperCase();
+    const phone = num ? null : normalizePhone(arg);
+    if (num || phone) {
+      await sendInvite(msg.chat.id, (num ?? phone)!, msg.message_id);
+    } else {
+      await tg("sendMessage", {
+        chat_id: msg.chat.id,
+        reply_to_message_id: msg.message_id,
+        text: "Формат: /link TT-20261020-00016 або /link 067 123 45 67",
+      });
+    }
     return ok();
   }
 

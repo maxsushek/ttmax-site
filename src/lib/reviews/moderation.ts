@@ -54,7 +54,8 @@ export function reviewMessageText(r: ReviewRow): string {
     `👤 ${tgEsc(r.author_name)}${r.author_city ? `, ${tgEsc(r.author_city)}` : ""}`,
   ];
   if (r.verified && r.order_number) {
-    lines.push(`✅ Покупець — замовлення ${tgEsc(r.order_number)}${r.source === "invite" ? " (за посиланням)" : ""}`);
+    const ref = r.order_number.startsWith("L-") ? "швидке замовлення (заявка в CRM)" : `замовлення ${tgEsc(r.order_number)}`;
+    lines.push(`✅ Покупець — ${ref}${r.source === "invite" ? " (за посиланням)" : ""}`);
   } else if (r.phone) {
     lines.push(`📞 +${tgEsc(r.phone)} — замовлень ${r.kind === "store" ? "" : "цього товару "}не знайдено`);
   } else {

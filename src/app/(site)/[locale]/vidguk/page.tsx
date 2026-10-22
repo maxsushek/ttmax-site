@@ -11,7 +11,7 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { Container, Section } from "@/components/ui/Section";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { verifyInvite } from "@/lib/reviews/secret";
-import { findOrder } from "@/lib/reviews/purchase";
+import { findInviteRef } from "@/lib/reviews/purchase";
 import { getProductBySlug } from "@/data/catalog";
 import { getMediaMap, pickPrimary } from "@/lib/media/get";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -24,7 +24,7 @@ const T = {
   ua: {
     title: "Ваш відгук — TTMAX",
     h1: "Як вам покупка?",
-    lead: (n: string) => `Замовлення ${n}. Оцініть товари й магазин — кілька слів допоможуть іншим гравцям із вибором. Відгуки публікуємо після перевірки.`,
+    lead: (n: string | null) => `${n ? `Замовлення ${n}. ` : ""}Оцініть товари й магазин — кілька слів допоможуть іншим гравцям із вибором. Відгуки публікуємо після перевірки.`,
     product: "Відгук про товар",
     store: "Відгук про магазин",
     done: "Відгук уже надіслано — дякуємо!",
@@ -34,7 +34,7 @@ const T = {
   ru: {
     title: "Ваш отзыв — TTMAX",
     h1: "Как вам покупка?",
-    lead: (n: string) => `Заказ ${n}. Оцените товары и магазин — несколько слов помогут другим игрокам с выбором. Отзывы публикуем после проверки.`,
+    lead: (n: string | null) => `${n ? `Заказ ${n}. ` : ""}Оцените товары и магазин — несколько слов помогут другим игрокам с выбором. Отзывы публикуем после проверки.`,
     product: "Отзыв о товаре",
     store: "Отзыв о магазине",
     done: "Отзыв уже отправлен — спасибо!",
@@ -64,7 +64,7 @@ export default async function InvitePage({
 
   const orderNumber = verifyInvite(token);
   const sb = getSupabaseServerClient({ useServiceRole: true });
-  const order = orderNumber && sb ? await findOrder(sb, orderNumber) : null;
+  const order = orderNumber && sb ? await findInviteRef(sb, orderNumber) : null;
 
   if (!order || !token) {
     return (
@@ -100,7 +100,7 @@ export default async function InvitePage({
     <Section as="div" className="pt-10">
       <Container>
         <h1 className="font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">{tx.h1}</h1>
-        <p className="mt-4 max-w-[70ch] font-body text-[15px] leading-relaxed text-ink-muted">{tx.lead(order.orderNumber)}</p>
+        <p className="mt-4 max-w-[70ch] font-body text-[15px] leading-relaxed text-ink-muted">{tx.lead(order.orderNumber.startsWith("L-") ? null : order.orderNumber)}</p>
 
         <div className="mt-8 flex max-w-3xl flex-col gap-6">
           {products.map((p) => {

@@ -59,7 +59,13 @@ export function ipHash(ip: string): string | null {
 export const INVITE_DAYS = 120;
 const DAY_MS = 86_400_000;
 
-/** Токен: base64url(номер замовлення).день-закінчення.підпис */
+/**
+ * Посилання веде або на замовлення з кошика (TT-20261020-00016), або на заявку
+ * «швидке замовлення / консультація» (L-<uuid заявки>) — продажі йдуть обома шляхами.
+ */
+export const INVITE_REF_RE = /^(TT-\d{8}-\d{3,}|L-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
+
+/** Токен: base64url(номер замовлення або L-заявка).день-закінчення.підпис */
 export function signInvite(orderNumber: string, days = INVITE_DAYS): string | null {
   const s = secret();
   if (!s) return null;
@@ -80,8 +86,8 @@ export function verifyInvite(token: string | null | undefined): string | null {
   if (!safeEqual(sig, expected)) return null;
   const exp = Number(expStr);
   if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / DAY_MS)) return null;
-  const orderNumber = fromB64url(enc);
-  return /^TT-\d{8}-\d{3,}$/.test(orderNumber) ? orderNumber : null;
+  const ref = fromB64url(enc);
+  return INVITE_REF_RE.test(ref) ? ref : null;
 }
 
 /** Повна адреса сторінки відгуку за замовленням (мова — як у замовленні). */

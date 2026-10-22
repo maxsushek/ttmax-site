@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
   });
   // Підказка в меню команд бота.
   await tg("setMyCommands", {
-    commands: [{ command: "link", description: "Посилання на відгук: /link TT-20261021-00012" }],
+    commands: [{ command: "link", description: "Посилання на відгук: /link TT-… або /link 067 123 45 67" }],
   });
   const after = await tg<WebhookInfo>("getWebhookInfo", {});
   return NextResponse.json({

@@ -143,6 +143,7 @@ export async function POST(request: NextRequest) {
       product,
       productUrl,
       adminUrl,
+      leadId,
     });
   });
 

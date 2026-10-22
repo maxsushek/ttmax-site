@@ -11,7 +11,7 @@ import { isWithdrawn } from "@/lib/catalog/hidden";
 import { locales, localeToLang } from "@/i18n/config";
 import { ipHash, isReviewsConfigured, verifyInvite } from "@/lib/reviews/secret";
 import { checkSpam } from "@/lib/reviews/spam";
-import { findOrder, findPurchase, normalizePhone, type OrderInfo } from "@/lib/reviews/purchase";
+import { findInviteRef, findPurchase, normalizePhone, type OrderInfo } from "@/lib/reviews/purchase";
 import { reviewSlugFor } from "@/lib/reviews/data";
 import { sendForModeration } from "@/lib/reviews/moderation";
 import type { ReviewRow } from "@/lib/supabase/types";
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
   if (d.token) {
     const num = verifyInvite(d.token);
     if (!num) return fail(400, "token");
-    order = await findOrder(sb, num);
+    order = await findInviteRef(sb, num);
     if (!order) return fail(400, "token");
     if (productSlug && !order.slugs.includes(productSlug)) return fail(400, "product");
     source = "invite";
