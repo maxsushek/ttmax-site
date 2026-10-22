@@ -1,7 +1,14 @@
 import { pushDataLayer } from "./gtm";
 import { fbqTrack, metaEventName } from "./meta-pixel";
 import { gtagConversion } from "./google-ads";
+import { phCapture } from "./posthog";
 import type { AnalyticsEvent, AnalyticsItem } from "./types";
+
+/**
+ * Не дублюємо в PostHog: page_view і scroll_depth він збирає сам ($pageview, $pageleave з
+ * глибиною прокрутки), conversion — дубль lead_form_submit / purchase.
+ */
+const POSTHOG_SKIP: ReadonlySet<string> = new Set(["page_view", "scroll_depth", "conversion"]);
 
 type EcommerceEvent = Extract<
   AnalyticsEvent,
@@ -75,11 +82,25 @@ export function trackEvent(event: AnalyticsEvent): void {
     }
 
     if (event.name === "purchase") gtagConversion(event.params.value);
+
+    // PostHog — ті самі назви, що в GA4: воронка view_item → add_to_cart → begin_checkout → purchase.
+    const single = p.items.length === 1 ? p.items[0] : undefined;
+    phCapture(event.name, {
+      currency: p.currency,
+      value: p.value,
+      ...(event.name === "purchase"
+        ? { transaction_id: event.params.transactionId, shipping: event.params.shipping }
+        : {}),
+      items_count: p.items.reduce((s, i) => s + i.quantity, 0),
+      product_ids: p.items.map((i) => i.id),
+      ...(single ? { product_id: single.id, product_name: single.name, product_brand: single.brand } : {}),
+    });
     return;
   }
 
   // Звичайні (неекомерс) події
   const params = "params" in event && event.params ? event.params : {};
+  if (!POSTHOG_SKIP.has(event.name)) phCapture(event.name, params);
   pushDataLayer({ event: event.name, ...params });
 
   const fbEvent = metaEventName(event.name);

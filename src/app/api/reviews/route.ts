@@ -14,6 +14,7 @@ import { checkSpam } from "@/lib/reviews/spam";
 import { findInviteRef, findPurchase, normalizePhone, type OrderInfo } from "@/lib/reviews/purchase";
 import { reviewSlugFor } from "@/lib/reviews/data";
 import { sendForModeration } from "@/lib/reviews/moderation";
+import { captureServerEvent, posthogContext } from "@/lib/analytics/posthog-server";
 import type { ReviewRow } from "@/lib/supabase/types";
 
 export const runtime = "nodejs";
@@ -160,6 +161,25 @@ export async function POST(request: NextRequest) {
   after(async () => {
     await sendForModeration(sb, row as ReviewRow);
   });
+
+  // PostHog: лише факт і оцінка — без імені, тексту й телефону.
+  const ph = posthogContext(request);
+  after(() =>
+    captureServerEvent(
+      ph,
+      "review_submitted",
+      {
+        kind: d.kind,
+        product_slug: productSlug,
+        rating: d.rating,
+        verified: Boolean(order),
+        source,
+        locale: d.locale,
+        flagged: verdict.flags.length > 0,
+      },
+      `review:${(row as ReviewRow).id}`,
+    ),
+  );
 
   return NextResponse.json({ ok: true, verified: Boolean(order) });
 }

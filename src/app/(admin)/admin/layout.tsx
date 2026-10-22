@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Tektur } from "next/font/google";
 import { getSiteLogoUrl } from "@/lib/media/site-assets";
 import { AdminLogoProvider } from "@/components/admin/AdminLogoContext";
+import { MarkInternal } from "@/components/admin/MarkInternal";
 import "../../globals.css";
 
 /**
@@ -36,6 +37,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   return (
     <html lang="uk" className={tektur.variable} suppressHydrationWarning>
       <body className="min-h-screen bg-[#080A0E] text-[#F0F0F0] antialiased">
+        <MarkInternal />
         <AdminLogoProvider logoUrl={logoUrl}>{children}</AdminLogoProvider>
       </body>
     </html>

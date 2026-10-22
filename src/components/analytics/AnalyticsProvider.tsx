@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Script from "next/script";
 import { captureAttribution } from "@/lib/analytics/attribution";
+import { initPosthog } from "@/lib/analytics/posthog";
 import { setAnalyticsIds } from "@/lib/analytics/runtime";
 import { sanitizeAnalyticsIds, type AnalyticsIds } from "@/lib/analytics/ids";
 
@@ -18,6 +19,8 @@ export function AnalyticsProvider({ ids: rawIds }: { ids: AnalyticsIds }) {
 
   useEffect(() => {
     captureAttribution();
+    // PostHog вантажиться сам після load, у вільний час браузера (lib/analytics/posthog.ts).
+    initPosthog();
   }, []);
 
   const gtagId = ids.ga || ids.adsId;

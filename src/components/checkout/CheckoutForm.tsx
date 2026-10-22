@@ -286,7 +286,8 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
         <p className="mb-2 font-body text-base text-ink-muted">
           {m.success.orderNumber} <strong className="text-accent">{orderId}</strong>
         </p>
-        <p className="mb-8 max-w-[320px] font-body text-sm text-ink-dim">
+        {/* ph-mask: у записі сеансу PostHog цей текст (тут e-mail) прихований. */}
+        <p className="ph-mask mb-8 max-w-[320px] font-body text-sm text-ink-dim">
           {form.email
             ? m.success.emailNote.replace("{email}", form.email)
             : m.success.emailNote.replace("{email}", m.success.emailFallback)}
@@ -405,7 +406,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     {m.steps.delivery}
                   </span>
                   {done.includes(1) && (
-                    <span className="mt-0.5 block font-body text-xs text-success">
+                    <span className="ph-mask mt-0.5 block font-body text-xs text-success">
                       ✓ {form.city}, {form.npBranch}
                     </span>
                   )}

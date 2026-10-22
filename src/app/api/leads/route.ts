@@ -4,6 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { sendLeadCard } from "@/lib/telegram/cards";
 import { locales, localeToLang } from "@/i18n/config";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
+import { attributionProps, captureServerEvent, posthogContext } from "@/lib/analytics/posthog-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -134,6 +135,27 @@ export async function POST(request: NextRequest) {
         console.error("[leads] telegram card failed:", err instanceof Error ? err.message : err);
       }
     });
+  }
+
+  // PostHog: заявка (консультація / швидке замовлення). Без імені й телефону.
+  if (leadRow?.lead_number) {
+    const ph = posthogContext(request);
+    const leadNumber = leadRow.lead_number;
+    after(() =>
+      captureServerEvent(
+        ph,
+        "lead_created",
+        {
+          lead_number: leadNumber,
+          source: parsed.data.source,
+          locale: parsed.data.locale,
+          product: attribution.productName ?? attribution.product,
+          product_slug: attribution.productSlug,
+          ...attributionProps(attribution),
+        },
+        `lead:${leadNumber}`,
+      ),
+    );
   }
 
   return NextResponse.json({ ok: true, persisted: true });

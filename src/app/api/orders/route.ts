@@ -10,6 +10,7 @@ import { locales, localeToLang } from "@/i18n/config";
 import { getContact } from "@/lib/contact/get";
 import { AVAILABLE_PAYMENT_METHODS, PAYMENT_METHODS } from "@/config/payment";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
+import { attributionProps, captureServerEvent, posthogContext } from "@/lib/analytics/posthog-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -356,6 +357,31 @@ export async function POST(request: NextRequest) {
       console.error("[orders] telegram card failed:", err instanceof Error ? err.message : err);
     }
   });
+
+  // 5) PostHog: серверна подія з виручкою (її не ріже блокувальник). Без імені й телефону.
+  const ph = posthogContext(request);
+  after(() =>
+    captureServerEvent(
+      ph,
+      "order_placed",
+      {
+        order_number: orderRow.order_number,
+        revenue: computedTotal,
+        currency: "UAH",
+        subtotal: computedSubtotal,
+        shipping: computedShipping,
+        items_count: itemsCount,
+        delivery_method: data.delivery.method,
+        payment_method: data.payment.method,
+        locale: data.locale,
+        product_ids: data.items.map((i) => i.productId),
+        products: data.items.map((i) => `${i.brand} ${i.model}`),
+        categories: [...new Set(data.items.map((i) => i.category).filter(Boolean))],
+        ...attributionProps(data.attribution),
+      },
+      `order:${orderRow.order_number}`,
+    ),
+  );
 
   return NextResponse.json({
     ok: true,
