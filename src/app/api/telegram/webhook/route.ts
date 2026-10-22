@@ -19,7 +19,7 @@ import { INVITE_VARIANTS, firstName, inviteCopy, type CopyLang } from "@/lib/rev
 import { getProductBySlug } from "@/data/catalog";
 import { botChatId, tg, tgEsc, type InlineKeyboard } from "@/lib/telegram/bot";
 import { setLeadStatus, setOrderStatus } from "@/lib/telegram/crm";
-import { sendLeadCard, sendOrderCard } from "@/lib/telegram/cards";
+import { sendCardByNumber } from "@/lib/telegram/cards";
 import { LEAD_BY_CODE, LEAD_STATUS, ORDER_BY_CODE, ORDER_STATUS } from "@/lib/crm/status";
 import type { ReviewRow } from "@/lib/supabase/types";
 
@@ -117,14 +117,7 @@ async function sendInvite(chatId: number, ref: string, replyTo?: number): Promis
 async function sendStatusCard(chatId: number, num: string, replyTo?: number): Promise<void> {
   const sb = getSupabaseServerClient({ useServiceRole: true });
   if (!sb) return;
-  let ok = false;
-  if (num.startsWith("TT-")) {
-    const { data } = await sb.from("orders").select("id").eq("order_number", num).maybeSingle();
-    if (data) ok = await sendOrderCard(sb, (data as { id: string }).id, replyTo);
-  } else {
-    const { data } = await sb.from("leads").select("id").eq("lead_number", num).maybeSingle();
-    if (data) ok = await sendLeadCard(sb, (data as { id: string }).id, replyTo);
-  }
+  const ok = await sendCardByNumber(sb, num, replyTo);
   if (!ok) {
     await tg("sendMessage", { chat_id: chatId, reply_to_message_id: replyTo, text: `${num} не знайдено.` });
   }

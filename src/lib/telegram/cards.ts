@@ -34,7 +34,7 @@ function phone(raw: string): string {
 const LANG: Record<string, string> = { uk: "🇺🇦 UA", ua: "🇺🇦 UA", ru: "🇷🇺 RU" };
 
 const DELIVERY: Record<string, string> = { np: "Нова Пошта", ukrposhta: "Укрпошта", pickup: "Самовивіз" };
-const PAYMENT: Record<string, string> = { cod: "Накладений платіж", card: "Картка онлайн", apple: "Apple Pay" };
+const PAYMENT: Record<string, string> = { cod: "Накладений платіж", card: "Картка онлайн", apple: "Apple Pay", cash: "Готівка" };
 
 /** google.com.ua → Google, chatgpt.com → ChatGPT; невідоме — як є. */
 function sourceName(host: string): string {
@@ -57,6 +57,8 @@ function sourceName(host: string): string {
 /** «Звідки клієнт»: сторінка входу + джерело (utm або сайт-реферер). */
 function originLine(attr: Record<string, unknown> | null | undefined): string | null {
   if (!attr) return null;
+  // Замовлення, внесене вручну (продаж наживо знайомим, спецціна) — без сторінки входу й джерела.
+  if (attr.channel === "offline") return "🤝 Продаж наживо (внесено вручну)";
   const str = (k: string) => (typeof attr[k] === "string" && (attr[k] as string).trim() ? (attr[k] as string).trim() : null);
   const parts: string[] = [];
   const landing = str("landing_page");
@@ -212,7 +214,8 @@ const crmUrl = (path: string) => `${siteConfig.url}/admin/leads${path}`;
 export function orderText(o: OrderFull, last: Last, leadId: string | null): string {
   const L: string[] = [];
   L.push(`🆕 <b>Нове замовлення</b> · <code>${tgEsc(o.order_number)}</code>`, "");
-  L.push(`👤 <b>${tgEsc(o.customer_name)}</b>`, `📞 ${tgEsc(phone(o.customer_phone))}`);
+  L.push(`👤 <b>${tgEsc(o.customer_name)}</b>`);
+  if (o.customer_phone.trim()) L.push(`📞 ${tgEsc(phone(o.customer_phone))}`);
   if (o.customer_email) L.push(`✉️ ${tgEsc(o.customer_email)}`);
 
   L.push("", "🛒 <b>Товари</b>");
@@ -256,7 +259,8 @@ export async function leadText(l: LeadFull, last: Last): Promise<string> {
   const L: string[] = [`${title} · <code>${tgEsc(l.lead_number)}</code>`, ""];
 
   const placeholder = /^(швидке замовлення|быстрый заказ)$/i.test(l.name.trim());
-  L.push(`👤 <b>${placeholder ? "Без імені" : tgEsc(l.name)}</b>`, `📞 ${tgEsc(phone(l.phone))}`);
+  L.push(`👤 <b>${placeholder ? "Без імені" : tgEsc(l.name)}</b>`);
+  if (l.phone.trim()) L.push(`📞 ${tgEsc(phone(l.phone))}`);
   if (l.email) L.push(`✉️ ${tgEsc(l.email)}`);
 
   // Товар зі швидкого замовлення: посилання + актуальна ціна з каталогу (з адмінки).
@@ -366,3 +370,13 @@ async function redraw(card: Card | null): Promise<void> {
 
 export const refreshOrderCard = async (sb: Sb, orderId: string) => redraw(await orderCard(sb, orderId));
 export const refreshLeadCard = async (sb: Sb, leadId: string) => redraw(await leadCard(sb, leadId));
+
+/** Картка за номером: TT-… — замовлення, Z-… — заявка. false — не знайдено або не надіслано. */
+export async function sendCardByNumber(sb: Sb, num: string, replyTo?: number): Promise<boolean> {
+  if (num.startsWith("TT-")) {
+    const { data } = await sb.from("orders").select("id").eq("order_number", num).maybeSingle();
+    return data ? sendOrderCard(sb, (data as { id: string }).id, replyTo) : false;
+  }
+  const { data } = await sb.from("leads").select("id").eq("lead_number", num).maybeSingle();
+  return data ? sendLeadCard(sb, (data as { id: string }).id, replyTo) : false;
+}

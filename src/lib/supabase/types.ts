@@ -144,7 +144,8 @@ export type OrderStatus =
   | "refunded";
 
 export type DeliveryMethod = "np" | "ukrposhta" | "pickup";
-export type PaymentMethod = "apple" | "cod" | "card";
+/** cash — продаж наживо (замовлення, внесене вручну); на сайті цей спосіб не пропонується. */
+export type PaymentMethod = "apple" | "cod" | "card" | "cash";
 
 export type OrderRow = {
   id: string;
