@@ -50,11 +50,13 @@ function buildInvite(order: OrderInfo, variant: number, lang: CopyLang): { text:
   const products = order.slugs.map((s) => getProductBySlug(s)).filter((p): p is NonNullable<typeof p> => Boolean(p));
   const copy = inviteCopy({ lang, name: order.customerName, products, url, variant });
   const v = ((variant % INVITE_VARIANTS) + INVITE_VARIANTS) % INVITE_VARIANTS;
-  const isLead = order.orderNumber.startsWith("L-");
+  const isLead = /^(L|Z)-/.test(order.orderNumber);
   const who = firstName(order.customerName);
   const l = lang === "ru" ? "r" : "u";
   const text = [
-    `⭐ <b>Запрошення на відгук — ${isLead ? "швидке замовлення" : tgEsc(order.orderNumber)}</b>`,
+    `⭐ <b>Запрошення на відгук — ${
+      isLead ? `швидке замовлення${order.orderNumber.startsWith("Z-") ? ` ${tgEsc(order.orderNumber)}` : ""}` : tgEsc(order.orderNumber)
+    }</b>`,
     `${who ? `👤 ${tgEsc(who)} · ` : ""}🛒 ${tgEsc(products.map((p) => p.name.ua).join(", ") || "—")}`,
     `${lang === "ru" ? "🇷🇺 російською" : "🇺🇦 українською"} · варіант ${v + 1} з ${INVITE_VARIANTS} · посилання діє ${INVITE_DAYS} днів, відгуки за ним — «Покупець»`,
     "",
@@ -92,7 +94,7 @@ async function sendInvite(chatId: number, ref: string, replyTo?: number): Promis
       chat_id: chatId,
       text: /^380/.test(ref)
         ? `За номером +${tgEsc(ref)} немає замовлень чи швидких замовлень із товаром.`
-        : `${ref.startsWith("L-") ? "Заявку" : "Замовлення"} ${tgEsc(ref)} не знайдено (або скасоване / без товару).`,
+        : `${/^(L|Z)-/.test(ref) ? "Заявку" : "Замовлення"} ${tgEsc(ref)} не знайдено (або закрита / без товару).`,
       reply_to_message_id: replyTo,
     });
     return;
@@ -131,7 +133,7 @@ export async function POST(request: NextRequest) {
     const data = cq.data ?? "";
 
     // Посилання на відгук із повідомлення про замовлення.
-    const inv = /^inv:(TT-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
+    const inv = /^inv:(TT-\d{8}-\d{3,}|Z-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
     if (inv?.[1] && chatId !== undefined) {
       await tg("answerCallbackQuery", { callback_query_id: cq.id });
       await sendInvite(chatId, inv[1], cq.message?.message_id);
@@ -139,7 +141,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Інший варіант тексту / інша мова — перемальовуємо те саме повідомлення.
-    const inx = /^inx:(\d):([ur]):(TT-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
+    const inx = /^inx:(\d):([ur]):(TT-\d{8}-\d{3,}|Z-\d{8}-\d{3,}|L-[0-9a-f-]{36})$/.exec(data);
     if (inx?.[3] && cq.message) {
       const sb = getSupabaseServerClient({ useServiceRole: true });
       const order = sb ? await findInviteRef(sb, inx[3]) : null;
@@ -189,7 +191,7 @@ export async function POST(request: NextRequest) {
   const link = /^\/(?:link|vidguk)(?:@\w+)?\s+(.+)$/i.exec(text);
   if (link?.[1]) {
     const arg = link[1].trim();
-    const num = /TT-\d{8}-\d{3,}/i.exec(arg)?.[0]?.toUpperCase();
+    const num = /(TT|Z)-\d{8}-\d{3,}/i.exec(arg)?.[0]?.toUpperCase();
     const phone = num ? null : normalizePhone(arg);
     if (num || phone) {
       await sendInvite(msg.chat.id, (num ?? phone)!, msg.message_id);
@@ -197,7 +199,7 @@ export async function POST(request: NextRequest) {
       await tg("sendMessage", {
         chat_id: msg.chat.id,
         reply_to_message_id: msg.message_id,
-        text: "Формат: /link TT-20261020-00016 або /link 067 123 45 67",
+        text: "Формат: /link TT-20261020-00016, /link Z-20261022-00018 або /link 067 123 45 67",
       });
     }
     return ok();

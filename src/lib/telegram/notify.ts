@@ -162,14 +162,17 @@ export type NewLeadNotification = {
   adminUrl?: string | null;
   /** id заявки — для кнопки «Посилання на відгук» (лише коли є товар). */
   leadId?: string | null;
+  /** Номер заявки Z-YYYYMMDD-NNNNN (міграція 0009). */
+  leadNumber?: string | null;
 };
 
 /** Збирає й відправляє повідомлення про нову заявку (форма-CTA). Безпечно за будь-яких умов. */
 export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean> {
   if (!isTelegramConfigured()) return false;
 
+  const num = lead.leadNumber ? ` ${esc(lead.leadNumber)}` : "";
   const lines: string[] = [
-    "📩 <b>Нова заявка</b>",
+    lead.source === "quick-order" ? `⚡ <b>Швидке замовлення${num}</b>` : `📩 <b>Нова заявка${num}</b>`,
     "",
     `👤 ${esc(lead.name)}`,
     `📞 ${esc(lead.phone)}`,
@@ -187,7 +190,11 @@ export async function notifyNewLead(lead: NewLeadNotification): Promise<boolean>
   // Швидке замовлення з товаром → кнопка персонального посилання на відгук (після продажу).
   const reviewButton =
     process.env.REVIEWS_SECRET && lead.leadId && lead.productUrl
-      ? { inline_keyboard: [[{ text: "⭐ Посилання на відгук", callback_data: `inv:L-${lead.leadId}` }]] }
+      ? {
+          inline_keyboard: [
+            [{ text: "⭐ Посилання на відгук", callback_data: `inv:${lead.leadNumber ?? `L-${lead.leadId}`}` }],
+          ],
+        }
       : undefined;
 
   return sendMessage(lines.join("\n"), reviewButton);

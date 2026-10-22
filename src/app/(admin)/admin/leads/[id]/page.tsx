@@ -78,7 +78,7 @@ export default async function LeadDetailPage({ params }: PageProps) {
     <ToastProvider>
       <AdminShell email={admin.email}>
         <main className="mx-auto max-w-[1200px] px-5 pb-24 md:pb-12">
-          <LeadHeader name={lead.name} createdAt={lead.created_at} updatedAt={lead.updated_at} />
+          <LeadHeader name={lead.name} number={lead.lead_number} createdAt={lead.created_at} updatedAt={lead.updated_at} />
 
           <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-[1fr_360px] md:gap-5">
             {/* ── MAIN COLUMN ─────────────────────────────── */}

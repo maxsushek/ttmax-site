@@ -4,6 +4,8 @@ import Link from "next/link";
 
 type Props = {
   name: string;
+  /** Номер заявки (Z-…) або замовлення (TT-…). */
+  number?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -38,7 +40,7 @@ function formatExactDate(iso: string): string {
   });
 }
 
-export function LeadHeader({ name, createdAt, updatedAt }: Props) {
+export function LeadHeader({ name, number, createdAt, updatedAt }: Props) {
   return (
     <div className="sticky top-0 z-30 bg-[#080A0E]/95 backdrop-blur-md border-b border-white/[0.05] -mx-5 px-5">
       <div className="py-3 flex items-center gap-3">
@@ -72,6 +74,7 @@ export function LeadHeader({ name, createdAt, updatedAt }: Props) {
             {name}
           </h1>
           <div className="flex items-center gap-2 mt-0.5 text-[11px] text-[#555] flex-wrap">
+            {number && <span className="font-bold text-[#888]">{number}</span>}
             <span
               style={{ fontFamily: "'Barlow',sans-serif" }}
               title={formatExactDate(createdAt)}

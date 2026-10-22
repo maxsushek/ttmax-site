@@ -51,6 +51,7 @@ export function LeadsTable({ leads }: { leads: LeadRow[] }) {
                 </td>
                 <td className="px-4 py-3 font-bold text-white max-w-[180px] truncate">
                   {lead.name}
+                  <div className="text-[11px] font-normal text-[#666]">{lead.lead_number}</div>
                 </td>
                 <td className="px-4 py-3 text-[#aaa] whitespace-nowrap">
                   <a
@@ -106,6 +107,7 @@ export function LeadsTable({ leads }: { leads: LeadRow[] }) {
                 className="font-bold text-white truncate flex-1 hover:text-[#E8FF47] transition-colors"
               >
                 {lead.name}
+                <span className="ml-2 text-[11px] font-normal text-[#666]">{lead.lead_number}</span>
               </Link>
               <div className="shrink-0">
                 <InlineStatus leadId={lead.id} currentStatus={lead.status} />

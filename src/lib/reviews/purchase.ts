@@ -53,6 +53,7 @@ const toInfo = (o: OrderWithItems): OrderInfo => ({
 /** Заявка «швидке замовлення» з товаром (leads.attribution.productSlug). */
 type LeadRow = {
   id: string;
+  lead_number?: string | null;
   name?: string | null;
   locale: string;
   created_at: string;
@@ -65,7 +66,7 @@ const leadInfo = (l: LeadRow): OrderInfo | null => {
   const slug = typeof l.attribution?.productSlug === "string" ? l.attribution.productSlug : null;
   if (!slug || DEAD_LEAD.includes(l.status)) return null;
   return {
-    orderNumber: `L-${l.id}`,
+    orderNumber: l.lead_number ?? `L-${l.id}`,
     locale: l.locale === "ru" ? "ru" : "uk",
     createdAt: l.created_at,
     slugs: [mainSlug(slug)],
@@ -76,15 +77,26 @@ const leadInfo = (l: LeadRow): OrderInfo | null => {
 export async function findLead(sb: Sb, leadId: string): Promise<OrderInfo | null> {
   const { data, error } = await sb
     .from("leads")
-    .select("id, name, locale, created_at, status, attribution")
+    .select("id, lead_number, name, locale, created_at, status, attribution")
     .eq("id", leadId)
     .maybeSingle();
   if (error || !data) return null;
   return leadInfo(data as unknown as LeadRow);
 }
 
-/** Замовлення (TT-…) або заявка (L-…) за посиланням. */
+async function findLeadByNumber(sb: Sb, num: string): Promise<OrderInfo | null> {
+  const { data, error } = await sb
+    .from("leads")
+    .select("id, lead_number, name, locale, created_at, status, attribution")
+    .eq("lead_number", num)
+    .maybeSingle();
+  if (error || !data) return null;
+  return leadInfo(data as unknown as LeadRow);
+}
+
+/** Замовлення (TT-…), заявка за номером (Z-…) або старе посилання на заявку (L-uuid). */
 export async function findInviteRef(sb: Sb, ref: string): Promise<OrderInfo | null> {
+  if (ref.startsWith("Z-")) return findLeadByNumber(sb, ref);
   return ref.startsWith("L-") ? findLead(sb, ref.slice(2)) : findOrder(sb, ref);
 }
 
@@ -103,7 +115,7 @@ export async function findLatestByPhone(sb: Sb, phone: string): Promise<OrderInf
       .limit(5),
     sb
       .from("leads")
-      .select("id, name, locale, created_at, status, attribution")
+      .select("id, lead_number, name, locale, created_at, status, attribution")
       .ilike("phone", `%${nine}`)
       .order("created_at", { ascending: false })
       .limit(10),
@@ -155,7 +167,7 @@ export async function findPurchase(sb: Sb, phone: string, slug: string | null): 
   // інакше будь-хто, хто лишив номер у формі, ставав би «покупцем».
   const { data: leads } = await sb
     .from("leads")
-    .select("id, name, locale, created_at, status, attribution")
+    .select("id, lead_number, name, locale, created_at, status, attribution")
     .ilike("phone", `%${nine}`)
     .eq("status", "won")
     .order("created_at", { ascending: false })

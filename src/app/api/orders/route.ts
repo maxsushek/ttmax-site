@@ -333,6 +333,8 @@ export async function POST(request: NextRequest) {
       phone: data.customer.phone,
       email: data.customer.email ?? null,
       source: "order",
+      // Той самий номер, що й у замовлення, — у CRM і Telegram одне число.
+      lead_number: orderRow.order_number,
       locale: localeToLang[data.locale] as "ua" | "ru",
       attribution,
       value_uah: computedTotal,

@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       locale: dbLocale,
       attribution,
     })
-    .select("id")
+    .select("id, lead_number")
     .single();
 
   if (error) {
@@ -144,6 +144,7 @@ export async function POST(request: NextRequest) {
       productUrl,
       adminUrl,
       leadId,
+      leadNumber: leadRow?.lead_number ?? null,
     });
   });
 

@@ -16,6 +16,8 @@ export type LeadStatus =
 
 export type LeadRow = {
   id: string;
+  /** Людський номер: Z-YYYYMMDD-NNNNN (заявка) або TT-… (копія замовлення). Міграція 0009. */
+  lead_number: string;
   created_at: string;
   name: string;
   phone: string;
@@ -41,6 +43,7 @@ export type LeadRow = {
 
 export type LeadInsert = {
   id?: string;
+  lead_number?: string;
   created_at?: string;
   name: string;
   phone: string;
