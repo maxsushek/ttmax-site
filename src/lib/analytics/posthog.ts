@@ -24,6 +24,7 @@ let instance: PostHog | null = null;
 let state: "idle" | "loading" | "ready" | "off" = "idle";
 const queue: Job[] = [];
 const MAX_QUEUE = 100;
+let firstPageviewDated = false;
 
 function enabledHere(): boolean {
   if (typeof window === "undefined" || !POSTHOG_TOKEN) return false;
@@ -83,6 +84,19 @@ export function initPosthog(): void {
           // створюємо. Імені й телефону в PostHog немає і бути не повинно.
           person_profiles: "identified_only",
           capture_exceptions: true,
+          // Опитувань не використовуємо — не тягнемо surveys.js на кожну сторінку.
+          disable_surveys: true,
+          before_send: (event) => {
+            // ⚠️ Перший $pageview бібліотека пише в момент ліниво відкладеного init — уже ПІСЛЯ
+            // подій сторінки з черги (view_item тощо, з їхнім справжнім часом). Тоді у воронках
+            // «перегляд сторінки → дія» вхідна сторінка ламала б порядок кроків. Ставимо йому час
+            // відкриття сторінки — саме тоді перегляд і стався.
+            if (event && event.event === "$pageview" && !firstPageviewDated) {
+              firstPageviewDated = true;
+              event.timestamp = new Date(performance.timeOrigin);
+            }
+            return event;
+          },
           session_recording: {
             // Усе, що людина вводить (ім'я, телефон, місто, відділення, текст відгуку), у записі
             // зірочками. .ph-mask — текст на екрані, у якому видно введене (підсумок доставки,
