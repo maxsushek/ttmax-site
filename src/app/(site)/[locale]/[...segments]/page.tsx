@@ -41,7 +41,13 @@ import {
   type FacetGroup,
 } from "@/components/catalog/CatalogFilters";
 import { breadcrumbJsonLd, productJsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
-import { getProductReviews, reviewSlugFor, summarize as summarizeReviews } from "@/lib/reviews/data";
+import {
+  getProductReviews,
+  getRatingsMap,
+  reviewSlugFor,
+  summarize as summarizeReviews,
+  type RatingsMap,
+} from "@/lib/reviews/data";
 import { RatingBadge, ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { isReviewsConfigured } from "@/lib/reviews/secret";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
@@ -60,6 +66,8 @@ import { RichContent } from "@/components/catalog/RichContent";
 import { getRichContent, type RichContent as RichContentData } from "@/data/catalog/categoryContent";
 import { getExpert } from "@/data/catalog/expert";
 import { expertFor, variantOf } from "@/data/catalog/variants";
+import { gtinFor, gtinKey } from "@/data/catalog/gtin";
+import { CardRating } from "@/components/reviews/CardRating";
 import { cldUrl } from "@/lib/cloudinary/url";
 import {
   BLADE_CLASS_LABEL,
@@ -417,6 +425,8 @@ export default async function CatalogPage({
             brand: getBrandBySlug(eroute.product.brandSlug)?.name ?? eroute.product.brandSlug,
             images: productImages,
             sku: productSku,
+            // Ключ без варіанта: для накладок (коди по товщині × кольору) тут завжди undefined.
+            gtin: gtinFor(gtinKey(eroute.product.slug)),
             price: getMinPrice(eroute.product),
             strikethroughPrice: promoOldPrice(eroute.product.slug, getMinPrice(eroute.product)),
             currency: "UAH",
@@ -549,7 +559,13 @@ export default async function CatalogPage({
         {eroute.kind === "product" ? (
           <ProductView route={eroute} locale={locale} media={media} content={content} />
         ) : (
-          <ListingView route={eroute} locale={locale} media={media} content={content} />
+          <ListingView
+            route={eroute}
+            locale={locale}
+            media={media}
+            content={content}
+            ratings={await getRatingsMap()}
+          />
         )}
       </Container>
     </Section>
@@ -574,11 +590,13 @@ function ListingView({
   locale,
   media,
   content,
+  ratings,
 }: {
   route: Exclude<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
   content: ContentBlock | null;
+  ratings: RatingsMap;
 }) {
   // ⏸️ Ховаємо товари без фото у визначених категоріях (одяг) — оборотно, див. lib/catalog/hidden.
   const visibleProducts = filterVisible(route.products, media);
@@ -657,10 +675,12 @@ function ListingView({
         // (src/config/navigation.ts). Індексації це не шкодить — канонікал відкидає query, —
         // але холодний вхід дає стрибок контенту. Правильне лікування: перевести пресети
         // на реальні сегменти маршруту, як зроблено для основ ALC/ZLC у lib/catalog/routing.ts.
-        <Suspense fallback={<ProductGrid products={ordered} locale={locale} media={media} />}>
+        <Suspense
+          fallback={<ProductGrid products={ordered} locale={locale} media={media} ratings={ratings} />}
+        >
           <CatalogFilters
             locale={locale}
-            items={buildCardVMs(ordered, locale, media)}
+            items={buildCardVMs(ordered, locale, media, ratings)}
             groups={buildFacetGroups(ordered, locale)}
             priceBuckets={buildPriceBuckets(ordered, locale)}
           />
@@ -835,6 +855,7 @@ function buildCardVMs(
   products: CatalogProduct[],
   locale: Locale,
   media: EntityMediaMap,
+  ratings: RatingsMap,
 ): CatalogCardVM[] {
   return products.map((p, i) => {
     const price = getMinPrice(p);
@@ -869,6 +890,7 @@ function buildCardVMs(
         return old && price !== undefined ? `−${formatPrice(old - price)}` : null;
       })(),
       inStock: isInStock(p),
+      rating: ratings[reviewSlugFor(p.slug)] ?? null,
       imageUrl: img ? cldUrl(img.publicId, { w: 480, h: 480 }) : null,
       facets: {
         bladeClass: p.base?.bladeClass,
@@ -1008,10 +1030,12 @@ function ProductCard({
   product,
   locale,
   media,
+  rating,
 }: {
   product: CatalogProduct;
   locale: Locale;
   media: EntityMediaMap;
+  rating: RatingsMap[string] | undefined;
 }) {
   const price = getMinPrice(product);
   const brandName = getBrandBySlug(product.brandSlug)?.name ?? product.brandSlug;
@@ -1098,6 +1122,7 @@ function ProductCard({
           .trim() || product.model}
       </div>
       {secondary && <div className="mt-1 font-body text-[11px] text-ink-dim">{secondary}</div>}
+      <CardRating rating={rating} locale={locale} />
 
       <div className="mt-auto flex flex-col pt-3">
         {oldPrice && (
@@ -1128,20 +1153,40 @@ function ProductGrid({
   products,
   locale,
   media,
+  ratings,
 }: {
   products: CatalogProduct[];
   locale: Locale;
   media: EntityMediaMap;
+  ratings: RatingsMap;
 }) {
   return (
     <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
       {products.map((p) => (
         <li key={p.slug} className="h-full">
-          <ProductCard product={p} locale={locale} media={media} />
+          <ProductCard
+            product={p}
+            locale={locale}
+            media={media}
+            rating={ratings[reviewSlugFor(p.slug)]}
+          />
         </li>
       ))}
     </ul>
   );
+}
+
+/** «Схожі товари» на картці: та сама сітка + зірки (кешована карта рейтингів, див. getRatingsMap). */
+async function RelatedGrid({
+  products,
+  locale,
+  media,
+}: {
+  products: CatalogProduct[];
+  locale: Locale;
+  media: EntityMediaMap;
+}) {
+  return <ProductGrid products={products} locale={locale} media={media} ratings={await getRatingsMap()} />;
 }
 
 /* ---------------- Страница товара (диспетчер: основание / накладка) ---------------- */
@@ -1323,7 +1368,7 @@ function ProductShell({
             <h2 className="mb-5 mt-2 font-display text-lg font-bold uppercase tracking-[0.04em]">
               {catalogUi.related[locale]}
             </h2>
-            <ProductGrid products={related} locale={locale} media={media} />
+            <RelatedGrid products={related} locale={locale} media={media} />
           </div>
         )}
         {content && (

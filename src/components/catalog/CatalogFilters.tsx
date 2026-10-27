@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { cn } from "@/utils/cn";
+import { CardRating } from "@/components/reviews/CardRating";
 
 /** Сериализуемая модель карточки + поля для фильтрации (готовится на сервере). */
 export type CatalogCardVM = {
@@ -24,6 +25,8 @@ export type CatalogCardVM = {
   /** Бейдж знижки на фото ("−150 грн") або null. */
   saveLabel: string | null;
   inStock: boolean;
+  /** Середня оцінка й кількість відгуків моделі; null — відгуків немає (зірок не малюємо). */
+  rating: { avg: number; count: number } | null;
   /** Готовый URL картинки (Cloudinary) или null → плейсхолдер. */
   imageUrl: string | null;
   /** Значения для фасетов (любой ключ → значение). */
@@ -374,6 +377,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                 {item.secondary && (
                   <div className="mt-1 font-body text-[11px] text-ink-dim">{item.secondary}</div>
                 )}
+                <CardRating rating={item.rating} locale={locale} />
 
                 {/* «Було → стало»: стара ціна дрібно НАД новою — як на сторінці товару. */}
                 <div className="mt-auto flex flex-col pt-3">

@@ -165,6 +165,59 @@ export const getLatestProductReviews = unstable_cache(loadLatest, ["reviews-late
   revalidate: false,
 });
 
+/** Середня й кількість відгуків по моделі — для зірок у картках каталогу. Ключ — reviewSlugFor. */
+export type RatingsMap = Record<string, { avg: number; count: number }>;
+
+async function loadRatings(): Promise<RatingsMap> {
+  // Під час збірки — та сама вибірка всіх відгуків, що вже є для карток товарів (buildMemo):
+  // зірки в лістингах не додають жодного запиту до Supabase.
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    const all = await buildMemo("reviews-all", loadAllProduct);
+    return Object.fromEntries(
+      [...all].map(([slug, list]) => {
+        const s = summarize(list);
+        return [slug, { avg: s.avg, count: s.count }];
+      }),
+    );
+  }
+  const sb = getSupabaseServerClient({ useServiceRole: true });
+  if (!sb) return noClient("reviews", {});
+  const { data, error } = await sb
+    .from("reviews")
+    .select("product_slug, rating")
+    .eq("status", "approved")
+    .eq("kind", "product")
+    .limit(5000);
+  if (error) queryFailed("reviews", error.message);
+  const acc: Record<string, { sum: number; count: number }> = {};
+  for (const r of (data ?? []) as { product_slug: string | null; rating: number }[]) {
+    if (!r.product_slug) continue;
+    const a = (acc[r.product_slug] ??= { sum: 0, count: 0 });
+    a.sum += r.rating;
+    a.count += 1;
+  }
+  return Object.fromEntries(
+    Object.entries(acc).map(([slug, a]) => [slug, { avg: Math.round((a.sum / a.count) * 10) / 10, count: a.count }]),
+  );
+}
+
+/**
+ * Рейтинги всіх моделей для карток каталогу (лістинги, «Схожі товари»).
+ *
+ * ⚠️ НАВІЩО без тегу, який скидає модерація: картки є на ~1600 сторінках (кожна картка
+ * товару має блок «Схожі»). Якби схвалення відгуку скидало цей кеш, кожен відгук
+ * перебудовував би весь сайт — рівно той інцидент з лімітом ISR-записів, через який
+ * кеш відгуків розбито по товарах (див. шапку файлу). Тому зірки в картках оновлюються з
+ * наступним деплоєм, а сама сторінка товару і /vidguky — одразу, як і раніше.
+ *
+ * ⚠️ ID деплою в ключі обовʼязковий: Data Cache на Vercel переживає деплої, і без нього
+ * кеш без тегу лишився б зі старими цифрами назавжди. Новий деплой → новий ключ → свіжі дані.
+ */
+export function getRatingsMap(): Promise<RatingsMap> {
+  const deployKey = process.env.VERCEL_DEPLOYMENT_ID ?? process.env.VERCEL_GIT_COMMIT_SHA ?? "local";
+  return unstable_cache(loadRatings, ["reviews-ratings-v1", deployKey], { revalidate: false })();
+}
+
 export function summarize(reviews: PublicReview[]): ReviewSummary {
   const dist: ReviewSummary["dist"] = [0, 0, 0, 0, 0];
   let sum = 0;

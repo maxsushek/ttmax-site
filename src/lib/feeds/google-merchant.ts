@@ -18,10 +18,10 @@
 // з накладками (водяні знаки, логотипи, текст). Оригінали в Cloudinary чисті — знак живе
 // лише в URL доставки сайту.
 //
-// ⚠️ GTIN (штрихкодів) у каталозі немає. Ставити identifier_exists=no НЕ МОЖНА: у товарів
-// Butterfly штрихкоди є, і це було б хибне твердження. Без GTIN товар показується, але з
-// попередженням «обмежена ефективність». Коли зʼявляться коди з прайсу постачальника —
-// додати поле gtin у дані й сюди.
+// ⚠️ GTIN — з data/catalog/gtin.ts (ключ = сирий рядок id цього фіду). Де коду ще немає,
+// тег просто не пишемо. Ставити identifier_exists=no НЕ МОЖНА: у товарів Butterfly штрихкоди
+// є, і це було б хибне твердження. Без GTIN товар показується, але з попередженням
+// «обмежена ефективність» і без привʼязки до загальної картки моделі в Google.
 import type { Locale } from "@/i18n/config";
 import { siteConfig } from "@/config/site";
 import {
@@ -34,6 +34,7 @@ import {
 } from "@/data/catalog";
 import { promoOldPrice } from "@/data/catalog/promos";
 import { VARIANTS, expertFor, variantOf } from "@/data/catalog/variants";
+import { gtinFor, gtinKey } from "@/data/catalog/gtin";
 import { applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { isHidden } from "@/lib/catalog/hidden";
 import { isRacket, resolveCombo } from "@/lib/catalog/racket";
@@ -83,6 +84,8 @@ export type MerchantItem = {
   price: number;
   salePrice?: number;
   brand: string;
+  /** Штрихкод варіанта (data/catalog/gtin.ts); немає — тег не пишемо. */
+  gtin?: string;
   googleProductCategory: number;
   productType: string;
   isBundle?: boolean;
@@ -526,7 +529,8 @@ export function buildMerchantItems(input: MerchantFeedInput): MerchantItem[] {
         const colorName = labelFor("color", v.color, locale).toLowerCase();
         items.push({
           ...common,
-          id: feedId(`${p.slug}__${v.thickness}__${v.color}`),
+          id: feedId(gtinKey(p.slug, v.thickness, v.color)),
+          gtin: gtinFor(gtinKey(p.slug, v.thickness, v.color)),
           itemGroupId: groupId(p.slug),
           title: `${title} — ${th}, ${colorName}`.slice(0, MAX.title),
           color: RUBBER_COLOR[v.color]?.[locale] ?? v.color,
@@ -543,7 +547,8 @@ export function buildMerchantItems(input: MerchantFeedInput): MerchantItem[] {
       for (const size of sizes) {
         items.push({
           ...common,
-          id: feedId(`${p.slug}__${size}`),
+          id: feedId(gtinKey(p.slug, size)),
+          gtin: gtinFor(gtinKey(p.slug, size)),
           itemGroupId: groupId(p.slug),
           title: `${title} — ${T.size[locale]} ${size}`.slice(0, MAX.title),
           size,
@@ -558,7 +563,8 @@ export function buildMerchantItems(input: MerchantFeedInput): MerchantItem[] {
       for (const c of colorways) {
         items.push({
           ...common,
-          id: feedId(`${p.slug}__${c.ua}`),
+          id: feedId(gtinKey(p.slug, c.ua)),
+          gtin: gtinFor(gtinKey(p.slug, c.ua)),
           itemGroupId: groupId(p.slug),
           title: `${title} — ${T.color[locale]} ${c[locale]}`.slice(0, MAX.title),
           color: c[locale],
@@ -570,6 +576,8 @@ export function buildMerchantItems(input: MerchantFeedInput): MerchantItem[] {
     items.push({
       ...common,
       id: feedId(p.slug),
+      // Збірна ракетка — набір, власного штрихкоду в неї немає.
+      gtin: isBundle ? undefined : gtinFor(gtinKey(p.slug)),
       itemGroupId: volumeGroup && volume ? groupId(volumeGroup) : undefined,
       title: title.slice(0, MAX.title),
       size: sizes.length === 1 ? sizes[0] : volumeGroup ? volume : undefined,
@@ -634,6 +642,7 @@ function itemXml(it: MerchantItem, delivery: MerchantFeedInput["delivery"]): str
     it.salePrice !== undefined ? tag("sale_price", money(it.salePrice)) : "",
     tag("condition", "new"),
     tag("brand", it.brand),
+    tag("gtin", it.gtin),
     tag("google_product_category", it.googleProductCategory),
     tag("product_type", it.productType),
     it.isBundle ? tag("is_bundle", "yes") : "",

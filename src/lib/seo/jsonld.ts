@@ -266,6 +266,12 @@ export function productJsonLd(opts: {
   /** Абсолютні URL зображень (поки порожньо — додамо з Cloudinary). */
   images?: string[];
   sku?: string;
+  /**
+   * Штрихкод (data/catalog/gtin.ts) — лише коли сторінка = ОДИН товар з одним кодом
+   * (основа з однією ручкою, клей, мʼячі). У накладки код свій у кожної товщини й кольору,
+   * тож одного GTIN на всю сторінку бути не може — їхні коди йдуть лише у фід Merchant.
+   */
+  gtin?: string;
   /** Ціна "від" (для одиничного Offer). */
   price?: number;
   /** Діапазон цін варіантів — для AggregateOffer (коли варіанти мають різні ціни). */
@@ -330,6 +336,7 @@ export function productJsonLd(opts: {
     brand,
     images,
     sku,
+    gtin,
     price,
     lowPrice,
     highPrice,
@@ -402,6 +409,7 @@ export function productJsonLd(opts: {
   delete node.offers;
   if (images && images.length > 0) node.image = images;
   if (sku) node.sku = sku;
+  if (gtin) node.gtin = gtin;
 
   const availability = inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
   const itemCondition = "https://schema.org/NewCondition";
