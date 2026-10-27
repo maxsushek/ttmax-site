@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGallerySync } from "./GallerySync";
+import { trackEvent } from "@/lib/analytics/events";
 
 export type GalleryImage = {
   url: string;
@@ -32,6 +33,15 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
     [count, setActive],
   );
 
+  // Аналітика гортання: на стрілки галереї припадала більшість rage-кліків, тож бачимо,
+  // чим саме гортають (стрілка / свайп / мініатюра / клавіатура) і до якого кадру доходять.
+  const nav = (next: number, method: "arrow" | "swipe" | "thumb" | "key") => {
+    if (count < 2) return;
+    const to = ((next % count) + count) % count;
+    go(to);
+    trackEvent({ name: "gallery_navigate", params: { method, index: to + 1, count } });
+  };
+
   useEffect(() => {
     const el = thumbsRef.current?.querySelector<HTMLElement>(`[data-idx="${active}"]`);
     el?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
@@ -49,7 +59,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
     const endX = e.changedTouches[0]?.clientX;
     if (startX === null || endX === undefined) return;
     const dx = endX - startX;
-    if (Math.abs(dx) > 40) go(dx < 0 ? active + 1 : active - 1);
+    if (Math.abs(dx) > 40) nav(dx < 0 ? active + 1 : active - 1, "swipe");
   };
 
   return (
@@ -58,8 +68,8 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
       tabIndex={0}
       aria-roledescription="carousel"
       onKeyDown={(e) => {
-        if (e.key === "ArrowLeft") go(active - 1);
-        if (e.key === "ArrowRight") go(active + 1);
+        if (e.key === "ArrowLeft") nav(active - 1, "key");
+        if (e.key === "ArrowRight") nav(active + 1, "key");
       }}
     >
       <div
@@ -86,7 +96,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               aria-label="Попереднє фото"
-              onClick={() => go(active - 1)}
+              onClick={() => nav(active - 1, "arrow")}
               className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -103,7 +113,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
             <button
               type="button"
               aria-label="Наступне фото"
-              onClick={() => go(active + 1)}
+              onClick={() => nav(active + 1, "arrow")}
               className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -134,7 +144,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
               type="button"
               key={img.url}
               data-idx={i}
-              onClick={() => setActive(i)}
+              onClick={() => nav(i, "thumb")}
               aria-label={`Фото ${i + 1}`}
               aria-current={i === active}
               className={`relative aspect-square w-16 shrink-0 overflow-hidden rounded-xl border transition-all sm:w-[72px] ${

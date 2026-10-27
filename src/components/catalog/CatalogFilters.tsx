@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { cn } from "@/utils/cn";
 import { CardRating } from "@/components/reviews/CardRating";
+import { trackEvent } from "@/lib/analytics/events";
 
 /** Сериализуемая модель карточки + поля для фильтрации (готовится на сервере). */
 export type CatalogCardVM = {
@@ -133,7 +134,12 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
     (priceBucket !== null ? 1 : 0) +
     (onlyStock ? 1 : 0);
 
+  const LIST = "catalog";
+  const trackFilter = (filter: string, value: string, active: boolean) =>
+    trackEvent({ name: "filter_apply", params: { filter, value, active } });
+
   const toggle = (groupKey: string, value: string) => {
+    trackFilter(groupKey, value, !(selected[groupKey]?.has(value) ?? false));
     setSelected((prev) => {
       const next = { ...prev };
       const set = new Set(next[groupKey] ?? []);
@@ -185,6 +191,15 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
     return list;
   }, [items, selected, onlyStock, priceBucket, priceBuckets, sort]);
 
+  // Показ списку: при відкритті й після кожної зміни фільтрів. items_count = 0 — порожня
+  // видача; filters_active показує, скільки фільтрів її спричинили.
+  useEffect(() => {
+    trackEvent({
+      name: "view_item_list",
+      params: { list: "catalog", items_count: filtered.length, filters_active: activeCount },
+    });
+  }, [filtered.length, activeCount]);
+
   return (
     <div>
       {/* Панель управления */}
@@ -210,7 +225,10 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
           <select
             id="catalog-sort"
             value={sort}
-            onChange={(e) => setSort(e.target.value as SortKey)}
+            onChange={(e) => {
+              setSort(e.target.value as SortKey);
+              trackEvent({ name: "sort_change", params: { sort: e.target.value } });
+            }}
             className="rounded-xl border border-border-strong bg-bg-raised px-3 py-2 font-body text-sm text-ink outline-none transition-colors focus:border-accent/60"
           >
             <option value="popular">{t.sortPopular}</option>
@@ -268,7 +286,10 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                   <button
                     key={b.label}
                     type="button"
-                    onClick={() => setPriceBucket(active ? null : i)}
+                    onClick={() => {
+                      setPriceBucket(active ? null : i);
+                      trackFilter("price", b.label, !active);
+                    }}
                     aria-pressed={active}
                     className={cn(
                       "rounded-xl border px-3 py-1.5 text-sm font-medium tabular-nums transition-all",
@@ -289,7 +310,10 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
         <div className="flex flex-wrap items-center gap-3 pt-1">
           <button
             type="button"
-            onClick={() => setOnlyStock((v) => !v)}
+            onClick={() => {
+              setOnlyStock((v) => !v);
+              trackFilter("in_stock", "1", !onlyStock);
+            }}
             aria-pressed={onlyStock}
             className={cn(
               "inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-sm font-medium transition-all",
@@ -329,7 +353,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
         </div>
       ) : (
         <ul className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
-          {filtered.map((item) => (
+          {filtered.map((item, idx) => (
             <li key={item.slug} className="h-full">
               <Link
                 href={item.href}
@@ -342,6 +366,12 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                 className="group relative flex h-full flex-col overflow-hidden rounded-[18px] border border-border-strong bg-bg-raised p-3 transition-all duration-300 hover:-translate-y-1 hover:border-border hover:bg-bg-elevated hover:shadow-card-hover sm:p-4"
                 data-cta="catalog-product"
                 data-location={item.slug}
+                onClick={() =>
+                  trackEvent({
+                    name: "select_item",
+                    params: { list: LIST, product_slug: item.slug, position: idx + 1 },
+                  })
+                }
               >
                 <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]">
                   {item.imageUrl ? (
@@ -382,7 +412,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                 {/* «Було → стало»: стара ціна дрібно НАД новою — як на сторінці товару. */}
                 <div className="mt-auto flex flex-col pt-3">
                   {item.oldPriceLabel && (
-                    <span className="font-body text-xs text-ink-dim line-through tabular-nums">
+                    <span className="font-body text-xs tabular-nums text-ink-dim line-through">
                       {item.oldPriceLabel}
                     </span>
                   )}

@@ -143,7 +143,13 @@ export function BasePurchasePanel({
               <button
                 key={h}
                 type="button"
-                onClick={() => setHandle(h)}
+                onClick={() => {
+                  setHandle(h);
+                  trackEvent({
+                    name: "select_variant",
+                    params: { product_slug: slug, option: "handle", value: String(h) },
+                  });
+                }}
                 aria-pressed={active}
                 className={cn(
                   "flex flex-col items-start rounded-xl border px-3.5 py-2 transition-all",
@@ -180,9 +186,7 @@ export function BasePurchasePanel({
               className={cn(
                 // cta-sheen (globals.css): відблиск і підйом при наведенні, стиснення при натисканні.
                 "cta-sheen w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all",
-                justAdded
-                  ? "bg-success text-white"
-                  : "bg-accent text-bg-base shadow-accent-glow",
+                justAdded ? "bg-success text-white" : "bg-accent text-bg-base shadow-accent-glow",
               )}
             >
               {justAdded ? `✓ ${t.added}` : t.addToCart}
@@ -209,7 +213,11 @@ export function BasePurchasePanel({
               onClick={() =>
                 trackEvent({
                   name: "phone_click",
-                  params: { location: "product", product_slug: slug, product: `${brandLabel} ${model}` },
+                  params: {
+                    location: "product",
+                    product_slug: slug,
+                    product: `${brandLabel} ${model}`,
+                  },
                 })
               }
               className="block w-full rounded-xl border border-border-strong py-3 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors hover:border-border hover:text-ink"

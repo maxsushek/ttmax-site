@@ -19,6 +19,8 @@ type EcommerceEvent = Extract<
       | "remove_from_cart"
       | "view_cart"
       | "begin_checkout"
+      | "add_shipping_info"
+      | "add_payment_info"
       | "purchase";
   }
 >;
@@ -29,8 +31,17 @@ const ECOMMERCE_EVENTS: ReadonlySet<string> = new Set<EcommerceEvent["name"]>([
   "remove_from_cart",
   "view_cart",
   "begin_checkout",
+  "add_shipping_info",
+  "add_payment_info",
   "purchase",
 ]);
+
+/** Додаткові поля кроків оформлення — GA4 і PostHog отримують їх під тими ж іменами. */
+function stepExtras(e: EcommerceEvent): Record<string, string> {
+  if (e.name === "add_shipping_info") return { shipping_tier: e.params.shippingTier };
+  if (e.name === "add_payment_info") return { payment_type: e.params.paymentType };
+  return {};
+}
 
 function isEcommerce(e: AnalyticsEvent): e is EcommerceEvent {
   return ECOMMERCE_EVENTS.has(e.name);
@@ -65,6 +76,7 @@ export function trackEvent(event: AnalyticsEvent): void {
         ...(event.name === "purchase"
           ? { transaction_id: event.params.transactionId, shipping: event.params.shipping }
           : {}),
+        ...stepExtras(event),
         items: ga4Items(p.items),
       },
     });
@@ -91,9 +103,12 @@ export function trackEvent(event: AnalyticsEvent): void {
       ...(event.name === "purchase"
         ? { transaction_id: event.params.transactionId, shipping: event.params.shipping }
         : {}),
+      ...stepExtras(event),
       items_count: p.items.reduce((s, i) => s + i.quantity, 0),
       product_ids: p.items.map((i) => i.id),
-      ...(single ? { product_id: single.id, product_name: single.name, product_brand: single.brand } : {}),
+      ...(single
+        ? { product_id: single.id, product_name: single.name, product_brand: single.brand }
+        : {}),
     });
     return;
   }

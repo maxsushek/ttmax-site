@@ -29,7 +29,27 @@ export type AnalyticsEvent =
   | { name: "view_cart"; params: EcommerceParams }
   | { name: "begin_checkout"; params: EcommerceParams }
   | { name: "purchase"; params: PurchaseParams }
-  | { name: "conversion"; params: { type: "lead" | "purchase"; value?: number } };
+  | { name: "conversion"; params: { type: "lead" | "purchase"; value?: number } }
+  // Кроки всередині оформлення (назви — як у GA4: add_shipping_info / add_payment_info).
+  | { name: "add_shipping_info"; params: EcommerceParams & { shippingTier: string } }
+  | { name: "add_payment_info"; params: EcommerceParams & { paymentType: string } }
+  // Помилки валідації: лише назви полів, без введених значень.
+  | { name: "checkout_error"; params: { step: number; fields: string; count: number } }
+  | { name: "order_failed"; params: { reason: string } }
+  // Картка товару.
+  | { name: "select_variant"; params: { product_slug: string; option: string; value: string } }
+  | {
+      name: "gallery_navigate";
+      params: { method: "arrow" | "swipe" | "thumb" | "key"; index: number; count: number };
+    }
+  // Каталог.
+  | { name: "filter_apply"; params: { filter: string; value: string; active: boolean } }
+  | { name: "sort_change"; params: { sort: string } }
+  | {
+      name: "view_item_list";
+      params: { list: string; items_count: number; filters_active: number };
+    }
+  | { name: "select_item"; params: { list: string; product_slug: string; position: number } };
 
 export type EventName = AnalyticsEvent["name"];
 

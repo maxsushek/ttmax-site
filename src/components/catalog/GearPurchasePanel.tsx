@@ -101,6 +101,12 @@ export function GearPurchasePanel({
   const pick = (i: number) => {
     if (syncColors) sync.setIndex(i);
     else setLocalIdx(i);
+    const value = hasOptions ? (options as string[])[i] : undefined;
+    if (value)
+      trackEvent({
+        name: "select_variant",
+        params: { product_slug: slug, option: optionKind, value: String(value) },
+      });
   };
 
   // GA4 view_item
@@ -200,9 +206,7 @@ export function GearPurchasePanel({
               className={cn(
                 // cta-sheen (globals.css): відблиск і підйом при наведенні, стиснення при натисканні.
                 "cta-sheen w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all",
-                justAdded
-                  ? "bg-success text-white"
-                  : "bg-accent text-bg-base shadow-accent-glow",
+                justAdded ? "bg-success text-white" : "bg-accent text-bg-base shadow-accent-glow",
               )}
             >
               {justAdded ? `✓ ${t.added}` : t.addToCart}
@@ -229,7 +233,11 @@ export function GearPurchasePanel({
               onClick={() =>
                 trackEvent({
                   name: "phone_click",
-                  params: { location: "product", product_slug: slug, product: `${brandLabel} ${model}` },
+                  params: {
+                    location: "product",
+                    product_slug: slug,
+                    product: `${brandLabel} ${model}`,
+                  },
                 })
               }
               className="block w-full rounded-xl border border-border-strong py-3 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors hover:border-border hover:text-ink"

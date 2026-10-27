@@ -129,12 +129,27 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     return errs;
   };
 
+  // Аналітика кроків: лише назви полів і способи, без введених даних покупця.
+  const stepItems = () => toAnalyticsItems(cart.items);
+  const reportErrors = (step: number, errs: Partial<Record<FieldKey, string>>) => {
+    const fields = Object.keys(errs);
+    trackEvent({
+      name: "checkout_error",
+      params: { step, fields: fields.join(","), count: fields.length },
+    });
+  };
+
   const goStep2 = () => {
     const errs = validate1();
     if (Object.keys(errs).length) {
       setErrors(errs);
+      reportErrors(1, errs);
       return;
     }
+    trackEvent({
+      name: "add_shipping_info",
+      params: { currency: CURRENCY, value: total, items: stepItems(), shippingTier: form.delivery },
+    });
     setDone((p) => Array.from(new Set([...p, 1])) as Array<1 | 2>);
     setStep(2);
   };
@@ -143,8 +158,13 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     const errs = validate2();
     if (Object.keys(errs).length) {
       setErrors(errs);
+      reportErrors(2, errs);
       return;
     }
+    trackEvent({
+      name: "add_payment_info",
+      params: { currency: CURRENCY, value: total, items: stepItems(), paymentType: form.payment },
+    });
     setDone((p) => Array.from(new Set([...p, 2])) as Array<1 | 2>);
     setStep(3);
   };
@@ -243,6 +263,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
       cart.clear();
     } catch (err) {
       console.error("Order submit failed:", err);
+      // HTTP-статус або тип мережевої помилки — щоб бачити втрачені замовлення.
+      trackEvent({
+        name: "order_failed",
+        params: { reason: err instanceof Error ? err.message.slice(0, 60) : "unknown" },
+      });
       setSubmitError(t.submitError);
     } finally {
       setSubmitting(false);
@@ -639,44 +664,44 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                   ]
                     .filter((opt) => AVAILABLE_PAYMENT_METHODS.includes(opt.v))
                     .map((opt) => (
-                    <button
-                      key={opt.v}
-                      type="button"
-                      onClick={() => update("payment", opt.v)}
-                      className={cn(
-                        "flex w-full cursor-pointer items-center gap-3.5 rounded-xl px-4 py-3.5 text-left transition-all",
-                        form.payment === opt.v
-                          ? "border-[1.5px] border-accent bg-accent/[0.06]"
-                          : "border-[1.5px] border-border-subtle bg-white/[0.02] hover:bg-white/[0.04]",
-                      )}
-                    >
-                      <span aria-hidden className="shrink-0 text-[22px]">
-                        {opt.icon}
-                      </span>
-                      <span className="flex-1">
-                        <span
-                          className={cn(
-                            "block font-display text-[15px] font-bold",
-                            form.payment === opt.v ? "text-accent" : "text-ink",
-                          )}
-                        >
-                          {opt.label}
-                        </span>
-                        <span className="mt-0.5 block font-body text-xs text-ink-dim">
-                          {opt.sub}
-                        </span>
-                      </span>
-                      <span
-                        aria-hidden
+                      <button
+                        key={opt.v}
+                        type="button"
+                        onClick={() => update("payment", opt.v)}
                         className={cn(
-                          "h-5 w-5 shrink-0 rounded-full border-2 transition-all",
+                          "flex w-full cursor-pointer items-center gap-3.5 rounded-xl px-4 py-3.5 text-left transition-all",
                           form.payment === opt.v
-                            ? "border-accent bg-accent"
-                            : "border-white/20 bg-transparent",
+                            ? "border-[1.5px] border-accent bg-accent/[0.06]"
+                            : "border-[1.5px] border-border-subtle bg-white/[0.02] hover:bg-white/[0.04]",
                         )}
-                      />
-                    </button>
-                  ))}
+                      >
+                        <span aria-hidden className="shrink-0 text-[22px]">
+                          {opt.icon}
+                        </span>
+                        <span className="flex-1">
+                          <span
+                            className={cn(
+                              "block font-display text-[15px] font-bold",
+                              form.payment === opt.v ? "text-accent" : "text-ink",
+                            )}
+                          >
+                            {opt.label}
+                          </span>
+                          <span className="mt-0.5 block font-body text-xs text-ink-dim">
+                            {opt.sub}
+                          </span>
+                        </span>
+                        <span
+                          aria-hidden
+                          className={cn(
+                            "h-5 w-5 shrink-0 rounded-full border-2 transition-all",
+                            form.payment === opt.v
+                              ? "border-accent bg-accent"
+                              : "border-white/20 bg-transparent",
+                          )}
+                        />
+                      </button>
+                    ))}
                 </div>
 
                 {form.payment === "card" && (
@@ -820,14 +845,14 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                   </div>
                 </div>
                 {/**
-                  * Згода дається самим оформленням — окремої галочки немає й не було.
-                  * Раніше тут стояло «Я погоджуюсь з умовами використання» і текст
-                  * збирався через .replace(): формулювання від першої особи читалось як
-                  * підпис під галочкою, а сам трюк ламався б від будь-якої правки тексту.
-                  * Тепер речення з плейсхолдерами {terms} і {privacy} — обидва стають
-                  * посиланнями. Політика конфіденційності тут потрібна не менше за умови:
-                  * на цьому кроці збираються персональні дані.
-                  */}
+                 * Згода дається самим оформленням — окремої галочки немає й не було.
+                 * Раніше тут стояло «Я погоджуюсь з умовами використання» і текст
+                 * збирався через .replace(): формулювання від першої особи читалось як
+                 * підпис під галочкою, а сам трюк ламався б від будь-якої правки тексту.
+                 * Тепер речення з плейсхолдерами {terms} і {privacy} — обидва стають
+                 * посиланнями. Політика конфіденційності тут потрібна не менше за умови:
+                 * на цьому кроці збираються персональні дані.
+                 */}
                 <p className="mb-4 font-body text-[13px] leading-relaxed text-ink-muted">
                   {(() => {
                     const link = (href: string, label: string) => (
@@ -844,11 +869,13 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     return m.confirm.agreement
                       .split(/(\{terms\}|\{privacy\})/)
                       .map((part, i) =>
-                        part === "{terms}"
-                          ? link("/terms", m.confirm.agreementTerms)
-                          : part === "{privacy}"
-                            ? link("/privacy", m.confirm.agreementPrivacy)
-                            : <span key={i}>{part}</span>,
+                        part === "{terms}" ? (
+                          link("/terms", m.confirm.agreementTerms)
+                        ) : part === "{privacy}" ? (
+                          link("/privacy", m.confirm.agreementPrivacy)
+                        ) : (
+                          <span key={i}>{part}</span>
+                        ),
                       );
                   })()}
                 </p>

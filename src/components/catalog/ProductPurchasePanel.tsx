@@ -114,7 +114,8 @@ export function ProductPurchasePanel({
   const hasPrice = typeof selected?.price === "number" && selected.price > 0;
   const soldOut = selected?.inStock === false;
   // Закреслюємо лише якщо стара ціна справді вища за ціну обраного варіанта.
-  const showOld = hasPrice && typeof oldPrice === "number" && oldPrice > (selected!.price as number);
+  const showOld =
+    hasPrice && typeof oldPrice === "number" && oldPrice > (selected!.price as number);
   const save = showOld ? (oldPrice as number) - (selected!.price as number) : 0;
 
   const cartId = `${slug}__${thickness}__${color}`;
@@ -145,7 +146,7 @@ export function ProductPurchasePanel({
           відсотком: 150 з 4 100 — це 3,66%, круглий «−4%» був би неправдою. */}
       {showOld && (
         <div className="mb-2 flex items-center gap-2.5">
-          <span className="font-body text-base text-ink-dim line-through tabular-nums">
+          <span className="font-body text-base tabular-nums text-ink-dim line-through">
             {formatPrice(oldPrice as number)}
           </span>
           <span className="rounded-full bg-danger/15 px-2.5 py-0.5 font-body text-xs font-bold tabular-nums text-danger ring-1 ring-inset ring-danger/30">
@@ -177,7 +178,13 @@ export function ProductPurchasePanel({
               <button
                 key={c}
                 type="button"
-                onClick={() => setColor(c)}
+                onClick={() => {
+                  setColor(c);
+                  trackEvent({
+                    name: "select_variant",
+                    params: { product_slug: slug, option: "color", value: String(c) },
+                  });
+                }}
                 aria-pressed={active}
                 className={cn(
                   "inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-medium transition-all",
@@ -210,7 +217,13 @@ export function ProductPurchasePanel({
               <button
                 key={th}
                 type="button"
-                onClick={() => setThickness(th)}
+                onClick={() => {
+                  setThickness(th);
+                  trackEvent({
+                    name: "select_variant",
+                    params: { product_slug: slug, option: "thickness", value: String(th) },
+                  });
+                }}
                 aria-pressed={active}
                 className={cn(
                   "min-w-[52px] rounded-xl border px-3.5 py-2 text-sm font-semibold tabular-nums transition-all",
@@ -246,9 +259,7 @@ export function ProductPurchasePanel({
               className={cn(
                 // cta-sheen (globals.css): відблиск і підйом при наведенні, стиснення при натисканні.
                 "cta-sheen w-full rounded-xl py-3.5 font-display text-sm font-bold uppercase tracking-[0.08em] transition-all",
-                justAdded
-                  ? "bg-success text-white"
-                  : "bg-accent text-bg-base shadow-accent-glow",
+                justAdded ? "bg-success text-white" : "bg-accent text-bg-base shadow-accent-glow",
               )}
             >
               {justAdded ? `✓ ${t.added}` : t.addToCart}
@@ -275,7 +286,11 @@ export function ProductPurchasePanel({
               onClick={() =>
                 trackEvent({
                   name: "phone_click",
-                  params: { location: "product", product_slug: slug, product: `${brandLabel} ${model}` },
+                  params: {
+                    location: "product",
+                    product_slug: slug,
+                    product: `${brandLabel} ${model}`,
+                  },
                 })
               }
               className="block w-full rounded-xl border border-border-strong py-3 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors hover:border-border hover:text-ink"

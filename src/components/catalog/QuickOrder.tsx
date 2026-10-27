@@ -111,12 +111,15 @@ export function QuickOrder({
   const openModal = () => {
     setOpen(true);
     setStatus("idle");
-    trackEvent({ name: "lead_form_start", params: { location: "quick-order" } });
+    // Відкрив вікно — «показ форми»; «почав» — лише коли щось увів (onFirstInput).
+    // Так воронка відрізняє тих, хто подивився й закрив, від тих, хто почав заповнювати.
+    trackEvent({ name: "lead_form_view", params: { location: "quick-order" } });
   };
 
   const onFirstInput = () => {
     if (startedRef.current) return;
     startedRef.current = true;
+    trackEvent({ name: "lead_form_start", params: { location: "quick-order" } });
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -193,7 +196,9 @@ export function QuickOrder({
                 <h2 className="font-display text-xl font-black uppercase tracking-tight text-ink">
                   {t.title}
                 </h2>
-                <p className="mt-1 font-body text-[13px] leading-snug text-ink-muted">{t.subtitle}</p>
+                <p className="mt-1 font-body text-[13px] leading-snug text-ink-muted">
+                  {t.subtitle}
+                </p>
               </div>
               <button
                 type="button"
