@@ -18,7 +18,7 @@ export type AnalyticsEvent =
   | { name: "lead_form_start"; params?: { location: string } }
   | { name: "lead_form_submit"; params?: { location: string } }
   | { name: "cta_click"; params: { cta: string; location: string } }
-  | { name: "phone_click"; params?: { location: string } }
+  | { name: "phone_click"; params?: { location: string; product_slug?: string; product?: string } }
   | { name: "email_click"; params?: { location: string } }
   | { name: "whatsapp_click"; params?: { location: string } }
   | { name: "faq_open"; params: { question: string } }

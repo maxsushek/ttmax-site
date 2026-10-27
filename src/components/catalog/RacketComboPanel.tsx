@@ -164,6 +164,12 @@ export function RacketComboPanel({
               href={telHref}
               data-cta="catalog-request-price"
               data-location={slug}
+              onClick={() =>
+                trackEvent({
+                  name: "phone_click",
+                  params: { location: "product", product_slug: slug, product: `${brandLabel} ${model}` },
+                })
+              }
               className="block w-full rounded-xl border border-border-strong py-3 text-center font-display text-sm font-bold uppercase tracking-[0.08em] text-ink-muted transition-colors hover:border-border hover:text-ink"
             >
               {t.request}
