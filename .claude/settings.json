@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "ask": [
+      "mcp__*__apply_migration",
+      "mcp__*__execute_sql"
+    ]
+  }
+}
