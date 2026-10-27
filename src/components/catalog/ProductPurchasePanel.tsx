@@ -9,6 +9,7 @@ import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
 import { QuickOrder } from "@/components/catalog/QuickOrder";
 import type { Color } from "@/types/catalog";
+import { pickDefaultThickness } from "@/lib/catalog/thickness";
 import type { ProductCategory } from "@/types";
 
 /** Сериализуемый срез варианта (server → client). */
@@ -88,7 +89,9 @@ export function ProductPurchasePanel({
   const cart = useCart();
 
   const [color, setColor] = useState<Color>(colors[0] ?? "black");
-  const [thickness, setThickness] = useState<string>(thicknessOptions[0] ?? "");
+  const [thickness, setThickness] = useState<string>(() =>
+    pickDefaultThickness(thicknessOptions, variants, colors[0] ?? "black"),
+  );
 
   // GA4 view_item при відкритті картки товару
   useEffect(() => {
