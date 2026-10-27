@@ -246,7 +246,35 @@ function mistse() {
   );
 }
 
+/* ─── 7. Інвентар профі: вітрина ракеток, більшість — на ALC ─── */
+function profi() {
+  // ⚠️ ВІТРИНА 4×2: стаття — енциклопедія сетапів гравців. Акцентний обідок у більшості
+  // ракеток — головний висновок (переважна більшість чинних гравців Butterfly грає на ALC);
+  // дві тьмяні — меншість на ZLC і спецзамовленнях. Пропорція образна, БЕЗ ЧИСЕЛ.
+  const xs = [850, 1000, 1150, 1290];
+  const ys = [360, 640];
+  const rx = 48;
+  const ry = 58;
+  const hw = 20;
+  const hLen = 88;
+  const dim = new Set(["1-0", "3-1"]); // які дві ракетки «не ALC»
+  const b = [`<circle cx="1070" cy="500" r="290" fill="url(#halo)"/>`];
+  ys.forEach((y, row) => {
+    b.push(`<line x1="790" y1="${y + ry + hLen + 14}" x2="${SAFE.x1 + 10}" y2="${y + ry + hLen + 14}" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="2"/>`);
+    xs.forEach((x, col) => {
+      const off = dim.has(`${col}-${row}`);
+      b.push(
+        `<rect x="${x - hw / 2}" y="${y + ry - 8}" width="${hw}" height="${hLen}" rx="5" fill="${DOT_CORE}" fill-opacity="0.4"/>`,
+        `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${DOT_RING}" fill-opacity="${off ? 0.35 : 0.5}"/>`,
+        `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="none" stroke="${off ? DOT_CORE : ACCENT}" stroke-opacity="${off ? 0.35 : 0.8}" stroke-width="${off ? 1.6 : 3}"/>`,
+      );
+    });
+  });
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "inventar-profi-cover.svg": profi(),
   "tenergy-dignics-cover.svg": tenergyDignics(),
   "novachok-cover.svg": novachok(),
   "tovshchyna-cover.svg": tovshchyna(),

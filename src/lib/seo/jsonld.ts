@@ -522,6 +522,17 @@ export function blogPostingJsonLd(opts: {
   citations?: { name: string; url: string }[];
   /** Головні теми статті → `about` (напр. бренд). */
   about?: { type: "Brand" | "Thing"; name: string }[];
+  /**
+   * Реальні люди, про яких стаття (гравці) → Person у `mentions`. sameAs на Wikidata
+   * однозначно звʼязує ім'я з людиною; фото — ImageObject з ліцензією й автором
+   * (поля, за якими Google Images показує «Ліцензоване зображення»).
+   */
+  people?: {
+    name: string;
+    alternateName?: string;
+    sameAs: string[];
+    image?: { url: string; author: string; license?: string; acquireLicensePage: string };
+  }[];
 }) {
   const {
     url,
@@ -536,6 +547,7 @@ export function blogPostingJsonLd(opts: {
     mentions,
     citations,
     about,
+    people,
   } = opts;
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -554,7 +566,24 @@ export function blogPostingJsonLd(opts: {
   };
   if (images && images.length > 0) node.image = images;
   if (about && about.length > 0) node.about = about.map((a) => ({ "@type": a.type, name: a.name }));
-  if (mentions && mentions.length > 0) node.mentions = mentions.map((u) => ref(productId(u)));
+  const mentionNodes: unknown[] = (mentions ?? []).map((u) => ref(productId(u)));
+  for (const p of people ?? []) {
+    const person: Record<string, unknown> = { "@type": "Person", name: p.name, sameAs: p.sameAs };
+    if (p.alternateName) person.alternateName = p.alternateName;
+    if (p.image) {
+      const img: Record<string, unknown> = {
+        "@type": "ImageObject",
+        contentUrl: p.image.url,
+        creditText: p.image.author,
+        creator: { "@type": "Person", name: p.image.author },
+        acquireLicensePage: p.image.acquireLicensePage,
+      };
+      if (p.image.license) img.license = p.image.license;
+      person.image = img;
+    }
+    mentionNodes.push(person);
+  }
+  if (mentionNodes.length > 0) node.mentions = mentionNodes;
   if (citations && citations.length > 0)
     node.citation = citations.map((c) => ({ "@type": "CreativeWork", name: c.name, url: c.url }));
   return node;

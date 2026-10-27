@@ -5,8 +5,15 @@
 // Фото зберігаємо як Cloudinary publicId прямо тут (heroPublicId) — без entity_media й міграцій.
 import type { Locale } from "@/i18n/config";
 import type { AuthorSlug } from "@/data/authors";
+import type { PlayerSlug } from "@/data/players";
 
 type L = Record<Locale, string>;
+
+/**
+ * Клітинка таблиці. `player` — аватарка гравця перед текстом (фото з Commons або ініціали,
+ * див. src/data/players.ts); з цих же клітинок збираються блок «Фото» і Person у розмітці.
+ */
+export type BlogCell = L & { player?: PlayerSlug };
 
 /** Розділ статті (h2 + абзаци + опційна таблиця + контекстні лінки). id — якір для змісту/сітлінків. */
 export type BlogSection = {
@@ -14,7 +21,7 @@ export type BlogSection = {
   id: string;
   h: L;
   p: Record<Locale, string[]>;
-  table?: { columns: L[]; rows: L[][] };
+  table?: { columns: L[]; rows: BlogCell[][] };
   /**
    * Ілюстрація до розділу — схема або графік, а не фото товару (для фото є `rec`).
    *
@@ -2492,7 +2499,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "основи з ZLC", ru: "основания с ZLC" }, href: "/osnovaniya/zlc" },
     ],
-    relatedPosts: ["versii-osnov-butterfly", "yak-vybraty-raketku", "tenergy-chy-dignics", "yak-nakleity-nakladku"],
+    relatedPosts: ["versii-osnov-butterfly", "inventar-profi-butterfly", "yak-vybraty-raketku", "tenergy-chy-dignics"],
   },
 
   "doglyad-za-nakladkamy": {
@@ -3741,7 +3748,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
       { label: { ua: "Butterfly Tenergy 05", ru: "Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
     ],
-    relatedPosts: ["naykrashchi-nakladki-butterfly", "yak-vybraty-raketku"],
+    relatedPosts: ["naykrashchi-nakladki-butterfly", "inventar-profi-butterfly", "yak-vybraty-raketku"],
     interactive: "rubberPoll",
   },
   "tenergy-chy-dignics": {
@@ -5084,7 +5091,412 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Zhang Jike ALC", ru: "Butterfly Zhang Jike ALC" }, href: "/butterfly/osnovaniya/zhang-jike-alc" },
       { label: { ua: "Butterfly Innerforce Layer ALC", ru: "Butterfly Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
     ],
-    relatedPosts: ["yak-vybraty-raketku", "naykrashchi-nakladki-butterfly", "tenergy-chy-dignics", "alc-chy-zlc"],
+    relatedPosts: ["inventar-profi-butterfly", "yak-vybraty-raketku", "naykrashchi-nakladki-butterfly", "alc-chy-zlc"],
+  },
+
+  "inventar-profi-butterfly": {
+    slug: "inventar-profi-butterfly",
+    // Енциклопедія інвентарю гравців Butterfly (загальна стаття; далі — окремі статті під гравців).
+    // Запити: «чим грають професіонали», «інвентар профі настільний теніс», «якою ракеткою грає Харімото»,
+    // «чем играет Харимото», «инвентарь профессионалов».
+    // УСІ сетапи — блок «使用用具» на сторінках butterfly.co.jp/players/detail/<slug>.html, звірено 27.10.2026,
+    // дата «станом на» — як на сторінці. Порядок на сторінці: основа → форхенд → бекхенд (підтверджено
+    // Pro-Line ракеткою Лінь Юньжу на shop.butterflyonline.com: Zyre 03 FH + Dignics 05 BH).
+    // Фань Чженьдун і Лінь Шидун — Butterfly вказує ОДНУ накладку без сторони. Праймерак і Корбел — без блоку інвентарю.
+    // ⚠️ Дан Цю: Butterfly пише «Viscaria-CS» (китайське перо), Вонг Чунтін — «спецзамовлення, перо ALC»; подаємо як на сторінці.
+    // Підрахунки FH/BH і схема — scripts/gen-pro-rubbers-diagram.mjs (міняєш склад тут — міняй і там).
+    // Реакція/вібрація/товщина основ — bases.ts; жорсткість накладок — картки butterfly.co.jp (= expert.ts).
+    h1: {
+      ua: "Чим грають професіонали: основи й накладки гравців Butterfly у 2026 році",
+      ru: "Чем играют профессионалы: основания и накладки игроков Butterfly в 2026 году",
+    },
+    metaTitle: {
+      ua: "Чим грають профі: інвентар 27 гравців Butterfly | TTMAX",
+      ru: "Чем играют профи: инвентарь 27 игроков Butterfly | TTMAX",
+    },
+    metaDescription: {
+      ua: "🏓 Чим грають Харімото, Лінь Юньжу, Овчаров та ще 24 профі Butterfly: основи й накладки з офіційних сторінок. 18 із 23 — на ALC, лідер — Dignics 09C.",
+      ru: "🏓 Чем играют Харимото, Линь Юньжу, Овчаров и ещё 24 профи Butterfly: основания и накладки с офиц. страниц. 18 из 23 — на ALC, лидер — Dignics 09C.",
+    },
+    excerpt: {
+      ua: "Основа, форхенд і бекхенд 27 гравців Butterfly — від Томокадзу Харімото до Тімо Болля — за офіційними сторінками бренду з датою. Що з цього виходить: ALC, Dignics 09C і Zyre 03.",
+      ru: "Основание, форхенд и бэкхенд 27 игроков Butterfly — от Томокадзу Харимото до Тимо Болля — по официальным страницам бренда с датой. Что из этого следует: ALC, Dignics 09C и Zyre 03.",
+    },
+    datePublished: "2026-10-27",
+    dateModified: "2026-10-27",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/inventar-profi-cover.svg",
+    heroAlt: {
+      ua: "Вітрина силуетів тенісних ракеток професіоналів, більшість підсвічена акцентним кольором",
+      ru: "Витрина силуэтов теннисных ракеток профессионалов, большинство подсвечено акцентным цветом",
+    },
+    intro: {
+      ua: [
+        "Чим грають професіонали в настільний теніс, видно не з чуток, а з першоджерела: Butterfly на своєму японському сайті веде сторінку кожного гравця з блоком «інвентар» і датою, станом на яку він актуальний. Ми звели ці дані для 23 чинних гравців і 4 легенд — основу, накладку на форхенді й на бекхенді.",
+        "Нижче — короткі висновки, як ми збирали дані, таблиці гравців Азії, Європи й Америки та легенд, розбір основ і накладок із характеристиками з каталогу й відповідь, чи варто аматору копіювати сетап профі. Це загальна стаття енциклопедії; розбори окремих гравців виходитимуть далі.",
+      ],
+      ru: [
+        "Чем играют профессионалы в настольный теннис, видно не из слухов, а из первоисточника: Butterfly на своём японском сайте ведёт страницу каждого игрока с блоком «инвентарь» и датой, на которую он актуален. Мы свели эти данные для 23 действующих игроков и 4 легенд — основание, накладку на форхенде и на бэкхенде.",
+        "Ниже — короткие выводы, как мы собирали данные, таблицы игроков Азии, Европы и Америки и легенд, разбор оснований и накладок с характеристиками из каталога и ответ, стоит ли любителю копировать сетап профи. Это общая статья энциклопедии; разборы отдельных игроков выйдут дальше.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротко: чим грають професіонали Butterfly", ru: "Коротко: чем играют профессионалы Butterfly" },
+        p: {
+          ua: [
+            "Типовий сетап профі Butterfly у 2026 році — основа з волокном ALC (арилат-карбон), Dignics 09C на форхенді й Zyre 03 або Dignics 05 на бекхенді. На ALC або Super ALC грають 18 із 23 чинних гравців, Dignics 09C стоїть на форхенді в 10 із 21 гравця, у яких Butterfly вказує обидві накладки.",
+            "Tenergy майже зник: це лише 3 листи з 42. Майже половина гравців — 9 із 21 — клеїть однакову накладку з двох боків. А п’ятеро грають основами за спецзамовленням, яких немає у вільному продажу.",
+          ],
+          ru: [
+            "Типичный сетап профи Butterfly в 2026 году — основание с волокном ALC (арилат-карбон), Dignics 09C на форхенде и Zyre 03 или Dignics 05 на бэкхенде. На ALC или Super ALC играют 18 из 23 действующих игроков, Dignics 09C стоит на форхенде у 10 из 21 игрока, у которых Butterfly указывает обе накладки.",
+            "Tenergy почти исчез: это всего 3 листа из 42. Почти половина игроков — 9 из 21 — клеит одинаковую накладку с двух сторон. А пятеро играют основаниями на спецзаказ, которых нет в свободной продаже.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Показник", ru: "Показатель" },
+            { ua: "Скільки", ru: "Сколько" },
+            { ua: "Приклади", ru: "Примеры" },
+          ],
+          rows: [
+            [{ ua: "Основа ALC або Super ALC", ru: "Основание ALC или Super ALC" }, { ua: "18 із 23", ru: "18 из 23" }, { ua: "Харімото, Лінь Юньжу, Тогамі, Овчаров", ru: "Харимото, Линь Юньжу, Тогами, Овчаров" }],
+            [{ ua: "Основа ZLC", ru: "Основание ZLC" }, { ua: "4 із 23", ru: "4 из 23" }, { ua: "Франціска, Аполонія, Ассар, Полканова", ru: "Франциска, Аполония, Ассар, Полканова" }],
+            [{ ua: "Основа за спецзамовленням", ru: "Основание на спецзаказ" }, { ua: "5 із 23", ru: "5 из 23" }, { ua: "Овчаров, Лінь Шидун, Чжу Юйлін, Діас, Вонг Чунтін", ru: "Овчаров, Линь Шидун, Чжу Юйлин, Диас, Вонг Чунтин" }],
+            [{ ua: "Dignics 09C на форхенді", ru: "Dignics 09C на форхенде" }, { ua: "10 із 21", ru: "10 из 21" }, { ua: "Мацусіма, Тогамі, Овчаров, Чельберг", ru: "Мацусима, Тогами, Овчаров, Чельберг" }],
+            [{ ua: "Zyre 03 на бекхенді", ru: "Zyre 03 на бэкхенде" }, { ua: "8 із 21", ru: "8 из 21" }, { ua: "Т. Харімото, Мацусіма, Тогамі, Овчаров", ru: "Т. Харимото, Мацусима, Тогами, Овчаров" }],
+            [{ ua: "Однакові накладки з двох боків", ru: "Одинаковые накладки с двух сторон" }, { ua: "9 із 21", ru: "9 из 21" }, { ua: "Т. Харімото, Чен Іцзін, Полканова", ru: "Т. Харимото, Чэн Ицзин, Полканова" }],
+            [{ ua: "Tenergy (будь-яка сторона)", ru: "Tenergy (любая сторона)" }, { ua: "3 листи з 42", ru: "3 листа из 42" }, { ua: "Чжу Юйлін, Лім Джонхун, Вонг Чунтін", ru: "Чжу Юйлин, Лим Чжонхун, Вонг Чунтин" }],
+          ],
+        },
+        links: [
+          { label: { ua: "основи ALC", ru: "основания ALC" }, href: "/osnovaniya/alc" },
+          { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+        ],
+      },
+      {
+        id: "dzherela",
+        h: { ua: "Звідки дані й наскільки вони свіжі", ru: "Откуда данные и насколько они свежие" },
+        p: {
+          ua: [
+            "Усі сетапи взято з офіційних сторінок гравців на butterfly.co.jp: у кожного є блок «інвентар» із датою, станом на яку його оновлено. Ми звірили їх 27.10.2026 й показуємо цю дату в таблицях — у профі сетап міняється, і стара дата означає, що варто перевірити.",
+            "Сторони на сторінці не підписані, але порядок сталий: основа, форхенд, бекхенд. Це підтверджує готова Pro-Line ракетка Лінь Юньжу, яку продає Butterfly North America: Zyre 03 на форхенді й Dignics 05 на бекхенді — точно в порядку японської сторінки.",
+            "У двох китайських гравців — Фань Чженьдуна й Лінь Шидуна — Butterfly вказує лише одну накладку й не пише, на якому вона боці, тому в підрахунок «форхенд/бекхенд» вони не входять. У Зорана Приморца й Петра Корбела, яких Butterfly відносить до легенд, блоку інвентарю немає.",
+          ],
+          ru: [
+            "Все сетапы взяты с официальных страниц игроков на butterfly.co.jp: у каждого есть блок «инвентарь» с датой, на которую он обновлён. Мы сверили их 27.10.2026 и показываем эту дату в таблицах — у профи сетап меняется, и старая дата означает, что стоит перепроверить.",
+            "Стороны на странице не подписаны, но порядок постоянный: основание, форхенд, бэкхенд. Это подтверждает готовая Pro-Line ракетка Линь Юньжу, которую продаёт Butterfly North America: Zyre 03 на форхенде и Dignics 05 на бэкхенде — ровно в порядке японской страницы.",
+            "У двух китайских игроков — Фань Чжэньдуна и Линь Шидуна — Butterfly указывает только одну накладку и не пишет, на какой она стороне, поэтому в подсчёт «форхенд/бэкхенд» они не входят. У Зорана Приморца и Петра Корбела, которых Butterfly относит к легендам, блока инвентаря нет.",
+          ],
+        },
+      },
+      {
+        id: "aziya",
+        h: { ua: "Інвентар гравців Азії: Харімото, Тогамі, Лінь Юньжу, Фань Чженьдун", ru: "Инвентарь игроков Азии: Харимото, Тогами, Линь Юньжу, Фань Чжэньдун" },
+        p: {
+          ua: [
+            "Серед азійських гравців найпомітніший збіг — японська молодь. Сора Мацусіма, Сюнсуке Тогамі й Хірото Сінодзука грають однаковою парою накладок: Dignics 09C на форхенді й Zyre 03 на бекхенді. Перші двоє — ще й на одній основі, Fan Zhendong ALC.",
+            "Томокадзу Харімото (Harimoto Tomokazu) грає власною основою Innerforce Super ALC і Zyre 03 з обох боків; його сестра Міва Харімото — тією ж основою, але з Dignics 09C і Dignics 05. Лінь Юньжу (Lin Yun-Ju) з січня 2026 року — Viscaria Super ALC, Zyre 03 і Dignics 05.",
+          ],
+          ru: [
+            "Среди азиатских игроков самое заметное совпадение — японская молодёжь. Сора Мацусима, Сюнсукэ Тогами и Хирото Синодзука играют одинаковой парой накладок: Dignics 09C на форхенде и Zyre 03 на бэкхенде. Первые двое — ещё и на одном основании, Fan Zhendong ALC.",
+            "Томокадзу Харимото (Harimoto Tomokazu) играет собственным основанием Innerforce Super ALC и Zyre 03 с двух сторон; его сестра Мива Харимото — тем же основанием, но с Dignics 09C и Dignics 05. Линь Юньжу (Lin Yun-Ju) с января 2026 года — Viscaria Super ALC, Zyre 03 и Dignics 05.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Гравець", ru: "Игрок" },
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Форхенд", ru: "Форхенд" },
+            { ua: "Бекхенд", ru: "Бэкхенд" },
+            { ua: "Станом на", ru: "На дату" },
+          ],
+          rows: [
+            [{ ua: "Томокадзу Харімото (JPN)", ru: "Томокадзу Харимото (JPN)", player: "harimoto-tomokazu" }, { ua: "Harimoto Tomokazu Innerforce Super ALC", ru: "Harimoto Tomokazu Innerforce Super ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "11.10.2025", ru: "11.10.2025" }],
+            [{ ua: "Міва Харімото (JPN)", ru: "Мива Харимото (JPN)", player: "harimoto-miwa" }, { ua: "Harimoto Tomokazu Innerforce Super ALC", ru: "Harimoto Tomokazu Innerforce Super ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "18.12.2025", ru: "18.12.2025" }],
+            [{ ua: "Сора Мацусіма (JPN)", ru: "Сора Мацусима (JPN)", player: "matsushima-sora" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "01.10.2025", ru: "01.10.2025" }],
+            [{ ua: "Сюнсуке Тогамі (JPN)", ru: "Сюнсукэ Тогами (JPN)", player: "togami-shunsuke" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "21.05.2026", ru: "21.05.2026" }],
+            [{ ua: "Хірото Сінодзука (JPN)", ru: "Хирото Синодзука (JPN)", player: "shinozuka-hiroto" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "19.01.2026", ru: "19.01.2026" }],
+            [{ ua: "Фань Чженьдун (CHN)", ru: "Фань Чжэньдун (CHN)", player: "fan-zhendong" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C (сторону не вказано)", ru: "Dignics 09C (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "19.07.2022", ru: "19.07.2022" }],
+            [{ ua: "Лінь Шидун (CHN)", ru: "Линь Шидун (CHN)", player: "lin-shidong" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Dignics 09C (сторону не вказано)", ru: "Dignics 09C (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "01.06.2022", ru: "01.06.2022" }],
+            [{ ua: "Лінь Юньжу (TPE)", ru: "Линь Юньжу (TPE)", player: "lin-yunju" }, { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "05.01.2026", ru: "05.01.2026" }],
+            [{ ua: "Чен Іцзін (TPE)", ru: "Чэн Ицзин (TPE)", player: "cheng-i-ching" }, { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "16.03.2026", ru: "16.03.2026" }],
+            [{ ua: "Чжу Юйлін (MAC)", ru: "Чжу Юйлин (MAC)", player: "zhu-yuling" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "16.02.2026", ru: "16.02.2026" }],
+            [{ ua: "Лім Джонхун (KOR)", ru: "Лим Чжонхун (KOR)", player: "lim-jonghoon" }, { ua: "Lim Jonghoon Advance", ru: "Lim Jonghoon Advance" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "07.10.2026", ru: "07.10.2026" }],
+            [{ ua: "Вонг Чунтін (HKG)", ru: "Вонг Чунтин (HKG)", player: "wong-chun-ting" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "06.08.2021", ru: "06.08.2021" }],
+          ],
+        },
+        links: [
+          { label: { ua: "основа Harimoto Tomokazu Innerforce Super ALC", ru: "основание Harimoto Tomokazu Innerforce Super ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-super-alc" },
+          { label: { ua: "основа Fan Zhendong ALC", ru: "основание Fan Zhendong ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+          { label: { ua: "основа Viscaria Super ALC", ru: "основание Viscaria Super ALC" }, href: "/butterfly/osnovaniya/viscaria-super-alc" },
+        ],
+      },
+      {
+        id: "yevropa-amerika",
+        h: { ua: "Інвентар гравців Європи, Америки й Африки: Овчаров, Франціска, Фрейташ", ru: "Инвентарь игроков Европы, Америки и Африки: Овчаров, Франциска, Фрейташ" },
+        p: {
+          ua: [
+            "У європейців частіше трапляються іменні основи: свої моделі мають Патрік Франціска, Маркуш Фрейташ, Тіагу Аполонія й Омар Ассар. Дмитро Овчаров (Dimitrij Ovtcharov) грає основою за спецзамовленням з ALC, Dignics 09C на форхенді й Zyre 03 на бекхенді — тією ж парою накладок, що й японська молодь.",
+            "Антон Чельберг і Канак Джха грають Timo Boll ALC, але з різними накладками: Чельберг — Dignics 09C з обох боків, Джха — Zyre 03 з обох боків. У Дана Цю Butterfly вказує Viscaria-CS — версію Viscaria з тим самим ALC.",
+          ],
+          ru: [
+            "У европейцев чаще встречаются именные основания: свои модели есть у Патрика Франциски, Маркуша Фрейташа, Тиагу Аполонии и Омара Ассара. Дмитрий Овчаров (Dimitrij Ovtcharov) играет основанием на спецзаказ с ALC, Dignics 09C на форхенде и Zyre 03 на бэкхенде — той же парой накладок, что и японская молодёжь.",
+            "Антон Чельберг и Канак Джа играют Timo Boll ALC, но с разными накладками: Чельберг — Dignics 09C с двух сторон, Джа — Zyre 03 с двух сторон. У Дана Цю Butterfly указывает Viscaria-CS — версию Viscaria с тем же ALC.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Гравець", ru: "Игрок" },
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Форхенд", ru: "Форхенд" },
+            { ua: "Бекхенд", ru: "Бэкхенд" },
+            { ua: "Станом на", ru: "На дату" },
+          ],
+          rows: [
+            [{ ua: "Дмитро Овчаров (GER)", ru: "Дмитрий Овчаров (GER)", player: "ovtcharov-dimitrij" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Патрік Франціска (GER)", ru: "Патрик Франциска (GER)", player: "franziska-patrick" }, { ua: "Franziska Innerforce ZLC", ru: "Franziska Innerforce ZLC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "15.06.2026", ru: "15.06.2026" }],
+            [{ ua: "Дан Цю (GER)", ru: "Дан Цю (GER)", player: "qiu-dang" }, { ua: "Viscaria-CS", ru: "Viscaria-CS" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "20.09.2026", ru: "20.09.2026" }],
+            [{ ua: "Антон Чельберг (SWE)", ru: "Антон Чельберг (SWE)", player: "kallberg-anton" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Маркуш Фрейташ (POR)", ru: "Маркуш Фрейташ (POR)", player: "freitas-marcos" }, { ua: "Freitas ALC", ru: "Freitas ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "24.03.2026", ru: "24.03.2026" }],
+            [{ ua: "Тіагу Аполонія (POR)", ru: "Тиагу Аполония (POR)", player: "apolonia-tiago" }, { ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "11.04.2025", ru: "11.04.2025" }],
+            [{ ua: "Андрей Гачина (CRO)", ru: "Андрей Гачина (CRO)", player: "gacina-andrej" }, { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Софія Полканова (AUT)", ru: "Софья Полканова (AUT)", player: "polcanova-sofia" }, { ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "14.02.2025", ru: "14.02.2025" }],
+            [{ ua: "Канак Джха (USA)", ru: "Канак Джа (USA)", player: "jha-kanak" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "11.02.2026", ru: "11.02.2026" }],
+            [{ ua: "Адріана Діас (PUR)", ru: "Адриана Диас (PUR)", player: "diaz-adriana" }, { ua: "спецзамовлення, Super ALC", ru: "спецзаказ, Super ALC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "17.09.2025", ru: "17.09.2025" }],
+            [{ ua: "Омар Ассар (EGY)", ru: "Омар Ассар (EGY)", player: "assar-omar" }, { ua: "Omar Assar Innerforce ZLC", ru: "Omar Assar Innerforce ZLC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+          ],
+        },
+        links: [
+          { label: { ua: "основа Franziska Innerforce ZLC", ru: "основание Franziska Innerforce ZLC" }, href: "/butterfly/osnovaniya/franziska-innerforce-zlc" },
+          { label: { ua: "основа Freitas ALC", ru: "основание Freitas ALC" }, href: "/butterfly/osnovaniya/freitas-alc" },
+          { label: { ua: "основа Apolonia ZLC", ru: "основание Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
+          { label: { ua: "основа Omar Assar Innerforce ZLC", ru: "основание Omar Assar Innerforce ZLC" }, href: "/butterfly/osnovaniya/omar-assar-zlc" },
+        ],
+      },
+      {
+        id: "legendy",
+        h: { ua: "Чим грають легенди: Тімо Болль, Мідзутані, Мейс", ru: "Чем играют легенды: Тимо Болль, Мидзутани, Мэйз" },
+        p: {
+          ua: [
+            "Легенди Butterfly грають основами, які давно стали серійними. Тімо Болль (Timo Boll) — Timo Boll ALC з ручкою за спецзамовленням і Dignics 05 з обох боків; тією ж основою й накладками грає Міхаель Мейс. Дзюн Мідзутані — Mizutani Jun ZLC і Dignics 80 з обох боків.",
+            "Дати тут старіші — 2021–2024 роки: це сетапи часів активної кар’єри або останні оновлення сторінок. Як орієнтир для вибору вони корисні, але не як «чим він грає сьогодні».",
+          ],
+          ru: [
+            "Легенды Butterfly играют основаниями, которые давно стали серийными. Тимо Болль (Timo Boll) — Timo Boll ALC с ручкой на спецзаказ и Dignics 05 с двух сторон; тем же основанием и накладками играет Михаэль Мэйз. Дзюн Мидзутани — Mizutani Jun ZLC и Dignics 80 с двух сторон.",
+            "Даты здесь старше — 2021–2024 годы: это сетапы времён активной карьеры или последние обновления страниц. Как ориентир для выбора они полезны, но не как «чем он играет сегодня».",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Гравець", ru: "Игрок" },
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Форхенд", ru: "Форхенд" },
+            { ua: "Бекхенд", ru: "Бэкхенд" },
+            { ua: "Станом на", ru: "На дату" },
+          ],
+          rows: [
+            [{ ua: "Тімо Болль (GER)", ru: "Тимо Болль (GER)", player: "boll-timo" }, { ua: "Timo Boll ALC (ручка G-FLESS на замовлення)", ru: "Timo Boll ALC (ручка G-FLESS на заказ)" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "14.02.2024", ru: "14.02.2024" }],
+            [{ ua: "Дзюн Мідзутані (JPN)", ru: "Дзюн Мидзутани (JPN)", player: "mizutani-jun" }, { ua: "Mizutani Jun ZLC", ru: "Mizutani Jun ZLC" }, { ua: "Dignics 80", ru: "Dignics 80" }, { ua: "Dignics 80", ru: "Dignics 80" }, { ua: "09.07.2021", ru: "09.07.2021" }],
+            [{ ua: "Міхаель Мейс (DEN)", ru: "Михаэль Мэйз (DEN)", player: "maze-michael" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "09.07.2021", ru: "09.07.2021" }],
+            [{ ua: "Чжуан Чжиюань (TPE)", ru: "Чжуан Чжиюань (TPE)", player: "chuang-chih-yuan" }, { ua: "спецзамовлення, Super ZLC", ru: "спецзаказ, Super ZLC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "09.07.2021", ru: "09.07.2021" }],
+          ],
+        },
+        links: [
+          { label: { ua: "основа Timo Boll ALC", ru: "основание Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+          { label: { ua: "основа Mizutani ZLC", ru: "основание Mizutani ZLC" }, href: "/butterfly/osnovaniya/mizutani-zlc" },
+          { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+        ],
+      },
+      {
+        id: "osnovy",
+        h: { ua: "Основи професіоналів: ALC переважає, ZLC — у меншості", ru: "Основания профессионалов: ALC преобладает, ZLC — в меньшинстве" },
+        p: {
+          ua: [
+            "Серійні основи профі майже всі мають два шари штучного волокна в класичній схемі 5+2. Найпопулярніші — Timo Boll ALC, Viscaria Super ALC і Fan Zhendong ALC: кожною грають по троє чинних гравців. Характеристики нижче — офіційні числа Butterfly з нашого каталогу: реакція — базова швидкість, вібрація — наскільки жорстко відчувається удар.",
+            "Видно дві школи. Outer-основи (волокно під верхнім шпоном) — Timo Boll ALC, Fan Zhendong ALC, Viscaria Super ALC — дають реакцію 11,8–12,1. Inner-основи (волокно біля ядра) — Harimoto Innerforce Super ALC, Franziska, Apolonia — м’якші за вібрацією: 9,5. Детальніше про матеріали — у статті «ALC чи ZLC».",
+          ],
+          ru: [
+            "Серийные основания профи почти все имеют два слоя искусственного волокна в классической схеме 5+2. Самые популярные — Timo Boll ALC, Viscaria Super ALC и Fan Zhendong ALC: каждым играют по трое действующих игроков. Характеристики ниже — официальные числа Butterfly из нашего каталога: реакция — базовая скорость, вибрация — насколько жёстко ощущается удар.",
+            "Видны две школы. Outer-основания (волокно под верхним шпоном) — Timo Boll ALC, Fan Zhendong ALC, Viscaria Super ALC — дают реакцию 11,8–12,1. Inner-основания (волокно у ядра) — Harimoto Innerforce Super ALC, Franziska, Apolonia — мягче по вибрации: 9,5. Подробнее о материалах — в статье «ALC или ZLC».",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Хто грає", ru: "Кто играет" },
+            { ua: "Волокно", ru: "Волокно" },
+            { ua: "Реакція / вібрація", ru: "Реакция / вибрация" },
+            { ua: "Товщина", ru: "Толщина" },
+          ],
+          rows: [
+            [{ ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Сінодзука, Чельберг, Джха, Болль, Мейс", ru: "Синодзука, Чельберг, Джа, Болль, Мэйз" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8 / 10,3", ru: "11,8 / 10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Лінь Юньжу, Чен Іцзін, Гачина", ru: "Линь Юньжу, Чэн Ицзин, Гачина" }, { ua: "Super ALC, outer", ru: "Super ALC, outer" }, { ua: "12,1 / 10,1", ru: "12,1 / 10,1" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Фань Чженьдун, Мацусіма, Тогамі", ru: "Фань Чжэньдун, Мацусима, Тогами" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8 / 10,3", ru: "11,8 / 10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Harimoto Tomokazu Innerforce Super ALC", ru: "Harimoto Tomokazu Innerforce Super ALC" }, { ua: "Т. Харімото, М. Харімото", ru: "Т. Харимото, М. Харимото" }, { ua: "Super ALC, inner", ru: "Super ALC, inner" }, { ua: "11,4 / 9,5", ru: "11,4 / 9,5" }, { ua: "5,9 мм", ru: "5,9 мм" }],
+            [{ ua: "Freitas ALC", ru: "Freitas ALC" }, { ua: "Фрейташ", ru: "Фрейташ" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,4 / 10,8", ru: "11,4 / 10,8" }, { ua: "6,0 мм", ru: "6,0 мм" }],
+            [{ ua: "Franziska Innerforce ZLC", ru: "Franziska Innerforce ZLC" }, { ua: "Франціска", ru: "Франциска" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5 / 9,5", ru: "10,5 / 9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, { ua: "Аполонія", ru: "Аполония" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5 / 9,5", ru: "10,5 / 9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, { ua: "Полканова", ru: "Полканова" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "10,5 / 9,5", ru: "10,5 / 9,5" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+            [{ ua: "Omar Assar Innerforce ZLC", ru: "Omar Assar Innerforce ZLC" }, { ua: "Ассар", ru: "Ассар" }, { ua: "ZLC, inner", ru: "ZLC, inner" }, { ua: "12,0 / 10,6", ru: "12,0 / 10,6" }, { ua: "6,2 мм", ru: "6,2 мм" }],
+            [{ ua: "Mizutani ZLC", ru: "Mizutani ZLC" }, { ua: "Мідзутані", ru: "Мидзутани" }, { ua: "ZLC, outer", ru: "ZLC, outer" }, { ua: "11,8 / 11,2", ru: "11,8 / 11,2" }, { ua: "5,7 мм", ru: "5,7 мм" }],
+          ],
+        },
+        links: [
+          { label: { ua: "усі основи ALC", ru: "все основания ALC" }, href: "/osnovaniya/alc" },
+          { label: { ua: "усі основи ZLC", ru: "все основания ZLC" }, href: "/osnovaniya/zlc" },
+          { label: { ua: "ALC чи ZLC: що обрати", ru: "ALC или ZLC: что выбрать" }, href: "/blog/alc-chy-zlc" },
+        ],
+      },
+      {
+        id: "nakladky",
+        h: { ua: "Накладки професіоналів: Dignics 09C на форхенді, Zyre 03 на бекхенді", ru: "Накладки профессионалов: Dignics 09C на форхенде, Zyre 03 на бэкхенде" },
+        p: {
+          ua: [
+            "У накладках профі розподіл чіткий: на форхенді лідирує липка Dignics 09C (10 гравців із 21), на бекхенді — Zyre 03 (8 гравців). Dignics 05 частіше стоїть на бекхенді (7), ніж на форхенді (3). Усе це жорсткі губки: 40–44 за шкалою Butterfly.",
+            "Tenergy 05 Hard тримається лише в трьох азійських гравців. А дев’ятеро з 21 клеять однакову накладку з обох боків — найчастіше Zyre 03 або Dignics 05.",
+          ],
+          ru: [
+            "В накладках профи распределение чёткое: на форхенде лидирует липкая Dignics 09C (10 игроков из 21), на бэкхенде — Zyre 03 (8 игроков). Dignics 05 чаще стоит на бэкхенде (7), чем на форхенде (3). Всё это жёсткие губки: 40–44 по шкале Butterfly.",
+            "Tenergy 05 Hard держится только у трёх азиатских игроков. А девятеро из 21 клеят одинаковую накладку с двух сторон — чаще всего Zyre 03 или Dignics 05.",
+          ],
+        },
+        image: {
+          src: { ua: "/blog/profi-nakladky-ua.svg", ru: "/blog/profi-nakladky-ru.svg" },
+          alt: {
+            ua: "Діаграма: скільки професіоналів Butterfly клеять Dignics 09C, Zyre 03, Dignics 05 і Tenergy 05 Hard на форхенд і бекхенд",
+            ru: "Диаграмма: сколько профессионалов Butterfly клеят Dignics 09C, Zyre 03, Dignics 05 и Tenergy 05 Hard на форхенд и бэкхенд",
+          },
+          caption: {
+            ua: "21 гравець, у якого Butterfly вказує обидві накладки; дані сторінок butterfly.co.jp станом на 27.10.2026",
+            ru: "21 игрок, у которого Butterfly указывает обе накладки; данные страниц butterfly.co.jp на 27.10.2026",
+          },
+        },
+        table: {
+          columns: [
+            { ua: "Накладка", ru: "Накладка" },
+            { ua: "Форхенд", ru: "Форхенд" },
+            { ua: "Бекхенд", ru: "Бэкхенд" },
+            { ua: "Жорсткість губки", ru: "Жёсткость губки" },
+            { ua: "Хто грає", ru: "Кто играет" },
+          ],
+          rows: [
+            [{ ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "10", ru: "10" }, { ua: "5", ru: "5" }, { ua: "44", ru: "44" }, { ua: "Мацусіма, Тогамі, Овчаров, Чельберг", ru: "Мацусима, Тогами, Овчаров, Чельберг" }],
+            [{ ua: "Zyre 03", ru: "Zyre 03" }, { ua: "6", ru: "6" }, { ua: "8", ru: "8" }, { ua: "44", ru: "44" }, { ua: "Т. Харімото, Лінь Юньжу, Чен Іцзін, Джха", ru: "Т. Харимото, Линь Юньжу, Чэн Ицзин, Джа" }],
+            [{ ua: "Dignics 05", ru: "Dignics 05" }, { ua: "3", ru: "3" }, { ua: "7", ru: "7" }, { ua: "40", ru: "40" }, { ua: "Аполонія, Полканова, Діас, М. Харімото", ru: "Аполония, Полканова, Диас, М. Харимото" }],
+            [{ ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "2", ru: "2" }, { ua: "1", ru: "1" }, { ua: "43", ru: "43" }, { ua: "Чжу Юйлін, Лім Джонхун, Вонг Чунтін", ru: "Чжу Юйлин, Лим Чжонхун, Вонг Чунтин" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+          { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+          { label: { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
+        ],
+      },
+      {
+        id: "chy-kopiyuvaty",
+        h: { ua: "Чи варто аматору грати інвентарем профі", ru: "Стоит ли любителю играть инвентарём профи" },
+        p: {
+          ua: [
+            "Скопіювати сетап профі можна майже повністю: усі накладки з таблиць серійні, а більшість основ продаються під тими ж назвами. Винятки — п’ять основ за спецзамовленням і Lim Jonghoon Advance, яку Butterfly позначає як таку, що не продається в Японії.",
+            "Але це інвентар для сильного удару. Губки жорсткістю 40–44 і швидкі карбонові основи розкриваються, коли м’яч б’ють повною амплітудою; на повільному аматорському ударі такий сетап здається жорстким і «скляним». Для старту краще накладка м’якша й основа повільніша — про це окремі статті.",
+            "Розумний шлях — брати від профі напрям, а не точну копію. Подобається сетап Тогамі — спробуйте Fan Zhendong ALC з м’якшими накладками; подобається Тімо Болль — Timo Boll ALC з Dignics 05 або Tenergy. Товщину губки під свій рівень підкажуть таблиці в статті про товщину.",
+          ],
+          ru: [
+            "Скопировать сетап профи можно почти полностью: все накладки из таблиц серийные, а большинство оснований продаются под теми же названиями. Исключения — пять оснований на спецзаказ и Lim Jonghoon Advance, которую Butterfly помечает как не продающуюся в Японии.",
+            "Но это инвентарь для сильного удара. Губки жёсткостью 40–44 и быстрые карбоновые основания раскрываются, когда мяч бьют полной амплитудой; на медленном любительском ударе такой сетап кажется жёстким и «стеклянным». Для старта лучше накладка мягче и основание медленнее — об этом отдельные статьи.",
+            "Разумный путь — брать у профи направление, а не точную копию. Нравится сетап Тогами — попробуйте Fan Zhendong ALC с более мягкими накладками; нравится Тимо Болль — Timo Boll ALC с Dignics 05 или Tenergy. Толщину губки под свой уровень подскажут таблицы в статье о толщине.",
+          ],
+        },
+        links: [
+          { label: { ua: "накладка для початківця", ru: "накладка для новичка" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
+          { label: { ua: "товщина губки накладки", ru: "толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
+          { label: { ua: "спецзамовлення й основи профі", ru: "спецзаказ и основания профи" }, href: "/blog/versii-osnov-butterfly" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Якою ракеткою грає Томокадзу Харімото?", ru: "Какой ракеткой играет Томокадзу Харимото?" },
+        a: {
+          ua: "За сторінкою Butterfly станом на 11.10.2025, Томокадзу Харімото грає основою Harimoto Tomokazu Innerforce Super ALC і накладками Zyre 03 з обох боків. Основа — inner Super ALC з реакцією 11,4 і вібрацією 9,5 за даними Butterfly.",
+          ru: "По странице Butterfly на 11.10.2025, Томокадзу Харимото играет основанием Harimoto Tomokazu Innerforce Super ALC и накладками Zyre 03 с двух сторон. Основание — inner Super ALC с реакцией 11,4 и вибрацией 9,5 по данным Butterfly.",
+        },
+      },
+      {
+        q: { ua: "Чим грає Лінь Юньжу?", ru: "Чем играет Линь Юньжу?" },
+        a: {
+          ua: "Станом на 05.01.2026 Лінь Юньжу грає основою Viscaria Super ALC, Zyre 03 на форхенді й Dignics 05 на бекхенді. Ту саму комбінацію Butterfly North America продає як готову Pro-Line ракетку.",
+          ru: "На 05.01.2026 Линь Юньжу играет основанием Viscaria Super ALC, Zyre 03 на форхенде и Dignics 05 на бэкхенде. Ту же комбинацию Butterfly North America продаёт как готовую Pro-Line ракетку.",
+        },
+      },
+      {
+        q: { ua: "Чим грає Фань Чженьдун?", ru: "Чем играет Фань Чжэньдун?" },
+        a: {
+          ua: "Butterfly вказує в Фань Чженьдуна основу Fan Zhendong ALC і одну накладку — Dignics 09C, не уточнюючи сторону. Дані на сторінці датовані 19.07.2022, тож сетап міг змінитися.",
+          ru: "Butterfly указывает у Фань Чжэньдуна основание Fan Zhendong ALC и одну накладку — Dignics 09C, не уточняя сторону. Данные на странице датированы 19.07.2022, так что сетап мог измениться.",
+        },
+      },
+      {
+        q: { ua: "Чим грає Тімо Болль?", ru: "Чем играет Тимо Болль?" },
+        a: {
+          ua: "Станом на 14.02.2024 Тімо Болль грає основою Timo Boll ALC з ручкою G-FLESS за спецзамовленням і Dignics 05 з обох боків. Серійна Timo Boll ALC має реакцію 11,8 і товщину 5,8 мм.",
+          ru: "На 14.02.2024 Тимо Болль играет основанием Timo Boll ALC с ручкой G-FLESS на спецзаказ и Dignics 05 с двух сторон. Серийное Timo Boll ALC имеет реакцию 11,8 и толщину 5,8 мм.",
+        },
+      },
+      {
+        q: { ua: "Яка накладка найпопулярніша серед професіоналів?", ru: "Какая накладка самая популярная у профессионалов?" },
+        a: {
+          ua: "Серед гравців Butterfly — Dignics 09C: вона стоїть на форхенді в 10 із 21 гравця й на бекхенді ще в 5. На бекхенді лідирує Zyre 03 — 8 гравців.",
+          ru: "Среди игроков Butterfly — Dignics 09C: она стоит на форхенде у 10 из 21 игрока и на бэкхенде ещё у 5. На бэкхенде лидирует Zyre 03 — 8 игроков.",
+        },
+      },
+      {
+        q: { ua: "Чи можна купити таку саму ракетку, як у профі?", ru: "Можно ли купить такую же ракетку, как у профи?" },
+        a: {
+          ua: "Здебільшого так: накладки серійні, а основи на кшталт Timo Boll ALC, Viscaria Super ALC чи Fan Zhendong ALC продаються під тими ж назвами. Не повторити лише основи за спецзамовленням — їх мають Овчаров, Лінь Шидун, Чжу Юйлін, Діас і Вонг Чунтін.",
+          ru: "В основном да: накладки серийные, а основания вроде Timo Boll ALC, Viscaria Super ALC или Fan Zhendong ALC продаются под теми же названиями. Не повторить только основания на спецзаказ — они у Овчарова, Линь Шидуна, Чжу Юйлин, Диас и Вонг Чунтина.",
+        },
+      },
+      {
+        q: { ua: "Чи підійде новачку інвентар професіонала?", ru: "Подойдёт ли новичку инвентарь профессионала?" },
+        a: {
+          ua: "Як правило, ні: губки жорсткістю 40–44 й швидкі карбонові основи розраховані на сильний удар з повною амплітудою. Новачку легше контролювати м’якшу накладку й повільнішу основу, а до сетапу профі переходити поступово.",
+          ru: "Как правило, нет: губки жёсткостью 40–44 и быстрые карбоновые основания рассчитаны на сильный удар с полной амплитудой. Новичку легче контролировать более мягкую накладку и медленное основание, а к сетапу профи переходить постепенно.",
+        },
+      },
+      {
+        q: { ua: "Наскільки актуальні ці дані?", ru: "Насколько актуальны эти данные?" },
+        a: {
+          ua: "Кожен сетап у таблицях має дату, станом на яку Butterfly оновив сторінку гравця, — від 2021 до жовтня 2026 року. Ми звірили всі сторінки 27.10.2026 і оновлюватимемо статтю, коли Butterfly змінюватиме дані.",
+          ru: "У каждого сетапа в таблицах есть дата, на которую Butterfly обновил страницу игрока, — от 2021 до октября 2026 года. Мы сверили все страницы 27.10.2026 и будем обновлять статью, когда Butterfly изменит данные.",
+        },
+      },
+    ],
+    officialSource: {
+      label: { ua: "Butterfly Japan — гравці й їхній інвентар", ru: "Butterfly Japan — игроки и их инвентарь" },
+      url: "https://www.butterfly.co.jp/players/",
+    },
+    sources: [
+      { label: { ua: "Butterfly Japan — Томокадзу Харімото, інвентар", ru: "Butterfly Japan — Томокадзу Харимото, инвентарь" }, url: "https://www.butterfly.co.jp/players/detail/harimoto-tomokazu.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Лінь Юньжу, інвентар", ru: "Butterfly Japan — Линь Юньжу, инвентарь" }, url: "https://www.butterfly.co.jp/players/detail/lin-yunju.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Фань Чженьдун, інвентар", ru: "Butterfly Japan — Фань Чжэньдун, инвентарь" }, url: "https://www.butterfly.co.jp/players/detail/fan-zhendong.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Дмитро Овчаров, інвентар", ru: "Butterfly Japan — Дмитрий Овчаров, инвентарь" }, url: "https://www.butterfly.co.jp/players/detail/ovtcharov-dimitrij.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Тімо Болль, інвентар", ru: "Butterfly Japan — Тимо Болль, инвентарь" }, url: "https://www.butterfly.co.jp/players/detail/boll-timo.html", kind: "official" },
+      { label: { ua: "Butterfly North America — Pro-Line ракетка Лінь Юньжу", ru: "Butterfly North America — Pro-Line ракетка Линь Юньжу" }, url: "https://shop.butterflyonline.com/viscaria-super-alc-pro-line-racket-zyre-03-dignics-05-cmr99", kind: "official" },
+      { label: { ua: "Butterfly Japan — Zyre 03 (жорсткість губки)", ru: "Butterfly Japan — Zyre 03 (жёсткость губки)" }, url: "https://www.butterfly.co.jp/products/detail/06140.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Dignics 09C (жорсткість губки)", ru: "Butterfly Japan — Dignics 09C (жёсткость губки)" }, url: "https://www.butterfly.co.jp/products/detail/06070.html", kind: "official" },
+    ],
+    relatedProducts: [
+      { label: { ua: "основи ALC", ru: "основания ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "накладки Dignics", ru: "накладки Dignics" }, href: "/nakladki/dignics" },
+      { label: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+      { label: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+    ],
+    relatedPosts: ["alc-chy-zlc", "zyre-03-vs-dignics-tenergy", "tenergy-chy-dignics", "versii-osnov-butterfly"],
   },
 };
 

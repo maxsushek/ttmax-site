@@ -9,6 +9,7 @@ import { localeToLang, type Locale } from "@/i18n/config";
 import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
+import { PLAYERS, playerInitials, type PlayerSlug } from "@/data/players";
 import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
 import { RacketPickerQuiz } from "@/components/content/RacketPickerQuiz";
 import { TableSpaceQuiz } from "@/components/content/TableSpaceQuiz";
@@ -96,6 +97,44 @@ function AuthorAvatar({
   );
 }
 
+/**
+ * Кружок гравця в клітинці таблиці: фото з Commons або ініціали (як у AuthorAvatar).
+ * alt — імʼя й контекст: картинка потрапляє в Google Images, а текст поруч дублює імʼя
+ * лише для зрячих.
+ */
+function PlayerAvatar({ slug, locale }: { slug: PlayerSlug; locale: Locale }) {
+  const player = PLAYERS[slug];
+  const size = 36;
+  if (player.photo) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={player.photo.src}
+        alt={
+          locale === "ua"
+            ? `${player.name.ua} — гравець у настільний теніс, фото`
+            : `${player.name.ru} — игрок в настольный теннис, фото`
+        }
+        width={size}
+        height={size}
+        loading="lazy"
+        decoding="async"
+        className="shrink-0 rounded-full border border-border-subtle object-cover"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+  return (
+    <span
+      className="flex shrink-0 items-center justify-center rounded-full bg-accent/15 font-display font-bold text-accent"
+      style={{ width: size, height: size, fontSize: 13 }}
+      aria-hidden="true"
+    >
+      {playerInitials(slug, locale)}
+    </span>
+  );
+}
+
 /** Гарна назва профілю за хостом (для карток sameAs). */
 function profileLabel(url: string): string {
   const host = (() => {
@@ -131,6 +170,16 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
   // Зображення для BlogPosting.image — те саме, що в og:image (растр, не SVG).
   const ldImage = blogOgImage(post, locale)?.url ?? "";
   const related = getRelatedPosts(post);
+  // Гравці з таблиць статті (у порядку появи) → блок «Фото» і Person у розмітці.
+  const postPlayers = [
+    ...new Set(
+      post.sections.flatMap((s) => (s.table?.rows ?? []).flatMap((r) => r.map((c) => c.player))),
+    ),
+  ].filter((x): x is PlayerSlug => Boolean(x));
+  const photoCredits = postPlayers.flatMap((slug) => {
+    const pl = PLAYERS[slug];
+    return pl.photo ? [{ slug, name: pl.name[locale], photo: pl.photo }] : [];
+  });
 
   const breadcrumb = breadcrumbJsonLd(
     [
@@ -157,6 +206,23 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
       .map((h) => `${siteConfig.url}/${locale}${h}`),
     citations: (post.sources ?? []).map((src) => ({ name: src.label[locale], url: src.url })),
     about: [{ type: "Brand", name: "Butterfly" }],
+    people: postPlayers.map((slug) => {
+      const pl = PLAYERS[slug];
+      const photo = pl.photo;
+      return {
+        name: pl.nameEn,
+        alternateName: pl.name[locale],
+        sameAs: [`https://www.wikidata.org/wiki/${pl.wikidata}`],
+        image: photo
+          ? {
+              url: `${siteConfig.url}${photo.src}`,
+              author: photo.author,
+              license: photo.licenseUrl,
+              acquireLicensePage: photo.sourceUrl,
+            }
+          : undefined,
+      };
+    }),
   });
   // HowTo — з першого розділу, де є кроки. Ті самі рядки малюються списком нижче.
   const howToSection = post.sections.find((s) => s.steps && s.steps.length > 0);
@@ -380,7 +446,14 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                               data-label={s.table?.columns[cj]?.[locale] ?? ""}
                               className="border-b border-border-subtle px-3 py-2 text-ink"
                             >
-                              {cell[locale]}
+                              {cell.player ? (
+                                <span className="inline-flex items-center gap-2.5">
+                                  <PlayerAvatar slug={cell.player} locale={locale} />
+                                  <span>{cell[locale]}</span>
+                                </span>
+                              ) : (
+                                cell[locale]
+                              )}
                             </td>
                           ))}
                         </tr>
@@ -472,6 +545,35 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 </li>
               ))}
             </ol>
+          </section>
+        )}
+
+        {photoCredits.length > 0 && (
+          <section className="mt-8">
+            <h2 className="mb-2 font-display text-sm font-bold uppercase tracking-wide text-ink-muted">
+              {locale === "ua" ? "Фото гравців" : "Фото игроков"}
+            </h2>
+            {/* Умова ліцензій CC BY / CC BY-SA: автор, ліцензія й посилання на джерело. */}
+            <p className="font-body text-[12px] leading-relaxed text-ink-dim">
+              {locale === "ua" ? "Wikimedia Commons, обрізано до кружка: " : "Wikimedia Commons, обрезано до круга: "}
+              {photoCredits.map((c, i) => (
+                <span key={c.slug}>
+                  {c.name} —{" "}
+                  <a href={c.photo.sourceUrl} target="_blank" rel="noopener" className="hover:underline">
+                    {c.photo.author}
+                  </a>
+                  ,{" "}
+                  {c.photo.licenseUrl ? (
+                    <a href={c.photo.licenseUrl} target="_blank" rel="noopener license" className="hover:underline">
+                      {c.photo.license}
+                    </a>
+                  ) : (
+                    c.photo.license
+                  )}
+                  {i < photoCredits.length - 1 ? "; " : "."}
+                </span>
+              ))}
+            </p>
           </section>
         )}
 
