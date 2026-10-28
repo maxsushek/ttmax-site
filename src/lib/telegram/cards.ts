@@ -12,6 +12,8 @@ import { getProductBySlug, getMinPrice } from "@/data/catalog";
 import { applyOverrides, getOverrides } from "@/lib/catalog/overrides";
 import { productPageUrl, slugFromProductId } from "@/lib/catalog/product-url";
 import { siteConfig } from "@/config/site";
+import { getMediaMap, pickPrimary } from "@/lib/media/get";
+import { cldUrl } from "@/lib/cloudinary/url";
 import { botChatId, kyivTime, tg, tgEsc, tgEscAttr, type InlineButton, type InlineKeyboard } from "./bot";
 
 type Sb = SupabaseClient<Database>;
@@ -375,6 +377,78 @@ async function leadCard(sb: Sb, leadId: string): Promise<Card | null> {
   };
 }
 
+/* ---------------- Фото товарів над карткою ---------------- */
+
+type PhotoItem = { slug: string; caption: string };
+
+/**
+ * URL фото для Telegram: JPG і без dpr_auto.
+ * ⚠️ НЕ cldUrl як є: там f_auto, і Cloudinary може віддати WebP/AVIF — Telegram такі
+ * «фото за посиланням» не завжди приймає, і весь альбом падає разом.
+ */
+function tgPhotoUrl(publicId: string): string {
+  const url = cldUrl(publicId, { w: 800, h: 800, crop: "pad", bg: "auto" });
+  return url.replace("f_auto,", "f_jpg,").replace(",dpr_auto", "");
+}
+
+/**
+ * Альбом фото товарів ПЕРЕД карткою (сама картка — останнім повідомленням, з кнопками).
+ *
+ * НАВІЩО: менеджеру з самого тексту не видно, що саме замовили (колір, модель) — треба
+ * відкривати посилання. Окремим повідомленням, а не фото в самій картці: картку потім
+ * перемальовує editMessageText при зміні статусу, а підпис фото обмежений 1024 символами.
+ *
+ * ⚠️ Будь-яка помилка тут не повинна зупинити картку: фото — зручність, картка — головне.
+ * Фото беремо головне (sort 0) за slug; комбо-ракетки без власних фото просто пропускаються.
+ */
+async function sendPhotos(chatId: string, items: PhotoItem[], replyTo?: number): Promise<void> {
+  try {
+    if (!items.length) return;
+    const media = await getMediaMap();
+    const seen = new Set<string>();
+    const photos: { type: "photo"; media: string; caption: string }[] = [];
+    for (const it of items) {
+      if (!it.slug || seen.has(it.slug)) continue;
+      const m = pickPrimary(media, "product", it.slug);
+      const url = m ? tgPhotoUrl(m.publicId) : "";
+      if (!url) continue;
+      seen.add(it.slug);
+      photos.push({ type: "photo", media: url, caption: it.caption.slice(0, 1000) });
+    }
+    if (!photos.length) return;
+    const reply = replyTo ? { reply_to_message_id: replyTo } : {};
+    const first = photos[0]!;
+    if (photos.length === 1) {
+      await tg("sendPhoto", { chat_id: chatId, photo: first.media, caption: first.caption, ...reply });
+    } else {
+      // sendMediaGroup приймає 2–10 елементів.
+      await tg("sendMediaGroup", { chat_id: chatId, media: photos.slice(0, 10), ...reply });
+    }
+  } catch (err) {
+    console.error("[telegram] photos failed:", err instanceof Error ? err.message : err);
+  }
+}
+
+async function orderPhotoItems(sb: Sb, orderId: string): Promise<PhotoItem[]> {
+  const { data } = await sb.from("orders").select("order_items(product_id, brand, model, qty)").eq("id", orderId).maybeSingle();
+  const items = (data as { order_items: { product_id: string; brand: string; model: string; qty: number }[] | null } | null)
+    ?.order_items;
+  return (items ?? []).map((it) => ({
+    slug: slugFromProductId(it.product_id),
+    caption: `${it.brand} ${it.model} ×${it.qty}`,
+  }));
+}
+
+async function leadPhotoItems(sb: Sb, leadId: string): Promise<PhotoItem[]> {
+  const { data } = await sb.from("leads").select("source, attribution").eq("id", leadId).maybeSingle();
+  const l = data as { source: string; attribution: Record<string, unknown> | null } | null;
+  // Лише швидке замовлення з картки: там відомий конкретний товар (productSlug).
+  const slug = l?.source === "quick-order" ? l.attribution?.productSlug : null;
+  if (typeof slug !== "string" || !slug) return [];
+  const name = typeof l?.attribution?.product === "string" ? l.attribution.product : slug;
+  return [{ slug, caption: name }];
+}
+
 async function send(card: Card, replyTo?: number): Promise<{ chatId: number; messageId: number } | null> {
   const chatId = botChatId();
   if (!chatId) return null;
@@ -392,6 +466,8 @@ async function send(card: Card, replyTo?: number): Promise<{ chatId: number; mes
 /** Надіслати картку замовлення й запамʼятати повідомлення (його потім перемальовує зміна статусу). */
 export async function sendOrderCard(sb: Sb, orderId: string, replyTo?: number): Promise<boolean> {
   const card = await orderCard(sb, orderId);
+  const chatId = botChatId();
+  if (card && chatId) await sendPhotos(chatId, await orderPhotoItems(sb, orderId), replyTo);
   const sent = card ? await send(card, replyTo) : null;
   if (sent) await sb.from("orders").update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId }).eq("id", orderId);
   return Boolean(sent);
@@ -399,6 +475,8 @@ export async function sendOrderCard(sb: Sb, orderId: string, replyTo?: number): 
 
 export async function sendLeadCard(sb: Sb, leadId: string, replyTo?: number): Promise<boolean> {
   const card = await leadCard(sb, leadId);
+  const chatId = botChatId();
+  if (card && chatId) await sendPhotos(chatId, await leadPhotoItems(sb, leadId), replyTo);
   const sent = card ? await send(card, replyTo) : null;
   if (sent) await sb.from("leads").update({ tg_chat_id: sent.chatId, tg_message_id: sent.messageId }).eq("id", leadId);
   return Boolean(sent);
