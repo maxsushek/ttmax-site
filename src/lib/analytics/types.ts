@@ -44,6 +44,8 @@ export type AnalyticsEvent =
     }
   // Каталог.
   | { name: "filter_apply"; params: { filter: string; value: string; active: boolean } }
+  // Розкриті інформаційні блоки (доставка й оплата на картці).
+  | { name: "info_expand"; params: { block: string } }
   | { name: "sort_change"; params: { sort: string } }
   | {
       name: "view_item_list";

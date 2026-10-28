@@ -8,6 +8,7 @@ import { CURRENCY } from "@/lib/analytics/ecommerce";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
 import { QuickOrder } from "@/components/catalog/QuickOrder";
+import { DeliveryPaymentInfo } from "@/components/catalog/DeliveryPaymentInfo";
 import type { Color } from "@/types/catalog";
 import { pickDefaultThickness } from "@/lib/catalog/thickness";
 import type { ProductCategory } from "@/types";
@@ -300,6 +301,7 @@ export function ProductPurchasePanel({
           </>
         )}
         <p className="text-center text-[11px] text-ink-dim">{t.pickNote}</p>
+        <DeliveryPaymentInfo locale={locale} />
       </div>
     </div>
   );

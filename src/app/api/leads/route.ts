@@ -4,7 +4,11 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { sendLeadCard } from "@/lib/telegram/cards";
 import { locales, localeToLang } from "@/i18n/config";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
-import { attributionProps, captureServerEvent, posthogContext } from "@/lib/analytics/posthog-server";
+import {
+  attributionProps,
+  captureServerEvent,
+  posthogContext,
+} from "@/lib/analytics/posthog-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -39,7 +43,34 @@ const LeadSchema = z.object({
    * відхилення, щоб бот не підбирав обхід).
    */
   company: z.string().max(200).optional(),
+  /**
+   * Склад кошика для «Замовити в 1 клік» з кошика (source="cart-quick-order").
+   * Ліміти жорсткі з тієї ж причини, що й в attribution: без них можна залити БД сміттям.
+   * Ціни — з браузера, тобто довідкові: менеджер підтверджує їх у дзвінку.
+   */
+  cart: z
+    .object({
+      items: z
+        .array(
+          z.object({
+            name: z.string().trim().min(1).max(160),
+            qty: z.number().int().min(1).max(99),
+            price: z.number().min(0).max(1_000_000),
+          }),
+        )
+        .min(1)
+        .max(30),
+      total: z.number().min(0).max(10_000_000),
+    })
+    .optional(),
 });
+
+/** Склад кошика одним текстом — у leads.notes (його показують CRM і картка в Telegram). */
+function cartNotes(cart: NonNullable<z.infer<typeof LeadSchema>["cart"]>): string {
+  const uah = (n: number) => `${new Intl.NumberFormat("uk-UA").format(n)} грн`;
+  const lines = cart.items.map((i) => `• ${i.name} ×${i.qty} — ${uah(i.price * i.qty)}`);
+  return [`Кошик (ціни з сайту):`, ...lines, `Разом: ${uah(cart.total)}`].join("\n");
+}
 
 const buckets = new Map<string, { count: number; reset: number }>();
 const LIMIT = 5;
@@ -116,6 +147,9 @@ export async function POST(request: NextRequest) {
       source: parsed.data.source,
       locale: dbLocale,
       attribution,
+      ...(parsed.data.cart
+        ? { notes: cartNotes(parsed.data.cart), value_uah: Math.round(parsed.data.cart.total) }
+        : {}),
     })
     .select("id, lead_number")
     .single();
@@ -151,6 +185,13 @@ export async function POST(request: NextRequest) {
           locale: parsed.data.locale,
           product: attribution.productName ?? attribution.product,
           product_slug: attribution.productSlug,
+          ...(parsed.data.cart
+            ? {
+                value: parsed.data.cart.total,
+                currency: "UAH",
+                items_count: parsed.data.cart.items.reduce((n, i) => n + i.qty, 0),
+              }
+            : {}),
           ...attributionProps(attribution),
         },
         `lead:${leadNumber}`,

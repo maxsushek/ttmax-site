@@ -61,6 +61,17 @@ export function phCapture(event: string, properties: Record<string, unknown> = {
 }
 
 /**
+ * Значення фіча-флагу, щойно PostHog його завантажить. Колбек отримує `undefined`, якщо флагу
+ * немає або PostHog вимкнений (localhost, прев'ю, блокувальник) — тоді компонент лишає дефолт.
+ * Використання як «вимикача»: показувати за замовчуванням, ховати лише на явне `false`.
+ */
+export function phFeatureFlag(key: string, cb: (enabled: boolean | undefined) => void): void {
+  withPosthog((ph) => {
+    ph.onFeatureFlags(() => cb(ph.isFeatureEnabled(key)));
+  });
+}
+
+/**
  * Запуск (AnalyticsProvider, один раз на вкладку). Адмінка — окремий кореневий layout без
  * AnalyticsProvider, тож туди PostHog не потрапляє взагалі.
  */

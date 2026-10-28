@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "./CartProvider";
 import { Button } from "@/components/ui/Button";
 import { formatPrice } from "@/utils/format";
@@ -8,6 +8,8 @@ import { t } from "@/i18n";
 import { trackEvent } from "@/lib/analytics/events";
 import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import { QuickOrder } from "@/components/catalog/QuickOrder";
+import { phFeatureFlag } from "@/lib/analytics/posthog";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
@@ -22,6 +24,15 @@ type Props = {
 export function CartDrawer({ messages, locale, logoUrl }: Props) {
   const cart = useCart();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  // «Замовити в 1 клік» з кошика (28.10.2026). Вимикач — флаг PostHog `cart-one-click`:
+  // показуємо за замовчуванням, ховаємо лише якщо флаг явно вимкнений. Так кнопку можна
+  // прибрати без деплою, якщо заявки з неї не перетворюються на продажі.
+  const [oneClick, setOneClick] = useState(true);
+  useEffect(() => {
+    phFeatureFlag("cart-one-click", (on) => {
+      if (on === false) setOneClick(false);
+    });
+  }, []);
 
   const m = messages.cart;
 
@@ -234,6 +245,22 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
             >
               {m.checkout} →
             </Button>
+            {oneClick && (
+              <div className="mb-2.5">
+                <QuickOrder
+                  locale={locale}
+                  productName={`${locale === "ru" ? "Корзина" : "Кошик"}: ${cart.count} шт. · ${formatPrice(cart.total)}`}
+                  cart={{
+                    items: cart.items.map((i) => ({
+                      name: `${i.brand} ${i.model}`.slice(0, 160),
+                      qty: i.qty,
+                      price: i.price,
+                    })),
+                    total: cart.total,
+                  }}
+                />
+              </div>
+            )}
             <button
               type="button"
               onClick={cart.close}

@@ -255,7 +255,11 @@ export function orderText(o: OrderFull, last: Last, leadId: string | null): stri
 
 export async function leadText(l: LeadFull, last: Last): Promise<string> {
   const quick = l.source === "quick-order";
-  const title = quick ? "⚡ <b>Швидке замовлення</b>" : l.source === "consultation" ? "📩 <b>Консультація</b>" : "📩 <b>Заявка</b>";
+  // Заявка «в 1 клік» з кошика: склад кошика — у notes (api/leads, cartNotes), сума — у value_uah.
+  const fromCart = l.source === "cart-quick-order";
+  const title = fromCart
+    ? "🛒 <b>Замовлення в 1 клік (кошик)</b>"
+    : quick ? "⚡ <b>Швидке замовлення</b>" : l.source === "consultation" ? "📩 <b>Консультація</b>" : "📩 <b>Заявка</b>";
   const L: string[] = [`${title} · <code>${tgEsc(l.lead_number)}</code>`, ""];
 
   const placeholder = /^(швидке замовлення|быстрый заказ)$/i.test(l.name.trim());
@@ -283,7 +287,9 @@ export async function leadText(l: LeadFull, last: Last): Promise<string> {
   }
 
   if (l.value_uah && Number(l.value_uah) > 0) L.push("", `💰 <b>Сума угоди: ${uah(Number(l.value_uah))}</b>`);
-  if (l.notes) L.push(`📝 <i>${tgEsc(l.notes.length > 300 ? `${l.notes.slice(0, 299)}…` : l.notes)}</i>`);
+  // Для кошика notes — це склад замовлення (до 30 позицій), тож не обрізаємо на 300 символах.
+  const notesMax = fromCart ? 2000 : 300;
+  if (l.notes) L.push(`📝 <i>${tgEsc(l.notes.length > notesMax ? `${l.notes.slice(0, notesMax - 1)}…` : l.notes)}</i>`);
 
   L.push("", `${LANG[l.locale] ?? tgEsc(l.locale)} · ${kyivTime(l.created_at)}`);
   const origin = originLine(l.attribution);

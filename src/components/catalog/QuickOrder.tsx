@@ -69,20 +69,52 @@ const UI: Record<
   },
 };
 
+// Тексти режиму «з кошика»: замість одного товару — весь кошик.
+const CART_UI: Record<
+  Locale,
+  Pick<(typeof UI)["ua"], "button" | "title" | "subtitle" | "submit">
+> = {
+  ua: {
+    button: "Замовити в 1 клік",
+    title: "Замовлення в 1 клік",
+    subtitle: "Залиште номер — передзвонимо й оформимо весь кошик за вас, без заповнення форми.",
+    submit: "Замовити дзвінок",
+  },
+  ru: {
+    button: "Заказать в 1 клик",
+    title: "Заказ в 1 клик",
+    subtitle: "Оставьте номер — перезвоним и оформим всю корзину за вас, без заполнения формы.",
+    submit: "Заказать звонок",
+  },
+};
+
+export type QuickOrderCart = {
+  items: Array<{ name: string; qty: number; price: number }>;
+  total: number;
+};
+
 export function QuickOrder({
   locale,
-  productSlug,
+  productSlug = "",
   productName,
   variant = "secondary",
+  cart,
 }: {
   locale: Locale;
-  productSlug: string;
-  /** Повна назва (бренд + модель) — іде в attribution і в Telegram. */
+  productSlug?: string;
+  /** Повна назва (бренд + модель) — іде в attribution і в Telegram. У режимі кошика — підпис у вікні. */
   productName: string;
   /** primary — акцентна кнопка (для товарів «ціна за запитом»); secondary — під «В кошик». */
   variant?: "primary" | "secondary";
+  /**
+   * Режим «з кошика»: склад іде окремим полем `cart` (api/leads пише його в notes і value_uah),
+   * source = "cart-quick-order". Звичайне оформлення при цьому лишається — це другий шлях.
+   */
+  cart?: QuickOrderCart;
 }) {
-  const t = UI[locale];
+  const t = cart ? { ...UI[locale], ...CART_UI[locale] } : UI[locale];
+  // Одне ім'я на source заявки і на location подій — так воронки розділяють картку й кошик.
+  const source = cart ? "cart-quick-order" : "quick-order";
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
@@ -113,13 +145,13 @@ export function QuickOrder({
     setStatus("idle");
     // Відкрив вікно — «показ форми»; «почав» — лише коли щось увів (onFirstInput).
     // Так воронка відрізняє тих, хто подивився й закрив, від тих, хто почав заповнювати.
-    trackEvent({ name: "lead_form_view", params: { location: "quick-order" } });
+    trackEvent({ name: "lead_form_view", params: { location: source } });
   };
 
   const onFirstInput = () => {
     if (startedRef.current) return;
     startedRef.current = true;
-    trackEvent({ name: "lead_form_start", params: { location: "quick-order" } });
+    trackEvent({ name: "lead_form_start", params: { location: source } });
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -147,13 +179,18 @@ export function QuickOrder({
           phone: cleanPhone,
           // Honeypot на сервер: у людини поле лишається порожнім, бот його заповнює.
           company: honey,
-          source: "quick-order",
+          source,
           locale,
-          attribution: { ...getAttribution(), product: productName, productSlug },
+          // Для кошика товар не кладемо в attribution: картка в Telegram зробила б з нього
+          // посилання на неіснуючу сторінку. Склад — у полі cart.
+          attribution: cart
+            ? getAttribution()
+            : { ...getAttribution(), product: productName, productSlug },
+          ...(cart ? { cart } : {}),
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      trackEvent({ name: "lead_form_submit", params: { location: "quick-order" } });
+      trackEvent({ name: "lead_form_submit", params: { location: source } });
       trackEvent({ name: "conversion", params: { type: "lead" } });
       setStatus("success");
       setPhone("");
@@ -174,18 +211,20 @@ export function QuickOrder({
         // (primary вже має cta-sheen з варіанта Button).
         className={variant === "primary" ? undefined : "cta-sheen cta-sheen--soft"}
         onClick={openModal}
-        data-cta="quick-order"
-        data-location={productSlug}
+        data-cta={source}
+        data-location={productSlug || source}
       >
         {t.button}
       </Button>
 
       {open && (
+        // ⚠️ z-[900], а не z-[100]: з кошика вікно відкривається поверх шухляди кошика (z-[810]),
+        // інакше воно опинилося б під нею і кнопка «1 клік» нічого б не показувала.
         <div
           role="dialog"
           aria-modal="true"
           aria-label={t.title}
-          className="fixed inset-0 z-[100] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+          className="fixed inset-0 z-[900] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-4"
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) setOpen(false);
           }}
@@ -296,8 +335,8 @@ export function QuickOrder({
                   fullWidth
                   disabled={status === "submitting"}
                   className="mt-1"
-                  data-cta="quick-order-submit"
-                  data-location={productSlug}
+                  data-cta={`${source}-submit`}
+                  data-location={productSlug || source}
                 >
                   {status === "submitting" ? (
                     t.submitting

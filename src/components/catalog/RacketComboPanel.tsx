@@ -8,6 +8,7 @@ import { CURRENCY } from "@/lib/analytics/ecommerce";
 import { formatPrice } from "@/utils/format";
 import { cn } from "@/utils/cn";
 import { QuickOrder } from "@/components/catalog/QuickOrder";
+import { DeliveryPaymentInfo } from "@/components/catalog/DeliveryPaymentInfo";
 import type { ProductCategory } from "@/types";
 
 type Props = {
@@ -176,6 +177,7 @@ export function RacketComboPanel({
             </a>
           </>
         )}
+        <DeliveryPaymentInfo locale={locale} />
       </div>
     </div>
   );
