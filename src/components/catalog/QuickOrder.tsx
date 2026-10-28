@@ -88,6 +88,30 @@ const CART_UI: Record<
   },
 };
 
+// Тексти режиму «консультація» (блог): людина ще не обрала товар — просить підбір.
+const CONSULT_UI: Record<
+  Locale,
+  Pick<(typeof UI)["ua"], "button" | "title" | "subtitle" | "submit" | "success" | "note">
+> = {
+  ua: {
+    button: "Підібрати під мене",
+    title: "Підбір інвентарю",
+    subtitle: "Залиште номер — розпитаємо про рівень і стиль гри й порадимо основу та накладки.",
+    submit: "Чекаю дзвінка",
+    success: "Дякуємо! Передзвонимо й допоможемо з вибором.",
+    note: "Без спаму. Номер потрібен лише для дзвінка щодо підбору.",
+  },
+  ru: {
+    button: "Подобрать под меня",
+    title: "Подбор инвентаря",
+    subtitle:
+      "Оставьте номер — расспросим об уровне и стиле игры и подскажем основание и накладки.",
+    submit: "Жду звонка",
+    success: "Спасибо! Перезвоним и поможем с выбором.",
+    note: "Без спама. Номер нужен только для звонка по подбору.",
+  },
+};
+
 export type QuickOrderCart = {
   items: Array<{ name: string; qty: number; price: number }>;
   total: number;
@@ -99,6 +123,7 @@ export function QuickOrder({
   productName,
   variant = "secondary",
   cart,
+  consult = false,
 }: {
   locale: Locale;
   productSlug?: string;
@@ -111,10 +136,19 @@ export function QuickOrder({
    * source = "cart-quick-order". Звичайне оформлення при цьому лишається — це другий шлях.
    */
   cart?: QuickOrderCart;
+  /**
+   * Режим «підбір» зі статті блогу (BlogConsult): productName — назва статті, source =
+   * "blog-consult". Товару немає, тож slug в attribution не кладемо.
+   */
+  consult?: boolean;
 }) {
-  const t = cart ? { ...UI[locale], ...CART_UI[locale] } : UI[locale];
-  // Одне ім'я на source заявки і на location подій — так воронки розділяють картку й кошик.
-  const source = cart ? "cart-quick-order" : "quick-order";
+  const t = cart
+    ? { ...UI[locale], ...CART_UI[locale] }
+    : consult
+      ? { ...UI[locale], ...CONSULT_UI[locale] }
+      : UI[locale];
+  // Одне ім'я на source заявки і на location подій — так воронки розділяють картку, кошик і блог.
+  const source = cart ? "cart-quick-order" : consult ? "blog-consult" : "quick-order";
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
@@ -185,7 +219,9 @@ export function QuickOrder({
           // посилання на неіснуючу сторінку. Склад — у полі cart.
           attribution: cart
             ? getAttribution()
-            : { ...getAttribution(), product: productName, productSlug },
+            : consult
+              ? { ...getAttribution(), product: productName }
+              : { ...getAttribution(), product: productName, productSlug },
           ...(cart ? { cart } : {}),
         }),
       });
@@ -252,7 +288,7 @@ export function QuickOrder({
             </div>
 
             <p className="mb-4 rounded-xl border border-border-subtle bg-white/[0.03] px-3.5 py-2.5 font-body text-[13px] text-ink-muted">
-              🛒 <span className="font-semibold text-ink">{productName}</span>
+              {consult ? "📖" : "🛒"} <span className="font-semibold text-ink">{productName}</span>
             </p>
 
             {status === "success" ? (

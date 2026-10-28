@@ -46,6 +46,8 @@ export type AnalyticsEvent =
   | { name: "filter_apply"; params: { filter: string; value: string; active: boolean } }
   // Розкриті інформаційні блоки (доставка й оплата на картці).
   | { name: "info_expand"; params: { block: string } }
+  // Клік зі статті блогу: kind = rec | link | related | post.
+  | { name: "blog_link_click"; params: { post: string; kind: string; href: string } }
   | { name: "sort_change"; params: { sort: string } }
   | {
       name: "view_item_list";

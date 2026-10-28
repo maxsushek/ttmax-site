@@ -121,6 +121,12 @@ export type BlogPost = {
   interactive?: "playStyle" | "racketPicker" | "tableSpace" | "rubberPoll";
   /** true → не рендериться на проді й не потрапляє в sitemap/список. */
   draft?: boolean;
+  /**
+   * id розділу, після якого показати блок «Не впевнені, що обрати? — підберемо» (BlogConsult).
+   * Лише для статей-порівнянь, де читач обирає модель. Це консультація, а не кнопка «Купити»,
+   * тож правило формату (стаття ≠ каталог) не порушує. Один блок на статтю.
+   */
+  consultAfter?: string;
 };
 
 const POSTS: Record<string, BlogPost> = {
@@ -402,6 +408,8 @@ const POSTS: Record<string, BlogPost> = {
 
   "yak-vybraty-raketku": {
     slug: "yak-vybraty-raketku",
+    // Блок «Підберемо» (BlogConsult) — після розділу «riven-gry» (28.10.2026, CRO).
+    consultAfter: "riven-gry",
     h1: {
       ua: "Як вибрати ракетку для настільного тенісу: гайд для новачка",
       ru: "Как выбрать ракетку для настольного тенниса: гайд для новичка",
@@ -2128,6 +2136,8 @@ const POSTS: Record<string, BlogPost> = {
 
   "alc-chy-zlc": {
     slug: "alc-chy-zlc",
+    // Блок «Підберемо» (BlogConsult) — після розділу «inner-outer» (28.10.2026, CRO).
+    consultAfter: "inner-outer",
     // Карбонові основи: матеріали й розташування волокна. УСІ числа реакції/вібрації/товщини —
     // офіційні з карток butterfly-global.com (Reaction / Vibration property, дані Butterfly R&D 2026);
     // ті самі числа 21.10.2026 внесено в bases.ts і в схеми scripts/gen-carbon-diagrams.mjs.
@@ -2960,6 +2970,8 @@ const POSTS: Record<string, BlogPost> = {
 
   "naykrashchi-nakladki-butterfly": {
     slug: "naykrashchi-nakladki-butterfly",
+    // Блок «Підберемо» (BlogConsult) — після розділу «tablytsia» (28.10.2026, CRO).
+    consultAfter: "tablytsia",
     // ТАРГЕТ (Ahrefs UA): рейтинг/порівняння — «лучшие накладки для настольного тенниса» (RU 20)
     // + кириличні бренд-форми «тенерджи 05» (20), «дигникс 09с» (10), KD 0. Інформаційний
     // інтент (рейтинг/порівняння), НЕ транзакційний — не канібалізує /nakladki. Головна цінність —
@@ -3361,6 +3373,8 @@ const POSTS: Record<string, BlogPost> = {
   // числа наводимо ТІЛЬКИ ті, що є в офіційних джерелах.
   "zyre-03-vs-dignics-tenergy": {
     slug: "zyre-03-vs-dignics-tenergy",
+    // Блок «Підберемо» (BlogConsult) — після розділу «yak-chytaty» (28.10.2026, CRO).
+    consultAfter: "yak-chytaty",
     h1: {
       ua: "Як влаштовані накладки Butterfly: від Spring Sponge до Ricosheet",
       ru: "Как устроены накладки Butterfly: от Spring Sponge до Ricosheet",
@@ -3753,6 +3767,8 @@ const POSTS: Record<string, BlogPost> = {
   },
   "tenergy-chy-dignics": {
     slug: "tenergy-chy-dignics",
+    // Блок «Підберемо» (BlogConsult) — після розділу «shcho-daye-hubka» (28.10.2026, CRO).
+    consultAfter: "shcho-daye-hubka",
     // ТАРГЕТ: порівняльні запити «dignics или tenergy», «чем отличается dignics от tenergy»,
     // «tenergy vs dignics». Формат обрано за даними GSC: дві порівняльні статті на сайті
     // тримають позиції 6.4 і 6.9, тоді як інформаційні — 15–30. Порівняння працює, огляди
@@ -3883,6 +3899,20 @@ const POSTS: Record<string, BlogPost> = {
             "Кому это подходит: игроку, который упёрся в потолок Tenergy 05 по вращению, уже имеет поставленное полное движение, но не готов платить за Dignics. Кому не подходит: всем, кто ещё не уверен, что продавливает 36-градусную губку до конца. Прыжок с 36 на 43 градуса резче, чем с 36 на 40.",
           ],
         },
+        // Рекомендація (28.10.2026): вердикт — з тексту цього розділу; фото 01 не повторює інші статті.
+        rec: {
+          publicId: "ttmax/product/tenergy-05-hard/01",
+          name: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" },
+          verdict: {
+            ua: "Обертання 96, як у Dignics 09C, на губці 43° — модель Tenergy, що за характеристиками ближча до Dignics.",
+            ru: "Вращение 96, как у Dignics 09C, на губке 43° — модель Tenergy, по характеристикам более близкая к Dignics.",
+          },
+          alt: {
+            ua: "Накладка для настільного тенісу Butterfly Tenergy 05 Hard з твердою губкою",
+            ru: "Накладка для настольного тенниса Butterfly Tenergy 05 Hard с твёрдой губкой",
+          },
+          href: "/butterfly/nakladki/tenergy-05-hard",
+        },
         links: [
           { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
           { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
@@ -3948,6 +3978,8 @@ const POSTS: Record<string, BlogPost> = {
 
   "nakladka-dlya-pochatkivtsya": {
     slug: "nakladka-dlya-pochatkivtsya",
+    // Блок «Підберемо» (BlogConsult) — після розділу «tovshchyna-na-start» (28.10.2026, CRO).
+    consultAfter: "tovshchyna-na-start",
     h1: {
       ua: "Яку накладку обрати новачку: з чого почати",
       ru: "Какую накладку выбрать новичку: с чего начать",
@@ -4021,6 +4053,20 @@ const POSTS: Record<string, BlogPost> = {
             "Третий — секция, тренер, поставленное движение, но опыта ещё мало. Здесь уже имеет смысл Glayzer с вращением 73 и дугой 82: высокая траектория даёт запас над сеткой, и ошибка на разгоне не сразу стоит очка.",
             "Ошибка, которой стоит избежать во всех трёх случаях, одна — брать FX-версии топовых линий, считая их «облегчённой Tenergy». У Tenergy 05 FX губка 32 градуса и вращение 64. Она действительно мягче, но это накладка для игрока с техникой, который сознательно хочет больше контроля, а не упрощённая версия для старта.",
           ],
+        },
+        // Рекомендація (28.10.2026): вердикт — з тексту цього розділу; фото 02 не повторює інші статті.
+        rec: {
+          publicId: "ttmax/product/rozena/02",
+          name: { ua: "Butterfly Rozena", ru: "Butterfly Rozena" },
+          verdict: {
+            ua: "Швидкість 83, як у Tenergy, але обертання 70 і губка 35° — активна накладка, що прощає неточність.",
+            ru: "Скорость 83, как у Tenergy, но вращение 70 и губка 35° — активная накладка, которая прощает неточность.",
+          },
+          alt: {
+            ua: "Накладка Butterfly Rozena для гравця, що переходить з готової ракетки",
+            ru: "Накладка Butterfly Rozena для игрока, который переходит с готовой ракетки",
+          },
+          href: "/butterfly/nakladki/rozena",
         },
         table: {
           columns: [
@@ -4275,6 +4321,20 @@ const POSTS: Record<string, BlogPost> = {
             "То есть цифра описывает губку, а не всю накладку, и сравнивать 2,7 у Zyre с 2,1 у Dignics напрямую нельзя — это одинаковая общая толщина, просто иначе поделённая между слоями. В четыре миллиметра ITTF накладка укладывается так же, как остальные.",
           ],
         },
+        // Рекомендація (28.10.2026): вердикт — з тексту цього розділу; фото 02 не повторює інші статті.
+        rec: {
+          publicId: "ttmax/product/zyre-03/02",
+          name: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" },
+          verdict: {
+            ua: "Губка 2,5 / 2,7 мм через Ricosheet за загальною товщиною відповідає колишнім 1,9 / 2,1 мм.",
+            ru: "Губка 2,5 / 2,7 мм из-за Ricosheet по общей толщине соответствует прежним 1,9 / 2,1 мм.",
+          },
+          alt: {
+            ua: "Накладка Butterfly Zyre 03 з губкою 2,7 мм і технологією Ricosheet",
+            ru: "Накладка Butterfly Zyre 03 с губкой 2,7 мм и технологией Ricosheet",
+          },
+          href: "/butterfly/nakladki/zyre-03",
+        },
         links: [
           { label: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
         ],
@@ -4314,6 +4374,8 @@ const POSTS: Record<string, BlogPost> = {
 
   "lypki-chy-tenzorni-nakladky": {
     slug: "lypki-chy-tenzorni-nakladky",
+    // Блок «Підберемо» (BlogConsult) — після розділу «chomu-kytaytsi» (28.10.2026, CRO).
+    consultAfter: "chomu-kytaytsi",
     h1: {
       ua: "Липкі чи тензорні накладки: у чому різниця насправді",
       ru: "Липкие или тензорные накладки: в чём разница на самом деле",
@@ -4405,6 +4467,20 @@ const POSTS: Record<string, BlogPost> = {
             "Сравните с чистой липкой: у Tackiness Chop II вращение 30 при твёрдости 41. Топшит у неё тоже цепкий, а разница почти втрое — и вся она в губке.",
             "Плата за гибрид предсказуема. Твёрдость 42–44 градуса означает, что накладка включается только на полном движении, а липкий топшит изнашивается быстрее нелипкого — поверхность, которая цепляет мяч, цепляет и всё остальное. Для игрока с техникой это самый интересный класс в каталоге. Для игрока без неё — самый дорогой способ сделать игру сложнее.",
           ],
+        },
+        // Рекомендація (28.10.2026): вердикт — з тексту цього розділу; фото 02 не повторює інші статті.
+        rec: {
+          publicId: "ttmax/product/dignics-09c/02",
+          name: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" },
+          verdict: {
+            ua: "Липкуватий топшит + губка Spring Sponge X 44°: обертання 96 і дуга 96 — серед найвищих у каталозі.",
+            ru: "Липковатый топшит + губка Spring Sponge X 44°: вращение 96 и дуга 96 — среди самых высоких в каталоге.",
+          },
+          alt: {
+            ua: "Гібридна накладка Butterfly Dignics 09C з липкуватим топшитом",
+            ru: "Гибридная накладка Butterfly Dignics 09C с липковатым топшитом",
+          },
+          href: "/butterfly/nakladki/dignics-09c",
         },
         table: {
           columns: [
@@ -4507,6 +4583,8 @@ const POSTS: Record<string, BlogPost> = {
   },
   "versii-osnov-butterfly": {
     slug: "versii-osnov-butterfly",
+    // Блок «Підберемо» (BlogConsult) — після розділу «pokolinnya» (28.10.2026, CRO).
+    consultAfter: "pokolinnya",
     h1: {
       ua: "Японська, європейська чи китайська версія основи Butterfly: у чому різниця і як перевірити оригінал",
       ru: "Японская, европейская или китайская версия основания Butterfly: в чём разница и как проверить оригинал",

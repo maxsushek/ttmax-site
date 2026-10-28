@@ -15,6 +15,9 @@ import { RacketPickerQuiz } from "@/components/content/RacketPickerQuiz";
 import { TableSpaceQuiz } from "@/components/content/TableSpaceQuiz";
 import { RubberPoll } from "@/components/content/RubberPoll";
 import { ArticleCover } from "@/components/content/ArticleCover";
+import { BlogClickTracker } from "@/components/content/BlogClickTracker";
+import { BlogConsult } from "@/components/content/BlogConsult";
+import { Fragment } from "react";
 
 const UI = {
   ua: {
@@ -244,6 +247,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
   return (
     <article className="py-12 sm:py-16 lg:py-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <BlogClickTracker slug={post.slug} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
       {faqLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
@@ -331,7 +335,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
 
         <div className="flex flex-col gap-8">
           {post.sections.map((s) => (
-            <section key={s.id} id={s.id} className="scroll-mt-24">
+            <Fragment key={s.id}>
+            <section id={s.id} className="scroll-mt-24">
               <h2 className="mb-3 font-display text-lg font-bold uppercase tracking-wide text-ink">
                 {s.h[locale]}
               </h2>
@@ -373,6 +378,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 // БЕЗ ціни, БЕЗ кнопки «Купити» — захист правила формату (стаття ≠ каталог).
                 <Link
                   href={`/${locale}${s.rec.href}`}
+                  data-blog-link="rec"
                   className="mt-4 flex items-center gap-4 rounded-xl border border-border-subtle border-l-[3px] border-l-accent bg-bg-raised px-4 py-3 transition-colors hover:bg-accent/5"
                 >
                   {/* Фіксований контейнер + fill замість width/height на самому <img>:
@@ -468,6 +474,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     <Link
                       key={i}
                       href={`/${locale}${l.href}`}
+                      data-blog-link="link"
                       className="rounded-full border border-accent/40 px-3 py-1 font-body text-[13px] text-accent hover:bg-accent/10"
                     >
                       {l.label[locale]}
@@ -476,6 +483,10 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 </div>
               )}
             </section>
+            {post.consultAfter === s.id && (
+              <BlogConsult locale={locale} slug={post.slug} topic={post.h1[locale]} />
+            )}
+            </Fragment>
           ))}
         </div>
 
@@ -602,6 +613,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     <Link
                       key={i}
                       href={`/${locale}${l.href}`}
+                      data-blog-link="related"
                       className="rounded-full border border-accent/40 px-3 py-1 font-body text-[13px] text-accent hover:bg-accent/10"
                     >
                       {l.label[locale]}
@@ -620,6 +632,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     <li key={r.slug}>
                       <Link
                         href={`/${locale}/blog/${r.slug}`}
+                        data-blog-link="post"
                         className="block rounded-lg border border-border-subtle px-3 py-2 font-body text-[13px] text-ink hover:border-border-strong hover:text-accent"
                       >
                         {r.h1[locale]}

@@ -257,9 +257,13 @@ export async function leadText(l: LeadFull, last: Last): Promise<string> {
   const quick = l.source === "quick-order";
   // Заявка «в 1 клік» з кошика: склад кошика — у notes (api/leads, cartNotes), сума — у value_uah.
   const fromCart = l.source === "cart-quick-order";
+  // Підбір зі статті блогу: товару немає, в attribution.product — назва статті (BlogConsult).
+  const fromBlog = l.source === "blog-consult";
   const title = fromCart
     ? "🛒 <b>Замовлення в 1 клік (кошик)</b>"
-    : quick ? "⚡ <b>Швидке замовлення</b>" : l.source === "consultation" ? "📩 <b>Консультація</b>" : "📩 <b>Заявка</b>";
+    : fromBlog
+      ? "🎯 <b>Підбір інвентарю (зі статті блогу)</b>"
+      : quick ? "⚡ <b>Швидке замовлення</b>" : l.source === "consultation" ? "📩 <b>Консультація</b>" : "📩 <b>Заявка</b>";
   const L: string[] = [`${title} · <code>${tgEsc(l.lead_number)}</code>`, ""];
 
   const placeholder = /^(швидке замовлення|быстрый заказ)$/i.test(l.name.trim());
@@ -270,7 +274,9 @@ export async function leadText(l: LeadFull, last: Last): Promise<string> {
   // Товар зі швидкого замовлення: посилання + актуальна ціна з каталогу (з адмінки).
   const slug = typeof l.attribution?.productSlug === "string" ? l.attribution.productSlug : null;
   const productName = typeof l.attribution?.product === "string" ? l.attribution.product : null;
-  if (slug || productName) {
+  if (fromBlog && productName) {
+    L.push("", `📖 Стаття: ${tgEsc(productName)}`);
+  } else if (slug || productName) {
     const p = slug ? getProductBySlug(slug) : undefined;
     let price = "";
     if (p) {
