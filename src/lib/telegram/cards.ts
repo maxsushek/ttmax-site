@@ -54,40 +54,76 @@ function sourceName(host: string): string {
   return known.find(([re]) => re.test(h))?.[1] ?? host;
 }
 
-/** «Звідки клієнт»: сторінка входу + джерело (utm або сайт-реферер). */
-function originLine(attr: Record<string, unknown> | null | undefined): string | null {
-  if (!attr) return null;
-  // Замовлення, внесене вручну (продаж наживо знайомим, спецціна) — без сторінки входу й джерела.
-  if (attr.channel === "offline") return "🤝 Продаж наживо (внесено вручну)";
-  const str = (k: string) => (typeof attr[k] === "string" && (attr[k] as string).trim() ? (attr[k] as string).trim() : null);
+/** Сторінка входу + джерело (utm, рекламний клік або сайт-реферер) — одним рядком. */
+function describeTouch(t: {
+  landing: string | null;
+  utm: string | null;
+  medium: string | null;
+  gclid: string | null;
+  fbclid: string | null;
+  referrer: string | null;
+}): string | null {
   const parts: string[] = [];
-  const landing = str("landing_page");
-  if (landing) {
+  if (t.landing) {
     try {
-      const u = new URL(landing, siteConfig.url);
+      const u = new URL(t.landing, siteConfig.url);
       const path = decodeURIComponent(u.pathname).replace(/\/$/, "") || "/";
       parts.push(link(`${siteConfig.url}${u.pathname}`, path.length > 48 ? `${path.slice(0, 47)}…` : path));
     } catch {
       /* битий URL — пропускаємо */
     }
   }
-  const utm = str("utm_source");
-  const medium = str("utm_medium");
-  if (utm) parts.push(tgEsc(medium ? `${sourceName(utm)} / ${medium}` : sourceName(utm)));
-  else if (str("gclid")) parts.push("Google Ads");
-  else if (str("fbclid")) parts.push("Facebook / Instagram");
+  if (t.utm) parts.push(tgEsc(t.medium ? `${sourceName(t.utm)} / ${t.medium}` : sourceName(t.utm)));
+  else if (t.gclid) parts.push("Google Ads");
+  else if (t.fbclid) parts.push("Facebook / Instagram");
   else {
-    const ref = str("referrer");
-    if (ref) {
-      try {
-        const host = new URL(ref).hostname.replace(/^www\./, "");
-        if (!host.endsWith("ttmax.com.ua")) parts.push(tgEsc(sourceName(host)));
-      } catch {
-        /* ігноруємо */
-      }
-    } else parts.push("прямий захід");
+    let host: string | null = null;
+    try {
+      host = t.referrer ? new URL(t.referrer).hostname.replace(/^www\./, "") : null;
+    } catch {
+      /* ігноруємо */
+    }
+    if (host && !host.endsWith("ttmax.com.ua")) parts.push(tgEsc(sourceName(host)));
+    else if (!host) parts.push("прямий захід");
   }
-  return parts.length ? `📍 ${parts.join(" · ")}` : null;
+  return parts.length ? parts.join(" · ") : null;
+}
+
+/**
+ * «Звідки клієнт»: поточний візит + перший візит браузера (якщо відрізняється).
+ *
+ * ⚠️ НАВІЩО два рядки: перший візит (landing_page, utm_*) сайт пам'ятає назавжди. 28.10.2026
+ * заявка зі статті блогу прийшла з «qr-code / visit-card», бо колись із цього телефона
+ * сканували QR — менеджер бачив хибне джерело. Тепер головний рядок — поточний візит
+ * (visit_*, attribution.ts), а перший — під ним, лише якщо він інший. Старі заявки без
+ * visit_* показуються як раніше.
+ */
+function originLine(attr: Record<string, unknown> | null | undefined): string | null {
+  if (!attr) return null;
+  // Замовлення, внесене вручну (продаж наживо знайомим, спецціна) — без сторінки входу й джерела.
+  if (attr.channel === "offline") return "🤝 Продаж наживо (внесено вручну)";
+  const str = (k: string) => (typeof attr[k] === "string" && (attr[k] as string).trim() ? (attr[k] as string).trim() : null);
+  const first = describeTouch({
+    landing: str("landing_page"),
+    utm: str("utm_source"),
+    medium: str("utm_medium"),
+    gclid: str("gclid"),
+    fbclid: str("fbclid"),
+    referrer: str("referrer"),
+  });
+  if (!str("visit_landing")) return first ? `📍 ${first}` : null;
+  const visit = describeTouch({
+    landing: str("visit_landing"),
+    utm: str("visit_utm_source"),
+    medium: str("visit_utm_medium"),
+    gclid: str("visit_gclid"),
+    fbclid: str("visit_fbclid"),
+    referrer: str("visit_referrer"),
+  });
+  const L: string[] = [];
+  if (visit) L.push(`📍 ${visit}`);
+  if (first && first !== visit) L.push(`🕐 Перший візит: ${first}`);
+  return L.length ? L.join("\n") : null;
 }
 
 type Last = { by: string | null; at: string } | null;

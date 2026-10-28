@@ -64,4 +64,16 @@ export type AttributionData = {
   landing_page?: string;
   referrer?: string;
   captured_at?: string;
+  /**
+   * Поточний візит (sessionStorage, живе до закриття вкладки). Поля вище — ПЕРШИЙ візит
+   * браузера, і він зберігається назавжди: без цих полів заявка з телефона, який колись
+   * сканував QR із візитки, вічно показувала б «qr-code / visit-card».
+   */
+  visit_landing?: string;
+  visit_referrer?: string;
+  visit_utm_source?: string;
+  visit_utm_medium?: string;
+  visit_utm_campaign?: string;
+  visit_gclid?: string;
+  visit_fbclid?: string;
 };

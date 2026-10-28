@@ -32,5 +32,13 @@ export const AttributionSchema = z
     product: z.string().max(200).optional(),
     productName: z.string().max(200).optional(),
     productSlug: z.string().max(200).optional(),
+    // Поточний візит (attribution.ts, sessionStorage) — поруч із першим візитом вище.
+    visit_landing: z.string().max(500).optional(),
+    visit_referrer: z.string().max(500).optional(),
+    visit_utm_source: z.string().max(200).optional(),
+    visit_utm_medium: z.string().max(200).optional(),
+    visit_utm_campaign: z.string().max(200).optional(),
+    visit_gclid: z.string().max(300).optional(),
+    visit_fbclid: z.string().max(300).optional(),
   })
   .strip();

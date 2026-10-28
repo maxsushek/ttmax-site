@@ -109,6 +109,11 @@ export function attributionProps(a: Record<string, unknown> | undefined): Record
     first_referrer: pick("referrer"),
     has_gclid: Boolean(pick("gclid")),
     has_fbclid: Boolean(pick("fbclid")),
+    // Поточний візит (attribution.ts) — звідки людина прийшла саме цього разу.
+    visit_utm_source: pick("visit_utm_source"),
+    visit_utm_medium: pick("visit_utm_medium"),
+    visit_landing_page: pick("visit_landing"),
+    visit_referrer: pick("visit_referrer"),
   };
   for (const k of Object.keys(out)) if (out[k] === undefined) delete out[k];
   return out;
