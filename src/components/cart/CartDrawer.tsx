@@ -10,6 +10,7 @@ import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { QuickOrder } from "@/components/catalog/QuickOrder";
 import { phFeatureFlag } from "@/lib/analytics/posthog";
+import { slugFromProductId } from "@/lib/catalog/product-url";
 import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
@@ -255,6 +256,7 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
                       name: `${i.brand} ${i.model}`.slice(0, 160),
                       qty: i.qty,
                       price: i.price,
+                      slug: slugFromProductId(i.id),
                     })),
                     total: cart.total,
                   }}

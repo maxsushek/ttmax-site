@@ -442,7 +442,18 @@ async function orderPhotoItems(sb: Sb, orderId: string): Promise<PhotoItem[]> {
 async function leadPhotoItems(sb: Sb, leadId: string): Promise<PhotoItem[]> {
   const { data } = await sb.from("leads").select("source, attribution").eq("id", leadId).maybeSingle();
   const l = data as { source: string; attribution: Record<string, unknown> | null } | null;
-  // Лише швидке замовлення з картки: там відомий конкретний товар (productSlug).
+  // «1 клік» з кошика: склад у attribution.cart_items (api/leads пише його після валідації).
+  if (l?.source === "cart-quick-order") {
+    const raw = l.attribution?.cart_items;
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((i): i is { slug: string; name: string; qty: number } => {
+        const o = i as Record<string, unknown>;
+        return typeof o.slug === "string" && typeof o.name === "string" && typeof o.qty === "number";
+      })
+      .map((i) => ({ slug: i.slug, caption: `${i.name} ×${i.qty}` }));
+  }
+  // Швидке замовлення з картки: там відомий конкретний товар (productSlug).
   const slug = l?.source === "quick-order" ? l.attribution?.productSlug : null;
   if (typeof slug !== "string" || !slug) return [];
   const name = typeof l?.attribution?.product === "string" ? l.attribution.product : slug;

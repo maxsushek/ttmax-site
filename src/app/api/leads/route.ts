@@ -54,6 +54,11 @@ const LeadSchema = z.object({
         .array(
           z.object({
             name: z.string().trim().min(1).max(160),
+            // Сторінка товару — для фото в Telegram. Формат slug каталогу, нічого іншого.
+            slug: z
+              .string()
+              .regex(/^[a-z0-9-]{1,120}$/)
+              .optional(),
             qty: z.number().int().min(1).max(99),
             price: z.number().min(0).max(1_000_000),
           }),
@@ -146,7 +151,16 @@ export async function POST(request: NextRequest) {
       email: parsed.data.email ?? null,
       source: parsed.data.source,
       locale: dbLocale,
-      attribution,
+      // Склад кошика (slug + назва + кількість) — у attribution.cart_items: звідти картка в
+      // Telegram бере фото товарів. Пишемо вже ПРОВАЛІДОВАНЕ (zod вище), а не сирий ввід.
+      attribution: parsed.data.cart
+        ? {
+            ...attribution,
+            cart_items: parsed.data.cart.items
+              .filter((i) => i.slug)
+              .map((i) => ({ slug: i.slug, name: i.name, qty: i.qty })),
+          }
+        : attribution,
       ...(parsed.data.cart
         ? { notes: cartNotes(parsed.data.cart), value_uah: Math.round(parsed.data.cart.total) }
         : {}),

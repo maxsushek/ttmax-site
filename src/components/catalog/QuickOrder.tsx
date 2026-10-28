@@ -113,7 +113,8 @@ const CONSULT_UI: Record<
 };
 
 export type QuickOrderCart = {
-  items: Array<{ name: string; qty: number; price: number }>;
+  /** slug — сторінка товару: за ним бот у Telegram бере фото (cards.ts, sendPhotos). */
+  items: Array<{ name: string; qty: number; price: number; slug?: string }>;
   total: number;
 };
 
