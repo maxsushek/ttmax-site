@@ -162,6 +162,9 @@ export const ru: Messages = {
     freeShipReached: "🎉 Бесплатная доставка!",
     checkout: "Оформить заказ",
     continueShopping: "Продолжить покупки",
+    remove: "Удалить из корзины",
+    decrease: "Уменьшить количество",
+    increase: "Увеличить количество",
     trust: {
       payment: "Безопасная оплата",
       delivery: "Доставка по Украине",

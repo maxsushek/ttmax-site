@@ -117,6 +117,9 @@ export type Messages = {
     freeShipReached: string;
     checkout: string;
     continueShopping: string;
+    remove: string;
+    decrease: string;
+    increase: string;
     trust: {
       payment: string;
       delivery: string;

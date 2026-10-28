@@ -176,6 +176,9 @@ export const ua: Messages = {
     freeShipReached: "🎉 Безкоштовна доставка!",
     checkout: "Оформити замовлення",
     continueShopping: "Продовжити покупки",
+    remove: "Видалити з кошика",
+    decrease: "Зменшити кількість",
+    increase: "Збільшити кількість",
     trust: {
       payment: "Безпечна оплата",
       delivery: "Доставка по Україні",

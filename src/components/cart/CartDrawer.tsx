@@ -145,21 +145,51 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
                       {item.model}
                     </div>
                     <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => cart.changeQty(item.id, -1)}
-                        aria-label="−"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-white/[0.05] font-display text-base font-bold text-ink transition-colors hover:border-accent/40 hover:bg-accent/15 hover:text-accent"
-                      >
-                        −
-                      </button>
+                      {/* ⚠️ НАВІЩО: на 1 штуці «−» раніше нічого не робив (кількість не нижче 1).
+                          27.10.2026 покупець із кошиком на 18 815 ₴ натиснув його 15+ разів,
+                          намагаючись прибрати основу, і пішов без замовлення. Тепер на 1 штуці
+                          кнопка стає «видалити» — через remove, тож remove_from_cart теж іде. */}
+                      {item.qty <= 1 ? (
+                        <button
+                          type="button"
+                          onClick={() => cart.remove(item.id)}
+                          aria-label={m.remove}
+                          title={m.remove}
+                          className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-white/[0.05] text-ink-muted transition-colors hover:border-danger/40 hover:bg-danger/15 hover:text-danger"
+                        >
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => cart.changeQty(item.id, -1)}
+                          aria-label={m.decrease}
+                          className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-white/[0.05] font-display text-base font-bold text-ink transition-colors hover:border-accent/40 hover:bg-accent/15 hover:text-accent"
+                        >
+                          −
+                        </button>
+                      )}
                       <span className="min-w-[20px] text-center font-display text-[15px] font-bold">
                         {item.qty}
                       </span>
                       <button
                         type="button"
                         onClick={() => cart.changeQty(item.id, 1)}
-                        aria-label="+"
+                        aria-label={m.increase}
                         className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-white/[0.05] font-display text-base font-bold text-ink transition-colors hover:border-accent/40 hover:bg-accent/15 hover:text-accent"
                       >
                         +
@@ -170,7 +200,8 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
                     <button
                       type="button"
                       onClick={() => cart.remove(item.id)}
-                      aria-label={messages.common.close}
+                      aria-label={m.remove}
+                      title={m.remove}
                       className="p-1 text-sm text-ink-ghost transition-colors hover:text-danger"
                     >
                       <CloseIcon />
