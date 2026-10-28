@@ -138,6 +138,10 @@ export function LeadForm({
         value={form.phone}
         error={errors.phone}
         onValueChange={(val) => update("phone", formatPhone(val))}
+        // Як у чекауті: перевірка номера (код оператора) одразу після виходу з поля.
+        onBlur={() =>
+          setErrors((p) => ({ ...p, phone: form.phone ? validators.phone(form.phone, v) : "" }))
+        }
       />
       <PlainField
         label={m.email}

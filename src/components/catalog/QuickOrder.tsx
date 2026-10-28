@@ -13,8 +13,8 @@ import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 
-// Той самий валідатор укр. номера, що й на бекенді (/api/leads) — щоб не пропускати сміття.
-const PHONE_RE = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
+// Той самий валідатор укр. номера (з кодом оператора), що й у чекауті та на бекенді (/api/leads).
+import { UA_PHONE } from "@/utils/validators";
 
 const UI: Record<
   Locale,
@@ -197,7 +197,7 @@ export function QuickOrder({
     if (status === "submitting") return;
 
     const cleanPhone = phone.replace(/[\s\-()]/g, "");
-    if (!PHONE_RE.test(cleanPhone)) {
+    if (!UA_PHONE.test(cleanPhone)) {
       setPhoneErr(true);
       phoneRef.current?.focus();
       return;
@@ -333,6 +333,13 @@ export function QuickOrder({
                       setPhone(formatPhone(e.target.value));
                       setPhoneErr(false);
                       onFirstInput();
+                    }}
+                    // Як у чекауті: перевіряємо, щойно людина вийшла з поля, а не лише на сабміті —
+                    // інакше номер із неіснуючим кодом оператора (напр. 055) видно як «нормальний»
+                    // аж до натискання кнопки. Порожнє поле не підсвічуємо — це ще не помилка.
+                    onBlur={() => {
+                      const clean = phone.replace(/[\s\-()]/g, "");
+                      if (clean && !UA_PHONE.test(clean)) setPhoneErr(true);
                     }}
                     aria-invalid={phoneErr || undefined}
                     className={cn(
