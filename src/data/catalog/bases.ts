@@ -467,7 +467,7 @@ export const catalogBases: CatalogProduct[] = [
     "base": {
       "weight": "76–80 г",
       "thicknessMm": 5,
-      "bladeClass": "off-minus",
+      "bladeClass": "all",
       "surface": "wood",
       "plies": "5",
       "handles": [
@@ -894,8 +894,8 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 2335,
     "inStock": true,
     "base": {
-      "weight": "83–88 г",
-      "thicknessMm": 5.7,
+      "weight": "≈84 г",
+      "thicknessMm": 5.5,
       "bladeClass": "off-minus",
       "surface": "wood",
       "plies": "5",
@@ -1329,7 +1329,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 5195,
     "inStock": true,
     "base": {
-      "weight": "86–90 г",
+      "weight": "97–100 г",
       "thicknessMm": 5.8,
       "madeIn": { "ua": "Європа", "ru": "Европа" },
       "bladeClass": "off-minus",
@@ -1565,7 +1565,7 @@ export const catalogBases: CatalogProduct[] = [
       "fiber": "inner",
       "thicknessMm": 5.6,
       "bladeClass": "off",
-      "surface": "alc",
+      "surface": "zlf",
       "plies": "5+2",
       "handles": [
         "fl",
@@ -1681,7 +1681,7 @@ export const catalogBases: CatalogProduct[] = [
     "inStock": true,
     "base": {
       "weight": "90–95 г",
-      "thicknessMm": 6.7,
+      "thicknessMm": 6.8,
       "bladeClass": "off",
       "surface": "wood",
       "plies": "7",
@@ -1718,7 +1718,7 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 10400,
     "inStock": true,
     "base": {
-      "weight": "81–85 г",
+      "weight": "≈85 г",
       "fiber": "outer",
       "thicknessMm": 5.8,
       "bladeClass": "off",
@@ -2164,7 +2164,7 @@ export const catalogBases: CatalogProduct[] = [
     "base": {
       "weight": "90–96 г",
       "thicknessMm": 5.3,
-      "bladeClass": "off-minus",
+      "bladeClass": "def",
       "surface": "wood",
       "plies": "5",
       "handles": [
@@ -2318,7 +2318,7 @@ export const catalogBases: CatalogProduct[] = [
       "thicknessMm": 6.4,
       "bladeClass": "off-minus",
       "surface": "wood",
-      "plies": "5",
+      "plies": "7",
       "handles": [
         "fl",
         "st",
@@ -2511,7 +2511,7 @@ export const catalogBases: CatalogProduct[] = [
       "thicknessMm": 7.1,
       "bladeClass": "off-plus",
       "surface": "zlc",
-      "plies": "5+2",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -2550,7 +2550,7 @@ export const catalogBases: CatalogProduct[] = [
       "thicknessMm": 7.2,
       "bladeClass": "off-plus",
       "surface": "t5000",
-      "plies": "5+2",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -2589,7 +2589,7 @@ export const catalogBases: CatalogProduct[] = [
       "thicknessMm": 6.9,
       "bladeClass": "off",
       "surface": "alc",
-      "plies": "5+2",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",
@@ -3063,11 +3063,11 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 3635,
     "inStock": true,
     "base": {
-      "weight": "80–86 г",
+      "weight": "≈75 г",
       "thicknessMm": 7.5,
       "bladeClass": "off-plus",
-      "surface": "wood",
-      "plies": "5",
+      "surface": "carbon",
+      "plies": "5+2",
       "handles": [
         "fl",
         "st",
@@ -3101,12 +3101,12 @@ export const catalogBases: CatalogProduct[] = [
     "priceFrom": 3115,
     "inStock": true,
     "base": {
-      "weight": "70–80 г",
+      "weight": "≈72 г",
       "fiber": "outer",
       "thicknessMm": 6.2,
       "bladeClass": "off-plus",
       "surface": "carbon",
-      "plies": "5+2",
+      "plies": "3+2",
       "handles": [
         "fl",
         "st",

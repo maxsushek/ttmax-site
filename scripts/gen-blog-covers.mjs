@@ -273,7 +273,49 @@ function profi() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 8. Зняті з виробництва основи: вітрина з порожніми місцями ─── */
+function znyati() {
+  // ⚠️ ТА САМА ВІТРИНА 4×2, ЩО Й У «ІНВЕНТАРІ ПРОФІ», АЛЕ МОДЕЛЕЙ УЖЕ НЕМАЄ: більшість місць —
+  // пунктирні контури (моделі зникли з лінійки), дві — тьмяні силуети, які ще трапляються в
+  // продажу, і одна акцентна — рідкісний екземпляр, заради якого стаття й читається. БЕЗ ЧИСЕЛ.
+  const xs = [850, 1000, 1150, 1290];
+  const ys = [360, 640];
+  const rx = 48;
+  const ry = 58;
+  const hw = 20;
+  const hLen = 88;
+  const ghost = new Set(["0-1", "3-0"]); // ще трапляються в магазинах
+  const rare = "2-1"; // акцент
+  const b = [`<circle cx="1150" cy="640" r="250" fill="url(#halo)"/>`];
+  ys.forEach((y, row) => {
+    b.push(`<line x1="790" y1="${y + ry + hLen + 14}" x2="${SAFE.x1 + 10}" y2="${y + ry + hLen + 14}" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="2"/>`);
+    xs.forEach((x, col) => {
+      const key = `${col}-${row}`;
+      if (key === rare) {
+        b.push(
+          `<rect x="${x - hw / 2}" y="${y + ry - 8}" width="${hw}" height="${hLen}" rx="5" fill="${DOT_CORE}" fill-opacity="0.55"/>`,
+          `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${DOT_RING}" fill-opacity="0.6"/>`,
+          `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="none" stroke="${ACCENT}" stroke-opacity="0.95" stroke-width="3.2"/>`,
+          `<ellipse cx="${x}" cy="${y}" rx="${rx + 16}" ry="${ry + 16}" fill="none" stroke="${ACCENT}" stroke-opacity="0.25" stroke-width="1.6"/>`,
+        );
+      } else if (ghost.has(key)) {
+        b.push(
+          `<rect x="${x - hw / 2}" y="${y + ry - 8}" width="${hw}" height="${hLen}" rx="5" fill="${DOT_CORE}" fill-opacity="0.22"/>`,
+          `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${DOT_RING}" fill-opacity="0.28" stroke="${DOT_CORE}" stroke-opacity="0.3" stroke-width="1.6"/>`,
+        );
+      } else {
+        b.push(
+          `<rect x="${x - hw / 2}" y="${y + ry - 8}" width="${hw}" height="${hLen}" rx="5" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.28" stroke-width="1.4" stroke-dasharray="5 7"/>`,
+          `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.32" stroke-width="1.6" stroke-dasharray="7 9"/>`,
+        );
+      }
+    });
+  });
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "znyati-cover.svg": znyati(),
   "inventar-profi-cover.svg": profi(),
   "tenergy-dignics-cover.svg": tenergyDignics(),
   "novachok-cover.svg": novachok(),

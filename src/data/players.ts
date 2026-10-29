@@ -311,6 +311,98 @@ const PLAYERS_DATA = {
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Mondial_Ping_-_Men%27s_Doubles_-_Semifinals_-_23.jpg",
     },
   },
+  // Легенди з іменними основами Butterfly (стаття про зняті з виробництва основи, 29.10.2026).
+  // Фото — P18 з Wikidata, ліцензії звірено через Commons API; на кадрах із кількома людьми
+  // взято найбільше обличчя (головний герой фото).
+  "primorac-zoran": {
+    name: { ua: "Зоран Примораць", ru: "Зоран Приморац" },
+    nameEn: "Zoran Primorac",
+    wikidata: "Q26355",
+    photo: {
+      src: "/blog/players/primorac-zoran.webp",
+      author: "Vladimir Mirskiy",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Zoran_Primorac-001.JPG",
+    },
+  },
+  "gionis-panagiotis": {
+    name: { ua: "Панайотіс Гіоніс", ru: "Панайотис Гионис" },
+    nameEn: "Panagiotis Gionis",
+    wikidata: "Q3120927",
+    photo: {
+      src: "/blog/players/gionis-panagiotis.webp",
+      author: "XIAOYU TANG",
+      license: "CC BY-SA 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/2.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Panagiotis_Gionis_WTTC2016.jpeg",
+    },
+  },
+  "mazunov-andrei": {
+    name: { ua: "Андрій Мазунов", ru: "Андрей Мазунов" },
+    nameEn: "Andrei Mazunov",
+    wikidata: "Q502706",
+    photo: {
+      src: "/blog/players/mazunov-andrei.webp",
+      author: "Vladimir Mirskiy",
+      license: "CC BY 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/3.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Andrey_Mazunov-02.JPG",
+    },
+  },
+  "korbel-petr": {
+    name: { ua: "Петр Корбел", ru: "Петр Корбел" },
+    nameEn: "Petr Korbel",
+    wikidata: "Q973508",
+  },
+  "zhang-jike": {
+    name: { ua: "Чжан Цзіке", ru: "Чжан Цзикэ" },
+    nameEn: "Zhang Jike",
+    wikidata: "Q197218",
+    photo: {
+      src: "/blog/players/zhang-jike.webp",
+      author: "Pierre-Yves Beaudouin",
+      license: "CC BY-SA 4.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Mondial_Ping_-_Men%27s_Singles_-_Final_-_Zhang_Jike_vs_Wang_Hao_-_40.jpg",
+    },
+  },
+  "liu-shiwen": {
+    name: { ua: "Лю Шивень", ru: "Лю Шивэнь" },
+    nameEn: "Liu Shiwen",
+    wikidata: "Q443175",
+    photo: {
+      src: "/blog/players/liu-shiwen.webp",
+      author: "Pierre-Yves Beaudouin",
+      license: "CC BY-SA 4.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Mondial_Ping_-_Women%27s_Doubles_-_Final_-_36.jpg",
+    },
+  },
+  "fukuhara-ai": {
+    name: { ua: "Ай Фукухара", ru: "Ай Фукухара" },
+    nameEn: "Ai Fukuhara",
+    wikidata: "Q239371",
+    photo: {
+      src: "/blog/players/fukuhara-ai.webp",
+      author: "Didier Garcon",
+      license: "CC BY 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/3.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Ai_Fukuhara_at_Table_Tennis_Pro_Tour_Grand_Finals_2011.jpg",
+    },
+  },
+  "matsudaira-kenta": {
+    name: { ua: "Кента Мацудайра", ru: "Кента Мацудайра" },
+    nameEn: "Kenta Matsudaira",
+    wikidata: "Q2363614",
+    photo: {
+      src: "/blog/players/matsudaira-kenta.webp",
+      author: "Pierre-Yves Beaudouin",
+      license: "CC BY-SA 3.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Mondial_Ping_-_Men%27s_Singles_-_Round_4_-_Kenta_Matsudaira-Vladimir_Samsonov_-_42.jpg",
+    },
+  },
 } satisfies Record<string, Player>;
 
 export type PlayerSlug = keyof typeof PLAYERS_DATA;
