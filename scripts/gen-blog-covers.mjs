@@ -314,7 +314,61 @@ function znyati() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 9. Apolonia ZLC: розріз основи, карбон біля ядра, дві різні накладки ─── */
+function apolonia() {
+  // ⚠️ ТЕЗА СТАТТІ — INNER-ZLC: два акцентні шари карбону стоять БІЛЯ ЯДРА, а не під
+  // поверхнею, і результат залежить від накладок. Тому зверху — товста щільна губка
+  // (твердий форхенд), знизу — тонша й «пухка» в крапку (мʼякий бекхенд). Мʼяч торкається
+  // саме форхенду. Товщини шарів образні, БЕЗ ЧИСЕЛ.
+  const x0 = 810;
+  const x1 = 1300;
+  const w = x1 - x0;
+  const layers = [
+    { h: 10, kind: "top" }, // топшит форхенду
+    { h: 70, kind: "hard" }, // тверда губка
+    { h: 30, kind: "wood" },
+    { h: 30, kind: "wood" },
+    { h: 8, kind: "carbon" },
+    { h: 70, kind: "core" },
+    { h: 8, kind: "carbon" },
+    { h: 30, kind: "wood" },
+    { h: 30, kind: "wood" },
+    { h: 52, kind: "soft" }, // мʼяка губка бекхенду
+    { h: 10, kind: "top" },
+  ];
+  let y = 410; // нижче, ніж в інших: угорі праворуч ArticleCover малює логотип
+  const b = [`<circle cx="1055" cy="${y + 175}" r="260" fill="url(#halo)"/>`];
+  for (const l of layers) {
+    const r = (fill, op, extra = "") =>
+      `<rect x="${x0}" y="${y}" width="${w}" height="${l.h}" fill="${fill}" fill-opacity="${op}" ${extra}/>`;
+    if (l.kind === "top") b.push(r("#FFFFFF", 0.16));
+    else if (l.kind === "hard") b.push(r(DOT_RING, 0.7, `stroke="${DOT_CORE}" stroke-opacity="0.35" stroke-width="1.4"`));
+    else if (l.kind === "wood") b.push(r(DOT_CORE, 0.2, `stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1"`));
+    else if (l.kind === "core") b.push(r(DOT_CORE, 0.3, `stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1"`));
+    else if (l.kind === "carbon") b.push(r(ACCENT, 0.95));
+    else if (l.kind === "soft") {
+      b.push(r(DOT_RING, 0.3, `stroke="${DOT_CORE}" stroke-opacity="0.3" stroke-width="1.4" stroke-dasharray="6 8"`));
+      for (let cx = x0 + 22; cx < x1 - 10; cx += 34) {
+        for (let cy = y + 14; cy < y + l.h - 6; cy += 22) {
+          b.push(`<circle cx="${cx + ((cy - y) % 44 === 14 ? 0 : 17)}" cy="${cy}" r="3.2" fill="${DOT_CORE}" fill-opacity="0.35"/>`);
+        }
+      }
+    }
+    y += l.h;
+  }
+  // мʼяч на форхенді й дуга вильоту — вища, ніж «плаский» outer-виліт (тьмяний пунктир)
+  const bx = 960;
+  const by = 410 - 24;
+  b.push(
+    `<path d="M${bx} ${by} Q 1110 ${by - 130} 1250 ${by - 20}" fill="none" stroke="${ACCENT}" stroke-opacity="0.65" stroke-width="3"/>`,
+    `<path d="M${bx} ${by} Q 1110 ${by - 55} 1250 ${by - 4}" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.35" stroke-width="2.2" stroke-dasharray="9 10"/>`,
+    dotAccent(bx, by, 18),
+  );
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "apolonia-cover.svg": apolonia(),
   "znyati-cover.svg": znyati(),
   "inventar-profi-cover.svg": profi(),
   "tenergy-dignics-cover.svg": tenergyDignics(),
