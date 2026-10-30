@@ -18,6 +18,48 @@ import { ArticleCover } from "@/components/content/ArticleCover";
 import { BlogClickTracker } from "@/components/content/BlogClickTracker";
 import { BlogConsult } from "@/components/content/BlogConsult";
 import { Fragment } from "react";
+import { getProductVideos } from "@/data/catalog/videos";
+import { YouTubeFacade } from "@/components/catalog/YouTubeFacade";
+
+/** Наш ролик у розділі статті + VideoObject. Дані — ті самі, що в блоці «Відео» на картці товару. */
+function SectionVideo({ slug, locale }: { slug: string; locale: Locale }) {
+  const v = getProductVideos(slug)[0];
+  if (!v) return null;
+  const watch = v.vertical
+    ? `https://www.youtube.com/shorts/${v.youtubeId}`
+    : `https://www.youtube.com/watch?v=${v.youtubeId}`;
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: v.title[locale],
+    description: v.description[locale],
+    thumbnailUrl: `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`,
+    uploadDate: v.uploadDate,
+    embedUrl: `https://www.youtube.com/embed/${v.youtubeId}`,
+    contentUrl: watch,
+    inLanguage: localeToLang[locale],
+  };
+  return (
+    <figure className={`mt-5 ${v.vertical ? "w-full max-w-[300px]" : "w-full max-w-[720px]"}`}>
+      <YouTubeFacade
+        youtubeId={v.youtubeId}
+        title={v.title[locale]}
+        vertical={v.vertical}
+        playLabel={locale === "ua" ? "Відтворити відео" : "Воспроизвести видео"}
+      />
+      <figcaption className="mt-3 font-body text-sm font-semibold text-ink">{v.title[locale]}</figcaption>
+      <a
+        href={watch}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-1 inline-block font-body text-sm text-ink-muted underline-offset-4 hover:text-ink hover:underline"
+      >
+        {locale === "ua" ? "Дивитися на YouTube" : "Смотреть на YouTube"} ↗
+      </a>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+    </figure>
+  );
+}
 
 const UI = {
   ua: {
@@ -372,6 +414,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   ))}
                 </ol>
               )}
+              {s.video && <SectionVideo slug={s.video} locale={locale} />}
               {s.rec && (
                 // Редакційна картка-рекомендація: фото товару + вердикт тренера + лінк на money-картку.
                 // Лівий акцент-бордер + курсив-вердикт = «цитата тренера», НЕ product-tile.

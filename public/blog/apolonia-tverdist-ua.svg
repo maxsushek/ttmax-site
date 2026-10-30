@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="1000" height="800" role="img">
+<rect width="1000" height="800" fill="#0E1117"/>
+<rect x="24" y="24" width="952" height="752" rx="22" fill="#161B22"/>
+<text x="60" y="84" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="30" font-weight="700" fill="#F2F4F7" letter-spacing="0.5">APOLONIA ZLC: ТВЕРДІСТЬ НАКЛАДОК І ДЕ ЇХ СТАВЛЯТЬ</text>
+<rect x="405" y="130" width="300" height="520" fill="#E8FF47" fill-opacity="0.06"/>
+<text x="409" y="120" text-anchor="start" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" font-weight="700" fill="#E8FF47" letter-spacing="1">БЕКХЕНД у відгуках</text>
+<rect x="555" y="130" width="300" height="520" fill="#E8FF47" fill-opacity="0.08"/>
+<text x="851" y="120" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" font-weight="700" fill="#E8FF47" letter-spacing="1">ФОРХЕНД у відгуках</text>
+<line x1="330" y1="130" x2="330" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="330" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">30</text>
+<line x1="405" y1="130" x2="405" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="405" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">32</text>
+<line x1="480" y1="130" x2="480" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="480" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">34</text>
+<line x1="555" y1="130" x2="555" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="555" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">36</text>
+<line x1="630" y1="130" x2="630" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="630" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">38</text>
+<line x1="705" y1="130" x2="705" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="705" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">40</text>
+<line x1="780" y1="130" x2="780" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="780" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">42</text>
+<line x1="855" y1="130" x2="855" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="855" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">44</text>
+<line x1="930" y1="130" x2="930" y2="650" stroke="#212832" stroke-width="1.5"/>
+<text x="930" y="680" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="19" fill="#8A93A0">46</text>
+<text x="630" y="712" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="18" fill="#8A93A0">твердість губки, °</text>
+<text x="306" y="182" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Tenergy 05 FX</text>
+<line x1="330" y1="175" x2="405" y2="175" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="405" cy="175" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="405" y="161" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">32°</text>
+<text x="306" y="232" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Rozena</text>
+<line x1="330" y1="225" x2="517.5" y2="225" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="517.5" cy="225" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="517.5" y="211" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">35°</text>
+<text x="306" y="282" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Tenergy 05</text>
+<line x1="330" y1="275" x2="555" y2="275" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="555" cy="275" r="15" fill="none" stroke="#E8FF47" stroke-width="2.5"/>
+<circle cx="555" cy="275" r="8" fill="#E8FF47"/>
+<text x="581" y="281" text-anchor="start" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" fill="#E8FF47">Шмідбергер</text>
+<text x="555" y="254" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">36°</text>
+<text x="306" y="332" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Tenergy 64</text>
+<line x1="330" y1="325" x2="555" y2="325" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="555" cy="325" r="15" fill="none" stroke="#E8FF47" stroke-width="2.5"/>
+<circle cx="555" cy="325" r="8" fill="#E8FF47"/>
+<text x="581" y="331" text-anchor="start" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" fill="#E8FF47">Шмідбергер</text>
+<text x="555" y="304" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">36°</text>
+<text x="306" y="382" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Glayzer</text>
+<line x1="330" y1="375" x2="630" y2="375" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="630" cy="375" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="630" y="361" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">38°</text>
+<text x="306" y="432" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Dignics 05</text>
+<line x1="330" y1="425" x2="705" y2="425" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="705" cy="425" r="15" fill="none" stroke="#E8FF47" stroke-width="2.5"/>
+<circle cx="705" cy="425" r="8" fill="#E8FF47"/>
+<text x="731" y="431" text-anchor="start" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" fill="#E8FF47">Аполонія</text>
+<text x="705" y="404" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">40°</text>
+<text x="306" y="482" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Dignics 80</text>
+<line x1="330" y1="475" x2="705" y2="475" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="705" cy="475" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="705" y="461" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">40°</text>
+<text x="306" y="532" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Tenergy 05 Hard</text>
+<line x1="330" y1="525" x2="817.5" y2="525" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="817.5" cy="525" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="817.5" y="511" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">43°</text>
+<text x="306" y="582" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Dignics 09C</text>
+<line x1="330" y1="575" x2="855" y2="575" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="855" cy="575" r="15" fill="none" stroke="#E8FF47" stroke-width="2.5"/>
+<circle cx="855" cy="575" r="8" fill="#E8FF47"/>
+<text x="829" y="581" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="17" fill="#E8FF47">Мойланд</text>
+<text x="855" y="554" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">44°</text>
+<text x="306" y="632" text-anchor="end" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="22" fill="#F2F4F7">Zyre 03</text>
+<line x1="330" y1="625" x2="855" y2="625" stroke="#8A93A0" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="855" cy="625" r="8" fill="#F2F4F7" fill-opacity="0.85"/>
+<text x="855" y="611" text-anchor="middle" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="14" fill="#8A93A0">44°</text>
+<circle cx="70" cy="732" r="12" fill="none" stroke="#E8FF47" stroke-width="2.5"/><circle cx="70" cy="732" r="6" fill="#E8FF47"/>
+<text x="92" y="738" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="18" fill="#F2F4F7">— грає на Apolonia ZLC</text>
+<text x="60" y="766" font-family="Oswald,'Arial Narrow',Arial,sans-serif" font-size="15" fill="#8A93A0">Твердість — дані Butterfly; гравці — butterfly.co.jp, butterfly-global.com, tabletennis-reference</text>
+</svg>

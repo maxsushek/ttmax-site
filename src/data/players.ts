@@ -350,6 +350,18 @@ const PLAYERS_DATA = {
       sourceUrl: "https://commons.wikimedia.org/wiki/File:Andrey_Mazunov-02.JPG",
     },
   },
+  "schmidberger-thomas": {
+    name: { ua: "Томас Шмідбергер", ru: "Томас Шмидбергер" },
+    nameEn: "Thomas Schmidberger",
+    wikidata: "Q2427112",
+    photo: {
+      src: "/blog/players/schmidberger-thomas.webp",
+      author: "Gaël Marziou",
+      license: "CC BY 2.0",
+      licenseUrl: "https://creativecommons.org/licenses/by/2.0",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Thomas_Schmidberger_WPTTC2010_1_(cropped).jpeg",
+    },
+  },
   "korbel-petr": {
     name: { ua: "Петр Корбел", ru: "Петр Корбел" },
     nameEn: "Petr Korbel",
