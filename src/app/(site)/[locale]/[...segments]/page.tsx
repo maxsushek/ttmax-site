@@ -53,6 +53,8 @@ import { isReviewsConfigured } from "@/lib/reviews/secret";
 import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/overrides";
 import { isRacket, resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
+import { ProductVideos } from "@/components/catalog/ProductVideos";
+import { getProductVideos, type ProductVideo } from "@/data/catalog/videos";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { getSettings } from "@/lib/settings/get";
@@ -1307,11 +1309,14 @@ function ProductShell({
   media,
   content,
   extra,
+  videos = [],
 }: {
   brandName: string;
   h1: string;
   /** Slug картки: відгуки моделі (для дублів кольору/обʼєму — основної картки). */
   reviewSlug?: string;
+  /** Ролики з YouTube-каналу (src/data/catalog/videos.ts). */
+  videos?: ProductVideo[];
   visualLabel: string;
   images: GalleryImage[];
   children: React.ReactNode;
@@ -1354,6 +1359,12 @@ function ProductShell({
           <ContentIntro text={content?.intro} />
           {children}
         </div>
+
+        {videos.length > 0 && (
+          <div className="min-w-0 lg:col-span-2">
+            <ProductVideos videos={videos} locale={locale} />
+          </div>
+        )}
 
         {extra && <div className="min-w-0 lg:col-span-2">{extra}</div>}
 
@@ -1449,6 +1460,7 @@ function RubberView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       reviewSlug={route.product.slug}
+      videos={getProductVideos(route.product.slug)}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
@@ -1531,6 +1543,7 @@ function GearView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       reviewSlug={route.product.slug}
+      videos={getProductVideos(route.product.slug)}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}
@@ -1641,6 +1654,7 @@ function BaseView({
       brandName={brandName}
       h1={routeH1(route, locale)}
       reviewSlug={route.product.slug}
+      videos={getProductVideos(route.product.slug)}
       visualLabel={brandName}
       images={buildGallery(media, product.slug, product.name[locale])}
       related={related}

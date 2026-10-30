@@ -74,10 +74,11 @@ const CSP_REPORT_ONLY = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua",
   "worker-src 'self' blob:",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://i.ytimg.com",
   "font-src 'self' data:",
   "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://api.cloudinary.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua",
-  "frame-src 'self' https://www.googletagmanager.com",
+  // YouTube: обкладинки відео на картках (i.ytimg.com) і плеєр після кліку (youtube-nocookie.com).
+  "frame-src 'self' https://www.googletagmanager.com https://www.youtube-nocookie.com",
   "upgrade-insecure-requests",
 ].join("; ");
 
