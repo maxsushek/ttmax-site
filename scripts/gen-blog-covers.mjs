@@ -367,7 +367,96 @@ function apolonia() {
   return wrap(b.join("\n"));
 }
 
+/** Стрілка обертання навколо мʼяча: дуга з наконечником; dir = 1 — за годинниковою, -1 — проти. */
+function spinArrow(cx, cy, r, dir, color, op = 0.8) {
+  const a0 = dir > 0 ? -150 : -30;
+  const a1 = dir > 0 ? 60 : 240;
+  const pt = (a) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];
+  const [x0, y0] = pt(a0);
+  const [x1, y1] = pt(a1);
+  const t = ((a1 + 90 * dir) * Math.PI) / 180; // дотична в кінці
+  const hx = Math.cos(t) * 12;
+  const hy = Math.sin(t) * 12;
+  return (
+    `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 1 ${dir > 0 ? 1 : 0} ${x1.toFixed(1)} ${y1.toFixed(1)}" fill="none" stroke="${color}" stroke-opacity="${op}" stroke-width="2.6"/>` +
+    `<path d="M${(x1 - hx - hy * 0.6).toFixed(1)} ${(y1 - hy + hx * 0.6).toFixed(1)} L${x1.toFixed(1)} ${y1.toFixed(1)} L${(x1 - hx + hy * 0.6).toFixed(1)} ${(y1 - hy - hx * 0.6).toFixed(1)}" fill="none" stroke="${color}" stroke-opacity="${op}" stroke-width="2.6"/>`
+  );
+}
+
+/* ─── 10. Проти шипів: довгі шипи «віддають» ваше ж обертання ─── */
+function shypy() {
+  // ⚠️ ТЕЗА СТАТТІ: довгі шипи майже не створюють свого обертання, а зберігають чуже. Тому
+  // мʼяч, що прилетів із верхнім (тьмяна стрілка), повертається з нижнім (акцентна) — напрям
+  // обертання відносно польоту «перевертається». Знизу — ряд високих тонких шипів. БЕЗ ЧИСЕЛ.
+  const base = 760;
+  const b = [`<circle cx="1060" cy="520" r="260" fill="url(#halo)"/>`];
+  b.push(`<rect x="840" y="${base}" width="440" height="22" rx="4" fill="${DOT_RING}" fill-opacity="0.6"/>`);
+  for (let x = 856; x <= 1266; x += 22) {
+    b.push(`<rect x="${x}" y="${base - 74}" width="8" height="76" rx="3" fill="${DOT_CORE}" fill-opacity="0.55"/>`);
+  }
+  // приліт: зверху ліворуч униз до шипів
+  b.push(`<path d="M830 420 Q 960 470 1040 ${base - 96}" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.45" stroke-width="2.4" stroke-dasharray="9 10"/>`);
+  b.push(dot(830, 420, 26, 0.55), spinArrow(830, 420, 44, 1, DOT_CORE, 0.6));
+  // відліт: від шипів угору праворуч
+  b.push(`<path d="M1060 ${base - 96} Q 1150 480 ${SAFE.x1 - 40} 410" fill="none" stroke="${ACCENT}" stroke-opacity="0.65" stroke-width="3"/>`);
+  b.push(dotAccent(SAFE.x1 - 40, 410, 24), spinArrow(SAFE.x1 - 40, 410, 50, -1, ACCENT, 0.85));
+  return wrap(b.join("\n"));
+}
+
+/* ─── 11. Мʼячі: тренувальні й змагальний ─── */
+function myachi() {
+  // ⚠️ ТЕЗА СТАТТІ: однакові на вигляд мʼячі різні за класом. Два тьмяні (тренувальні) і один
+  // акцентний із трьома зірочками під ним (змагальний 3★) + рівна дуга відскоку. Зірки — фігури, НЕ цифри.
+  const y = 560;
+  const star = (cx, cy, r) => {
+    const pts = [];
+    for (let i = 0; i < 10; i++) {
+      const a = (Math.PI / 5) * i - Math.PI / 2;
+      const rr = i % 2 ? r * 0.45 : r;
+      pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+    }
+    return `<polygon points="${pts.join(" ")}" fill="${ACCENT}"/>`;
+  };
+  const b = [`<circle cx="1180" cy="${y - 40}" r="250" fill="url(#halo)"/>`];
+  b.push(`<line x1="800" y1="${y + 120}" x2="${SAFE.x1}" y2="${y + 120}" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="3"/>`);
+  b.push(dot(880, y, 46, 0.5), dot(1020, y, 46, 0.5));
+  b.push(`<path d="M1180 ${y + 60} Q 1230 ${y - 230} 1290 ${y + 110}" fill="none" stroke="${ACCENT}" stroke-opacity="0.35" stroke-width="2.4" stroke-dasharray="8 9"/>`);
+  b.push(dotAccent(1180, y, 50));
+  b.push(star(1144, y + 90, 13), star(1180, y + 90, 13), star(1216, y + 90, 13));
+  return wrap(b.join("\n"));
+}
+
+/* ─── 12. Прийом подачі: прочитати обертання — підібрати кут ракетки ─── */
+function pryimaty() {
+  // ⚠️ ТЕЗА СТАТТІ: спершу читаємо обертання (три мʼячі з різними стрілками: нижнє, бокове,
+  // верхнє), потім відповідаємо кутом ракетки. Акцент — мʼяч, який «прочитали», і відповідний
+  // нахил ракетки праворуч. БЕЗ ЧИСЕЛ.
+  const b = [`<circle cx="1120" cy="520" r="260" fill="url(#halo)"/>`];
+  const balls = [
+    { x: 860, y: 330, dir: -1 },
+    { x: 860, y: 520, dir: 1 },
+    { x: 860, y: 710, dir: -1, accent: true },
+  ];
+  for (const k of balls) {
+    if (k.accent) b.push(dotAccent(k.x, k.y, 24), spinArrow(k.x, k.y, 44, k.dir, ACCENT, 0.9));
+    else b.push(dot(k.x, k.y, 24, 0.5), spinArrow(k.x, k.y, 44, k.dir, DOT_CORE, 0.5));
+  }
+  // лінія «прочитали → відповіли»
+  b.push(`<path d="M910 710 Q 1040 640 1150 560" fill="none" stroke="${ACCENT}" stroke-opacity="0.55" stroke-width="2.6" stroke-dasharray="9 9"/>`);
+  // ракетка під кутом: лопать + ручка
+  b.push(
+    `<g transform="rotate(-28 1200 520)">` +
+      `<ellipse cx="1200" cy="480" rx="62" ry="74" fill="${DOT_RING}" fill-opacity="0.6" stroke="${ACCENT}" stroke-opacity="0.9" stroke-width="3"/>` +
+      `<rect x="1188" y="548" width="24" height="96" rx="6" fill="${DOT_CORE}" fill-opacity="0.5"/>` +
+      `</g>`,
+  );
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "yak-hraty-proty-shypiv-cover.svg": shypy(),
+  "yaki-myachi-vybraty-cover.svg": myachi(),
+  "yak-pryimaty-podachu-cover.svg": pryimaty(),
   "apolonia-cover.svg": apolonia(),
   "znyati-cover.svg": znyati(),
   "inventar-profi-cover.svg": profi(),
