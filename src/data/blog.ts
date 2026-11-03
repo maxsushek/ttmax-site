@@ -2995,6 +2995,10 @@ const POSTS: Record<string, BlogPost> = {
     slug: "naykrashchi-nakladki-butterfly",
     // Блок «Підберемо» (BlogConsult) — після розділу «tablytsia» (28.10.2026, CRO).
     consultAfter: "tablytsia",
+    // Блок товарів (03.11.2026): 3 моделі різних рівнів і ПІСЛЯ розбору моделей, а не на початку —
+    // рейтинг із шістьма цінами одразу після вступу виглядав би як хаб /nakladki (канібалізація).
+    products: ["dignics-09c", "tenergy-05", "rozena"],
+    productsAfter: "budget",
     // ТАРГЕТ (Ahrefs UA): рейтинг/порівняння — «лучшие накладки для настольного тенниса» (RU 20)
     // + кириличні бренд-форми «тенерджи 05» (20), «дигникс 09с» (10), KD 0. Інформаційний
     // інтент (рейтинг/порівняння), НЕ транзакційний — не канібалізує /nakladki. Головна цінність —
@@ -6090,6 +6094,10 @@ const POSTS: Record<string, BlogPost> = {
   },
   "apolonia-zlc-oglyad": {
     slug: "apolonia-zlc-oglyad",
+    // Блок товарів (03.11.2026) — лише накладки з розділів статті, БЕЗ самої Apolonia ZLC:
+    // огляд одного товару з його ціною й «Купити» конкурував би з карткою за «Apolonia ZLC».
+    // На основу веде rec-картка. Dignics 64 не влізла в ліміт 6 — є в розділі dignics-80-64.
+    products: ["dignics-09c", "dignics-05", "zyre-03", "tenergy-05", "tenergy-05-fx", "dignics-80"],
     // Огляд основи Apolonia ZLC + що дають різні накладки. Запити: «Apolonia ZLC огляд»,
     // «Apolonia ZLC накладки», «які накладки на Apolonia ZLC», «Apolonia ZLC vs Viscaria»,
     // «Apolonia ZLC vs Innerforce Layer ZLC», «Apolonia ZLC Tenergy 05 FX / Dignics 09C / Zyre 03».
