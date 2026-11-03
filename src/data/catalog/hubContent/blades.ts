@@ -181,6 +181,8 @@ export const BLADE_HUBS: Record<string, RichContent> = {
       { label: t("Основи ZLC", "Основания ZLC"), href: "/osnovaniya/zlc" },
       { label: t("ALC чи ZLC, inner чи outer", "ALC или ZLC, inner или outer"), href: "/blog/alc-chy-zlc" },
       { label: t("Версії основ Butterfly", "Версии оснований Butterfly"), href: "/blog/versii-osnov-butterfly" },
+      { label: t("Зняті з виробництва основи", "Снятые с производства основания"), href: "/blog/znyati-osnovy-butterfly" },
+      { label: t("Огляд Apolonia ZLC", "Обзор Apolonia ZLC"), href: "/blog/apolonia-zlc-oglyad" },
       { label: t("Універсальні основи", "Универсальные основания"), href: "/osnovaniya/universalni" },
       { label: t("Готові ракетки", "Готовые ракетки"), href: "/rakety" },
     ],

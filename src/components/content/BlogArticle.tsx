@@ -17,6 +17,7 @@ import { RubberPoll } from "@/components/content/RubberPoll";
 import { ArticleCover } from "@/components/content/ArticleCover";
 import { BlogClickTracker } from "@/components/content/BlogClickTracker";
 import { BlogConsult } from "@/components/content/BlogConsult";
+import { BlogProducts, blogProductSlugs } from "@/components/content/BlogProducts";
 import { Fragment } from "react";
 import { getProductVideos } from "@/data/catalog/videos";
 import { YouTubeFacade } from "@/components/catalog/YouTubeFacade";
@@ -285,6 +286,8 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
       ? faqJsonLd(post.faq.map((f) => ({ q: f.q[locale], a: f.a[locale] })))
       : null;
   const readMin = readingMinutes(post, locale);
+  const productSlugs = blogProductSlugs(post);
+  const productsAfter = post.productsAfter ?? post.sections[0]?.id;
 
   return (
     <article className="py-12 sm:py-16 lg:py-20">
@@ -526,6 +529,9 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                 </div>
               )}
             </section>
+            {productSlugs.length > 0 && productsAfter === s.id && (
+              <BlogProducts post={post} slugs={productSlugs} locale={locale} />
+            )}
             {post.consultAfter === s.id && (
               <BlogConsult locale={locale} slug={post.slug} topic={post.h1[locale]} />
             )}

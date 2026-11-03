@@ -116,6 +116,16 @@ export type BlogPost = {
   sources?: { label: L; url: string; kind: "official" | "forum" | "review" }[];
   /** Контекстні лінки на товар (перелінковка → каталог). */
   relatedProducts?: BlogLink[];
+  /**
+   * Блок «Моделі зі статті» (BlogProducts): фото, ціна, кнопка «Купити». Слаги товарів
+   * каталогу, до 6. Не задано → картки, на які стаття вже посилається (rec, links,
+   * relatedProducts); [] → блоку немає (статті без товарного інтенту).
+   *
+   * ⚠️ НАВІЩО: зі статей у магазин майже не переходять (PostHog, 03.11.2026) — див. BlogProducts.
+   */
+  products?: string[];
+  /** id розділу, після якого стоїть блок товарів. Не задано → після першого розділу. */
+  productsAfter?: string;
   /** Слаги інших статей для блоку «Читайте також» (стаття → стаття). */
   relatedPosts?: string[];
   /**
@@ -1719,6 +1729,14 @@ const POSTS: Record<string, BlogPost> = {
 
   "yak-nakleity-nakladku": {
     slug: "yak-nakleity-nakladku",
+    // Блок товарів (03.11.2026): те, що потрібне для поклейки, — без тубуса для м'ячів,
+    // який автоматично потрапив би першим із розділу «що потрібно».
+    products: [
+      "klei-butterfly-free-chack-90-ml",
+      "klei-butterfly-freechack-pro-ii-90ml",
+      "tortseva-strichka-butterfly-logo-12mm-1m",
+      "zakhysna-plivka-butterfly",
+    ],
     // Інструкція поклейки за ОФІЦІЙНИМИ матеріалами Butterfly (butterfly-global.com, care/free_chack,
     // care/replacement, care/chack_sheet, сторінка Free Chack II) + гайд дистрибʼютора Butterfly у США.
     // Числа з інструкції: клей «з монету 20–25 мм», щонайменше 10 хв до прозорості, накладку
@@ -4590,6 +4608,9 @@ const POSTS: Record<string, BlogPost> = {
     slug: "versii-osnov-butterfly",
     // Блок «Підберемо» (BlogConsult) — після розділу «pokolinnya» (28.10.2026, CRO).
     consultAfter: "pokolinnya",
+    // Блок товарів після «korotko» (03.11.2026): головна вхідна сторінка з Google (RU),
+    // медіанна прокрутка 41% — блок у кінці не бачать. Найпопулярніші основи зі статті.
+    products: ["viscaria", "timo-boll-alc", "innerforce-layer-alc", "zhang-jike-alc", "omar-assar-zlc", "petr-korbel"],
     h1: {
       ua: "Японська, європейська чи китайська версія основи Butterfly: у чому різниця і як перевірити оригінал",
       ru: "Японская, европейская или китайская версия основания Butterfly: в чём разница и как проверить оригинал",
