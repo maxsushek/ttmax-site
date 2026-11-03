@@ -17,6 +17,9 @@
 # вивантаження з Supabase для scripts/gen-openai-feed.mjs (готовий фід — у /out/feeds)
 /.feed-data/
 
+# знімок sitemap для scripts/indexnow.mjs (що вже надіслано)
+/.indexnow/
+
 # misc
 .DS_Store
 *.pem

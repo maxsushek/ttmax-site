@@ -10,7 +10,10 @@ import { siteConfig } from "@/config/site";
 import { getAllPosts } from "@/data/blog";
 import { getAuthor } from "@/data/authors";
 
-export const revalidate = 3600;
+// ⚠️ БЕЗ ТАЙМЕРА (03.11.2026, на прохання власника): файл перезбирається на кожному деплої,
+// а ціни/наявність/контакти всередині оновлюються тим самим тегом, що й сторінки (адмінка →
+// revalidateTag). Погодинна регенерація лише палила ISR-записи Vercel без нових даних.
+export const revalidate = false;
 export const dynamicParams = false;
 
 export function generateStaticParams() {

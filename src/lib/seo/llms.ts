@@ -177,70 +177,54 @@ export function buildLlmsIndex(opts: {
     "",
     "## Повні дані",
     "",
-    `- [llms-full.txt](${url("/llms-full.txt")}) — ціни, наявність, характеристики, FAQ`,
+    "Окремими файлами — беріть той, що під запит (повний файл великий):",
+    "",
+    ...llmsParts({ media, overrides }).map((p) => `- [${p.title}](${url(`/llms/${p.slug}.txt`)}) — ${p.note}`),
+    "",
+    `- [llms-full.txt](${url("/llms-full.txt")}) — усе разом (~0,9 МБ)`,
     `- [sitemap.xml](${url("/sitemap.xml")})`,
     "",
   );
   return out.join("\n");
 }
 
-/**
- * llms-full.txt — готові відповіді: ціни, наявність, характеристики, FAQ.
- *
- * ⚠️ Повні тексти статей сюди НЕ включаємо свідомо: фактуру несуть FAQ і характеристики,
- * а статті роздули б файл у рази без нової інформації (у sparkservice цей файл вийшов
- * ~800 КБ саме через тексти). Стаття лишається посиланням.
- */
-export function buildLlmsFull(opts: {
-  media: EntityMediaMap;
-  overrides: OverridesMap;
-  contact: ContactInfo;
-}): string {
-  const { media, overrides, contact } = opts;
-  const products = sellable(media, overrides);
-  const out = company(contact);
+type LlmsOpts = { media: EntityMediaMap; overrides: OverridesMap; contact: ContactInfo };
 
-  out.push(
-    "Формат: розділ на категорію, у кожному — товар, ціна, наявність, характеристики,",
-    "далі FAQ і статті-довідники. Дані згенеровано з того ж джерела, що й сторінки сайту.",
-    "",
-  );
-
-  for (const c of getIndexableCategories()) {
-    const inCat = products.filter((p) => p.categorySlug === c.slug);
-    if (inCat.length === 0) continue;
-    out.push(`## ${c.name[UA]} (${inCat.length})`, "");
-    for (const p of inCat) {
-      const path = `/${p.brandSlug}/${p.categorySlug}/${p.slug}`;
-      out.push(
-        `### ${p.name[UA]}`,
-        `- Ціна: ${money(getMinPrice(p))}${isInStock(p) ? ", в наявності" : ", під замовлення"}`,
-        // У товарів без власної сторінки в індексі (екіпірування) посилаємось на розділ:
-        // вести асистента на noindex-картку означало б радити сторінку, яку ми самі
-        // закрили від пошуку.
-        productIndexable(p)
-          ? `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`
-          : `- Розділ: ${url(`/ua${sectionPath(p)}`)} (картка без окремої сторінки)`,
-      );
-      const specs = specLine(p);
-      if (specs) out.push(`- Характеристики: ${specs}`);
-      const e = getExpert(p.slug);
-      if (e) {
-        out.push(`- Коротко: ${e.verdict[UA]}`);
-        if (e.official[UA]) out.push(`- Дані виробника: ${e.official[UA]}`);
-        for (const f of e.faq.slice(0, 4)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
-      } else if (p.seoBlocks?.length) {
-        // Екіпірування з власним текстом (gearCopy.ts) — ті самі факти, що на картці.
-        out.push(`- Коротко: ${p.seoBlocks[0]?.p[UA].join(" ")}`);
-        for (const f of (p.faq ?? []).slice(0, 3)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
-      }
-      out.push("");
+/** Товари однієї категорії: ціна, наявність, сторінка, характеристики, «Коротко», FAQ. */
+function productLines(inCat: CatalogProduct[]): string[] {
+  const out: string[] = [];
+  for (const p of inCat) {
+    const path = `/${p.brandSlug}/${p.categorySlug}/${p.slug}`;
+    out.push(
+      `### ${p.name[UA]}`,
+      `- Ціна: ${money(getMinPrice(p))}${isInStock(p) ? ", в наявності" : ", під замовлення"}`,
+      // У товарів без власної сторінки в індексі (екіпірування) посилаємось на розділ:
+      // вести асистента на noindex-картку означало б радити сторінку, яку ми самі
+      // закрили від пошуку.
+      productIndexable(p)
+        ? `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`
+        : `- Розділ: ${url(`/ua${sectionPath(p)}`)} (картка без окремої сторінки)`,
+    );
+    const specs = specLine(p);
+    if (specs) out.push(`- Характеристики: ${specs}`);
+    const e = getExpert(p.slug);
+    if (e) {
+      out.push(`- Коротко: ${e.verdict[UA]}`);
+      if (e.official[UA]) out.push(`- Дані виробника: ${e.official[UA]}`);
+      for (const f of e.faq.slice(0, 4)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
+    } else if (p.seoBlocks?.length) {
+      // Екіпірування з власним текстом (gearCopy.ts) — ті самі факти, що на картці.
+      out.push(`- Коротко: ${p.seoBlocks[0]?.p[UA].join(" ")}`);
+      for (const f of (p.faq ?? []).slice(0, 3)) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
     }
+    out.push("");
   }
+  return out;
+}
 
-  // Гайди підкатегорій: «Коротко», таблиця-підсумок і FAQ — готові відповіді на запити
-  // «як обрати довгі шипи», «яку атакуючу основу взяти» тощо (ті самі тексти, що на сторінках).
-  out.push("## Як обрати: гайди підкатегорій", "");
+/** Гайди підкатегорій: «Коротко» і FAQ — ті самі тексти, що на сторінках хабів. */
+function guideLines(products: CatalogProduct[]): string[] {
+  const out: string[] = [];
   for (const g of surfaceGroups) {
     const rich = getRichContent(g.slug);
     if (!rich || !products.some((p) => inGroup(p, g))) continue;
@@ -250,14 +234,115 @@ export function buildLlmsFull(opts: {
     if (rich.updated) out.push(`- Оновлено: ${rich.updated}`);
     out.push("");
   }
+  return out;
+}
 
-  out.push("## Питання й відповіді з довідника", "");
+/** Статті: FAQ (у повному файлі) або ще й «Коротко» + дата (в окремому файлі довідника). */
+function postLines(withSummary: boolean): string[] {
+  const out: string[] = [];
   for (const post of getAllPosts()) {
-    if (!post.faq || post.faq.length === 0) continue;
+    if (!withSummary && (!post.faq || post.faq.length === 0)) continue;
     out.push(`### ${post.h1[UA]} — ${url(`/ua/blog/${post.slug}`)}`);
-    for (const f of post.faq) out.push(`- ${f.q[UA]} — ${f.a[UA]}`);
+    if (withSummary) {
+      out.push(`- Оновлено: ${post.dateModified}`);
+      // Перший розділ статті — answer-first «Коротко»: прямий ответ на запит статті.
+      const first = post.sections[0];
+      if (first) for (const para of first.p[UA]) out.push(`- ${para}`);
+    }
+    for (const f of post.faq ?? []) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
     out.push("");
   }
+  return out;
+}
+
+/** Гравці: інвентар (Butterfly, з датою), головні титули, коротко. */
+function playerLines(): string[] {
+  const out: string[] = [];
+  for (const pr of allProfiles()) {
+    const eq = pr.equipment;
+    out.push(`### ${PLAYERS[pr.slug].name[UA]} (${PLAYERS[pr.slug].nameEn}) — ${url(`/ua/igroki/${pr.slug}`)}`);
+    out.push(`- ${pr.summary[UA]}`);
+    const rubbers = eq.bh
+      ? `форхенд ${eq.fh?.name ?? "—"}, бекхенд ${eq.bh.name}`
+      : `накладка ${eq.fh?.name ?? "—"} (сторону Butterfly не вказує)`;
+    out.push(`- Інвентар (Butterfly, станом на ${eq.asOf}): основа ${eq.blade.name}; ${rubbers}. Джерело: ${eq.source}`);
+    for (const a of pr.achievements.slice(0, 6)) out.push(`- ${a.year}: ${a.event[UA]} — ${a.result[UA]}`);
+    out.push("");
+  }
+  return out;
+}
+
+export type LlmsPart = { slug: string; title: string; note: string };
+
+/**
+ * Частини llms-full.txt окремими файлами /llms/<slug>.txt.
+ *
+ * ⚠️ НАВІЩО (03.11.2026): llms-full.txt виріс до ~885 КБ (~250 тис. токенів). ШІ-інструменти
+ * обрізають такий файл на початку — до гайдів і статей (вони в кінці) асистент не доходив.
+ * Тепер llms.txt веде на частину під запит: «основи» — 270 КБ замість 885. Повний файл
+ * лишається для тих, хто шукає саме його.
+ */
+export function llmsParts(opts: Pick<LlmsOpts, "media" | "overrides">): LlmsPart[] {
+  const products = sellable(opts.media, opts.overrides);
+  const parts: LlmsPart[] = [];
+  for (const c of getIndexableCategories()) {
+    const n = products.filter((p) => p.categorySlug === c.slug).length;
+    if (n > 0) parts.push({ slug: c.slug, title: c.name[UA], note: `${plural(n, "позиція", "позиції", "позицій")}: ціни, наявність, характеристики, FAQ` });
+  }
+  parts.push({ slug: "gaidy", title: "Як обрати: гайди підкатегорій", note: "«Коротко» й FAQ хабів (основи ALC/ZLC, шипи, клей тощо)" });
+  parts.push({ slug: "dovidnyk", title: "Довідник: статті блогу", note: "«Коротко» й FAQ кожної статті" });
+  if (allProfiles().length > 0) parts.push({ slug: "gravtsi", title: "Гравці: на чому грають", note: "інвентар за даними Butterfly з датою, титули" });
+  return parts;
+}
+
+/** Одна частина: короткий заголовок + дані. Компанію не дублюємо — вона в llms.txt. */
+export function buildLlmsPart(slug: string, opts: LlmsOpts): string | null {
+  const part = llmsParts(opts).find((p) => p.slug === slug);
+  if (!part) return null;
+  const products = sellable(opts.media, opts.overrides);
+  const head = [
+    `# ${siteConfig.name} — ${part.title}`,
+    "",
+    `> ${part.note}. Частина повних даних магазину; карта всіх частин — ${url("/llms.txt")}.`,
+    `> Мова — українська; ціни в UAH, оновлено: ${PRICE_LIST_EFFECTIVE_DATE}.`,
+    "",
+  ];
+  let body: string[];
+  if (slug === "gaidy") body = guideLines(products);
+  else if (slug === "dovidnyk") body = postLines(true);
+  else if (slug === "gravtsi") body = playerLines();
+  else body = productLines(products.filter((p) => p.categorySlug === slug));
+  return [...head, ...body].join("\n");
+}
+
+/**
+ * llms-full.txt — готові відповіді: ціни, наявність, характеристики, FAQ (усе в одному файлі).
+ *
+ * ⚠️ Повні тексти статей сюди НЕ включаємо свідомо: фактуру несуть FAQ і характеристики,
+ * а статті роздули б файл у рази без нової інформації (у sparkservice цей файл вийшов
+ * ~800 КБ саме через тексти). Стаття лишається посиланням.
+ */
+export function buildLlmsFull(opts: LlmsOpts): string {
+  const { media, overrides, contact } = opts;
+  const products = sellable(media, overrides);
+  const out = company(contact);
+
+  out.push(
+    "Формат: розділ на категорію, у кожному — товар, ціна, наявність, характеристики,",
+    "далі FAQ і статті-довідники. Дані згенеровано з того ж джерела, що й сторінки сайту.",
+    `Те саме окремими файлами (менші, зручніші): див. розділ «Повні дані» в ${url("/llms.txt")}.`,
+    "",
+  );
+
+  for (const c of getIndexableCategories()) {
+    const inCat = products.filter((p) => p.categorySlug === c.slug);
+    if (inCat.length === 0) continue;
+    out.push(`## ${c.name[UA]} (${inCat.length})`, "", ...productLines(inCat));
+  }
+
+  out.push("## Як обрати: гайди підкатегорій", "", ...guideLines(products));
+  out.push("## Питання й відповіді з довідника", "", ...postLines(false));
+  if (allProfiles().length > 0) out.push("## Гравці: на чому грають", "", ...playerLines());
 
   return out.join("\n");
 }

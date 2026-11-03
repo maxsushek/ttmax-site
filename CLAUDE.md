@@ -37,6 +37,7 @@ Next.js 15.5 (App Router) · React 19 · TypeScript 5.6 · Tailwind 3.4 · zod �
 - Push в `main` = продакшен-деплой на Vercel. Каждая сборка — ~1600 страниц и чтение Supabase (egress на Free — 5 ГБ в месяц). Поэтому изменения группировать; пушить, когда пользователь просит деплой или задаче нужна проверка на проде (сказать об этом заранее).
 - Коммит, меняющий только `docs/`, `.claude/`, `scripts/`, `supabase/` или `*.md` в корне, сборку не запускает (`scripts/vercel-ignore-build.sh`). Такие изменения можно пушить сразу.
 - Дождаться деплоя: `bash scripts/wait-deploy.sh` в фоне — одна строка с итогом (статус из GitHub). Без серии опросов.
+- После деплоя с новыми или изменёнными страницами — `node scripts/indexnow.mjs` (пинг Bing/Yandex по живому sitemap; `--dry` — посмотреть, `--all` — всё).
 - Коннектор Vercel по умолчанию выключен (экономия контекста). Для логов рантайма или env на Vercel — попросить пользователя включить его; изменение действует со следующего хода.
 - Коммит: тема «Область: что сделано» по-украински, в теле — зачем. Не коммитить `.env*`, `.next/`, `out/`, `.feed-data/`.
 - ID сервисов: Vercel `prj_Ld0TXxt0OBnZPFLstADYw7Do5jgw` (ttmax-site-z2za); Supabase `ttpjtpivtcxjvlzbpwoi`; PostHog EU, проект `315663`; GitHub `maxsushek/ttmax-site`.
