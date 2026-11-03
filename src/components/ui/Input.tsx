@@ -33,7 +33,11 @@ export function Input({
   const reactId = useId();
   const id = idProp ?? reactId;
   const [touched, setTouched] = useState(false);
-  const showError = touched && !!error;
+  // ⚠️ НАВІЩО без touched: помилку батько ставить лише після blur або спроби перейти далі.
+  // Було `touched && !!error` — і якщо одразу натиснути «Далі», помилки не з'являлись зовсім:
+  // кнопка мовчки «не працювала». 31.10.2026 покупець тричі натиснув її з порожньою формою
+  // й пішов без замовлення (PostHog, checkout_error).
+  const showError = !!error;
   const isValid = touched && !error && value.length > 0;
 
   return (

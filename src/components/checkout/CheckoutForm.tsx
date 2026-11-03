@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useCart } from "@/components/cart/CartProvider";
@@ -47,6 +47,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   const v = messages.validators;
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState<Array<1 | 2>>([]);
   const [ordered, setOrdered] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
@@ -136,6 +137,14 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     trackEvent({
       name: "checkout_error",
       params: { step, fields: fields.join(","), count: fields.length },
+    });
+    // На телефоні перше хибне поле часто вище екрана або під клавіатурою: показуємо його й
+    // ставимо курсор, щоб було видно, чому «Далі» не спрацювало. Після рендера помилок.
+    requestAnimationFrame(() => {
+      const el = rootRef.current?.querySelector<HTMLInputElement>('input[aria-invalid="true"]');
+      if (!el) return;
+      el.scrollIntoView({ block: "center", behavior: "smooth" });
+      el.focus({ preventScroll: true });
     });
   };
 
@@ -333,7 +342,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   }
 
   return (
-    <div className="fixed inset-0 z-[910] overflow-y-auto bg-bg-base">
+    <div ref={rootRef} className="fixed inset-0 z-[910] overflow-y-auto bg-bg-base">
       {/* Header */}
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border-subtle bg-bg-base/95 px-5 py-3.5 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
