@@ -93,11 +93,13 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
 
         {count > 1 && (
           <>
+            {/* ph-no-rageclick: швидке гортання фото стрілками — не роздратування. Без класу
+                це давало 71 із 73 «rage clicks» у PostHog (03.11.2026) і ховало справжні. */}
             <button
               type="button"
               aria-label="Попереднє фото"
               onClick={() => nav(active - 1, "arrow")}
-              className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
+              className="ph-no-rageclick absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
@@ -114,7 +116,7 @@ export function ProductGallery({ images }: { images: GalleryImage[] }) {
               type="button"
               aria-label="Наступне фото"
               onClick={() => nav(active + 1, "arrow")}
-              className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
+              className="ph-no-rageclick absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-ink backdrop-blur transition-all hover:border-accent/50 hover:bg-black/60 active:scale-95"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path

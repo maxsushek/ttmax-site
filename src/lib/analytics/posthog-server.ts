@@ -12,13 +12,21 @@
 // ⚠️ Без персональних даних: ні імені, ні телефону, ні e-mail, ні адреси. Лише номер,
 // суми й товари. Профіль людини не створюється ($process_person_profile: false).
 import type { NextRequest } from "next/server";
-import { POSTHOG_CAPTURE_URL, POSTHOG_COOKIE, POSTHOG_TOKEN } from "@/config/posthog";
+import { INTERNAL_COOKIE, POSTHOG_CAPTURE_URL, POSTHOG_COOKIE, POSTHOG_TOKEN } from "@/config/posthog";
 
 export type PosthogContext = {
   distinctId: string | null;
   sessionId: string | null;
   /** Сторінка, з якої надіслано форму, — без query (там може бути токен запрошення). */
   url: string | null;
+  /** Браузер власника (cookie ttmax_internal) — подія піде з internal=true. */
+  internal: boolean;
+  /**
+   * IP покупця — лише для країни/міста в PostHog (у проєкті ввімкнено anonymize_ips: сам IP
+   * не зберігається). ⚠️ НАВІЩО: без нього PostHog брав IP сервера Vercel (fra1) і всі
+   * замовлення й заявки були «з Німеччини».
+   */
+  ip: string | null;
 };
 
 /** Читати синхронно в обробнику, до after(). */
@@ -48,7 +56,10 @@ export function posthogContext(request: NextRequest): PosthogContext {
       /* битий referer — без URL */
     }
   }
-  return { distinctId, sessionId, url };
+  const fwd = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const ip = request.headers.get("x-real-ip") ?? (fwd || null);
+  const internal = request.cookies.get(INTERNAL_COOKIE)?.value === "1";
+  return { distinctId, sessionId, url, internal, ip };
 }
 
 function safeDecode(s: string): string {
@@ -82,6 +93,9 @@ export async function captureServerEvent(
       $lib: "ttmax-server",
       ...(ctx.sessionId ? { $session_id: ctx.sessionId } : {}),
       ...(ctx.url ? { $current_url: ctx.url } : {}),
+      ...(ctx.internal ? { internal: true } : {}),
+      // Немає IP — краще без гео, ніж із гео сервера.
+      ...(ctx.ip ? { $ip: ctx.ip } : { $geoip_disable: true }),
     },
   };
   try {

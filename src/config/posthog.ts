@@ -36,3 +36,20 @@ export const POSTHOG_COOKIE = `ph_${POSTHOG_TOKEN}_posthog`;
  * «внутрішній трафік» у PostHog — власні перевірки сайту не псують статистику.
  */
 export const INTERNAL_FLAG = "ttmax:internal";
+
+/**
+ * Та сама позначка в cookie — для серверних подій (order_placed, lead_created, review_submitted):
+ * сервер localStorage не бачить. ⚠️ НАВІЩО: 28.10.2026 дві тестові заявки власника потрапили в
+ * «Заявки» на дашборді, бо серверна подія йшла без internal.
+ */
+export const INTERNAL_COOKIE = "ttmax_internal";
+
+/** Позначити цей браузер як внутрішній: localStorage + cookie на рік. */
+export function markInternalBrowser(): void {
+  try {
+    window.localStorage.setItem(INTERNAL_FLAG, "1");
+  } catch {
+    /* приватний режим — лишається cookie */
+  }
+  document.cookie = `${INTERNAL_COOKIE}=1; path=/; max-age=31536000; samesite=lax; secure`;
+}

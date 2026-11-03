@@ -11,7 +11,9 @@
 // знову опиниться в бандлі кожного компонента, що викликає trackEvent.
 import type { PostHog } from "posthog-js";
 import {
+  INTERNAL_COOKIE,
   INTERNAL_FLAG,
+  markInternalBrowser,
   POSTHOG_API_HOST,
   POSTHOG_HOSTNAMES,
   POSTHOG_TOKEN,
@@ -32,11 +34,18 @@ function enabledHere(): boolean {
 }
 
 function isInternal(): boolean {
+  // ?ttmax_internal=1 — позначити пристрій без входу в адмінку (напр. телефон власника).
+  if (new URLSearchParams(window.location.search).get(INTERNAL_COOKIE) === "1") markInternalBrowser();
+  const hasCookie = document.cookie.split("; ").includes(`${INTERNAL_COOKIE}=1`);
+  let flagged = hasCookie;
   try {
-    return window.localStorage.getItem(INTERNAL_FLAG) === "1";
+    flagged = flagged || window.localStorage.getItem(INTERNAL_FLAG) === "1";
   } catch {
-    return false;
+    /* приватний режим */
   }
+  // Браузери, позначені до появи cookie, отримують її тут — інакше серверні події без internal.
+  if (flagged && !hasCookie) markInternalBrowser();
+  return flagged;
 }
 
 function withPosthog(job: Job): void {
