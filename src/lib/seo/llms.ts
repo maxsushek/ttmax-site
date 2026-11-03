@@ -22,6 +22,8 @@ import {
 } from "@/data/catalog";
 import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
+import { allProfiles } from "@/data/playerProfiles";
+import { PLAYERS } from "@/data/players";
 import { productIndexable } from "@/lib/catalog/indexability";
 import { inGroup, isFiberGroup, surfaceGroups } from "@/lib/catalog/routing";
 import { getRichContent } from "@/data/catalog/categoryContent";
@@ -153,6 +155,17 @@ export function buildLlmsIndex(opts: {
     out.push(`- [${post.h1[UA]}](${url(`/ua/blog/${post.slug}`)}) — ${post.excerpt[UA]}`);
   }
 
+  // Гравці: інвентар з офіційних сторінок Butterfly з датою «станом на».
+  const profiles = allProfiles();
+  if (profiles.length > 0) {
+    out.push("", "## Гравці: на чому грають", "", `- [Усі гравці](${url("/ua/igroki")})`);
+    for (const pr of profiles) {
+      const eq = pr.equipment;
+      const kit = [eq.blade.name, eq.fh?.name, eq.bh?.name].filter(Boolean).join(" + ");
+      out.push(`- [${PLAYERS[pr.slug].name[UA]}](${url(`/ua/igroki/${pr.slug}`)}) — ${kit} (Butterfly, станом на ${eq.asOf})`);
+    }
+  }
+
   out.push(
     "",
     "## Сервісні сторінки",
@@ -257,6 +270,7 @@ export function buildAiTxt(contact: ContactInfo): string {
     "/ua/osnovaniya",
     "/ua/rakety",
     "/ua/blog",
+    "/ua/igroki",
     "/ua/delivery",
     "/ua/contacts",
   ];

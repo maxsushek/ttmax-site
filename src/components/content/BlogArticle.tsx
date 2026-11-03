@@ -10,6 +10,7 @@ import { getAuthor } from "@/data/authors";
 import type { BlogPost } from "@/data/blog";
 import { getRelatedPosts } from "@/data/blog";
 import { PLAYERS, playerInitials, type PlayerSlug } from "@/data/players";
+import { hasProfile } from "@/data/playerProfiles";
 import { PlayStyleQuiz } from "@/components/content/PlayStyleQuiz";
 import { RacketPickerQuiz } from "@/components/content/RacketPickerQuiz";
 import { TableSpaceQuiz } from "@/components/content/TableSpaceQuiz";
@@ -501,7 +502,17 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                               {cell.player ? (
                                 <span className="inline-flex items-center gap-2.5">
                                   <PlayerAvatar slug={cell.player} locale={locale} />
-                                  <span>{cell[locale]}</span>
+                                  {hasProfile(cell.player) ? (
+                                    <Link
+                                      href={`/${locale}/igroki/${cell.player}`}
+                                      data-blog-link="player"
+                                      className="text-accent hover:underline"
+                                    >
+                                      {cell[locale]}
+                                    </Link>
+                                  ) : (
+                                    <span>{cell[locale]}</span>
+                                  )}
                                 </span>
                               ) : (
                                 cell[locale]
@@ -530,7 +541,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               )}
             </section>
             {productSlugs.length > 0 && productsAfter === s.id && (
-              <BlogProducts post={post} slugs={productSlugs} locale={locale} />
+              <BlogProducts owner={post.slug} slugs={productSlugs} locale={locale} />
             )}
             {post.consultAfter === s.id && (
               <BlogConsult locale={locale} slug={post.slug} topic={post.h1[locale]} />

@@ -490,8 +490,13 @@ export function personJsonLd(opts: {
   image?: string;
   knowsAbout?: string[];
   sameAs?: string[];
+  /** Для профілів гравців: країна (назва) і дата/рік народження (ISO). */
+  nationality?: string;
+  birthDate?: string;
+  /** Повне імʼя латиницею — alternateName. */
+  alternateName?: string;
 }) {
-  const { name, url, jobTitle, description, image, knowsAbout, sameAs } = opts;
+  const { name, url, jobTitle, description, image, knowsAbout, sameAs, nationality, birthDate, alternateName } = opts;
   const node: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -503,6 +508,9 @@ export function personJsonLd(opts: {
   if (image) node.image = image;
   if (knowsAbout && knowsAbout.length > 0) node.knowsAbout = knowsAbout;
   if (sameAs && sameAs.length > 0) node.sameAs = sameAs;
+  if (nationality) node.nationality = { "@type": "Country", name: nationality };
+  if (birthDate) node.birthDate = birthDate;
+  if (alternateName) node.alternateName = alternateName;
   return node;
 }
 

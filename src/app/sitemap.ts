@@ -13,6 +13,8 @@ import {
 import { surfaceGroups, seriesIndexable, productsInGroup } from "@/lib/catalog/routing";
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
+import { allProfiles } from "@/data/playerProfiles";
+import { PLAYERS } from "@/data/players";
 import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
 import { productIndexable } from "@/lib/catalog/indexability";
@@ -75,6 +77,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   for (const author of allAuthors) {
     paths.push({ path: `/author/${author.slug}`, priority: 0.3, freq: "monthly" });
+  }
+
+  // Сторінки гравців: lastMod — дата нашої звірки з джерелами (checked), не час білда.
+  const profiles = allProfiles();
+  if (profiles.length > 0) {
+    paths.push({ path: "/igroki", priority: 0.5, freq: "monthly" });
+    for (const pr of profiles) {
+      const photo = PLAYERS[pr.slug].photo;
+      paths.push({
+        path: `/igroki/${pr.slug}`,
+        priority: 0.5,
+        freq: "monthly",
+        lastMod: new Date(pr.checked),
+        images: photo ? [`${siteConfig.url}${photo.src}`] : undefined,
+      });
+    }
   }
 
   for (const c of getIndexableCategories()) {

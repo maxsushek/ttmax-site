@@ -54,6 +54,7 @@ import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/o
 import { isRacket, resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { ProductVideos } from "@/components/catalog/ProductVideos";
+import { PlayersUsing } from "@/components/catalog/PlayersUsing";
 import { getProductVideos, type ProductVideo } from "@/data/catalog/videos";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
@@ -1358,6 +1359,10 @@ function ProductShell({
           {reviewSlug && <ProductRating slug={reviewSlug} locale={locale} />}
           <ContentIntro text={content?.intro} />
           {children}
+        </div>
+
+        <div className="min-w-0 lg:col-span-2 empty:hidden">
+          <PlayersUsing productSlug={reviewSlug} locale={locale} />
         </div>
 
         {videos.length > 0 && (

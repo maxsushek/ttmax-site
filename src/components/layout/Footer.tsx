@@ -142,7 +142,12 @@ export function Footer({
     href: catalogSlugs[i] ? `/${locale}/${catalogSlugs[i]}` : `/${locale}/nakladki`,
   }));
   // Только Butterfly.
-  const brandLinks: FootLink[] = [{ label: "Butterfly", href: `/${locale}/butterfly` }];
+  // «Гравці» — розділ /igroki (карʼєра + інвентар з посиланнями на товари); футер — єдине
+  // наскрізне посилання на нього, хедер не перевантажуємо.
+  const brandLinks: FootLink[] = [
+    { label: "Butterfly", href: `/${locale}/butterfly` },
+    { label: locale === "ua" ? "Гравці Butterfly" : "Игроки Butterfly", href: `/${locale}/igroki` },
+  ];
   // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
   // ⚠️ ПОРЯДОК = m.infoLinks. «Блог» доданий другим: статей уже 5, вони збирають інфо-трафік
   // і ведуть на money-картки, а в футері блогу не було зовсім (лише в хедері).

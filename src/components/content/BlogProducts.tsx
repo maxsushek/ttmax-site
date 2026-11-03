@@ -65,15 +65,19 @@ export function blogProductSlugs(post: BlogPost): string[] {
 }
 
 export async function BlogProducts({
-  post,
+  owner,
   slugs,
   locale,
+  heading,
 }: {
-  post: BlogPost;
+  /** Slug статті або гравця — для data-атрибута (аналітика кліків). */
+  owner: string;
   slugs: string[];
   locale: Locale;
+  /** Свій заголовок блоку (сторінка гравця); інакше — «Моделі зі статті». */
+  heading?: string;
 }) {
-  const t = T[locale];
+  const t = { ...T[locale], ...(heading ? { heading } : {}) };
   // Без .catch(): збій БД не можна запам'ятати разом зі сторінкою (lib/supabase/load-failure.ts).
   const [overrides, media] = await Promise.all([getOverrides(), getMediaMap()]);
 
@@ -105,7 +109,7 @@ export async function BlogProducts({
   return (
     <aside
       aria-label={t.heading}
-      data-blog-products={post.slug}
+      data-blog-products={owner}
       className="rounded-2xl border border-border-strong bg-bg-raised p-4 sm:p-5"
     >
       <p className="font-display text-[13px] font-bold uppercase tracking-[0.1em] text-ink">{t.heading}</p>
