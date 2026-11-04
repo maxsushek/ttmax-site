@@ -1,0 +1,385 @@
+{
+  "slug": "shinozuka-hiroto",
+  "checked": "2026-11-03",
+  "country": {
+    "code": "JPN",
+    "ua": "Японія",
+    "ru": "Япония"
+  },
+  "born": "2003-12-23",
+  "active": true,
+  "retired": null,
+  "hand": "left",
+  "grip": "shakehand",
+  "summary": {
+    "ua": "Хірото Сінодзука — японський ліворукий тенісист, чемпіон світу 2025 року в парному розряді разом із Сюнсуке Тогамі. За даними Butterfly на 19.01.2026, він грає основою Timo Boll ALC, Dignics 09C на форхенді та Zyre 03 на бекхенді.",
+    "ru": "Хирото Синодзука — японский теннисист-левша, чемпион мира 2025 года в парном разряде вместе с Сюнсукэ Тогами. По данным Butterfly на 19.01.2026, он играет основанием Timo Boll ALC, Dignics 09C на форхенде и Zyre 03 на бэкхенде."
+  },
+  "bio": {
+    "ua": [
+      "Хірото Сінодзука народився 23 грудня 2003 року. Butterfly вказує, що він родом із міста Токай у префектурі Айті, грає лівою рукою європейською хваткою в атакувальному стилі й виступає за команду компанії Tōto Kankō Bus. У 2017 році він виграв чемпіонат Японії серед кадетів (до 14 років) в одиночному розряді, а в 2019 році на шкільному чемпіонаті Японії (Inter-High) переміг у командному турнірі та став другим в одиночному.",
+      "У 2022 році він виграв WTT Feeder у Фрімонті й WTT Contender у Новій Гориці — там і в одиночному, і в парному розряді. У 2024 році Сінодзука став чемпіоном Японії в міксті, виграв дві бронзи чемпіонату Азії в Астані (одиночний і парний розряди), посів із японською збірною четверте місце в командному турнірі Олімпіади в Парижі та дійшов до фіналу WTT Finals у Фукуоці в парному розряді.",
+      "У травні 2025 року Сінодзука й Сюнсуке Тогамі виграли парний розряд чемпіонату світу в Досі — перше золото Японії в чоловічому парному розряді за 64 роки. Далі були срібло командного Кубка світу 2025, срібло командного чемпіонату світу 2026 у Лондоні, бронза WTT Champions Yokohama та золото Азійських ігор 2026 у команді. За архівними сторінками Butterfly, у 2019 році він грав основою Viscaria, у 2022 році — Zhang Jike ALC, на 21.11.2023 — спеціально замовленою основою з Arylate Carbon, а щонайменше з 18.01.2024 — Timo Boll ALC."
+    ],
+    "ru": [
+      "Хирото Синодзука родился 23 декабря 2003 года. Butterfly указывает, что он родом из города Токай в префектуре Айти, играет левой рукой европейской хваткой в атакующем стиле и выступает за команду компании Tōto Kankō Bus. В 2017 году он выиграл чемпионат Японии среди кадетов (до 14 лет) в одиночном разряде, а в 2019 году на школьном чемпионате Японии (Inter-High) победил в командном турнире и стал вторым в одиночном.",
+      "В 2022 году он выиграл WTT Feeder во Фримонте и WTT Contender в Нова-Горице — там и в одиночном, и в парном разряде. В 2024 году Синодзука стал чемпионом Японии в миксте, выиграл две бронзы чемпионата Азии в Астане (одиночный и парный разряды), занял с японской сборной четвёртое место в командном турнире Олимпиады в Париже и дошёл до финала WTT Finals в Фукуоке в парном разряде.",
+      "В мае 2025 года Синодзука и Сюнсукэ Тогами выиграли парный разряд чемпионата мира в Дохе — первое золото Японии в мужском парном разряде за 64 года. Затем были серебро командного Кубка мира 2025, серебро командного чемпионата мира 2026 в Лондоне, бронза WTT Champions Yokohama и золото Азиатских игр 2026 в команде. По архивным страницам Butterfly, в 2019 году он играл основанием Viscaria, в 2022 году — Zhang Jike ALC, на 21.11.2023 — основанием на спецзаказ с Arylate Carbon, а как минимум с 18.01.2024 — Timo Boll ALC."
+    ]
+  },
+  "achievements": [
+    {
+      "year": 2026,
+      "event": {
+        "ua": "Азійські ігри, Айті–Наґоя — командний турнір",
+        "ru": "Азиатские игры, Айти–Нагоя — командный турнир"
+      },
+      "result": {
+        "ua": "золото",
+        "ru": "золото"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2026,
+      "event": {
+        "ua": "Азійські ігри, Айті–Наґоя — парний розряд",
+        "ru": "Азиатские игры, Айти–Нагоя — парный разряд"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2026,
+      "event": {
+        "ua": "WTT Champions Yokohama — одиночний розряд",
+        "ru": "WTT Champions Yokohama — одиночный разряд"
+      },
+      "result": {
+        "ua": "третє місце",
+        "ru": "третье место"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2026,
+      "event": {
+        "ua": "Командний чемпіонат світу, Лондон",
+        "ru": "Командный чемпионат мира, Лондон"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2026,
+      "event": {
+        "ua": "Чемпіонат Японії — парний і одиночний розряди",
+        "ru": "Чемпионат Японии — парный и одиночный разряды"
+      },
+      "result": {
+        "ua": "перемога в парному, друге місце в одиночному",
+        "ru": "победа в парном, второе место в одиночном"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2025,
+      "event": {
+        "ua": "Командний Кубок світу (змішані команди)",
+        "ru": "Командный Кубок мира (смешанные команды)"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2025,
+      "event": {
+        "ua": "Чемпіонат світу, Доха — парний розряд (із Сюнсуке Тогамі)",
+        "ru": "Чемпионат мира, Доха — парный разряд (с Сюнсукэ Тогами)"
+      },
+      "result": {
+        "ua": "золото",
+        "ru": "золото"
+      },
+      "source": "https://www.meiji.ac.jp/cip/english/news/2025/akq1230000000b41.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "WTT Finals, Фукуока — парний розряд",
+        "ru": "WTT Finals, Фукуока — парный разряд"
+      },
+      "result": {
+        "ua": "друге місце",
+        "ru": "второе место"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Олімпійські ігри, Париж — командний турнір",
+        "ru": "Олимпийские игры, Париж — командный турнир"
+      },
+      "result": {
+        "ua": "4-те місце",
+        "ru": "4-е место"
+      },
+      "source": "https://www.olympedia.org/athletes/155144"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Чемпіонат Азії, Астана — одиночний і парний розряди",
+        "ru": "Чемпионат Азии, Астана — одиночный и парный разряды"
+      },
+      "result": {
+        "ua": "дві бронзи",
+        "ru": "две бронзы"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Чемпіонат Японії — змішаний парний розряд",
+        "ru": "Чемпионат Японии — смешанный парный разряд"
+      },
+      "result": {
+        "ua": "перемога",
+        "ru": "победа"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "year": 2022,
+      "event": {
+        "ua": "WTT Contender Nova Gorica — одиночний і парний розряди",
+        "ru": "WTT Contender Nova Gorica — одиночный и парный разряды"
+      },
+      "result": {
+        "ua": "дві перемоги",
+        "ru": "две победы"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html"
+    }
+  ],
+  "ranking": {
+    "best": null,
+    "bestDate": null,
+    "source": null
+  },
+  "equipment": {
+    "asOf": "2026-01-19",
+    "source": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+    "blade": {
+      "name": "Timo Boll ALC",
+      "product": "timo-boll-alc"
+    },
+    "fh": {
+      "name": "Dignics 09C",
+      "product": "dignics-09c"
+    },
+    "bh": {
+      "name": "Zyre 03",
+      "product": "zyre-03"
+    },
+    "note": {
+      "ua": "Butterfly не підписує сторони; форхенд і бекхенд указано за сталим порядком на сторінках Butterfly: основа, форхенд, бекхенд. Ту саму дату й склад наводить і англійська сторінка Butterfly Global.",
+      "ru": "Butterfly не подписывает стороны; форхенд и бэкхенд указаны по постоянному порядку на страницах Butterfly: основание, форхенд, бэкхенд. Ту же дату и состав приводит и английская страница Butterfly Global."
+    }
+  },
+  "history": [
+    {
+      "period": {
+        "ua": "за даними Butterfly на 18.01.2024 і 21.01.2025",
+        "ru": "по данным Butterfly на 18.01.2024 и 21.01.2025"
+      },
+      "blade": "Timo Boll ALC",
+      "rubbers": "Dignics 09C / Dignics 09C",
+      "source": "https://web.archive.org/web/20250623123322/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 21.11.2023",
+        "ru": "по данным Butterfly на 21.11.2023"
+      },
+      "blade": "Butterfly special order (Arylate Carbon)",
+      "rubbers": "Dignics 09C / Dignics 09C",
+      "source": "https://web.archive.org/web/20231209184821/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 09.09.2022",
+        "ru": "по данным Butterfly на 09.09.2022"
+      },
+      "blade": "Zhang Jike ALC",
+      "rubbers": "Dignics 05 / Dignics 09C",
+      "source": "https://web.archive.org/web/20230404013704/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 10.06.2019",
+        "ru": "по данным Butterfly на 10.06.2019"
+      },
+      "blade": "Viscaria",
+      "rubbers": "Tenergy 05 / Tenergy 05",
+      "source": "https://web.archive.org/web/20190821053004/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html"
+    }
+  ],
+  "faq": [
+    {
+      "q": {
+        "ua": "На чому грає Хірото Сінодзука?",
+        "ru": "На чём играет Хирото Синодзука?"
+      },
+      "a": {
+        "ua": "За офіційною сторінкою Butterfly станом на 19.01.2026, Хірото Сінодзука грає основою Timo Boll ALC. На форхенді в нього Dignics 09C, на бекхенді — Zyre 03.",
+        "ru": "По официальной странице Butterfly на 19.01.2026, Хирото Синодзука играет основанием Timo Boll ALC. На форхенде у него Dignics 09C, на бэкхенде — Zyre 03."
+      }
+    },
+    {
+      "q": {
+        "ua": "Яка основа в Хірото Сінодзуки?",
+        "ru": "Какое основание у Хирото Синодзуки?"
+      },
+      "a": {
+        "ua": "Станом на 19.01.2026 — Timo Boll ALC; цю основу Butterfly вказує щонайменше з 18.01.2024. Раніше, за архівними сторінками Butterfly, він грав спеціально замовленою основою з Arylate Carbon (на 21.11.2023), Zhang Jike ALC (2022) і Viscaria (2019).",
+        "ru": "На 19.01.2026 — Timo Boll ALC; это основание Butterfly указывает как минимум с 18.01.2024. Раньше, по архивным страницам Butterfly, он играл основанием на спецзаказ с Arylate Carbon (на 21.11.2023), Zhang Jike ALC (2022) и Viscaria (2019)."
+      }
+    },
+    {
+      "q": {
+        "ua": "Які накладки в Хірото Сінодзуки?",
+        "ru": "Какие накладки у Хирото Синодзуки?"
+      },
+      "a": {
+        "ua": "Станом на 19.01.2026 — Dignics 09C на форхенді й Zyre 03 на бекхенді. На 21.11.2023, 18.01.2024 і 21.01.2025 Butterfly вказувала Dignics 09C з обох боків, а в 2019 році — Tenergy 05 з обох боків.",
+        "ru": "На 19.01.2026 — Dignics 09C на форхенде и Zyre 03 на бэкхенде. На 21.11.2023, 18.01.2024 и 21.01.2025 Butterfly указывала Dignics 09C с двух сторон, а в 2019 году — Tenergy 05 с двух сторон."
+      }
+    },
+    {
+      "q": {
+        "ua": "Скільки років Хірото Сінодзуці?",
+        "ru": "Сколько лет Хирото Синодзуке?"
+      },
+      "a": {
+        "ua": "Хірото Сінодзука народився 23 грудня 2003 року. У листопаді 2026 року йому 22 роки.",
+        "ru": "Хирото Синодзука родился 23 декабря 2003 года. В ноябре 2026 года ему 22 года."
+      }
+    },
+    {
+      "q": {
+        "ua": "Якою рукою грає Хірото Сінодзука?",
+        "ru": "Какой рукой играет Хирото Синодзука?"
+      },
+      "a": {
+        "ua": "Лівою. Butterfly описує його як ліворукого атакувального гравця з європейською хваткою (shakehand).",
+        "ru": "Левой. Butterfly описывает его как леворукого атакующего игрока с европейской хваткой (shakehand)."
+      }
+    },
+    {
+      "q": {
+        "ua": "Чи можна купити ракетку Хірото Сінодзуки?",
+        "ru": "Можно ли купить ракетку Хирото Синодзуки?"
+      },
+      "a": {
+        "ua": "Так, усі три компоненти — серійні моделі Butterfly: основа Timo Boll ALC і накладки Dignics 09C та Zyre 03 є в каталозі TT Max. Там же є основи Zhang Jike ALC і Viscaria, якими він грав раніше.",
+        "ru": "Да, все три компонента — серийные модели Butterfly: основание Timo Boll ALC и накладки Dignics 09C и Zyre 03 есть в каталоге TT Max. Там же есть основания Zhang Jike ALC и Viscaria, которыми он играл раньше."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": {
+        "ua": "Butterfly Japan — профіль Хірото Сінодзуки (інвентар на 19.01.2026)",
+        "ru": "Butterfly Japan — профиль Хирото Синодзуки (инвентарь на 19.01.2026)"
+      },
+      "url": "https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Global — профіль і досягнення Хірото Сінодзуки",
+        "ru": "Butterfly Global — профиль и достижения Хирото Синодзуки"
+      },
+      "url": "https://www.butterfly-global.com/en/sponsoring/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 21.01.2025",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 21.01.2025"
+      },
+      "url": "https://web.archive.org/web/20250623123322/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 21.11.2023",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 21.11.2023"
+      },
+      "url": "https://web.archive.org/web/20231209184821/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 09.09.2022",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 09.09.2022"
+      },
+      "url": "https://web.archive.org/web/20230404013704/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 10.06.2019",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 10.06.2019"
+      },
+      "url": "https://web.archive.org/web/20190821053004/https://www.butterfly.co.jp/players/detail/shinozuka-hiroto.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Olympedia — олімпійські результати Хірото Сінодзуки",
+        "ru": "Olympedia — олимпийские результаты Хирото Синодзуки"
+      },
+      "url": "https://www.olympedia.org/athletes/155144",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "Університет Мейдзі — золото Тогамі й Сінодзуки на чемпіонаті світу 2025",
+        "ru": "Университет Мэйдзи — золото Тогами и Синодзуки на чемпионате мира 2025"
+      },
+      "url": "https://www.meiji.ac.jp/cip/english/news/2025/akq1230000000b41.html",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "Вікіпедія (англ.) — Hiroto Shinozuka",
+        "ru": "Википедия (англ.) — Hiroto Shinozuka"
+      },
+      "url": "https://en.wikipedia.org/wiki/Hiroto_Shinozuka",
+      "kind": "reference"
+    }
+  ],
+  "openQuestions": [
+    "Конфлікт дати народження: Butterfly Global пише «August 24, 2001», Butterfly Japan — 23.12.2003; Olympedia, Wikidata й Вікіпедія теж дають 23.12.2003. Узято 2003-12-23, ймовірно помилка на сторінці Global.",
+    "Конфлікт місця народження: Butterfly Japan (出身地, «звідки родом») — Токай, префектура Айті (так само Wikidata); Olympedia — «born in Tokyo». У біо стоїть лише «родом із Токая» за Butterfly.",
+    "Найвищий рейтинг не вказано (ranking = null): Вікіпедія дає 18-те місце (ITTF, 5 жовтня 2026, тиждень 41), але сторінка ITTF (ittf.com/wp-content/uploads/2026/10/2026_41_SEN_MS.html) повертає 403. Повернути після звірки.",
+    "Бронза чемпіонату Азії 2024 в одиночному розряді є на Butterfly Global і у Вікіпедії, але відсутня на японській сторінці Butterfly (там лише парний розряд). Залишено як «дві бронзи» за Global.",
+    "Партнера в золоті ЧС 2025 (Сюнсуке Тогамі) і «перше золото Японії в чоловічому парному за 64 роки» взято зі сторінки Університету Мейдзі; сторінка Butterfly Тогамі теж має «世界卓球2025ドーハ 男子ダブルス 優勝». ITTF (403) не відкрився. Партнерів в інших парних медалях (Азійські ігри 2026, WTT Finals 2024, чемпіонати Японії) Butterfly не називає — у тексті їх немає.",
+    "Міста: Айті–Наґоя для Азійських ігор 2026 — за Вікіпедією; Butterfly місто не вказує. Місце командного Кубка світу 2025 (Вікіпедія: Ченду) у досягнення не внесено.",
+    "Не внесено (лише Вікіпедія): бронза командного чемпіонату Азії 2021 (Доха); клуб у T.League (Ryukyu Asteeda, посилання 2024 року); зріст 165 см (є також в Olympedia). Командні бронзи чемпіонатів Азії 2025 і 2026 (Butterfly) у досягнення не ввійшли через ліміт 12.",
+    "Пропущений дослідником знімок: на 21.11.2023 (архів 09.12.2023) Butterfly вказувала спецзамовлену основу Arylate Carbon з Dignics 09C / Dignics 09C — додано в history, біо й FAQ. Із history прибрано знімок 17.01.2022 (Zhang Jike ALC, Dignics 05 / Dignics 05; архів 20220117164837) через ліміт 4 — він лишається підтвердженим, просто не показаний. Між 10.06.2019 і 17.01.2022 знімків зі зміною інвентарю немає, тож точна дата переходу з Viscaria на Zhang Jike ALC невідома; між 09.09.2022 і 21.11.2023 — теж. Знімок 28.01.2026 не відкрився (Wayback), але чинна сторінка показує 19.01.2026."
+  ]
+}

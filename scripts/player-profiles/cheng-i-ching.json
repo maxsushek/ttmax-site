@@ -1,0 +1,384 @@
+{
+  "slug": "cheng-i-ching",
+  "checked": "2026-11-03",
+  "country": {
+    "code": "TPE",
+    "ua": "Китайський Тайбей",
+    "ru": "Китайский Тайбэй"
+  },
+  "born": "1992-02-15",
+  "active": true,
+  "retired": null,
+  "hand": "right",
+  "grip": "shakehand",
+  "summary": {
+    "ua": "Чен Іцзін — тенісистка з Тайваню (Китайський Тайбей), бронзова призерка Олімпіади в Токіо в міксті та срібна призерка чемпіонату світу 2017 у міксті. За даними Butterfly на 16.03.2026, вона грає основою Viscaria Super ALC і накладками Zyre 03 з обох боків.",
+    "ru": "Чэн Ицзин — теннисистка с Тайваня (Китайский Тайбэй), бронзовый призёр Олимпиады в Токио в миксте и серебряный призёр чемпионата мира 2017 в миксте. По данным Butterfly на 16.03.2026, она играет основанием Viscaria Super ALC и накладками Zyre 03 с обеих сторон."
+  },
+  "bio": {
+    "ua": [
+      "Чен Іцзін народилася 15 лютого 1992 року в районі Гуйжень міста Тайнань на Тайвані. Butterfly описує її як праворуку атакувальну гравчиню з європейською хваткою. У 2012 році вона дійшла до фіналу ITTF Pro Tour Grand Final у парному розряді, а чемпіонат світу 2015 у Сучжоу, за даними Butterfly, став для неї десятим поспіль у складі збірної Тайваню.",
+      "2016 рік приніс бронзу командного чемпіонату світу в Куала-Лумпурі, чвертьфінал одиночного турніру Олімпіади в Ріо-де-Жанейро та срібло Кубка світу. Далі були ще дві бронзи Кубка світу — у 2017 і 2018 роках (Ченду) — та срібло чемпіонату світу 2017 у Дюссельдорфі в міксті з Чень Цзяньанем. Найвищий рейтинг ITTF в одиночному розряді — 5-те місце на початку 2017 року.",
+      "На Олімпіаді в Токіо (2021) вона разом із Лінь Юньжу виграла бронзу в міксті, а в листопаді 2021 року — ще одну бронзу в міксті на чемпіонаті світу в Х'юстоні. На Олімпіаді в Парижі (2024) Чен знову дійшла до чвертьфіналу в одиночному розряді; того ж року вона виграла WTT Star Contender Goa і стала третьою на WTT Champions Montpellier. За архівними сторінками Butterfly, наприкінці 2015 року вона грала основою Zhang Jike ALC, у 2017–2022 роках — спеціально замовленими основами, а станом на 16.03.2026 — серійною Viscaria Super ALC."
+    ],
+    "ru": [
+      "Чэн Ицзин родилась 15 февраля 1992 года в районе Гуйжэнь города Тайнань на Тайване. Butterfly описывает её как праворукую атакующую спортсменку с европейской хваткой. В 2012 году она дошла до финала ITTF Pro Tour Grand Final в парном разряде, а чемпионат мира 2015 в Сучжоу, по данным Butterfly, стал для неё десятым подряд в составе сборной Тайваня.",
+      "2016 год принёс бронзу командного чемпионата мира в Куала-Лумпуре, четвертьфинал одиночного турнира Олимпиады в Рио-де-Жанейро и серебро Кубка мира. Затем были ещё две бронзы Кубка мира — в 2017 и 2018 годах (Чэнду) — и серебро чемпионата мира 2017 в Дюссельдорфе в миксте с Чэнь Цзяньанем. Высший рейтинг ITTF в одиночном разряде — 5-е место в начале 2017 года.",
+      "На Олимпиаде в Токио (2021) она вместе с Линь Юньжу выиграла бронзу в миксте, а в ноябре 2021 года — ещё одну бронзу в миксте на чемпионате мира в Хьюстоне. На Олимпиаде в Париже (2024) Чэн снова дошла до четвертьфинала в одиночном разряде; в том же году она выиграла WTT Star Contender Goa и стала третьей на WTT Champions Montpellier. По архивным страницам Butterfly, в конце 2015 года она играла основанием Zhang Jike ALC, в 2017–2022 годах — основаниями на спецзаказ, а на 16.03.2026 — серийным Viscaria Super ALC."
+    ]
+  },
+  "achievements": [
+    {
+      "year": 2026,
+      "event": {
+        "ua": "WTT China Smash — змішаний парний розряд",
+        "ru": "WTT China Smash — смешанный парный разряд"
+      },
+      "result": {
+        "ua": "друге місце",
+        "ru": "второе место"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "WTT Champions Montpellier — одиночний розряд",
+        "ru": "WTT Champions Montpellier — одиночный разряд"
+      },
+      "result": {
+        "ua": "третє місце",
+        "ru": "третье место"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "WTT Star Contender Goa — одиночний розряд",
+        "ru": "WTT Star Contender Goa — одиночный разряд"
+      },
+      "result": {
+        "ua": "перемога",
+        "ru": "победа"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Олімпійські ігри, Париж — одиночний розряд",
+        "ru": "Олимпийские игры, Париж — одиночный разряд"
+      },
+      "result": {
+        "ua": "чвертьфінал",
+        "ru": "четвертьфинал"
+      },
+      "source": "https://www.olympedia.org/athletes/131867"
+    },
+    {
+      "year": 2021,
+      "event": {
+        "ua": "Чемпіонат світу, Х'юстон — змішаний парний розряд",
+        "ru": "Чемпионат мира, Хьюстон — смешанный парный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2021,
+      "event": {
+        "ua": "Олімпійські ігри 2020, Токіо — змішаний парний розряд (із Лінь Юньжу)",
+        "ru": "Олимпийские игры 2020, Токио — смешанный парный разряд (с Линь Юньжу)"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.olympedia.org/athletes/131867"
+    },
+    {
+      "year": 2019,
+      "event": {
+        "ua": "ITTF World Tour Grand Final — змішаний парний розряд",
+        "ru": "ITTF World Tour Grand Final — смешанный парный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2018,
+      "event": {
+        "ua": "Кубок світу, Ченду — одиночний розряд",
+        "ru": "Кубок мира, Чэнду — одиночный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://web.archive.org/web/20220814043413/https://www.ittf.com/2018/09/30/grand-slam-champion-ding-ning-claims-third-ittf-world-cup-title/"
+    },
+    {
+      "year": 2017,
+      "event": {
+        "ua": "Чемпіонат світу, Дюссельдорф — змішаний парний розряд (із Чень Цзяньанем)",
+        "ru": "Чемпионат мира, Дюссельдорф — смешанный парный разряд (с Чэнь Цзяньанем)"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://web.archive.org/web/20250917144524/https://www.ittf.com/2017/06/03/first-title-decided-gold-maharu-yoshimura-kasumi-ishikawa/"
+    },
+    {
+      "year": 2017,
+      "event": {
+        "ua": "Кубок світу — одиночний розряд",
+        "ru": "Кубок мира — одиночный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2016,
+      "event": {
+        "ua": "Кубок світу — одиночний розряд",
+        "ru": "Кубок мира — одиночный разряд"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html"
+    },
+    {
+      "year": 2016,
+      "event": {
+        "ua": "Командний чемпіонат світу, Куала-Лумпур",
+        "ru": "Командный чемпионат мира, Куала-Лумпур"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/cheng-i-ching.html"
+    }
+  ],
+  "ranking": {
+    "best": 5,
+    "bestDate": "2017-02",
+    "source": "https://web.archive.org/web/20190718111647/https://www.ittf.com/2017/03/02/six-years-never-three-six-months-always-number-one/"
+  },
+  "equipment": {
+    "asOf": "2026-03-16",
+    "source": "https://www.butterfly.co.jp/players/detail/cheng-i-ching.html",
+    "blade": {
+      "name": "Viscaria Super ALC",
+      "product": "viscaria-super-alc"
+    },
+    "fh": {
+      "name": "Zyre 03",
+      "product": "zyre-03"
+    },
+    "bh": {
+      "name": "Zyre 03",
+      "product": "zyre-03"
+    },
+    "note": {
+      "ua": "Butterfly не підписує сторони, але обидві накладки однакові — Zyre 03. Ту саму дату й склад наводить і англійська сторінка Butterfly Global.",
+      "ru": "Butterfly не подписывает стороны, но обе накладки одинаковые — Zyre 03. Ту же дату и состав приводит и английская страница Butterfly Global."
+    }
+  },
+  "history": [
+    {
+      "period": {
+        "ua": "за даними Butterfly на 30.11.2022",
+        "ru": "по данным Butterfly на 30.11.2022"
+      },
+      "blade": "Butterfly special order (Super ZL Carbon, inner fiber)",
+      "rubbers": "Dignics 09C / Dignics 09C",
+      "source": "https://web.archive.org/web/20231128135549/https://www.butterfly.co.jp/players/detail/cheng-i-ching.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 09.07.2021",
+        "ru": "по данным Butterfly на 09.07.2021"
+      },
+      "blade": "Butterfly special order (Arylate Carbon)",
+      "rubbers": "Dignics 05 / Tenergy 05 Hard",
+      "source": "https://web.archive.org/web/20210726235908/https://www.butterfly.co.jp/players/detail/cheng-i-ching.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 12.07.2017",
+        "ru": "по данным Butterfly на 12.07.2017"
+      },
+      "blade": "Butterfly special order (Arylate Carbon)",
+      "rubbers": "Spin Art / Tenergy 64",
+      "source": "https://web.archive.org/web/20190714195703/https://www.butterfly.co.jp/players/detail/cheng-i-ching.html"
+    },
+    {
+      "period": {
+        "ua": "за даними Butterfly на 01.12.2015",
+        "ru": "по данным Butterfly на 01.12.2015"
+      },
+      "blade": "Zhang Jike ALC (FL)",
+      "rubbers": "Tenergy 05 (FH) / Tenergy 64 (BH)",
+      "source": "https://web.archive.org/web/20160527111626/http://www.butterfly.co.jp:80/players/detail/cheng-i-ching.html"
+    }
+  ],
+  "faq": [
+    {
+      "q": {
+        "ua": "На чому грає Чен Іцзін?",
+        "ru": "На чём играет Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "За офіційною сторінкою Butterfly станом на 16.03.2026, Чен Іцзін грає основою Viscaria Super ALC. На обох боках у неї накладки Zyre 03.",
+        "ru": "По официальной странице Butterfly на 16.03.2026, Чэн Ицзин играет основанием Viscaria Super ALC. С обеих сторон у неё накладки Zyre 03."
+      }
+    },
+    {
+      "q": {
+        "ua": "Яка основа в Чен Іцзін?",
+        "ru": "Какое основание у Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "Станом на 16.03.2026 — серійна Viscaria Super ALC. За архівними сторінками Butterfly, у 2017–2022 роках вона грала спеціально замовленими основами (Arylate Carbon, потім Super ZL Carbon), а на 01.12.2015 — Zhang Jike ALC.",
+        "ru": "На 16.03.2026 — серийное Viscaria Super ALC. По архивным страницам Butterfly, в 2017–2022 годах она играла основаниями на спецзаказ (Arylate Carbon, затем Super ZL Carbon), а на 01.12.2015 — Zhang Jike ALC."
+      }
+    },
+    {
+      "q": {
+        "ua": "Які накладки в Чен Іцзін?",
+        "ru": "Какие накладки у Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "Станом на 16.03.2026 — Zyre 03 з обох боків. До цього Butterfly з 30.11.2022 вказувала Dignics 09C з обох боків, а в 2021 році — Dignics 05 і Tenergy 05 Hard.",
+        "ru": "На 16.03.2026 — Zyre 03 с обеих сторон. До этого Butterfly с 30.11.2022 указывала Dignics 09C с обеих сторон, а в 2021 году — Dignics 05 и Tenergy 05 Hard."
+      }
+    },
+    {
+      "q": {
+        "ua": "Скільки років Чен Іцзін?",
+        "ru": "Сколько лет Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "Чен Іцзін народилася 15 лютого 1992 року в Тайнані на Тайвані. У листопаді 2026 року їй 34 роки.",
+        "ru": "Чэн Ицзин родилась 15 февраля 1992 года в Тайнане на Тайване. В ноябре 2026 года ей 34 года."
+      }
+    },
+    {
+      "q": {
+        "ua": "Які медалі Олімпіади в Чен Іцзін?",
+        "ru": "Какие олимпийские медали у Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "Одна — бронза Олімпіади в Токіо (2021) у змішаному парному розряді разом із Лінь Юньжу. В одиночному розряді вона двічі доходила до чвертьфіналу: у Ріо-де-Жанейро (2016) і в Парижі (2024).",
+        "ru": "Одна — бронза Олимпиады в Токио (2021) в смешанном парном разряде вместе с Линь Юньжу. В одиночном разряде она дважды доходила до четвертьфинала: в Рио-де-Жанейро (2016) и в Париже (2024)."
+      }
+    },
+    {
+      "q": {
+        "ua": "Чи можна купити ракетку Чен Іцзін?",
+        "ru": "Можно ли купить ракетку Чэн Ицзин?"
+      },
+      "a": {
+        "ua": "Так, станом на 16.03.2026 обидва компоненти серійні: основа Viscaria Super ALC і накладки Zyre 03 є в каталозі TT Max. Основи, якими вона грала у 2017–2022 роках, Butterfly позначала як спецзамовлення, а не серійні моделі.",
+        "ru": "Да, на 16.03.2026 оба компонента серийные: основание Viscaria Super ALC и накладки Zyre 03 есть в каталоге TT Max. Основания, которыми она играла в 2017–2022 годах, Butterfly обозначала как спецзаказ, а не серийные модели."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": {
+        "ua": "Butterfly Japan — профіль Чен Іцзін (інвентар на 16.03.2026)",
+        "ru": "Butterfly Japan — профиль Чэн Ицзин (инвентарь на 16.03.2026)"
+      },
+      "url": "https://www.butterfly.co.jp/players/detail/cheng-i-ching.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Global — профіль і досягнення Чен Іцзін",
+        "ru": "Butterfly Global — профиль и достижения Чэн Ицзин"
+      },
+      "url": "https://www.butterfly-global.com/en/sponsoring/detail/cheng-i-ching.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 30.11.2022",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 30.11.2022"
+      },
+      "url": "https://web.archive.org/web/20231128135549/https://www.butterfly.co.jp/players/detail/cheng-i-ching.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 01.12.2015",
+        "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 01.12.2015"
+      },
+      "url": "https://web.archive.org/web/20160527111626/http://www.butterfly.co.jp:80/players/detail/cheng-i-ching.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Olympedia — олімпійські результати Чен Іцзін",
+        "ru": "Olympedia — олимпийские результаты Чэн Ицзин"
+      },
+      "url": "https://www.olympedia.org/athletes/131867",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "ITTF — фінал міксту чемпіонату світу 2017 у Дюссельдорфі",
+        "ru": "ITTF — финал микста чемпионата мира 2017 в Дюссельдорфе"
+      },
+      "url": "https://web.archive.org/web/20250917144524/https://www.ittf.com/2017/06/03/first-title-decided-gold-maharu-yoshimura-kasumi-ishikawa/",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "ITTF — підсумки Кубка світу 2018 у Ченду",
+        "ru": "ITTF — итоги Кубка мира 2018 в Чэнду"
+      },
+      "url": "https://web.archive.org/web/20220814043413/https://www.ittf.com/2018/09/30/grand-slam-champion-ding-ning-claims-third-ittf-world-cup-title/",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "ITTF — світовий рейтинг на березень 2017 (5-те місце)",
+        "ru": "ITTF — мировой рейтинг на март 2017 (5-е место)"
+      },
+      "url": "https://web.archive.org/web/20190718111647/https://www.ittf.com/2017/03/02/six-years-never-three-six-months-always-number-one/",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "Вікіпедія (англ.) — Cheng I-ching",
+        "ru": "Википедия (англ.) — Cheng I-ching"
+      },
+      "url": "https://en.wikipedia.org/wiki/Cheng_I-ching",
+      "kind": "reference"
+    }
+  ],
+  "openQuestions": [
+    "Найвищий рейтинг 5: стаття ITTF від 02.03.2017 (відкрито через Wayback) — «retains her no.5 spot», тобто 5-те місце і в лютневому, і в березневому рейтингу 2017; Вікіпедія — «5 (February 2017)». Що 5 — саме кар'єрний максимум, підтверджує лише Вікіпедія (жива база ITTF не відкривається).",
+    "Статті ITTF про ЧС 2017 (мікст, фінал із Чень Цзяньанем) і Кубок світу 2018 (бронза, перемога 4:1 над Касумі Ісікавою) відкрито через Wayback — підтверджено; посилання замінено на архівні, бо ittf.com віддає 403. Кубка світу 2018 немає на сторінках Butterfly — джерело лише ITTF.",
+    "Конфлікт Butterfly: WTT Contender Amman 2023 — японська сторінка пише «жіночий парний — перемога», Global — «Mixed Doubles Winner». У досягнення не внесено.",
+    "Не внесено (лише Вікіпедія, Butterfly не вказує): бронза командного ЧС 2022 у Ченду та бронза командного Кубка світу 2019 у Токіо. Міста Кубків світу 2016 (Філадельфія) і 2017 (Маркем) — лише Вікіпедія, тому в досягненнях без міста.",
+    "Місце народження: Olympedia — Guiren, Tainan; Wikidata — Gueiren District; Вікіпедія — Tainan. Butterfly місця не вказує.",
+    "Партнерку чи партнера в нових парних результатах (China Smash 2026, Star Contender London 2025 тощо) Butterfly не називає; у тексті їх немає. Бронза ЧС 2021 у Х'юстоні — за Вікіпедією, з Лінь Юньжу; у тексті партнер не названий.",
+    "Проміжний знімок: на 20.02.2020 Butterfly, за дослідником, вказувала спецзамовлену основу Arylate Carbon з Dignics 09C / Tenergy 05 Hard — сам не перевіряв, у history не ввійшов (ліміт 4). Знімки 06.09.2025 і 07.12.2025 ще показують дату 30.11.2022 (основа — лише «特注シェーク», Dignics 09C / Dignics 09C), тож перехід на Viscaria Super ALC / Zyre 03 відбувся між 07.12.2025 і 16.03.2026 (дата на сторінці)."
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "slug": "lin-yunju",
+  "checked": "2026-11-03",
+  "country": { "code": "TPE", "ua": "Китайський Тайбей", "ru": "Китайский Тайбэй" },
+  "born": "2001-08-17",
+  "active": true,
+  "retired": null,
+  "hand": "left",
+  "grip": "shakehand",
+  "summary": {
+    "ua": "Лінь Юньжу — тенісист із Тайваню (Китайський Тайбей), бронзовий призер Олімпіади в Токіо в міксті й переможець WTT Champions Doha 2026. За даними Butterfly на 05.01.2026, він грає основою Viscaria Super ALC, Zyre 03 на форхенді та Dignics 05 на бекхенді.",
+    "ru": "Линь Юньжу — теннисист с Тайваня (Китайский Тайбэй), бронзовый призёр Олимпиады в Токио в миксте и победитель WTT Champions Doha 2026. По данным Butterfly на 05.01.2026, он играет основанием Viscaria Super ALC, Zyre 03 на форхенде и Dignics 05 на бэкхенде."
+  },
+  "bio": {
+    "ua": [
+      "Лінь Юньжу народився 17 серпня 2001 року в повіті Ілань на Тайвані. Butterfly описує його як ліворукого атакувального гравця з європейською хваткою. У 14 років він увійшов до національної збірної, а в 2018 році виграв бронзу юнацької Олімпіади в Буенос-Айресі в змішаному командному турнірі.",
+      "У 2019 році він виграв Czech Open (ITTF World Tour) і T2 Diamond у Малайзії, а на своєму першому Кубку світу в Ченду здобув бронзу. На Олімпіаді в Токіо (2021) Лінь разом із Чен Іцзін виграв бронзу в міксті, а в одиночному розряді посів четверте місце. Далі були бронза чемпіонату світу 2021 у міксті, перший титул WTT Champions (Франкфурт, 2023) і срібло чемпіонату світу 2025 у парному розряді з Гао Ченжуєм.",
+      "У 2026 році Лінь виграв WTT Champions Doha, став бронзовим призером Кубка світу, командного чемпіонату світу в Лондоні та Азійських ігор (одиночний і командний турніри). За архівними сторінками Butterfly, у 2019–2020 роках він грав основою Zhang Jike Super ZLC, з 2021 року — власною Lin Yun-Ju Super ZLC, а станом на 05.01.2026 перейшов на Viscaria Super ALC."
+    ],
+    "ru": [
+      "Линь Юньжу родился 17 августа 2001 года в уезде Илань на Тайване. Butterfly описывает его как леворукого атакующего игрока с европейской хваткой. В 14 лет он вошёл в национальную сборную, а в 2018 году выиграл бронзу юношеской Олимпиады в Буэнос-Айресе в смешанном командном турнире.",
+      "В 2019 году он выиграл Czech Open (ITTF World Tour) и T2 Diamond в Малайзии, а на своём первом Кубке мира в Чэнду завоевал бронзу. На Олимпиаде в Токио (2021) Линь вместе с Чэн Ицзин выиграл бронзу в миксте, а в одиночном разряде занял четвёртое место. Затем были бронза чемпионата мира 2021 в миксте, первый титул WTT Champions (Франкфурт, 2023) и серебро чемпионата мира 2025 в парном разряде с Гао Чэнжуем.",
+      "В 2026 году Линь выиграл WTT Champions Doha, стал бронзовым призёром Кубка мира, командного чемпионата мира в Лондоне и Азиатских игр (одиночный и командный турниры). По архивным страницам Butterfly, в 2019–2020 годах он играл основанием Zhang Jike Super ZLC, с 2021 года — собственным Lin Yun-Ju Super ZLC, а на 05.01.2026 перешёл на Viscaria Super ALC."
+    ]
+  },
+  "achievements": [
+    {
+      "year": 2026,
+      "event": { "ua": "Азійські ігри, Айті–Наґоя — одиночний і командний турніри", "ru": "Азиатские игры, Айти–Нагоя — одиночный и командный турниры" },
+      "result": { "ua": "дві бронзи", "ru": "две бронзы" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2026,
+      "event": { "ua": "WTT China Smash — одиночний розряд", "ru": "WTT China Smash — одиночный разряд" },
+      "result": { "ua": "друге місце", "ru": "второе место" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2026,
+      "event": { "ua": "Командний чемпіонат світу, Лондон", "ru": "Командный чемпионат мира, Лондон" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "year": 2026,
+      "event": { "ua": "Кубок світу — одиночний розряд", "ru": "Кубок мира — одиночный разряд" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2026,
+      "event": { "ua": "WTT Champions Doha — одиночний розряд", "ru": "WTT Champions Doha — одиночный разряд" },
+      "result": { "ua": "перемога", "ru": "победа" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2025,
+      "event": { "ua": "Чемпіонат світу, Доха — парний розряд", "ru": "Чемпионат мира, Доха — парный разряд" },
+      "result": { "ua": "срібло", "ru": "серебро" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2024,
+      "event": { "ua": "Командний чемпіонат світу, Пусан", "ru": "Командный чемпионат мира, Пусан" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "year": 2023,
+      "event": { "ua": "WTT Champions Frankfurt — одиночний розряд", "ru": "WTT Champions Frankfurt — одиночный разряд" },
+      "result": { "ua": "перемога", "ru": "победа" },
+      "source": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+    },
+    {
+      "year": 2021,
+      "event": { "ua": "Чемпіонат світу, Х'юстон — змішаний парний розряд", "ru": "Чемпионат мира, Хьюстон — смешанный парный разряд" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "year": 2021,
+      "event": { "ua": "Олімпійські ігри 2020, Токіо — змішаний парний розряд", "ru": "Олимпийские игры 2020, Токио — смешанный парный разряд" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://www.olympedia.org/athletes/2504126"
+    },
+    {
+      "year": 2019,
+      "event": { "ua": "Кубок світу, Ченду — одиночний розряд", "ru": "Кубок мира, Чэнду — одиночный разряд" },
+      "result": { "ua": "бронза", "ru": "бронза" },
+      "source": "https://web.archive.org/web/20210115175251/https://www.ittf.com/2019/12/01/final-day-2019-chengdu-airlines-mens-world-cup/"
+    }
+  ],
+  "ranking": {
+    "best": null,
+    "bestDate": null,
+    "source": null
+  },
+  "equipment": {
+    "asOf": "2026-01-05",
+    "source": "https://www.butterfly.co.jp/players/detail/lin-yunju.html",
+    "blade": { "name": "Viscaria Super ALC", "product": "viscaria-super-alc" },
+    "fh": { "name": "Zyre 03", "product": "zyre-03" },
+    "bh": { "name": "Dignics 05", "product": "dignics-05" },
+    "note": {
+      "ua": "Butterfly не підписує сторони; форхенд і бекхенд указано за сталим порядком на сторінках Butterfly: основа, форхенд, бекхенд.",
+      "ru": "Butterfly не подписывает стороны; форхенд и бэкхенд указаны по постоянному порядку на страницах Butterfly: основание, форхенд, бэкхенд."
+    }
+  },
+  "history": [
+    {
+      "period": { "ua": "за даними Butterfly на 09.10.2025", "ru": "по данным Butterfly на 09.10.2025" },
+      "blade": "Lin Yun-Ju Super ZLC",
+      "rubbers": "Tenergy 05 Hard / Dignics 05",
+      "source": "https://web.archive.org/web/20251027190242/https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "period": { "ua": "за даними Butterfly на 18.06.2025", "ru": "по данным Butterfly на 18.06.2025" },
+      "blade": "Lin Yun-Ju Super ZLC",
+      "rubbers": "Tenergy 05 Hard / Zyre 03",
+      "source": "https://web.archive.org/web/20250906050250/https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "period": { "ua": "за даними Butterfly на 18.01.2022", "ru": "по данным Butterfly на 18.01.2022" },
+      "blade": "Lin Yun-Ju Super ZLC",
+      "rubbers": "Dignics 09C / Dignics 09C",
+      "source": "https://web.archive.org/web/20220127090519/https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    },
+    {
+      "period": { "ua": "за даними Butterfly на 01.02.2019", "ru": "по данным Butterfly на 01.02.2019" },
+      "blade": "Zhang Jike Super ZLC",
+      "rubbers": "Tenergy 05 Hard / Dignics 05",
+      "source": "https://web.archive.org/web/20190717154434/https://www.butterfly.co.jp/players/detail/lin-yunju.html"
+    }
+  ],
+  "faq": [
+    {
+      "q": { "ua": "На чому грає Лінь Юньжу?", "ru": "На чём играет Линь Юньжу?" },
+      "a": {
+        "ua": "За офіційною сторінкою Butterfly станом на 05.01.2026, Лінь Юньжу грає основою Viscaria Super ALC. На форхенді в нього Zyre 03, на бекхенді — Dignics 05.",
+        "ru": "По официальной странице Butterfly на 05.01.2026, Линь Юньжу играет основанием Viscaria Super ALC. На форхенде у него Zyre 03, на бэкхенде — Dignics 05."
+      }
+    },
+    {
+      "q": { "ua": "Яка основа в Лінь Юньжу?", "ru": "Какое основание у Линь Юньжу?" },
+      "a": {
+        "ua": "Станом на 05.01.2026 — Viscaria Super ALC. До цього, за архівними сторінками Butterfly, він щонайменше з 20.01.2021 до 09.10.2025 грав власною основою Lin Yun-Ju Super ZLC, а в 2019–2020 роках — Zhang Jike Super ZLC.",
+        "ru": "На 05.01.2026 — Viscaria Super ALC. До этого, по архивным страницам Butterfly, он как минимум с 20.01.2021 до 09.10.2025 играл собственным основанием Lin Yun-Ju Super ZLC, а в 2019–2020 годах — Zhang Jike Super ZLC."
+      }
+    },
+    {
+      "q": { "ua": "Які накладки в Лінь Юньжу?", "ru": "Какие накладки у Линь Юньжу?" },
+      "a": {
+        "ua": "Станом на 05.01.2026 — Zyre 03 на форхенді й Dignics 05 на бекхенді. Раніше Butterfly роками вказувала на форхенді Tenergy 05 Hard, а на 18.01.2022 — Dignics 09C з обох боків.",
+        "ru": "На 05.01.2026 — Zyre 03 на форхенде и Dignics 05 на бэкхенде. Раньше Butterfly годами указывала на форхенде Tenergy 05 Hard, а на 18.01.2022 — Dignics 09C с двух сторон."
+      }
+    },
+    {
+      "q": { "ua": "Скільки років Лінь Юньжу?", "ru": "Сколько лет Линь Юньжу?" },
+      "a": {
+        "ua": "Лінь Юньжу народився 17 серпня 2001 року в повіті Ілань на Тайвані. У листопаді 2026 року йому 25 років.",
+        "ru": "Линь Юньжу родился 17 августа 2001 года в уезде Илань на Тайване. В ноябре 2026 года ему 25 лет."
+      }
+    },
+    {
+      "q": { "ua": "Якою рукою грає Лінь Юньжу?", "ru": "Какой рукой играет Линь Юньжу?" },
+      "a": {
+        "ua": "Лівою. Butterfly описує його як ліворукого атакувального гравця з європейською хваткою (shakehand).",
+        "ru": "Левой. Butterfly описывает его как леворукого атакующего игрока с европейской хваткой (shakehand)."
+      }
+    },
+    {
+      "q": { "ua": "Чи можна купити ракетку Лінь Юньжу?", "ru": "Можно ли купить ракетку Линь Юньжу?" },
+      "a": {
+        "ua": "Так, усі три компоненти — серійні моделі Butterfly: основа Viscaria Super ALC і накладки Zyre 03 та Dignics 05 є в каталозі TT Max. Там же є його іменна основа Lin Yun-Ju Super ZLC, якою він грав щонайменше до жовтня 2025 року.",
+        "ru": "Да, все три компонента — серийные модели Butterfly: основание Viscaria Super ALC и накладки Zyre 03 и Dignics 05 есть в каталоге TT Max. Там же есть его именное основание Lin Yun-Ju Super ZLC, которым он играл как минимум до октября 2025 года."
+      }
+    }
+  ],
+  "sources": [
+    { "label": { "ua": "Butterfly Japan — профіль Лінь Юньжу (інвентар на 05.01.2026)", "ru": "Butterfly Japan — профиль Линь Юньжу (инвентарь на 05.01.2026)" }, "url": "https://www.butterfly.co.jp/players/detail/lin-yunju.html", "kind": "official" },
+    { "label": { "ua": "Butterfly Global — профіль і досягнення Лінь Юньжу", "ru": "Butterfly Global — профиль и достижения Линь Юньжу" }, "url": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html", "kind": "official" },
+    { "label": { "ua": "Butterfly Global — основа Lin Yun-Ju Super ZLC", "ru": "Butterfly Global — основание Lin Yun-Ju Super ZLC" }, "url": "https://www.butterfly-global.com/en/product/lin_yun-ju/", "kind": "official" },
+    { "label": { "ua": "Архів сторінки Butterfly Japan (Wayback Machine), інвентар на 09.10.2025", "ru": "Архив страницы Butterfly Japan (Wayback Machine), инвентарь на 09.10.2025" }, "url": "https://web.archive.org/web/20251027190242/https://www.butterfly.co.jp/players/detail/lin-yunju.html", "kind": "official" },
+    { "label": { "ua": "Olympedia — олімпійські результати Лінь Юньжу", "ru": "Olympedia — олимпийские результаты Линь Юньжу" }, "url": "https://www.olympedia.org/athletes/2504126", "kind": "reference" },
+    { "label": { "ua": "ITTF — фінальний день Кубка світу 2019 у Ченду (архів)", "ru": "ITTF — финальный день Кубка мира 2019 в Чэнду (архив)" }, "url": "https://web.archive.org/web/20210115175251/https://www.ittf.com/2019/12/01/final-day-2019-chengdu-airlines-mens-world-cup/", "kind": "reference" },
+    { "label": { "ua": "Taiwan Panorama — портрет Лінь Юньжу (листопад 2021)", "ru": "Taiwan Panorama — портрет Линь Юньжу (ноябрь 2021)" }, "url": "https://www.taiwan-panorama.com/en/Articles/Details?Guid=e3e2e85d-7256-4df0-8130-dee8b26fded0&langId=3&CatId=7", "kind": "reference" },
+    { "label": { "ua": "Вікіпедія (англ.) — Lin Yun-ju", "ru": "Википедия (англ.) — Lin Yun-ju" }, "url": "https://en.wikipedia.org/wiki/Lin_Yun-ju", "kind": "reference" }
+  ],
+  "openQuestions": [
+    "Фактчек 03.11.2026: найвищий рейтинг прибрано (ranking = null). Цифра «5-те місце, 3 серпня 2021» є лише в англійській Вікіпедії; ITTF (results.ittf.link — 403, ranking.ittf.com — лише JS) не відкрився, а після 2021 року (WTT-рейтинг, перемоги 2026) він міг підніматися вище. Повернути після звірки на worldtabletennis.com.",
+    "Фактчек 03.11.2026: з біо прибрано «дебют за збірну на командному ЧС 2016» (Taiwan Panorama пише лише, що в 14 років він увійшов до збірної — це й залишено), «бронзу Азійських ігор 2018 у команді» (Focus Taiwan підтверджує бронзу команди Тайваню, але склад у доступній частині статті не названо) і «топ-10 у вересні 2019» (лише Вікіпедія). Також «перший титул ITTF World Tour на Czech Open» замінено на «виграв Czech Open»: за Butterfly, раніше у 2019 році він уже вигравав мікст на Hong Kong Open і China Open.",
+    "Підтверджено вторинними джерелами (Butterfly цього не пише): місце народження — повіт Ілань (Olympedia: Yilan; Вікіпедія: Юаньшань, повіт Ілань); бронза юнацької Олімпіади 2018 у змішаній команді та 4-те місце в одиночному розряді Токіо — Olympedia; бронза Кубка світу 2019 у Ченду — архів звіту ITTF. Партнер у парі на ЧС 2025 (Kao Cheng-jui) — лише Вікіпедія з посиланням на The Japan News.",
+    "Місце проведення Кубка світу 2026 (Вікіпедія: Макао) і China Smash 2026 Butterfly не вказує — у досягненнях без міста. Азійські ігри 2026 (Айті–Наґоя) — місто за Вікіпедією та загальновідомим місцем проведення, а не з профілю Butterfly.",
+    "Pro-Line ракетку Лінь Юньжу (Zyre 03 FH + Dignics 05 BH, shop.butterflyonline.com, за scripts/gen-pro-rubbers-diagram.mjs) знайти не вдалося; з примітки до інвентарю цю згадку прибрано, лишився загальний порядок сторінки Butterfly (основа → FH → BH).",
+    "Як і коли Butterfly змінювала сторінку між 2023-04-14 і 2025-06-18, не з'ясовано. Чотири записи history й знімки 2020-07-14 (Zhang Jike Super ZLC / D05 / D05) і 2021-01-20 (Lin Yun-Ju Super ZLC / T05 Hard / D05) перевірено у Wayback 03.11.2026. Знімки 2022-08-30 і 2023-04-14 не перевірялися.",
+    "Клуб у T.League (Kinoshita Meister Tokyo) є лише у Вікіпедії з посиланням 2023 року; актуальність не перевірено, тому в біо його немає.",
+    "Транслітерацію узгоджено з блогом сайту: Чен Іцзін (UA) / Чэн Ицзин (RU). Kao Cheng-jui → Гао Ченжуй (UA) / Гао Чэнжуй (RU) — у блозі цього імені немає."
+  ]
+}

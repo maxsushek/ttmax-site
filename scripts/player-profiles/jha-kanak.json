@@ -1,0 +1,453 @@
+{
+  "slug": "jha-kanak",
+  "checked": "2026-11-04",
+  "country": {
+    "code": "USA",
+    "ua": "США",
+    "ru": "США"
+  },
+  "born": "2000-06-19",
+  "active": true,
+  "retired": null,
+  "hand": "right",
+  "grip": "shakehand",
+  "summary": {
+    "ua": "Канак Джха — американський тенісист, учасник трьох Олімпіад (2016, 2020, 2024) і чвертьфіналіст чемпіонату світу 2021 в одиночному розряді. За даними Butterfly станом на 11.02.2026, він грає основою Timo Boll ALC з накладками Zyre 03 з обох боків.",
+    "ru": "Канак Джа — американский теннисист, участник трёх Олимпиад (2016, 2020, 2024) и четвертьфиналист чемпионата мира 2021 в одиночном разряде. По данным Butterfly на 11.02.2026, он играет основанием Timo Boll ALC с накладками Zyre 03 с обеих сторон."
+  },
+  "bio": {
+    "ua": [
+      "Канак Джха народився 19 червня 2000 року в Мілпітасі (Каліфорнія, США). Butterfly відносить його до правшів-атакувальників із хватом «рукостискання». За даними USA Table Tennis, він шість разів вигравав чемпіонат США в одиночному розряді: чотири роки поспіль з 2016 по 2019-й, а також у 2024 і 2025 роках. У 16 років він виступив на Олімпіаді в Ріо-де-Жанейро в одиночному та командному розрядах.",
+      "2018 року Джха виграв одиночний розряд чемпіонату Панамерики та взяв бронзу юнацьких Олімпійських ігор у Буенос-Айресі, а на Панамериканських іграх 2019 року в Лімі — золото в команді й бронзу в одиночному та змішаному парному розрядах. На чемпіонаті світу 2021 року в Х'юстоні він дійшов до чвертьфіналу одиночного розряду, а 3 січня 2023 року піднявся на 19-те місце світового рейтингу ITTF. На Олімпіаді в Токіо він завершив виступ в одиночному розряді в 1/32 фіналу, а в Парижі 2024 року дійшов до 1/8 фіналу. 2025 року Джха став півфіналістом WTT Champions у Йокогамі, а 2026-го — фіналістом WTT Contender у Скоп'є. 2020 року він перейшов до клубу німецької Бундесліги TTF Liebherr Ochsenhausen.",
+      "Інвентар Джхи Butterfly оновлювала часто. 2019 року він грав основою Timo Boll ALC з Tenergy 05 Hard на форхенді й Tenergy 05 на бекхенді; 2021–2022 років — тією самою основою з Tenergy 19 на бекхенді (форхенд — спершу Tenergy 05 Hard, з вересня 2022-го — Dignics 05). Станом на 04.04.2024, 27.12.2024 і 18.06.2025 Butterfly вказувала основу Viscaria Super ALC, станом на 19.12.2025 — знову Timo Boll ALC, а станом на 11.02.2026 — Timo Boll ALC із Zyre 03 з обох боків."
+    ],
+    "ru": [
+      "Канак Джа родился 19 июня 2000 года в Милпитасе (Калифорния, США). Butterfly относит его к атакующим правшам с хватом «рукопожатие». По данным USA Table Tennis, он шесть раз выигрывал чемпионат США в одиночном разряде: четыре года подряд с 2016 по 2019-й, а также в 2024 и 2025 годах. В 16 лет он выступил на Олимпиаде в Рио-де-Жанейро в одиночном и командном разрядах.",
+      "В 2018 году Джа выиграл одиночный разряд чемпионата Панамерики и взял бронзу юношеских Олимпийских игр в Буэнос-Айресе, а на Панамериканских играх 2019 года в Лиме — золото в команде и бронзу в одиночном и смешанном парном разрядах. На чемпионате мира 2021 года в Хьюстоне он дошёл до четвертьфинала одиночного разряда, а 3 января 2023 года поднялся на 19-е место мирового рейтинга ITTF. На Олимпиаде в Токио он завершил выступление в одиночном разряде в 1/32 финала, а в Париже 2024 года дошёл до 1/8 финала. В 2025 году Джа стал полуфиналистом WTT Champions в Иокогаме, а в 2026-м — финалистом WTT Contender в Скопье. В 2020 году он перешёл в клуб немецкой Бундеслиги TTF Liebherr Ochsenhausen.",
+      "Инвентарь Джи Butterfly обновляла часто. В 2019 году он играл основанием Timo Boll ALC с Tenergy 05 Hard на форхенде и Tenergy 05 на бэкхенде; в 2021–2022 годах — тем же основанием с Tenergy 19 на бэкхенде (форхенд — сначала Tenergy 05 Hard, с сентября 2022-го — Dignics 05). На 04.04.2024, 27.12.2024 и 18.06.2025 Butterfly указывала основание Viscaria Super ALC, на 19.12.2025 — снова Timo Boll ALC, а на 11.02.2026 — Timo Boll ALC с Zyre 03 с обеих сторон."
+    ]
+  },
+  "achievements": [
+    {
+      "year": 2026,
+      "event": {
+        "ua": "WTT Contender, Скоп'є — одиночний розряд",
+        "ru": "WTT Contender, Скопье — одиночный разряд"
+      },
+      "result": {
+        "ua": "фінал (2-ге місце)",
+        "ru": "финал (2-е место)"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "year": 2025,
+      "event": {
+        "ua": "WTT Champions, Йокогама — одиночний розряд",
+        "ru": "WTT Champions, Иокогама — одиночный разряд"
+      },
+      "result": {
+        "ua": "півфінал (3-тє місце)",
+        "ru": "полуфинал (3-е место)"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "year": 2025,
+      "event": {
+        "ua": "Чемпіонат Панамерики — одиночний розряд",
+        "ru": "Чемпионат Панамерики — одиночный разряд"
+      },
+      "result": {
+        "ua": "срібло",
+        "ru": "серебро"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "year": 2025,
+      "event": {
+        "ua": "Чемпіонат США — одиночний розряд",
+        "ru": "Чемпионат США — одиночный разряд"
+      },
+      "result": {
+        "ua": "чемпіон (6-й титул)",
+        "ru": "чемпион (6-й титул)"
+      },
+      "source": "https://www.usatt.org/news/2025/july/02/kanak-jha-wins-sixth-u-s-men-s-singles-championship-ties-national-record"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Олімпійські ігри, Париж — одиночний розряд",
+        "ru": "Олимпийские игры, Париж — одиночный разряд"
+      },
+      "result": {
+        "ua": "1/8 фіналу",
+        "ru": "1/8 финала"
+      },
+      "source": "https://www.olympedia.org/athletes/136380"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Чемпіонат Панамерики — командний турнір",
+        "ru": "Чемпионат Панамерики — командный турнир"
+      },
+      "result": {
+        "ua": "золото",
+        "ru": "золото"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "year": 2024,
+      "event": {
+        "ua": "Чемпіонат США — одиночний розряд",
+        "ru": "Чемпионат США — одиночный разряд"
+      },
+      "result": {
+        "ua": "чемпіон (5-й титул)",
+        "ru": "чемпион (5-й титул)"
+      },
+      "source": "https://www.usatt.org/news/2024/july/12/kanak-jha-and-hong-lin-secure-2024-us-nationals-mens-and-womens-singles-titles"
+    },
+    {
+      "year": 2021,
+      "event": {
+        "ua": "Чемпіонат світу, Х'юстон — одиночний розряд",
+        "ru": "Чемпионат мира, Хьюстон — одиночный разряд"
+      },
+      "result": {
+        "ua": "чвертьфінал",
+        "ru": "четвертьфинал"
+      },
+      "source": "https://www.usatt.org/news/2021/december/01/ping-pong-diplomacy-shines-through-2021-world-table-tennis-championships"
+    },
+    {
+      "year": 2019,
+      "event": {
+        "ua": "Панамериканські ігри, Ліма — командний турнір",
+        "ru": "Панамериканские игры, Лима — командный турнир"
+      },
+      "result": {
+        "ua": "золото",
+        "ru": "золото"
+      },
+      "source": "https://www.olympedia.org/athletes/136380"
+    },
+    {
+      "year": 2019,
+      "event": {
+        "ua": "Панамериканські ігри, Ліма — одиночний розряд",
+        "ru": "Панамериканские игры, Лима — одиночный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.olympedia.org/athletes/136380"
+    },
+    {
+      "year": 2019,
+      "event": {
+        "ua": "Чемпіонат США — одиночний розряд",
+        "ru": "Чемпионат США — одиночный разряд"
+      },
+      "result": {
+        "ua": "чемпіон (4-й титул поспіль, 2016–2019)",
+        "ru": "чемпион (4-й титул подряд, 2016–2019)"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "year": 2018,
+      "event": {
+        "ua": "Юнацькі Олімпійські ігри, Буенос-Айрес — одиночний розряд",
+        "ru": "Юношеские Олимпийские игры, Буэнос-Айрес — одиночный разряд"
+      },
+      "result": {
+        "ua": "бронза",
+        "ru": "бронза"
+      },
+      "source": "https://www.olympedia.org/athletes/136380"
+    },
+    {
+      "year": 2018,
+      "event": {
+        "ua": "Чемпіонат Панамерики — одиночний розряд",
+        "ru": "Чемпионат Панамерики — одиночный разряд"
+      },
+      "result": {
+        "ua": "золото",
+        "ru": "золото"
+      },
+      "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    }
+  ],
+  "ranking": {
+    "best": 19,
+    "bestDate": "2023-01",
+    "source": "https://web.archive.org/web/20240220225330/https://www.ittf.com/wp-content/uploads/2023/01/2023_1_SEN_MS.html"
+  },
+  "equipment": {
+    "asOf": "2026-02-11",
+    "source": "https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+    "blade": {
+      "name": "Timo Boll ALC",
+      "product": "timo-boll-alc"
+    },
+    "fh": {
+      "name": "Zyre 03",
+      "product": "zyre-03"
+    },
+    "bh": {
+      "name": "Zyre 03",
+      "product": "zyre-03"
+    },
+    "note": null
+  },
+  "history": [
+    {
+      "period": {
+        "ua": "станом на 19.12.2025",
+        "ru": "на 19.12.2025"
+      },
+      "blade": "Timo Boll ALC",
+      "rubbers": "FH Zyre 03 / BH Dignics 05",
+      "source": "https://web.archive.org/web/20260208150231/https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "period": {
+        "ua": "станом на 18.06.2025",
+        "ru": "на 18.06.2025"
+      },
+      "blade": "Viscaria Super ALC",
+      "rubbers": "FH Zyre 03 / BH Dignics 05",
+      "source": "https://web.archive.org/web/20250911074550/https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "period": {
+        "ua": "станом на 04.04.2024",
+        "ru": "на 04.04.2024"
+      },
+      "blade": "Viscaria Super ALC",
+      "rubbers": "FH Dignics 05 / BH Tenergy 19",
+      "source": "https://web.archive.org/web/20240917131524/https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    },
+    {
+      "period": {
+        "ua": "станом на 12.03.2019",
+        "ru": "на 12.03.2019"
+      },
+      "blade": "Timo Boll ALC",
+      "rubbers": "FH Tenergy 05 Hard / BH Tenergy 05",
+      "source": "https://web.archive.org/web/20190825013251/https://www.butterfly.co.jp/players/detail/jha-kanak.html"
+    }
+  ],
+  "faq": [
+    {
+      "q": {
+        "ua": "На чому грає Канак Джха?",
+        "ru": "На чём играет Канак Джа?"
+      },
+      "a": {
+        "ua": "За даними Butterfly станом на 11.02.2026, Канак Джха грає основою Timo Boll ALC з накладками Zyre 03 на форхенді й бекхенді. До цього, станом на 19.12.2025, на бекхенді в нього була Dignics 05.",
+        "ru": "По данным Butterfly на 11.02.2026, Канак Джа играет основанием Timo Boll ALC с накладками Zyre 03 на форхенде и бэкхенде. До этого, на 19.12.2025, на бэкхенде у него была Dignics 05."
+      }
+    },
+    {
+      "q": {
+        "ua": "Яка основа в Канака Джхи?",
+        "ru": "Какое основание у Канака Джи?"
+      },
+      "a": {
+        "ua": "Станом на 11.02.2026 Канак Джха грає основою Butterfly Timo Boll ALC. Цю основу Butterfly вказувала в нього й у 2019–2022 роках, а станом на 04.04.2024, 27.12.2024 і 18.06.2025 — Viscaria Super ALC.",
+        "ru": "На 11.02.2026 Канак Джа играет основанием Butterfly Timo Boll ALC. Это основание Butterfly указывала у него и в 2019–2022 годах, а на 04.04.2024, 27.12.2024 и 18.06.2025 — Viscaria Super ALC."
+      }
+    },
+    {
+      "q": {
+        "ua": "Які накладки в Канака Джхи?",
+        "ru": "Какие накладки у Канака Джи?"
+      },
+      "a": {
+        "ua": "Станом на 11.02.2026 Butterfly вказує в Канака Джхи Zyre 03 з обох боків. Раніше він грав Tenergy 05 Hard, Tenergy 05, Tenergy 19 і Dignics 05, а Zyre 03 на форхенді з'явилася в даних Butterfly станом на 18.06.2025.",
+        "ru": "На 11.02.2026 Butterfly указывает у Канака Джи Zyre 03 с обеих сторон. Раньше он играл Tenergy 05 Hard, Tenergy 05, Tenergy 19 и Dignics 05, а Zyre 03 на форхенде появилась в данных Butterfly на 18.06.2025."
+      }
+    },
+    {
+      "q": {
+        "ua": "Канак Джха — скільки йому років?",
+        "ru": "Канак Джа — сколько ему лет?"
+      },
+      "a": {
+        "ua": "Канак Джха народився 19 червня 2000 року в Мілпітасі (Каліфорнія), тож станом на листопад 2026 року йому 26 років. На свою першу Олімпіаду — у Ріо-де-Жанейро 2016 року — він поїхав у 16 років.",
+        "ru": "Канак Джа родился 19 июня 2000 года в Милпитасе (Калифорния), так что на ноябрь 2026 года ему 26 лет. На свою первую Олимпиаду — в Рио-де-Жанейро 2016 года — он поехал в 16 лет."
+      }
+    },
+    {
+      "q": {
+        "ua": "Які найкращі результати Канака Джхи?",
+        "ru": "Каковы лучшие результаты Канака Джи?"
+      },
+      "a": {
+        "ua": "Канак Джха дійшов до чвертьфіналу чемпіонату світу 2021 року в одиночному розряді й до 1/8 фіналу Олімпіади в Парижі 2024 року. Він шестиразовий чемпіон США (2016–2019, 2024, 2025), виграв чемпіонат Панамерики 2018 року й золото Панамериканських ігор 2019 року в команді, а 3 січня 2023 року посідав 19-те місце у світовому рейтингу ITTF — найвище в його кар'єрі.",
+        "ru": "Канак Джа дошёл до четвертьфинала чемпионата мира 2021 года в одиночном разряде и до 1/8 финала Олимпиады в Париже 2024 года. Он шестикратный чемпион США (2016–2019, 2024, 2025), выиграл чемпионат Панамерики 2018 года и золото Панамериканских игр 2019 года в команде, а 3 января 2023 года занимал 19-е место в мировом рейтинге ITTF — высшее в его карьере."
+      }
+    },
+    {
+      "q": {
+        "ua": "Чи можна купити ракетку як у Канака Джхи?",
+        "ru": "Можно ли купить ракетку как у Канака Джи?"
+      },
+      "a": {
+        "ua": "Butterfly вказує в Канака Джхи серійні моделі: основу Timo Boll ALC і накладки Zyre 03 з обох боків. Їх можна купити окремо й зібрати ракетку з таким самим інвентарем.",
+        "ru": "Butterfly указывает у Канака Джи серийные модели: основание Timo Boll ALC и накладки Zyre 03 с обеих сторон. Их можно купить отдельно и собрать ракетку с таким же инвентарём."
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": {
+        "ua": "Butterfly Japan — сторінка Канака Джхи",
+        "ru": "Butterfly Japan — страница Канака Джи"
+      },
+      "url": "https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Global — Kanak Jha",
+        "ru": "Butterfly Global — Kanak Jha"
+      },
+      "url": "https://www.butterfly-global.com/en/sponsoring/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 08.2019 (інвентар станом на 12.03.2019)",
+        "ru": "Butterfly Japan, архив 08.2019 (инвентарь на 12.03.2019)"
+      },
+      "url": "https://web.archive.org/web/20190825013251/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 07.2021 (інвентар станом на 09.07.2021)",
+        "ru": "Butterfly Japan, архив 07.2021 (инвентарь на 09.07.2021)"
+      },
+      "url": "https://web.archive.org/web/20210725044913/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 11.2023 (інвентар станом на 01.09.2022)",
+        "ru": "Butterfly Japan, архив 11.2023 (инвентарь на 01.09.2022)"
+      },
+      "url": "https://web.archive.org/web/20231128142529/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 09.2024 (інвентар станом на 04.04.2024)",
+        "ru": "Butterfly Japan, архив 09.2024 (инвентарь на 04.04.2024)"
+      },
+      "url": "https://web.archive.org/web/20240917131524/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 05.2025 (інвентар станом на 27.12.2024)",
+        "ru": "Butterfly Japan, архив 05.2025 (инвентарь на 27.12.2024)"
+      },
+      "url": "https://web.archive.org/web/20250524073836/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 09.2025 (інвентар станом на 18.06.2025)",
+        "ru": "Butterfly Japan, архив 09.2025 (инвентарь на 18.06.2025)"
+      },
+      "url": "https://web.archive.org/web/20250911074550/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly Japan, архів 02.2026 (інвентар станом на 19.12.2025)",
+        "ru": "Butterfly Japan, архив 02.2026 (инвентарь на 19.12.2025)"
+      },
+      "url": "https://web.archive.org/web/20260208150231/https://www.butterfly.co.jp/players/detail/jha-kanak.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Рейтинг ITTF, чоловіки, 1-й тиждень 2023 (архів)",
+        "ru": "Рейтинг ITTF, мужчины, 1-я неделя 2023 (архив)"
+      },
+      "url": "https://web.archive.org/web/20240220225330/https://www.ittf.com/wp-content/uploads/2023/01/2023_1_SEN_MS.html",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Olympedia — Kanak Jha",
+        "ru": "Olympedia — Kanak Jha"
+      },
+      "url": "https://www.olympedia.org/athletes/136380",
+      "kind": "reference"
+    },
+    {
+      "label": {
+        "ua": "USA Table Tennis — Канак Джха у чвертьфіналі ЧС 2021",
+        "ru": "USA Table Tennis — Канак Джа в четвертьфинале ЧМ 2021"
+      },
+      "url": "https://www.usatt.org/news/2021/december/01/ping-pong-diplomacy-shines-through-2021-world-table-tennis-championships",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "USA Table Tennis — 5-й титул чемпіона США (07.2024)",
+        "ru": "USA Table Tennis — 5-й титул чемпиона США (07.2024)"
+      },
+      "url": "https://www.usatt.org/news/2024/july/12/kanak-jha-and-hong-lin-secure-2024-us-nationals-mens-and-womens-singles-titles",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "USA Table Tennis — 6-й титул чемпіона США (07.2025)",
+        "ru": "USA Table Tennis — 6-й титул чемпиона США (07.2025)"
+      },
+      "url": "https://www.usatt.org/news/2025/july/02/kanak-jha-wins-sixth-u-s-men-s-singles-championship-ties-national-record",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Butterfly North America — перехід Джхи до Ochsenhausen (05.2020)",
+        "ru": "Butterfly North America — переход Джи в Ochsenhausen (05.2020)"
+      },
+      "url": "https://www.butterflyonline.com/jha-joins-calderano-in-germany",
+      "kind": "official"
+    },
+    {
+      "label": {
+        "ua": "Вікіпедія (англ.) — Kanak Jha",
+        "ru": "Википедия (англ.) — Kanak Jha"
+      },
+      "url": "https://en.wikipedia.org/wiki/Kanak_Jha",
+      "kind": "reference"
+    }
+  ],
+  "openQuestions": [
+    "Дата інвентарю розходиться: butterfly.co.jp — «2026年2月11日現在» (11.02.2026), butterfly-global.com — «as of February 12, 2026» (12.02.2026). Взято японську (збігається з таблицею статті inventar-profi-butterfly); склад однаковий — Timo Boll ALC, Zyre 03, Zyre 03.",
+    "Повна історія інвентарю за архівом butterfly.co.jp: 12.03.2019 — Timo Boll ALC, Tenergy 05 Hard / Tenergy 05; 09.07.2021 — Timo Boll ALC, Tenergy 05 Hard / Tenergy 19; 01.09.2022 — Timo Boll ALC, Dignics 05 / Tenergy 19; 04.04.2024 — Viscaria Super ALC, Dignics 05 / Tenergy 19; 27.12.2024 — Viscaria Super ALC, Dignics 05 / Dignics 05; 18.06.2025 — Viscaria Super ALC, Zyre 03 / Dignics 05; 19.12.2025 — Timo Boll ALC, Zyre 03 / Dignics 05. У history — 4 із них (ліміт).",
+    "Чемпіонати США: розбіжність знято за USA Table Tennis — 5-й титул 06.07.2024 (Гантсвілл), 6-й — 2025 (Онтаріо, Каліфорнія); разом шість: 2016–2019, 2024, 2025. Butterfly (JP і Global) у списку досягнень пропускає 2024 рік, а Global натомість пише «U.S. Open 2024 — Men’s Singles Winner» — перемогу на U.S. Open 2024 не перевірено, у текст не включено.",
+    "Найкращий рейтинг №19 (3 січня 2023) — архів рейтингу ITTF, 1-й тиждень 2023, і інфобокс en.wikipedia. Вибірково звірено тижні 2025 року (архів ITTF): 7-й — 44, 15-й — 28, 22-й — 30, 29-й — 28, 34-й — 21, 39-й — 23, 42-й — 24; вище 19-го не було. Тижні з листопада 2025 і 2026 року архів не віддав (тайм-аути); en.wikipedia дає 24-те місце на 5 жовтня 2026. Пряме посилання ittf.com з цього середовища віддає 403, тож «найвище в кар'єрі» спирається на вибірку архіву й інфобокс en.wikipedia.",
+    "Не включено: 12-місячна дискваліфікація (березень 2023 — березень 2024) за три пропущені допінг-тести «whereabouts» — є в en.wikipedia з посиланнями на Reuters і USADA, першоджерела не відкривались. Власнику вирішити, чи згадувати.",
+    "Клуби: перехід до TTF Liebherr Ochsenhausen 2020 року підтверджує Butterfly North America (03.05.2020); рік завершення (2023) і решта клубів (TTC Ruhrstadt Herne, FSV Mainz 05, TTC Zugbrücke Grenzau, TTC Schwalbe Bergneustadt з 2024) — лише з en.wikipedia, у текст не включено. Твердження «наймолодший американець на Олімпіаді-2016» не включено (лише Вікіпедія).",
+    "Панамериканські ігри 2019: бронза в міксті (з ким — не перевірено) — з Olympedia; Butterfly ці ігри не вказує. Чвертьфінал ЧС-2021 підтверджено USATT (поразка від Тімо Болля 2:4) і сіткою турніру в en.wikipedia; на сайті ITTF не звірено.",
+    "Токіо-2020: Olympedia — одиночний розряд =33 (1/32 фіналу; за en.wikipedia — поразка від Кирила Скачкова 2:4), команда =9.",
+    "Як Butterfly класифікує результат WTT Champions Йокогама 2025 — «3位 / 3rd»; матчу за 3-тє місце в WTT Champions немає, тому записано «півфінал (3-тє місце)».",
+    "Butterfly також вказує результати, не включені в текст: 2026 — чемпіонат Панамерики (3-тє в парі й у команді), Americas Cup — фінал; 2025 — Pan American Cup — перемога, чемпіонат Панамерики в команді — срібло; 2024 — WTT Feeder Düsseldorf — перемога; 2022 — чемпіонат Панамерики — срібло; 2020 — Pan American Cup — 3-тє; 2019 — Pan American Cup — фінал.",
+    "Відповідь FAQ про «іменну ракетку» переписано: твердження, що Butterfly не випускає іменної моделі Джхи, не перевірити; залишено лише факт, що весь інвентар — серійні моделі."
+  ]
+}
