@@ -6,6 +6,7 @@
 import type { Locale } from "@/i18n/config";
 import type { AuthorSlug } from "@/data/authors";
 import type { PlayerSlug } from "@/data/players";
+import { buildSpecTable, type SpecTableRef } from "@/lib/catalog/specTables";
 
 type L = Record<Locale, string>;
 
@@ -13,7 +14,7 @@ type L = Record<Locale, string>;
  * Клітинка таблиці. `player` — аватарка гравця перед текстом (фото з Commons або ініціали,
  * див. src/data/players.ts); з цих же клітинок збираються блок «Фото» і Person у розмітці.
  */
-export type BlogCell = L & { player?: PlayerSlug };
+export type BlogCell = L & { player?: PlayerSlug; href?: string };
 
 /** Розділ статті (h2 + абзаци + опційна таблиця + контекстні лінки). id — якір для змісту/сітлінків. */
 export type BlogSection = {
@@ -46,6 +47,11 @@ export type BlogSection = {
    * Одне джерело з карткою товару — тож дата публікації для VideoObject не розійдеться.
    */
   video?: string;
+  /**
+   * Таблиця характеристик із каталогу (накладки або основи однієї групи). getPost()/getAllPosts()
+   * підставляють її в `table` — руками цифри не переписуємо (див. lib/catalog/specTables.ts).
+   */
+  specTable?: SpecTableRef;
 };
 
 /** Часті запитання → FAQPage schema + видимий блок. */
@@ -2532,7 +2538,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "основи з ZLC", ru: "основания с ZLC" }, href: "/osnovaniya/zlc" },
     ],
-    relatedPosts: ["apolonia-zlc-oglyad", "versii-osnov-butterfly", "inventar-profi-butterfly", "znyati-osnovy-butterfly", "yak-vybraty-raketku"],
+    relatedPosts: ["tablytsia-osnov-butterfly", "apolonia-zlc-oglyad", "versii-osnov-butterfly", "inventar-profi-butterfly"],
   },
 
   "doglyad-za-nakladkamy": {
@@ -2988,7 +2994,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "чохли для ракеток", ru: "чехлы для ракеток" }, href: "/chehly/chokhly" },
       { label: { ua: "накладки Butterfly", ru: "накладки Butterfly" }, href: "/nakladki" },
     ],
-    relatedPosts: ["yak-nakleity-nakladku", "lypki-chy-tenzorni-nakladky", "nakladka-dlya-pochatkivtsya", "tovshchyna-hubky-nakladky", "yak-hraty-proty-shypiv"],
+    relatedPosts: ["shcho-podaruvaty-tenisystu", "yak-nakleity-nakladku", "lypki-chy-tenzorni-nakladky", "nakladka-dlya-pochatkivtsya"],
   },
 
   "naykrashchi-nakladki-butterfly": {
@@ -3264,7 +3270,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
       { label: { ua: "Основи для ракеток", ru: "Основания для ракеток" }, href: "/osnovaniya" },
     ],
-    relatedPosts: ["yak-vybraty-raketku", "pravyla-nastilnogo-tenisu", "versii-osnov-butterfly"],
+    relatedPosts: ["tablytsia-nakladok-butterfly", "yak-vybraty-raketku", "pravyla-nastilnogo-tenisu", "versii-osnov-butterfly"],
     interactive: "racketPicker",
   },
 
@@ -3789,7 +3795,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
       { label: { ua: "Butterfly Tenergy 05", ru: "Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
     ],
-    relatedPosts: ["naykrashchi-nakladki-butterfly", "apolonia-zlc-oglyad", "inventar-profi-butterfly", "yak-vybraty-raketku"],
+    relatedPosts: ["tablytsia-nakladok-butterfly", "naykrashchi-nakladki-butterfly", "apolonia-zlc-oglyad", "inventar-profi-butterfly"],
     interactive: "rubberPoll",
   },
   "tenergy-chy-dignics": {
@@ -3999,7 +4005,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
       { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
     ],
-    relatedPosts: ["zyre-03-vs-dignics-tenergy", "apolonia-zlc-oglyad", "tovshchyna-hubky-nakladky", "naykrashchi-nakladki-butterfly"],
+    relatedPosts: ["tablytsia-nakladok-butterfly", "zyre-03-vs-dignics-tenergy", "apolonia-zlc-oglyad", "tovshchyna-hubky-nakladky"],
     interactive: "rubberPoll",
   },
 
@@ -5199,7 +5205,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Zhang Jike ALC", ru: "Butterfly Zhang Jike ALC" }, href: "/butterfly/osnovaniya/zhang-jike-alc" },
       { label: { ua: "Butterfly Innerforce Layer ALC", ru: "Butterfly Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
     ],
-    relatedPosts: ["inventar-profi-butterfly", "znyati-osnovy-butterfly", "yak-vybraty-raketku", "alc-chy-zlc"],
+    relatedPosts: ["tablytsia-osnov-butterfly", "inventar-profi-butterfly", "znyati-osnovy-butterfly", "yak-vybraty-raketku"],
   },
 
   "inventar-profi-butterfly": {
@@ -5604,7 +5610,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
       { label: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
     ],
-    relatedPosts: ["alc-chy-zlc", "zyre-03-vs-dignics-tenergy", "tenergy-chy-dignics", "versii-osnov-butterfly", "znyati-osnovy-butterfly"],
+    relatedPosts: ["tablytsia-osnov-butterfly", "alc-chy-zlc", "zyre-03-vs-dignics-tenergy", "tenergy-chy-dignics"],
   },
   "znyati-osnovy-butterfly": {
     slug: "znyati-osnovy-butterfly",
@@ -7565,7 +7571,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "м'ячі Butterfly R40+ 3★, 12 шт", ru: "мячи Butterfly R40+ 3★, 12 шт" }, href: "/butterfly/myachi/m-iachi-butterfly-r40-3-12sht-v-up" },
       { label: { ua: "Training Ball 40+, 120 шт", ru: "Training Ball 40+, 120 шт" }, href: "/butterfly/myachi/m-iachi-butterfly-training-ball-40-120sht-v-up" },
     ],
-    relatedPosts: ["pravyla-nastilnogo-tenisu", "podacha-v-nastilnomu-tenisi", "yak-vybraty-raketku", "ping-pong"],
+    relatedPosts: ["shcho-podaruvaty-tenisystu", "pravyla-nastilnogo-tenisu", "podacha-v-nastilnomu-tenisi", "yak-vybraty-raketku"],
   },
   "yak-pryimaty-podachu": {
     slug: "yak-pryimaty-podachu",
@@ -8157,20 +8163,1289 @@ const POSTS: Record<string, BlogPost> = {
     ],
     relatedPosts: ["podacha-v-nastilnomu-tenisi", "lypki-chy-tenzorni-nakladky", "nakladka-dlya-pochatkivtsya", "pravyla-nastilnogo-tenisu"],
   },
+  // ЦІЛЬОВІ ЗАПИТИ. UA: «таблиця накладок butterfly», «характеристики накладок butterfly»,
+  // «швидкість обертання накладок butterfly». RU: «таблица накладок butterfly»,
+  // «характеристики накладок баттерфляй».
+  // Інтент — довідковий (таблиця всіх моделей), НЕ рейтинг: вибір «найкращої» лишається за
+  // naykrashchi-nakladki-butterfly, комерція — за /nakladki. Таблиці груп НЕ пишемо руками:
+  // секції з specTable заповнюються з products.ts + профілів /igroki (lib/catalog/specTables.ts).
+  // ЗВІДКИ ЧИСЛА (звірено 2026-11-04):
+  //  • Усі швидкість / обертання / дуга / губка / товщини — specs у src/data/catalog/products.ts
+  //    (ті самі, що генерує specTables.ts). Вибірково звірено з офіційними картками
+  //    butterfly-global.com: Zyre 03 (06140) 88/100/96/44; Dignics 09C (06070) 79/96/96/44;
+  //    Tenergy 05 Hard (06030) 82/96/92/43; Sriver (05050) 38/23/23/38; Tackiness Chop (05450) 16/16/27/32.
+  //  • Bryce High Speed, Tackiness Drive, Aibiss на глобальному сайті Butterfly (список накладок) НЕ показано —
+  //    їхні числа лише з каталогу.
+  //  • Що означають швидкість / обертання / дуга, «відносно, за власними тестами Butterfly»,
+  //    перегляд індексу з лютого 2023, тест на найтовщій губці, окремий індекс «(Pimples-out)»,
+  //    стабільність і варіативність за 10-бальною шкалою для довгих шипів / OX / антиспіну —
+  //    butterfly-global.com/en/products/rubber/performance.html.
+  //  • Твердість губки «за власним стандартом Butterfly», вище — твердіша — /en/products/rubber/spec.html.
+  //  • Опис типів (High Tension, High friction, pimples-out, довгі шипи, антиспін, OX) — /en/products/rubber/type.html.
+  //  • Aibiss — інша шкала Butterfly, тому без швидкості/обертання (коментар у specTables.ts).
+  //  • Хто грає — 26 профілів scripts/player-profiles/*.json (дати даних Butterfly — у кожному профілі):
+  //    Dignics 09C — 15, Zyre 03 — 10, Dignics 05 — 8, Tenergy 05 Hard — 3 (Лім, Вонг, Чжу),
+  //    Dignics 80 — Мідзутані, Tenergy 80 — Чжан Цзіке (обидва завершили карʼєру).
+  //  • Рівні різниці Dignics↔Tenergy (05/64/80: +3 швидкість, +9 обертання, +9 дуга, +4°) і
+  //    FX↔базова Tenergy (05/25/64/80: −2 / −12 / −14, 32° проти 36°) — пораховано з products.ts.
+  "tablytsia-nakladok-butterfly": {
+    slug: "tablytsia-nakladok-butterfly",
+    // Блок «Підберемо» — після вибору; товари — після розбору тензорних (усі 6 моделей звідти).
+    consultAfter: "yak-obraty",
+    products: ["dignics-09c", "zyre-03", "dignics-05", "tenergy-05", "tenergy-05-hard", "rozena"],
+    productsAfter: "tenzor",
+    h1: {
+      ua: "Таблиця накладок Butterfly: швидкість, обертання й жорсткість губки",
+      ru: "Таблица накладок Butterfly: скорость, вращение и жёсткость губки",
+    },
+    metaTitle: {
+      ua: "Таблиця накладок Butterfly: швидкість і обертання | TTMAX",
+      ru: "Таблица накладок Butterfly: скорость и вращение | TTMAX",
+    },
+    metaDescription: {
+      ua: "📊 Таблиця накладок Butterfly: швидкість, обертання, дуга й губка 43 моделей. Найшвидша — 92, обертання до 100. І хто з профі чим грає.",
+      ru: "📊 Таблица накладок Butterfly: скорость, вращение, дуга и губка 43 моделей. Самая быстрая — 92, вращение до 100. И кто из профи чем играет.",
+    },
+    excerpt: {
+      ua: "Усі 43 накладки Butterfly з нашого каталогу в пʼяти таблицях: швидкість, обертання й дуга за індексом Butterfly, градуси губки, товщини й хто з професіоналів грає кожною моделлю.",
+      ru: "Все 43 накладки Butterfly из нашего каталога в пяти таблицах: скорость, вращение и дуга по индексу Butterfly, градусы губки, толщины и кто из профессионалов играет каждой моделью.",
+    },
+    datePublished: "2026-11-04",
+    dateModified: "2026-11-04",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/tablytsia-nakladok-butterfly-cover.svg",
+    heroAlt: {
+      ua: "Таблиця характеристик накладок Butterfly: швидкість, обертання й твердість губки 43 моделей",
+      ru: "Таблица характеристик накладок Butterfly: скорость, вращение и твёрдость губки 43 моделей",
+    },
+    intro: {
+      ua: [
+        "Таблиця накладок Butterfly нижче зібрана з нашого каталогу: 43 моделі, і для кожної — швидкість, обертання й дуга за індексом Butterfly, твердість губки в градусах, доступні товщини та хто з професіоналів нею грає. Назва моделі в таблиці веде на її картку, а цифри збігаються з тими, що на картках.",
+        "Спершу — як читати ці характеристики й чому їх не можна порівнювати з числами інших марок. Далі — пʼять груп: тензорні, липкі, класичні, короткі й довгі шипи, з розбором того, що показують цифри, і підказками, як обрати накладку під свій рівень.",
+      ],
+      ru: [
+        "Таблица накладок Butterfly ниже собрана из нашего каталога: 43 модели, и для каждой — скорость, вращение и дуга по индексу Butterfly, твёрдость губки в градусах, доступные толщины и кто из профессионалов ею играет. Название модели в таблице ведёт на её карточку, а цифры совпадают с теми, что в карточках.",
+        "Сначала — как читать эти характеристики накладок Butterfly (Баттерфляй) и почему их нельзя сравнивать с числами других марок. Дальше — пять групп: тензорные, липкие, классические, короткие и длинные шипы, с разбором того, что показывают цифры, и подсказками, как выбрать накладку под свой уровень.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Таблиця накладок Butterfly коротко: 43 моделі", ru: "Таблица накладок Butterfly коротко: 43 модели" },
+        p: {
+          ua: [
+            "У каталозі — 43 накладки Butterfly: 21 тензорна й гібридна, 4 липкі, 4 класичні, 6 із короткими шипами та 8 із довгими шипами й антиспіном. Найшвидша за індексом Butterfly — Bryce High Speed (92), найбільше обертання — у Zyre 03 (100), найтвердіша губка — у липкої Aibiss (50°), а серед тензорних — 44° у Zyre 03 і Dignics 09C.",
+            "Серед професіоналів найпоширеніша Dignics 09C: вона є в інвентарі 15 із 26 гравців на наших сторінках «Гравці», Zyre 03 — у 10, Dignics 05 — у 8. Числа швидкості й обертання — відносна шкала самої Butterfly, тож порівнювати їх можна лише між накладками Butterfly.",
+          ],
+          ru: [
+            "В каталоге — 43 накладки Butterfly: 21 тензорная и гибридная, 4 липкие, 4 классические, 6 с короткими шипами и 8 с длинными шипами и антиспином. Самая быстрая по индексу Butterfly — Bryce High Speed (92), больше всего вращения у Zyre 03 (100), самая твёрдая губка — у липкой Aibiss (50°), а среди тензорных — 44° у Zyre 03 и Dignics 09C.",
+            "Среди профессионалов чаще всего встречается Dignics 09C: она есть в инвентаре 15 из 26 игроков на наших страницах «Игроки», Zyre 03 — у 10, Dignics 05 — у 8. Числа скорости и вращения — относительная шкала самой Butterfly, поэтому сравнивать их можно только между накладками Butterfly.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Група", ru: "Группа" },
+            { ua: "Моделей", ru: "Моделей" },
+            { ua: "Швидкість", ru: "Скорость" },
+            { ua: "Обертання", ru: "Вращение" },
+            { ua: "Губка, °", ru: "Губка, °" },
+          ],
+          rows: [
+            [{ ua: "Тензорні й гібридні", ru: "Тензорные и гибридные" }, { ua: "21", ru: "21" }, { ua: "62–92", ru: "62–92" }, { ua: "37–100", ru: "37–100" }, { ua: "32–44", ru: "32–44" }],
+            [{ ua: "Липкі", ru: "Липкие" }, { ua: "4", ru: "4" }, { ua: "16–33 (без Aibiss)", ru: "16–33 (без Aibiss)" }, { ua: "15–30 (без Aibiss)", ru: "15–30 (без Aibiss)" }, { ua: "32–50", ru: "32–50" }],
+            [{ ua: "Класичні", ru: "Классические" }, { ua: "4", ru: "4" }, { ua: "29–38", ru: "29–38" }, { ua: "10–23", ru: "10–23" }, { ua: "32–38", ru: "32–38" }],
+            [{ ua: "Короткі шипи", ru: "Короткие шипы" }, { ua: "6", ru: "6" }, { ua: "36–70 (окремий індекс)", ru: "36–70 (отдельный индекс)" }, { ua: "36–70 (окремий індекс)", ru: "36–70 (отдельный индекс)" }, { ua: "30–42", ru: "30–42" }],
+            [{ ua: "Довгі шипи й антиспін", ru: "Длинные шипы и антиспин" }, { ua: "8", ru: "8" }, { ua: "не публікується", ru: "не публикуется" }, { ua: "не публікується", ru: "не публикуется" }, { ua: "25–48", ru: "25–48" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Усі накладки Butterfly", ru: "Все накладки Butterfly" }, href: "/nakladki" },
+          { label: { ua: "Гравці Butterfly та їхній інвентар", ru: "Игроки Butterfly и их инвентарь" }, href: "/igroki" },
+        ],
+      },
+      {
+        id: "yak-chytaty",
+        h: { ua: "Як читати швидкість, обертання й градуси губки", ru: "Как читать скорость, вращение и градусы губки" },
+        p: {
+          ua: [
+            "Швидкість, обертання й дуга — це відносні оцінки, які Butterfly отримує у власних тестах. Чим вища швидкість, тим швидше летить мʼяч і тим більше накладка підходить для атаки; низька швидкість — ознака захисної накладки. Обертання показує, скільки обертання накладка надає мʼячу, а дуга — наскільки легко підняти траєкторію: що нижче число, то нижча траєкторія.",
+            "Шкала належить самій Butterfly, тож порівнювати числа можна лише між її моделями, а не з Tibhar чи DHS. Butterfly переглянула індекс із лютого 2023 року через новий метод вимірювання, тому старі цифри з давніх оглядів і упаковок можуть не збігатися з нинішніми. Для шипів назовні в Butterfly окремий індекс, а для довгих шипів, OX і антиспіну замість швидкості й обертання — стабільність і варіативність за 10-бальною шкалою.",
+            "Тестують кожну модель на найтовщій губці з її лінійки, тож числа в таблиці описують саме найтовщу версію. Твердість губки, за словами Butterfly, міряють за власним стандартом компанії: що більше градусів, то твердіша губка. Тому 40° у Butterfly не обовʼязково дорівнюють 40° на європейській губці ESN чи китайській накладці: переносити градуси між марками 1:1 не можна.",
+          ],
+          ru: [
+            "Скорость, вращение и дуга — это относительные оценки, которые Butterfly получает в собственных тестах. Чем выше скорость, тем быстрее летит мяч и тем больше накладка подходит для атаки; низкая скорость — признак защитной накладки. Вращение показывает, сколько вращения накладка придаёт мячу, а дуга — насколько легко поднять траекторию: чем ниже число, тем ниже траектория.",
+            "Шкала принадлежит самой Butterfly, поэтому сравнивать числа можно только между её моделями, а не с Tibhar или DHS. С февраля 2023 года Butterfly пересмотрела индекс из-за нового метода измерения, так что старые цифры из давних обзоров и с упаковок могут не совпадать с нынешними. Для шипов наружу у Butterfly отдельный индекс, а для длинных шипов, OX и антиспина вместо скорости и вращения — стабильность и вариативность по 10-балльной шкале.",
+            "Каждую модель тестируют на самой толстой губке её линейки, так что числа в таблице описывают именно самую толстую версию. Твёрдость губки, по словам Butterfly, измеряют по собственному стандарту компании: чем больше градусов, тем твёрже губка. Поэтому 40° у Butterfly не обязательно равны 40° на европейской губке ESN или китайской накладке: переносить градусы между марками один в один нельзя.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Показник", ru: "Показатель" },
+            { ua: "Що означає (за Butterfly)", ru: "Что означает (по Butterfly)" },
+            { ua: "Діапазон у таблиці", ru: "Диапазон в таблице" },
+          ],
+          rows: [
+            [{ ua: "Швидкість", ru: "Скорость" }, { ua: "Вплив накладки на швидкість мʼяча; вище — для атаки, нижче — для захисту", ru: "Влияние накладки на скорость мяча; выше — для атаки, ниже — для защиты" }, { ua: "16–92 (гладкі)", ru: "16–92 (гладкие)" }],
+            [{ ua: "Обертання", ru: "Вращение" }, { ua: "Скільки обертання накладка надає мʼячу", ru: "Сколько вращения накладка придаёт мячу" }, { ua: "10–100 (гладкі)", ru: "10–100 (гладкие)" }],
+            [{ ua: "Дуга", ru: "Дуга" }, { ua: "Наскільки легко підняти траєкторію; нижче — нижча траєкторія", ru: "Насколько легко поднять траекторию; ниже — более низкая траектория" }, { ua: "15–96 (гладкі)", ru: "15–96 (гладкие)" }],
+            [{ ua: "Губка, °", ru: "Губка, °" }, { ua: "Твердість за власним стандартом Butterfly; вище — твердіша", ru: "Твёрдость по собственному стандарту Butterfly; выше — твёрже" }, { ua: "25–50", ru: "25–50" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Як товщина губки змінює накладку", ru: "Как толщина губки меняет накладку" }, href: "/blog/tovshchyna-hubky-nakladky" },
+        ],
+      },
+      {
+        id: "tenzor",
+        h: { ua: "Тензорні й гібридні накладки: 21 модель", ru: "Тензорные и гибридные накладки: 21 модель" },
+        p: {
+          ua: [
+            "Тензорних накладок у каталозі найбільше — 21: десять Tenergy, чотири Dignics, Zyre 03, Glayzer і Glayzer 09C, Rozena, Bryce High Speed, Roundell і Roundell Soft. Дві моделі з індексом 09C — гібриди: Butterfly відносить Dignics 09C до типу High Tension з підвищеним тертям, тому гібриди тут, а не серед липких. Швидкість у групі — від 62 (Tenergy 25 FX) до 92 (Bryce High Speed), обертання — від 37 (Roundell Soft) до 100 (Zyre 03).",
+            "Цифри показують чітку закономірність: губка змінює обертання й дугу набагато сильніше, ніж швидкість. Кожна Dignics випереджає Tenergy з тим самим номером (05, 64, 80) рівно на 3 пункти швидкості, 9 обертання й 9 дуги за губки 40° замість 36°. Усі чотири FX-версії Tenergy з губкою 32° поступаються базовим на 2 пункти швидкості, 12 обертання й 14 дуги. А три найобертовіші моделі — Zyre 03 (100), Dignics 09C і Tenergy 05 Hard (по 96) — мають найтвердіші губки групи, 43–44°. Виняток — Bryce High Speed: найшвидша (92), але з обертанням 54 і найнижчою в групі дугою 46, тобто з найнижчою траєкторією.",
+            "Професіонали в наших профілях грають переважно твердими моделями з губкою 40–44°: Dignics 09C — 15 гравців із 26, серед них Фань Чженьдун і Лінь Шидун; Zyre 03 — 10, зокрема Томокадзу Харімото й Лінь Юньжу; Dignics 05 — 8; Tenergy 05 Hard — троє: Лім Джонхун, Вонг Чунтін і Чжу Юйлін. Tenergy 80 є лише в профілі Чжан Цзіке (останні дані Butterfly — 2021 рік), а Dignics 80 — лише в Дзюна Мідзутані; обидва вже не виступають.",
+          ],
+          ru: [
+            "Тензорных накладок в каталоге больше всего — 21: десять Tenergy, четыре Dignics, Zyre 03, Glayzer и Glayzer 09C, Rozena, Bryce High Speed, Roundell и Roundell Soft. Две модели с индексом 09C — гибриды: Butterfly относит Dignics 09C к типу High Tension с повышенным трением, поэтому гибриды здесь, а не среди липких. Скорость в группе — от 62 (Tenergy 25 FX) до 92 (Bryce High Speed), вращение — от 37 (Roundell Soft) до 100 (Zyre 03).",
+            "Цифры показывают чёткую закономерность: губка меняет вращение и дугу гораздо сильнее, чем скорость. Каждая Dignics опережает Tenergy с тем же номером (05, 64, 80) ровно на 3 пункта скорости, 9 вращения и 9 дуги при губке 40° вместо 36°. Все четыре FX-версии Tenergy с губкой 32° уступают базовым 2 пункта скорости, 12 вращения и 14 дуги. А три самые крутящие модели — Zyre 03 (100), Dignics 09C и Tenergy 05 Hard (по 96) — имеют самые твёрдые губки группы, 43–44°. Исключение — Bryce High Speed: самая быстрая (92), но с вращением 54 и самой низкой в группе дугой 46, то есть с самой низкой траекторией.",
+            "Профессионалы в наших профилях играют в основном жёсткими моделями с губкой 40–44°: Dignics 09C — 15 игроков из 26, среди них Фань Чжэньдун и Линь Шидун; Zyre 03 — 10, в том числе Томокадзу Харимото и Линь Юньжу; Dignics 05 — 8; Tenergy 05 Hard — трое: Лим Чжонхун, Вонг Чунтин и Чжу Юйлин. Tenergy 80 есть только в профиле Чжан Цзикэ (последние данные Butterfly — 2021 год), а Dignics 80 — только у Дзюна Мидзутани; оба уже не выступают.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "tenzor" },
+        rec: {
+          publicId: "ttmax/product/zyre-03/02",
+          name: { ua: "Накладка Butterfly Zyre 03", ru: "Накладка Butterfly Zyre 03" },
+          verdict: {
+            ua: "Найбільше обертання в таблиці — 100, дуга 96, губка 44°; товщини 2,5 і 2,7 мм — більші, ніж у Dignics і Tenergy.",
+            ru: "Самое высокое вращение в таблице — 100, дуга 96, губка 44°; толщины 2,5 и 2,7 мм — больше, чем у Dignics и Tenergy.",
+          },
+          alt: {
+            ua: "Тензорна накладка Butterfly Zyre 03 для настільного тенісу",
+            ru: "Тензорная накладка Butterfly Zyre 03 для настольного тенниса",
+          },
+          href: "/butterfly/nakladki/zyre-03",
+        },
+        links: [
+          { label: { ua: "Серія Tenergy", ru: "Серия Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "Серія Dignics", ru: "Серия Dignics" }, href: "/nakladki/dignics" },
+          { label: { ua: "Профіль Томокадзу Харімото", ru: "Профиль Томокадзу Харимото" }, href: "/igroki/harimoto-tomokazu" },
+          { label: { ua: "Профіль Фань Чженьдуна", ru: "Профиль Фань Чжэньдуна" }, href: "/igroki/fan-zhendong" },
+        ],
+      },
+      {
+        id: "lipka",
+        h: { ua: "Липкі накладки: Tackiness і Aibiss", ru: "Липкие накладки: Tackiness и Aibiss" },
+        p: {
+          ua: [
+            "Окремо від гібридів у каталозі чотири липкі накладки: Tackiness Drive, Tackiness Chop, Tackiness Chop II та Aibiss. Butterfly відносить їх до накладок із підвищеним тертям: за її описом, липка поверхня допомагає легко закрутити мʼяч. Але за індексом Butterfly вони набагато повільніші й менш обертові за тензорні: найшвидша з них, Tackiness Drive, має швидкість 33 й обертання 15 проти 83 і 76 у Tenergy 05. Тобто в індексі Butterfly сама липкість високого числа обертання не дає — найвищі показники в Butterfly мають гібриди й тверді тензорні накладки.",
+            "Пара Tackiness Chop і Chop II ще раз показує роль губки: швидкість однакова, 16, але Chop II з губкою 41° замість 32° має обертання 30 проти 16 і дугу 41 проти 27. Обидві бувають від 1,3 мм — найтонша губка серед гладких накладок каталогу, тоді як Tackiness Drive є до MAX. Aibiss — накладка китайського типу з найтвердішою губкою всієї таблиці, 50°; Butterfly оцінює її за іншою шкалою, тому швидкості й обертання для неї ми не наводимо, щоб не поставити її поруч із несумісними числами.",
+          ],
+          ru: [
+            "Отдельно от гибридов в каталоге четыре липкие накладки: Tackiness Drive, Tackiness Chop, Tackiness Chop II и Aibiss. Butterfly относит их к накладкам с повышенным трением: по её описанию, липкая поверхность помогает легко закрутить мяч. Но по индексу Butterfly они гораздо медленнее и крутят слабее тензорных: самая быстрая из них, Tackiness Drive, имеет скорость 33 и вращение 15 против 83 и 76 у Tenergy 05. То есть в индексе Butterfly сама липкость высокого числа вращения не даёт — самые высокие показатели у Butterfly у гибридов и твёрдых тензорных накладок.",
+            "Пара Tackiness Chop и Chop II ещё раз показывает роль губки: скорость одинаковая, 16, но у Chop II с губкой 41° вместо 32° вращение 30 против 16 и дуга 41 против 27. Обе бывают от 1,3 мм — самая тонкая губка среди гладких накладок каталога, тогда как Tackiness Drive бывает до MAX. Aibiss — накладка китайского типа с самой твёрдой губкой во всей таблице, 50°; Butterfly оценивает её по другой шкале, поэтому скорость и вращение для неё мы не приводим, чтобы не ставить её рядом с несовместимыми числами.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "lipka" },
+        links: [
+          { label: { ua: "Липкі чи тензорні накладки", ru: "Липкие или тензорные накладки" }, href: "/blog/lypki-chy-tenzorni-nakladky" },
+          { label: { ua: "Butterfly Aibiss", ru: "Butterfly Aibiss" }, href: "/butterfly/nakladki/aibiss" },
+        ],
+      },
+      {
+        id: "klasyka",
+        h: { ua: "Класичні накладки: Sriver і Flextra", ru: "Классические накладки: Sriver и Flextra" },
+        p: {
+          ua: [
+            "Класичні накладки — це Sriver, Sriver EL, Sriver FX і Flextra: Butterfly позначає Sriver просто як гладку накладку, без технології High Tension. У всіх трьох Sriver однакова швидкість — 38, а відрізняються вони лише губкою: 38°, 35° і 33°, і разом із нею падають обертання та дуга — 23, 19 і 15. Flextra з губкою 32° має швидкість 29 й обертання 10 — найменше обертання серед усіх накладок таблиці, для яких Butterfly публікує числа.",
+            "Для гри це означає помітно повільніший мʼяч: швидкість 38 — менше половини від 83 у Tenergy 05 за індексом Butterfly, тож на удар більше часу, а неточний рух прощається легше. Тому Flextra і Sriver FX — серед моделей, які ми радимо як першу накладку. У нашому каталозі всі чотири є до товщини MAX. У профілях професіоналів класичних накладок немає — вони для навчання й аматорської гри, а не для топ-рівня.",
+          ],
+          ru: [
+            "Классические накладки — это Sriver, Sriver EL, Sriver FX и Flextra: Butterfly обозначает Sriver просто как гладкую накладку, без технологии High Tension. У всех трёх Sriver одинаковая скорость — 38, а отличаются они только губкой: 38°, 35° и 33°, и вместе с ней падают вращение и дуга — 23, 19 и 15. У Flextra с губкой 32° скорость 29 и вращение 10 — меньше всех среди накладок таблицы, для которых Butterfly публикует числа.",
+            "Для игры это значит заметно более медленный мяч: скорость 38 — меньше половины от 83 у Tenergy 05 по индексу Butterfly, так что на удар больше времени, а неточное движение прощается легче. Поэтому Flextra и Sriver FX — среди моделей, которые мы советуем как первую накладку. В нашем каталоге все четыре бывают до толщины MAX. В профилях профессионалов классических накладок нет — они для обучения и любительской игры, а не для топ-уровня.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "klasyka" },
+        links: [
+          { label: { ua: "Накладка для початківця", ru: "Накладка для начинающего" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
+          { label: { ua: "Butterfly Sriver", ru: "Butterfly Sriver" }, href: "/butterfly/nakladki/sriver" },
+          { label: { ua: "Butterfly Flextra", ru: "Butterfly Flextra" }, href: "/butterfly/nakladki/flextra" },
+        ],
+      },
+      {
+        id: "korotki-shypy",
+        h: { ua: "Накладки з короткими шипами", ru: "Накладки с короткими шипами" },
+        p: {
+          ua: [
+            "Накладок із короткими шипами назовні в каталозі шість: Impartial XS, Impartial XB, Bugller, Speedy P.O., Challenger Attack і Orthodox. За Butterfly, шипи назовні мають малу площу контакту з мʼячем, тож чуже обертання впливає на таку накладку слабше. Числа для них Butterfly рахує в окремому індексі для шипів назовні, тому порівнювати їх варто лише всередині групи, а не з тензорними.",
+            "Найшвидша й найобертовіша в групі — Impartial XS: 70 за швидкістю, обертанням і дугою. Impartial XB з такою самою губкою 30° поступається за всіма трьома (58 / 47 / 48), тож різницю тут дає топшит, а не губка. Bugller має найтвердішу губку групи (42°) і найнижчу дугу (27), Challenger Attack — найнижчу швидкість (36), але другу за висотою дугу (57). Orthodox — шипи назовні без губки (OX): такі накладки Butterfly оцінює не швидкістю й обертанням, а стабільністю й варіативністю, тож у таблиці цифр для неї немає.",
+          ],
+          ru: [
+            "Накладок с короткими шипами наружу в каталоге шесть: Impartial XS, Impartial XB, Bugller, Speedy P.O., Challenger Attack и Orthodox. По Butterfly, у шипов наружу маленькая площадь контакта с мячом, поэтому чужое вращение влияет на такую накладку слабее. Числа для них Butterfly считает в отдельном индексе для шипов наружу, поэтому сравнивать их стоит только внутри группы, а не с тензорными.",
+            "Самая быстрая и самая крутящая в группе — Impartial XS: 70 по скорости, вращению и дуге. Impartial XB с той же губкой 30° уступает по всем трём (58 / 47 / 48), значит, разницу здесь даёт топшит, а не губка. У Bugller самая твёрдая губка группы (42°) и самая низкая дуга (27), у Challenger Attack — самая низкая скорость (36), но вторая по высоте дуга (57). Orthodox — шипы наружу без губки (OX): такие накладки Butterfly оценивает не скоростью и вращением, а стабильностью и вариативностью, поэтому в таблице цифр для неё нет.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "korotki-shypy" },
+        rec: {
+          publicId: "ttmax/product/impartial-xs/01",
+          name: { ua: "Накладка Butterfly Impartial XS", ru: "Накладка Butterfly Impartial XS" },
+          verdict: {
+            ua: "Лідер коротких шипів у каталозі: 70 за швидкістю, обертанням і дугою в індексі Butterfly для шипів назовні.",
+            ru: "Лидер коротких шипов в каталоге: 70 по скорости, вращению и дуге в индексе Butterfly для шипов наружу.",
+          },
+          alt: {
+            ua: "Накладка з короткими шипами Butterfly Impartial XS для настільного тенісу",
+            ru: "Накладка с короткими шипами Butterfly Impartial XS для настольного тенниса",
+          },
+          href: "/butterfly/nakladki/impartial-xs",
+        },
+        links: [
+          { label: { ua: "Накладки з короткими шипами", ru: "Накладки с короткими шипами" }, href: "/nakladki/korotki-shypy" },
+          { label: { ua: "Як грати проти шипів", ru: "Как играть против шипов" }, href: "/blog/yak-hraty-proty-shypiv" },
+        ],
+      },
+      {
+        id: "dovgi-shypy",
+        h: { ua: "Довгі шипи й антиспін: Feint, Ilius, Super Anti", ru: "Длинные шипы и антиспин: Feint, Ilius, Super Anti" },
+        p: {
+          ua: [
+            "У групі вісім накладок: сім із довгими шипами — Feint AG, Feint Long II, Feint Long III, Feint OX, Feint Soft, Ilius B, Ilius S — і антиспін Super Anti. За Butterfly, довгі шипи легко деформуються при контакті з мʼячем і дають несподівані варіації обертання, а антиспін має низьке тертя, тож чуже обертання впливає на нього менше. Швидкості й обертання для них Butterfly не публікує: такі накладки вона оцінює за стабільністю й варіативністю за 10-бальною шкалою, тож у таблиці лишаються губка й товщини.",
+            "Губка тут — від 25° у Feint Soft і Super Anti до 48° в Ilius B і 45° в Ilius S; для Feint Long II, Feint Long III і Feint OX твердість у каталозі не вказана. Усі сім довгих шипів є у варіанті OX — без губки, за Butterfly легкому й з низькою пружністю, — і всі, крім Feint OX, ще й із губкою 1,1 та 1,3 мм; Feint Long II, III і Feint Soft — також 1,5 мм. Super Anti, навпаки, буває тільки з губкою 1,5–1,9 мм.",
+          ],
+          ru: [
+            "В группе восемь накладок: семь с длинными шипами — Feint AG, Feint Long II, Feint Long III, Feint OX, Feint Soft, Ilius B, Ilius S — и антиспин Super Anti. По Butterfly, длинные шипы легко деформируются при контакте с мячом и дают неожиданные вариации вращения, а у антиспина низкое трение, поэтому чужое вращение влияет на него меньше. Скорость и вращение для них Butterfly не публикует: такие накладки она оценивает по стабильности и вариативности по 10-балльной шкале, так что в таблице остаются губка и толщины.",
+            "Губка здесь — от 25° у Feint Soft и Super Anti до 48° у Ilius B и 45° у Ilius S; для Feint Long II, Feint Long III и Feint OX твёрдость в каталоге не указана. Все семь длинных шипов есть в варианте OX — без губки, по Butterfly лёгком и с низкой упругостью, — и все, кроме Feint OX, ещё и с губкой 1,1 и 1,3 мм; Feint Long II, III и Feint Soft — также 1,5 мм. Super Anti, наоборот, бывает только с губкой 1,5–1,9 мм.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "dovgi-shypy" },
+        links: [
+          { label: { ua: "Накладки з довгими шипами", ru: "Накладки с длинными шипами" }, href: "/nakladki/dovgi-shypy" },
+          { label: { ua: "Butterfly Feint Long III", ru: "Butterfly Feint Long III" }, href: "/butterfly/nakladki/feint-long-iii" },
+        ],
+      },
+      {
+        id: "yak-obraty",
+        h: { ua: "Як обрати накладку Butterfly за таблицею", ru: "Как выбрать накладку Butterfly по таблице" },
+        p: {
+          ua: [
+            "Обирайте не за найбільшим числом, а за тим, що ваш удар здатен із накладки взяти. Тверда губка 43–44° дає найвищі обертання й дугу, але, як ми розбирали в порівнянні Tenergy і Dignics, розкривається лише на повному прискоренні; на короткому русі біля столу мʼякша губка віддасть більше.",
+            "Памʼятайте, що числа в таблиці — для найтовщої губки кожної моделі: тонша губка дає менше власної швидкості, зате більше відчуття мʼяча. Як влаштовані Zyre 03, Dignics і Tenergy і звідки береться різниця, розібрано окремо — тут лише орієнтири за цифрами.",
+          ],
+          ru: [
+            "Выбирайте не по самому большому числу, а по тому, что ваш удар способен из накладки взять. Твёрдая губка 43–44° даёт самые высокие вращение и дугу, но, как мы разбирали в сравнении Tenergy и Dignics, раскрывается только на полном ускорении; на коротком движении у стола более мягкая губка отдаст больше.",
+            "Помните, что числа в таблице — для самой толстой губки каждой модели: более тонкая губка даёт меньше собственной скорости, зато мяч лучше чувствуется. Как устроены Zyre 03, Dignics и Tenergy и откуда берётся разница, разобрано отдельно — здесь только ориентиры по цифрам.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Ваша ситуація", ru: "Ваша ситуация" },
+            { ua: "На що дивитися в таблиці", ru: "На что смотреть в таблице" },
+            { ua: "Приклади", ru: "Примеры" },
+          ],
+          rows: [
+            [{ ua: "Перша накладка, ставите техніку", ru: "Первая накладка, ставите технику" }, { ua: "Класика або мʼякий тензор: губка 32–35°", ru: "Классика или мягкий тензор: губка 32–35°" }, { ua: "Flextra, Sriver FX, Rozena", ru: "Flextra, Sriver FX, Rozena" }],
+            [{ ua: "Перехід із класики на тензор", ru: "Переход с классики на тензор" }, { ua: "Швидкість 81–83, губка 32–38°", ru: "Скорость 81–83, губка 32–38°" }, { ua: "Rozena, Glayzer, Tenergy 05 FX", ru: "Rozena, Glayzer, Tenergy 05 FX" }],
+            [{ ua: "Атака топспіном, поставлений удар", ru: "Атака топспином, поставленный удар" }, { ua: "Обертання 73–85, губка 36–40°", ru: "Вращение 73–85, губка 36–40°" }, { ua: "Tenergy 05, Tenergy 80, Dignics 05", ru: "Tenergy 05, Tenergy 80, Dignics 05" }],
+            [{ ua: "Максимум обертання, сильний розгін", ru: "Максимум вращения, сильный разгон" }, { ua: "Обертання 96–100, губка 43–44°", ru: "Вращение 96–100, губка 43–44°" }, { ua: "Zyre 03, Dignics 09C, Tenergy 05 Hard", ru: "Zyre 03, Dignics 09C, Tenergy 05 Hard" }],
+            [{ ua: "Швидка гра першим темпом", ru: "Быстрая игра первым темпом" }, { ua: "Швидкість 87–92", ru: "Скорость 87–92" }, { ua: "Dignics 64, Tenergy 64, Bryce High Speed", ru: "Dignics 64, Tenergy 64, Bryce High Speed" }],
+            [{ ua: "Захист або гра шипами біля столу", ru: "Защита или игра шипами у стола" }, { ua: "Тип накладки й губка, а не швидкість", ru: "Тип накладки и губка, а не скорость" }, { ua: "Impartial XS, Feint Long III, Super Anti", ru: "Impartial XS, Feint Long III, Super Anti" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Tenergy чи Dignics", ru: "Tenergy или Dignics" }, href: "/blog/tenergy-chy-dignics" },
+          { label: { ua: "Як влаштовані Zyre 03, Dignics і Tenergy", ru: "Как устроены Zyre 03, Dignics и Tenergy" }, href: "/blog/zyre-03-vs-dignics-tenergy" },
+          { label: { ua: "Товщина губки накладки", ru: "Толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
+          { label: { ua: "Накладка для початківця", ru: "Накладка для начинающего" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Яка найшвидша накладка Butterfly?", ru: "Какая самая быстрая накладка Butterfly?" },
+        a: {
+          ua: "За індексом Butterfly у нашому каталозі найшвидша — Bryce High Speed зі швидкістю 92. Далі йдуть Dignics 64 (90), Dignics 80 і Zyre 03 (по 88). У Bryce High Speed при цьому обертання лише 54, а дуга 46 — траєкторія низька.",
+          ru: "По индексу Butterfly в нашем каталоге самая быстрая — Bryce High Speed со скоростью 92. Дальше идут Dignics 64 (90), Dignics 80 и Zyre 03 (по 88). У Bryce High Speed при этом вращение всего 54, а дуга 46 — траектория низкая.",
+        },
+      },
+      {
+        q: { ua: "Яка накладка Butterfly найбільше крутить?", ru: "Какая накладка Butterfly крутит сильнее всех?" },
+        a: {
+          ua: "Zyre 03: обертання 100, дуга 96, губка 44°. За нею — Dignics 09C і Tenergy 05 Hard, обидві з обертанням 96. Усі три мають найтвердіші губки серед тензорних накладок — 43–44°.",
+          ru: "Zyre 03: вращение 100, дуга 96, губка 44°. За ней — Dignics 09C и Tenergy 05 Hard, обе с вращением 96. У всех трёх самые твёрдые губки среди тензорных накладок — 43–44°.",
+        },
+      },
+      {
+        q: { ua: "Що означає 40° губки накладки?", ru: "Что означает 40° губки накладки?" },
+        a: {
+          ua: "Це твердість губки, яку Butterfly міряє за власним стандартом: що більше градусів, то твердіша губка. У тензорних накладках Butterfly діапазон — від 32° (FX-версії Tenergy, Roundell Soft) до 44° у Zyre 03 і Dignics 09C; 40° — губка всіх Dignics, крім 09C. З градусами інших марок ці числа напряму не порівнюються.",
+          ru: "Это твёрдость губки, которую Butterfly измеряет по собственному стандарту: чем больше градусов, тем твёрже губка. В тензорных накладках Butterfly диапазон — от 32° (FX-версии Tenergy, Roundell Soft) до 44° у Zyre 03 и Dignics 09C; 40° — губка всех Dignics, кроме 09C. С градусами других марок эти числа напрямую не сравниваются.",
+        },
+      },
+      {
+        q: { ua: "Чим Dignics 05 відрізняється від Tenergy 05 за цифрами?", ru: "Чем Dignics 05 отличается от Tenergy 05 по цифрам?" },
+        a: {
+          ua: "Dignics 05 — 86 / 85 / 88 за швидкістю, обертанням і дугою з губкою 40°, Tenergy 05 — 83 / 76 / 79 з губкою 36°. Тобто +3 до швидкості, +9 до обертання й дуги та +4°. Така сама різниця між Dignics і Tenergy з номерами 64 і 80.",
+          ru: "Dignics 05 — 86 / 85 / 88 по скорости, вращению и дуге с губкой 40°, Tenergy 05 — 83 / 76 / 79 с губкой 36°. То есть +3 к скорости, +9 к вращению и дуге и +4°. Такая же разница между Dignics и Tenergy с номерами 64 и 80.",
+        },
+      },
+      {
+        q: { ua: "Що означає FX у назві Tenergy?", ru: "Что означает FX в названии Tenergy?" },
+        a: {
+          ua: "FX-версії Tenergy мають мʼякшу губку — 32° замість 36°. За індексом Butterfly всі чотири FX (05, 25, 64, 80) поступаються базовим моделям на 2 пункти швидкості, 12 обертання й 14 дуги. Тобто мʼякша губка майже не знижує швидкість, але помітно зменшує обертання.",
+          ru: "У FX-версий Tenergy более мягкая губка — 32° вместо 36°. По индексу Butterfly все четыре FX (05, 25, 64, 80) уступают базовым моделям 2 пункта скорости, 12 вращения и 14 дуги. То есть мягкая губка почти не снижает скорость, но заметно уменьшает вращение.",
+        },
+      },
+      {
+        q: { ua: "Чи можна порівнювати цифри Butterfly з Tibhar або DHS?", ru: "Можно ли сравнивать цифры Butterfly с Tibhar или DHS?" },
+        a: {
+          ua: "Ні. Швидкість, обертання й дуга — відносні оцінки з власних тестів Butterfly, а твердість губки вона міряє за своїм стандартом. До того ж із лютого 2023 року Butterfly переглянула індекс, тож навіть її старі цифри можуть не збігатися з нинішніми.",
+          ru: "Нет. Скорость, вращение и дуга — относительные оценки из собственных тестов Butterfly, а твёрдость губки она измеряет по своему стандарту. К тому же с февраля 2023 года Butterfly пересмотрела индекс, так что даже её старые цифры могут не совпадать с нынешними.",
+        },
+      },
+      {
+        q: { ua: "Чому для довгих шипів немає швидкості й обертання?", ru: "Почему у длинных шипов нет скорости и вращения?" },
+        a: {
+          ua: "Для довгих шипів, шипів назовні без губки (OX) й антиспіну Butterfly публікує інші показники — стабільність і варіативність за 10-бальною шкалою. Тому в нашій таблиці для них — лише твердість губки й доступні товщини: від 25° у Feint Soft і Super Anti до 48° в Ilius B.",
+          ru: "Для длинных шипов, шипов наружу без губки (OX) и антиспина Butterfly публикует другие показатели — стабильность и вариативность по 10-балльной шкале. Поэтому в нашей таблице для них — только твёрдость губки и доступные толщины: от 25° у Feint Soft и Super Anti до 48° у Ilius B.",
+        },
+      },
+      {
+        q: { ua: "Якою накладкою Butterfly грають професіонали?", ru: "Какой накладкой Butterfly играют профессионалы?" },
+        a: {
+          ua: "Серед 26 гравців на наших сторінках «Гравці» Dignics 09C є в інвентарі 15 із них, Zyre 03 — у 10, Dignics 05 — у 8, Tenergy 05 Hard — у трьох. Дані взято з офіційних сторінок гравців Butterfly, дата перевірки — у кожному профілі.",
+          ru: "Среди 26 игроков на наших страницах «Игроки» Dignics 09C есть в инвентаре у 15, Zyre 03 — у 10, Dignics 05 — у 8, Tenergy 05 Hard — у троих. Данные взяты с официальных страниц игроков Butterfly, дата проверки — в каждом профиле.",
+        },
+      },
+    ],
+    officialSource: {
+      label: {
+        ua: "Butterfly — показники накладок: швидкість, обертання, дуга, стабільність і варіативність",
+        ru: "Butterfly — показатели накладок: скорость, вращение, дуга, стабильность и вариативность",
+      },
+      url: "https://www.butterfly-global.com/en/products/rubber/performance.html",
+    },
+    sources: [
+      {
+        label: { ua: "Butterfly — характеристики накладок: твердість губки за власним стандартом", ru: "Butterfly — характеристики накладок: твёрдость губки по собственному стандарту" },
+        url: "https://www.butterfly-global.com/en/products/rubber/spec.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — типи накладок: High Tension, підвищене тертя, шипи, антиспін, OX", ru: "Butterfly — типы накладок: High Tension, повышенное трение, шипы, антиспин, OX" },
+        url: "https://www.butterfly-global.com/en/products/rubber/type.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — картка Zyre 03 (06140)", ru: "Butterfly — карточка Zyre 03 (06140)" },
+        url: "https://www.butterfly-global.com/en/products/detail/06140.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — картка Dignics 09C (06070)", ru: "Butterfly — карточка Dignics 09C (06070)" },
+        url: "https://www.butterfly-global.com/en/products/detail/06070.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — картка Tenergy 05 Hard (06030)", ru: "Butterfly — карточка Tenergy 05 Hard (06030)" },
+        url: "https://www.butterfly-global.com/en/products/detail/06030.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — картка Sriver (05050)", ru: "Butterfly — карточка Sriver (05050)" },
+        url: "https://www.butterfly-global.com/en/products/detail/05050.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — картка Tackiness Chop (05450)", ru: "Butterfly — карточка Tackiness Chop (05450)" },
+        url: "https://www.butterfly-global.com/en/products/detail/05450.html",
+        kind: "official",
+      },
+    ],
+    relatedProducts: [
+      { label: { ua: "накладки Butterfly", ru: "накладки Butterfly" }, href: "/nakladki" },
+      { label: { ua: "серія Tenergy", ru: "серия Tenergy" }, href: "/nakladki/tenergy" },
+      { label: { ua: "серія Dignics", ru: "серия Dignics" }, href: "/nakladki/dignics" },
+      { label: { ua: "накладки з довгими шипами", ru: "накладки с длинными шипами" }, href: "/nakladki/dovgi-shypy" },
+    ],
+    relatedPosts: ["naykrashchi-nakladki-butterfly", "tenergy-chy-dignics", "zyre-03-vs-dignics-tenergy", "lypki-chy-tenzorni-nakladky"],
+  },
+
+  "tablytsia-osnov-butterfly": {
+    slug: "tablytsia-osnov-butterfly",
+    // ЦІЛЬОВІ ЗАПИТИ. UA: «таблиця основ butterfly», «характеристики основ butterfly», «вага і товщина основ butterfly»,
+    // «яка основа butterfly найлегша», «реакція і вібрація основи butterfly». RU: «таблица оснований butterfly»,
+    // «характеристики оснований баттерфляй», «вес и толщина оснований butterfly».
+    // Інтент — довідник (усі моделі в одній таблиці), не «купити». Від alc-chy-zlc відрізняється охопленням:
+    // там пояснення матеріалів і 31 карбонова основа, тут — усі 84 основи каталогу, включно з деревом.
+    // ЗВІДКИ ЧИСЛА (звірено 2026-11-04):
+    //  • Таблиці розділів alc / zlc / inshi-volokna / derevo — specTable (lib/catalog/specTables.ts) з bases.ts;
+    //    «Хто грає» — профілі /igroki (scripts/player-profiles/*.json, офіційні сторінки Butterfly з датою asOf).
+    //  • Таблиця korotko (діапазони по групах: 16 / 16 / 18 / 34 моделі, товщина, вага, реакція/вібрація) і всі числа
+    //    в тексті — РУКАМИ з тих самих таблиць станом на 04.11.2026: при зміні bases.ts звірити й оновити.
+    //  • Визначення ALC, Super ALC, ZLC, Super ZLC (1,8 раза), ZLF, T5000, CAF, CNF — butterfly-global.com/en/products/blade/fiber.html.
+    //  • Outerfiber / Innerfiber (Innerfiber — з 2009 р.) — outer_inner_fiber.html.
+    //  • Реакція = базова швидкість, вібрація = відчуття удару; одиниць і шкали сторінка НЕ дає, числа (і для дерева) — лише на картинках-матрицях — matrix.html.
+    //  • Вага залежить від вологості й температури — weight.html (самі числа там лише на картинці).
+    //  • Viscaria Super ALC (detail/37191) і Fan Zhendong Super ALC (detail/37241): обидві 5 дерево + 2 Super ALC, 5,7 мм,
+    //    157×150 мм, реакція 12,1, вібрація 10,1, Японія — ЗБІГ ЦИФР ПІДТВЕРДЖЕНО офіційно. Viscaria Super ALC — «basic
+    //    design follows the classic Viscaria», реакцію підняли без зростання вібрації; Fan Zhendong Super ALC — те саме
+    //    порівняно з Fan Zhendong ALC.
+    //  • Класи OFF+/OFF/OFF−/ALL — НЕ офіційні: bases.ts, рядок 3 («виведені з назви моделі»); butterfly-global
+    //    /products/blade/shake/ ділить основи лише на Offensive / Defensive / All-wood / Artificial fiber.
+    // НЕ НАЗИВАЄМО в тексті (дані не підтверджені, див. памʼять catalog-blade-data-gaps): Ovtcharov S1/S2, Allround,
+    // Offensive, Timo Boll Anniversary Wood — у генерованій таблиці вони є, у тексті — ні.
+    // Fan Zhendong CNF = Revoldia CNF (11,7 / 9,5) офіційно не звірено — у тексті числа лише для Revoldia CNF.
+    h1: {
+      ua: "Таблиця основ Butterfly: склад, товщина, вага й реакція 84 моделей",
+      ru: "Таблица оснований Butterfly: состав, толщина, вес и реакция 84 моделей",
+    },
+    metaTitle: {
+      ua: "Таблиця основ Butterfly: товщина, вага, реакція | TTMAX",
+      ru: "Таблица оснований Butterfly: толщина, вес, реакция | TTMAX",
+    },
+    metaDescription: {
+      ua: "📋 Таблиця основ Butterfly: 84 моделі — волокно, шари, товщина 5,0–7,5 мм, вага, офіційні реакція й вібрація. Хто з профі чим грає.",
+      ru: "📋 Таблица оснований Butterfly: 84 модели — волокно, слои, толщина 5,0–7,5 мм, вес, официальные реакция и вибрация. Кто из профи чем играет.",
+    },
+    excerpt: {
+      ua: "Усі 84 основи Butterfly з нашого каталогу в чотирьох таблицях — ALC, ZLC, інші волокна й дерево: склад, шари, товщина, вага, офіційні реакція й вібрація і хто з гравців Butterfly на чому грає.",
+      ru: "Все 84 основания Butterfly из нашего каталога в четырёх таблицах — ALC, ZLC, другие волокна и дерево: состав, слои, толщина, вес, официальные реакция и вибрация и кто из игроков Butterfly на чём играет.",
+    },
+    datePublished: "2026-11-04",
+    dateModified: "2026-11-04",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/tablytsia-osnov-butterfly-cover.svg",
+    heroAlt: {
+      ua: "Таблиця характеристик основ для настільного тенісу: волокно, шари, товщина й вага",
+      ru: "Таблица характеристик оснований для настольного тенниса: волокно, слои, толщина и вес",
+    },
+    intro: {
+      ua: [
+        "Таблиця основ Butterfly нижче зводить характеристики всіх 84 моделей нашого каталогу: тип і розташування волокна, кількість шарів, товщину, вагу й офіційні числа реакції й вібрації від Butterfly. Таблиці груп збираються автоматично з тих самих даних, що й картки товарів, тож цифри в статті й на картці не розходяться.",
+        "Основи розбито на чотири групи — ALC, ZLC, інші волокна й чисте дерево. Спершу — як читати кожну колонку, далі — розбір кожної групи з крайніми значеннями й тим, хто з гравців Butterfly чим грає, а наприкінці — як звузити вибір до двох-трьох моделей.",
+      ],
+      ru: [
+        "Таблица оснований Butterfly ниже сводит характеристики всех 84 моделей нашего каталога: тип и расположение волокна, число слоёв, толщину, вес и официальные значения реакции и вибрации от Butterfly (Баттерфляй). Таблицы групп собираются автоматически из тех же данных, что и карточки товаров, так что цифры в статье и на карточке не расходятся.",
+        "Основания разбиты на четыре группы — ALC, ZLC, другие волокна и чистое дерево. Сначала — как читать каждую колонку, затем — разбор каждой группы с крайними значениями и тем, кто из игроков Butterfly чем играет, а в конце — как сузить выбор до двух-трёх моделей.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротко: що показує таблиця основ Butterfly", ru: "Коротко: что показывает таблица оснований Butterfly" },
+        p: {
+          ua: [
+            "У каталозі 84 основи Butterfly: 16 з ALC і Super ALC, 16 з ZLC і Super ZLC, 18 з іншими волокнами (T5000, CNF, CAF, ZLF, карбон) і 34 повністю деревʼяні. Офіційні реакцію й вібрацію Butterfly маємо для 31 моделі з волокном; для деревʼяних цих чисел у каталозі немає.",
+            "Крайні значення таблиці. Найтовща — Balsa X7 (7,5 мм), найтонші мають 5,0 мм (серед них Timo Boll Mezzoforte). Найлегші — бальзові Balsa Carbo X5 (≈72 г) і Balsa X7 (≈75 г), найважча за діапазоном — Omar Assar (97–100 г). Найвища реакція — 12,5 у Mizutani Super ZLC і Primorac Carbon, найнижча — 10,1 у Innerforce Layer ALC.S; найжорсткіша за відчуттям — Primorac Carbon із вібрацією 13,3.",
+          ],
+          ru: [
+            "В каталоге 84 основания Butterfly: 16 с ALC и Super ALC, 16 с ZLC и Super ZLC, 18 с другими волокнами (T5000, CNF, CAF, ZLF, карбон) и 34 полностью деревянных. Официальные реакция и вибрация Butterfly есть для 31 модели с волокном; для деревянных этих чисел в каталоге нет.",
+            "Крайние значения таблицы. Самое толстое — Balsa X7 (7,5 мм), самые тонкие — 5,0 мм (среди них Timo Boll Mezzoforte). Самые лёгкие — бальзовые Balsa Carbo X5 (≈72 г) и Balsa X7 (≈75 г), самое тяжёлое по диапазону — Omar Assar (97–100 г). Самая высокая реакция — 12,5 у Mizutani Super ZLC и Primorac Carbon, самая низкая — 10,1 у Innerforce Layer ALC.S; самое жёсткое по ощущению — Primorac Carbon с вибрацией 13,3.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Група", ru: "Группа" },
+            { ua: "Моделей", ru: "Моделей" },
+            { ua: "Товщина, мм", ru: "Толщина, мм" },
+            { ua: "Вага, г", ru: "Вес, г" },
+            { ua: "Реакція / вібрація", ru: "Реакция / вибрация" },
+          ],
+          rows: [
+            [{ ua: "ALC і Super ALC", ru: "ALC и Super ALC" }, { ua: "16", ru: "16" }, { ua: "5,5–6,9", ru: "5,5–6,9" }, { ua: "83–92", ru: "83–92" }, { ua: "10,1–12,1 / 8,4–10,8", ru: "10,1–12,1 / 8,4–10,8" }],
+            [{ ua: "ZLC і Super ZLC", ru: "ZLC и Super ZLC" }, { ua: "16", ru: "16" }, { ua: "5,5–7,1", ru: "5,5–7,1" }, { ua: "84–93", ru: "84–93" }, { ua: "10,5–12,5 / 9,3–11,6", ru: "10,5–12,5 / 9,3–11,6" }],
+            [{ ua: "T5000, CNF, CAF, ZLF, карбон", ru: "T5000, CNF, CAF, ZLF, карбон" }, { ua: "18", ru: "18" }, { ua: "5,2–7,5", ru: "5,2–7,5" }, { ua: "72–100", ru: "72–100" }, { ua: "10,5–12,5 / 9,1–13,3", ru: "10,5–12,5 / 9,1–13,3" }],
+            [{ ua: "Дерево", ru: "Дерево" }, { ua: "34", ru: "34" }, { ua: "5,0–7,0", ru: "5,0–7,0" }, { ua: "76–100", ru: "76–100" }, { ua: "—", ru: "—" }],
+          ],
+        },
+      },
+      {
+        id: "yak-chytaty",
+        h: { ua: "Як читати характеристики основ Butterfly", ru: "Как читать характеристики оснований Butterfly" },
+        p: {
+          ua: [
+            "Кожна колонка таблиці відповідає на одне питання: з чого основа зроблена, наскільки вона товста й важка і як швидко віддає мʼяч. «Волокно» — це штучний шар між шарами дерева. За описом Butterfly, ALC — тканина з арилату й карбону, ZLC — карбон, сплетений із ZL-волокном, ZLF — саме ZL-волокно, міцне й пружне, T5000 — карбон Tamca-5000, CAF — матеріал, отриманий із деревини, CNF — целюлозне нановолокно. Super ALC і Super ZLC містять більше волокна: у Super ZLC його за масою в 1,8 раза більше, ніж у ZLC. «Carbon» без уточнення — моделі, для яких у каталозі вказано лише карбон.",
+            "«Внутрішнє» й «зовнішнє» — де лежить волокно. Зовнішнє (Outerfiber) розташоване одразу під верхнім шпоном: за Butterfly, така схема підсилює відчуття волокна й дає швидші удари. Внутрішнє (Innerfiber, лінійка Innerforce) лежить біля ядра й трохи подовжує контакт мʼяча з ракеткою; Butterfly застосовує його з 2009 року.",
+            "«Шари» — формула конструкції. 5 або 7 — лише деревʼяні шари, 5+2 — пʼять шарів дерева й два шари волокна, 3+2 — три шари дерева й два волокна. У таблиці сім моделей 3+2: три Garaydia, Primorac Carbon, Timo Boll CAF, SK Carbon і Balsa Carbo X5. Семишарових деревʼяних дві — Korbel SK7 і Hadraw SK.",
+            "Товщина й вага — з карток каталогу. Вага орієнтовна: Butterfly попереджає, що вона залежить від вологості й температури, тож конкретний екземпляр може відрізнятися від таблиці. Знак «≈» чи «~» означає, що для моделі відоме одне орієнтовне значення, а не діапазон.",
+            "Реакція й вібрація — офіційні числа Butterfly. Реакція — базова швидкість основи: що вища, то швидше мʼяч відлітає після контакту. Вібрація — відчуття удару: низька означає мʼякший дотик, висока — жорсткіший. Одиниць Butterfly не вказує, тож це шкала виробника, і порівнювати числа можна лише між основами Butterfly.",
+            "Клас (DEF, ALL, ALL+, OFF−, OFF) є лише в таблиці деревʼяних основ — це орієнтир нашого каталогу за поширеною в настільному тенісі шкалою від захисту до атаки, а не число Butterfly. Butterfly на глобальному сайті ділить основи для європейської хватки лише на атакувальні, захисні, деревʼяні й зі штучним волокном. Для основ із волокном клас не наводимо: швидкість точніше показує офіційна реакція.",
+          ],
+          ru: [
+            "Каждая колонка таблицы отвечает на один вопрос: из чего основание сделано, насколько оно толстое и тяжёлое и как быстро отдаёт мяч. «Волокно» — это искусственный слой между слоями дерева. По описанию Butterfly, ALC — ткань из арилата и карбона, ZLC — карбон, сплетённый с ZL-волокном, ZLF — само ZL-волокно, прочное и упругое, T5000 — карбон Tamca-5000, CAF — материал, полученный из древесины, CNF — целлюлозное нановолокно. В Super ALC и Super ZLC волокна больше: в Super ZLC его по массе в 1,8 раза больше, чем в ZLC. «Carbon» без уточнения — модели, для которых в каталоге указан только карбон.",
+            "«Внутреннее» и «внешнее» — где лежит волокно. Внешнее (Outerfiber) расположено сразу под верхним шпоном: по данным Butterfly, такая схема усиливает ощущение волокна и даёт более быстрые удары. Внутреннее (Innerfiber, линейка Innerforce) лежит у ядра и немного удлиняет контакт мяча с ракеткой; Butterfly применяет его с 2009 года.",
+            "«Слои» — формула конструкции. 5 или 7 — только деревянные слои, 5+2 — пять слоёв дерева и два слоя волокна, 3+2 — три слоя дерева и два волокна. В таблице семь моделей 3+2: три Garaydia, Primorac Carbon, Timo Boll CAF, SK Carbon и Balsa Carbo X5. Семислойных деревянных два — Korbel SK7 и Hadraw SK.",
+            "Толщина и вес — из карточек каталога. Вес ориентировочный: Butterfly предупреждает, что он зависит от влажности и температуры, так что конкретный экземпляр может отличаться от таблицы. Знак «≈» или «~» значит, что для модели известно одно ориентировочное значение, а не диапазон.",
+            "Реакция и вибрация — официальные числа Butterfly. Реакция — базовая скорость основания: чем она выше, тем быстрее мяч улетает после контакта. Вибрация — ощущение удара: низкая означает более мягкое касание, высокая — более жёсткое. Единиц Butterfly не указывает, так что это шкала производителя, и сравнивать числа можно только между основаниями Butterfly.",
+            "Класс (DEF, ALL, ALL+, OFF−, OFF) есть только в таблице деревянных оснований — это ориентир нашего каталога по распространённой в настольном теннисе шкале от защиты к атаке, а не число Butterfly. Butterfly на глобальном сайте делит основания для европейской хватки только на атакующие, защитные, деревянные и с искусственным волокном. Для оснований с волокном класс не приводим: скорость точнее показывает официальная реакция.",
+          ],
+        },
+        links: [
+          { label: { ua: "ALC чи ZLC, inner чи outer — докладно", ru: "ALC или ZLC, inner или outer — подробно" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "Усі основи Butterfly", ru: "Все основания Butterfly" }, href: "/osnovaniya" },
+        ],
+      },
+      {
+        id: "alc",
+        h: { ua: "Таблиця основ Butterfly з ALC і Super ALC", ru: "Таблица оснований Butterfly с ALC и Super ALC" },
+        p: {
+          ua: [
+            "У групі ALC 16 основ із реакцією від 10,1 до 12,1, і майже всі мають конструкцію 5+2. Найшвидші — Super ALC із зовнішнім волокном: Viscaria Super ALC і Fan Zhendong Super ALC за офіційними даними однакові — 12,1 / 10,1 при 5,7 мм. За сторінками Butterfly, в обох реакцію підняли без зростання вібрації порівняно з Viscaria та Fan Zhendong ALC. Класична трійка зовнішнього ALC — Viscaria, Timo Boll ALC і Fan Zhendong ALC — має 11,8 / 10,3 і 5,8 мм.",
+            "Внутрішнє волокно знижує обидва числа: Innerforce Layer ALC — 10,7 / 9,4, Innerforce Layer ALC.S — 10,1 / 8,4, це найповільніша й наймʼякша основа з офіційними числами в усьому каталозі. Виняток — товща inner-модель Dimitrij Ovtcharov Innerforce ALC (6,2 мм): вона має 11,7 / 10,5, майже як зовнішнє ALC. Найжорсткіша в групі — Freitas ALC із вібрацією 10,8. Для Garaydia ALC, Kenta Matsudaira ALC, Zhang Jike ALC і LIN Gaoyuan ALC офіційних чисел у каталозі немає.",
+            "ALC найчастіше трапляється на наших сторінках гравців. На Viscaria Super ALC грають Лінь Юньжу, Чен Іцзін і Андрей Гачина, на Fan Zhendong ALC — Фань Чженьдун (дані Butterfly на 19.07.2022), Сора Мацусіма й Сюнсуке Тогамі, на Timo Boll ALC — Хірото Сінодзука, Антон Чельберг, Канак Джха і сам Тімо Болль, який уже завершив карʼєру. Harimoto Tomokazu Super ALC — основа Томокадзу й Міви Харімото, Freitas ALC — Маркуша Фрейташа, а Дан Цю грає Viscaria у версії для китайського пера (CS).",
+          ],
+          ru: [
+            "В группе ALC 16 оснований с реакцией от 10,1 до 12,1, и почти у всех конструкция 5+2. Самые быстрые — Super ALC с внешним волокном: Viscaria Super ALC и Fan Zhendong Super ALC по официальным данным одинаковы — 12,1 / 10,1 при 5,7 мм. По данным Butterfly, в обоих реакцию подняли без роста вибрации по сравнению с Viscaria и Fan Zhendong ALC. Классическая тройка внешнего ALC — Viscaria, Timo Boll ALC и Fan Zhendong ALC — даёт 11,8 / 10,3 при 5,8 мм.",
+            "Внутреннее волокно снижает оба числа: у Innerforce Layer ALC — 10,7 / 9,4, у Innerforce Layer ALC.S — 10,1 / 8,4, это самое медленное и самое мягкое основание с официальными числами во всём каталоге. Исключение — более толстое inner-основание Dimitrij Ovtcharov Innerforce ALC (6,2 мм): у него 11,7 / 10,5, почти как у внешнего ALC. Самое жёсткое в группе — Freitas ALC с вибрацией 10,8. Для Garaydia ALC, Kenta Matsudaira ALC, Zhang Jike ALC и LIN Gaoyuan ALC официальных чисел в каталоге нет.",
+            "ALC чаще всего встречается на наших страницах игроков. На Viscaria Super ALC играют Линь Юньжу, Чэн Ицзин и Андрей Гачина, на Fan Zhendong ALC — Фань Чжэньдун (данные Butterfly на 19.07.2022), Сора Мацусима и Сюнсукэ Тогами, на Timo Boll ALC — Хирото Синодзука, Антон Чельберг, Канак Джа и сам Тимо Болль, уже завершивший карьеру. Harimoto Tomokazu Super ALC — основание Томокадзу и Мивы Харимото, Freitas ALC — Маркуша Фрейташа, а Дан Цю играет Viscaria в версии для китайского пера (CS).",
+          ],
+        },
+        specTable: { kind: "blades", group: "alc" },
+        links: [
+          { label: { ua: "Основи з ALC", ru: "Основания с ALC" }, href: "/osnovaniya/alc" },
+          { label: { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, href: "/butterfly/osnovaniya/viscaria-super-alc" },
+          { label: { ua: "Innerforce Layer ALC.S", ru: "Innerforce Layer ALC.S" }, href: "/butterfly/osnovaniya/innerforce-layer-alc-s" },
+          { label: { ua: "Гравці Butterfly та їхній інвентар", ru: "Игроки Butterfly и их инвентарь" }, href: "/igroki" },
+        ],
+      },
+      {
+        id: "zlc",
+        h: { ua: "ZLC і Super ZLC: 16 основ у таблиці", ru: "ZLC и Super ZLC: 16 оснований в таблице" },
+        p: {
+          ua: [
+            "У групі ZLC 16 основ. Найшвидша — Mizutani Super ZLC: реакція 12,5, як у Primorac Carbon, і найвища в групі вібрація 11,6. Fan Zhendong Super ZLC і Lin Yun-Ju Super ZLC мають 12,3 / 11,1 при 5,6 мм. Звичайні зовнішні ZLC — Timo Boll ZLC і Fan Zhendong ZLC — 11,7 / 10,8, Mizutani ZLC — 11,8 / 11,2, Outerforce ZLC — 11,3 / 11,1.",
+            "Порівняно з ALC зовнішнє ZLC має близьку реакцію, але вищу вібрацію: 10,8–11,6 проти 10,1–10,8 у зовнішніх ALC і Super ALC, тобто удар відчувається жорсткіше. Чотири inner-ZLC завтовшки 5,7 мм — Apolonia ZLC, Franziska Innerforce ZLC, Harimoto Tomokazu Innerforce ZLC та Innerforce Layer ZLC — мають однакову реакцію 10,5 і вібрацію 9,3–9,5. Товсті inner-моделі 6,2 мм — Harimoto Tomokazu Innerforce Super ZLC (12,0 / 10,5) і Omar Assar Innerforce ZLC (12,0 / 10,6) — за швидкістю ближчі до Super-версій.",
+            "Гравці на наших сторінках частіше обирають ZLC із внутрішнім волокном: Тіагу Аполонія грає Apolonia ZLC, Патрік Франціска — Franziska Innerforce ZLC, Софія Полканова — Innerforce Layer ZLC, Омар Ассар — Omar Assar Innerforce ZLC. Із зовнішніх ZLC у таблиці є гравець лише в Mizutani ZLC — Дзюн Мідзутані, який уже завершив карʼєру. Для Garaydia ZLC (3+2, 7,1 мм — найтовща в групі), Zhang Jike Super ZLC і Zhang Jike ZLC офіційних чисел у каталозі немає.",
+          ],
+          ru: [
+            "В группе ZLC 16 оснований. Самое быстрое — Mizutani Super ZLC: реакция 12,5, как у Primorac Carbon, и самая высокая в группе вибрация 11,6. У Fan Zhendong Super ZLC и Lin Yun-Ju Super ZLC — 12,3 / 11,1 при 5,6 мм. Обычные внешние ZLC — Timo Boll ZLC и Fan Zhendong ZLC — 11,7 / 10,8, Mizutani ZLC — 11,8 / 11,2, Outerforce ZLC — 11,3 / 11,1.",
+            "По сравнению с ALC у внешнего ZLC близкая реакция, но вибрация выше: 10,8–11,6 против 10,1–10,8 у внешних ALC и Super ALC, то есть удар ощущается жёстче. Четыре inner-ZLC толщиной 5,7 мм — Apolonia ZLC, Franziska Innerforce ZLC, Harimoto Tomokazu Innerforce ZLC и Innerforce Layer ZLC — имеют одинаковую реакцию 10,5 и вибрацию 9,3–9,5. Толстые inner-модели 6,2 мм — Harimoto Tomokazu Innerforce Super ZLC (12,0 / 10,5) и Omar Assar Innerforce ZLC (12,0 / 10,6) — по скорости ближе к Super-версиям.",
+            "Игроки на наших страницах чаще выбирают ZLC с внутренним волокном: Тиагу Аполония играет Apolonia ZLC, Патрик Франциска — Franziska Innerforce ZLC, Софья Полканова — Innerforce Layer ZLC, Омар Ассар — Omar Assar Innerforce ZLC. Из внешних ZLC игрок в таблице есть только у Mizutani ZLC — Дзюн Мидзутани, уже завершивший карьеру. Для Garaydia ZLC (3+2, 7,1 мм — самое толстое в группе), Zhang Jike Super ZLC и Zhang Jike ZLC официальных чисел в каталоге нет.",
+          ],
+        },
+        specTable: { kind: "blades", group: "zlc" },
+        rec: {
+          publicId: "ttmax/product/apolonia-zlc/01",
+          name: { ua: "Основа Butterfly Apolonia ZLC", ru: "Основание Butterfly Apolonia ZLC" },
+          verdict: {
+            ua: "Inner-ZLC: реакція 10,5, вібрація 9,5 при 5,7 мм — мʼякша за зовнішні ZLC; нею грає Тіагу Аполонія.",
+            ru: "Inner-ZLC: реакция 10,5, вибрация 9,5 при 5,7 мм — мягче внешних ZLC; на ней играет Тиагу Аполония.",
+          },
+          alt: {
+            ua: "Основа для настільного тенісу Butterfly Apolonia ZLC з волокном біля ядра",
+            ru: "Основание для настольного тенниса Butterfly Apolonia ZLC с волокном у ядра",
+          },
+          href: "/butterfly/osnovaniya/apolonia-zlc",
+        },
+        links: [
+          { label: { ua: "Основи з ZLC", ru: "Основания с ZLC" }, href: "/osnovaniya/zlc" },
+          { label: { ua: "Mizutani Super ZLC", ru: "Mizutani Super ZLC" }, href: "/butterfly/osnovaniya/mizutani-super-zlc" },
+          { label: { ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, href: "/butterfly/osnovaniya/innerforce-layer-zlc" },
+          { label: { ua: "Огляд Apolonia ZLC", ru: "Обзор Apolonia ZLC" }, href: "/blog/apolonia-zlc-oglyad" },
+        ],
+      },
+      {
+        id: "inshi-volokna",
+        h: { ua: "T5000, CNF, CAF, ZLF і карбон: 18 основ", ru: "T5000, CNF, CAF, ZLF и карбон: 18 оснований" },
+        p: {
+          ua: [
+            "Це найрізноманітніша група: тут і одна з двох найшвидших основ каталогу, і найлегші, і одна захисна. Primorac Carbon (T5000, 3+2, 7,0 мм) ділить першість за реакцією з Mizutani Super ZLC — 12,5, — але має найвищу вібрацію в усьому каталозі: 13,3. SK Carbon на тому ж T5000 і теж 3+2 — протилежна крайність: 5,2 мм, 78–81 г і 10,5 / 10,5.",
+            "Revoldia CNF і Outerforce CAF поєднують досить високу реакцію з низькою вібрацією: 11,7 / 9,5 і 11,3 / 9,1. Легша Timo Boll CAF (3+2, 80–84 г) повільніша й жорсткіша за відчуттям — 10,6 / 10,4. Для 12 моделей групи офіційних чисел у каталозі немає: це ZLF-основи (Fukuhara Ai Pro ZLF, Liu Shiwen, Timo Boll ZLF, Innerforce Layer ZLF), лінійка Gionis Carbon від DEF до OFF, Garaydia T5000, Zhang Jike T5000, Omar Assar і бальзові Balsa X7 та Balsa Carbo X5.",
+            "Бальзові основи — найлегші в таблиці: Balsa Carbo X5 важить ≈72 г при 6,2 мм, Balsa X7 — ≈75 г при 7,5 мм, і це найтовща основа каталогу. Протилежний полюс — Omar Assar: 97–100 г, найважча модель за діапазоном. Гравців із наших сторінок у цій групі немає.",
+          ],
+          ru: [
+            "Это самая разнородная группа: здесь и одно из двух самых быстрых оснований каталога, и самые лёгкие, и одно защитное. Primorac Carbon (T5000, 3+2, 7,0 мм) делит первенство по реакции с Mizutani Super ZLC — 12,5, — но имеет самую высокую вибрацию во всём каталоге: 13,3. SK Carbon на том же T5000 и тоже 3+2 — противоположная крайность: 5,2 мм, 78–81 г и 10,5 / 10,5.",
+            "Revoldia CNF и Outerforce CAF сочетают довольно высокую реакцию с низкой вибрацией: 11,7 / 9,5 и 11,3 / 9,1. Более лёгкое Timo Boll CAF (3+2, 80–84 г) медленнее и жёстче по ощущению — 10,6 / 10,4. Для 12 моделей группы официальных чисел в каталоге нет: это ZLF-основания (Fukuhara Ai Pro ZLF, Liu Shiwen, Timo Boll ZLF, Innerforce Layer ZLF), линейка Gionis Carbon от DEF до OFF, Garaydia T5000, Zhang Jike T5000, Omar Assar и бальзовые Balsa X7 и Balsa Carbo X5.",
+            "Бальзовые основания — самые лёгкие в таблице: Balsa Carbo X5 весит ≈72 г при 6,2 мм, Balsa X7 — ≈75 г при 7,5 мм, и это самое толстое основание каталога. Противоположный полюс — Omar Assar: 97–100 г, самая тяжёлая модель по диапазону. Игроков с наших страниц в этой группе нет.",
+          ],
+        },
+        specTable: { kind: "blades", group: "inshi-volokna" },
+        links: [
+          { label: { ua: "Primorac Carbon", ru: "Primorac Carbon" }, href: "/butterfly/osnovaniya/primorac-carbon" },
+          { label: { ua: "Revoldia CNF", ru: "Revoldia CNF" }, href: "/butterfly/osnovaniya/revoldia-cnf" },
+          { label: { ua: "SK Carbon", ru: "SK Carbon" }, href: "/butterfly/osnovaniya/sk-carbon" },
+        ],
+      },
+      {
+        id: "derevo",
+        h: { ua: "Деревʼяні основи Butterfly: 34 моделі без волокна", ru: "Деревянные основания Butterfly: 34 модели без волокна" },
+        p: {
+          ua: [
+            "Деревʼяних основ у каталозі найбільше — 34, і майже всі пʼятишарові. Товщина — від 5,0 до 7,0 мм: найтовща Andrej Mazunov (7,0 мм, 90–100 г), за нею Timo Boll Forte (6,9 мм) і Korbel SK7 (6,8 мм). Найлегша серед деревʼяних — Timo Boll Mezzoforte (5,0 мм, 76–80 г).",
+            "Реакції й вібрації для деревʼяних основ у каталозі немає, тож порівнювати їх доводиться за класом, товщиною й кількістю шарів. Більшість має клас OFF−; ALL — серед інших Timo Boll Allround, Timo Boll Control, Timo Boll Mezzoforte і Maze Magic, ALL+ — Andrzej Grubba All+, DEF — Hadrawshield (5,3 мм, 90–96 г). Семишарова Korbel SK7 — єдина деревʼяна основа з класом OFF, друга семишарова — Hadraw SK (6,4 мм, OFF−).",
+            "Серед гравців на наших сторінках деревʼяною основою з каталогу не грає ніхто: у 25 із 26 профілів — основи з волокном, серійні або виготовлені на замовлення, а конструкцію іменної Lim Jonghoon Advance Butterfly не вказує. Деревʼяні основи класів ALL, ALL+ і OFF− є в розділі універсальних основ — разом із моделями з волокном тих самих класів.",
+          ],
+          ru: [
+            "Деревянных оснований в каталоге больше всего — 34, и почти все пятислойные. Толщина — от 5,0 до 7,0 мм: самое толстое Andrej Mazunov (7,0 мм, 90–100 г), за ним Timo Boll Forte (6,9 мм) и Korbel SK7 (6,8 мм). Самое лёгкое среди деревянных — Timo Boll Mezzoforte (5,0 мм, 76–80 г).",
+            "Реакции и вибрации для деревянных оснований в каталоге нет, так что сравнивать их приходится по классу, толщине и числу слоёв. У большинства класс OFF−; ALL — среди прочих у Timo Boll Allround, Timo Boll Control, Timo Boll Mezzoforte и Maze Magic, ALL+ — у Andrzej Grubba All+, DEF — у Hadrawshield (5,3 мм, 90–96 г). Семислойное Korbel SK7 — единственное деревянное основание с классом OFF, второе семислойное — Hadraw SK (6,4 мм, OFF−).",
+            "Среди игроков на наших страницах деревянным основанием из каталога не играет никто: в 25 из 26 профилей — основания с волокном, серийные или сделанные на заказ, а конструкцию именного Lim Jonghoon Advance Butterfly не указывает. Деревянные основания классов ALL, ALL+ и OFF− есть в разделе универсальных оснований — вместе с моделями с волокном тех же классов.",
+          ],
+        },
+        specTable: { kind: "blades", group: "derevo" },
+        rec: {
+          publicId: "ttmax/product/korbel-sk7/01",
+          name: { ua: "Основа Butterfly Korbel SK7", ru: "Основание Butterfly Korbel SK7" },
+          verdict: {
+            ua: "Сім шарів дерева, 6,8 мм, 90–95 г — єдина деревʼяна основа каталогу з класом OFF.",
+            ru: "Семь слоёв дерева, 6,8 мм, 90–95 г — единственное деревянное основание каталога с классом OFF.",
+          },
+          alt: {
+            ua: "Семишарова деревʼяна основа Butterfly Korbel SK7 для настільного тенісу",
+            ru: "Семислойное деревянное основание Butterfly Korbel SK7 для настольного тенниса",
+          },
+          href: "/butterfly/osnovaniya/korbel-sk7",
+        },
+        links: [
+          { label: { ua: "Універсальні основи", ru: "Универсальные основания" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "Timo Boll Allround", ru: "Timo Boll Allround" }, href: "/butterfly/osnovaniya/timo-boll-allround" },
+          { label: { ua: "Hadrawshield", ru: "Hadrawshield" }, href: "/butterfly/osnovaniya/hadrawshield" },
+        ],
+      },
+      {
+        id: "yak-obraty",
+        h: { ua: "Як обрати основу за таблицею", ru: "Как выбрать основание по таблице" },
+        p: {
+          ua: [
+            "Почніть із групи, а не з моделі: далі звужуйте вибір за реакцією й вібрацією, а товщину й вагу перевіряйте наприкінці. Кроки нижче спираються лише на числа з таблиць цієї статті.",
+            "Чим відрізняються матеріали й inner від outer, докладно пояснює стаття «ALC чи ZLC, inner чи outer», чим грають професіонали Butterfly — окремий огляд інвентарю гравців. Якщо порівнюєте японську й європейську версії однієї моделі, допоможе стаття про версії основ, а моделям, знятим із виробництва, присвячено окремий матеріал.",
+          ],
+          ru: [
+            "Начните с группы, а не с модели: дальше сужайте выбор по реакции и вибрации, а толщину и вес проверяйте в конце. Шаги ниже опираются только на числа из таблиц этой статьи.",
+            "Чем различаются материалы и inner с outer, подробно объясняет статья «ALC или ZLC, inner или outer», чем играют профессионалы Butterfly — отдельный обзор инвентаря игроков. Если сравниваете японскую и европейскую версии одной модели, поможет статья о версиях оснований, а моделям, снятым с производства, посвящён отдельный материал.",
+          ],
+        },
+        steps: [
+          {
+            name: { ua: "Оберіть групу", ru: "Выберите группу" },
+            text: {
+              ua: "Дерево класів ALL і OFF− — для контролю; зовнішнє ALC — збалансована атака; зовнішнє ZLC — та сама швидкість із жорсткішим відчуттям; Super ALC, Super ZLC і Primorac Carbon — найвища реакція.",
+              ru: "Дерево классов ALL и OFF− — для контроля; внешнее ALC — сбалансированная атака; внешнее ZLC — та же скорость с более жёстким ощущением; Super ALC, Super ZLC и Primorac Carbon — самая высокая реакция.",
+            },
+          },
+          {
+            name: { ua: "Звузьте за реакцією", ru: "Сузьте по реакции" },
+            text: {
+              ua: "Після дерева шукайте 10,1–10,7 (Innerforce Layer ALC.S, SK Carbon, Timo Boll CAF, Innerforce Layer ALC), для атаки з контролем — 11,4–11,8 (зовнішнє ALC), для максимуму швидкості — 12,0–12,5.",
+              ru: "После дерева ищите 10,1–10,7 (Innerforce Layer ALC.S, SK Carbon, Timo Boll CAF, Innerforce Layer ALC), для атаки с контролем — 11,4–11,8 (внешнее ALC), для максимума скорости — 12,0–12,5.",
+            },
+          },
+          {
+            name: { ua: "Оберіть відчуття за вібрацією", ru: "Выберите ощущение по вибрации" },
+            text: {
+              ua: "Нижча вібрація — мʼякший дотик: від 8,4 у Innerforce Layer ALC.S і 9,1 в Outerforce CAF. Вища — жорсткіший удар: 10,8–11,6 у зовнішніх ZLC і 13,3 у Primorac Carbon.",
+              ru: "Более низкая вибрация — более мягкое касание: от 8,4 у Innerforce Layer ALC.S и 9,1 у Outerforce CAF. Более высокая — более жёсткий удар: 10,8–11,6 у внешних ZLC и 13,3 у Primorac Carbon.",
+            },
+          },
+          {
+            name: { ua: "Перевірте товщину й вагу", ru: "Проверьте толщину и вес" },
+            text: {
+              ua: "Товщина сама не визначає швидкість: Outerforce ALC завтовшки 6,2 мм має реакцію 11,4, а Viscaria 5,8 мм — 11,8. Вагу основи рахуйте разом із двома накладками — готова ракетка буде помітно важчою.",
+              ru: "Толщина сама по себе не определяет скорость: у Outerforce ALC толщиной 6,2 мм реакция 11,4, а у Viscaria 5,8 мм — 11,8. Вес основания считайте вместе с двумя накладками — готовая ракетка будет заметно тяжелее.",
+            },
+          },
+        ],
+        links: [
+          { label: { ua: "Атакуючі основи", ru: "Атакующие основания" }, href: "/osnovaniya/atakuyuchi" },
+          { label: { ua: "Універсальні основи", ru: "Универсальные основания" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "ALC чи ZLC, inner чи outer", ru: "ALC или ZLC, inner или outer" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "Чим грають професіонали", ru: "Чем играют профессионалы" }, href: "/blog/inventar-profi-butterfly" },
+          { label: { ua: "Японська й європейська версії основ", ru: "Японская и европейская версии оснований" }, href: "/blog/versii-osnov-butterfly" },
+          { label: { ua: "Зняті з виробництва основи", ru: "Снятые с производства основания" }, href: "/blog/znyati-osnovy-butterfly" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Яка основа Butterfly найлегша?", ru: "Какое основание Butterfly самое лёгкое?" },
+        a: {
+          ua: "За даними нашого каталогу — бальзові Balsa Carbo X5 (≈72 г) і Balsa X7 (≈75 г). Серед деревʼяних найлегша Timo Boll Mezzoforte (76–80 г), серед основ на T5000 — SK Carbon (78–81 г). Butterfly попереджає, що вага основи залежить від вологості й температури, тож конкретний екземпляр може відрізнятися.",
+          ru: "По данным нашего каталога — бальзовые Balsa Carbo X5 (≈72 г) и Balsa X7 (≈75 г). Среди деревянных самое лёгкое Timo Boll Mezzoforte (76–80 г), среди оснований на T5000 — SK Carbon (78–81 г). Butterfly предупреждает, что вес основания зависит от влажности и температуры, так что конкретный экземпляр может отличаться.",
+        },
+      },
+      {
+        q: { ua: "Яка основа Butterfly найшвидша?", ru: "Какое основание Butterfly самое быстрое?" },
+        a: {
+          ua: "За офіційною реакцією — Mizutani Super ZLC і Primorac Carbon, обидві 12,5. Далі йдуть Fan Zhendong Super ZLC і Lin Yun-Ju Super ZLC (12,3), а також Viscaria Super ALC і Fan Zhendong Super ALC (12,1). Primorac Carbon при цьому найжорсткіша за відчуттям: вібрація 13,3.",
+          ru: "По официальной реакции — Mizutani Super ZLC и Primorac Carbon, у обоих 12,5. Дальше идут Fan Zhendong Super ZLC и Lin Yun-Ju Super ZLC (12,3), а также Viscaria Super ALC и Fan Zhendong Super ALC (12,1). Primorac Carbon при этом самое жёсткое по ощущению: вибрация 13,3.",
+        },
+      },
+      {
+        q: { ua: "Що означають реакція і вібрація в Butterfly?", ru: "Что значат реакция и вибрация у Butterfly?" },
+        a: {
+          ua: "Це офіційні числа Butterfly для основ. Реакція — базова швидкість: що вища, то швидше мʼяч відлітає після контакту. Вібрація — відчуття удару: низька означає мʼякший дотик, висока — жорсткіший. Одиниць виробник не вказує, тож порівнювати числа можна лише між основами Butterfly.",
+          ru: "Это официальные числа Butterfly для оснований. Реакция — базовая скорость: чем выше, тем быстрее мяч улетает после контакта. Вибрация — ощущение удара: низкая означает более мягкое касание, высокая — более жёсткое. Единиц производитель не указывает, поэтому сравнивать числа можно только между основаниями Butterfly.",
+        },
+      },
+      {
+        q: { ua: "Inner чи outer — що краще?", ru: "Inner или outer — что лучше?" },
+        a: {
+          ua: "Кращого немає — різниться відчуття. Outer (волокно під верхнім шпоном) дає швидші удари: у Viscaria 11,8 / 10,3. Inner (волокно біля ядра) довше тримає мʼяч і мʼякше відчувається: у Innerforce Layer ALC 10,7 / 9,4. Товсті inner-моделі 6,2 мм за реакцією майже не поступаються outer.",
+          ru: "Лучшего нет — различается ощущение. Outer (волокно под верхним шпоном) даёт более быстрые удары: у Viscaria 11,8 / 10,3. Inner (волокно у ядра) дольше держит мяч и ощущается мягче: у Innerforce Layer ALC 10,7 / 9,4. Толстые inner-модели 6,2 мм по реакции почти не уступают outer.",
+        },
+      },
+      {
+        q: { ua: "Яка товщина основи краща?", ru: "Какая толщина основания лучше?" },
+        a: {
+          ua: "Універсально кращої немає: основи Butterfly в таблиці мають від 5,0 до 7,5 мм. Товщина сама не визначає швидкість — Outerforce ALC завтовшки 6,2 мм має реакцію 11,4, а Viscaria 5,8 мм — 11,8. Порівнюйте моделі за реакцією й вібрацією, а товщину й вагу враховуйте як додаткові параметри.",
+          ru: "Универсально лучшей нет: у оснований Butterfly в таблице от 5,0 до 7,5 мм. Толщина сама по себе не определяет скорость — у Outerforce ALC толщиной 6,2 мм реакция 11,4, а у Viscaria 5,8 мм — 11,8. Сравнивайте модели по реакции и вибрации, а толщину и вес учитывайте как дополнительные параметры.",
+        },
+      },
+      {
+        q: { ua: "Що означає 5+2 у характеристиках основи?", ru: "Что значит 5+2 в характеристиках основания?" },
+        a: {
+          ua: "Пʼять шарів деревини й два шари штучного волокна — так, наприклад, Butterfly описує Viscaria Super ALC і Fan Zhendong Super ALC. 3+2 — три шари дерева й два волокна (Primorac Carbon, SK Carbon, Garaydia). Цифра 5 або 7 без «+» означає суто деревʼяну основу.",
+          ru: "Пять слоёв древесины и два слоя искусственного волокна — так, например, Butterfly описывает Viscaria Super ALC и Fan Zhendong Super ALC. 3+2 — три слоя дерева и два волокна (Primorac Carbon, SK Carbon, Garaydia). Цифра 5 или 7 без «+» означает чисто деревянное основание.",
+        },
+      },
+      {
+        q: { ua: "Чим Viscaria Super ALC відрізняється від Fan Zhendong Super ALC?", ru: "Чем Viscaria Super ALC отличается от Fan Zhendong Super ALC?" },
+        a: {
+          ua: "За опублікованими характеристиками — нічим: обидві мають 5 шарів дерева й 2 шари Super ALC, товщину 5,7 мм, лопать 157×150 мм, реакцію 12,1 і вібрацію 10,1, обидві зроблені в Японії; вагу на цих сторінках Butterfly не вказує. Butterfly подає Viscaria Super ALC як розвиток Viscaria, а Fan Zhendong Super ALC — як розвиток Fan Zhendong ALC: в обох реакцію підняли без зростання вібрації.",
+          ru: "По опубликованным характеристикам — ничем: у обоих 5 слоёв дерева и 2 слоя Super ALC, толщина 5,7 мм, лопасть 157×150 мм, реакция 12,1 и вибрация 10,1, оба сделаны в Японии; вес на этих страницах Butterfly не указывает. Butterfly подаёт Viscaria Super ALC как развитие Viscaria, а Fan Zhendong Super ALC — как развитие Fan Zhendong ALC: в обоих реакцию подняли без роста вибрации.",
+        },
+      },
+      {
+        q: { ua: "Що означає клас OFF, OFF− і ALL у деревʼяних основ?", ru: "Что значит класс OFF, OFF− и ALL у деревянных оснований?" },
+        a: {
+          ua: "Це приблизна шкала від захисту до атаки: DEF — захисні основи, ALL і ALL+ — універсальні, OFF− — атака з контролем, OFF і OFF+ — швидкі атакувальні. У таблиці клас стоїть лише для деревʼяних основ як орієнтир каталогу, а не офіційне число Butterfly; для основ із волокном швидкість показує офіційна реакція.",
+          ru: "Это примерная шкала от защиты к атаке: DEF — защитные основания, ALL и ALL+ — универсальные, OFF− — атака с контролем, OFF и OFF+ — быстрые атакующие. В таблице класс указан только для деревянных оснований как ориентир каталога, а не официальное число Butterfly; для оснований с волокном скорость показывает официальная реакция.",
+        },
+      },
+      {
+        q: { ua: "Чому в деревʼяних основ немає реакції й вібрації?", ru: "Почему у деревянных оснований нет реакции и вибрации?" },
+        a: {
+          ua: "Butterfly показує деревʼяні основи на своїй матриці реакції й вібрації лише графіком-картинкою, без чисел у тексті, і в нашому каталозі цих значень для дерева немає. Тому деревʼяні основи в таблиці порівнюються за товщиною, вагою, кількістю шарів і класом.",
+          ru: "Butterfly показывает деревянные основания на своей матрице реакции и вибрации только графиком-картинкой, без чисел в тексте, и в нашем каталоге этих значений для дерева нет. Поэтому деревянные основания в таблице сравниваются по толщине, весу, числу слоёв и классу.",
+        },
+      },
+    ],
+    officialSource: {
+      label: {
+        ua: "Butterfly — штучні волокна в основах (ALC, ZLC, ZLF, T5000, CAF, CNF)",
+        ru: "Butterfly — искусственные волокна в основаниях (ALC, ZLC, ZLF, T5000, CAF, CNF)",
+      },
+      url: "https://www.butterfly-global.com/en/products/blade/fiber.html",
+    },
+    sources: [
+      {
+        label: { ua: "Butterfly — матриця основ: що означають реакція й вібрація", ru: "Butterfly — матрица оснований: что значат реакция и вибрация" },
+        url: "https://www.butterfly-global.com/en/products/blade/matrix.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — Outerfiber і Innerfiber: розташування волокна", ru: "Butterfly — Outerfiber и Innerfiber: расположение волокна" },
+        url: "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — вага основ залежить від вологості й температури", ru: "Butterfly — вес оснований зависит от влажности и температуры" },
+        url: "https://www.butterfly-global.com/en/products/blade/weight.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — Viscaria Super ALC: характеристики", ru: "Butterfly — Viscaria Super ALC: характеристики" },
+        url: "https://www.butterfly-global.com/en/products/detail/37191.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — Fan Zhendong Super ALC: характеристики", ru: "Butterfly — Fan Zhendong Super ALC: характеристики" },
+        url: "https://www.butterfly-global.com/en/products/detail/37241.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — розділи основ для європейської хватки", ru: "Butterfly — разделы оснований для европейской хватки" },
+        url: "https://www.butterfly-global.com/en/products/blade/shake/",
+        kind: "official",
+      },
+    ],
+    relatedProducts: [
+      { label: { ua: "основи для ракетки", ru: "основания для ракетки" }, href: "/osnovaniya" },
+      { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "основи з ZLC", ru: "основания с ZLC" }, href: "/osnovaniya/zlc" },
+      { label: { ua: "універсальні основи", ru: "универсальные основания" }, href: "/osnovaniya/universalni" },
+    ],
+    products: ["viscaria", "viscaria-super-alc", "innerforce-layer-alc", "innerforce-layer-zlc", "primorac-carbon", "timo-boll-allround"],
+    relatedPosts: ["alc-chy-zlc", "apolonia-zlc-oglyad", "inventar-profi-butterfly", "versii-osnov-butterfly"],
+    consultAfter: "yak-obraty",
+  },
+
+  // ТАРГЕТ: UA «що подарувати тенісисту», «подарунок для тенісиста», «подарунок для гравця в
+  // настільний теніс»; RU «что подарить теннисисту», «подарок теннисисту настольный теннис».
+  // Сезон: Миколай (6 грудня) і Новий рік. Формат — гайд за бюджетом і отримувачем, не каталог.
+  // ⚠️ ЦІНИ: правило «без цін» тут послаблене ЛИШЕ до бюджетних діапазонів (до 500 / 500–1500 /
+  // 1500–5000 / від 5000 грн) — станом на 04.11.2026, з живого фіду Google Merchant, тільки товари
+  // в наявності. Точні ціни — лише в блоці products. При оновленні статті діапазони звіряти заново.
+  // Готових ракеток для новачка в наявності на 04.11.2026 немає (лише професійні зв'язки дорожче
+  // за 10 000 грн) — тому новачку радимо зібрати ракетку з основи ALL і Flextra/Sriver.
+  // Столи не в наявності — у статті їх не радимо.
+  // ЗВІДКИ ФАКТИ (звірено 2026-11-04):
+  //  • м'ячі, засоби догляду, стрічка, клей, тубус, пляшки, рушники, чохли, сумки, взуття, шкарпетки —
+  //    описи каталогу (gearCopy.ts, gearExpert.ts, gearExpertBags.ts, gearExpertWear.ts): R40+ 3* ITTF,
+  //    Training Ball «близький до тризіркового», Combi Cleaner 100 мл із губкою, Spin Refresh 150 мл без
+  //    газу й органічних розчинників, Rubber Film IV неклейка, стрічка 12 мм × 1 м на одну ракетку,
+  //    Free Chack водний (ITTF заборонила клеї з леткими розчинниками з 2008), тубус на 6 м'ячів і ролик,
+  //    пляшка 750 мл, Yao Midi 30 × 50 см 100% бавовна, Stripe 50 × 100 см з магнітом, Easy Case 900D з
+  //    відділенням для м'ячів, BG Case 320D (ракетка, 2 м'ячі, догляд), рюкзак Kitami 25 л 900D, сумка для
+  //    м'ячів на 144 шт (за дистриб'ютором), Lezoline Zero / Unizes II / Gigu / Levalis / Sunika («не для
+  //    гри»), Radial Cross «для тренерів», устілки S–XL, шкарпетки S 34–37 … XL 45–47, правило ITTF про
+  //    колір форми й м'яча;
+  //  • розміри в наявності (instock із фіду): кросівки 38–46, одяг XS–XXL;
+  //  • Flextra 29 / губка 32°, Sriver FX губка 33°, Tenergy 05 швидкість 83, товщини 1,5–MAX — specTables
+  //    (rubbers/klasyka, rubbers/tenzor); Timo Boll Allround ALL 5,5 мм 83–87 г, Mezzoforte ALL 76–80 г —
+  //    specTables (blades/derevo) і expert.ts; безкоштовне збирання й обрізання — categories.ts (rakety);
+  //  • форми ручок FL / ST / AN — Butterfly FAQ «The handle shape of shakehand blades…» (015702);
+  //  • назва накладки й логотип ITTF біля ручки мають лишатися видимими; одна сторона чорна, друга —
+  //    яскрава — правила ITTF 2.4 (джерела — у статтях yak-nakleity-nakladku і pravyla-nastilnogo-tenisu).
+  //  • підтеми подарунків (м'ячі, взуття, накладки як регулярна заміна — «міняти щонайменше двічі на рік») —
+  //    гайд Expert Table Tennis (ред. 2020). Порад «спершу дізнатися інвентар» там НЕМАЄ — це наш висновок.
+  //  • FAQ Butterfly 015702: FL — «wide handle end», обирає багато гравців; ST — однакова товщина, «majority of
+  //    choppers»; AN — хвиляста, заповнює долоню, «comfortable for beginner»; SI — пряма за шириною, товщає до кінця.
+  //  • Big Streak / Big Taoru — 70 × 140 см, для душу; Kanoy Duffle — знімний мішок для ВЗУТТЯ (gearCopy.ts).
+  //  • Розміри шкарпеток у фіді не розбиті на варіанти — наявність розміру S не підтверджена.
+  // Allround / Offensive без «Timo Boll» свідомо не згадуємо — їхні дані не підтверджені (див. пам'ять).
+  "shcho-podaruvaty-tenisystu": {
+    slug: "shcho-podaruvaty-tenisystu",
+    // Блок «Підберемо» — після розділу про накладки й основи: там читач розуміє, що сам не вгадає.
+    consultAfter: "nakladky-osnovy",
+    h1: {
+      ua: "Що подарувати тенісисту: ідеї за бюджетом і рівнем гравця",
+      ru: "Что подарить теннисисту: идеи по бюджету и уровню игрока",
+    },
+    metaTitle: {
+      ua: "Що подарувати тенісисту — ідеї за бюджетом | TTMAX",
+      ru: "Что подарить теннисисту — идеи по бюджету | TTMAX",
+    },
+    metaDescription: {
+      ua: "🎁 Що подарувати тенісисту на Миколая й Новий рік: ідеї до 500, до 1500, до 5000 грн і дорожче, як дізнатися його накладку і чого не дарувати.",
+      ru: "🎁 Что подарить теннисисту на Николая и Новый год: идеи до 500, до 1500, до 5000 грн и дороже, как узнать его накладку и чего не дарить.",
+    },
+    excerpt: {
+      ua: "Подарунок для тенісиста за бюджетом: м'ячі, догляд за накладками, рушник, чохол, взуття. Окремо — для дитини, новачка й тренера, і як дізнатися, якою накладкою грає людина.",
+      ru: "Подарок теннисисту по бюджету: мячи, уход за накладками, полотенце, чехол, обувь. Отдельно — для ребёнка, новичка и тренера, и как узнать, какой накладкой играет человек.",
+    },
+    datePublished: "2026-11-04",
+    dateModified: "2026-11-04",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/shcho-podaruvaty-tenisystu-cover.svg",
+    heroAlt: {
+      ua: "Подарунок для тенісиста: м'ячі, рушник і чохол для ракетки настільного тенісу",
+      ru: "Подарок теннисисту: мячи, полотенце и чехол для ракетки настольного тенниса",
+    },
+    intro: {
+      ua: [
+        "Що подарувати тенісисту, щоб подарунок пішов у справу? Найнадійніше — те, що в настільному тенісі постійно витрачається або не залежить від стилю гри: м'ячі, засоби догляду за накладками, рушник, чохол, сумка. Найризикованіше — накладки й основи: це особистий інвентар, і без точної моделі вгадати майже неможливо.",
+        "Нижче — ідеї за чотирма бюджетами станом на 04.11.2026 (до 500 грн, 500–1500, 1500–5000 і від 5000 грн), окремо для дитини, новачка й тренера, покрокова інструкція, як дізнатися, якою накладкою грає людина, і подарунки, які найчастіше не підходять. Усі товари з таблиць на цю дату були в наявності.",
+      ],
+      ru: [
+        "Что подарить теннисисту, чтобы подарок пошёл в дело? Надёжнее всего — то, что в настольном теннисе постоянно расходуется или не зависит от стиля игры: мячи, средства ухода за накладками, полотенце, чехол, сумка. Рискованнее всего — накладки и основания: это личный инвентарь, и без точной модели угадать почти невозможно.",
+        "Ниже — идеи для четырёх бюджетов на 04.11.2026 (до 500 грн, 500–1500, 1500–5000 и от 5000 грн), отдельно для ребёнка, новичка и тренера, пошаговая инструкция, как узнать, какой накладкой играет человек, и подарки, которые чаще всего не подходят. Все товары из таблиц на эту дату были в наличии.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротко: що подарувати тенісисту за бюджетом", ru: "Коротко: что подарить теннисисту по бюджету" },
+        p: {
+          ua: [
+            "Якщо не знаєте, чим людина грає, даруйте витратне й універсальне: тризіркові м'ячі, очищувач для накладок, торцеву стрічку, рушник або чохол. Вони підійдуть будь-якому гравцю незалежно від стилю. Накладку чи основу дарують лише тоді, коли точно відомі модель, товщина губки й форма ручки.",
+            "Бюджети в таблиці — станом на 04.11.2026 і тільки для товарів, які на цю дату були в наявності. Точну ціну показує картка товару й блок нижче: вона може змінитися.",
+          ],
+          ru: [
+            "Если не знаете, чем человек играет, дарите расходное и универсальное: трёхзвёздочные мячи, очиститель для накладок, торцевую ленту, полотенце или чехол. Они подойдут любому игроку независимо от стиля. Накладку или основание дарят, только когда точно известны модель, толщина губки и форма ручки.",
+            "Бюджеты в таблице — на 04.11.2026 и только для товаров, которые на эту дату были в наличии. Точную цену показывает карточка товара и блок ниже: она может измениться.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Бюджет (на 04.11.2026)", ru: "Бюджет (на 04.11.2026)" },
+            { ua: "Ідея подарунка", ru: "Идея подарка" },
+            { ua: "Чому підходить", ru: "Почему подходит" },
+          ],
+          rows: [
+            [
+              { ua: "до 500 грн", ru: "до 500 грн" },
+              { ua: "М'ячі Butterfly R40+ 3* (3 шт)", ru: "Мячи Butterfly R40+ 3* (3 шт)", href: "/butterfly/myachi/m-iachi-butterfly-r40-3-3sht-v-up" },
+              { ua: "Тризірковий м'яч зі схваленням ITTF — для гри, ліги й турнірів", ru: "Трёхзвёздочный мяч с одобрением ITTF — для игры, лиги и турниров" },
+            ],
+            [
+              { ua: "до 500 грн", ru: "до 500 грн" },
+              { ua: "Очищувач Butterfly Combi Cleaner", ru: "Очиститель Butterfly Combi Cleaner", href: "/butterfly/aksessuary/ochysnyk-dlia-nakladok-butterfly-combi-cleaner" },
+              { ua: "Засіб і губка в одній упаковці: знімає бруд і повертає накладці зчеплення", ru: "Средство и губка в одной упаковке: снимает грязь и возвращает накладке сцепление" },
+            ],
+            [
+              { ua: "до 500 грн", ru: "до 500 грн" },
+              { ua: "Торцева стрічка Butterfly Logo 12 мм × 1 м", ru: "Торцевая лента Butterfly Logo 12 мм × 1 м", href: "/butterfly/aksessuary/tortseva-strichka-butterfly-logo-12mm-1m" },
+              { ua: "На одну ракетку: захищає торець основи від сколів", ru: "На одну ракетку: защищает торец основания от сколов" },
+            ],
+            [
+              { ua: "500–1500 грн", ru: "500–1500 грн" },
+              { ua: "Рушник Butterfly Yao Midi", ru: "Полотенце Butterfly Yao Midi", href: "/butterfly/aksessuary/rushnyk-butterfly-yao-midi" },
+              { ua: "100% бавовна, 30 × 50 см — розмір угадувати не треба", ru: "100% хлопок, 30 × 50 см — размер угадывать не нужно" },
+            ],
+            [
+              { ua: "500–1500 грн", ru: "500–1500 грн" },
+              { ua: "Чохол Butterfly Easy Case", ru: "Чехол Butterfly Easy Case", href: "/butterfly/chehly/chokhol-butterfly-easy-case" },
+              { ua: "Ракетка й м'ячі разом: окреме відділення для м'ячів", ru: "Ракетка и мячи вместе: отдельное отделение для мячей" },
+            ],
+            [
+              { ua: "1500–5000 грн", ru: "1500–5000 грн" },
+              { ua: "Рюкзак Butterfly Kitami", ru: "Рюкзак Butterfly Kitami", href: "/butterfly/chehly/riukzak-butterfly-kitami" },
+              { ua: "25 л, поліестер 900D — для щоденних поїздок на тренування", ru: "25 л, полиэстер 900D — для ежедневных поездок на тренировку" },
+            ],
+            [
+              { ua: "1500–5000 грн", ru: "1500–5000 грн" },
+              { ua: "Кросівки Butterfly Lezoline Zero", ru: "Кроссовки Butterfly Lezoline Zero", href: "/butterfly/obuv/krosivky-butterfly-lezoline-zero" },
+              { ua: "Легкі, з чіпкою підошвою; потрібен точний розмір (38–46)", ru: "Лёгкие, с цепкой подошвой; нужен точный размер (38–46)" },
+            ],
+            [
+              { ua: "1500–5000 грн", ru: "1500–5000 грн" },
+              { ua: "Основа Timo Boll Allround + дві накладки Flextra", ru: "Основание Timo Boll Allround + две накладки Flextra", href: "/butterfly/osnovaniya/timo-boll-allround" },
+              { ua: "Перша ракетка новачку: дерево класу ALL і повільна накладка", ru: "Первая ракетка новичку: дерево класса ALL и медленная накладка" },
+            ],
+            [
+              { ua: "від 5000 грн", ru: "от 5000 грн" },
+              { ua: "Готова ракетка Butterfly у зборі", ru: "Готовая ракетка Butterfly в сборе", href: "/rakety" },
+              { ua: "Професійні зв'язки з Tenergy, Dignics чи Zyre, дорожчі за 10 000 грн, — лише якщо знаєте, чим людина грає", ru: "Профессиональные связки с Tenergy, Dignics или Zyre дороже 10 000 грн — только если знаете, чем человек играет" },
+            ],
+          ],
+        },
+      },
+      {
+        id: "do-500",
+        h: { ua: "Подарунок для тенісиста до 500 грн: витратні дрібниці", ru: "Подарок теннисисту до 500 грн: расходные мелочи" },
+        p: {
+          ua: [
+            "До 500 грн найкращий подарунок для тенісиста — те, що закінчується: м'ячі, засоби догляду, торцева стрічка. Такі речі не залежать від стилю гри, і досвідчений гравець купує їх регулярно сам — тож подарунок точно не ляже в шафу.",
+            "М'ячі. Для гри, ліги й турнірів — тризіркові Butterfly R40+ 3* зі схваленням ITTF; S40+ 3* має шорсткішу поверхню, яка допомагає закрутити м'яч. Для тренувань удома — Training Ball 40+ (за описом Butterfly, якістю близький до тризіркового) або недорогий Easy Ball 40+ по 6 шт. Чим вони відрізняються, розібрано в статті про вибір м'ячів.",
+            "Догляд за накладками. Combi Cleaner — 100 мл засобу й губка в одній упаковці, Spin Refresh — пінний очищувач на 150 мл без газу й органічних розчинників. Плівка Rubber Film IV неклейка: її накладають на очищену й просохлу накладку, щоб зберегти поверхню до наступного тренування. Усе це в діапазоні до 500 грн.",
+            "Дрібниці для ракетки. Торцева стрічка 12 мм × 1 м розрахована на одну ракетку й захищає торець основи від сколів. Обмотка Overgrip не дає ракетці ковзати в долоні. Тубус Roller/Ball Box вміщує 6 м'ячів і працює як ролик, щоб прикочувати накладку під час поклейки. Ще варіанти: пляшка Butterfly на 750 мл, напульсник або пов'язка на голову.",
+            "Клей Free Chack на 37 мл — подарунок лише для того, хто клеїть накладки сам. Він водний: з 2008 року ITTF заборонила клеї з леткими органічними розчинниками, а Free Chack їх не містить.",
+          ],
+          ru: [
+            "До 500 грн лучший подарок теннисисту — то, что заканчивается: мячи, средства ухода, торцевая лента. Такие вещи не зависят от стиля игры, и опытный игрок регулярно покупает их сам — так что подарок точно не уйдёт в шкаф.",
+            "Мячи. Для игры, лиги и турниров — трёхзвёздочные Butterfly R40+ 3* с одобрением ITTF; у S40+ 3* поверхность шероховатее, она помогает закрутить мяч. Для тренировок дома — Training Ball 40+ (по описанию Butterfly, по качеству близок к трёхзвёздочному) или недорогой Easy Ball 40+ по 6 шт. Чем они отличаются, разобрано в статье о выборе мячей.",
+            "Уход за накладками. Combi Cleaner — 100 мл средства и губка в одной упаковке, Spin Refresh — пенный очиститель на 150 мл без газа и органических растворителей. Плёнка Rubber Film IV неклеящаяся: её накладывают на очищенную и просохшую накладку, чтобы сохранить поверхность до следующей тренировки. Всё это укладывается в 500 грн.",
+            "Мелочи для ракетки. Торцевая лента 12 мм × 1 м рассчитана на одну ракетку и защищает торец основания от сколов. Обмотка Overgrip не даёт ракетке скользить в ладони. Тубус Roller/Ball Box вмещает 6 мячей и служит роликом, чтобы прикатывать накладку при наклейке. Ещё варианты: бутылка Butterfly на 750 мл, напульсник или повязка на голову.",
+            "Клей Free Chack на 37 мл — подарок только тому, кто клеит накладки сам. Он водный: с 2008 года ITTF запретила клеи с летучими органическими растворителями, а во Free Chack их нет.",
+          ],
+        },
+        links: [
+          { label: { ua: "М'ячі для настільного тенісу", ru: "Мячи для настольного тенниса" }, href: "/myachi" },
+          { label: { ua: "Засоби догляду за накладками", ru: "Средства ухода за накладками" }, href: "/aksessuary/doglyad" },
+          { label: { ua: "Торцеві стрічки", ru: "Торцевые ленты" }, href: "/aksessuary/tortsevi-strichky" },
+          { label: { ua: "Які м'ячі вибрати", ru: "Какие мячи выбрать" }, href: "/blog/yaki-myachi-vybraty" },
+          { label: { ua: "Як доглядати за накладками", ru: "Как ухаживать за накладками" }, href: "/blog/doglyad-za-nakladkamy" },
+        ],
+      },
+      {
+        id: "rushnyky-chokhly-sumky",
+        h: { ua: "Рушник, чохол чи сумка: подарунок без ризику з розміром", ru: "Полотенце, чехол или сумка: подарок, где не надо угадывать размер" },
+        p: {
+          ua: [
+            "Рушник, чохол і сумка — найбезпечніші подарунки середнього бюджету: розмір угадувати не треба, а знадобляться вони на кожному тренуванні. Більшість рушників і чохлів — у діапазоні 500–1500 грн, більшість рюкзаків і сумок — 1500–5000 грн.",
+            "Рушники. Yao Midi — компактний, 30 × 50 см, 100% бавовна: витерти руки й обличчя між розіграшами. Stripe — 50 × 100 см, із вбудованим магнітом, який кріпить рушник до краю тенісного столу. Yao Big — більший ігровий рушник тієї ж колекції, а Big Streak і Big Taoru — великі, 70 × 140 см, для душу після тренування.",
+            "Чохли. Easy Case з поліестеру 900D має окреме відділення для м'ячів, Cell Case I вміщує ракетку й до 4 м'ячів. Подвійний чохол (Kitami, Kashiwa, Otomo) — для того, хто возить дві ракетки. BG Case — новинка 2026 року: ракетка, 2 м'ячі й засоби догляду на внутрішньому лотку, бюджет 1500–5000 грн.",
+            "Рюкзаки й сумки. Рюкзак Kitami — 25 л, 48 × 34 × 16 см, для щоденних поїздок; Kashiwa — 35 л із щільнішої тканини 1680D. Спортивна сумка Kitami Midi — 36 л, Kanoy Duffle — 40 л зі знімним мішком для взуття. Валізи (Black Line Trolley, Yasyo Trolley, Tabi) — подарунок від 5000 грн для того, хто їздить на турніри.",
+          ],
+          ru: [
+            "Полотенце, чехол и сумка — самые безопасные подарки среднего бюджета: размер угадывать не нужно, а пригодятся они на каждой тренировке. Большинство полотенец и чехлов — в диапазоне 500–1500 грн, большинство рюкзаков и сумок — 1500–5000 грн.",
+            "Полотенца. Yao Midi — компактное, 30 × 50 см, 100% хлопок: вытереть руки и лицо между розыгрышами. Stripe — 50 × 100 см, со встроенным магнитом, которым полотенце крепится к краю теннисного стола. Yao Big — игровое полотенце побольше из той же коллекции, а Big Streak и Big Taoru — большие, 70 × 140 см, для душа после тренировки.",
+            "Чехлы. Easy Case из полиэстера 900D с отдельным отделением для мячей, Cell Case I вмещает ракетку и до 4 мячей. Двойной чехол (Kitami, Kashiwa, Otomo) — для того, кто возит две ракетки. BG Case — новинка 2026 года: ракетка, 2 мяча и средства ухода на внутреннем лотке, бюджет 1500–5000 грн.",
+            "Рюкзаки и сумки. Рюкзак Kitami — 25 л, 48 × 34 × 16 см, для ежедневных поездок; Kashiwa — 35 л из более плотной ткани 1680D. Спортивная сумка Kitami Midi — 36 л, Kanoy Duffle — 40 л со съёмным мешком для обуви. Чемоданы (Black Line Trolley, Yasyo Trolley, Tabi) — подарок от 5000 грн для того, кто ездит на турниры.",
+          ],
+        },
+        links: [
+          { label: { ua: "Рушники Butterfly", ru: "Полотенца Butterfly" }, href: "/aksessuary/rushnyky" },
+          { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
+          { label: { ua: "Рюкзаки", ru: "Рюкзаки" }, href: "/chehly/ryukzaky" },
+          { label: { ua: "Спортивні сумки", ru: "Спортивные сумки" }, href: "/chehly/sumky" },
+        ],
+      },
+      {
+        id: "odyag-vzuttia",
+        h: { ua: "Одяг і кросівки: спершу дізнайтеся розмір", ru: "Одежда и кроссовки: сначала узнайте размер" },
+        p: {
+          ua: [
+            "Одяг і взуття — гарний подарунок, але тільки коли відомий точний розмір. Якщо його немає, краще взяти рушник, чохол чи сумку: з ними не доведеться нічого міняти.",
+            "Кросівки для настільного тенісу мають чіпку підошву під різкі бічні кроки. Lezoline Zero — легкі й гнучкі, із сітчастим верхом, для гравців легкої й середньої ваги. Lezoline Unizes II — універсальна модель для перших тенісних кросівок з амортизацією п'яти EVA. Обидві — у діапазоні 1500–5000 грн. Дорожче за 5000 грн — Gigu з найтовщою підошвою в серії Lezoline і флагман Levalis. На 04.11.2026 у наявності розміри 38–46.",
+            "Футболки й шорти — у діапазонах 500–1500 і 1500–5000 грн, костюми — 1500–5000 грн і дорожче, розміри в наявності — від XS до XXL. Для турнірного гравця зважте колір: за правилами ITTF основний колір футболки чи шортів має чітко відрізнятися від кольору м'яча, тож білим м'ячем у переважно білій формі не грають.",
+            "Шкарпетки — компромісний варіант: у Butterfly їхній розмір прив'язаний до розміру взуття (S — 34–37, M — 38–41, L — 42–44, XL — 45–47), і його легше вгадати, ніж розмір футболки. Ще одна дрібниця без ризику — сумка для взуття: ігрові кросівки не бруднять форму й речі в сумці.",
+          ],
+          ru: [
+            "Одежда и обувь — хороший подарок, но только когда известен точный размер. Если его нет, лучше взять полотенце, чехол или сумку: их не придётся менять.",
+            "У кроссовок для настольного тенниса цепкая подошва — для резких шагов в сторону. Lezoline Zero — лёгкие и гибкие, с сетчатым верхом, для игроков лёгкого и среднего веса. Lezoline Unizes II — универсальная модель для первых теннисных кроссовок с амортизацией пятки EVA. Обе — в диапазоне 1500–5000 грн. Дороже 5000 грн — Gigu с самой толстой подошвой в серии Lezoline и флагман Levalis. На 04.11.2026 в наличии размеры 38–46.",
+            "Футболки и шорты — в диапазонах 500–1500 и 1500–5000 грн, костюмы — 1500–5000 грн и дороже, размеры в наличии — от XS до XXL. Турнирному игроку важен цвет: по правилам ITTF основной цвет футболки или шорт должен чётко отличаться от цвета мяча, поэтому белым мячом в преимущественно белой форме не играют.",
+            "Носки — компромиссный вариант: у Butterfly их размер привязан к размеру обуви (S — 34–37, M — 38–41, L — 42–44, XL — 45–47), и угадать его проще, чем размер футболки. Ещё одна мелочь без риска — сумка для обуви: игровые кроссовки не пачкают форму и вещи в сумке.",
+          ],
+        },
+        links: [
+          { label: { ua: "Взуття для настільного тенісу", ru: "Обувь для настольного тенниса" }, href: "/obuv" },
+          { label: { ua: "Lezoline Unizes II", ru: "Lezoline Unizes II" }, href: "/butterfly/obuv/krosivky-butterfly-lezoline-unizes-2" },
+          { label: { ua: "Футболки Butterfly", ru: "Футболки Butterfly" }, href: "/odyag/futbolky" },
+          { label: { ua: "Шкарпетки Butterfly", ru: "Носки Butterfly" }, href: "/odyag/shkarpetky" },
+        ],
+      },
+      {
+        id: "nakladky-osnovy",
+        h: { ua: "Накладка чи основа в подарунок: як не помилитися", ru: "Накладка или основание в подарок: как не ошибиться" },
+        p: {
+          ua: [
+            "Накладку чи основу можна дарувати, лише коли ви точно знаєте, чим людина грає. Ракетку гравець збирає під себе: модель накладки, товщину губки, форму ручки. Інша накладка навіть тієї самої серії змінить швидкість і обертання, і подарунок, найімовірніше, відкладуть.",
+            "Найпростіше — подарувати заміну тієї самої накладки, якою людина вже грає: накладки зношуються, і нова того ж типу знадобиться точно. Для цього треба знати чотири речі: модель, товщину губки, колір сторони, яку міняють, і, якщо даруєте основу, форму ручки. Як це з'ясувати, не розпитуючи напряму, — у кроках нижче.",
+            "Форма ручки за описом Butterfly: FL має широкий кінець — цю форму обирає багато гравців у світі; ST однакової товщини по всій довжині, з нею легше швидко міняти хват, і її обирає більшість гравців, що грають підрізкою; AN хвиляста й заповнює всю долоню — Butterfly називає її зручною для початківців. Четверта форма, SI, пряма за шириною, але товщає до кінця ручки.",
+            "Якщо людина вболіває за конкретного професіонала, на сторінках гравців видно його інвентар за даними Butterfly. Але це подарунок «для колекції»: накладки й основи зірок розраховані на гравців високого рівня.",
+          ],
+          ru: [
+            "Накладку или основание можно дарить, только когда вы точно знаете, чем человек играет. Ракетку игрок собирает под себя: модель накладки, толщину губки, форму ручки. Другая накладка даже той же серии изменит скорость и вращение, и подарок, скорее всего, отложат.",
+            "Проще всего подарить замену той же накладки, которой человек уже играет: накладки изнашиваются, и новая того же типа понадобится наверняка. Для этого нужно знать четыре вещи: модель, толщину губки, цвет стороны, которую меняют, и, если дарите основание, форму ручки. Как это выяснить, не спрашивая напрямую, — в шагах ниже.",
+            "Форма ручки по описанию Butterfly: FL с широким концом — эту форму выбирают многие игроки в мире; ST одинаковой толщины по всей длине, с ней проще быстро менять хват, и её выбирает большинство игроков, которые играют подрезкой; AN волнистая и заполняет всю ладонь — Butterfly называет её удобной для начинающих. Четвёртая форма, SI, прямая по ширине, но утолщается к концу ручки.",
+            "Если человек болеет за конкретного профессионала, на страницах игроков виден его инвентарь по данным Butterfly. Но это подарок «для коллекции»: накладки и основания звёзд рассчитаны на игроков высокого уровня.",
+          ],
+        },
+        steps: [
+          {
+            name: { ua: "Сфотографуйте ракетку з обох боків", ru: "Сфотографируйте ракетку с обеих сторон" },
+            text: {
+              ua: "Назва моделі й логотип ITTF надруковані на накладці біля ручки — за правилами вони мають лишатися видимими після обрізання. Знімайте обидві сторони: на форхенді й бекхенді часто стоять різні моделі.",
+              ru: "Название модели и логотип ITTF напечатаны на накладке у ручки — по правилам они должны оставаться видимыми после обрезки. Снимайте обе стороны: на форхенде и бэкхенде часто стоят разные модели.",
+            },
+          },
+          {
+            name: { ua: "Знайдіть назву основи й форму ручки", ru: "Найдите название основания и форму ручки" },
+            text: {
+              ua: "Назва основи зазвичай є на ручці. Там же видно форму: FL розширюється до кінця, ST однакової товщини, AN хвиляста, SI товщає до кінця.",
+              ru: "Название основания обычно есть на ручке. Там же видна форма: FL расширяется к концу, ST одинаковой толщины, AN волнистая, SI утолщается к концу.",
+            },
+          },
+          {
+            name: { ua: "Дізнайтеся товщину губки", ru: "Узнайте толщину губки" },
+            text: {
+              ua: "На око товщину не визначити: подивіться стару упаковку чи історію замовлень або запитайте партнера по залу. Одна модель випускається в кількох товщинах — наприклад, Tenergy 05 буває 1,7, 1,9 і 2,1 мм.",
+              ru: "На глаз толщину не определить: посмотрите старую упаковку или историю заказов либо спросите партнёра по залу. Одна модель выпускается в нескольких толщинах — например, Tenergy 05 бывает 1,7, 1,9 и 2,1 мм.",
+            },
+          },
+          {
+            name: { ua: "Запишіть колір сторони, яку треба міняти", ru: "Запишите цвет стороны, которую нужно менять" },
+            text: {
+              ua: "За правилами одна сторона ракетки чорна, інша — яскравого кольору. Накладку міняють по одній, тож потрібна та модель і той колір, що стоять на зношеній стороні.",
+              ru: "По правилам одна сторона ракетки чёрная, другая — яркого цвета. Накладку меняют по одной, поэтому нужна та модель и тот цвет, что стоят на изношенной стороне.",
+            },
+          },
+          {
+            name: { ua: "Звірте модель з таблицею", ru: "Сверьте модель с таблицей" },
+            text: {
+              ua: "Знайдіть модель у таблиці накладок або основ Butterfly. Якщо її знято з виробництва чи немає в наявності, залиште заявку — підберемо найближчу заміну за характеристиками.",
+              ru: "Найдите модель в таблице накладок или оснований Butterfly. Если её сняли с производства или нет в наличии, оставьте заявку — подберём ближайшую замену по характеристикам.",
+            },
+          },
+        ],
+        links: [
+          { label: { ua: "Таблиця накладок Butterfly", ru: "Таблица накладок Butterfly" }, href: "/blog/tablytsia-nakladok-butterfly" },
+          { label: { ua: "Таблиця основ Butterfly", ru: "Таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
+          { label: { ua: "Зняті з виробництва основи", ru: "Снятые с производства основания" }, href: "/blog/znyati-osnovy-butterfly" },
+          { label: { ua: "Інвентар гравців Butterfly", ru: "Инвентарь игроков Butterfly" }, href: "/igroki" },
+        ],
+      },
+      {
+        id: "pochatkivtsyu-dytyni",
+        h: { ua: "Що подарувати дитині чи новачку", ru: "Что подарить ребёнку или новичку" },
+        p: {
+          ua: [
+            "Дитині чи новачку найкраще подарувати першу власну ракетку з повільними накладками й тренувальні м'ячі. Професійна ракетка тут заважає: у Tenergy 05 швидкість 83, у Flextra — 29, і новачкові такий швидкий м'яч складно контролювати.",
+            "Готові ракетки в наявності на 04.11.2026 — лише професійні зв'язки з Tenergy, Dignics чи Zyre, дорожчі за 10 000 грн. Для старту простіше зібрати ракетку: дерев'яна основа класу ALL, наприклад Timo Boll Allround (5 шарів, 5,5 мм, 83–87 г), і дві накладки Flextra або Sriver. Ми наклеїмо й обріжемо накладки безкоштовно, а комплект з Flextra вкладається в 1500–5000 грн.",
+            "Найлегша дерев'яна основа в каталозі — Timo Boll Mezzoforte, 76–80 г, теж клас ALL. Товщину накладки новачку беріть 1,7–1,9 мм, а 2,1 і MAX на старті лише додають швидкості. Усі чотири класичні накладки з таблиці нижче на 04.11.2026 були в наявності, у червоному й чорному кольорах.",
+            "Що ще знадобиться дитині: тренувальні м'ячі Easy Ball 40+ чи Training Ball 40+ і чохол для ракетки. Кросівки й форму в наявності маємо лише від 38-го розміру взуття та від XS в одязі, тож для молодшої дитини краще обрати чохол, рушник або шкарпетки: найменший розмір Butterfly, S, відповідає взуттю 34–37, наявність розміру — на картці.",
+          ],
+          ru: [
+            "Ребёнку или новичку лучше всего подарить первую собственную ракетку с медленными накладками и тренировочные мячи. Профессиональная ракетка тут мешает: у Tenergy 05 скорость 83, у Flextra — 29, и новичку такой быстрый мяч сложно контролировать.",
+            "Готовые ракетки в наличии на 04.11.2026 — только профессиональные связки с Tenergy, Dignics или Zyre дороже 10 000 грн. Для старта проще собрать ракетку: деревянное основание класса ALL, например Timo Boll Allround (5 слоёв, 5,5 мм, 83–87 г), и две накладки Flextra или Sriver. Мы наклеим и обрежем накладки бесплатно, а комплект с Flextra укладывается в 1500–5000 грн.",
+            "Самое лёгкое деревянное основание в каталоге — Timo Boll Mezzoforte, 76–80 г, тоже класс ALL. Толщину накладки новичку берите 1,7–1,9 мм, а 2,1 и MAX на старте только добавляют скорости. Все четыре классические накладки из таблицы ниже на 04.11.2026 были в наличии, в красном и чёрном цветах.",
+            "Что ещё пригодится ребёнку: тренировочные мячи Easy Ball 40+ или Training Ball 40+ и чехол для ракетки. Кроссовки и форма в наличии есть только от 38-го размера обуви и от XS в одежде, поэтому младшему ребёнку лучше выбрать чехол, полотенце или носки: самый маленький размер Butterfly, S, соответствует обуви 34–37, наличие размера — на карточке.",
+          ],
+        },
+        specTable: { kind: "rubbers", group: "klasyka" },
+        links: [
+          { label: { ua: "Основа Timo Boll Allround", ru: "Основание Timo Boll Allround" }, href: "/butterfly/osnovaniya/timo-boll-allround" },
+          { label: { ua: "Основа Timo Boll Mezzoforte", ru: "Основание Timo Boll Mezzoforte" }, href: "/butterfly/osnovaniya/timo-boll-mezzoforte" },
+          { label: { ua: "Універсальні основи Butterfly", ru: "Универсальные основания Butterfly" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "Яку накладку обрати новачку", ru: "Какую накладку выбрать новичку" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
+          { label: { ua: "Як вибрати ракетку", ru: "Как выбрать ракетку" }, href: "/blog/yak-vybraty-raketku" },
+        ],
+      },
+      {
+        id: "treneru",
+        h: { ua: "Подарунок тренеру або клубу", ru: "Подарок тренеру или клубу" },
+        p: {
+          ua: [
+            "Тренеру чи клубу найкорисніше подарувати те, що витрачається на кожному занятті: велику коробку тренувальних м'ячів, сумку для м'ячів або засоби догляду за столом. Особисті речі на кшталт накладок тут ще ризикованіші, ніж для гравця.",
+            "Коробки м'ячів — у діапазоні 1500–5000 грн: Training Ball 40+ і Easy Ball 40+ по 120 шт — для багатокулькових вправ і роботів, Master Quality G40+ по 72 шт — для підготовки до змагань. Сумка для м'ячів Butterfly циліндрична, з плечовим ременем; за даними дистриб'ютора вміщує 144 м'ячі — це 500–1500 грн.",
+            "Ще варіанти: спрей Table Cleaner на 500 мл для ігрової поверхні столу (до 500 грн) і кросівки Radial Cross — за описом, для тренерів і спортсменів: тренування, розминка, біг (1500–5000 грн, потрібен розмір).",
+          ],
+          ru: [
+            "Тренеру или клубу полезнее всего подарить то, что расходуется на каждом занятии: большую коробку тренировочных мячей, сумку для мячей или средства ухода за столом. Личные вещи вроде накладок тут ещё рискованнее, чем для игрока.",
+            "Коробки мячей — в диапазоне 1500–5000 грн: Training Ball 40+ и Easy Ball 40+ по 120 шт — для многомячевых упражнений и роботов, Master Quality G40+ по 72 шт — для подготовки к соревнованиям. Сумка для мячей Butterfly цилиндрическая, с плечевым ремнём; по данным дистрибьютора вмещает 144 мяча — это 500–1500 грн.",
+            "Ещё варианты: спрей Table Cleaner на 500 мл для игровой поверхности стола (до 500 грн) и кроссовки Radial Cross — по описанию, для тренеров и спортсменов: тренировка, разминка, бег (1500–5000 грн, нужен размер).",
+          ],
+        },
+        links: [
+          { label: { ua: "Training Ball 40+, 120 шт", ru: "Training Ball 40+, 120 шт" }, href: "/butterfly/myachi/m-iachi-butterfly-training-ball-40-120sht-v-up" },
+          { label: { ua: "Сумка для м'ячів Butterfly", ru: "Сумка для мячей Butterfly" }, href: "/butterfly/aksessuary/sumka-dlia-m-iachiv-butterfly" },
+          { label: { ua: "Очищувач для столу Table Cleaner", ru: "Очиститель для стола Table Cleaner" }, href: "/butterfly/aksessuary/ochyshchuvach-dlia-stolu-butterfly-table-cleaner" },
+          { label: { ua: "Кросівки Radial Cross", ru: "Кроссовки Radial Cross" }, href: "/butterfly/obuv/krosivky-butterfly-radial-cross" },
+        ],
+      },
+      {
+        id: "chogo-ne-daruvaty",
+        h: { ua: "Чого не варто дарувати тенісисту", ru: "Что не стоит дарить теннисисту" },
+        p: {
+          ua: [
+            "Найчастіше не підходять подарунки, обрані «за назвою»: топова накладка, яку хвалять професіонали, чи ракетка під ім'ям відомого гравця. Нижче — помилки, яких легко уникнути.",
+            "Топова накладка новачку. Tenergy 05 має швидкість 83, Flextra — 29: різниця майже втричі. Те, що допомагає гравцю з технікою, новачкові заважає контролювати м'яч.",
+            "Не та товщина або не та ручка. Одна модель накладки випускається в кількох товщинах, і товстіша губка додає швидкості. Основа з незвичною формою ручки (FL, ST, AN чи SI) змінює хват, тож навіть правильна модель з іншою ручкою може не підійти.",
+            "Повсякденні кросівки замість ігрових і біла форма. Sunika — модель на щодень: у каталозі вона прямо позначена як не для гри. Переважно біла футболка не підійде для турніру з білим м'ячем.",
+            "Готова професійна ракетка досвідченому гравцю. У нього вже є своя зв'язка, зібрана під стиль, — замість неї краще подарувати заміну його накладки або засоби догляду. А тренувальні м'ячі без зірок — гарний подарунок для тренувань, але на офіційних змаганнях грають м'ячем зі схваленням ITTF.",
+          ],
+          ru: [
+            "Чаще всего не подходят подарки, выбранные «по названию»: топовая накладка, которую хвалят профессионалы, или ракетка с именем известного игрока. Ниже — ошибки, которых легко избежать.",
+            "Топовая накладка новичку. У Tenergy 05 скорость 83, у Flextra — 29: разница почти втрое. То, что помогает игроку с техникой, новичку мешает контролировать мяч.",
+            "Не та толщина или не та ручка. Одна модель накладки выпускается в нескольких толщинах, и более толстая губка добавляет скорости. Основание с непривычной формой ручки (FL, ST, AN или SI) меняет хват, так что даже правильная модель с другой ручкой может не подойти.",
+            "Повседневные кроссовки вместо игровых и белая форма. Sunika — модель на каждый день: в каталоге она прямо помечена как не для игры. Преимущественно белая футболка не подойдёт для турнира с белым мячом.",
+            "Готовая профессиональная ракетка опытному игроку. У него уже есть своя связка, собранная под стиль, — вместо неё лучше подарить замену его накладки или средства ухода. А тренировочные мячи без звёзд — хороший подарок для тренировок, но на официальных соревнованиях играют мячом с одобрением ITTF.",
+          ],
+        },
+        links: [
+          { label: { ua: "Товщина губки накладки", ru: "Толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
+          { label: { ua: "Правила настільного тенісу", ru: "Правила настольного тенниса" }, href: "/blog/pravyla-nastilnogo-tenisu" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Що подарувати тенісисту, якщо не знаєш, чим він грає?", ru: "Что подарить теннисисту, если не знаешь, чем он играет?" },
+        a: {
+          ua: "Те, що не залежить від стилю гри: тризіркові м'ячі, очищувач для накладок, торцеву стрічку, рушник, чохол або сумку. Ці речі потрібні будь-якому гравцю й витрачаються чи зношуються. Накладку й основу краще не дарувати навмання.",
+          ru: "То, что не зависит от стиля игры: трёхзвёздочные мячи, очиститель для накладок, торцевую ленту, полотенце, чехол или сумку. Эти вещи нужны любому игроку и расходуются или изнашиваются. Накладку и основание лучше не дарить наугад.",
+        },
+      },
+      {
+        q: { ua: "Чи можна подарувати накладку, якщо не знаєш яку?", ru: "Можно ли подарить накладку, если не знаешь какую?" },
+        a: {
+          ua: "Краще ні: гравець підбирає модель, товщину губки й колір під свою ракетку, і інша накладка змінить її швидкість та обертання. Модель можна непомітно з'ясувати: назва й логотип ITTF надруковані на накладці біля ручки. Якщо дізнатися не вдалося, подаруйте засоби догляду або чохол.",
+          ru: "Лучше не стоит: игрок подбирает модель, толщину губки и цвет под свою ракетку, и другая накладка изменит её скорость и вращение. Модель можно незаметно выяснить: название и логотип ITTF напечатаны на накладке у ручки. Если узнать не удалось, подарите средства ухода или чехол.",
+        },
+      },
+      {
+        q: { ua: "Який подарунок тенісисту до 500 грн?", ru: "Какой подарок теннисисту до 500 грн?" },
+        a: {
+          ua: "Станом на 04.11.2026 у цей бюджет вкладаються м'ячі Butterfly R40+ 3* по 3 шт, очищувачі Combi Cleaner і Spin Refresh, захисна плівка, торцева стрічка на одну ракетку, клей Free Chack 37 мл, пляшка, тубус для м'ячів і частина шкарпеток. М'ячі й засоби догляду — найбезпечніший вибір.",
+          ru: "На 04.11.2026 в этот бюджет укладываются мячи Butterfly R40+ 3* по 3 шт, очистители Combi Cleaner и Spin Refresh, защитная плёнка, торцевая лента на одну ракетку, клей Free Chack 37 мл, бутылка, тубус для мячей и часть носков. Мячи и средства ухода — самый безопасный выбор.",
+        },
+      },
+      {
+        q: { ua: "Що подарувати тренеру з настільного тенісу?", ru: "Что подарить тренеру по настольному теннису?" },
+        a: {
+          ua: "Те, що витрачається на заняттях: коробку тренувальних м'ячів на 120 шт, сумку для м'ячів або спрей для чищення столу. Для тренера, який багато рухається на тренуванні, — кросівки Butterfly Radial Cross, якщо відомий розмір.",
+          ru: "То, что расходуется на занятиях: коробку тренировочных мячей на 120 шт, сумку для мячей или спрей для чистки стола. Тренеру, который много двигается на тренировке, — кроссовки Butterfly Radial Cross, если известен размер.",
+        },
+      },
+      {
+        q: { ua: "Що подарувати дитині, яка займається настільним тенісом?", ru: "Что подарить ребёнку, который занимается настольным теннисом?" },
+        a: {
+          ua: "Якщо ракетки ще немає — зібрану ракетку з дерев'яної основи класу ALL і повільних накладок Flextra або Sriver, а не професійну. Якщо ракетка вже є — чохол, тренувальні м'ячі чи рушник. Тренер дитини зазвичай підкаже, який інвентар потрібен саме зараз.",
+          ru: "Если ракетки ещё нет — собранную ракетку из деревянного основания класса ALL и медленных накладок Flextra или Sriver, а не профессиональную. Если ракетка уже есть — чехол, тренировочные мячи или полотенце. Тренер ребёнка обычно подскажет, какой инвентарь нужен именно сейчас.",
+        },
+      },
+      {
+        q: { ua: "Чи варто дарувати кросівки для настільного тенісу?", ru: "Стоит ли дарить кроссовки для настольного тенниса?" },
+        a: {
+          ua: "Так, якщо знаєте точний розмір: ігрові кросівки з чіпкою підошвою потрібні тому, хто тренується регулярно. Lezoline Zero й Unizes II — у діапазоні 1500–5000 грн, на 04.11.2026 у наявності розміри 38–46. Модель Sunika повсякденна й не призначена для гри.",
+          ru: "Да, если знаете точный размер: игровые кроссовки с цепкой подошвой нужны тому, кто тренируется регулярно. Lezoline Zero и Unizes II — в диапазоне 1500–5000 грн, на 04.11.2026 в наличии размеры 38–46. Модель Sunika повседневная и не предназначена для игры.",
+        },
+      },
+      {
+        q: { ua: "Які м'ячі подарувати тенісисту?", ru: "Какие мячи подарить теннисисту?" },
+        a: {
+          ua: "Тому, хто грає в лізі чи на турнірах, — тризіркові Butterfly R40+ 3* або S40+ 3* зі схваленням ITTF. Для тренувань і гри вдома — Training Ball 40+ чи Easy Ball 40+, а тренеру — коробку на 120 шт.",
+          ru: "Тому, кто играет в лиге или на турнирах, — трёхзвёздочные Butterfly R40+ 3* или S40+ 3* с одобрением ITTF. Для тренировок и игры дома — Training Ball 40+ или Easy Ball 40+, а тренеру — коробку на 120 шт.",
+        },
+      },
+      {
+        q: { ua: "Чи можна подарувати готову ракетку досвідченому гравцю?", ru: "Можно ли подарить готовую ракетку опытному игроку?" },
+        a: {
+          ua: "Ризиковано: у досвідченого гравця вже є зв'язка основи й накладок під його стиль, і чужу він, найімовірніше, не використовуватиме. Краще подарувати заміну тієї накладки, якою він грає, або аксесуари. Готова ракетка доречна, коли людина сама назвала модель.",
+          ru: "Рискованно: у опытного игрока уже есть связка основания и накладок под его стиль, и чужую он, скорее всего, использовать не будет. Лучше подарить замену той накладки, которой он играет, или аксессуары. Готовая ракетка уместна, когда человек сам назвал модель.",
+        },
+      },
+    ],
+    officialSource: {
+      label: {
+        ua: "Butterfly — форми ручок FL, ST, AN і SI: чим відрізняються",
+        ru: "Butterfly — формы ручек FL, ST, AN и SI: чем отличаются",
+      },
+      url: "https://butterfly-global.com/en/faq/detail/015702.html",
+    },
+    sources: [
+      {
+        label: {
+          ua: "Butterfly — FAQ: форми ручок основ (FL, ST, AN, SI)",
+          ru: "Butterfly — FAQ: формы ручек оснований (FL, ST, AN, SI)",
+        },
+        url: "https://butterfly-global.com/en/faq/detail/015702.html",
+        kind: "official",
+      },
+      {
+        label: {
+          ua: "Expert Table Tennis — ідеї подарунків тенісисту (м'ячі, взуття, накладки)",
+          ru: "Expert Table Tennis — идеи подарков теннисисту (мячи, обувь, накладки)",
+        },
+        url: "https://www.experttabletennis.com/christmas-gift-ideas-table-tennis-player/",
+        kind: "review",
+      },
+    ],
+    relatedProducts: [
+      { label: { ua: "м'ячі для настільного тенісу", ru: "мячи для настольного тенниса" }, href: "/myachi" },
+      { label: { ua: "засоби догляду за накладками", ru: "средства ухода за накладками" }, href: "/aksessuary/doglyad" },
+      { label: { ua: "чохли для ракеток", ru: "чехлы для ракеток" }, href: "/chehly/chokhly" },
+      { label: { ua: "рушники Butterfly", ru: "полотенца Butterfly" }, href: "/aksessuary/rushnyky" },
+    ],
+    products: [
+      "m-iachi-butterfly-r40-3-3sht-v-up",
+      "ochysnyk-dlia-nakladok-butterfly-combi-cleaner",
+      "rushnyk-butterfly-yao-midi",
+      "chokhol-butterfly-easy-case",
+      "krosivky-butterfly-lezoline-zero",
+      "timo-boll-allround",
+    ],
+    relatedPosts: ["tablytsia-nakladok-butterfly", "yaki-myachi-vybraty", "nakladka-dlya-pochatkivtsya", "doglyad-za-nakladkamy"],
+  },
 };
+
+/** Підставляє таблиці з каталогу (specTable → table). Один раз на статтю, результат кешується. */
+const resolved = new Map<string, BlogPost>();
+function withSpecTables(post: BlogPost): BlogPost {
+  if (!post.sections.some((s) => s.specTable)) return post;
+  let out = resolved.get(post.slug);
+  if (!out) {
+    out = {
+      ...post,
+      sections: post.sections.map((s) => (s.specTable ? { ...s, table: buildSpecTable(s.specTable) } : s)),
+    };
+    resolved.set(post.slug, out);
+  }
+  return out;
+}
 
 /** Усі статті (крім чернеток), відсортовані за датою публікації спадаючи. */
 export function getAllPosts(): BlogPost[] {
   return Object.values(POSTS)
     .filter((p) => !p.draft)
-    .sort((a, b) => (a.datePublished < b.datePublished ? 1 : -1));
+    .sort((a, b) => (a.datePublished < b.datePublished ? 1 : -1))
+    .map(withSpecTables);
 }
 
 /** Стаття за слагом; чернетки повертаються лише якщо явно шукати (для прев'ю). null — немає. */
 export function getPost(slug: string): BlogPost | null {
   const post = POSTS[slug];
   if (!post || post.draft) return null;
-  return post;
+  return withSpecTables(post);
 }
 
 export function getRelatedPosts(post: BlogPost): BlogPost[] {

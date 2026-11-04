@@ -248,6 +248,17 @@ function postLines(withSummary: boolean): string[] {
       // Перший розділ статті — answer-first «Коротко»: прямий ответ на запит статті.
       const first = post.sections[0];
       if (first) for (const para of first.p[UA]) out.push(`- ${para}`);
+      // Таблиці-довідники з каталогу (specTable) — саме їх асистенти цитують, тож даємо
+      // повністю, markdown-таблицею. Звичайні редакційні таблиці статей тут не дублюємо.
+      for (const s of post.sections) {
+        if (!s.specTable || !s.table) continue;
+        out.push("", `#### ${s.h[UA]}`);
+        out.push(`| ${s.table.columns.map((c) => c[UA]).join(" | ")} |`);
+        out.push(`|${s.table.columns.map(() => "---").join("|")}|`);
+        for (const row of s.table.rows) {
+          out.push(`| ${row.map((c) => (c.href ? `[${c[UA]}](${url(`/ua${c.href}`)})` : c[UA])).join(" | ")} |`);
+        }
+      }
     }
     for (const f of post.faq ?? []) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
     out.push("");

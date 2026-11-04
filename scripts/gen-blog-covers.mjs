@@ -453,7 +453,85 @@ function pryimaty() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 13. Таблиця накладок: рядки таблиці-«смужки» різної довжини ─── */
+function tablytsiaNakladok() {
+  // ⚠️ ТЕЗА СТАТТІ: усі моделі в одній таблиці, кожна — рядок із «шкалою». Довжини смужок —
+  // декор (не дані), щоб не зашивати в картинку числа, які розійдуться з каталогом.
+  // Акцентний рядок — той, що найдовший: «знайти свою модель у таблиці».
+  const b = [`<circle cx="1120" cy="520" r="270" fill="url(#halo)"/>`];
+  const lens = [0.62, 0.78, 0.55, 1, 0.7, 0.46, 0.84, 0.6];
+  const x0 = 860;
+  const full = SAFE.x1 - 40 - x0;
+  lens.forEach((k, i) => {
+    const y = 270 + i * 72;
+    const accent = k === 1;
+    b.push(
+      accent ? dotAccent(810, y, 14) : dot(810, y, 14, 0.5),
+      `<rect x="${x0}" y="${y - 9}" width="${full}" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.05"/>`,
+      `<rect x="${x0}" y="${y - 9}" width="${Math.round(full * k)}" height="18" rx="9" fill="${accent ? ACCENT : DOT_RING}" fill-opacity="${accent ? 0.9 : 0.55}"/>`,
+    );
+  });
+  return wrap(b.join("\n"));
+}
+
+/* ─── 14. Таблиця основ: розрізи основ — шари дерева й волокна ─── */
+function tablytsiaOsnov() {
+  // ⚠️ ТЕЗА СТАТТІ: основи відрізняються складом шарів (дерево, волокно ззовні чи біля ядра)
+  // і товщиною. Пʼять «торців» поруч; волокно — тонкі світлі шари, в акцентній — підсвічене.
+  const b = [`<circle cx="1110" cy="540" r="270" fill="url(#halo)"/>`];
+  const blades = [
+    { x: 800, layers: ["w", "w", "w", "w", "w"] },
+    { x: 905, layers: ["w", "f", "w", "w", "w", "f", "w"] },
+    { x: 1010, layers: ["w", "w", "f", "w", "f", "w", "w"], accent: true },
+    { x: 1115, layers: ["w", "f", "w", "f", "w"] },
+    { x: 1220, layers: ["w", "w", "w", "w", "w", "w", "w"] },
+  ];
+  const w = 70;
+  blades.forEach((bl) => {
+    let y = 300;
+    for (const l of bl.layers) {
+      const h = l === "f" ? 14 : 58;
+      const fill = l === "f" ? (bl.accent ? ACCENT : DOT_CORE) : DOT_RING;
+      const op = l === "f" ? (bl.accent ? 0.95 : 0.6) : bl.accent ? 0.6 : 0.38;
+      b.push(`<rect x="${bl.x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${fill}" fill-opacity="${op}"/>`);
+      y += h + 6;
+    }
+  });
+  return wrap(b.join("\n"));
+}
+
+/* ─── 15. Подарунок тенісисту: коробка зі стрічкою, мʼяч і ракетка ─── */
+function podarunok() {
+  const b = [`<circle cx="1080" cy="560" r="280" fill="url(#halo)"/>`];
+  const bx = 900;
+  const by = 520;
+  const bw = 300;
+  const bh = 250;
+  b.push(
+    // коробка й кришка
+    `<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="10" fill="${DOT_RING}" fill-opacity="0.55"/>`,
+    `<rect x="${bx - 18}" y="${by - 56}" width="${bw + 36}" height="62" rx="10" fill="${DOT_RING}" fill-opacity="0.75"/>`,
+    // стрічка
+    `<rect x="${bx + bw / 2 - 18}" y="${by - 56}" width="36" height="${bh + 56}" fill="${ACCENT}" fill-opacity="0.9"/>`,
+    // бант
+    `<path d="M${bx + bw / 2} ${by - 56} C ${bx + bw / 2 - 90} ${by - 150}, ${bx + bw / 2 - 120} ${by - 40}, ${bx + bw / 2} ${by - 56} Z" fill="none" stroke="${ACCENT}" stroke-width="5" stroke-opacity="0.9"/>`,
+    `<path d="M${bx + bw / 2} ${by - 56} C ${bx + bw / 2 + 90} ${by - 150}, ${bx + bw / 2 + 120} ${by - 40}, ${bx + bw / 2} ${by - 56} Z" fill="none" stroke="${ACCENT}" stroke-width="5" stroke-opacity="0.9"/>`,
+  );
+  // ракетка, що спирається на коробку, і мʼяч
+  b.push(
+    `<g transform="rotate(24 1250 470)">` +
+      `<ellipse cx="1250" cy="430" rx="58" ry="70" fill="${DOT_RING}" fill-opacity="0.7" stroke="${DOT_CORE}" stroke-opacity="0.6" stroke-width="2"/>` +
+      `<rect x="1239" y="494" width="22" height="90" rx="6" fill="${DOT_CORE}" fill-opacity="0.5"/>` +
+      `</g>`,
+    dotAccent(840, 400, 26),
+  );
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "tablytsia-nakladok-butterfly-cover.svg": tablytsiaNakladok(),
+  "tablytsia-osnov-butterfly-cover.svg": tablytsiaOsnov(),
+  "shcho-podaruvaty-tenisystu-cover.svg": podarunok(),
   "yak-hraty-proty-shypiv-cover.svg": shypy(),
   "yaki-myachi-vybraty-cover.svg": myachi(),
   "yak-pryimaty-podachu-cover.svg": pryimaty(),

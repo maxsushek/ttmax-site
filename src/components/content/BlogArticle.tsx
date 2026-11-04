@@ -514,6 +514,14 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                                     <span>{cell[locale]}</span>
                                   )}
                                 </span>
+                              ) : cell.href ? (
+                                <Link
+                                  href={`/${locale}${cell.href}`}
+                                  data-blog-link="table"
+                                  className="font-semibold text-accent hover:underline"
+                                >
+                                  {cell[locale]}
+                                </Link>
                               ) : (
                                 cell[locale]
                               )}
