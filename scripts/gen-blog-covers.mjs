@@ -528,7 +528,53 @@ function podarunok() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 16. Dignics 05 чи 09C: дві дуги з однієї точки ─── */
+function dignics0509() {
+  // ⚠️ ТЕЗА СТАТТІ: 05 — швидша й пласкіша траєкторія, 09C — вища дуга й більше обертання.
+  // Акцент — висока дуга (09C) зі стрілкою обертання; пласка — тьмяна. БЕЗ ЧИСЕЛ.
+  const table = 780;
+  const x0 = 810;
+  const y0 = 650;
+  return wrap(
+    [
+      `<circle cx="1120" cy="470" r="250" fill="url(#halo)"/>`,
+      `<line x1="770" y1="${table}" x2="${SAFE.x1}" y2="${table}" stroke="#FFFFFF" stroke-opacity="0.24" stroke-width="3"/>`,
+      `<line x1="1010" y1="${table}" x2="1010" y2="${table - 56}" stroke="#FFFFFF" stroke-opacity="0.24" stroke-width="3"/>`,
+      `<path d="M${x0} ${y0} Q 1060 ${y0 - 150} 1280 ${table - 14}" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.45" stroke-width="2.6" stroke-dasharray="10 10"/>`,
+      dot(1280, table - 14, 18, 0.55),
+      `<path d="M${x0} ${y0} Q 990 ${y0 - 430} 1140 ${table - 16}" fill="none" stroke="${ACCENT}" stroke-opacity="0.65" stroke-width="3"/>`,
+      dotAccent(1140, table - 16, 20),
+      spinArrow(1140, table - 16, 42, -1, ACCENT, 0.85),
+      dot(x0, y0, 24, 0.55),
+    ].join("\n"),
+  );
+}
+
+/* ─── 17. Три ALC-основи: однакові цифри, різні ручки ─── */
+function alcTrio() {
+  // ⚠️ ТЕЗА СТАТТІ: три основи з ОДНАКОВИМИ реакцією й вібрацією — спільна рівна лінія через
+  // усі три лопаті; відрізняються деталі (ручка). Акцент — середня. БЕЗ ЧИСЕЛ.
+  const b = [`<circle cx="1060" cy="520" r="270" fill="url(#halo)"/>`];
+  const xs = [850, 1060, 1270];
+  const handles = [
+    (x) => `<path d="M${x - 13} 610 L${x - 18} 720 Q ${x} 734 ${x + 18} 720 L${x + 13} 610 Z"`, // FL — розширюється донизу
+    (x) => `<rect x="${x - 13}" y="610" width="26" height="112" rx="6"`, // ST — пряма
+    (x) => `<path d="M${x - 13} 610 Q ${x - 22} 665 ${x - 14} 720 L${x + 14} 720 Q ${x + 22} 665 ${x + 13} 610 Z"`, // AN — опукла
+  ];
+  xs.forEach((x, i) => {
+    const accent = i === 1;
+    b.push(
+      `<ellipse cx="${x}" cy="510" rx="78" ry="96" fill="${DOT_RING}" fill-opacity="${accent ? 0.65 : 0.45}"${accent ? ` stroke="${ACCENT}" stroke-opacity="0.9" stroke-width="3"` : ""}/>`,
+      `${handles[i](x)} fill="${accent ? ACCENT : DOT_CORE}" fill-opacity="${accent ? 0.85 : 0.5}"/>`,
+    );
+  });
+  b.push(`<line x1="760" y1="470" x2="${SAFE.x1}" y2="470" stroke="${ACCENT}" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="9 9"/>`);
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "dignics-05-chy-09c-cover.svg": dignics0509(),
+  "viscaria-timo-boll-alc-fan-zhendong-alc-cover.svg": alcTrio(),
   "tablytsia-nakladok-butterfly-cover.svg": tablytsiaNakladok(),
   "tablytsia-osnov-butterfly-cover.svg": tablytsiaOsnov(),
   "shcho-podaruvaty-tenisystu-cover.svg": podarunok(),

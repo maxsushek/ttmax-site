@@ -2538,7 +2538,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "основи з ZLC", ru: "основания с ZLC" }, href: "/osnovaniya/zlc" },
     ],
-    relatedPosts: ["tablytsia-osnov-butterfly", "apolonia-zlc-oglyad", "versii-osnov-butterfly", "inventar-profi-butterfly"],
+    relatedPosts: ["viscaria-timo-boll-alc-fan-zhendong-alc", "tablytsia-osnov-butterfly", "apolonia-zlc-oglyad", "versii-osnov-butterfly"],
   },
 
   "doglyad-za-nakladkamy": {
@@ -4005,7 +4005,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
       { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
     ],
-    relatedPosts: ["tablytsia-nakladok-butterfly", "zyre-03-vs-dignics-tenergy", "apolonia-zlc-oglyad", "tovshchyna-hubky-nakladky"],
+    relatedPosts: ["dignics-05-chy-09c", "tablytsia-nakladok-butterfly", "zyre-03-vs-dignics-tenergy", "apolonia-zlc-oglyad"],
     interactive: "rubberPoll",
   },
 
@@ -4611,7 +4611,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Tenergy 05", ru: "Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
       { label: { ua: "Butterfly Aibiss", ru: "Butterfly Aibiss" }, href: "/butterfly/nakladki/aibiss" },
     ],
-    relatedPosts: ["tenergy-chy-dignics", "zyre-03-vs-dignics-tenergy", "nakladka-dlya-pochatkivtsya", "yak-pryimaty-podachu"],
+    relatedPosts: ["dignics-05-chy-09c", "tenergy-chy-dignics", "zyre-03-vs-dignics-tenergy", "nakladka-dlya-pochatkivtsya"],
     interactive: "rubberPoll",
   },
   "versii-osnov-butterfly": {
@@ -5205,7 +5205,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "Butterfly Zhang Jike ALC", ru: "Butterfly Zhang Jike ALC" }, href: "/butterfly/osnovaniya/zhang-jike-alc" },
       { label: { ua: "Butterfly Innerforce Layer ALC", ru: "Butterfly Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
     ],
-    relatedPosts: ["tablytsia-osnov-butterfly", "inventar-profi-butterfly", "znyati-osnovy-butterfly", "yak-vybraty-raketku"],
+    relatedPosts: ["viscaria-timo-boll-alc-fan-zhendong-alc", "tablytsia-osnov-butterfly", "inventar-profi-butterfly", "znyati-osnovy-butterfly"],
   },
 
   "inventar-profi-butterfly": {
@@ -8565,7 +8565,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "серія Dignics", ru: "серия Dignics" }, href: "/nakladki/dignics" },
       { label: { ua: "накладки з довгими шипами", ru: "накладки с длинными шипами" }, href: "/nakladki/dovgi-shypy" },
     ],
-    relatedPosts: ["naykrashchi-nakladki-butterfly", "tenergy-chy-dignics", "zyre-03-vs-dignics-tenergy", "lypki-chy-tenzorni-nakladky"],
+    relatedPosts: ["dignics-05-chy-09c", "naykrashchi-nakladki-butterfly", "tenergy-chy-dignics", "zyre-03-vs-dignics-tenergy"],
   },
 
   "tablytsia-osnov-butterfly": {
@@ -8963,7 +8963,7 @@ const POSTS: Record<string, BlogPost> = {
       { label: { ua: "універсальні основи", ru: "универсальные основания" }, href: "/osnovaniya/universalni" },
     ],
     products: ["viscaria", "viscaria-super-alc", "innerforce-layer-alc", "innerforce-layer-zlc", "primorac-carbon", "timo-boll-allround"],
-    relatedPosts: ["alc-chy-zlc", "apolonia-zlc-oglyad", "inventar-profi-butterfly", "versii-osnov-butterfly"],
+    relatedPosts: ["viscaria-timo-boll-alc-fan-zhendong-alc", "alc-chy-zlc", "apolonia-zlc-oglyad", "inventar-profi-butterfly"],
     consultAfter: "yak-obraty",
   },
 
@@ -9415,6 +9415,970 @@ const POSTS: Record<string, BlogPost> = {
       "timo-boll-allround",
     ],
     relatedPosts: ["tablytsia-nakladok-butterfly", "yaki-myachi-vybraty", "nakladka-dlya-pochatkivtsya", "doglyad-za-nakladkamy"],
+  },
+  // ТАРГЕТ UA: «dignics 05 чи 09c», «dignics 05 або 09c на форхенд», «різниця dignics 05 і 09c».
+  // ТАРГЕТ RU: «dignics 05 или 09c», «dignics 05 vs 09c», «что выбрать dignics 05 или 09c».
+  // ЦИФРИ (звірено 07.11.2026 з офіційними картками, збігаються з products.ts):
+  //   Dignics 05 — butterfly-global.com/en/products/detail/06040.html: High Tension pimples-in,
+  //     Spring Sponge X 40, 2,1 / 1,9, Speed 86 / Spin 85 / Arc 88, шипи «No. 05»,
+  //     «uniquely composed top sheet, with strengthened abrasion»; для атаки топспіном і контртопспіну
+  //     біля столу та з середньої дистанції; клей — водний Butterfly; поверхня делікатна → захисна плівка.
+  //   Dignics 09C — butterfly-global.com/en/products/detail/06070.html: «High friction High Tension
+  //     pimples-in», Spring Sponge X 44, 2,1 / 1,9, Speed 79 / Spin 96 / Arc 96, шипи «No. 209»
+  //     («topspin and defensive play with high amount of spin»), індекс переглянуто з лютого 2023;
+  //     клей — водний Butterfly; поверхня делікатна й легко пошкоджується; логотип після зняття
+  //     плівки може виглядати тьмяним, на якість не впливає.
+  //   Серія — butterfly-global.com/en/product/dignics/: «09C generates the heavy top-spin play with
+  //     tackiness»; Dignics 05 за старою шкалою — Speed 13.5 / Spin 12.
+  //   Догляд — butterfly-global.com/en/products/care/pimples_in.html: очищувач Spin Refresh або Cure Water,
+  //     для Dignics 09C і Glayzer 09C Butterfly радить Adhesive Rubber Protect Film III (клейку плівку).
+  //   Третій варіант — products.ts: Tenergy 05 Hard 82/96/92/43°, Zyre 03 88/100/96/44°,
+  //     Dignics 80 88/82/86/40°, Dignics 64 90/79/84/40°, Glayzer 09C 75/87/95/42°.
+  // ГРАВЦІ — scripts/player-profiles/*.json (дати asOf зі сторінок Butterfly; профілі перевірені 03–04.11.2026).
+  //   Butterfly не підписує сторони: порядок «основа → форхенд → бекхенд». 09C — 15 профілів:
+  //   1-ша позиція — 10 (Цю, Ассар, Чельберг, Овчаров, Тогамі, Фрейташ, Сінодзука, Міва Харімото,
+  //   Мацусіма, Вонг), 2-га — 5 (Лім, Цю, Франціска, Чельберг, Чжу), без сторони — 2 (Фань, Лінь Шидун).
+  //   05 — 8 профілів: 1-ша позиція — 4 (усі з 05 на обох боках: Діас, Аполонія, Полканова, Болль),
+  //   2-га — 8. Комбінація 09C + 05 — 3 (Ассар, Фрейташ, Міва Харімото); 05 + 09C — 0.
+  //   Основи (тип волокна — bases.ts/spec-tables): 09C — outer 7, inner 3, не вказано 5;
+  //   05 — outer 3, inner 4, не вказано 1.
+  //   No. 209 (06070): також «ease of over-the-table techniques and counter topspin». Обидві картки:
+  //     «delicate surface, it will be easily damaged» + «cover it with protect sheet after playing».
+  //   Inner/outer — butterfly-global.com/en/products/blade/outer_inner_fiber.html: outer «faster shots»,
+  //     inner «a touch of longer dwell time» (про дугу нічого).
+  // ОГЛЯД (думка автора, не факт): vsenastolnitenis.cz, Karel Malík, © 2020 (дата статті не вказана;
+  //   запуск 09C — 01.04.2020): пасивні удари повільні, на сильних — близько до T05; катапульта
+  //   D05 > T05 > 09C; надто м'яка коротка підрізка не долітає до сітки; пасивний блок — у сітку;
+  //   «Innerforce blades might dampen its potential too much». Звірено 07.11.2026.
+  // Форумні гілки tabletennisdaily / mytabletennis / megaspin не відкрились (403) — у джерела не внесені.
+  "dignics-05-chy-09c": {
+    slug: "dignics-05-chy-09c",
+    // Блок «Підберемо» — після розділу про сторони ракетки: там читач уже бачить, хто що ставить.
+    consultAfter: "forhend-bekhend",
+    products: ["dignics-09c", "dignics-05", "tenergy-05-hard", "zyre-03", "glayzer-09c", "dignics-80"],
+    h1: {
+      ua: "Dignics 05 чи Dignics 09C: яку обрати на форхенд і бекхенд",
+      ru: "Dignics 05 или Dignics 09C: какую выбрать на форхенд и бэкхенд",
+    },
+    metaTitle: {
+      ua: "Dignics 05 чи 09C — що обрати на форхенд | TTMAX",
+      ru: "Dignics 05 или 09C — что выбрать на форхенд | TTMAX",
+    },
+    metaDescription: {
+      ua: "⚖️ Dignics 05 чи 09C: швидкість 86 і 79, обертання 85 і 96, губка 40° і 44°. Хто з 20 гравців Butterfly ставить 09C на форхенд, а 05 — на бекхенд.",
+      ru: "⚖️ Dignics 05 или 09C: скорость 86 и 79, вращение 85 и 96, губка 40° и 44°. Кто из 20 игроков Butterfly ставит 09C на форхенд, а 05 — на бэкхенд.",
+    },
+    excerpt: {
+      ua: "Порівняння двох найпопулярніших Dignics за цифрами Butterfly, офіційним описом топшита й інвентарем 20 гравців: хто ставить 09C, хто 05 і на який бік.",
+      ru: "Сравнение двух самых популярных Dignics по цифрам Butterfly, официальному описанию топшита и инвентарю 20 игроков: кто ставит 09C, кто 05 и на какую сторону.",
+    },
+    datePublished: "2026-11-07",
+    dateModified: "2026-11-07",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/dignics-05-chy-09c-cover.svg",
+    heroAlt: {
+      ua: "Дві накладки Butterfly Dignics 05 і Dignics 09C на ракетці для настільного тенісу",
+      ru: "Две накладки Butterfly Dignics 05 и Dignics 09C на ракетке для настольного тенниса",
+    },
+    intro: {
+      ua: [
+        "Dignics 05 чи 09C — вибір, у який упирається майже кожен, хто вирішив грати накладками Dignics. Обидві моделі мають губку Spring Sponge X і ті самі товщини 1,9 і 2,1 мм, але за індексом Butterfly 09C повільніша на 7 пунктів, крутить на 11 пунктів сильніше і має губку на 4 градуси твердішу.",
+        "Нижче — цифри обох накладок поруч, що Butterfly пише про топшит 09C, як ці накладки розподіляють між форхендом і бекхендом 20 гравців Butterfly з наших профілів, з якими основами їх поєднують і як ухвалити рішення за п'ять кроків.",
+      ],
+      ru: [
+        "Dignics 05 или 09C — выбор, в который упирается почти каждый, кто решил играть накладками Dignics. У обеих моделей губка Spring Sponge X и одни и те же толщины 1,9 и 2,1 мм, но по индексу Butterfly 09C медленнее на 7 пунктов, крутит на 11 пунктов сильнее и имеет губку на 4 градуса твёрже.",
+        "Ниже — цифры обеих накладок рядом, что Butterfly пишет о топшите 09C, как эти накладки распределяют между форхендом и бэкхендом 20 игроков Butterfly из наших профилей, с какими основаниями их сочетают и как принять решение за пять шагов.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротко: Dignics 05 чи 09C — яку обрати", ru: "Коротко: Dignics 05 или 09C — какую выбрать" },
+        p: {
+          ua: [
+            "Dignics 09C — для гравця, який будує гру на обертанні й повному розгоні: обертання 96 і дуга 96 за індексом Butterfly, губка 44°, топшит із підвищеним тертям. Dignics 05 — швидша (86 проти 79) і м'якша (40°) накладка для атаки топспіном і контртопспіну біля столу та з середньої дистанції.",
+            "У профілях гравців Butterfly 09C найчастіше стоїть першою, тобто на форхенді (10 із 15 профілів), а 05 — на бекхенді (у всіх 8 профілях з 05). Сетапу «05 на форхенді, 09C на бекхенді» серед 20 гравців немає жодного.",
+          ],
+          ru: [
+            "Dignics 09C — для игрока, который строит игру на вращении и полном разгоне: вращение 96 и дуга 96 по индексу Butterfly, губка 44°, топшит с повышенным трением. Dignics 05 — более быстрая (86 против 79) и мягкая (40°) накладка для атаки топспином и контртопспина у стола и со средней дистанции.",
+            "В профилях игроков Butterfly 09C чаще всего стоит первой, то есть на форхенде (10 из 15 профилей), а 05 — на бэкхенде (во всех 8 профилях с 05). Сетапа «05 на форхенде, 09C на бэкхенде» среди 20 игроков нет ни одного.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Параметр", ru: "Параметр" },
+            { ua: "Dignics 05", ru: "Dignics 05" },
+            { ua: "Dignics 09C", ru: "Dignics 09C" },
+          ],
+          rows: [
+            [{ ua: "Швидкість", ru: "Скорость" }, { ua: "86", ru: "86" }, { ua: "79", ru: "79" }],
+            [{ ua: "Обертання", ru: "Вращение" }, { ua: "85", ru: "85" }, { ua: "96", ru: "96" }],
+            [{ ua: "Дуга", ru: "Дуга" }, { ua: "88", ru: "88" }, { ua: "96", ru: "96" }],
+            [{ ua: "Губка", ru: "Губка" }, { ua: "Spring Sponge X, 40°", ru: "Spring Sponge X, 40°" }, { ua: "Spring Sponge X, 44°", ru: "Spring Sponge X, 44°" }],
+            [{ ua: "Топшит", ru: "Топшит" }, { ua: "High Tension", ru: "High Tension" }, { ua: "High Tension з підвищеним тертям", ru: "High Tension с повышенным трением" }],
+            [{ ua: "Товщина", ru: "Толщина" }, { ua: "1,9 / 2,1 мм", ru: "1,9 / 2,1 мм" }, { ua: "1,9 / 2,1 мм", ru: "1,9 / 2,1 мм" }],
+            [{ ua: "Гравців із 20: FH / BH", ru: "Игроков из 20: FH / BH" }, { ua: "4 / 8", ru: "4 / 8" }, { ua: "10 / 5 (+2 без сторони)", ru: "10 / 5 (+2 без стороны)" }],
+            [{ ua: "Картка", ru: "Карточка" }, { ua: "Dignics 05", ru: "Dignics 05", href: "/butterfly/nakladki/dignics-05" }, { ua: "Dignics 09C", ru: "Dignics 09C", href: "/butterfly/nakladki/dignics-09c" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Уся серія Dignics", ru: "Вся серия Dignics" }, href: "/nakladki/dignics" },
+          { label: { ua: "Гравці Butterfly та їхній інвентар", ru: "Игроки Butterfly и их инвентарь" }, href: "/igroki" },
+        ],
+      },
+      {
+        id: "tsyfry",
+        h: { ua: "Різниця Dignics 05 і 09C у цифрах Butterfly", ru: "Разница Dignics 05 и 09C в цифрах Butterfly" },
+        p: {
+          ua: [
+            "За індексом Butterfly різниця між накладками йде в протилежні боки: 09C втрачає 7 пунктів швидкості (79 проти 86), але додає 11 пунктів обертання (96 проти 85) і 8 пунктів дуги (96 проти 88). Губка в 09C твердіша на 4 градуси — 44° проти 40°.",
+            "Ці числа Butterfly наводить на картках обох моделей станом на 07.11.2026. На обох картках сказано, що індекси для накладок Butterfly переглянуто з лютого 2023 року через удосконалений метод вимірювань — тому старі описи в магазинах і оглядах можуть давати інші числа.",
+            "Дуга 96 означає вищу траєкторію: м'яч після удару 09C іде з більшим запасом над сіткою, ніж після 05. Швидкість 79 означає, що на тому самому русі м'яч від 09C летить повільніше — заради сильнішого обертання.",
+            "Для порівняння масштабу: обертання 96 у 09C — стільки ж, скільки в Tenergy 05 Hard, і на 4 пункти менше, ніж у Zyre 03 (100). А швидкість 86 у Dignics 05 — на 3 пункти вища, ніж у Tenergy 05 (83).",
+          ],
+          ru: [
+            "По индексу Butterfly разница между накладками идёт в противоположные стороны: 09C теряет 7 пунктов скорости (79 против 86), но добавляет 11 пунктов вращения (96 против 85) и 8 пунктов дуги (96 против 88). Губка у 09C твёрже на 4 градуса — 44° против 40°.",
+            "Эти числа Butterfly приводит на карточках обеих моделей по состоянию на 07.11.2026. На обеих карточках сказано, что индексы для накладок Butterfly пересмотрены с февраля 2023 года из-за усовершенствованного метода измерений — поэтому старые описания в магазинах и обзорах могут давать другие числа.",
+            "Дуга 96 означает более высокую траекторию: мяч после удара 09C идёт с бо́льшим запасом над сеткой, чем после 05. Скорость 79 означает, что при том же движении мяч от 09C летит медленнее — ради более сильного вращения.",
+            "Для сравнения масштаба: вращение 96 у 09C — столько же, сколько у Tenergy 05 Hard, и на 4 пункта меньше, чем у Zyre 03 (100). А скорость 86 у Dignics 05 — на 3 пункта выше, чем у Tenergy 05 (83).",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Показник", ru: "Показатель" },
+            { ua: "Dignics 05", ru: "Dignics 05" },
+            { ua: "Dignics 09C", ru: "Dignics 09C" },
+            { ua: "Різниця 09C", ru: "Разница 09C" },
+          ],
+          rows: [
+            [{ ua: "Швидкість", ru: "Скорость" }, { ua: "86", ru: "86" }, { ua: "79", ru: "79" }, { ua: "−7", ru: "−7" }],
+            [{ ua: "Обертання", ru: "Вращение" }, { ua: "85", ru: "85" }, { ua: "96", ru: "96" }, { ua: "+11", ru: "+11" }],
+            [{ ua: "Дуга", ru: "Дуга" }, { ua: "88", ru: "88" }, { ua: "96", ru: "96" }, { ua: "+8", ru: "+8" }],
+            [{ ua: "Твердість губки", ru: "Твёрдость губки" }, { ua: "40°", ru: "40°" }, { ua: "44°", ru: "44°" }, { ua: "+4°", ru: "+4°" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Таблиця всіх накладок Butterfly", ru: "Таблица всех накладок Butterfly" }, href: "/blog/tablytsia-nakladok-butterfly" },
+        ],
+      },
+      {
+        id: "topshyt",
+        h: { ua: "Що робить 09C іншою: топшит і шипи", ru: "Что делает 09C другой: топшит и шипы" },
+        p: {
+          ua: [
+            "Головна відмінність 09C — топшит. Butterfly описує тип накладки як «High friction High Tension» — High Tension з підвищеним тертям, а на сторінці серії Dignics пише, що 09C дає важкий топспін завдяки липкості (tackiness). У Dignics 05 тип — просто High Tension, без згадки про липкість.",
+            "Друга відмінність — шипи під топшитом. Butterfly вказує для 09C код шипів No. 209 і пише, що він дає топспін і захисну гру з великим обертанням, а також полегшує техніку над столом і контртопспін. Для Dignics 05 — код No. 05, відомий, за словами Butterfly, високим обертанням.",
+            "Butterfly пояснює характер 09C поєднанням власного топшита з досить твердою губкою Spring Sponge X: так, за описом виробника, досягнуто відчуття фрикційної накладки разом із високим відскоком. Про 05 Butterfly пише інше: топшит особливого складу з посиленою стійкістю до стирання дає відчуття, що накладка «тримає» м'яч у момент удару.",
+            "Отже, 09C — не «твердіша 05», а окрема конструкція з іншою поверхнею й іншою геометрією шипів. Чим липкі накладки відрізняються від тензорних і чому гібриди на кшталт 09C стоять між ними, ми розбирали окремо.",
+          ],
+          ru: [
+            "Главное отличие 09C — топшит. Butterfly описывает тип накладки как «High friction High Tension» — High Tension с повышенным трением, а на странице серии Dignics пишет, что 09C даёт тяжёлый топспин благодаря липкости (tackiness). У Dignics 05 тип — просто High Tension, без упоминания липкости.",
+            "Второе отличие — шипы под топшитом. Butterfly указывает для 09C код шипов No. 209 и пишет, что он даёт топспин и защитную игру с большим вращением, а также облегчает технику над столом и контртопспин. Для Dignics 05 — код No. 05, известный, по словам Butterfly, высоким вращением.",
+            "Butterfly объясняет характер 09C сочетанием собственного топшита с довольно твёрдой губкой Spring Sponge X: так, по описанию производителя, получено ощущение фрикционной накладки вместе с высоким отскоком. О 05 Butterfly пишет другое: топшит особого состава с повышенной стойкостью к истиранию даёт ощущение, что накладка «держит» мяч в момент удара.",
+            "Значит, 09C — не «более твёрдая 05», а отдельная конструкция с другой поверхностью и другой геометрией шипов. Чем липкие накладки отличаются от тензорных и почему гибриды вроде 09C стоят между ними, мы разбирали отдельно.",
+          ],
+        },
+        rec: {
+          publicId: "ttmax/product/dignics-09c/02",
+          name: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" },
+          verdict: {
+            ua: "Обертання 96 і дуга 96 за індексом Butterfly, губка 44° і топшит із підвищеним тертям — найкрутніша з Dignics.",
+            ru: "Вращение 96 и дуга 96 по индексу Butterfly, губка 44° и топшит с повышенным трением — самая крутящая из Dignics.",
+          },
+          alt: {
+            ua: "Накладка Butterfly Dignics 09C з топшитом підвищеного тертя",
+            ru: "Накладка Butterfly Dignics 09C с топшитом повышенного трения",
+          },
+          href: "/butterfly/nakladki/dignics-09c",
+        },
+        links: [
+          { label: { ua: "Липкі чи тензорні накладки", ru: "Липкие или тензорные накладки" }, href: "/blog/lypki-chy-tenzorni-nakladky" },
+          { label: { ua: "Tenergy чи Dignics", ru: "Tenergy или Dignics" }, href: "/blog/tenergy-chy-dignics" },
+        ],
+      },
+      {
+        id: "tekhnika",
+        h: { ua: "Яку техніку вимагає кожна накладка", ru: "Какую технику требует каждая накладка" },
+        p: {
+          ua: [
+            "09C вимагає більшого прискорення, ніж 05, бо її губка твердіша на 4 градуси, а базова швидкість нижча. Твердша губка менше просідає під м'ячем, тому на короткому чи слабкому русі вона не встигає спрацювати; швидкість 79 за індексом означає, що темп у 09C треба створювати рухом, а не брати з накладки.",
+            "Butterfly адресує моделі різним завданням. Dignics 05 — для гравця, який будує атакувальну гру високого рівня з потужним топспіном і контртопспіном біля столу та з середньої дистанції. Шипи 09C, за описом Butterfly, дають топспін і захисну гру з великим обертанням і водночас полегшують гру над столом і контртопспін — тобто короткі удари виробник не відносить до слабких місць 09C.",
+            "У огляді чеського магазину vsenastolnitenis.cz (Karel Malík, 2020) автор пише, що 09C повільна на пасивних ударах і наближається до Tenergy 05 за швидкістю лише на сильних, тобто віддача сильно залежить від вкладеного руху. Там само він зазначає, що в 05 більше катапульти. Це думка одного рецензента, а не вимірювання.",
+            "Той самий рецензент пише, що надто м'яка коротка підрізка з 09C може не долетіти навіть до сітки, а пасивний блок «старої школи» йде в сітку — потрібен короткий активний поштовх або робота кистю. Тут його враження розходиться з описом Butterfly. Якщо ваша гра біля столу тримається на підставках і пасивних блоках, зважте, що в 05 губка м'якша (40°), а швидкість за індексом вища (86).",
+          ],
+          ru: [
+            "09C требует большего ускорения, чем 05, потому что её губка твёрже на 4 градуса, а базовая скорость ниже. Более твёрдая губка меньше проседает под мячом, поэтому на коротком или слабом движении она не успевает сработать; скорость 79 по индексу означает, что темп у 09C нужно создавать движением, а не брать из накладки.",
+            "Butterfly адресует модели разным задачам. Dignics 05 — для игрока, который строит атакующую игру высокого уровня с мощным топспином и контртопспином у стола и со средней дистанции. Шипы 09C, по описанию Butterfly, дают топспин и защитную игру с большим вращением и при этом облегчают игру над столом и контртопспин — то есть короткие удары производитель не относит к слабым местам 09C.",
+            "В обзоре чешского магазина vsenastolnitenis.cz (Karel Malík, 2020) автор пишет, что 09C медленная на пассивных ударах и приближается к Tenergy 05 по скорости только на сильных, то есть отдача сильно зависит от вложенного движения. Там же он отмечает, что у 05 больше катапульты. Это мнение одного рецензента, а не измерение.",
+            "Тот же рецензент пишет, что слишком мягкая короткая подрезка с 09C может не долететь даже до сетки, а пассивный блок «старой школы» уходит в сетку — нужен короткий активный толчок или работа кистью. Здесь его впечатление расходится с описанием Butterfly. Если ваша игра у стола держится на подставках и пассивных блоках, учтите, что у 05 губка мягче (40°), а скорость по индексу выше (86).",
+          ],
+        },
+        links: [
+          { label: { ua: "Butterfly Dignics 05", ru: "Butterfly Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+          { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+        ],
+      },
+      {
+        id: "forhend-bekhend",
+        h: { ua: "09C чи 05 на форхенд і бекхенд: як грають гравці Butterfly", ru: "09C или 05 на форхенд и бэкхенд: как играют игроки Butterfly" },
+        p: {
+          ua: [
+            "У гравців Butterfly 09C переважно стоїть на форхенді, а 05 — на бекхенді. З 26 профілів гравців на нашому сайті 09C є у 15, Dignics 05 — у 8, обидві разом — у 3 (Омар Ассар, Маркуш Фрейташ, Міва Харімото); разом це 20 гравців.",
+            "Butterfly не підписує сторони накладок: на сторінках гравців інвентар іде в сталому порядку «основа → форхенд → бекхенд», і таблиця нижче побудована за ним. У Фань Чженьдуна (дані Butterfly від 19.07.2022) і Лінь Шидуна (від 01.06.2022) вказано лише одну накладку — 09C — без сторони, тож їх ми не зараховуємо ні до форхенду, ні до бекхенду.",
+            "09C на першій позиції — у 10 гравців, на другій — у 5. Чельберг і Цю грають 09C з обох боків; Франціска, Лім Джонхун і Чжу Юйлін ставлять 09C на бекхенд, а на форхенд — Zyre 03 або Tenergy 05 Hard. Тобто 09C на бекхенді трапляється, але в парі з іншою твердою накладкою на форхенді.",
+            "Dignics 05 на першій позиції стоїть лише в чотирьох гравців — Діас, Аполонії, Полканової й Болля, — і в усіх чотирьох це 05 з обох боків. Комбінації «05 на форхенді й інша накладка на бекхенді» серед 20 гравців немає, а «09C + 05» — у трьох. Дані Вонга Чунтіна датовані 06.08.2021, а Болль завершив кар'єру в 2025 році, тож їхні сетапи — історичні.",
+          ],
+          ru: [
+            "У игроков Butterfly 09C преимущественно стоит на форхенде, а 05 — на бэкхенде. Из 26 профилей игроков на нашем сайте 09C есть в 15, Dignics 05 — в 8, обе вместе — в 3 (Омар Ассар, Маркуш Фрейташ, Мива Харимото); всего это 20 игроков.",
+            "Butterfly не подписывает стороны накладок: на страницах игроков инвентарь идёт в постоянном порядке «основание → форхенд → бэкхенд», и таблица ниже построена по нему. У Фань Чженьдуна (данные Butterfly от 19.07.2022) и Линь Шидуна (от 01.06.2022) указана только одна накладка — 09C — без стороны, поэтому их мы не относим ни к форхенду, ни к бэкхенду.",
+            "09C на первой позиции — у 10 игроков, на второй — у 5. Чельберг и Цю играют 09C с обеих сторон; Франциска, Лим Чжонхун и Чжу Юйлин ставят 09C на бэкхенд, а на форхенд — Zyre 03 или Tenergy 05 Hard. То есть 09C на бэкхенде встречается, но в паре с другой твёрдой накладкой на форхенде.",
+            "Dignics 05 на первой позиции стоит только у четырёх игроков — Диас, Аполонии, Полкановой и Болля, — и у всех четырёх это 05 с обеих сторон. Комбинации «05 на форхенде и другая накладка на бэкхенде» среди 20 игроков нет, а «09C + 05» — у трёх. Данные Вонга Чунтина датированы 06.08.2021, а Болль завершил карьеру в 2025 году, так что их сетапы — исторические.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Гравець", ru: "Игрок" },
+            { ua: "Основа", ru: "Основание" },
+            { ua: "1-ша накладка (FH)", ru: "1-я накладка (FH)" },
+            { ua: "2-га накладка (BH)", ru: "2-я накладка (BH)" },
+            { ua: "Дані Butterfly", ru: "Данные Butterfly" },
+          ],
+          rows: [
+            [{ ua: "Лім Джонхун (KOR)", ru: "Лим Чжонхун (KOR)", player: "lim-jonghoon" }, { ua: "Lim Jonghoon Advance", ru: "Lim Jonghoon Advance" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "07.10.2026", ru: "07.10.2026" }],
+            [{ ua: "Дан Цю (GER)", ru: "Дан Цю (GER)", player: "qiu-dang" }, { ua: "Viscaria - CS (перо)", ru: "Viscaria - CS (перо)" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "20.09.2026", ru: "20.09.2026" }],
+            [{ ua: "Патрік Франціска (GER)", ru: "Патрик Франциска (GER)", player: "franziska-patrick" }, { ua: "Franziska Innerforce ZLC", ru: "Franziska Innerforce ZLC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "15.06.2026", ru: "15.06.2026" }],
+            [{ ua: "Омар Ассар (EGY)", ru: "Омар Ассар (EGY)", player: "assar-omar" }, { ua: "Omar Assar Innerforce ZLC", ru: "Omar Assar Innerforce ZLC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Антон Чельберг (SWE)", ru: "Антон Чельберг (SWE)", player: "kallberg-anton" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Дмитро Овчаров (GER)", ru: "Дмитрий Овчаров (GER)", player: "ovtcharov-dimitrij" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Сюнсуке Тогамі (JPN)", ru: "Сюнсукэ Тогами (JPN)", player: "togami-shunsuke" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "21.05.2026", ru: "21.05.2026" }],
+            [{ ua: "Маркуш Фрейташ (POR)", ru: "Маркуш Фрейташ (POR)", player: "freitas-marcos" }, { ua: "Freitas ALC", ru: "Freitas ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "24.03.2026", ru: "24.03.2026" }],
+            [{ ua: "Чжу Юйлін (MAC)", ru: "Чжу Юйлин (MAC)", player: "zhu-yuling" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "16.02.2026", ru: "16.02.2026" }],
+            [{ ua: "Хірото Сінодзука (JPN)", ru: "Хирото Синодзука (JPN)", player: "shinozuka-hiroto" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "19.01.2026", ru: "19.01.2026" }],
+            [{ ua: "Лінь Юньжу (TPE)", ru: "Линь Юньжу (TPE)", player: "lin-yunju" }, { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "05.01.2026", ru: "05.01.2026" }],
+            [{ ua: "Міва Харімото (JPN)", ru: "Мива Харимото (JPN)", player: "harimoto-miwa" }, { ua: "Harimoto Tomokazu Innerforce Super ALC", ru: "Harimoto Tomokazu Innerforce Super ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "18.12.2025", ru: "18.12.2025" }],
+            [{ ua: "Сора Мацусіма (JPN)", ru: "Сора Мацусима (JPN)", player: "matsushima-sora" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "01.10.2025", ru: "01.10.2025" }],
+            [{ ua: "Адріана Діас (PUR)", ru: "Адриана Диас (PUR)", player: "diaz-adriana" }, { ua: "спецзамовлення, Super ALC", ru: "спецзаказ, Super ALC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "17.09.2025", ru: "17.09.2025" }],
+            [{ ua: "Тіагу Аполонія (POR)", ru: "Тиагу Аполония (POR)", player: "apolonia-tiago" }, { ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "11.04.2025", ru: "11.04.2025" }],
+            [{ ua: "Софія Полканова (AUT)", ru: "Софья Полканова (AUT)", player: "polcanova-sofia" }, { ua: "Innerforce Layer ZLC", ru: "Innerforce Layer ZLC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "14.02.2025", ru: "14.02.2025" }],
+            [{ ua: "Тімо Болль (GER)", ru: "Тимо Болль (GER)", player: "boll-timo" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "14.02.2024", ru: "14.02.2024" }],
+            [{ ua: "Фань Чженьдун (CHN)", ru: "Фань Чжэньдун (CHN)", player: "fan-zhendong" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C (сторону не вказано)", ru: "Dignics 09C (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "19.07.2022", ru: "19.07.2022" }],
+            [{ ua: "Лінь Шидун (CHN)", ru: "Линь Шидун (CHN)", player: "lin-shidong" }, { ua: "спецзамовлення, ALC", ru: "спецзаказ, ALC" }, { ua: "Dignics 09C (сторону не вказано)", ru: "Dignics 09C (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "01.06.2022", ru: "01.06.2022" }],
+            [{ ua: "Вонг Чунтін (HKG)", ru: "Вонг Чунтин (HKG)", player: "wong-chun-ting" }, { ua: "спецзамовлення, ALC (перо)", ru: "спецзаказ, ALC (перо)" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, { ua: "06.08.2021", ru: "06.08.2021" }],
+          ],
+        },
+        links: [
+          { label: { ua: "Усі профілі гравців Butterfly", ru: "Все профили игроков Butterfly" }, href: "/igroki" },
+          { label: { ua: "Інвентар профі Butterfly", ru: "Инвентарь профи Butterfly" }, href: "/blog/inventar-profi-butterfly" },
+        ],
+      },
+      {
+        id: "osnovy",
+        h: { ua: "З якими основами їх ставлять: inner чи outer", ru: "С какими основаниями их ставят: inner или outer" },
+        p: {
+          ua: [
+            "09C у гравців Butterfly частіше стоїть на основах із карбоном одразу під верхнім шпоном (outer), а 05 — і на outer, і на inner. Із 15 гравців із 09C серійну основу з відомою конструкцією мають 10: сім — outer, три — inner.",
+            "Outer-основи в гравців із 09C — Timo Boll ALC (Чельберг, Сінодзука), Fan Zhendong ALC (Тогамі, Мацусіма, Фань Чженьдун), Freitas ALC і Viscaria. Inner — Omar Assar Innerforce ZLC, Harimoto Tomokazu Innerforce Super ALC (Міва Харімото) і Franziska Innerforce ZLC, де 09C стоїть на бекхенді. У решти п'яти — спецзамовлення або іменна основа, конструкцію якої Butterfly не вказує.",
+            "У гравців із Dignics 05 картина рівніша: inner — Apolonia ZLC, Innerforce Layer ZLC, основи Ассара й Міви Харімото (чотири), outer — Timo Boll ALC у Болля, Viscaria Super ALC у Лінь Юньжу і Freitas ALC (три). Вибірка мала, тож це спостереження, а не правило.",
+            "За описом Butterfly, outer-конструкція дає швидші удари, а inner — трохи довше утримання м'яча. Звідси можливе, але не підтверджене виробником пояснення: outer-основа частково компенсує нижчу швидкість 09C (79). Рецензент vsenastolnitenis.cz у 2020 році писав, що основи Innerforce можуть надто гасити 09C, — але гравці з inner-основами під 09C у нашій таблиці є, тож це не заборона.",
+          ],
+          ru: [
+            "09C у игроков Butterfly чаще стоит на основаниях с карбоном сразу под верхним шпоном (outer), а 05 — и на outer, и на inner. Из 15 игроков с 09C серийное основание с известной конструкцией есть у 10: семь — outer, три — inner.",
+            "Outer-основания у игроков с 09C — Timo Boll ALC (Чельберг, Синодзука), Fan Zhendong ALC (Тогами, Мацусима, Фань Чжэньдун), Freitas ALC и Viscaria. Inner — Omar Assar Innerforce ZLC, Harimoto Tomokazu Innerforce Super ALC (Мива Харимото) и Franziska Innerforce ZLC, где 09C стоит на бэкхенде. У остальных пяти — спецзаказ или именное основание, конструкцию которого Butterfly не указывает.",
+            "У игроков с Dignics 05 картина ровнее: inner — Apolonia ZLC, Innerforce Layer ZLC, основания Ассара и Мивы Харимото (четыре), outer — Timo Boll ALC у Болля, Viscaria Super ALC у Линь Юньжу и Freitas ALC (три). Выборка маленькая, так что это наблюдение, а не правило.",
+            "По описанию Butterfly, outer-конструкция даёт более быстрые удары, а inner — чуть более долгое удержание мяча. Отсюда возможное, но не подтверждённое производителем объяснение: outer-основание частично компенсирует более низкую скорость 09C (79). Рецензент vsenastolnitenis.cz в 2020 году писал, что основания Innerforce могут слишком гасить 09C, — но игроки с inner-основаниями под 09C в нашей таблице есть, так что это не запрет.",
+          ],
+        },
+        rec: {
+          publicId: "ttmax/product/dignics-05/01",
+          name: { ua: "Butterfly Dignics 05", ru: "Butterfly Dignics 05" },
+          verdict: {
+            ua: "Швидкість 86, обертання 85, губка 40°: у профілях гравців Butterfly стоїть на бекхенді у всіх восьми й поєднується як з inner, так і з outer-основами.",
+            ru: "Скорость 86, вращение 85, губка 40°: в профилях игроков Butterfly стоит на бэкхенде у всех восьми и сочетается как с inner, так и с outer-основаниями.",
+          },
+          alt: {
+            ua: "Накладка Butterfly Dignics 05 з губкою Spring Sponge X",
+            ru: "Накладка Butterfly Dignics 05 с губкой Spring Sponge X",
+          },
+          href: "/butterfly/nakladki/dignics-05",
+        },
+        links: [
+          { label: { ua: "ALC чи ZLC, inner чи outer", ru: "ALC или ZLC, inner или outer" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "Основи з ALC", ru: "Основания с ALC" }, href: "/osnovaniya/alc" },
+          { label: { ua: "Основи з ZLC", ru: "Основания с ZLC" }, href: "/osnovaniya/zlc" },
+        ],
+      },
+      {
+        id: "tovshchyna-i-doglyad",
+        h: { ua: "Товщина 1,9 чи 2,1, клей і плівка", ru: "Толщина 1,9 или 2,1, клей и плёнка" },
+        p: {
+          ua: [
+            "Обидві накладки Butterfly випускає лише в двох товщинах — 1,9 і 2,1 мм, тож вибір товщини однаковий для 05 і 09C. Товща губка дає більше швидкості й ваги, тонша — трохи більше контролю й легшу ракетку; детально про це — в окремій статті про товщину губки.",
+            "Для обох моделей Butterfly радить клеїти накладку водним клеєм Butterfly, попереджає, що поверхня делікатна й легко пошкоджується, і просить після гри накривати її захисною плівкою. Для 09C додано, що поверхня біля логотипа після зняття плівки може виглядати тьмяною — на якість це, за словами Butterfly, не впливає.",
+            "У інструкції з догляду за гладкими накладками Butterfly радить для Dignics 09C і Glayzer 09C клейку плівку Adhesive Rubber Protect Film III. Для Dignics 05 окремої рекомендації немає. Очищувачі Butterfly називає однакові для всіх гладких накладок — Spin Refresh або Cure Water.",
+          ],
+          ru: [
+            "Обе накладки Butterfly выпускает только в двух толщинах — 1,9 и 2,1 мм, так что выбор толщины одинаковый для 05 и 09C. Более толстая губка даёт больше скорости и веса, более тонкая — чуть больше контроля и более лёгкую ракетку; подробно об этом — в отдельной статье о толщине губки.",
+            "Для обеих моделей Butterfly советует клеить накладку водным клеем Butterfly, предупреждает, что поверхность деликатная и легко повреждается, и просит после игры накрывать её защитной плёнкой. Для 09C добавлено, что поверхность у логотипа после снятия плёнки может выглядеть тусклой — на качество это, по словам Butterfly, не влияет.",
+            "В инструкции по уходу за гладкими накладками Butterfly советует для Dignics 09C и Glayzer 09C клеящуюся плёнку Adhesive Rubber Protect Film III. Для Dignics 05 отдельной рекомендации нет. Очистители Butterfly называет одинаковые для всех гладких накладок — Spin Refresh или Cure Water.",
+          ],
+        },
+        links: [
+          { label: { ua: "Товщина губки: 1,9, 2,1 чи MAX", ru: "Толщина губки: 1,9, 2,1 или MAX" }, href: "/blog/tovshchyna-hubky-nakladky" },
+          { label: { ua: "Як наклеїти накладку", ru: "Как наклеить накладку" }, href: "/blog/yak-nakleity-nakladku" },
+          { label: { ua: "Догляд за накладками", ru: "Уход за накладками" }, href: "/blog/doglyad-za-nakladkamy" },
+        ],
+      },
+      {
+        id: "tretiy-variant",
+        h: { ua: "Якщо не підходить ні 05, ні 09C", ru: "Если не подходит ни 05, ни 09C" },
+        p: {
+          ua: [
+            "Між 05 і 09C та поруч із ними в каталозі Butterfly є кілька моделей, які закривають проміжні випадки. Tenergy 05 Hard має обертання 96, як у 09C, при швидкості 82 і губці 43° — її в наших профілях ставлять Лім Джонхун і Чжу Юйлін на форхенд і Вонг Чунтін на бекхенд.",
+            "Zyre 03 — обертання 100, швидкість 88 і губка 44°: найвище обертання в таблиці накладок Butterfly і водночас швидша за 09C; у половині наших профілів із Zyre 03 (5 із 10) в парі з нею стоїть саме 09C. Glayzer 09C — 87 обертання при губці 42°, тобто м'якший варіант того самого типу. Dignics 80 (88 / 82 / 86, 40°) і Dignics 64 (90 / 79 / 84, 40°) — швидші за 05 з нижчим обертанням.",
+            "Повні цифри всіх моделей ми звели в окрему таблицю накладок Butterfly, а різницю Zyre 03 із Dignics і Tenergy розбирали в окремому порівнянні.",
+          ],
+          ru: [
+            "Между 05 и 09C и рядом с ними в каталоге Butterfly есть несколько моделей, которые закрывают промежуточные случаи. Tenergy 05 Hard имеет вращение 96, как у 09C, при скорости 82 и губке 43° — в наших профилях её ставят Лим Чжонхун и Чжу Юйлин на форхенд и Вонг Чунтин на бэкхенд.",
+            "Zyre 03 — вращение 100, скорость 88 и губка 44°: самое высокое вращение в таблице накладок Butterfly и при этом быстрее 09C; в половине наших профилей с Zyre 03 (5 из 10) в паре с ней стоит именно 09C. Glayzer 09C — 87 вращения при губке 42°, то есть более мягкий вариант того же типа. Dignics 80 (88 / 82 / 86, 40°) и Dignics 64 (90 / 79 / 84, 40°) — быстрее 05 с более низким вращением.",
+            "Полные цифры всех моделей мы свели в отдельную таблицу накладок Butterfly, а разницу Zyre 03 с Dignics и Tenergy разбирали в отдельном сравнении.",
+          ],
+        },
+        links: [
+          { label: { ua: "Таблиця накладок Butterfly", ru: "Таблица накладок Butterfly" }, href: "/blog/tablytsia-nakladok-butterfly" },
+          { label: { ua: "Zyre 03 проти Dignics і Tenergy", ru: "Zyre 03 против Dignics и Tenergy" }, href: "/blog/zyre-03-vs-dignics-tenergy" },
+          { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
+          { label: { ua: "Butterfly Glayzer 09C", ru: "Butterfly Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
+        ],
+      },
+      {
+        id: "yak-vyrishyty",
+        h: { ua: "Як обрати між Dignics 05 і 09C за п'ять кроків", ru: "Как выбрать между Dignics 05 и 09C за пять шагов" },
+        p: {
+          ua: [
+            "Рішення зводиться до п'яти перевірок: сторона ракетки, ваш рух, основа, товщина і запасний варіант. Кроки нижче йдуть у тому порядку, в якому вони відсікають варіанти.",
+          ],
+          ru: [
+            "Решение сводится к пяти проверкам: сторона ракетки, ваше движение, основание, толщина и запасной вариант. Шаги ниже идут в том порядке, в котором они отсекают варианты.",
+          ],
+        },
+        steps: [
+          {
+            name: { ua: "Визначте сторону", ru: "Определите сторону" },
+            text: {
+              ua: "Для форхенду розглядайте обидві накладки, для бекхенду почніть із 05: у профілях гравців Butterfly 05 стоїть на бекхенді у всіх восьми випадках, а 09C на бекхенді — у п'яти з 15.",
+              ru: "Для форхенда рассматривайте обе накладки, для бэкхенда начните с 05: в профилях игроков Butterfly 05 стоит на бэкхенде во всех восьми случаях, а 09C на бэкхенде — в пяти из 15.",
+            },
+          },
+          {
+            name: { ua: "Оцініть свій рух", ru: "Оцените своё движение" },
+            text: {
+              ua: "Якщо ви стабільно робите повний розгін топспіну — 09C з губкою 44° віддасть обертання 96. Якщо значна частина гри — підставки й пасивні блоки, оберіть 05 з губкою 40° і швидкістю 86.",
+              ru: "Если вы стабильно делаете полный разгон топспина — 09C с губкой 44° отдаст вращение 96. Если значительная часть игры — подставки и пассивные блоки, выберите 05 с губкой 40° и скоростью 86.",
+            },
+          },
+          {
+            name: { ua: "Перевірте основу", ru: "Проверьте основание" },
+            text: {
+              ua: "Подивіться, де лежить карбон у вашій основі. Серед гравців Butterfly з відомою конструкцією основи 09C стоїть на outer у 7 випадках і на inner — у 3; 05 — на outer у 3 і на inner у 4.",
+              ru: "Посмотрите, где лежит карбон в вашем основании. Среди игроков Butterfly с известной конструкцией основания 09C стоит на outer в 7 случаях и на inner — в 3; 05 — на outer в 3 и на inner в 4.",
+            },
+          },
+          {
+            name: { ua: "Оберіть товщину", ru: "Выберите толщину" },
+            text: {
+              ua: "Обидві моделі бувають лише 1,9 або 2,1 мм. Беріть 2,1, якщо потрібен максимум швидкості, і 1,9, якщо хочете легшу ракетку й трохи більше контролю.",
+              ru: "Обе модели бывают только 1,9 или 2,1 мм. Берите 2,1, если нужен максимум скорости, и 1,9, если хотите более лёгкую ракетку и чуть больше контроля.",
+            },
+          },
+          {
+            name: { ua: "Звірте з третім варіантом", ru: "Сверьте с третьим вариантом" },
+            text: {
+              ua: "Якщо 05 здається замало крутною, а 09C — надто повільною, порівняйте Tenergy 05 Hard (швидкість 82, обертання 96, 43°). Якщо 09C надто тверда, подивіться Glayzer 09C (губка 42°, але швидкість 75). Повні цифри — в таблиці накладок Butterfly.",
+              ru: "Если 05 кажется недостаточно крутящей, а 09C — слишком медленной, сравните Tenergy 05 Hard (скорость 82, вращение 96, 43°). Если 09C слишком твёрдая, посмотрите Glayzer 09C (губка 42°, но скорость 75). Полные цифры — в таблице накладок Butterfly.",
+            },
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Чи можна ставити Dignics 09C на бекхенд?", ru: "Можно ли ставить Dignics 09C на бэкхенд?" },
+        a: {
+          ua: "Можна: у профілях гравців Butterfly 09C стоїть на бекхенді в п'яти гравців — Лім Джонхуна, Дана Цю, Патріка Франціски, Антона Чельберга і Чжу Юйлін. Dignics 05 на бекхенді в тих самих профілях трапляється частіше — у восьми гравців; у неї м'якша губка (40° проти 44°) і вища швидкість за індексом (86 проти 79).",
+          ru: "Можно: в профилях игроков Butterfly 09C стоит на бэкхенде у пяти игроков — Лим Чжонхуна, Дана Цю, Патрика Франциски, Антона Чельберга и Чжу Юйлин. Dignics 05 на бэкхенде в тех же профилях встречается чаще — у восьми игроков; у неё мягче губка (40° против 44°) и выше скорость по индексу (86 против 79).",
+        },
+      },
+      {
+        q: { ua: "Чи потрібно доглядати за 09C інакше, ніж за 05?", ru: "Нужно ли ухаживать за 09C иначе, чем за 05?" },
+        a: {
+          ua: "Трохи інакше. Очищувачі Butterfly радить однакові — Spin Refresh або Cure Water, — але для Dignics 09C рекомендує клейку плівку Adhesive Rubber Protect Film III, а для 05 окремої рекомендації не дає. Поверхню обох моделей Butterfly називає делікатною й такою, що легко пошкоджується.",
+          ru: "Немного иначе. Очистители Butterfly советует одинаковые — Spin Refresh или Cure Water, — но для Dignics 09C рекомендует клеящуюся плёнку Adhesive Rubber Protect Film III, а для 05 отдельной рекомендации не даёт. Поверхность обеих моделей Butterfly называет деликатной и легко повреждаемой.",
+        },
+      },
+      {
+        q: { ua: "Яку товщину 09C взяти аматору?", ru: "Какую толщину 09C взять любителю?" },
+        a: {
+          ua: "Dignics 09C буває лише 1,9 і 2,1 мм. Тонша губка 1,9 дає легшу ракетку й трохи більше контролю, тому для аматора вона логічніша. Якщо ж складно саме з твердістю 44°, товщина цього не змінить — варто подивитися на Glayzer 09C з губкою 42°.",
+          ru: "Dignics 09C бывает только 1,9 и 2,1 мм. Более тонкая губка 1,9 даёт более лёгкую ракетку и чуть больше контроля, поэтому для любителя она логичнее. Если же сложно именно с твёрдостью 44°, толщина этого не изменит — стоит посмотреть на Glayzer 09C с губкой 42°.",
+        },
+      },
+      {
+        q: { ua: "Яка накладка швидша — Dignics 05 чи 09C?", ru: "Какая накладка быстрее — Dignics 05 или 09C?" },
+        a: {
+          ua: "Dignics 05: за індексом Butterfly її швидкість 86, у 09C — 79. Натомість 09C має вище обертання (96 проти 85) і вищу дугу (96 проти 88).",
+          ru: "Dignics 05: по индексу Butterfly её скорость 86, у 09C — 79. Зато у 09C выше вращение (96 против 85) и выше дуга (96 против 88).",
+        },
+      },
+      {
+        q: { ua: "Чому в описах пишуть 13,5 і 12, а не 86 і 85?", ru: "Почему в описаниях пишут 13,5 и 12, а не 86 и 85?" },
+        a: {
+          ua: "Це стара шкала Butterfly: за нею Dignics 05 мала швидкість 13,5 і обертання 12, і ці числа досі є на сторінці серії Dignics. З лютого 2023 року Butterfly перейшла на новий індекс, і на картках моделей тепер 86 і 85 для 05 та 79 і 96 для 09C.",
+          ru: "Это старая шкала Butterfly: по ней Dignics 05 имела скорость 13,5 и вращение 12, и эти числа до сих пор есть на странице серии Dignics. С февраля 2023 года Butterfly перешла на новый индекс, и на карточках моделей теперь 86 и 85 для 05 и 79 и 96 для 09C.",
+        },
+      },
+      {
+        q: { ua: "Чи ставлять профі 05 на форхенд, а 09C на бекхенд?", ru: "Ставят ли профи 05 на форхенд, а 09C на бэкхенд?" },
+        a: {
+          ua: "Серед 20 гравців Butterfly з 05 або 09C у наших профілях такого сетапу немає жодного. Зворотна комбінація — 09C на форхенді й 05 на бекхенді — є в Омара Ассара, Маркуша Фрейташа і Міви Харімото.",
+          ru: "Среди 20 игроков Butterfly с 05 или 09C в наших профилях такого сетапа нет ни одного. Обратная комбинация — 09C на форхенде и 05 на бэкхенде — есть у Омара Ассара, Маркуша Фрейташа и Мивы Харимото.",
+        },
+      },
+      {
+        q: { ua: "Чим клеїти Dignics 09C і Dignics 05?", ru: "Чем клеить Dignics 09C и Dignics 05?" },
+        a: {
+          ua: "Butterfly для обох моделей вказує водний клей Butterfly. Окремого клею для 09C виробник не називає: різниця в догляді стосується плівки, а не клею.",
+          ru: "Butterfly для обеих моделей указывает водный клей Butterfly. Отдельного клея для 09C производитель не называет: разница в уходе касается плёнки, а не клея.",
+        },
+      },
+      {
+        q: { ua: "Чи 09C — це просто твердіша Dignics 05?", ru: "09C — это просто более твёрдая Dignics 05?" },
+        a: {
+          ua: "Ні. Крім губки 44° замість 40°, у 09C інший топшит — Butterfly описує його як High Tension з підвищеним тертям — і інша геометрія шипів: код No. 209 проти No. 05 у Dignics 05.",
+          ru: "Нет. Кроме губки 44° вместо 40°, у 09C другой топшит — Butterfly описывает его как High Tension с повышенным трением — и другая геометрия шипов: код No. 209 против No. 05 у Dignics 05.",
+        },
+      },
+    ],
+    officialSource: {
+      label: { ua: "Butterfly — Dignics 09C (06070)", ru: "Butterfly — Dignics 09C (06070)" },
+      url: "https://www.butterfly-global.com/en/products/detail/06070.html",
+    },
+    sources: [
+      {
+        label: { ua: "Butterfly — Dignics 09C: тип, губка, індекси, застереження", ru: "Butterfly — Dignics 09C: тип, губка, индексы, предупреждения" },
+        url: "https://www.butterfly-global.com/en/products/detail/06070.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — Dignics 05: тип, губка, індекси, застереження", ru: "Butterfly — Dignics 05: тип, губка, индексы, предупреждения" },
+        url: "https://www.butterfly-global.com/en/products/detail/06040.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — серія Dignics: 09C і липкість, стара шкала 05", ru: "Butterfly — серия Dignics: 09C и липкость, старая шкала 05" },
+        url: "https://www.butterfly-global.com/en/product/dignics/",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — догляд за гладкими накладками (плівка для 09C)", ru: "Butterfly — уход за гладкими накладками (плёнка для 09C)" },
+        url: "https://www.butterfly-global.com/en/products/care/pimples_in.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "Butterfly — Outerfiber і Innerfiber: як розміщення волокна змінює основу", ru: "Butterfly — Outerfiber и Innerfiber: как расположение волокна меняет основание" },
+        url: "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html",
+        kind: "official",
+      },
+      {
+        label: { ua: "vsenastolnitenis.cz — огляд Dignics 09C (Karel Malík)", ru: "vsenastolnitenis.cz — обзор Dignics 09C (Karel Malík)" },
+        url: "https://www.vsenastolnitenis.cz/en/blog/recenze-produktu/dignics09c-2",
+        kind: "review",
+      },
+    ],
+    relatedProducts: [
+      { label: { ua: "Butterfly Dignics 05", ru: "Butterfly Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+      { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+      { label: { ua: "Уся серія Dignics", ru: "Вся серия Dignics" }, href: "/nakladki/dignics" },
+    ],
+    relatedPosts: ["tenergy-chy-dignics", "lypki-chy-tenzorni-nakladky", "tablytsia-nakladok-butterfly", "alc-chy-zlc"],
+  },
+
+  // ТАРГЕТ: UA «viscaria чи timo boll alc», «viscaria vs fan zhendong alc», «різниця viscaria і timo boll alc»;
+  // RU «viscaria или timo boll alc», «виская или тимо болл алс», «fan zhendong alc или viscaria».
+  // Порівняння трьох outer-ALC основ з однаковими цифрами Butterfly; блок «Підберемо» — після «hto-grae».
+  // ОФІЦІЙНО (звірено 07.11.2026):
+  //   butterfly-global.com/en/products/detail/30041.html (Viscaria), 35861.html (Timo Boll ALC), 37221.html (Fan Zhendong ALC):
+  //   у всіх трьох — реакція 11,8, вібрація 10,3, 5 дерева + 2 Arylate-Carbon (без позначки Innerfiber), 5,8 мм,
+  //   лопать 157×150 мм, Японія, тип «Offensive shakehand» (класів OFF/OFF+ на сторінках НЕМАЄ).
+  //   Ручки (довжина × товщина × ширина кінця): Viscaria і FZD ALC — FL 100×25×34, ST 100×23×28 (AN не вказано);
+  //   Timo Boll ALC — FL 100×24×34, ST 100×22×27,5, AN 100×24×34.
+  //   butterfly.co.jp/products/detail/30041.html: Viscaria — «прототип багатьох ALC-основ», перевидання з дизайном
+  //   першого випуску, дата продажу в Японії 01.04.2019, середня вага 87 г; 35861.html: Timo Boll ALC — 21.11.2008,
+  //   Болль із 2008 р. 5 разів чемпіон Європи, 87 г; 37221.html: Fan Zhendong ALC — 01.09.2022, конструкція
+  //   «специфікації Viscaria», 88 г, золота пластина з логотипом на торці ручки — лише в ракетках самого Фаня.
+  //   butterfly-global.com/en/about/history/: 1993 — випуск Viscaria; 2022 — Viscaria Super ALC.
+  //   Сусіди: 37191 (Viscaria Super ALC) і 37241 (FZD Super ALC) — 12,1/10,1, 5,7 мм; 36991 (Harimoto Tomokazu
+  //   Innerforce ALC = наш harimoto-tomokazu-alc) — 10,7/9,2, 6,0 мм, лопать 158×152; 36701 (Innerforce Layer ALC) —
+  //   10,7/9,4, 6,0 мм, FL/ST/AN; 24010 (Viscaria - CS) — 11,8/10,6, лопать 158×150, ручка 82×22×31,5.
+  //   Вага: weight.html — примітка про вологість/температуру + шкала en-blade-img03.svg (R&D до 10.2026, без грамів):
+  //   Timo Boll ALC — на рядок легше за Viscaria, Fan Zhendong ALC (на схемі «Fan Zhedong ALC») — на 2 рядки важче, поруч з Viscaria Super ALC;
+  //   діапазони 86–90 / 85–90 / 87–90 г — bases.ts.
+  // ОГЛЯД: butterflyonline.com/alc-blades-comparison (Butterfly North America, 29.12.2020) — заміри конкретних
+  //   екземплярів: Viscaria 85 г, TB ALC 84 г; суб'єктивний рейтинг швидкості/контролю. Подано як враження.
+  // ГРАВЦІ — scripts/player-profiles/*.json (asOf у таблиці). Форумні гілки tabletennisdaily (403) не відкрились —
+  //   у джерела не внесені, форумних тверджень у тексті немає.
+  "viscaria-timo-boll-alc-fan-zhendong-alc": {
+    slug: "viscaria-timo-boll-alc-fan-zhendong-alc",
+    consultAfter: "hto-grae",
+    products: ["viscaria", "timo-boll-alc", "fan-zhendong-alc", "viscaria-super-alc", "dignics-09c", "zyre-03"],
+    h1: {
+      ua: "Viscaria, Timo Boll ALC чи Fan Zhendong ALC: у чому різниця, якщо цифри однакові",
+      ru: "Viscaria, Timo Boll ALC или Fan Zhendong ALC: в чём разница, если цифры одинаковые",
+    },
+    metaTitle: {
+      ua: "Viscaria чи Timo Boll ALC, Fan Zhendong ALC: різниця | TTMAX",
+      ru: "Viscaria или Timo Boll ALC, Fan Zhendong ALC? | TTMAX",
+    },
+    metaDescription: {
+      ua: "⚖️ Viscaria чи Timo Boll ALC і Fan Zhendong ALC: реакція 11,8 і вібрація 10,3 в усіх трьох. Різниця — у ручці (24 чи 25 мм), AN і роках випуску.",
+      ru: "⚖️ Viscaria или Timo Boll ALC и Fan Zhendong ALC: реакция 11,8 и вибрация 10,3 у всех трёх. Разница — в ручке (24 или 25 мм), AN и годах выпуска.",
+    },
+    excerpt: {
+      ua: "Три основи Butterfly з однаковими офіційними цифрами: що насправді відрізняє Viscaria, Timo Boll ALC і Fan Zhendong ALC, хто з профі ними грає і як обрати свою.",
+      ru: "Три основания Butterfly с одинаковыми официальными цифрами: что на самом деле отличает Viscaria, Timo Boll ALC и Fan Zhendong ALC, кто из профи ими играет и как выбрать своё.",
+    },
+    datePublished: "2026-11-07",
+    dateModified: "2026-11-07",
+    author: "artem-maksymchuk",
+    coverSrc: "/blog/viscaria-timo-boll-alc-fan-zhendong-alc-cover.svg",
+    heroAlt: {
+      ua: "Три атакувальні основи Butterfly з арилат-карбоном і різними ручками поруч",
+      ru: "Три атакующих основания Butterfly с арилат-карбоном и разными ручками рядом",
+    },
+    intro: {
+      ua: [
+        "Viscaria чи Timo Boll ALC — питання, на яке офіційні характеристики Butterfly відповідають несподівано: за цифрами різниці немає. У Viscaria, Timo Boll ALC і Fan Zhendong ALC однакові реакція 11,8 і вібрація 10,3, та сама схема 5+2 з арилат-карбоном під верхнім шпоном, товщина 5,8 мм і лопать 157×150 мм. Усі три виробляють у Японії.",
+        "Нижче — що в цих основ справді різне за даними Butterfly Global і Butterfly Japan: розміри й типи ручок, середня вага, рік випуску й дизайн. Далі — хто з професіоналів грає кожною основою і з якими накладками, чим від них відрізняються Super ALC та inner-основи родини, а також покроковий вибір між трьома моделями.",
+      ],
+      ru: [
+        "Viscaria или Timo Boll ALC — вопрос, на который официальные характеристики Butterfly отвечают неожиданно: по цифрам разницы нет. У Viscaria, Timo Boll ALC и Fan Zhendong ALC одинаковые реакция 11,8 и вибрация 10,3, та же схема 5+2 с арилат-карбоном под верхним шпоном, толщина 5,8 мм и лопасть 157×150 мм. Все три производят в Японии.",
+        "Ниже — что у этих оснований действительно отличается по данным Butterfly Global и Butterfly Japan: размеры и типы ручек, средний вес, год выпуска и дизайн. Дальше — кто из профессионалов играет каждым основанием и с какими накладками, чем от них отличаются Super ALC и inner-основания семейства, а также пошаговый выбор между тремя моделями.",
+      ],
+    },
+    sections: [
+      {
+        id: "korotko",
+        h: { ua: "Коротко: Viscaria чи Timo Boll ALC — чим вони різняться", ru: "Коротко: Viscaria или Timo Boll ALC — чем они отличаются" },
+        p: {
+          ua: [
+            "За офіційними даними Butterfly, Viscaria, Timo Boll ALC і Fan Zhendong ALC — одна й та сама конструкція: реакція 11,8, вібрація 10,3, 5 шарів дерева + 2 шари арилат-карбону, 5,8 мм, лопать 157×150 мм, виробництво в Японії. Fan Zhendong ALC Butterfly Japan прямо описує як основу з багатошаровою конструкцією «специфікації Viscaria».",
+            "Відмінності — у ручці та історії. Timo Boll ALC має тоншу ручку (FL — 24 мм завтовшки проти 25 мм, ST — 22 мм проти 23 мм) і єдина з трьох офіційно випускається з анатомічною ручкою AN. Viscaria вийшла в 1993 році, Timo Boll ALC — у 2008-му, Fan Zhendong ALC — у 2022-му. Тому обирають за тим, як ручка лежить у руці, і за вагою конкретного екземпляра, а не за назвою.",
+          ],
+          ru: [
+            "По официальным данным Butterfly, Viscaria, Timo Boll ALC и Fan Zhendong ALC — одна и та же конструкция: реакция 11,8, вибрация 10,3, 5 слоёв дерева + 2 слоя арилат-карбона, 5,8 мм, лопасть 157×150 мм, производство в Японии. Fan Zhendong ALC Butterfly Japan прямо описывает как основание с многослойной конструкцией «спецификации Viscaria».",
+            "Отличия — в ручке и истории. У Timo Boll ALC ручка тоньше (FL — 24 мм в толщину против 25 мм, ST — 22 мм против 23 мм), и это единственное из трёх оснований, которое официально выпускается с анатомической ручкой AN. Viscaria вышла в 1993 году, Timo Boll ALC — в 2008-м, Fan Zhendong ALC — в 2022-м. Поэтому выбирают по тому, как ручка лежит в руке, и по весу конкретного экземпляра, а не по названию.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Реакція / вібрація", ru: "Реакция / вибрация" },
+            { ua: "Ручки за Butterfly", ru: "Ручки по Butterfly" },
+            { ua: "Товщина ручки FL", ru: "Толщина ручки FL" },
+            { ua: "Вийшла", ru: "Вышла" },
+            { ua: "Хто грає (приклад)", ru: "Кто играет (пример)" },
+          ],
+          rows: [
+            [
+              { ua: "Viscaria", ru: "Viscaria", href: "/butterfly/osnovaniya/viscaria" },
+              { ua: "11,8 / 10,3", ru: "11,8 / 10,3" },
+              { ua: "FL, ST", ru: "FL, ST" },
+              { ua: "25 мм", ru: "25 мм" },
+              { ua: "1993", ru: "1993" },
+              { ua: "Дан Цю (версія CS)", ru: "Дан Цю (версия CS)", player: "qiu-dang" },
+            ],
+            [
+              { ua: "Timo Boll ALC", ru: "Timo Boll ALC", href: "/butterfly/osnovaniya/timo-boll-alc" },
+              { ua: "11,8 / 10,3", ru: "11,8 / 10,3" },
+              { ua: "FL, ST, AN", ru: "FL, ST, AN" },
+              { ua: "24 мм", ru: "24 мм" },
+              { ua: "2008", ru: "2008" },
+              { ua: "Хірото Сінодзука", ru: "Хирото Синодзука", player: "shinozuka-hiroto" },
+            ],
+            [
+              { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC", href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+              { ua: "11,8 / 10,3", ru: "11,8 / 10,3" },
+              { ua: "FL, ST", ru: "FL, ST" },
+              { ua: "25 мм", ru: "25 мм" },
+              { ua: "2022", ru: "2022" },
+              { ua: "Фань Чженьдун", ru: "Фань Чжэньдун", player: "fan-zhendong" },
+            ],
+          ],
+        },
+        links: [
+          { label: { ua: "Butterfly Viscaria", ru: "Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+          { label: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+          { label: { ua: "Butterfly Fan Zhendong ALC", ru: "Butterfly Fan Zhendong ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+          { label: { ua: "усі основи з ALC", ru: "все основания с ALC" }, href: "/osnovaniya/alc" },
+        ],
+      },
+      {
+        id: "tsyfry",
+        h: { ua: "Що однакове: офіційні характеристики трьох основ", ru: "Что одинаковое: официальные характеристики трёх оснований" },
+        p: {
+          ua: [
+            "Однакове все, що Butterfly вимірює й публікує: реакція 11,8, вібрація 10,3, склад «5 шарів дерева + 2 Arylate-Carbon», товщина 5,8 мм, розмір лопаті 157×150 мм і країна виробництва — Японія. Усі три Butterfly відносить до одного типу — «атакувальна основа для європейської хватки». Позначки Innerfiber, якою виробник маркує основи з волокном ближче до ядра, у жодної з трьох немає: карбон лежить під верхнім шпоном, це класична outer-схема.",
+            "Різняться лише описи. Viscaria Butterfly подає як основу для варіативної атаки з акцентом на обертання і як базу для багатьох успішних ALC-моделей; Timo Boll ALC — як класику лінійки з потужною атакою й контролем; Fan Zhendong ALC — як баланс гнучкості, простоти й відскоку між атакою та захистом. Це маркетингові формулювання: цифри реакції й вібрації, які Butterfly виводить для порівняння основ, у всіх трьох збігаються.",
+            "Про класи. У нашому каталозі Viscaria позначена OFF+, а Timo Boll ALC і Fan Zhendong ALC — OFF. На сторінках моделей Butterfly Global і Butterfly Japan такого класу немає, тож він не означає виміряної різниці у швидкості. Як саме outer-ALC відрізняється від inner-ALC і ZLC, розібрано в окремій статті «ALC чи ZLC».",
+          ],
+          ru: [
+            "Одинаково всё, что Butterfly измеряет и публикует: реакция 11,8, вибрация 10,3, состав «5 слоёв дерева + 2 Arylate-Carbon», толщина 5,8 мм, размер лопасти 157×150 мм и страна производства — Япония. Все три Butterfly относит к одному типу — «атакующее основание для европейской хватки». Пометки Innerfiber, которой производитель отмечает основания с волокном ближе к ядру, нет ни у одного из трёх: карбон лежит под верхним шпоном, это классическая outer-схема.",
+            "Отличаются только описания. Viscaria Butterfly подаёт как основание для вариативной атаки с упором на вращение и как базу для многих успешных ALC-моделей; Timo Boll ALC — как классику линейки с мощной атакой и контролем; Fan Zhendong ALC — как баланс гибкости, простоты и отскока между атакой и защитой. Это маркетинговые формулировки: цифры реакции и вибрации, которые Butterfly выводит для сравнения оснований, у всех трёх совпадают.",
+            "О классах. В нашем каталоге Viscaria отмечена как OFF+, а Timo Boll ALC и Fan Zhendong ALC — как OFF. На страницах моделей Butterfly Global и Butterfly Japan такого класса нет, так что он не означает измеренной разницы в скорости. Чем outer-ALC отличается от inner-ALC и ZLC, разобрано в отдельной статье «ALC или ZLC».",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Параметр", ru: "Параметр" },
+            { ua: "Viscaria", ru: "Viscaria" },
+            { ua: "Timo Boll ALC", ru: "Timo Boll ALC" },
+            { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" },
+          ],
+          rows: [
+            [{ ua: "Реакція", ru: "Реакция" }, { ua: "11,8", ru: "11,8" }, { ua: "11,8", ru: "11,8" }, { ua: "11,8", ru: "11,8" }],
+            [{ ua: "Вібрація", ru: "Вибрация" }, { ua: "10,3", ru: "10,3" }, { ua: "10,3", ru: "10,3" }, { ua: "10,3", ru: "10,3" }],
+            [{ ua: "Склад", ru: "Состав" }, { ua: "5 дерева + 2 ALC", ru: "5 дерева + 2 ALC" }, { ua: "5 дерева + 2 ALC", ru: "5 дерева + 2 ALC" }, { ua: "5 дерева + 2 ALC", ru: "5 дерева + 2 ALC" }],
+            [{ ua: "Товщина", ru: "Толщина" }, { ua: "5,8 мм", ru: "5,8 мм" }, { ua: "5,8 мм", ru: "5,8 мм" }, { ua: "5,8 мм", ru: "5,8 мм" }],
+            [{ ua: "Лопать", ru: "Лопасть" }, { ua: "157×150 мм", ru: "157×150 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }],
+            [{ ua: "Середня вага (Butterfly Japan)", ru: "Средний вес (Butterfly Japan)" }, { ua: "87 г", ru: "87 г" }, { ua: "87 г", ru: "87 г" }, { ua: "88 г", ru: "88 г" }],
+            [{ ua: "Виробництво", ru: "Производство" }, { ua: "Японія", ru: "Япония" }, { ua: "Японія", ru: "Япония" }, { ua: "Японія", ru: "Япония" }],
+          ],
+        },
+        links: [
+          { label: { ua: "ALC чи ZLC — у чому різниця", ru: "ALC или ZLC — в чём разница" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "таблиця всіх основ Butterfly", ru: "таблица всех оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
+        ],
+      },
+      {
+        id: "ruchka",
+        h: { ua: "Головна різниця — ручка: FL, ST і AN у міліметрах", ru: "Главная разница — ручка: FL, ST и AN в миллиметрах" },
+        p: {
+          ua: [
+            "Єдина відмінність у самих характеристиках Butterfly — розміри ручки. Виробник вказує їх як довжину × товщину × ширину кінця. У Viscaria і Fan Zhendong ALC вони однакові: FL — 100×25×34 мм, ST — 100×23×28 мм. У Timo Boll ALC ручка тонша: FL — 100×24×34 мм, ST — 100×22×27,5 мм. Butterfly Japan радить за можливості потримати основу в руках перед покупкою, і для ручки ця порада особливо доречна.",
+            "Тип ручки визначає форму. FL (flared) розширюється до кінця — у всіх трьох основ до 34 мм — і краще фіксується в руці. ST (straight) пряма, з кінцем 27,5–28 мм, і лежить у долоні вільніше. AN (anatomic) — анатомічна ручка з потовщенням посередині; у Timo Boll ALC її розмір 100×24×34 мм.",
+            "AN за офіційним переліком Butterfly Global і Butterfly Japan є тільки в Timo Boll ALC: Viscaria і Fan Zhendong ALC там указані лише у варіантах FL і ST. Які ручки доступні в нас зараз, видно під час вибору на картці товару.",
+            "Fan Zhendong ALC відрізняється ще й оформленням: за словами Butterfly, на ручці використано прямі лінії, що символізують його прагнення постійно рухатися вперед, а золота пластина з логотипом на торці ручки є лише в ракетках, якими грає сам Фань Чженьдун. Тренер Butterfly North America у порівнянні шести ALC-основ (29.12.2020) описував ручку Timo Boll ALC як найбільш «квадратну» й округлу з усіх — це його враження від конкретних екземплярів.",
+          ],
+          ru: [
+            "Единственное отличие в самих характеристиках Butterfly — размеры ручки. Производитель указывает их как длину × толщину × ширину конца. У Viscaria и Fan Zhendong ALC они одинаковые: FL — 100×25×34 мм, ST — 100×23×28 мм. У Timo Boll ALC ручка тоньше: FL — 100×24×34 мм, ST — 100×22×27,5 мм. Butterfly Japan советует по возможности подержать основание в руках перед покупкой, и для ручки этот совет особенно уместен.",
+            "Тип ручки определяет форму. FL (flared) расширяется к концу — у всех трёх оснований до 34 мм — и лучше фиксируется в руке. ST (straight) прямая, с концом 27,5–28 мм, и лежит в ладони свободнее. AN (anatomic) — анатомическая ручка с утолщением посередине; у Timo Boll ALC её размер 100×24×34 мм.",
+            "AN по официальному перечню Butterfly Global и Butterfly Japan есть только у Timo Boll ALC: Viscaria и Fan Zhendong ALC там указаны лишь в вариантах FL и ST. Какие ручки доступны у нас сейчас, видно при выборе на карточке товара.",
+            "Fan Zhendong ALC отличается ещё и оформлением: по словам Butterfly, на ручке использованы прямые линии, которые символизируют его стремление постоянно двигаться вперёд, а золотая пластина с логотипом на торце ручки есть только у ракеток, которыми играет сам Фань Чжэньдун. Тренер Butterfly North America в сравнении шести ALC-оснований (29.12.2020) описывал ручку Timo Boll ALC как самую «квадратную» и округлую из всех — это его впечатление от конкретных экземпляров.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Ручка (довжина × товщина × кінець)", ru: "Ручка (длина × толщина × конец)" },
+            { ua: "Viscaria", ru: "Viscaria" },
+            { ua: "Timo Boll ALC", ru: "Timo Boll ALC" },
+            { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" },
+          ],
+          rows: [
+            [{ ua: "FL (конічна)", ru: "FL (коническая)" }, { ua: "100×25×34 мм", ru: "100×25×34 мм" }, { ua: "100×24×34 мм", ru: "100×24×34 мм" }, { ua: "100×25×34 мм", ru: "100×25×34 мм" }],
+            [{ ua: "ST (пряма)", ru: "ST (прямая)" }, { ua: "100×23×28 мм", ru: "100×23×28 мм" }, { ua: "100×22×27,5 мм", ru: "100×22×27,5 мм" }, { ua: "100×23×28 мм", ru: "100×23×28 мм" }],
+            [{ ua: "AN (анатомічна)", ru: "AN (анатомическая)" }, { ua: "не вказана", ru: "не указана" }, { ua: "100×24×34 мм", ru: "100×24×34 мм" }, { ua: "не вказана", ru: "не указана" }],
+          ],
+        },
+        rec: {
+          publicId: "ttmax/product/timo-boll-alc/02",
+          name: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" },
+          verdict: { ua: "Ті самі 11,8 і 10,3, що й у Viscaria, але ручка на 1 мм тонша й офіційно є варіант AN.", ru: "Те же 11,8 и 10,3, что у Viscaria, но ручка на 1 мм тоньше и официально есть вариант AN." },
+          alt: { ua: "Основа Butterfly Timo Boll ALC з арилат-карбоном, вигляд ручки", ru: "Основание Butterfly Timo Boll ALC с арилат-карбоном, вид ручки" },
+          href: "/butterfly/osnovaniya/timo-boll-alc",
+        },
+      },
+      {
+        id: "vaga",
+        h: { ua: "Вага: 85–90 г, і екземпляр важливіший за модель", ru: "Вес: 85–90 г, и экземпляр важнее модели" },
+        p: {
+          ua: [
+            "За вагою три основи майже повністю перекриваються. Діапазони в нашому каталозі — 86–90 г у Viscaria, 85–90 г у Timo Boll ALC і 87–90 г у Fan Zhendong ALC. Butterfly Japan наводить середню вагу 87, 87 і 88 г відповідно, тобто різниця між моделями в середньому — до 1 г, а розкид усередині однієї моделі — кілька грамів.",
+            "Butterfly окремо попереджає, що вага основи змінюється залежно від вологості й температури, а на сторінках моделей Butterfly Global грамів не дає — лише загальну шкалу «легша — важча» за даними свого відділу досліджень (станом на жовтень 2026 року). На ній Timo Boll ALC стоїть на рівень легше за Viscaria, а Fan Zhendong ALC — на два рівні важче, поруч із Viscaria Super ALC. Це порядок у середньому, тож дві Viscaria можуть різнитися сильніше, ніж Viscaria і Timo Boll ALC.",
+            "Це видно й на практиці. Тренер Butterfly North America у згаданому порівнянні 2020 року зважив свої екземпляри: Viscaria — 85 г, Timo Boll ALC — 84 г, найлегша з шести ALC-основ. За його відчуттями Timo Boll ALC вийшла жорсткішою й швидшою, а Viscaria — контрольнішою, а як загальне правило зазначав, що менша й коротша ручка зміщує баланс до лопаті. Це оцінка конкретних основ, а не заводські характеристики.",
+            "Практичний висновок: якщо для вас важливі 2–3 г, просіть зважити саме ваш екземпляр. Чому однакові основи важать і відчуваються по-різному і як змінювалася Viscaria з роками, розібрано в статті про версії основ Butterfly.",
+          ],
+          ru: [
+            "По весу три основания почти полностью перекрываются. Диапазоны в нашем каталоге — 86–90 г у Viscaria, 85–90 г у Timo Boll ALC и 87–90 г у Fan Zhendong ALC. Butterfly Japan приводит средний вес 87, 87 и 88 г соответственно, то есть разница между моделями в среднем — до 1 г, а разброс внутри одной модели — несколько граммов.",
+            "Butterfly отдельно предупреждает, что вес основания меняется в зависимости от влажности и температуры, а на страницах моделей Butterfly Global граммов не даёт — только общую шкалу «легче — тяжелее» по данным своего отдела исследований (по состоянию на октябрь 2026 года). На ней Timo Boll ALC стоит на уровень легче Viscaria, а Fan Zhendong ALC — на два уровня тяжелее, рядом с Viscaria Super ALC. Это порядок в среднем, так что две Viscaria могут различаться сильнее, чем Viscaria и Timo Boll ALC.",
+            "Это видно и на практике. Тренер Butterfly North America в упомянутом сравнении 2020 года взвесил свои экземпляры: Viscaria — 85 г, Timo Boll ALC — 84 г, самое лёгкое из шести ALC-оснований. По его ощущениям Timo Boll ALC оказалась жёстче и быстрее, а Viscaria — контрольнее, а как общее правило отмечал, что более короткая и маленькая ручка смещает баланс к лопасти. Это оценка конкретных оснований, а не заводские характеристики.",
+            "Практический вывод: если для вас важны 2–3 г, просите взвесить именно ваш экземпляр. Почему одинаковые основания весят и ощущаются по-разному и как менялась Viscaria с годами, разобрано в статье о версиях оснований Butterfly.",
+          ],
+        },
+        links: [
+          { label: { ua: "версії основ Butterfly: роки випуску й вага", ru: "версии оснований Butterfly: годы выпуска и вес" }, href: "/blog/versii-osnov-butterfly" },
+        ],
+      },
+      {
+        id: "istoriya",
+        h: { ua: "Історія: Viscaria 1993, Timo Boll ALC 2008, Fan Zhendong ALC 2022", ru: "История: Viscaria 1993, Timo Boll ALC 2008, Fan Zhendong ALC 2022" },
+        p: {
+          ua: [
+            "Найстаріша з трьох — Viscaria: в історії компанії Butterfly датує її випуск 1993 роком і називає основою, на якій побудовано багато успішних ALC-моделей. Butterfly Japan пише, що нинішня Viscaria — це перевидання, яке максимально відтворює дизайн першого випуску; у японському каталозі воно продається з 1 квітня 2019 року.",
+            "Timo Boll ALC надійшла в продаж у Японії 21 листопада 2008 року. За даними Butterfly Japan, Тімо Болль грав цією основою з 2008 року і за цей час п'ять разів ставав чемпіоном Європи.",
+            "Fan Zhendong ALC — наймолодша, у продажу з 1 вересня 2022 року. Butterfly Japan прямо пише, що в неї багатошарова конструкція специфікації Viscaria, а оформлення, за описом виробника, натхненне швидкою атакувальною грою Фань Чженьдуна. Для Timo Boll ALC такої фрази на офіційних сторінках немає, але цифри й склад шарів ті самі.",
+          ],
+          ru: [
+            "Самое старое из трёх — Viscaria: в истории компании Butterfly датирует её выпуск 1993 годом и называет основанием, на котором построено много успешных ALC-моделей. Butterfly Japan пишет, что нынешняя Viscaria — это переиздание, которое максимально воспроизводит дизайн первого выпуска; в японском каталоге оно продаётся с 1 апреля 2019 года.",
+            "Timo Boll ALC поступило в продажу в Японии 21 ноября 2008 года. По данным Butterfly Japan, Тимо Болль играл этим основанием с 2008 года и за это время пять раз становился чемпионом Европы.",
+            "Fan Zhendong ALC — самое молодое, в продаже с 1 сентября 2022 года. Butterfly Japan прямо пишет, что у него многослойная конструкция спецификации Viscaria, а оформление, по описанию производителя, вдохновлено быстрой атакующей игрой Фань Чжэньдуна. Для Timo Boll ALC такой фразы на официальных страницах нет, но цифры и состав слоёв те же.",
+          ],
+        },
+        links: [
+          { label: { ua: "Butterfly Viscaria", ru: "Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+        ],
+      },
+      {
+        id: "hto-grae",
+        h: { ua: "Хто грає Viscaria, Timo Boll ALC і Fan Zhendong ALC", ru: "Кто играет Viscaria, Timo Boll ALC и Fan Zhendong ALC" },
+        p: {
+          ua: [
+            "Усі три основи є в сетапах топ-гравців Butterfly, і накладки на них дуже схожі. У таблиці — дані з офіційних сторінок гравців Butterfly з датою; сторони накладок Butterfly не підписує, тож порядок наведено як на сторінці: основа → форхенд → бекхенд.",
+            "Viscaria. Дан Цю (GER) грає пером, і в нього версія Viscaria - CS — для китайського пера. За Butterfly, вона не ідентична класичній: вібрація 10,6 замість 10,3, лопать 158×150 мм, ручка 82×22×31,5 мм. Дані Чжан Цзіке (Viscaria і Tenergy 80) датовані 09.07.2021, а 19.12.2024 Butterfly оголосила про завершення контракту, тож це історія, а не поточний сетап. Чжу Юйлін Butterfly вказувала із серійною Viscaria з 07.04.2025 щонайменше до 13.01.2026, а на 16.02.2026 — з основою ALC на спецзамовлення.",
+            "Timo Boll ALC. Тімо Болль грав нею з ручкою з матеріалу G-FLESS на замовлення (дані 14.02.2024) і завершив кар'єру в 2025 році. Поточні гравці — Хірото Сінодзука, Антон Чельберг і Канак Джха; на сторінці моделі в Butterfly Global серед гравців також Міхаель Мейс і Роберт Гардош.",
+            "Fan Zhendong ALC. Дані Фань Чженьдуна датовані 19.07.2022, і Butterfly вказує в нього лише одну накладку — Dignics 09C, без сторони. Свіжіші дані — у Сори Мацусіми та Сюнсуке Тогамі; японська сторінка моделі серед гравців називає й Ван Манью.",
+            "Звідси типові пари: Dignics 09C є в 6 сетапах із 9 у таблиці, Zyre 03 — у 4, а схема «09C першою, Zyre 03 другою» повторюється в Сінодзуки, Мацусіми й Тогамі. Від основи пара не залежить: ті самі накладки ставлять на всі три моделі.",
+          ],
+          ru: [
+            "Все три основания есть в сетапах топ-игроков Butterfly, и накладки на них очень похожи. В таблице — данные с официальных страниц игроков Butterfly с датой; стороны накладок Butterfly не подписывает, поэтому порядок приведён как на странице: основание → форхенд → бэкхенд.",
+            "Viscaria. Дан Цю (GER) играет пером, и у него версия Viscaria - CS — для китайского пера. По Butterfly, она не идентична классической: вибрация 10,6 вместо 10,3, лопасть 158×150 мм, ручка 82×22×31,5 мм. Данные Чжан Цзикэ (Viscaria и Tenergy 80) датированы 09.07.2021, а 19.12.2024 Butterfly объявила о завершении контракта, так что это история, а не текущий сетап. Чжу Юйлин Butterfly указывала с серийной Viscaria с 07.04.2025 как минимум до 13.01.2026, а на 16.02.2026 — с основанием ALC на спецзаказ.",
+            "Timo Boll ALC. Тимо Болль играл им с ручкой из материала G-FLESS на заказ (данные 14.02.2024) и завершил карьеру в 2025 году. Текущие игроки — Хирото Синодзука, Антон Чельберг и Канак Джа; на странице модели в Butterfly Global среди игроков также Михаэль Мэйз и Роберт Гардош.",
+            "Fan Zhendong ALC. Данные Фань Чжэньдуна датированы 19.07.2022, и Butterfly указывает у него только одну накладку — Dignics 09C, без стороны. Более свежие данные — у Соры Мацусимы и Сюнсукэ Тогами; японская страница модели среди игроков называет и Ван Маньюй.",
+            "Отсюда типичные пары: Dignics 09C есть в 6 сетапах из 9 в таблице, Zyre 03 — в 4, а схема «09C первой, Zyre 03 второй» повторяется у Синодзуки, Мацусимы и Тогами. От основания пара не зависит: те же накладки ставят на все три модели.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Гравець", ru: "Игрок" },
+            { ua: "Основа", ru: "Основание" },
+            { ua: "1-ша накладка (форхенд)", ru: "1-я накладка (форхенд)" },
+            { ua: "2-га накладка (бекхенд)", ru: "2-я накладка (бэкхенд)" },
+            { ua: "Дані Butterfly на", ru: "Данные Butterfly на" },
+          ],
+          rows: [
+            [{ ua: "Дан Цю (GER)", ru: "Дан Цю (GER)", player: "qiu-dang" }, { ua: "Viscaria - CS", ru: "Viscaria - CS" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "20.09.2026", ru: "20.09.2026" }],
+            [{ ua: "Чжан Цзіке (CHN)", ru: "Чжан Цзикэ (CHN)", player: "zhang-jike" }, { ua: "Viscaria", ru: "Viscaria" }, { ua: "Tenergy 80 (сторона не вказана)", ru: "Tenergy 80 (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "09.07.2021", ru: "09.07.2021" }],
+            [{ ua: "Тімо Болль (GER)", ru: "Тимо Болль (GER)", player: "boll-timo" }, { ua: "Timo Boll ALC (ручка G-FLESS на замовлення)", ru: "Timo Boll ALC (ручка G-FLESS на заказ)" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "Dignics 05", ru: "Dignics 05" }, { ua: "14.02.2024", ru: "14.02.2024" }],
+            [{ ua: "Хірото Сінодзука (JPN)", ru: "Хирото Синодзука (JPN)", player: "shinozuka-hiroto" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "19.01.2026", ru: "19.01.2026" }],
+            [{ ua: "Антон Чельберг (SWE)", ru: "Антон Чельберг (SWE)", player: "kallberg-anton" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "22.05.2026", ru: "22.05.2026" }],
+            [{ ua: "Канак Джха (USA)", ru: "Канак Джа (USA)", player: "jha-kanak" }, { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "11.02.2026", ru: "11.02.2026" }],
+            [{ ua: "Фань Чженьдун (CHN)", ru: "Фань Чжэньдун (CHN)", player: "fan-zhendong" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C (сторона не вказана)", ru: "Dignics 09C (сторона не указана)" }, { ua: "не вказано", ru: "не указано" }, { ua: "19.07.2022", ru: "19.07.2022" }],
+            [{ ua: "Сора Мацусіма (JPN)", ru: "Сора Мацусима (JPN)", player: "matsushima-sora" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "01.10.2025", ru: "01.10.2025" }],
+            [{ ua: "Сюнсуке Тогамі (JPN)", ru: "Сюнсукэ Тогами (JPN)", player: "togami-shunsuke" }, { ua: "Fan Zhendong ALC", ru: "Fan Zhendong ALC" }, { ua: "Dignics 09C", ru: "Dignics 09C" }, { ua: "Zyre 03", ru: "Zyre 03" }, { ua: "21.05.2026", ru: "21.05.2026" }],
+          ],
+        },
+        rec: {
+          publicId: "ttmax/product/fan-zhendong-alc/02",
+          name: { ua: "Butterfly Fan Zhendong ALC", ru: "Butterfly Fan Zhendong ALC" },
+          verdict: { ua: "Конструкція специфікації Viscaria в іменному оформленні: нею за даними Butterfly грають Фань Чженьдун, Сора Мацусіма й Сюнсуке Тогамі.", ru: "Конструкция спецификации Viscaria в именном оформлении: им по данным Butterfly играют Фань Чжэньдун, Сора Мацусима и Сюнсукэ Тогами." },
+          alt: { ua: "Основа Butterfly Fan Zhendong ALC з прямими лініями на ручці", ru: "Основание Butterfly Fan Zhendong ALC с прямыми линиями на ручке" },
+          href: "/butterfly/osnovaniya/fan-zhendong-alc",
+        },
+        links: [
+          { label: { ua: "гравці Butterfly та їхній інвентар", ru: "игроки Butterfly и их инвентарь" }, href: "/igroki" },
+          { label: { ua: "профіль Дана Цю", ru: "профиль Дана Цю" }, href: "/igroki/qiu-dang" },
+          { label: { ua: "профіль Хірото Сінодзуки", ru: "профиль Хирото Синодзуки" }, href: "/igroki/shinozuka-hiroto" },
+          { label: { ua: "профіль Фань Чженьдуна", ru: "профиль Фань Чжэньдуна" }, href: "/igroki/fan-zhendong" },
+          { label: { ua: "інвентар профі Butterfly", ru: "инвентарь профи Butterfly" }, href: "/blog/inventar-profi-butterfly" },
+          { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+        ],
+      },
+      {
+        id: "rodyna",
+        h: { ua: "Сусіди по родині: Super ALC та inner-основи", ru: "Соседи по семейству: Super ALC и inner-основания" },
+        p: {
+          ua: [
+            "Якщо хочеться не однієї з трьох, а помітно іншої поведінки, у Butterfly для цього є окремі моделі з відмінними цифрами. Швидший варіант — Super ALC: у Viscaria Super ALC і Fan Zhendong Super ALC реакція 12,1, вібрація 10,1, товщина 5,7 мм, та сама лопать 157×150 мм і ручки FL та ST. Viscaria Super ALC Butterfly випустила в 2022 році.",
+            "Мʼякший і повільніший за цифрами варіант — inner-ALC, де карбон лежить ближче до ядра. У Harimoto Tomokazu ALC (на Butterfly Global — Harimoto Tomokazu Innerforce ALC) реакція 10,7, вібрація 9,2, товщина 6,0 мм і більша лопать — 158×152 мм. В Innerforce Layer ALC реакція 10,7, вібрація 9,4, 6,0 мм, і вона, як і Timo Boll ALC, офіційно випускається з ручкою AN.",
+            "Повний перелік основ з цифрами — у таблиці основ Butterfly, а що змінює розташування волокна й тип карбону — у статті «ALC чи ZLC». Тут важливо одне: Viscaria, Timo Boll ALC і Fan Zhendong ALC стоять у цьому ряду в одній точці.",
+          ],
+          ru: [
+            "Если хочется не одного из трёх, а заметно другого поведения, у Butterfly для этого есть отдельные модели с другими цифрами. Более быстрый вариант — Super ALC: у Viscaria Super ALC и Fan Zhendong Super ALC реакция 12,1, вибрация 10,1, толщина 5,7 мм, та же лопасть 157×150 мм и ручки FL и ST. Viscaria Super ALC Butterfly выпустила в 2022 году.",
+            "Более мягкий и медленный по цифрам вариант — inner-ALC, где карбон лежит ближе к ядру. У Harimoto Tomokazu ALC (на Butterfly Global — Harimoto Tomokazu Innerforce ALC) реакция 10,7, вибрация 9,2, толщина 6,0 мм и лопасть больше — 158×152 мм. У Innerforce Layer ALC реакция 10,7, вибрация 9,4, 6,0 мм, и оно, как и Timo Boll ALC, официально выпускается с ручкой AN.",
+            "Полный перечень оснований с цифрами — в таблице оснований Butterfly, а что меняет расположение волокна и тип карбона — в статье «ALC или ZLC». Здесь важно одно: Viscaria, Timo Boll ALC и Fan Zhendong ALC стоят в этом ряду в одной точке.",
+          ],
+        },
+        table: {
+          columns: [
+            { ua: "Основа", ru: "Основание" },
+            { ua: "Волокно", ru: "Волокно" },
+            { ua: "Реакція / вібрація", ru: "Реакция / вибрация" },
+            { ua: "Товщина", ru: "Толщина" },
+            { ua: "Лопать", ru: "Лопасть" },
+          ],
+          rows: [
+            [{ ua: "Viscaria Super ALC", ru: "Viscaria Super ALC", href: "/butterfly/osnovaniya/viscaria-super-alc" }, { ua: "Super ALC, outer", ru: "Super ALC, outer" }, { ua: "12,1 / 10,1", ru: "12,1 / 10,1" }, { ua: "5,7 мм", ru: "5,7 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }],
+            [{ ua: "Fan Zhendong Super ALC", ru: "Fan Zhendong Super ALC", href: "/butterfly/osnovaniya/fan-zhendong-super-alc" }, { ua: "Super ALC, outer", ru: "Super ALC, outer" }, { ua: "12,1 / 10,1", ru: "12,1 / 10,1" }, { ua: "5,7 мм", ru: "5,7 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }],
+            [{ ua: "Viscaria, Timo Boll ALC, Fan Zhendong ALC", ru: "Viscaria, Timo Boll ALC, Fan Zhendong ALC" }, { ua: "ALC, outer", ru: "ALC, outer" }, { ua: "11,8 / 10,3", ru: "11,8 / 10,3" }, { ua: "5,8 мм", ru: "5,8 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }],
+            [{ ua: "Innerforce Layer ALC", ru: "Innerforce Layer ALC", href: "/butterfly/osnovaniya/innerforce-layer-alc" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "10,7 / 9,4", ru: "10,7 / 9,4" }, { ua: "6,0 мм", ru: "6,0 мм" }, { ua: "157×150 мм", ru: "157×150 мм" }],
+            [{ ua: "Harimoto Tomokazu ALC", ru: "Harimoto Tomokazu ALC", href: "/butterfly/osnovaniya/harimoto-tomokazu-alc" }, { ua: "ALC, inner", ru: "ALC, inner" }, { ua: "10,7 / 9,2", ru: "10,7 / 9,2" }, { ua: "6,0 мм", ru: "6,0 мм" }, { ua: "158×152 мм", ru: "158×152 мм" }],
+          ],
+        },
+        links: [
+          { label: { ua: "таблиця основ Butterfly", ru: "таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
+          { label: { ua: "ALC чи ZLC", ru: "ALC или ZLC" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "Butterfly Viscaria Super ALC", ru: "Butterfly Viscaria Super ALC" }, href: "/butterfly/osnovaniya/viscaria-super-alc" },
+          { label: { ua: "Butterfly Harimoto Tomokazu ALC", ru: "Butterfly Harimoto Tomokazu ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-alc" },
+        ],
+      },
+      {
+        id: "yak-obraty",
+        h: { ua: "Як обрати між Viscaria, Timo Boll ALC і Fan Zhendong ALC", ru: "Как выбрать между Viscaria, Timo Boll ALC и Fan Zhendong ALC" },
+        p: {
+          ua: [
+            "Обирати варто в такому порядку: ручка, вага екземпляра, накладки — і лише наостанок назва та дизайн. Лопать, товщина й цифри Butterfly в усіх трьох однакові, тож шукати різницю в них марно.",
+            "Якщо жодна з трьох ручок не лягає в долоню або хочеться іншого характеру удару, дивіться сусідні моделі з попереднього розділу — там цифри справді інші.",
+          ],
+          ru: [
+            "Выбирать стоит в таком порядке: ручка, вес экземпляра, накладки — и только напоследок название и дизайн. Лопасть, толщина и цифры Butterfly у всех трёх одинаковые, так что искать разницу в них бесполезно.",
+            "Если ни одна из трёх ручек не ложится в ладонь или хочется другого характера удара, смотрите соседние модели из предыдущего раздела — там цифры действительно другие.",
+          ],
+        },
+        steps: [
+          {
+            name: { ua: "Оберіть тип ручки", ru: "Выберите тип ручки" },
+            text: {
+              ua: "Вирішіть, яка форма вам зручніша: FL розширюється до кінця й тримається щільніше, ST пряма й лежить у долоні вільніше. Якщо граєте ручкою AN, з трьох моделей офіційно вона є лише в Timo Boll ALC.",
+              ru: "Решите, какая форма вам удобнее: FL расширяется к концу и держится плотнее, ST прямая и лежит в ладони свободнее. Если играете ручкой AN, из трёх моделей официально она есть только у Timo Boll ALC.",
+            },
+          },
+          {
+            name: { ua: "Порівняйте товщину ручки", ru: "Сравните толщину ручки" },
+            text: {
+              ua: "Потримайте в руці ракетку з ручкою 24 і 25 мм або порівняйте зі своєю поточною. Тонша ручка — Timo Boll ALC, повніша — Viscaria або Fan Zhendong ALC.",
+              ru: "Подержите в руке ракетку с ручкой 24 и 25 мм или сравните со своей текущей. Тоньше ручка — у Timo Boll ALC, полнее — у Viscaria или Fan Zhendong ALC.",
+            },
+          },
+          {
+            name: { ua: "Попросіть зважити екземпляр", ru: "Попросите взвесить экземпляр" },
+            text: {
+              ua: "Діапазони трьох моделей перекриваються (85–90 г), тож вага конкретної основи важливіша за назву. Тому має сенс попросити продавця зважити конкретну основу перед покупкою.",
+              ru: "Диапазоны трёх моделей перекрываются (85–90 г), так что вес конкретного основания важнее названия. Поэтому имеет смысл попросить продавца взвесить конкретное основание перед покупкой.",
+            },
+          },
+          {
+            name: { ua: "Підберіть накладки", ru: "Подберите накладки" },
+            text: {
+              ua: "Орієнтуйтеся на свій рівень, а не на сетап профі. У професіоналів на цих основах найчастіше Dignics 09C першою й Zyre 03 або 09C другою, але це тверді губки 44°, розраховані на сильний розгін.",
+              ru: "Ориентируйтесь на свой уровень, а не на сетап профи. У профессионалов на этих основаниях чаще всего Dignics 09C первой и Zyre 03 или 09C второй, но это жёсткие губки 44°, рассчитанные на сильный разгон.",
+            },
+          },
+          {
+            name: { ua: "Вирішіть за дизайном і назвою", ru: "Решите по дизайну и названию" },
+            text: {
+              ua: "Коли ручка й вага підходять в кількох моделей, обирайте ту, чиє оформлення або ім'я гравця вам ближче: на гру це вже не впливає.",
+              ru: "Когда ручка и вес подходят у нескольких моделей, выбирайте ту, чьё оформление или имя игрока вам ближе: на игру это уже не влияет.",
+            },
+          },
+        ],
+        rec: {
+          publicId: "ttmax/product/viscaria/01",
+          name: { ua: "Butterfly Viscaria", ru: "Butterfly Viscaria" },
+          verdict: { ua: "Перша з трьох (1993) і, за Butterfly, база для багатьох ALC-основ: ті самі 11,8 і 10,3, ручка FL 25 мм.", ru: "Первое из трёх (1993) и, по Butterfly, база для многих ALC-оснований: те же 11,8 и 10,3, ручка FL 25 мм." },
+          alt: { ua: "Основа Butterfly Viscaria з арилат-карбоном для атакувальної гри", ru: "Основание Butterfly Viscaria с арилат-карбоном для атакующей игры" },
+          href: "/butterfly/osnovaniya/viscaria",
+        },
+        links: [
+          { label: { ua: "товщина губки накладки", ru: "толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
+          { label: { ua: "найкращі накладки Butterfly", ru: "лучшие накладки Butterfly" }, href: "/blog/naykrashchi-nakladki-butterfly" },
+          { label: { ua: "як наклеїти накладку на основу", ru: "как наклеить накладку на основание" }, href: "/blog/yak-nakleity-nakladku" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: { ua: "Чи є різниця у грі між Viscaria і Timo Boll ALC?", ru: "Есть ли разница в игре между Viscaria и Timo Boll ALC?" },
+        a: {
+          ua: "За офіційними даними Butterfly — ні: реакція 11,8, вібрація 10,3, склад 5+2 з арилат-карбоном, 5,8 мм і лопать 157×150 мм в обох однакові. Відрізняється ручка: у Timo Boll ALC вона на 1 мм тонша і є варіант AN. Різницю у відчуттях частіше дає вага конкретного екземпляра, ніж модель.",
+          ru: "По официальным данным Butterfly — нет: реакция 11,8, вибрация 10,3, состав 5+2 с арилат-карбоном, 5,8 мм и лопасть 157×150 мм у обоих одинаковые. Отличается ручка: у Timo Boll ALC она на 1 мм тоньше и есть вариант AN. Разницу в ощущениях чаще даёт вес конкретного экземпляра, чем модель.",
+        },
+      },
+      {
+        q: { ua: "Fan Zhendong ALC — це та сама Viscaria?", ru: "Fan Zhendong ALC — это та же Viscaria?" },
+        a: {
+          ua: "За конструкцією — так: Butterfly Japan прямо пише, що в Fan Zhendong ALC багатошарова конструкція специфікації Viscaria, і всі цифри та розміри ручок FL і ST у них збігаються. Відрізняються оформлення, рік випуску (2022 проти 1993) і середня вага в каталозі Butterfly Japan — 88 г проти 87 г.",
+          ru: "По конструкции — да: Butterfly Japan прямо пишет, что у Fan Zhendong ALC многослойная конструкция спецификации Viscaria, и все цифры и размеры ручек FL и ST у них совпадают. Отличаются оформление, год выпуска (2022 против 1993) и средний вес в каталоге Butterfly Japan — 88 г против 87 г.",
+        },
+      },
+      {
+        q: { ua: "Яка з трьох основ найшвидша?", ru: "Какое из трёх оснований самое быстрое?" },
+        a: {
+          ua: "За шкалою Butterfly — жодна: реакція в усіх трьох 11,8. Класи OFF+ у Viscaria та OFF у двох інших, які трапляються в каталогах магазинів (зокрема в нашому), на офіційних сторінках Butterfly не вказані. Помітно швидші за цифрами виробника — Viscaria Super ALC і Fan Zhendong Super ALC з реакцією 12,1.",
+          ru: "По шкале Butterfly — ни одно: реакция у всех трёх 11,8. Классы OFF+ у Viscaria и OFF у двух других, которые встречаются в каталогах магазинов (в том числе в нашем), на официальных страницах Butterfly не указаны. Заметно быстрее по цифрам производителя — Viscaria Super ALC и Fan Zhendong Super ALC с реакцией 12,1.",
+        },
+      },
+      {
+        q: { ua: "Яку ручку обрати — FL чи ST?", ru: "Какую ручку выбрать — FL или ST?" },
+        a: {
+          ua: "FL (flared) розширюється до кінця до 34 мм і щільніше фіксується в долоні; ST (straight) пряма, з кінцем 27,5–28 мм, і лежить вільніше. Однозначно кращої немає: обирайте ту, якою граєте зараз, або ту, що зручніша на дотик. В усіх трьох основах доступні обидві.",
+          ru: "FL (flared) расширяется к концу до 34 мм и плотнее фиксируется в ладони; ST (straight) прямая, с концом 27,5–28 мм, и лежит свободнее. Однозначно лучшей нет: выбирайте ту, которой играете сейчас, или ту, что удобнее на ощупь. У всех трёх оснований доступны обе.",
+        },
+      },
+      {
+        q: { ua: "Чи буває Viscaria з анатомічною ручкою AN?", ru: "Бывает ли Viscaria с анатомической ручкой AN?" },
+        a: {
+          ua: "На офіційних сторінках Butterfly Global і Butterfly Japan Viscaria і Fan Zhendong ALC указані лише з ручками FL і ST. З трьох моделей AN офіційно є тільки в Timo Boll ALC (100×24×34 мм). Актуальні варіанти ручки в нас видно на картці товару.",
+          ru: "На официальных страницах Butterfly Global и Butterfly Japan Viscaria и Fan Zhendong ALC указаны только с ручками FL и ST. Из трёх моделей AN официально есть только у Timo Boll ALC (100×24×34 мм). Актуальные варианты ручки у нас видны на карточке товара.",
+        },
+      },
+      {
+        q: { ua: "Чому Дан Цю грає Viscaria, якщо він тримає ракетку пером?", ru: "Почему Дан Цю играет Viscaria, если он держит ракетку пером?" },
+        a: {
+          ua: "Він грає окремою версією Viscaria - CS для китайського пера (дані Butterfly на 20.09.2026). За Butterfly, у неї вібрація 10,6 замість 10,3, лопать 158×150 мм і коротка ручка 82×22×31,5 мм, тож це не та сама основа, що Viscaria для європейської хватки.",
+          ru: "Он играет отдельной версией Viscaria - CS для китайского пера (данные Butterfly на 20.09.2026). По Butterfly, у неё вибрация 10,6 вместо 10,3, лопасть 158×150 мм и короткая ручка 82×22×31,5 мм, так что это не то же основание, что Viscaria для европейской хватки.",
+        },
+      },
+      {
+        q: { ua: "Чи грає Фань Чженьдун серійною Fan Zhendong ALC?", ru: "Играет ли Фань Чжэньдун серийным Fan Zhendong ALC?" },
+        a: {
+          ua: "Butterfly вказує в нього Fan Zhendong ALC і Dignics 09C, але ці дані датовані 19.07.2022. Butterfly Japan окремо пише, що золота пластина з логотипом на торці ручки є лише в ракетках, якими грає сам Фань; про інші відмінності від серійної основи виробник не повідомляє.",
+          ru: "Butterfly указывает у него Fan Zhendong ALC и Dignics 09C, но эти данные датированы 19.07.2022. Butterfly Japan отдельно пишет, что золотая пластина с логотипом на торце ручки есть только у ракеток, которыми играет сам Фань; о других отличиях от серийного основания производитель не сообщает.",
+        },
+      },
+      {
+        q: { ua: "Які накладки ставити на Viscaria або Timo Boll ALC?", ru: "Какие накладки ставить на Viscaria или Timo Boll ALC?" },
+        a: {
+          ua: "У професіоналів Butterfly на цих трьох основах найчастіше Dignics 09C (6 сетапів із 9 у нашій таблиці) і Zyre 03 (4 із 9). Це тверді накладки з губкою 44°, розраховані на сильний розгін; аматору варто відштовхуватися від свого рівня, а не від сетапу профі.",
+          ru: "У профессионалов Butterfly на этих трёх основаниях чаще всего Dignics 09C (6 сетапов из 9 в нашей таблице) и Zyre 03 (4 из 9). Это жёсткие накладки с губкой 44°, рассчитанные на сильный разгон; любителю стоит отталкиваться от своего уровня, а не от сетапа профи.",
+        },
+      },
+    ],
+    officialSource: {
+      label: { ua: "Butterfly Global — Viscaria: характеристики", ru: "Butterfly Global — Viscaria: характеристики" },
+      url: "https://www.butterfly-global.com/en/products/detail/30041.html",
+    },
+    sources: [
+      { label: { ua: "Butterfly Global — Viscaria (11,8 / 10,3, ручки FL і ST)", ru: "Butterfly Global — Viscaria (11,8 / 10,3, ручки FL и ST)" }, url: "https://www.butterfly-global.com/en/products/detail/30041.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Timo Boll ALC (ручки FL, ST, AN)", ru: "Butterfly Global — Timo Boll ALC (ручки FL, ST, AN)" }, url: "https://www.butterfly-global.com/en/products/detail/35861.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Fan Zhendong ALC", ru: "Butterfly Global — Fan Zhendong ALC" }, url: "https://www.butterfly-global.com/en/products/detail/37221.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Viscaria: перевидання, середня вага", ru: "Butterfly Japan — Viscaria: переиздание, средний вес" }, url: "https://www.butterfly.co.jp/products/detail/30041.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Timo Boll ALC: дата випуску 2008", ru: "Butterfly Japan — Timo Boll ALC: дата выпуска 2008" }, url: "https://www.butterfly.co.jp/products/detail/35861.html", kind: "official" },
+      { label: { ua: "Butterfly Japan — Fan Zhendong ALC: конструкція Viscaria, 2022", ru: "Butterfly Japan — Fan Zhendong ALC: конструкция Viscaria, 2022" }, url: "https://www.butterfly.co.jp/products/detail/37221.html", kind: "official" },
+      { label: { ua: "Butterfly — історія компанії (Viscaria, 1993)", ru: "Butterfly — история компании (Viscaria, 1993)" }, url: "https://www.butterfly-global.com/en/about/history/", kind: "official" },
+      { label: { ua: "Butterfly Global — Viscaria - CS (китайське перо)", ru: "Butterfly Global — Viscaria - CS (китайское перо)" }, url: "https://www.butterfly-global.com/en/products/detail/24010.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Viscaria Super ALC", ru: "Butterfly Global — Viscaria Super ALC" }, url: "https://www.butterfly-global.com/en/products/detail/37191.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Fan Zhendong Super ALC", ru: "Butterfly Global — Fan Zhendong Super ALC" }, url: "https://www.butterfly-global.com/en/products/detail/37241.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Harimoto Tomokazu Innerforce ALC", ru: "Butterfly Global — Harimoto Tomokazu Innerforce ALC" }, url: "https://www.butterfly-global.com/en/products/detail/36991.html", kind: "official" },
+      { label: { ua: "Butterfly Global — Innerforce Layer ALC", ru: "Butterfly Global — Innerforce Layer ALC" }, url: "https://www.butterfly-global.com/en/products/detail/36701.html", kind: "official" },
+      { label: { ua: "Butterfly — вага основ: вологість, температура й шкала «легша — важча»", ru: "Butterfly — вес оснований: влажность, температура и шкала «легче — тяжелее»" }, url: "https://www.butterfly-global.com/en/products/blade/weight.html", kind: "official" },
+      { label: { ua: "Butterfly North America — порівняння шести ALC-основ (29.12.2020)", ru: "Butterfly North America — сравнение шести ALC-оснований (29.12.2020)" }, url: "https://butterflyonline.com/alc-blades-comparison", kind: "review" },
+    ],
+    relatedProducts: [
+      { label: { ua: "Butterfly Viscaria", ru: "Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+      { label: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+      { label: { ua: "Butterfly Fan Zhendong ALC", ru: "Butterfly Fan Zhendong ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+      { label: { ua: "основи з ALC", ru: "основания с ALC" }, href: "/osnovaniya/alc" },
+    ],
+    relatedPosts: ["alc-chy-zlc", "versii-osnov-butterfly", "tablytsia-osnov-butterfly", "inventar-profi-butterfly"],
   },
 };
 
