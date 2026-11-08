@@ -278,8 +278,7 @@ export const catalogBases: CatalogProduct[] = [
       "plies": "5+2",
       "handles": [
         "fl",
-        "st",
-        "an"
+        "st"
       ]
     }
   },
@@ -2877,8 +2876,7 @@ export const catalogBases: CatalogProduct[] = [
       "plies": "5+2",
       "handles": [
         "fl",
-        "st",
-        "an"
+        "st"
       ]
     }
   },
