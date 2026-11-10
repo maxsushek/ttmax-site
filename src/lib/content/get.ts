@@ -158,7 +158,8 @@ async function load(
 // адмінку без бампу не видна НЕ «до години», а до наступної правки в адмінці або деплою.
 // v4 (10.11.2026): SQL-правка content_blocks для /nakladki, /odyag, серій dignics і tenergy
 // (комерційні тексти; копія старих — docs/seo/cms-backup-2026-11-10.json).
-const CONTENT_CACHE_VERSION = "v4";
+// v5 (10.11.2026): SQL — title /ru/aksessuary (було 61 символ), опис /myachi (було <110).
+const CONTENT_CACHE_VERSION = "v5";
 
 /**
  * Кешований опис для (тип, slug, мова). null — нічого не рендеримо.
