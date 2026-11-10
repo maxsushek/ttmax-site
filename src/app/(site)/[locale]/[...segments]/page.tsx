@@ -2,6 +2,7 @@
 // Catch-all каталога: /{category}, /{brand}, /{brand}/{category}, /{brand}/{category}/{product}.
 // Не перехватывает главную (/{locale}) и имеет низший приоритет, поэтому ничего существующего не ломает.
 // Поддержка двух видов товара: накладки (kind: "rubber") и основания (kind: "base").
+import { cyrillicName } from "@/data/catalog/aliases";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
@@ -417,6 +418,7 @@ export default async function CatalogPage({
           }
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
+            alternateName: cyrillicName(eroute.product, locale) ?? undefined,
             // Найдовший з трьох описів: вердикт + офіційні характеристики Butterfly.
             // schema.org не має ліміту на description, тож ріжемо тут лише через фолбек.
             description:
@@ -1327,6 +1329,8 @@ function ProductShell({
   content: ContentBlock | null;
   extra?: React.ReactNode;
 }) {
+  const shellProduct = reviewSlug ? getProductBySlug(reviewSlug) : undefined;
+  const cyrillic = shellProduct ? cyrillicName(shellProduct, locale) : null;
   return (
     /**
      * GallerySyncProvider тримає спільний «активний кадр» для галереї й селектора
@@ -1356,6 +1360,8 @@ function ProductShell({
           <h1 className="mt-1.5 font-display text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl">
             {h1}
           </h1>
+          {/* Кириличне написання моделі (aliases.ts): за ним частина людей і шукає. */}
+          {cyrillic && <p className="mt-1.5 font-body text-sm text-ink-muted">{cyrillic}</p>}
           {reviewSlug && <ProductRating slug={reviewSlug} locale={locale} />}
           <ContentIntro text={content?.intro} />
           {children}

@@ -35,13 +35,21 @@ const CONTENT: Record<string, RichContent> = {
   osnovaniya: {
     lead: [
       {
-        ua: "Основа (бланк) — це фундамент ракетки: вона значною мірою визначає швидкість, контроль і «відчуття» м'яча, а накладки лише доповнюють її характер. Тому грамотний вибір ракетки починається саме з основи — під ваш стиль, рівень і хват.",
-        ru: "Основание (бланк) — это фундамент ракетки: оно во многом определяет скорость, контроль и «ощущение» мяча, а накладки лишь дополняют его характер. Поэтому грамотный выбор ракетки начинается именно с основания — под ваш стиль, уровень и хват.",
+        ua: "Основи Butterfly (Батерфляй) для ракеток настільного тенісу — у нашому каталозі понад 80 моделей: від дерев'яних Korbel і Primorac до карбонових Viscaria, Timo Boll ALC, Harimoto Tomokazu Super ALC і Apolonia ZLC. Основа значною мірою визначає швидкість, контроль і «відчуття» м'яча, а накладки лише доповнюють її характер, тому вибір ракетки починається саме з неї — під ваш стиль, рівень і хват.",
+        ru: "Основания Butterfly (Баттерфляй) для ракеток настольного тенниса — в нашем каталоге больше 80 моделей: от деревянных Korbel и Primorac до карбоновых Viscaria, Timo Boll ALC, Harimoto Tomokazu Super ALC и Apolonia ZLC. Основание во многом определяет скорость, контроль и «ощущение» мяча, а накладки лишь дополняют его характер, поэтому выбор ракетки начинается именно с него — под ваш стиль, уровень и хват.",
       },
       {
-        ua: "Усі основи Butterfly у нас — оригінал з гарантією. Не хочете збирати самостійно — підберемо накладки й зберемо готову ракетку безкоштовно.",
-        ru: "Все основания Butterfly у нас — оригинал с гарантией. Не хотите собирать самостоятельно — подберём накладки и соберём готовую ракетку бесплатно.",
+        ua: "Усі основи — оригінальна продукція Butterfly з гарантією виробника. Не хочете збирати самостійно — підберемо накладки й зберемо готову ракетку безкоштовно.",
+        ru: "Все основания — оригинальная продукция Butterfly с гарантией производителя. Не хотите собирать самостоятельно — подберём накладки и соберём готовую ракетку бесплатно.",
       },
+    ],
+    summary: [
+      { ua: "Універсальна атака — outer-ALC: Viscaria і Timo Boll ALC (за даними Butterfly реакція 11,8, вібрація 10,3).", ru: "Универсальная атака — outer-ALC: Viscaria и Timo Boll ALC (по данным Butterfly реакция 11,8, вибрация 10,3)." },
+      { ua: "Атака з м'якшим, контрольованішим відчуттям — inner-карбон: Harimoto Tomokazu Super ALC, Innerforce Layer ALC.", ru: "Атака с более мягким и контролируемым ощущением — inner-карбон: Harimoto Tomokazu Super ALC, Innerforce Layer ALC." },
+      { ua: "Силова гра першим темпом — outer-ZLC (Timo Boll ZLC); м'якша inner-ZLC — Apolonia ZLC.", ru: "Силовая игра первым темпом — outer-ZLC (Timo Boll ZLC); более мягкая inner-ZLC — Apolonia ZLC." },
+      { ua: "Контроль і навчання — дерев'яні основи (Korbel, Primorac).", ru: "Контроль и обучение — деревянные основания (Korbel, Primorac)." },
+      { ua: "Склад, товщина, вага, реакція й вібрація всіх моделей — у таблиці основ Butterfly в нашому блозі.", ru: "Состав, толщина, вес, реакция и вибрация всех моделей — в таблице оснований Butterfly в нашем блоге." },
+      { ua: "Оригінал Butterfly з гарантією, доставка по Україні, оплата при отриманні, безкоштовне збирання ракетки.", ru: "Оригинал Butterfly с гарантией, доставка по Украине, оплата при получении, бесплатная сборка ракетки." },
     ],
     cardsHeading: { ua: "Типи основ — як обрати", ru: "Типы оснований — как выбрать" },
     cards: [
@@ -96,8 +104,8 @@ const CONTENT: Record<string, RichContent> = {
       {
         title: { ua: "Ціна і доставка", ru: "Цена и доставка" },
         body: {
-          ua: "Основи Butterfly — від доступного дерева до преміум-карбону. Доставка Новою Поштою по Україні, оплата онлайн або при отриманні. Наявність і актуальну ціну дивіться на картці моделі.",
-          ru: "Основания Butterfly — от доступного дерева до премиум-карбона. Доставка Новой Почтой по Украине, оплата онлайн или при получении. Наличие и актуальную цену смотрите на карточке модели.",
+          ua: "Основи Butterfly — від доступного дерева до преміум-карбону. Доставка Новою Поштою або Укрпоштою по Україні, оплата при отриманні (накладений платіж), можливий самовивіз у Харкові. Наявність і актуальну ціну дивіться на картці моделі.",
+          ru: "Основания Butterfly — от доступного дерева до премиум-карбона. Доставка Новой Почтой или Укрпочтой по Украине, оплата при получении (наложенный платёж), возможен самовывоз в Харькове. Наличие и актуальную цену смотрите на карточке модели.",
         },
       },
     ],
@@ -126,15 +134,18 @@ const CONTENT: Record<string, RichContent> = {
       { q: { ua: "Можна замовити ракетку у зборі?", ru: "Можно заказать ракетку в сборе?" }, a: { ua: "Так. Підберемо накладки під основу, наклеїмо й обріжемо безкоштовно. Готова до гри одразу.", ru: "Да. Подберём накладки под основание, наклеим и обрежем бесплатно. Готова к игре сразу." } },
     ],
     links: [
-      { label: { ua: "Viscaria", ru: "Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
-      { label: { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
-      { label: { ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
+      { label: { ua: "Основа Viscaria", ru: "Основание Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+      { label: { ua: "Основа Timo Boll ALC", ru: "Основание Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+      { label: { ua: "Harimoto Tomokazu Super ALC", ru: "Harimoto Tomokazu Super ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-super-alc" },
+      { label: { ua: "Основа Apolonia ZLC", ru: "Основание Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
       { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
       { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
+      { label: { ua: "Таблиця основ Butterfly", ru: "Таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
+      { label: { ua: "Японська, європейська чи китайська версія основи", ru: "Японская, европейская или китайская версия основания" }, href: "/blog/versii-osnov-butterfly" },
       { label: { ua: "ALC чи ZLC, inner чи outer — гайд", ru: "ALC или ZLC, inner или outer — гайд" }, href: "/blog/alc-chy-zlc" },
       { label: { ua: "Зняті з виробництва основи Butterfly", ru: "Снятые с производства основания Butterfly" }, href: "/blog/znyati-osnovy-butterfly" },
       { label: { ua: "Огляд Apolonia ZLC", ru: "Обзор Apolonia ZLC" }, href: "/blog/apolonia-zlc-oglyad" },
-      { label: { ua: "Накладки", ru: "Накладки" }, href: "/nakladki" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
       { label: { ua: "Готові ракетки", ru: "Готовые ракетки" }, href: "/rakety" },
     ],
   },
@@ -143,13 +154,20 @@ const CONTENT: Record<string, RichContent> = {
   rakety: {
     lead: [
       {
-        ua: "Готова ракетка — це професійна зв'язка Butterfly «основа + накладки», підібрана за стилем і зібрана майстром. На відміну від дешевих ракеток у блістері, тут кожен компонент — оригінал, а склад можна змінювати згодом.",
-        ru: "Готовая ракетка — это профессиональная связка Butterfly «основание + накладки», подобранная по стилю и собранная мастером. В отличие от дешёвых ракеток в блистере, здесь каждый компонент — оригинал, а состав можно менять со временем.",
+        ua: "Ракетки для настільного тенісу Butterfly (Батерфляй) у TTMAX — це професійні зв'язки «основа + накладки», підібрані за стилем і зібрані майстром: у каталозі понад 90 готових комбінацій, наприклад Viscaria з Tenergy 05 чи Timo Boll CAF із Zyre 03. На відміну від дешевих ракеток у блістері, тут кожен компонент — оригінал, а склад можна змінювати згодом.",
+        ru: "Ракетки для настольного тенниса Butterfly (Баттерфляй) в TTMAX — это профессиональные связки «основание + накладки», подобранные по стилю и собранные мастером: в каталоге больше 90 готовых комбинаций, например Viscaria с Tenergy 05 или Timo Boll CAF с Zyre 03. В отличие от дешёвых ракеток в блистере, здесь каждый компонент — оригинал, а состав можно менять со временем.",
       },
       {
-        ua: "Оберіть готову комбінацію або скажіть рівень і стиль — підберемо під вас. Збирання, обрізання накладок і торцева стрічка — безкоштовно.",
-        ru: "Выберите готовую комбинацию или скажите уровень и стиль — подберём под вас. Сборка, обрезка накладок и торцевая лента — бесплатно.",
+        ua: "Оберіть готову комбінацію або скажіть рівень і стиль — підберемо під вас. При купівлі збірної ракетки збирання, обрізання накладок і доставка — безкоштовно, торцева стрічка — у подарунок.",
+        ru: "Выберите готовую комбинацию или скажите уровень и стиль — подберём под вас. При покупке сборной ракетки сборка, обрезка накладок и доставка — бесплатно, торцевая лента — в подарок.",
       },
+    ],
+    summary: [
+      { ua: "Атака топспіном — швидка карбонова основа (Viscaria, Timo Boll ALC) плюс спінова накладка Dignics або Tenergy.", ru: "Атака топспином — быстрое карбоновое основание (Viscaria, Timo Boll ALC) плюс спиновая накладка Dignics или Tenergy." },
+      { ua: "Старт і навчання — дерево або м'яка ALC-основа з м'якою накладкою (Rozena, Tenergy 05 FX).", ru: "Старт и обучение — дерево или мягкое ALC-основание с мягкой накладкой (Rozena, Tenergy 05 FX)." },
+      { ua: "Склад не фіксований: основу й накладки підберемо під ваш рівень і стиль.", ru: "Состав не фиксирован: основание и накладки подберём под ваш уровень и стиль." },
+      { ua: "Збирання, обрізання, торцева стрічка й доставка збірної ракетки — безкоштовно; оплата при отриманні.", ru: "Сборка, обрезка, торцевая лента и доставка сборной ракетки — бесплатно; оплата при получении." },
+      { ua: "Порівняти компоненти допоможуть таблиці основ і накладок Butterfly в нашому блозі.", ru: "Сравнить компоненты помогут таблицы оснований и накладок Butterfly в нашем блоге." },
     ],
     cardsHeading: { ua: "Як обрати готову ракетку", ru: "Как выбрать готовую ракетку" },
     cards: [
@@ -193,8 +211,8 @@ const CONTENT: Record<string, RichContent> = {
       {
         title: { ua: "Ціна і доставка", ru: "Цена и доставка" },
         body: {
-          ua: "Готові ракетки — від стартових зв'язок до преміум-комбінацій. Доставка Новою Поштою по Україні, оплата онлайн або при отриманні.",
-          ru: "Готовые ракетки — от стартовых связок до премиум-комбинаций. Доставка Новой Почтой по Украине, оплата онлайн или при получении.",
+          ua: "Готові ракетки — від стартових зв'язок до преміум-комбінацій. Доставка збірної ракетки Новою Поштою або Укрпоштою по Україні безкоштовна, оплата при отриманні (накладений платіж), можливий самовивіз у Харкові.",
+          ru: "Готовые ракетки — от стартовых связок до премиум-комбинаций. Доставка сборной ракетки Новой Почтой или Укрпочтой по Украине бесплатная, оплата при получении (наложенный платёж), возможен самовывоз в Харькове.",
         },
       },
     ],
@@ -220,12 +238,17 @@ const CONTENT: Record<string, RichContent> = {
       { q: { ua: "Це оригінал Butterfly?", ru: "Это оригинал Butterfly?" }, a: { ua: "Так, усі компоненти — 100% оригінал Butterfly з гарантією.", ru: "Да, все компоненты — 100% оригинал Butterfly с гарантией." } },
     ],
     links: [
+      { label: { ua: "Як вибрати ракетку для настільного тенісу", ru: "Как выбрать ракетку для настольного тенниса" }, href: "/blog/yak-vybraty-raketku" },
       { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+      { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
       { label: { ua: "Tenergy 05", ru: "Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
-      { label: { ua: "Viscaria", ru: "Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
-      { label: { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
-      { label: { ua: "Накладки", ru: "Накладки" }, href: "/nakladki" },
-      { label: { ua: "Основи", ru: "Основания" }, href: "/osnovaniya" },
+      { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+      { label: { ua: "Основа Viscaria", ru: "Основание Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+      { label: { ua: "Основа Timo Boll ALC", ru: "Основание Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+      { label: { ua: "Таблиця основ Butterfly", ru: "Таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
+      { label: { ua: "Таблиця накладок Butterfly", ru: "Таблица накладок Butterfly" }, href: "/blog/tablytsia-nakladok-butterfly" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
+      { label: { ua: "Основи Butterfly", ru: "Основания Butterfly" }, href: "/osnovaniya" },
     ],
   },
 
@@ -233,13 +256,20 @@ const CONTENT: Record<string, RichContent> = {
   alc: {
     lead: [
       {
-        ua: "Основи з арилат-карбоновим шаром (ALC) — найпопулярніший вибір атакувальних гравців усіх рівнів. Карбон додає швидкості та збільшує «солодку зону», зберігаючи природний контроль дерева: ракетка прощає неточні удари й лишається передбачуваною.",
-        ru: "Основания с арилат-карбоновым слоем (ALC) — самый популярный выбор атакующих игроков всех уровней. Карбон добавляет скорости и увеличивает «зону комфорта», сохраняя естественный контроль дерева: ракетка прощает неточные удары и остаётся предсказуемой.",
+        ua: "Основи Butterfly ALC — основи з арилат-карбоновим шаром, найпопулярніший вибір атакувальних гравців усіх рівнів. Карбон додає швидкості та збільшує «солодку зону», зберігаючи природний контроль дерева: ракетка прощає неточні удари й лишається передбачуваною.",
+        ru: "Основания Butterfly ALC — основания с арилат-карбоновым слоем, самый популярный выбор атакующих игроков всех уровней. Карбон добавляет скорости и увеличивает «зону комфорта», сохраняя естественный контроль дерева: ракетка прощает неточные удары и остаётся предсказуемой.",
       },
       {
-        ua: "У лінійці Butterfly це Viscaria, Timo Boll ALC, Harimoto Tomokazu ALC та інші. Чудово поєднуються з накладками Tenergy 05 і Dignics 05. Можна замовити готову ракетку у зборі.",
-        ru: "В линейке Butterfly это Viscaria, Timo Boll ALC, Harimoto Tomokazu ALC и другие. Отлично сочетаются с накладками Tenergy 05 и Dignics 05. Можно заказать готовую ракетку в сборе.",
+        ua: "У каталозі — понад 15 моделей ALC і Super ALC від Butterfly (Батерфляй): Viscaria, Timo Boll ALC, Fan Zhendong ALC, Harimoto Tomokazu ALC, Harimoto Tomokazu Super ALC та інші. Чудово поєднуються з накладками Tenergy 05 і Dignics 05. Оригінал з гарантією, доставка по Україні, оплата при отриманні; можна замовити готову ракетку у зборі.",
+        ru: "В каталоге — больше 15 моделей ALC и Super ALC от Butterfly (Баттерфляй): Viscaria, Timo Boll ALC, Fan Zhendong ALC, Harimoto Tomokazu ALC, Harimoto Tomokazu Super ALC и другие. Отлично сочетаются с накладками Tenergy 05 и Dignics 05. Оригинал с гарантией, доставка по Украине, оплата при получении; можно заказать готовую ракетку в сборе.",
       },
+    ],
+    summary: [
+      { ua: "Класичні outer-ALC — Viscaria, Timo Boll ALC, Fan Zhendong ALC: однакові офіційні числа Butterfly (реакція 11,8, вібрація 10,3).", ru: "Классические outer-ALC — Viscaria, Timo Boll ALC, Fan Zhendong ALC: одинаковые официальные числа Butterfly (реакция 11,8, вибрация 10,3)." },
+      { ua: "Inner-ALC м'якші й контрольованіші: Harimoto Tomokazu ALC, Innerforce Layer ALC.", ru: "Inner-ALC мягче и контролируемее: Harimoto Tomokazu ALC, Innerforce Layer ALC." },
+      { ua: "Super ALC — більше волокна: Viscaria Super ALC швидша за Viscaria (12,1 проти 11,8); Harimoto Tomokazu Super ALC — inner-версія з м'якшим відчуттям.", ru: "Super ALC — больше волокна: Viscaria Super ALC быстрее Viscaria (12,1 против 11,8); Harimoto Tomokazu Super ALC — inner-версия с более мягким ощущением." },
+      { ua: "Накладки під ALC — Tenergy 05 (баланс) або Dignics 05 (більше обертання).", ru: "Накладки под ALC — Tenergy 05 (баланс) или Dignics 05 (больше вращения)." },
+      { ua: "Товщина, вага, реакція й вібрація всіх основ — у таблиці основ Butterfly в нашому блозі.", ru: "Толщина, вес, реакция и вибрация всех оснований — в таблице оснований Butterfly в нашем блоге." },
     ],
     cardsHeading: { ua: "ALC — що варто знати", ru: "ALC — что стоит знать" },
     cards: [
@@ -306,12 +336,17 @@ const CONTENT: Record<string, RichContent> = {
       { q: { ua: "Для якого рівня ALC?", ru: "Для какого уровня ALC?" }, a: { ua: "Від упевненого аматора до профі. Viscaria й Timo Boll ALC — одні з найпопулярніших основ у світі.", ru: "От уверенного любителя до профи. Viscaria и Timo Boll ALC — одни из самых популярных оснований в мире." } },
     ],
     links: [
-      { label: { ua: "Viscaria", ru: "Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
-      { label: { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+      { label: { ua: "Основа Viscaria", ru: "Основание Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+      { label: { ua: "Основа Timo Boll ALC", ru: "Основание Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+      { label: { ua: "Harimoto Tomokazu Super ALC", ru: "Harimoto Tomokazu Super ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-super-alc" },
+      { label: { ua: "Viscaria Super ALC", ru: "Viscaria Super ALC" }, href: "/butterfly/osnovaniya/viscaria-super-alc" },
       { label: { ua: "Основи ZLC", ru: "Основания ZLC" }, href: "/osnovaniya/zlc" },
+      { label: { ua: "Viscaria, Timo Boll ALC чи Fan Zhendong ALC", ru: "Viscaria, Timo Boll ALC или Fan Zhendong ALC" }, href: "/blog/viscaria-timo-boll-alc-fan-zhendong-alc" },
+      { label: { ua: "Таблиця основ Butterfly", ru: "Таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
       { label: { ua: "ALC чи ZLC, inner чи outer — гайд", ru: "ALC или ZLC, inner или outer — гайд" }, href: "/blog/alc-chy-zlc" },
-      { label: { ua: "Усі основи", ru: "Все основания" }, href: "/osnovaniya" },
-      { label: { ua: "Накладки", ru: "Накладки" }, href: "/nakladki" },
+      { label: { ua: "Японська, європейська чи китайська версія основи", ru: "Японская, европейская или китайская версия основания" }, href: "/blog/versii-osnov-butterfly" },
+      { label: { ua: "Усі основи Butterfly", ru: "Все основания Butterfly" }, href: "/osnovaniya" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
       { label: { ua: "Готові ракетки", ru: "Готовые ракетки" }, href: "/rakety" },
     ],
   },
@@ -320,13 +355,20 @@ const CONTENT: Record<string, RichContent> = {
   zlc: {
     lead: [
       {
-        ua: "Основи з ZL-карбоном (ZLC) — карбоном, сплетеним із ZL-волокном. За офіційними числами Butterfly outer-ZLC майже така ж швидка, як outer-ALC (Timo Boll ZLC — 11,7, Viscaria — 11,8), але жорсткіша за відчуттям: вібрація 10,8 проти 10,3. Чіткий, жорсткий удар цінують гравці силового стилю та гри першим темпом.",
-        ru: "Основания с ZL-карбоном (ZLC) — карбоном, сплетённым с ZL-волокном. По официальным числам Butterfly outer-ZLC почти так же быстра, как outer-ALC (Timo Boll ZLC — 11,7, Viscaria — 11,8), но жёстче по ощущению: вибрация 10,8 против 10,3. Чёткий, жёсткий удар ценят игроки силового стиля и игры первым темпом.",
+        ua: "Основи Butterfly ZLC — основи з ZL-карбоном, тобто карбоном, сплетеним із ZL-волокном. За офіційними числами Butterfly outer-ZLC майже така ж швидка, як outer-ALC (Timo Boll ZLC — 11,7, Viscaria — 11,8), але жорсткіша за відчуттям: вібрація 10,8 проти 10,3. Чіткий, жорсткий удар цінують гравці силового стилю та гри першим темпом.",
+        ru: "Основания Butterfly ZLC — основания с ZL-карбоном, то есть карбоном, сплетённым с ZL-волокном. По официальным числам Butterfly outer-ZLC почти так же быстра, как outer-ALC (Timo Boll ZLC — 11,7, Viscaria — 11,8), но жёстче по ощущению: вибрация 10,8 против 10,3. Чёткий, жёсткий удар ценят игроки силового стиля и игры первым темпом.",
       },
       {
-        ua: "Серед моделей Butterfly — Timo Boll ZLC, Fan Zhendong ZLC, Zhang Jike ZLC і м'якші inner-версії Innerforce Layer ZLC та Apolonia ZLC. Outer-ZLC вимагає кращого контролю, тож її частіше обирають досвідчені. Оптимальні накладки — Dignics 05 або Dignics 09C.",
-        ru: "Среди моделей Butterfly — Timo Boll ZLC, Fan Zhendong ZLC, Zhang Jike ZLC и более мягкие inner-версии Innerforce Layer ZLC и Apolonia ZLC. Outer-ZLC требует лучшего контроля, поэтому её чаще выбирают опытные. Оптимальные накладки — Dignics 05 или Dignics 09C.",
+        ua: "У каталозі — понад 15 моделей ZLC і Super ZLC від Butterfly (Батерфляй): Timo Boll ZLC, Fan Zhendong ZLC, Zhang Jike ZLC і м'якші inner-версії Innerforce Layer ZLC та Apolonia ZLC. Outer-ZLC вимагає кращого контролю, тож її частіше обирають досвідчені. Оптимальні накладки — Dignics 05 або Dignics 09C. Оригінал з гарантією, доставка по Україні, оплата при отриманні.",
+        ru: "В каталоге — больше 15 моделей ZLC и Super ZLC от Butterfly (Баттерфляй): Timo Boll ZLC, Fan Zhendong ZLC, Zhang Jike ZLC и более мягкие inner-версии Innerforce Layer ZLC и Apolonia ZLC. Outer-ZLC требует лучшего контроля, поэтому её чаще выбирают опытные. Оптимальные накладки — Dignics 05 или Dignics 09C. Оригинал с гарантией, доставка по Украине, оплата при получении.",
       },
+    ],
+    summary: [
+      { ua: "Outer-ZLC — Timo Boll ZLC, Fan Zhendong ZLC: швидкість майже як в ALC (реакція 11,7), але жорсткіше відчуття (вібрація 10,8).", ru: "Outer-ZLC — Timo Boll ZLC, Fan Zhendong ZLC: скорость почти как у ALC (реакция 11,7), но жёстче ощущение (вибрация 10,8)." },
+      { ua: "Inner-ZLC м'якші й контрольованіші: Apolonia ZLC, Innerforce Layer ZLC.", ru: "Inner-ZLC мягче и контролируемее: Apolonia ZLC, Innerforce Layer ZLC." },
+      { ua: "Super ZLC — в 1,8 раза більше волокна за масою: швидша (12,3) і трохи жорсткіша, для профі-силовиків.", ru: "Super ZLC — в 1,8 раза больше волокна по массе: быстрее (12,3) и чуть жёстче, для профи-силовиков." },
+      { ua: "Початківцям outer-ZLC буде жорсткою — краще ALC, дерево або inner-ZLC.", ru: "Новичкам outer-ZLC будет жёсткой — лучше ALC, дерево или inner-ZLC." },
+      { ua: "Накладки під ZLC — Dignics 05 або Dignics 09C.", ru: "Накладки под ZLC — Dignics 05 или Dignics 09C." },
     ],
     cardsHeading: { ua: "ZLC — що варто знати", ru: "ZLC — что стоит знать" },
     cards: [
@@ -393,14 +435,18 @@ const CONTENT: Record<string, RichContent> = {
       { q: { ua: "Чим Super ZLC відрізняється?", ru: "Чем Super ZLC отличается?" }, a: { ua: "В 1,8 раза більше волокна за масою: швидша (12,3 проти 11,7) і трохи жорсткіша. Класична ZLC прощальніша. Super — для профі-силовиків.", ru: "В 1,8 раза больше волокна по массе: быстрее (12,3 против 11,7) и чуть жёстче. Классическая ZLC более прощающая. Super — для профи-силовиков." } },
     ],
     links: [
-      { label: { ua: "Apolonia ZLC", ru: "Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
-      { label: { ua: "Timo Boll ZLC", ru: "Timo Boll ZLC" }, href: "/butterfly/osnovaniya/timo-boll-zlc" },
+      { label: { ua: "Основа Apolonia ZLC", ru: "Основание Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
+      { label: { ua: "Основа Timo Boll ZLC", ru: "Основание Timo Boll ZLC" }, href: "/butterfly/osnovaniya/timo-boll-zlc" },
+      { label: { ua: "Zhang Jike ZLC", ru: "Zhang Jike ZLC" }, href: "/butterfly/osnovaniya/zhang-jike-zlc" },
       { label: { ua: "Основи ALC", ru: "Основания ALC" }, href: "/osnovaniya/alc" },
+      { label: { ua: "Таблиця основ Butterfly", ru: "Таблица оснований Butterfly" }, href: "/blog/tablytsia-osnov-butterfly" },
       { label: { ua: "ALC чи ZLC, inner чи outer — гайд", ru: "ALC или ZLC, inner или outer — гайд" }, href: "/blog/alc-chy-zlc" },
       { label: { ua: "Огляд Apolonia ZLC і накладок до неї", ru: "Обзор Apolonia ZLC и накладок к нему" }, href: "/blog/apolonia-zlc-oglyad" },
-      { label: { ua: "Усі основи", ru: "Все основания" }, href: "/osnovaniya" },
+      { label: { ua: "Японська, європейська чи китайська версія основи", ru: "Японская, европейская или китайская версия основания" }, href: "/blog/versii-osnov-butterfly" },
+      { label: { ua: "Усі основи Butterfly", ru: "Все основания Butterfly" }, href: "/osnovaniya" },
       { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
-      { label: { ua: "Накладки", ru: "Накладки" }, href: "/nakladki" },
+      { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+      { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
       { label: { ua: "Готові ракетки", ru: "Готовые ракетки" }, href: "/rakety" },
     ],
   },

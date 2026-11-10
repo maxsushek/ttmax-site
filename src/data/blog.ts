@@ -280,6 +280,7 @@ const POSTS: Record<string, BlogPost> = {
             label: { ua: "Розміри тенісного столу — докладно", ru: "Размеры теннисного стола — подробно" },
             href: "/blog/rozmiry-tenisnogo-stolu",
           },
+          { label: { ua: "м'ячі Butterfly 40 мм", ru: "мячи Butterfly 40 мм" }, href: "/myachi" },
         ],
       },
       {
@@ -295,6 +296,11 @@ const POSTS: Record<string, BlogPost> = {
             "Мяч — 40 мм в диаметре, весом 2,7 г, белый или оранжевый, из пластика (современные мячи 40+). Соревновательные мячи маркируют тремя звёздами (★★★): они точнее по форме и отскоку; у тренировочных мячей Butterfly звёзд нет. Размер самого основания ракетки и толщину накладок правила не ограничивают — тут выбор под ваш стиль.",
           ],
         },
+        links: [
+          { label: { ua: "накладки Butterfly", ru: "накладки Butterfly" }, href: "/nakladki" },
+          { label: { ua: "основи Butterfly", ru: "основания Butterfly" }, href: "/osnovaniya" },
+          { label: { ua: "готові ракетки Butterfly", ru: "готовые ракетки Butterfly" }, href: "/rakety" },
+        ],
       },
       {
         id: "parna-gra",
@@ -323,6 +329,9 @@ const POSTS: Record<string, BlogPost> = {
             "Вытирать руки и лицо полотенцем можно не в любой момент, а после каждых 6 набранных очков (6:2, 10:8 и т. д.) и на смене сторон. Это не формальность: пот на руке влияет на хват и подачу.",
           ],
         },
+        links: [
+          { label: { ua: "рушники Butterfly для гри", ru: "полотенца Butterfly для игры" }, href: "/aksessuary/rushnyky" },
+        ],
       },
       {
         id: "expedite",
@@ -570,6 +579,11 @@ const POSTS: Record<string, BlogPost> = {
             ],
           ],
         },
+        links: [
+          { label: { ua: "готові ракетки Butterfly на Viscaria й Timo Boll ALC", ru: "готовые ракетки Butterfly на Viscaria и Timo Boll ALC" }, href: "/rakety" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
+        ],
       },
       {
         id: "zirky",
@@ -1596,6 +1610,7 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
           { label: { ua: "Glayzer 09C", ru: "Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
         ],
       },
       {
@@ -1855,6 +1870,8 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "FreeChack Pro II", ru: "FreeChack Pro II" }, href: "/butterfly/aksessuary/klei-butterfly-freechack-pro-ii-90ml" },
           { label: { ua: "Липкі чи тензорні накладки", ru: "Липкие или тензорные накладки" }, href: "/blog/lypki-chy-tenzorni-nakladky" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
         ],
       },
       {
@@ -2029,6 +2046,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Засоби догляду за накладками", ru: "Средства ухода за накладками" }, href: "/aksessuary/doglyad" },
           { label: { ua: "Захисна плівка Butterfly", ru: "Защитная плёнка Butterfly" }, href: "/butterfly/aksessuary/zakhysna-plivka-butterfly" },
           { label: { ua: "Накладки Butterfly", ru: "Накладки Butterfly" }, href: "/nakladki" },
+          { label: { ua: "накладка Butterfly Dignics 09C", ru: "накладка Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "накладка Butterfly Glayzer 09C", ru: "накладка Butterfly Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
         ],
       },
       {
@@ -2251,6 +2270,11 @@ const POSTS: Record<string, BlogPost> = {
           },
           href: "/butterfly/osnovaniya/viscaria",
         },
+        links: [
+          { label: { ua: "основа Butterfly Harimoto Tomokazu Super ALC", ru: "основание Butterfly Harimoto Tomokazu Super ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-super-alc" },
+          { label: { ua: "основа Butterfly Innerforce Layer ALC", ru: "основание Butterfly Innerforce Layer ALC" }, href: "/butterfly/osnovaniya/innerforce-layer-alc" },
+          { label: { ua: "основа Butterfly Timo Boll ZLC", ru: "основание Butterfly Timo Boll ZLC" }, href: "/butterfly/osnovaniya/timo-boll-zlc" },
+        ],
       },
       {
         id: "materialy",
@@ -2313,6 +2337,10 @@ const POSTS: Record<string, BlogPost> = {
           },
           href: "/butterfly/osnovaniya/innerforce-layer-alc",
         },
+        links: [
+          { label: { ua: "основа Butterfly Viscaria", ru: "основание Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+          { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+        ],
       },
       {
         id: "karta",
@@ -2436,6 +2464,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Універсальні основи", ru: "Универсальные основания" }, href: "/osnovaniya/universalni" },
           { label: { ua: "Як вибрати ракетку", ru: "Как выбрать ракетку" }, href: "/blog/yak-vybraty-raketku" },
           { label: { ua: "Японська й європейська версії основ", ru: "Японская и европейская версии оснований" }, href: "/blog/versii-osnov-butterfly" },
+          { label: { ua: "основа Butterfly Fan Zhendong Super ALC", ru: "основание Butterfly Fan Zhendong Super ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-super-alc" },
+          { label: { ua: "основа Butterfly Mizutani Jun Super ZLC", ru: "основание Butterfly Mizutani Jun Super ZLC" }, href: "/butterfly/osnovaniya/mizutani-super-zlc" },
         ],
       },
     ],
@@ -2697,6 +2727,9 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Засоби для догляду за накладками", ru: "Средства для ухода за накладками" }, href: "/aksessuary/doglyad" },
           { label: { ua: "Cure Water", ru: "Cure Water" }, href: "/butterfly/aksessuary/ochyshchuvach-dlia-nakladok-butterfly-cure-water" },
           { label: { ua: "Combi Cleaner — очищувач і губка разом", ru: "Combi Cleaner — очиститель и губка вместе" }, href: "/butterfly/aksessuary/ochysnyk-dlia-nakladok-butterfly-combi-cleaner" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
+          { label: { ua: "накладка Butterfly Rozena", ru: "накладка Butterfly Rozena" }, href: "/butterfly/nakladki/rozena" },
         ],
       },
       {
@@ -2783,6 +2816,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Чохли для ракеток", ru: "Чехлы для ракеток" }, href: "/chehly/chokhly" },
           { label: { ua: "Чохол Easy Case", ru: "Чехол Easy Case" }, href: "/butterfly/chehly/chokhol-butterfly-easy-case" },
           { label: { ua: "Торцеві стрічки", ru: "Торцевые ленты" }, href: "/aksessuary/tortsevi-strichky" },
+          { label: { ua: "накладка Butterfly Dignics 09C", ru: "накладка Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "накладка Butterfly Glayzer 09C", ru: "накладка Butterfly Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
         ],
       },
       {
@@ -3121,6 +3156,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Tenergy 05", ru: "Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
           { label: { ua: "Tenergy 05 FX", ru: "Tenergy 05 FX" }, href: "/butterfly/nakladki/tenergy-05-fx" },
           { label: { ua: "Tenergy 80", ru: "Tenergy 80" }, href: "/butterfly/nakladki/tenergy-80" },
+          { label: { ua: "накладка Butterfly Tenergy 19", ru: "накладка Butterfly Tenergy 19" }, href: "/butterfly/nakladki/tenergy-19" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
         ],
       },
       {
@@ -3148,6 +3185,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
           { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
           { label: { ua: "Dignics 80", ru: "Dignics 80" }, href: "/butterfly/nakladki/dignics-80" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
         ],
       },
       {
@@ -3201,6 +3239,7 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Rozena", ru: "Rozena" }, href: "/butterfly/nakladki/rozena" },
           { label: { ua: "Glayzer 09C", ru: "Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
+          { label: { ua: "накладка Butterfly Glayzer", ru: "накладка Butterfly Glayzer" }, href: "/butterfly/nakladki/glayzer" },
         ],
       },
       {
@@ -3229,6 +3268,8 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Як вибрати ракетку — гайд", ru: "Как выбрать ракетку — гайд" }, href: "/blog/yak-vybraty-raketku" },
           { label: { ua: "Основи для ракеток", ru: "Основания для ракеток" }, href: "/osnovaniya" },
+          { label: { ua: "накладка Butterfly Rozena", ru: "накладка Butterfly Rozena" }, href: "/butterfly/nakladki/rozena" },
+          { label: { ua: "Tenergy 05 — універсальний еталон", ru: "Tenergy 05 — универсальный эталон" }, href: "/butterfly/nakladki/tenergy-05" },
         ],
       },
     ],
@@ -3360,6 +3401,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Готові ракетки", ru: "Готовые ракетки" }, href: "/rakety" },
           { label: { ua: "М'ячі 40+", ru: "Мячи 40+" }, href: "/myachi" },
           { label: { ua: "Сітки для столу", ru: "Сетки для стола" }, href: "/setki" },
+          { label: { ua: "основи Butterfly", ru: "основания Butterfly" }, href: "/osnovaniya" },
+          { label: { ua: "накладки Butterfly", ru: "накладки Butterfly" }, href: "/nakladki" },
         ],
       },
     ],
@@ -3492,6 +3535,11 @@ const POSTS: Record<string, BlogPost> = {
             "Для линейки Dignics Butterfly заявляет девятилетнюю программу разработки, удвоенную стойкость топшита к истиранию по собственным тестам и, по тестам Butterfly, на 5,4% больше вращения у Dignics 05 по сравнению с Tenergy 05. На эту цифру стоит посмотреть внимательно: 5,4% — это реальный масштаб разницы между поколениями. Не «вдвое больше вращения», а несколько процентов, за которые платят девятью годами разработки.",
           ],
         },
+        links: [
+          { label: { ua: "Tenergy 05 — перша на Spring Sponge", ru: "Tenergy 05 — первая на Spring Sponge" }, href: "/butterfly/nakladki/tenergy-05" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
+        ],
       },
       {
         id: "ricosheet",
@@ -3602,6 +3650,10 @@ const POSTS: Record<string, BlogPost> = {
             ru: "Каждая точка — модель. Правее быстрее, выше — с большим вращением, размер точки — жёсткость губки.",
           },
         },
+        links: [
+          { label: { ua: "накладка Butterfly Tenergy 19", ru: "накладка Butterfly Tenergy 19" }, href: "/butterfly/nakladki/tenergy-19" },
+          { label: { ua: "накладка Butterfly Dignics 80", ru: "накладка Butterfly Dignics 80" }, href: "/butterfly/nakladki/dignics-80" },
+        ],
       },
       {
         id: "try-pidhody",
@@ -3622,6 +3674,10 @@ const POSTS: Record<string, BlogPost> = {
             "Практическое следствие: выбирать надо не по максимальному числу, а по тому, какой из трёх механизмов соответствует вашему удару. Липкость работает и на коротком движении. Жёсткость и геометрия требуют полного замаха, иначе просто не включаются.",
           ],
         },
+        links: [
+          { label: { ua: "Dignics 09C — обертання через зчеплення", ru: "Dignics 09C — вращение через сцепление" }, href: "/butterfly/nakladki/dignics-09c" },
+          { label: { ua: "накладка Butterfly Tenergy 05 Hard", ru: "накладка Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
+        ],
       },
       {
         id: "duga",
@@ -3895,6 +3951,9 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Уся серія Tenergy", ru: "Вся серия Tenergy" }, href: "/nakladki/tenergy" },
           { label: { ua: "Уся серія Dignics", ru: "Вся серия Dignics" }, href: "/nakladki/dignics" },
+          { label: { ua: "накладка Butterfly Tenergy 05", ru: "накладка Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
+          { label: { ua: "накладка Butterfly Dignics 05", ru: "накладка Butterfly Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+          { label: { ua: "накладка Butterfly Dignics 80", ru: "накладка Butterfly Dignics 80" }, href: "/butterfly/nakladki/dignics-80" },
         ],
       },
       {
@@ -4067,6 +4126,10 @@ const POSTS: Record<string, BlogPost> = {
             "Побочный эффект недооценивают. На медленной накладке мяч дольше в игре — розыгрыши длиннее, касаний за тренировку больше, техника ставится быстрее. На быстрой накладке половина мячей заканчивается ошибкой на втором ударе, и учиться не на чем.",
           ],
         },
+        links: [
+          { label: { ua: "накладка Butterfly Flextra", ru: "накладка Butterfly Flextra" }, href: "/butterfly/nakladki/flextra" },
+          { label: { ua: "накладка Butterfly Tenergy 05", ru: "накладка Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
+        ],
       },
       {
         id: "try-stsenariyi",
@@ -4177,6 +4240,7 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Основи Butterfly", ru: "Основания Butterfly" }, href: "/osnovaniya" },
+          { label: { ua: "універсальні основи Butterfly", ru: "универсальные основания Butterfly" }, href: "/osnovaniya/universalni" },
         ],
       },
     ],
@@ -4579,6 +4643,8 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Усі гладкі накладки", ru: "Все гладкие накладки" }, href: "/nakladki?surfaceType=gladka" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
+          { label: { ua: "накладка Butterfly Rozena", ru: "накладка Butterfly Rozena" }, href: "/butterfly/nakladki/rozena" },
         ],
       },
     ],
@@ -4749,6 +4815,8 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Основи з арилат-карбоном (ALC)", ru: "Основания с арилат-карбоном (ALC)" }, href: "/osnovaniya/alc" },
           { label: { ua: "Timo Boll ALC", ru: "Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+          { label: { ua: "оригінальні основи Butterfly", ru: "оригинальные основания Butterfly" }, href: "/osnovaniya" },
+          { label: { ua: "оригінальні накладки Butterfly", ru: "оригинальные накладки Butterfly" }, href: "/nakladki" },
         ],
       },
       {
@@ -4810,6 +4878,7 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Timo Boll Offensive", ru: "Timo Boll Offensive" }, href: "/butterfly/osnovaniya/timo-boll-offensive" },
           { label: { ua: "Zhang Jike ALC", ru: "Zhang Jike ALC" }, href: "/butterfly/osnovaniya/zhang-jike-alc" },
+          { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
         ],
       },
       {
@@ -4861,6 +4930,9 @@ const POSTS: Record<string, BlogPost> = {
             ],
           ],
         },
+        links: [
+          { label: { ua: "основа Butterfly Viscaria", ru: "основание Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+        ],
       },
       {
         id: "vaga",
@@ -5288,6 +5360,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "основи ALC", ru: "основания ALC" }, href: "/osnovaniya/alc" },
           { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
           { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+          { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
         ],
       },
       {
@@ -5388,6 +5461,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "основа Freitas ALC", ru: "основание Freitas ALC" }, href: "/butterfly/osnovaniya/freitas-alc" },
           { label: { ua: "основа Apolonia ZLC", ru: "основание Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
           { label: { ua: "основа Omar Assar Innerforce ZLC", ru: "основание Omar Assar Innerforce ZLC" }, href: "/butterfly/osnovaniya/omar-assar-zlc" },
+          { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+          { label: { ua: "основа Butterfly Viscaria", ru: "основание Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
         ],
       },
       {
@@ -5422,6 +5497,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "основа Timo Boll ALC", ru: "основание Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
           { label: { ua: "основа Mizutani ZLC", ru: "основание Mizutani ZLC" }, href: "/butterfly/osnovaniya/mizutani-zlc" },
           { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
+          { label: { ua: "накладка Butterfly Dignics 80", ru: "накладка Butterfly Dignics 80" }, href: "/butterfly/nakladki/dignics-80" },
         ],
       },
       {
@@ -5462,6 +5538,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "усі основи ALC", ru: "все основания ALC" }, href: "/osnovaniya/alc" },
           { label: { ua: "усі основи ZLC", ru: "все основания ZLC" }, href: "/osnovaniya/zlc" },
           { label: { ua: "ALC чи ZLC: що обрати", ru: "ALC или ZLC: что выбрать" }, href: "/blog/alc-chy-zlc" },
+          { label: { ua: "основа Butterfly Fan Zhendong ALC", ru: "основание Butterfly Fan Zhendong ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+          { label: { ua: "основа Butterfly Apolonia ZLC", ru: "основание Butterfly Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
         ],
       },
       {
@@ -5508,6 +5586,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
           { label: { ua: "Dignics 05", ru: "Dignics 05" }, href: "/butterfly/nakladki/dignics-05" },
           { label: { ua: "Tenergy 05 Hard", ru: "Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
+          { label: { ua: "усі накладки Butterfly", ru: "все накладки Butterfly" }, href: "/nakladki" },
         ],
       },
       {
@@ -5529,6 +5608,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "накладка для початківця", ru: "накладка для новичка" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
           { label: { ua: "товщина губки накладки", ru: "толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
           { label: { ua: "спецзамовлення й основи профі", ru: "спецзаказ и основания профи" }, href: "/blog/versii-osnov-butterfly" },
+          { label: { ua: "накладки Butterfly Tenergy", ru: "накладки Butterfly Tenergy" }, href: "/nakladki/tenergy" },
         ],
       },
     ],
@@ -5903,6 +5983,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Maze Advance", ru: "Maze Advance" }, href: "/butterfly/osnovaniya/maze-advance" },
           { label: { ua: "Timo Boll Allround", ru: "Timo Boll Allround" }, href: "/butterfly/osnovaniya/timo-boll-allround" },
           { label: { ua: "універсальні основи", ru: "универсальные основания" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
         ],
       },
       {
@@ -6615,6 +6696,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Butterfly Harimoto ALC", ru: "Butterfly Harimoto ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-alc" },
           { label: { ua: "Butterfly Timo Boll ALC", ru: "Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
           { label: { ua: "як вибрати ракетку", ru: "как выбрать ракетку" }, href: "/blog/yak-vybraty-raketku" },
+          { label: { ua: "основа Butterfly Timo Boll ZLC", ru: "основание Butterfly Timo Boll ZLC" }, href: "/butterfly/osnovaniya/timo-boll-zlc" },
         ],
       },
       {
@@ -7966,6 +8048,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Липкі чи тензорні накладки", ru: "Липкие или тензорные накладки" }, href: "/blog/lypki-chy-tenzorni-nakladky" },
           { label: { ua: "Butterfly Flextra", ru: "Butterfly Flextra" }, href: "/butterfly/nakladki/flextra" },
           { label: { ua: "Універсальні основи Butterfly", ru: "Универсальные основания Butterfly" }, href: "/osnovaniya/universalni" },
+          { label: { ua: "накладка Butterfly Dignics 09C", ru: "накладка Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
         ],
       },
     ],
@@ -8454,6 +8537,8 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Як влаштовані Zyre 03, Dignics і Tenergy", ru: "Как устроены Zyre 03, Dignics и Tenergy" }, href: "/blog/zyre-03-vs-dignics-tenergy" },
           { label: { ua: "Товщина губки накладки", ru: "Толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
           { label: { ua: "Накладка для початківця", ru: "Накладка для начинающего" }, href: "/blog/nakladka-dlya-pochatkivtsya" },
+          { label: { ua: "накладка Butterfly Rozena", ru: "накладка Butterfly Rozena" }, href: "/butterfly/nakladki/rozena" },
+          { label: { ua: "накладка Butterfly Tenergy 05", ru: "накладка Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
         ],
       },
     ],
@@ -8656,6 +8741,10 @@ const POSTS: Record<string, BlogPost> = {
             [{ ua: "Дерево", ru: "Дерево" }, { ua: "34", ru: "34" }, { ua: "5,0–7,0", ru: "5,0–7,0" }, { ua: "76–100", ru: "76–100" }, { ua: "—", ru: "—" }],
           ],
         },
+        links: [
+          { label: { ua: "усі основи Butterfly", ru: "все основания Butterfly" }, href: "/osnovaniya" },
+          { label: { ua: "основа Butterfly Mizutani Super ZLC", ru: "основание Butterfly Mizutani Super ZLC" }, href: "/butterfly/osnovaniya/mizutani-super-zlc" },
+        ],
       },
       {
         id: "yak-chytaty",
@@ -9314,6 +9403,8 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Товщина губки накладки", ru: "Толщина губки накладки" }, href: "/blog/tovshchyna-hubky-nakladky" },
           { label: { ua: "Правила настільного тенісу", ru: "Правила настольного тенниса" }, href: "/blog/pravyla-nastilnogo-tenisu" },
+          { label: { ua: "ігрові футболки Butterfly", ru: "игровые футболки Butterfly" }, href: "/odyag/futbolky" },
+          { label: { ua: "м'ячі Butterfly", ru: "мячи Butterfly" }, href: "/myachi" },
         ],
       },
     ],
@@ -9559,6 +9650,7 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Таблиця всіх накладок Butterfly", ru: "Таблица всех накладок Butterfly" }, href: "/blog/tablytsia-nakladok-butterfly" },
+          { label: { ua: "накладка Butterfly Tenergy 05", ru: "накладка Butterfly Tenergy 05" }, href: "/butterfly/nakladki/tenergy-05" },
         ],
       },
       {
@@ -9669,6 +9761,7 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Усі профілі гравців Butterfly", ru: "Все профили игроков Butterfly" }, href: "/igroki" },
           { label: { ua: "Інвентар профі Butterfly", ru: "Инвентарь профи Butterfly" }, href: "/blog/inventar-profi-butterfly" },
+          { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
         ],
       },
       {
@@ -9705,6 +9798,9 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "ALC чи ZLC, inner чи outer", ru: "ALC или ZLC, inner или outer" }, href: "/blog/alc-chy-zlc" },
           { label: { ua: "Основи з ALC", ru: "Основания с ALC" }, href: "/osnovaniya/alc" },
           { label: { ua: "Основи з ZLC", ru: "Основания с ZLC" }, href: "/osnovaniya/zlc" },
+          { label: { ua: "основа Butterfly Fan Zhendong ALC", ru: "основание Butterfly Fan Zhendong ALC" }, href: "/butterfly/osnovaniya/fan-zhendong-alc" },
+          { label: { ua: "основа Butterfly Harimoto Tomokazu Super ALC", ru: "основание Butterfly Harimoto Tomokazu Super ALC" }, href: "/butterfly/osnovaniya/harimoto-tomokazu-super-alc" },
+          { label: { ua: "основа Butterfly Apolonia ZLC", ru: "основание Butterfly Apolonia ZLC" }, href: "/butterfly/osnovaniya/apolonia-zlc" },
         ],
       },
       {
@@ -9726,6 +9822,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Товщина губки: 1,9, 2,1 чи MAX", ru: "Толщина губки: 1,9, 2,1 или MAX" }, href: "/blog/tovshchyna-hubky-nakladky" },
           { label: { ua: "Як наклеїти накладку", ru: "Как наклеить накладку" }, href: "/blog/yak-nakleity-nakladku" },
           { label: { ua: "Догляд за накладками", ru: "Уход за накладками" }, href: "/blog/doglyad-za-nakladkamy" },
+          { label: { ua: "накладка Butterfly Glayzer 09C", ru: "накладка Butterfly Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
         ],
       },
       {
@@ -9748,6 +9845,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Zyre 03 проти Dignics і Tenergy", ru: "Zyre 03 против Dignics и Tenergy" }, href: "/blog/zyre-03-vs-dignics-tenergy" },
           { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
           { label: { ua: "Butterfly Glayzer 09C", ru: "Butterfly Glayzer 09C" }, href: "/butterfly/nakladki/glayzer-09c" },
+          { label: { ua: "накладка Butterfly Dignics 80", ru: "накладка Butterfly Dignics 80" }, href: "/butterfly/nakladki/dignics-80" },
         ],
       },
       {
@@ -10134,6 +10232,7 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Butterfly Viscaria", ru: "Butterfly Viscaria" }, href: "/butterfly/osnovaniya/viscaria" },
+          { label: { ua: "основи Butterfly з ALC", ru: "основания Butterfly с ALC" }, href: "/osnovaniya/alc" },
         ],
       },
       {

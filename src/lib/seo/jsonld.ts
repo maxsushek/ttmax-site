@@ -259,6 +259,8 @@ function returnPolicyNode() {
 /** Schema.org Product для сторінки товару. Якщо ціни немає — блок offers не додається. */
 export function productJsonLd(opts: {
   name: string;
+  /** Кириличне написання моделі (data/catalog/aliases.ts) — як її шукають українською й російською. */
+  alternateName?: string;
   description: string;
   /** Абсолютний URL сторінки товару. */
   url: string;
@@ -348,6 +350,7 @@ export function productJsonLd(opts: {
     inStock,
     shipping,
     freeShippingThreshold,
+    alternateName,
   } = opts;
 
   // Доставку й повернення чіпляємо лише коли тарифи реально відомі.
@@ -399,6 +402,7 @@ export function productJsonLd(opts: {
     "@type": "Product",
     "@id": productId(url),
     name,
+    ...(alternateName ? { alternateName } : {}),
     description,
     url,
     // brand — ВИРОБНИК (Butterfly), продавець — ми. Їх плутають, і тоді магазин
