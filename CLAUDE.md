@@ -15,6 +15,7 @@ Next.js 15.5 (App Router) · React 19 · TypeScript 5.6 · Tailwind 3.4 · zod �
 - `src/data/catalog/` — каталог в TS (товары, тексты, хабы в `hubContent/`); `src/data/blog.ts` — статьи (работа с ними — skill `ttmax-blog`); `src/data/legal.ts` — политики; `src/i18n/messages/{ua,ru}.ts` — строки UI.
 - Supabase поверх файлов: `product_overrides` (актуальные цены и наличие; цифры в коде — запасные), `content_blocks` (CMS-тексты категорий, перебивают файлы), `site_settings` (контакты, ID счётчиков), `entity_media` (фото в Cloudinary). Категории в CMS владелец правит сам через /admin.
 - `src/lib/`: `seo/` (JSON-LD, llms.txt, метаданные), `feeds/` (Google Merchant), `analytics/` (единая точка — `trackEvent` в `events.ts`; PostHog — `posthog.ts`, `posthog-server.ts`), `telegram/cards.ts` (карточки заявок и заказов), `crm/status.ts`, `reviews/`, `supabase/` (клиенты; `types.ts` — типы БД, ведутся вручную).
+- Для ШІ-агентів (Lighthouse «Agentic Browsing»): `src/lib/seo/ard.ts` — маніфест `/.well-known/ard.json` і навичка `SKILL.md`; `src/lib/webmcp/tools.ts` + `components/agent/WebMcpTools.tsx` — інструменти WebMCP (лише читання); форма консультації — `toolname` без `toolautosubmit`. Перевірка — `npm run check:webmcp` (локальний Chrome).
 - `supabase/migrations/00NN_*.sql` — схема БД. `scripts/` — проверки (`check-*`), генераторы схем (`gen-*`), деплой (`wait-deploy.sh`, `vercel-ignore-build.sh`).
 - `docs/archive/` — старые аудиты и разовые скрипты: не источник правды и не повод для поиска. README частично устарел.
 

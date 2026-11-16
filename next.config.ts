@@ -178,9 +178,14 @@ const nextConfig: NextConfig = {
    * /.well-known/ai.txt → маршрут app/well-known/ai.txt.
    * App Router ігнорує теки, що починаються з крапки, тож стандартний шлях віддаємо
    * переписом. Для клієнта й для ботів адреса лишається канонічною — /.well-known/ai.txt.
+   * Так само — маніфест ARD (ard.json) і його попередня назва ai-catalog.json: lib/seo/ard.ts.
    */
   async rewrites() {
-    return [{ source: "/.well-known/ai.txt", destination: "/well-known/ai.txt" }];
+    return [
+      { source: "/.well-known/ai.txt", destination: "/well-known/ai.txt" },
+      { source: "/.well-known/ard.json", destination: "/well-known/ard.json" },
+      { source: "/.well-known/ai-catalog.json", destination: "/well-known/ai-catalog.json" },
+    ];
   },
   async redirects() {
     const gone = ["salatovyi", "blakytnyi", "fioletovyi"];

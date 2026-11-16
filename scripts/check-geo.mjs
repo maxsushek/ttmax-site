@@ -51,6 +51,54 @@ async function head(url) {
   }
 }
 
+/**
+ * Маніфест ARD (/.well-known/ard.json) — ті самі правила, що в аудиті Lighthouse `ard-schema`
+ * (порт conformance-тесту ARD v0.91): помилка = аудит провалено, попередження = 0,9 бала.
+ * https://developer.chrome.com/docs/lighthouse/agentic-browsing/ard
+ * Повертає записи, щоб режим живого сайту перевірив ще й адреси з `url`.
+ */
+const ARD_STANDARD_TYPES = new Set([
+  "application/ai-catalog+json",
+  "application/agent-card+json",
+  "application/a2a-agent-card+json",
+  "application/mcp-server-card+json",
+  "application/agent-skills+json",
+  "application/agent-skills+md",
+  "application/agent-skills+zip",
+  "application/agent-skills+gzip",
+  "application/agent-plugins+zip",
+  "application/agent-plugins+gzip",
+  "application/ai-registry",
+  "application/ai-registry+json",
+]);
+function checkArd(text, where) {
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    fail(where, `не JSON: ${String(e).slice(0, 80)}`);
+    return [];
+  }
+  const entries = data?.entries;
+  if (!Array.isArray(entries) || entries.length === 0) {
+    fail(where, "немає масиву entries (або він порожній)");
+    return [];
+  }
+  for (const [i, e] of entries.entries()) {
+    const label = `${where} · ${e?.displayName || e?.identifier || `запис №${i}`}`;
+    if (!/^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$/.test(e?.identifier ?? ""))
+      fail(label, `identifier не у форматі urn:air:<видавець>:<простір>:<назва>: ${e?.identifier}`);
+    if (!e?.displayName) fail(label, "немає displayName");
+    if (!ARD_STANDARD_TYPES.has(e?.type))
+      fail(label, `type не зі стандартних типів ARD (Lighthouse дасть попередження): ${e?.type}`);
+    if ("url" in (e ?? {}) === "data" in (e ?? {})) fail(label, "має бути рівно одне з url / data");
+    const q = e?.representativeQueries;
+    if (!Array.isArray(q) || q.length < 2 || q.length > 5 || q.some((x) => typeof x !== "string"))
+      fail(label, "representativeQueries: потрібно 2–5 рядків (інакше запис не знаходиться пошуком)");
+  }
+  return entries;
+}
+
 if (useBuild) {
   // ---- Режим збірки: перевіряємо лише те, що видно в HTML без мережі. ----
   const walk = (dir) => {
@@ -83,6 +131,14 @@ if (useBuild) {
     if (!org["@id"]) fail(page, "Organization без @id — сторінка оголошує ОКРЕМУ компанію");
   }
   ok.push(`сторінок зі збірки перевірено: ${files.length}, з них із Organization: ${orgSeen}`);
+
+  // Маніфест ARD: статичне тіло маршруту app/well-known/ard.json.
+  try {
+    const n = checkArd(readFileSync(join(BUILD_ROOT, "well-known/ard.json.body"), "utf8"), "ard.json").length;
+    ok.push(`ard.json зі збірки: записів ${n}`);
+  } catch {
+    fail("ard.json", "немає у збірці (.next/server/app/well-known/ard.json.body)");
+  }
 } else {
   // ---- Режим живого сайту. ----
   const files = [
@@ -92,6 +148,8 @@ if (useBuild) {
     ["/llms-full.txt", "text/plain"],
     ["/ai.txt", "text/plain"],
     ["/.well-known/ai.txt", "text/plain"],
+    ["/.well-known/ard.json", "application/json"],
+    ["/.well-known/ai-catalog.json", "application/json"],
     ["/ua/feed.xml", "atom"],
     ["/ru/feed.xml", "atom"],
   ];
@@ -129,6 +187,18 @@ if (useBuild) {
     if (r.status !== 200) fail(`llms.txt → ${u}`, `HTTP ${r.status}`);
   }
   ok.push(`посилань із llms.txt перевірено: ${links.length}`);
+
+  // Маніфест ARD: схема + кожен ресурс із `url` справді відкривається. Стара адреса
+  // (ai-catalog.json) мусить віддавати той самий вміст.
+  const ardText = fetched["/.well-known/ard.json"]?.text ?? "";
+  for (const e of checkArd(ardText, "ard.json")) {
+    if (!e.url) continue;
+    const r = await head(e.url);
+    if (r.status !== 200) fail(`ard.json → ${e.url}`, `HTTP ${r.status}`);
+    else ok.push(`ard.json → ${e.url.replace(SITE, "")} → 200`);
+  }
+  if (ardText && fetched["/.well-known/ai-catalog.json"]?.text !== ardText)
+    fail("/.well-known/ai-catalog.json", "вміст відрізняється від ard.json");
 
   // Розмітка: головна, категорія, картка, стаття.
   const pages = ["/ua", "/ru", "/ua/nakladki", "/ua/butterfly/nakladki/dignics-05", "/ua/blog"];

@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
+import { WebMcpTools } from "@/components/agent/WebMcpTools";
 import { isLocale, locales, type Locale } from "@/i18n/config";
 import { getMessages } from "@/i18n";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -19,6 +20,11 @@ import { getSettings, settingString } from "@/lib/settings/get";
 import { resolveContact } from "@/lib/contact/get";
 import { COUNTER_KEYS, type AnalyticsIds } from "@/lib/analytics/ids";
 import type { Metadata } from "next";
+
+// Токен origin trial — base64; усе інше (порожній рядок, випадковий текст) ігноруємо.
+const WEBMCP_OT_TOKEN = /^[A-Za-z0-9+/=]{40,}$/.test(process.env.NEXT_PUBLIC_WEBMCP_OT_TOKEN ?? "")
+  ? process.env.NEXT_PUBLIC_WEBMCP_OT_TOKEN
+  : undefined;
 
 /**
  * ⚠️ ЦЕ КОРЕНЕВИЙ LAYOUT ГРУПИ (site) — саме тут <html> і <body>.
@@ -120,7 +126,13 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraphJsonLd(locale, contact)) }}
         />
+        {/* WebMCP у Chrome — origin trial: API вмикається лише з токеном, який власник реєструє
+            на developer.chrome.com/origintrials (WebMCP) для https://ttmax.com.ua і кладе у
+            Vercel як NEXT_PUBLIC_WEBMCP_OT_TOKEN. Токен публічний (не секрет). Немає змінної —
+            тег не виводиться, і WebMCP на сайті «спить». React сам переносить <meta> у <head>. */}
+        {WEBMCP_OT_TOKEN && <meta httpEquiv="origin-trial" content={WEBMCP_OT_TOKEN} />}
         <AnalyticsProvider ids={analyticsIds} />
+        <WebMcpTools locale={locale} />
         <CartProvider
           freeShippingThreshold={contact.freeShippingThreshold}
           shippingFee={contact.shippingFee}
