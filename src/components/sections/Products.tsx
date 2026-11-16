@@ -106,7 +106,7 @@ export async function Products({
                   {/* Акційний товар — замість «Хіт» яскравий бейдж знижки: на мобільному
                       інакше акцію не було видно зовсім (скрін власника). */}
                   {p.oldPrice && typeof p.price === "number" ? (
-                    <span className="absolute right-3 top-3 rounded-md bg-danger px-2.5 py-0.5 text-[10px] font-extrabold tabular-nums tracking-[0.04em] text-white">
+                    <span className="absolute right-3 top-3 rounded-md bg-danger px-2.5 py-0.5 text-[10px] font-extrabold tabular-nums tracking-[0.04em] text-bg-base">
                       −{formatPrice(p.oldPrice - p.price)}
                     </span>
                   ) : (

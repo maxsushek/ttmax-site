@@ -388,7 +388,7 @@ export function CatalogFilters({ locale, items, groups, priceBuckets }: Props) {
                     </span>
                   )}
                   {item.saveLabel && (
-                    <span className="absolute left-2 top-2 rounded-full bg-danger px-2 py-0.5 font-body text-[11px] font-bold tabular-nums text-white shadow-sm">
+                    <span className="absolute left-2 top-2 rounded-full bg-danger px-2 py-0.5 font-body text-[11px] font-bold tabular-nums text-bg-base shadow-sm">
                       {item.saveLabel}
                     </span>
                   )}

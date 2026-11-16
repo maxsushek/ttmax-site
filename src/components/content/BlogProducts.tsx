@@ -137,7 +137,9 @@ export async function BlogProducts({
                     className="max-h-[96px] w-auto object-contain"
                   />
                 ) : (
-                  <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-ink-ghost">
+                  // Заглушка без фото стоїть на БІЛІЙ підкладці: світло-сірий ink-ghost тут дає 3,7:1,
+                  // тому темний напівпрозорий (≈ #666 на білому, 5,7:1).
+                  <span className="font-display text-xs font-bold uppercase tracking-[0.2em] text-black/60">
                     Butterfly
                   </span>
                 )}
