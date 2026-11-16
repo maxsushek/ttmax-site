@@ -5,7 +5,7 @@
 // Google звіряє фід зі сторінкою, тож характеристика, підписана у фіді інакше, ніж на картці,
 // виглядала б як інший товар. Раніше ці мапи й рядки жили всередині [...segments]/page.tsx.
 import type { Locale } from "@/i18n/config";
-import type { BladeClass, BladeSurface, CatalogProduct } from "@/types/catalog";
+import type { BladeClass, BladeSurface, CatalogProduct, Handle } from "@/types/catalog";
 import { catalogUi, labelFor } from "@/lib/catalog/routing";
 
 export type SpecRow = { label: string; value: string };
@@ -179,4 +179,40 @@ export function productSpecRows(product: CatalogProduct, locale: Locale): SpecRo
   if (product.gear) return gearSpecRows(product, locale);
   if (product.kind === "racket" || product.combo) return [];
   return rubberSpecRows(product, locale);
+}
+
+/** Підписи ручок — одні для картки, фіду й розмітки. */
+export const HANDLE_LABEL: Record<Handle, Record<Locale, string>> = {
+  fl: { ua: "FL (конічна)", ru: "FL (коническая)" },
+  st: { ua: "ST (пряма)", ru: "ST (прямая)" },
+  an: { ua: "AN (анатомічна)", ru: "AN (анатомическая)" },
+  cs: { ua: "CS (китайське перо)", ru: "CS (китайское перо)" },
+};
+
+/**
+ * Характеристики для розмітки Product.additionalProperty: ті самі рядки, що в таблиці
+ * «Характеристики» картки, плюс варіанти, які покупець бачить у селекторах (товщини губки, ручки).
+ *
+ * ⚠️ НАВІЩО (PostHog, 16.11.2026): ChatGPT приводить людей саме на картки й категорії, і вони
+ * купують активніше за пошукових. ШІ-агенти для покупок порівнюють товари за структурованими
+ * полями, а в розмітці картки були лише назва, ціна й наявність. Беремо ТІ САМІ рядки, що
+ * бачить людина: розмітка, якої немає на сторінці, порушує правила Google.
+ * Ракетки-збірки не розмічаємо: їхні сторінки закриті від індексу.
+ */
+export function productPropertyRows(product: CatalogProduct, locale: Locale): SpecRow[] {
+  const rows = [...productSpecRows(product, locale)];
+  if (rows.length === 0) return rows;
+  const L = (ua: string, ru: string) => (locale === "ru" ? ru : ua);
+  const isRubber = !product.base && !product.gear;
+  if (isRubber && product.thicknessOptions.length > 0)
+    rows.push({
+      label: L("Товщини губки, мм", "Толщины губки, мм"),
+      value: product.thicknessOptions.join(", ").replace(/\./g, ","),
+    });
+  if (product.base?.handles.length)
+    rows.push({
+      label: L("Ручки", "Ручки"),
+      value: product.base.handles.map((h) => HANDLE_LABEL[h][locale]).join(", "),
+    });
+  return rows;
 }

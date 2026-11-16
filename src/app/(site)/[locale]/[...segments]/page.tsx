@@ -81,6 +81,7 @@ import {
   gearTypeLabel,
   genderLabel,
   rubberSpecRows,
+  productPropertyRows,
 } from "@/lib/catalog/spec-rows";
 import {
   catalogBreadcrumbs,
@@ -419,6 +420,7 @@ export default async function CatalogPage({
           return productJsonLd({
             name: pickLocalized(eroute.product.name, locale),
             alternateName: cyrillicName(eroute.product, locale) ?? undefined,
+            properties: productPropertyRows(eroute.product, locale),
             // Найдовший з трьох описів: вердикт + офіційні характеристики Butterfly.
             // schema.org не має ліміту на description, тож ріжемо тут лише через фолбек.
             description:

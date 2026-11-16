@@ -42,6 +42,7 @@ import { labelFor } from "@/lib/catalog/routing";
 import {
   BLADE_SURFACE_LABEL,
   baseSpecRows,
+  HANDLE_LABEL,
   gearTypeLabel,
   productSpecRows,
   rubberSpecRows,
@@ -50,7 +51,7 @@ import {
 import { pickAll, type EntityMediaMap } from "@/lib/media/get";
 import { productLdDescription } from "@/lib/seo/product-copy";
 import { DELIVERY_DAYS } from "@/config/delivery";
-import type { BladeClass, BladeSurface, CatalogProduct, Handle } from "@/types/catalog";
+import type { BladeClass, BladeSurface, CatalogProduct } from "@/types/catalog";
 
 const CURRENCY = "UAH";
 const COUNTRY = "UA";
@@ -126,12 +127,8 @@ const RUBBER_COLOR: Record<string, Record<Locale, string>> = {
   black: { ua: "чорний", ru: "черный" },
 };
 
-const HANDLE: Record<Handle, Record<Locale, string>> = {
-  fl: { ua: "FL (конічна)", ru: "FL (коническая)" },
-  st: { ua: "ST (пряма)", ru: "ST (прямая)" },
-  an: { ua: "AN (анатомічна)", ru: "AN (анатомическая)" },
-  cs: { ua: "CS (китайське перо)", ru: "CS (китайское перо)" },
-};
+// Підписи ручок — спільні з карткою й розміткою (lib/catalog/spec-rows.ts).
+const HANDLE = HANDLE_LABEL;
 
 /** Короткі позначення для заголовка основи: «ALC, OFF+». Довгі підписи — у характеристиках. */
 const SURFACE_SHORT: Record<BladeSurface, Record<Locale, string>> = {

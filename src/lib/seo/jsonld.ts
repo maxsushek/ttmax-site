@@ -261,6 +261,8 @@ export function productJsonLd(opts: {
   name: string;
   /** Кириличне написання моделі (data/catalog/aliases.ts) — як її шукають українською й російською. */
   alternateName?: string;
+  /** Характеристики з таблиці картки (lib/catalog/spec-rows.ts → productPropertyRows). */
+  properties?: { label: string; value: string }[];
   description: string;
   /** Абсолютний URL сторінки товару. */
   url: string;
@@ -351,6 +353,7 @@ export function productJsonLd(opts: {
     shipping,
     freeShippingThreshold,
     alternateName,
+    properties,
   } = opts;
 
   // Доставку й повернення чіпляємо лише коли тарифи реально відомі.
@@ -412,6 +415,9 @@ export function productJsonLd(opts: {
   };
   delete node.offers;
   if (images && images.length > 0) node.image = images;
+  if (properties && properties.length > 0) {
+    node.additionalProperty = properties.map((r) => ({ "@type": "PropertyValue", name: r.label, value: r.value }));
+  }
   if (sku) node.sku = sku;
   if (gtin) node.gtin = gtin;
 
