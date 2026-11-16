@@ -14,8 +14,9 @@
 //    власникові в Telegram — інструмента, який їх відправляє, бути не повинно.
 // 2. Жодних нових серверних маршрутів: пошук читає ті самі статичні /llms/*.txt, що й ШІ-боти
 //    (віддаються з CDN, без функцій Vercel і без запитів до Supabase).
-// 3. Запити агента не логуються і не йдуть в аналітику: у них може бути що завгодно з розмови
-//    користувача.
+// 3. В аналітику йде лише лічильник викликів: назва інструмента й підсумок (подія
+//    webmcp_tool_call, рахує components/agent/WebMcpTools.tsx). Текст запиту агента не логується
+//    і нікуди не передається: у ньому може бути що завгодно з розмови користувача.
 // 4. Бюджет Chrome: назва ≤ 30 символів, опис ≤ 500, опис параметра ≤ 150, відповідь ≤ 1,5 тис.
 
 export type ModelContextTool = {
@@ -32,7 +33,20 @@ export type ModelContextTool = {
 
 type ModelContext = {
   registerTool: (tool: ModelContextTool, opts?: { signal?: AbortSignal }) => Promise<void> | void;
+  // ModelContext — EventTarget (події toolactivated / toolcancel / toolchange).
+  addEventListener?: (type: string, listener: (e: Event) => void) => void;
+  removeEventListener?: (type: string, listener: (e: Event) => void) => void;
 };
+
+/** Назва декларативного інструмента — форми консультації (components/forms/LeadForm.tsx). */
+export const CONSULTATION_TOOL = "request_consultation";
+
+/**
+ * Початок відповіді інструмента при помилці / порожньому пошуку. Лічильник викликів
+ * (WebMcpTools.tsx) розрізняє за ними підсумок — тому це константи, а не текст у двох місцях.
+ */
+export const ERROR_PREFIX = "Error:";
+export const EMPTY_PREFIX = "No products match";
 
 /**
  * `document.modelContext` — актуальна точка входу; `navigator.modelContext` — рання назва
@@ -182,16 +196,16 @@ export function searchProductsTool(locale: "ua" | "ru"): ModelContextTool {
     annotations: { readOnlyHint: true, untrustedContentHint: false, consequentialHint: false },
     execute: async (input) => {
       const query = typeof input.query === "string" ? input.query.slice(0, 120) : "";
-      if (!query.trim()) return "Error: `query` is required (a product or model name).";
+      if (!query.trim()) return `${ERROR_PREFIX} \`query\` is required (a product or model name).`;
       let items: CatalogItem[];
       try {
         items = await loadCatalog();
       } catch {
-        return "Error: the catalog could not be loaded. Try again or open /llms.txt on this site.";
+        return `${ERROR_PREFIX} the catalog could not be loaded. Try again or open /llms.txt on this site.`;
       }
       const found = searchCatalog(items, query, input.in_stock_only === true);
       if (found.length === 0) {
-        return `No products match "${query}". Try a shorter model name, or browse ${location.origin}/${locale}.`;
+        return `${EMPTY_PREFIX} "${query}". Try a shorter model name, or browse ${location.origin}/${locale}.`;
       }
       const rows = found.map((p, i) => {
         const stock = p.inStock ? "in stock" : "on order";
@@ -254,7 +268,7 @@ export function productDetailsTool(): ModelContextTool {
     annotations: { readOnlyHint: true, untrustedContentHint: false, consequentialHint: false },
     execute: async () => {
       const p = currentProductLd();
-      if (!p) return "Error: this page is not a product page.";
+      if (!p) return `${ERROR_PREFIX} this page is not a product page.`;
       const offers = isObj(p.offers) ? p.offers : {};
       const price =
         typeof offers.price === "number" || typeof offers.price === "string"

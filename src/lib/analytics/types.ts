@@ -53,7 +53,18 @@ export type AnalyticsEvent =
       name: "view_item_list";
       params: { list: string; items_count: number; filters_active: number };
     }
-  | { name: "select_item"; params: { list: string; product_slug: string; position: number } };
+  | { name: "select_item"; params: { list: string; product_slug: string; position: number } }
+  /**
+   * ШІ-агент у браузері викликав інструмент WebMCP (lib/webmcp/tools.ts, форма консультації).
+   * ⚠️ Лише назва інструмента й підсумок. Текст запиту агента й значення полів сюди НЕ додавати:
+   * у них може бути що завгодно з розмови користувача, зокрема персональні дані.
+   * outcome: ok — є результат; empty — пошук нічого не знайшов; error — помилка;
+   * filled — агент заповнив форму (чекає на людину); submitted — людина її відправила.
+   */
+  | {
+      name: "webmcp_tool_call";
+      params: { tool: string; outcome: "ok" | "empty" | "error" | "filled" | "submitted" };
+    };
 
 export type EventName = AnalyticsEvent["name"];
 

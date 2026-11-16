@@ -113,6 +113,13 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
       trackEvent({ name: "conversion", params: { type: "lead" } });
       setStatus("success");
       setForm({ name: "", phone: "", email: "" });
+      // Заявку, яку заповнив агент, відправила людина — другий крок лічильника WebMCP.
+      if (ev.agentInvoked) {
+        trackEvent({
+          name: "webmcp_tool_call",
+          params: { tool: "request_consultation", outcome: "submitted" },
+        });
+      }
       tellAgent("The consultation request was sent. The shop will call the user back.");
     } catch {
       setStatus("error");
