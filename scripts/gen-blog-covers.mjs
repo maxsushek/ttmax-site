@@ -572,7 +572,60 @@ function alcTrio() {
   return wrap(b.join("\n"));
 }
 
+/* ─── 18. Удари: траєкторія замаху ракетки, що «зачісує» мʼяч ─── */
+function udary() {
+  // ⚠️ ТЕЗА СТАТТІ: удар = рух ракетки (дуга замаху знизу вгору-вперед) + контакт, що задає
+  // обертання. Пунктир — дуга замаху з трьома «кадрами» ракетки; акцент — мʼяч у точці
+  // контакту зі стрілкою верхнього обертання. БЕЗ ЧИСЕЛ.
+  const b = [`<circle cx="1080" cy="500" r="260" fill="url(#halo)"/>`];
+  b.push(`<path d="M820 760 Q 980 700 1080 520 Q 1150 380 1290 300" fill="none" stroke="${DOT_CORE}" stroke-opacity="0.4" stroke-width="2.4" stroke-dasharray="10 10"/>`);
+  const frames = [
+    { x: 860, y: 735, r: -60, op: 0.3 },
+    { x: 990, y: 640, r: -40, op: 0.45 },
+    { x: 1200, y: 360, r: -15, op: 0.35 },
+  ];
+  for (const f of frames) {
+    b.push(
+      `<g transform="rotate(${f.r} ${f.x} ${f.y})">` +
+        `<ellipse cx="${f.x}" cy="${f.y}" rx="34" ry="44" fill="${DOT_RING}" fill-opacity="${f.op + 0.2}"/>` +
+        `<rect x="${f.x - 7}" y="${f.y + 40}" width="14" height="52" rx="4" fill="${DOT_CORE}" fill-opacity="${f.op}"/>` +
+        `</g>`,
+    );
+  }
+  b.push(dotAccent(1095, 500, 26), spinArrow(1095, 500, 50, -1, ACCENT, 0.9));
+  return wrap(b.join("\n"));
+}
+
+/* ─── 19. Як грати шипами: ракетка з шипами й «переворот» ─── */
+function hratyShypamy() {
+  // ⚠️ ТЕЗА СТАТТІ: шипи — інструмент власника: одна сторона гладка, друга — шипи, і гравець
+  // перевертає ракетку. Лопать: ліва половина — шипи (точки), права — гладка; навколо —
+  // кругова стрілка перевороту. Акцент — шипова сторона. БЕЗ ЧИСЕЛ.
+  const cx = 1060;
+  const cy = 500;
+  const b = [`<circle cx="${cx}" cy="${cy}" r="270" fill="url(#halo)"/>`];
+  b.push(`<ellipse cx="${cx}" cy="${cy}" rx="120" ry="150" fill="${DOT_RING}" fill-opacity="0.55"/>`);
+  b.push(`<clipPath id="half"><rect x="${cx - 120}" y="${cy - 150}" width="120" height="300"/></clipPath>`);
+  const dots = [];
+  for (let y = cy - 140; y <= cy + 140; y += 22) {
+    for (let x = cx - 116; x <= cx - 6; x += 22) {
+      // лише точки, що повністю всередині овалу лопаті
+      if (((x - cx) / 108) ** 2 + ((y - cy) / 138) ** 2 > 1) continue;
+      dots.push(`<circle cx="${x}" cy="${y}" r="5.5" fill="${ACCENT}" fill-opacity="0.85"/>`);
+    }
+  }
+  b.push(`<g clip-path="url(#half)"><ellipse cx="${cx}" cy="${cy}" rx="120" ry="150" fill="${DOT_RING}" fill-opacity="0.2"/>${dots.join("")}</g>`);
+  b.push(`<ellipse cx="${cx}" cy="${cy}" rx="120" ry="150" fill="none" stroke="${ACCENT}" stroke-opacity="0.8" stroke-width="3"/>`);
+  b.push(`<rect x="${cx - 18}" y="${cy + 146}" width="36" height="120" rx="8" fill="${DOT_CORE}" fill-opacity="0.55"/>`);
+  // кругова стрілка перевороту
+  b.push(`<path d="M ${cx - 200} ${cy - 40} A 210 210 0 0 1 ${cx + 190} ${cy - 90}" fill="none" stroke="${ACCENT}" stroke-opacity="0.55" stroke-width="3" stroke-dasharray="10 9"/>`);
+  b.push(`<path d="M ${cx + 172} ${cy - 112} L ${cx + 192} ${cy - 88} L ${cx + 162} ${cy - 80}" fill="none" stroke="${ACCENT}" stroke-opacity="0.7" stroke-width="3"/>`);
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "udary-v-nastilnomu-tenisi-cover.svg": udary(),
+  "yak-hraty-shypamy-cover.svg": hratyShypamy(),
   "dignics-05-chy-09c-cover.svg": dignics0509(),
   "viscaria-timo-boll-alc-fan-zhendong-alc-cover.svg": alcTrio(),
   "tablytsia-nakladok-butterfly-cover.svg": tablytsiaNakladok(),

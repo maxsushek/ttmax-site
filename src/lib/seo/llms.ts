@@ -22,6 +22,7 @@ import {
 } from "@/data/catalog";
 import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
+import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory } from "@/data/glossary";
 import { allProfiles } from "@/data/playerProfiles";
 import { PLAYERS } from "@/data/players";
 import { productIndexable } from "@/lib/catalog/indexability";
@@ -166,6 +167,16 @@ export function buildLlmsIndex(opts: {
     }
   }
 
+  // Словник: короткі визначення термінів — найчастіше цитований формат («що таке X»).
+  if (GLOSSARY.length > 0) {
+    out.push(
+      "",
+      "## Словник настільного тенісу",
+      "",
+      `- [Словник: ${GLOSSARY.length} термінів](${url("/ua/slovnyk")}) — правила ITTF, удари, обертання, накладки й основи; у кожного терміна свій якір (#slug). Повний текст — ${url("/llms/slovnyk.txt")}`,
+    );
+  }
+
   out.push(
     "",
     "## Сервісні сторінки",
@@ -266,6 +277,23 @@ function postLines(withSummary: boolean): string[] {
   return out;
 }
 
+/** Словник: термін — визначення — посилання на якір і докладну сторінку. */
+function glossaryLines(): string[] {
+  const out: string[] = [];
+  for (const c of GLOSSARY_CATEGORIES) {
+    const items = glossaryByCategory(c.key, "ua");
+    if (items.length === 0) continue;
+    out.push(`### ${c.title[UA]}`);
+    for (const g of items) {
+      const aka = g.aka.ua.length ? ` (також: ${g.aka.ua.join(", ")})` : "";
+      const more = g.href ? ` Докладно: ${url(`/ua${g.href}`)}` : "";
+      out.push(`- **${g.term.ua}**${aka} — ${g.def.ua} [${url(`/ua/slovnyk#${g.slug}`)}]${more}`);
+    }
+    out.push("");
+  }
+  return out;
+}
+
 /** Гравці: інвентар (Butterfly, з датою), головні титули, коротко. */
 function playerLines(): string[] {
   const out: string[] = [];
@@ -303,6 +331,7 @@ export function llmsParts(opts: Pick<LlmsOpts, "media" | "overrides">): LlmsPart
   parts.push({ slug: "gaidy", title: "Як обрати: гайди підкатегорій", note: "«Коротко» й FAQ хабів (основи ALC/ZLC, шипи, клей тощо)" });
   parts.push({ slug: "dovidnyk", title: "Довідник: статті блогу", note: "«Коротко» й FAQ кожної статті" });
   if (allProfiles().length > 0) parts.push({ slug: "gravtsi", title: "Гравці: на чому грають", note: "інвентар за даними Butterfly з датою, титули" });
+  if (GLOSSARY.length > 0) parts.push({ slug: "slovnyk", title: "Словник настільного тенісу", note: `${GLOSSARY.length} термінів із визначеннями` });
   return parts;
 }
 
@@ -322,6 +351,7 @@ export function buildLlmsPart(slug: string, opts: LlmsOpts): string | null {
   if (slug === "gaidy") body = guideLines(products);
   else if (slug === "dovidnyk") body = postLines(true);
   else if (slug === "gravtsi") body = playerLines();
+  else if (slug === "slovnyk") body = glossaryLines();
   else body = productLines(products.filter((p) => p.categorySlug === slug));
   return [...head, ...body].join("\n");
 }
@@ -354,6 +384,7 @@ export function buildLlmsFull(opts: LlmsOpts): string {
   out.push("## Як обрати: гайди підкатегорій", "", ...guideLines(products));
   out.push("## Питання й відповіді з довідника", "", ...postLines(false));
   if (allProfiles().length > 0) out.push("## Гравці: на чому грають", "", ...playerLines());
+  if (GLOSSARY.length > 0) out.push("## Словник настільного тенісу", "", ...glossaryLines());
 
   return out.join("\n");
 }
@@ -367,6 +398,7 @@ export function buildAiTxt(contact: ContactInfo): string {
     "/ua/rakety",
     "/ua/blog",
     "/ua/igroki",
+    "/ua/slovnyk",
     "/ua/delivery",
     "/ua/contacts",
   ];

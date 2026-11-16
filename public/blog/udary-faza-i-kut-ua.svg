@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="1000" height="1400" font-family="Oswald,'Arial Narrow',Arial,sans-serif">
+<rect width="1000" height="1400" fill="#0E1117"/>
+<text x="40" y="58" fill="#F2F4F7" font-size="34" font-weight="700" letter-spacing="1">КОЛИ БИТИ Й ЯК ТРИМАТИ РАКЕТКУ</text>
+<text x="40" y="92" fill="#8A93A0" font-size="19">Вигляд збоку: суперник ліворуч, ви праворуч. Кути й довжини стрілок — умовні.</text>
+<circle cx="50" cy="118" r="8" fill="#E8FF47"/>
+<text x="66" y="124" fill="#F2F4F7" font-size="18">контакт</text>
+<line x1="170" y1="118" x2="214" y2="118" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<text x="224" y="124" fill="#F2F4F7" font-size="18">відскок мʼяча</text>
+<line x1="380" y1="118" x2="420" y2="118" stroke="#E8FF47" stroke-width="3"/>
+<path d="M410 111 L420 118 L410 125" fill="none" stroke="#E8FF47" stroke-width="3"/>
+<text x="432" y="124" fill="#F2F4F7" font-size="18">рух ракетки</text>
+<rect x="30" y="150" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="50" y="190" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">НАКАТ</text>
+<rect x="50" y="365" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="227" y1="372" x2="227" y2="415" stroke="#39424E" stroke-width="4"/>
+<path d="M60 295 Q 100 345 125 365" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M125 365 L131 355.9 L137 347.2 L143 338.9 L149 331 L155 323.5 L161 316.5 L167 309.8 L173 303.6 L179 297.8 L185 292.4 L191 287.4 L197 282.9 L203 278.7 L209 275 L215 271.7 L221 268.8 L227 266.3 L233 264.2 L239 262.5 L245 261.3 L251 260.5 L257 260.1 L263 260.1 L269 260.5 L275 261.3 L281 262.5 L287 264.2 L293 266.3 L299 268.8 L305 271.7 L311 275 L317 278.7 L323 282.9 L329 287.4 L335 292.4 L341 297.8 L347 303.6 L353 309.8 L359 316.5 L365 323.5 L371 331 L377 338.9 L383 347.2 L389 355.9 L395 365 L401 374.5 L407 384.5 L413 394.9 L419 405.7 L425 416.9 L431 428.5 L437 440.5 L443 452.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="125" cy="365" r="3.5" fill="#8A93A0"/>
+<line x1="267.8" y1="232.2" x2="290.2" y2="287.8" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="290.2" y1="287.8" x2="296.2" y2="302.7" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="335.6" y1="279.8" x2="222.4" y2="240.2" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M235.3 238.7 L222.4 240.2 L231.5 249.4" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="260" cy="260" r="9" fill="#E8FF47"/>
+<text x="50" y="450" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">вершина відскоку</tspan></text>
+<text x="50" y="478" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">трохи закрита</tspan></text>
+<text x="50" y="506" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">уперед і трохи вгору</tspan></text>
+<rect x="510" y="150" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="530" y="190" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">ТОПСПІН ПРОТИ ВЕРХНЬОГО</text>
+<rect x="530" y="365" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="707" y1="372" x2="707" y2="415" stroke="#39424E" stroke-width="4"/>
+<path d="M540 295 Q 580 345 605 365" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M605 365 L611 355.9 L617 347.2 L623 338.9 L629 331 L635 323.5 L641 316.5 L647 309.8 L653 303.6 L659 297.8 L665 292.4 L671 287.4 L677 282.9 L683 278.7 L689 275 L695 271.7 L701 268.8 L707 266.3 L713 264.2 L719 262.5 L725 261.3 L731 260.5 L737 260.1 L743 260.1 L749 260.5 L755 261.3 L761 262.5 L767 264.2 L773 266.3 L779 268.8 L785 271.7 L791 275 L797 278.7 L803 282.9 L809 287.4 L815 292.4 L821 297.8 L827 303.6 L833 309.8 L839 316.5 L845 323.5 L851 331 L857 338.9 L863 347.2 L869 355.9 L875 365 L881 374.5 L887 384.5 L893 394.9 L899 405.7 L905 416.9 L911 428.5 L917 440.5 L923 452.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="605" cy="365" r="3.5" fill="#8A93A0"/>
+<line x1="722.7" y1="239.2" x2="762.9" y2="283.8" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="762.9" y1="283.8" x2="773.6" y2="295.7" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="799.4" y1="295.5" x2="686.2" y2="227.6" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M699.2 228.7 L686.2 227.6 L693.3 238.4" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="723.8" cy="261.5" r="9" fill="#E8FF47"/>
+<text x="530" y="450" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">вершина або трохи до</tspan></text>
+<text x="530" y="478" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">закрита</tspan></text>
+<text x="530" y="506" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">уперед-угору по верху мʼяча</tspan></text>
+<rect x="30" y="550" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="50" y="590" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">ТОПСПІН ПРОТИ НИЖНЬОГО</text>
+<rect x="50" y="765" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="227" y1="772" x2="227" y2="815" stroke="#39424E" stroke-width="4"/>
+<path d="M60 695 Q 100 745 125 765" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M125 765 L131 755.9 L137 747.2 L143 738.9 L149 731 L155 723.5 L161 716.5 L167 709.8 L173 703.6 L179 697.8 L185 692.4 L191 687.4 L197 682.9 L203 678.7 L209 675 L215 671.7 L221 668.8 L227 666.3 L233 664.2 L239 662.5 L245 661.3 L251 660.5 L257 660.1 L263 660.1 L269 660.5 L275 661.3 L281 662.5 L287 664.2 L293 666.3 L299 668.8 L305 671.7 L311 675 L317 678.7 L323 682.9 L329 687.4 L335 692.4 L341 697.8 L347 703.6 L353 709.8 L359 716.5 L365 723.5 L371 731 L377 738.9 L383 747.2 L389 755.9 L395 765 L401 774.5 L407 784.5 L413 794.9 L419 805.7 L425 816.9 L431 828.5 L437 840.5 L443 852.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="125" cy="765" r="3.5" fill="#8A93A0"/>
+<line x1="297.5" y1="632.9" x2="303.7" y2="692.5" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="303.7" y1="692.5" x2="305.4" y2="708.4" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="328.9" y1="725.6" x2="272.3" y2="599.8" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M282.2 608.1 L272.3 599.8 L271.9 612.8" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="281.6" cy="662.7" r="9" fill="#E8FF47"/>
+<text x="50" y="850" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">вершина або трохи після</tspan></text>
+<text x="50" y="878" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">закрита менше</tspan></text>
+<text x="50" y="906" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">переважно вгору</tspan></text>
+<rect x="510" y="550" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="530" y="590" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">БЛОК</text>
+<rect x="530" y="765" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="707" y1="772" x2="707" y2="815" stroke="#39424E" stroke-width="4"/>
+<path d="M540 695 Q 580 745 605 765" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M605 765 L611 755.9 L617 747.2 L623 738.9 L629 731 L635 723.5 L641 716.5 L647 709.8 L653 703.6 L659 697.8 L665 692.4 L671 687.4 L677 682.9 L683 678.7 L689 675 L695 671.7 L701 668.8 L707 666.3 L713 664.2 L719 662.5 L725 661.3 L731 660.5 L737 660.1 L743 660.1 L749 660.5 L755 661.3 L761 662.5 L767 664.2 L773 666.3 L779 668.8 L785 671.7 L791 675 L797 678.7 L803 682.9 L809 687.4 L815 692.4 L821 697.8 L827 703.6 L833 709.8 L839 716.5 L845 723.5 L851 731 L857 738.9 L863 747.2 L869 755.9 L875 765 L881 774.5 L887 784.5 L893 794.9 L899 805.7 L905 816.9 L911 828.5 L917 840.5 L923 852.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="605" cy="765" r="3.5" fill="#8A93A0"/>
+<line x1="704" y1="643.7" x2="738.4" y2="692.8" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="738.4" y1="692.8" x2="747.6" y2="705.9" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="753.7" y1="674.1" x2="688.7" y2="662.4" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M701.2 658.9 L688.7 662.4 L699.2 670" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="702.2" cy="668.2" r="9" fill="#E8FF47"/>
+<text x="530" y="850" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">до вершини, на підйомі</tspan></text>
+<text x="530" y="878" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">закрита, нижче</tspan></text>
+<text x="530" y="906" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">короткий, уперед</tspan></text>
+<rect x="30" y="950" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="50" y="990" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">ПІДРІЗКА</text>
+<rect x="50" y="1165" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="227" y1="1172" x2="227" y2="1215" stroke="#39424E" stroke-width="4"/>
+<path d="M60 1095 Q 100 1145 125 1165" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M125 1165 L131 1155.9 L137 1147.2 L143 1138.9 L149 1131 L155 1123.5 L161 1116.5 L167 1109.8 L173 1103.6 L179 1097.8 L185 1092.4 L191 1087.4 L197 1082.9 L203 1078.7 L209 1075 L215 1071.7 L221 1068.8 L227 1066.3 L233 1064.2 L239 1062.5 L245 1061.3 L251 1060.5 L257 1060.1 L263 1060.1 L269 1060.5 L275 1061.3 L281 1062.5 L287 1064.2 L293 1066.3 L299 1068.8 L305 1071.7 L311 1075 L317 1078.7 L323 1082.9 L329 1087.4 L335 1092.4 L341 1097.8 L347 1103.6 L353 1109.8 L359 1116.5 L365 1123.5 L371 1131 L377 1138.9 L383 1147.2 L389 1155.9 L395 1165 L401 1174.5 L407 1184.5 L413 1194.9 L419 1205.7 L425 1216.9 L431 1228.5 L437 1240.5 L443 1252.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="125" cy="1165" r="3.5" fill="#8A93A0"/>
+<line x1="300.2" y1="1038.8" x2="257.8" y2="1081.2" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="257.8" y1="1081.2" x2="246.5" y2="1092.5" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="315" y1="1058.2" x2="243" y2="1061.8" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M254.5 1055.6 L243 1061.8 L255 1066.9" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="260" cy="1060" r="9" fill="#E8FF47"/>
+<text x="50" y="1250" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">вершина відскоку</tspan></text>
+<text x="50" y="1278" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">відкрита</tspan></text>
+<text x="50" y="1306" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">від ліктя вперед під мʼяч</tspan></text>
+<rect x="510" y="950" width="460" height="380" rx="10" fill="none" stroke="#212832"/>
+<text x="530" y="990" fill="#F2F4F7" font-size="25" font-weight="700" letter-spacing="0.5">ЧОП (ЗАХИСНА ПІДРІЗКА)</text>
+<rect x="530" y="1165" width="195" height="7" fill="#1F4F8F" stroke="#F2F4F7" stroke-opacity="0.6"/>
+<line x1="707" y1="1172" x2="707" y2="1215" stroke="#39424E" stroke-width="4"/>
+<path d="M540 1095 Q 580 1145 605 1165" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<path d="M605 1165 L611 1155.9 L617 1147.2 L623 1138.9 L629 1131 L635 1123.5 L641 1116.5 L647 1109.8 L653 1103.6 L659 1097.8 L665 1092.4 L671 1087.4 L677 1082.9 L683 1078.7 L689 1075 L695 1071.7 L701 1068.8 L707 1066.3 L713 1064.2 L719 1062.5 L725 1061.3 L731 1060.5 L737 1060.1 L743 1060.1 L749 1060.5 L755 1061.3 L761 1062.5 L767 1064.2 L773 1066.3 L779 1068.8 L785 1071.7 L791 1075 L797 1078.7 L803 1082.9 L809 1087.4 L815 1092.4 L821 1097.8 L827 1103.6 L833 1109.8 L839 1116.5 L845 1123.5 L851 1131 L857 1138.9 L863 1147.2 L869 1155.9 L875 1165 L881 1174.5 L887 1184.5 L893 1194.9 L899 1205.7 L905 1216.9 L911 1228.5 L917 1240.5 L923 1252.9" fill="none" stroke="#8A93A0" stroke-width="2" stroke-dasharray="5 6"/>
+<circle cx="605" cy="1165" r="3.5" fill="#8A93A0"/>
+<line x1="925.9" y1="1173.1" x2="905.3" y2="1229.5" stroke="#F2F4F7" stroke-width="9" stroke-linecap="round"/>
+<line x1="905.3" y1="1229.5" x2="899.9" y2="1244.5" stroke="#8A93A0" stroke-width="6" stroke-linecap="round"/>
+<line x1="948.8" y1="1144.2" x2="882.4" y2="1258.3" stroke="#E8FF47" stroke-width="3" stroke-opacity="0.9"/>
+<path d="M883.4 1245.4 L882.4 1258.3 L893.2 1251.1" fill="none" stroke="#E8FF47" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="896.6" cy="1201.3" r="9" fill="#E8FF47"/>
+<text x="530" y="1250" font-size="20"><tspan fill="#8A93A0">Фаза:</tspan><tspan fill="#F2F4F7" dx="7">рівень столу й нижче</tspan></text>
+<text x="530" y="1278" font-size="20"><tspan fill="#8A93A0">Ракетка:</tspan><tspan fill="#F2F4F7" dx="7">відкрита помірно</tspan></text>
+<text x="530" y="1306" font-size="20"><tspan fill="#8A93A0">Рух:</tspan><tspan fill="#F2F4F7" dx="7">зверху вниз і вперед</tspan></text>
+<text x="960" y="1380" fill="#39424E" font-size="15" text-anchor="end">ttmax.com.ua</text>
+</svg>

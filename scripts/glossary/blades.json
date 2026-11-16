@@ -1,0 +1,1177 @@
+{
+  "terms": [
+    {
+      "slug": "blade",
+      "cat": "blades",
+      "term": {
+        "ua": "Основа",
+        "ru": "Основание"
+      },
+      "aka": {
+        "ua": [
+          "основа ракетки",
+          "дерево ракетки",
+          "лопать",
+          "blade"
+        ],
+        "ru": [
+          "основание ракетки",
+          "дерево ракетки",
+          "лопасть",
+          "blade"
+        ]
+      },
+      "def": {
+        "ua": "Основа — ракетка без накладок: деревʼяна лопать із ручкою, часто з прошарками штучного волокна. За правилами ITTF ракетка може бути будь-якого розміру, форми й ваги, але лопать має бути пласкою й жорсткою (2.4.1), а щонайменше 85 % її товщини — натуральна деревина (2.4.2).",
+        "ru": "Основание — ракетка без накладок: деревянная лопасть с ручкой, часто с прослойками искусственного волокна. По правилам ITTF ракетка может быть любого размера, формы и веса, но лопасть должна быть плоской и жёсткой (2.4.1), а не менее 85 % её толщины — натуральная древесина (2.4.2)."
+      },
+      "href": "/osnovaniya",
+      "sources": [
+        "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf",
+        "https://documents.ittf.sport/sites/default/files/public/2021-04/2021ITTFHandbook.pdf"
+      ]
+    },
+    {
+      "slug": "plies",
+      "cat": "blades",
+      "term": {
+        "ua": "Шари основи",
+        "ru": "Слои основания"
+      },
+      "aka": {
+        "ua": [
+          "шаровість",
+          "5 шарів",
+          "7 шарів",
+          "п'ятишарова основа",
+          "семишарова основа",
+          "ply"
+        ],
+        "ru": [
+          "слойность",
+          "5 слоёв",
+          "7 слоёв",
+          "пятислойное основание",
+          "семислойное основание",
+          "ply"
+        ]
+      },
+      "def": {
+        "ua": "Шари — склеєні листи деревного шпону, а в композитних основах ще й штучного волокна, з яких складається лопать. «5» чи «7» — кількість шарів дерева; «5+2» і «3+2» — дерево плюс два шари волокна, як у характеристиці Viscaria: «5-ply wood + 2 Arylate-Carbon».",
+        "ru": "Слои — склеенные листы древесного шпона, а в композитных основаниях ещё и искусственного волокна, из которых состоит лопасть. «5» или «7» — число слоёв дерева; «5+2» и «3+2» — дерево плюс два слоя волокна, как в характеристике Viscaria: «5-ply wood + 2 Arylate-Carbon»."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "5-plus-2",
+      "cat": "blades",
+      "term": {
+        "ua": "Основа 5+2",
+        "ru": "Основание 5+2"
+      },
+      "aka": {
+        "ua": [
+          "5+2",
+          "5 дерево + 2 карбон",
+          "5W+2",
+          "7 шарів з карбоном"
+        ],
+        "ru": [
+          "5+2",
+          "5 дерево + 2 карбон",
+          "5W+2",
+          "7 слоёв с карбоном"
+        ]
+      },
+      "def": {
+        "ua": "5+2 — конструкція основи з пʼяти шарів дерева й двох шарів штучного волокна (ALC, ZLC, CAF, CNF тощо). Так зроблені, зокрема, Viscaria («5-ply wood + 2 Arylate-Carbon», 5,8 мм) та Innerforce Layer ALC (6,0 мм). Волокно лежить або під верхнім шпоном (Outerfiber), або біля ядра (Innerfiber).",
+        "ru": "5+2 — конструкция основания из пяти слоёв дерева и двух слоёв искусственного волокна (ALC, ZLC, CAF, CNF и др.). Так устроены, например, Viscaria («5-ply wood + 2 Arylate-Carbon», 5,8 мм) и Innerforce Layer ALC (6,0 мм). Волокно лежит либо под верхним шпоном (Outerfiber), либо у ядра (Innerfiber)."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/36701.html",
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+      ]
+    },
+    {
+      "slug": "3-plus-2",
+      "cat": "blades",
+      "term": {
+        "ua": "Основа 3+2",
+        "ru": "Основание 3+2"
+      },
+      "aka": {
+        "ua": [
+          "3+2",
+          "3 дерево + 2 карбон",
+          "3W+2"
+        ],
+        "ru": [
+          "3+2",
+          "3 дерево + 2 карбон",
+          "3W+2"
+        ]
+      },
+      "def": {
+        "ua": "3+2 — конструкція основи з трьох шарів дерева й двох шарів штучного волокна: ядро, по шару волокна з кожного боку від нього й верхній шпон поверх. Приклади Butterfly: Primorac Carbon і SK Carbon (3 шари дерева + 2 T5000, 7,0 і 5,2 мм) та Timo Boll CAF (3 + 2 CA-Fiber, 5,7 мм).",
+        "ru": "3+2 — конструкция основания из трёх слоёв дерева и двух слоёв искусственного волокна: ядро, по слою волокна с каждой стороны от него и верхний шпон поверх. Примеры у Butterfly: Primorac Carbon и SK Carbon (3 слоя дерева + 2 T5000, 7,0 и 5,2 мм) и Timo Boll CAF (3 + 2 CA-Fiber, 5,7 мм)."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/30101.html",
+        "https://www.butterfly-global.com/en/products/detail/36891.html",
+        "https://www.butterfly-global.com/en/products/detail/36951.html"
+      ]
+    },
+    {
+      "slug": "outer-ply",
+      "cat": "blades",
+      "term": {
+        "ua": "Верхній шпон",
+        "ru": "Верхний шпон"
+      },
+      "aka": {
+        "ua": [
+          "зовнішній шар",
+          "поверхневий шпон",
+          "outer ply",
+          "top veneer"
+        ],
+        "ru": [
+          "внешний слой",
+          "поверхностный шпон",
+          "outer ply",
+          "top veneer"
+        ]
+      },
+      "def": {
+        "ua": "Верхній шпон — зовнішній тонкий шар деревини основи, на який клеять накладку. Його порода й твердість помітно впливають на відчуття контакту з мʼячем. В основах Outerfiber шари штучного волокна лежать одразу під ним.",
+        "ru": "Верхний шпон — внешний тонкий слой древесины основания, на который клеят накладку. Его порода и твёрдость заметно влияют на ощущение контакта с мячом. В основаниях Outerfiber слои искусственного волокна лежат сразу под ним."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+      ]
+    },
+    {
+      "slug": "core",
+      "cat": "blades",
+      "term": {
+        "ua": "Ядро основи",
+        "ru": "Ядро основания"
+      },
+      "aka": {
+        "ua": [
+          "центральний шар",
+          "серцевина",
+          "core",
+          "середній шар"
+        ],
+        "ru": [
+          "центральный слой",
+          "сердцевина",
+          "core",
+          "средний слой"
+        ]
+      },
+      "def": {
+        "ua": "Ядро — центральний, зазвичай найтовщий шар деревини основи. Від його породи й товщини багато в чому залежать вага й жорсткість лопаті. В основах Innerfiber шари штучного волокна лежать поруч із ядром, а не під верхнім шпоном.",
+        "ru": "Ядро — центральный, обычно самый толстый слой древесины основания. От его породы и толщины во многом зависят вес и жёсткость лопасти. В основаниях Innerfiber слои искусственного волокна лежат рядом с ядром, а не под верхним шпоном."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+      ]
+    },
+    {
+      "slug": "koto",
+      "cat": "blades",
+      "term": {
+        "ua": "Кото (Koto)",
+        "ru": "Кото (Koto)"
+      },
+      "aka": {
+        "ua": [
+          "koto",
+          "кото шпон"
+        ],
+        "ru": [
+          "koto",
+          "кото шпон"
+        ]
+      },
+      "def": {
+        "ua": "Кото — світла деревина західноафриканського дерева Pterygota macrocarpa. Вона твердіша за лімбу (за Янкою ≈4200 Н проти ≈2990 Н), тому верхній шпон із кото зазвичай дає жорсткіший і чіткіший контакт, ніж лімбовий.",
+        "ru": "Кото — светлая древесина западноафриканского дерева Pterygota macrocarpa. Она твёрже лимбы (по Янке ≈4200 Н против ≈2990 Н), поэтому верхний шпон из кото обычно даёт более жёсткий и чёткий контакт, чем лимбовый."
+      },
+      "href": null,
+      "sources": [
+        "https://www.wood-database.com/koto/",
+        "https://www.wood-database.com/limba/"
+      ]
+    },
+    {
+      "slug": "limba",
+      "cat": "blades",
+      "term": {
+        "ua": "Лімба (Limba)",
+        "ru": "Лимба (Limba)"
+      },
+      "aka": {
+        "ua": [
+          "limba",
+          "лимба",
+          "афара"
+        ],
+        "ru": [
+          "limba",
+          "лімба",
+          "афара"
+        ]
+      },
+      "def": {
+        "ua": "Лімба (афара) — деревина західноафриканського дерева Terminalia superba. Вона мʼякша за кото (твердість за Янкою ≈2990 Н проти ≈4200 Н), тому лімбовий верхній шпон зазвичай дає мʼякший контакт.",
+        "ru": "Лимба (афара) — древесина западноафриканского дерева Terminalia superba. Она мягче кото (твёрдость по Янке ≈2990 Н против ≈4200 Н), поэтому лимбовый верхний шпон обычно даёт более мягкий контакт."
+      },
+      "href": null,
+      "sources": [
+        "https://www.wood-database.com/limba/",
+        "https://www.wood-database.com/koto/"
+      ]
+    },
+    {
+      "slug": "kiri",
+      "cat": "blades",
+      "term": {
+        "ua": "Кірі (Kiri)",
+        "ru": "Кири (Kiri)"
+      },
+      "aka": {
+        "ua": [
+          "kiri",
+          "павловнія",
+          "paulownia"
+        ],
+        "ru": [
+          "kiri",
+          "павловния",
+          "paulownia"
+        ]
+      },
+      "def": {
+        "ua": "Кірі — японська назва павловнії (Paulownia tomentosa), дуже легкої деревини: близько 280 кг/м³ у сухому стані, приблизно вдвічі легше за кото чи лімбу. В основах її використовують як товсте легке ядро.",
+        "ru": "Кири — японское название павловнии (Paulownia tomentosa), очень лёгкой древесины: около 280 кг/м³ в сухом виде, примерно вдвое легче кото или лимбы. В основаниях её используют как толстое лёгкое ядро."
+      },
+      "href": null,
+      "sources": [
+        "https://www.wood-database.com/paulownia/",
+        "https://www.wood-database.com/koto/",
+        "https://www.wood-database.com/limba/"
+      ]
+    },
+    {
+      "slug": "hinoki",
+      "cat": "blades",
+      "term": {
+        "ua": "Хінокі (Hinoki)",
+        "ru": "Хиноки (Hinoki)"
+      },
+      "aka": {
+        "ua": [
+          "hinoki",
+          "японський кипарис",
+          "кісо хінокі"
+        ],
+        "ru": [
+          "hinoki",
+          "японский кипарис",
+          "кисо хиноки"
+        ]
+      },
+      "def": {
+        "ua": "Хінокі — деревина японського кипариса (Chamaecyparis obtusa). З неї роблять, зокрема, одношарові основи для японського пера: Butterfly Cypress G-MAX — 1 шар Kiso Hinoki завтовшки 10,0 мм, реакція 13,6, вібрація 12,9.",
+        "ru": "Хиноки — древесина японского кипариса (Chamaecyparis obtusa). Из неё делают, в частности, однослойные основания для японского пера: Butterfly Cypress G-MAX — 1 слой Kiso Hinoki толщиной 10,0 мм, реакция 13,6, вибрация 12,9."
+      },
+      "href": null,
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/23930.html"
+      ]
+    },
+    {
+      "slug": "balsa",
+      "cat": "blades",
+      "term": {
+        "ua": "Бальза",
+        "ru": "Бальза"
+      },
+      "aka": {
+        "ua": [
+          "бальзова основа",
+          "balsa",
+          "бальса"
+        ],
+        "ru": [
+          "бальзовое основание",
+          "balsa",
+          "бальса"
+        ]
+      },
+      "def": {
+        "ua": "Бальза — найлегша й наймʼякша з комерційних порід деревини: близько 150 кг/м³ у сухому стані. В основах її ставлять товстим ядром, щоб лопать була товстою, але легкою; бальзу в назві мають, зокрема, Butterfly Balsa Carbo X5 і Balsa X7.",
+        "ru": "Бальза — самая лёгкая и мягкая из коммерческих пород древесины: около 150 кг/м³ в сухом виде. В основаниях её ставят толстым ядром, чтобы лопасть была толстой, но лёгкой; бальзу в названии имеют, например, Butterfly Balsa Carbo X5 и Balsa X7."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.wood-database.com/balsa/"
+      ]
+    },
+    {
+      "slug": "carbon",
+      "cat": "blades",
+      "term": {
+        "ua": "Карбонова основа",
+        "ru": "Карбоновое основание"
+      },
+      "aka": {
+        "ua": [
+          "карбон",
+          "основа з карбоном",
+          "основа з волокном",
+          "carbon blade"
+        ],
+        "ru": [
+          "карбон",
+          "основание с карбоном",
+          "основание с волокном",
+          "carbon blade"
+        ]
+      },
+      "def": {
+        "ua": "Карбонова основа — так зазвичай називають будь-яку основу з прошарками штучного волокна (карбону, ALC, ZLC тощо). За правилом ITTF 2.4.2 щонайменше 85 % товщини основи — натуральна деревина, а армований волокном клейовий шар — не товщий за 7,5 % загальної товщини або 0,35 мм, залежно від того, що менше.",
+        "ru": "Карбоновое основание — так обычно называют любое основание с прослойками искусственного волокна (карбона, ALC, ZLC и т. п.). По правилу ITTF 2.4.2 не менее 85 % толщины основания — натуральная древесина, а армированный волокном клеевой слой — не толще 7,5 % общей толщины или 0,35 мм, смотря что меньше."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf",
+        "https://documents.ittf.sport/sites/default/files/public/2021-04/2021ITTFHandbook.pdf",
+        "https://www.butterfly-global.com/en/products/blade/fiber.html"
+      ]
+    },
+    {
+      "slug": "alc",
+      "cat": "blades",
+      "term": {
+        "ua": "ALC (арилат-карбон)",
+        "ru": "ALC (арилат-карбон)"
+      },
+      "aka": {
+        "ua": [
+          "Arylate-Carbon",
+          "арилат карбон",
+          "АЛЦ",
+          "алк"
+        ],
+        "ru": [
+          "Arylate-Carbon",
+          "арилат карбон",
+          "АЛЦ",
+          "алк"
+        ]
+      },
+      "def": {
+        "ua": "ALC (Arylate-Carbon) — волокно Butterfly, сплетене з арилату й карбону. Приклад — Viscaria: 5 шарів дерева + 2 ALC під верхнім шпоном, 5,8 мм, реакція 11,8, вібрація 10,3. В Innerforce Layer ALC шари ALC лежать біля ядра, і показники нижчі — 10,7 / 9,4.",
+        "ru": "ALC (Arylate-Carbon) — волокно Butterfly, сплетённое из арилата и карбона. Пример — Viscaria: 5 слоёв дерева + 2 ALC под верхним шпоном, 5,8 мм, реакция 11,8, вибрация 10,3. В Innerforce Layer ALC слои ALC лежат у ядра, и показатели ниже — 10,7 / 9,4."
+      },
+      "href": "/osnovaniya/alc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/36701.html"
+      ]
+    },
+    {
+      "slug": "super-alc",
+      "cat": "blades",
+      "term": {
+        "ua": "Super ALC",
+        "ru": "Super ALC"
+      },
+      "aka": {
+        "ua": [
+          "супер ALC",
+          "Super Arylate-Carbon",
+          "супер арилат"
+        ],
+        "ru": [
+          "супер ALC",
+          "Super Arylate-Carbon",
+          "супер арилат"
+        ]
+      },
+      "def": {
+        "ua": "Super ALC (Super Arylate-Carbon) — варіант ALC, у який вплетено більше волокна, тому відскок вищий; співвідношення арилату й карбону підібране так, щоб основа лишалася гнучкою. Viscaria Super ALC: 5,7 мм, реакція 12,1, вібрація 10,1 — проти 11,8 / 10,3 у Viscaria.",
+        "ru": "Super ALC (Super Arylate-Carbon) — вариант ALC, в который вплетено больше волокна, поэтому отскок выше; соотношение арилата и карбона подобрано так, чтобы основание оставалось гибким. Viscaria Super ALC: 5,7 мм, реакция 12,1, вибрация 10,1 — против 11,8 / 10,3 у Viscaria."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/37191.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "zlc",
+      "cat": "blades",
+      "term": {
+        "ua": "ZLC (ZL-карбон)",
+        "ru": "ZLC (ZL-карбон)"
+      },
+      "aka": {
+        "ua": [
+          "ZL-Carbon",
+          "ЗЛЦ",
+          "зл карбон"
+        ],
+        "ru": [
+          "ZL-Carbon",
+          "ЗЛЦ",
+          "зл карбон"
+        ]
+      },
+      "def": {
+        "ua": "ZLC (ZL-Carbon) — волокно Butterfly, сплетене з карбону й ZL-Fiber: карбон дає високу реакцію, ZL-Fiber — міцність і легкість. За відчуттям ZLC жорсткіша за ALC: Timo Boll ZLC (5+2, 5,5 мм) має реакцію 11,7 і вібрацію 10,8, а Viscaria — 11,8 / 10,3.",
+        "ru": "ZLC (ZL-Carbon) — волокно Butterfly, сплетённое из карбона и ZL-Fiber: карбон даёт высокую реакцию, ZL-Fiber — прочность и лёгкость. По ощущению ZLC жёстче ALC: у Timo Boll ZLC (5+2, 5,5 мм) реакция 11,7 и вибрация 10,8, а у Viscaria — 11,8 / 10,3."
+      },
+      "href": "/osnovaniya/zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/35831.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "super-zlc",
+      "cat": "blades",
+      "term": {
+        "ua": "Super ZLC",
+        "ru": "Super ZLC"
+      },
+      "aka": {
+        "ua": [
+          "супер ZLC",
+          "Super ZL-Carbon",
+          "супер зл карбон"
+        ],
+        "ru": [
+          "супер ZLC",
+          "Super ZL-Carbon",
+          "супер зл карбон"
+        ]
+      },
+      "def": {
+        "ua": "Super ZLC (Super ZL-Carbon) — щільніше плетіння ZLC: за Butterfly, карбонових і ZL-волокон у ньому за масою в 1,8 раза більше, ніж у звичайному ZLC. Приклад — Mizutani Jun Super ZLC: 5+2, 5,8 мм, реакція 12,5, вібрація 11,6.",
+        "ru": "Super ZLC (Super ZL-Carbon) — более плотное плетение ZLC: по данным Butterfly, карбоновых и ZL-волокон в нём по массе в 1,8 раза больше, чем в обычном ZLC. Пример — Mizutani Jun Super ZLC: 5+2, 5,8 мм, реакция 12,5, вибрация 11,6."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/36601.html"
+      ]
+    },
+    {
+      "slug": "zlf",
+      "cat": "blades",
+      "term": {
+        "ua": "ZLF (ZL-волокно)",
+        "ru": "ZLF (ZL-волокно)"
+      },
+      "aka": {
+        "ua": [
+          "ZL-Fiber",
+          "ZL fiber",
+          "зл файбер"
+        ],
+        "ru": [
+          "ZL-Fiber",
+          "ZL fiber",
+          "зл файбер"
+        ]
+      },
+      "def": {
+        "ua": "ZLF (ZL-Fiber) — штучне волокно Butterfly з тонкою молекулярною будовою, міцне й пружне. У ZLC його сплітають із карбоном, а в основах ZLF (наприклад, Innershield Layer ZLF) використовують без карбону; за Butterfly, воно додає основі міцності й легкості.",
+        "ru": "ZLF (ZL-Fiber) — искусственное волокно Butterfly с тонкой молекулярной структурой, прочное и упругое. В ZLC его сплетают с карбоном, а в основаниях ZLF (например, Innershield Layer ZLF) используют без карбона; по данным Butterfly, оно придаёт основанию прочность и лёгкость."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/blade/"
+      ]
+    },
+    {
+      "slug": "t5000",
+      "cat": "blades",
+      "term": {
+        "ua": "T5000 (Tamca 5000)",
+        "ru": "T5000 (Tamca 5000)"
+      },
+      "aka": {
+        "ua": [
+          "Tamca-5000",
+          "Тамка 5000",
+          "Т5000",
+          "карбон Tamca"
+        ],
+        "ru": [
+          "Tamca-5000",
+          "Тамка 5000",
+          "Т5000",
+          "карбон Tamca"
+        ]
+      },
+      "def": {
+        "ua": "T5000 (Tamca-5000) — карбонове волокно, яке Butterfly описує як у шість разів міцніше за залізо й сталь і вп'ятеро легше. Його використовують 3+2-основи Primorac Carbon (7,0 мм, реакція 12,5, вібрація 13,3) і SK Carbon (5,2 мм, 10,5 / 10,5).",
+        "ru": "T5000 (Tamca-5000) — карбоновое волокно, которое Butterfly описывает как в шесть раз более прочное, чем железо и сталь, и в пять раз более лёгкое. Его используют основания 3+2 Primorac Carbon (7,0 мм, реакция 12,5, вибрация 13,3) и SK Carbon (5,2 мм, 10,5 / 10,5)."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/30101.html",
+        "https://www.butterfly-global.com/en/products/detail/36891.html"
+      ]
+    },
+    {
+      "slug": "caf",
+      "cat": "blades",
+      "term": {
+        "ua": "CAF (CA-волокно)",
+        "ru": "CAF (CA-волокно)"
+      },
+      "aka": {
+        "ua": [
+          "CA-Fiber",
+          "СА файбер",
+          "CAF волокно"
+        ],
+        "ru": [
+          "CA-Fiber",
+          "СА файбер",
+          "CAF волокно"
+        ]
+      },
+      "def": {
+        "ua": "CAF (CA-Fiber) — штучне волокно Butterfly, отримане з деревини. Воно дуже гнучке, тому, за описом виробника, краще «тримає» мʼяч і дає більше контролю, а висока міцність на розрив зберігає швидкість. Outerforce CAF: реакція 11,3, вібрація 9,1; Timo Boll CAF — 10,6 / 10,4.",
+        "ru": "CAF (CA-Fiber) — искусственное волокно Butterfly, полученное из древесины. Оно очень гибкое, поэтому, по описанию производителя, лучше «держит» мяч и даёт больше контроля, а высокая прочность на разрыв сохраняет скорость. Outerforce CAF: реакция 11,3, вибрация 9,1; Timo Boll CAF — 10,6 / 10,4."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/37351.html",
+        "https://www.butterfly-global.com/en/products/detail/36951.html"
+      ]
+    },
+    {
+      "slug": "cnf",
+      "cat": "blades",
+      "term": {
+        "ua": "CNF (целюлозне нановолокно)",
+        "ru": "CNF (целлюлозное нановолокно)"
+      },
+      "aka": {
+        "ua": [
+          "Cellulose Nano Fiber",
+          "наноцелюлоза",
+          "CNF волокно"
+        ],
+        "ru": [
+          "Cellulose Nano Fiber",
+          "наноцеллюлоза",
+          "CNF волокно"
+        ]
+      },
+      "def": {
+        "ua": "CNF (Cellulose Nano Fiber) — тонке волокно, отримане розщепленням рослинних волокон, наприклад деревини, до нанометрового розміру. За Butterfly, воно дає низьку вібрацію й відчуття, що мʼяч «тримається» на основі, попри високу реакцію: Revoldia CNF — 11,7 / 9,5.",
+        "ru": "CNF (Cellulose Nano Fiber) — тонкое волокно, полученное расщеплением растительных волокон, например древесины, до нанометрового размера. По данным Butterfly, оно даёт низкую вибрацию и ощущение, что мяч «держится» на основании, несмотря на высокую реакцию: у Revoldia CNF — 11,7 / 9,5."
+      },
+      "href": "/butterfly/osnovaniya/revoldia-cnf",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/37061.html"
+      ]
+    },
+    {
+      "slug": "outerfiber",
+      "cat": "blades",
+      "term": {
+        "ua": "Outerfiber (outer, зовнішнє волокно)",
+        "ru": "Outerfiber (outer, внешнее волокно)"
+      },
+      "aka": {
+        "ua": [
+          "outer",
+          "аутер",
+          "зовнішній карбон",
+          "карбон під шпоном"
+        ],
+        "ru": [
+          "outer",
+          "аутер",
+          "внешний карбон",
+          "карбон под шпоном"
+        ]
+      },
+      "def": {
+        "ua": "Outerfiber (outer) — розташування шарів штучного волокна одразу під верхнім шпоном. За Butterfly, така схема підсилює відчуття волокна й дає швидші удари. Так зроблені, наприклад, Outerforce ALC, Outerforce ZLC і Outerforce CAF.",
+        "ru": "Outerfiber (outer) — расположение слоёв искусственного волокна сразу под верхним шпоном. По данным Butterfly, такая схема усиливает ощущение волокна и даёт более быстрые удары. Так сделаны, например, Outerforce ALC, Outerforce ZLC и Outerforce CAF."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/37341.html",
+        "https://www.butterfly-global.com/en/products/detail/37361.html",
+        "https://www.butterfly-global.com/en/products/detail/37351.html"
+      ]
+    },
+    {
+      "slug": "innerfiber",
+      "cat": "blades",
+      "term": {
+        "ua": "Innerfiber (inner, внутрішнє волокно)",
+        "ru": "Innerfiber (inner, внутреннее волокно)"
+      },
+      "aka": {
+        "ua": [
+          "inner",
+          "іннер",
+          "внутрішній карбон",
+          "карбон біля ядра"
+        ],
+        "ru": [
+          "inner",
+          "иннер",
+          "внутренний карбон",
+          "карбон у ядра"
+        ]
+      },
+      "def": {
+        "ua": "Innerfiber (inner) — розташування шарів штучного волокна біля деревʼяного ядра, а не під верхнім шпоном. Butterfly застосовує його з 2009 року: мʼяч довше тримається на лопаті. Приклад: Innerforce Layer ZLC — реакція 10,5, вібрація 9,5 проти 11,7 / 10,8 у Timo Boll ZLC з outer-ZLC.",
+        "ru": "Innerfiber (inner) — расположение слоёв искусственного волокна у деревянного ядра, а не под верхним шпоном. Butterfly применяет его с 2009 года: мяч дольше держится на лопасти. Пример: у Innerforce Layer ZLC реакция 10,5 и вибрация 9,5 против 11,7 / 10,8 у Timo Boll ZLC с outer-ZLC."
+      },
+      "href": "/blog/alc-chy-zlc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html",
+        "https://www.butterfly-global.com/en/products/detail/36681.html",
+        "https://www.butterfly-global.com/en/products/detail/35831.html"
+      ]
+    },
+    {
+      "slug": "innerforce",
+      "cat": "blades",
+      "term": {
+        "ua": "Innerforce",
+        "ru": "Innerforce"
+      },
+      "aka": {
+        "ua": [
+          "Іннерфорс",
+          "Иннерфорс",
+          "IF",
+          "Innerforce Layer"
+        ],
+        "ru": [
+          "Иннерфорс",
+          "Іннерфорс",
+          "IF",
+          "Innerforce Layer"
+        ]
+      },
+      "def": {
+        "ua": "Innerforce — лінійка основ Butterfly з внутрішнім розташуванням волокна (Innerfiber), біля ядра. Приклади: Innerforce Layer ALC (5+2, 6,0 мм, реакція 10,7, вібрація 9,4), Innerforce Layer ZLC (5,7 мм, 10,5 / 9,5) і Harimoto Tomokazu Innerforce ALC зі збільшеною лопаттю 158×152 мм (10,7 / 9,2).",
+        "ru": "Innerforce — линейка оснований Butterfly с внутренним расположением волокна (Innerfiber), у ядра. Примеры: Innerforce Layer ALC (5+2, 6,0 мм, реакция 10,7, вибрация 9,4), Innerforce Layer ZLC (5,7 мм, 10,5 / 9,5) и Harimoto Tomokazu Innerforce ALC с увеличенной лопастью 158×152 мм (10,7 / 9,2)."
+      },
+      "href": "/butterfly/osnovaniya/innerforce-layer-alc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/36701.html",
+        "https://www.butterfly-global.com/en/products/detail/36681.html",
+        "https://www.butterfly-global.com/en/products/detail/36991.html",
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+      ]
+    },
+    {
+      "slug": "outerforce",
+      "cat": "blades",
+      "term": {
+        "ua": "Outerforce",
+        "ru": "Outerforce"
+      },
+      "aka": {
+        "ua": [
+          "Аутерфорс",
+          "Outerforce ALC",
+          "Outerforce ZLC"
+        ],
+        "ru": [
+          "Аутерфорс",
+          "Outerforce ALC",
+          "Outerforce ZLC"
+        ]
+      },
+      "def": {
+        "ua": "Outerforce — лінійка основ Butterfly із зовнішнім розташуванням волокна (Outerfiber), одразу під верхнім шпоном. Серед них Outerforce ALC (6,2 мм, реакція 11,4, вібрація 10,4), Outerforce ZLC (5,9 мм, 11,3 / 11,1) і Outerforce CAF (6,3 мм, 11,3 / 9,1).",
+        "ru": "Outerforce — линейка оснований Butterfly с внешним расположением волокна (Outerfiber), сразу под верхним шпоном. Среди них Outerforce ALC (6,2 мм, реакция 11,4, вибрация 10,4), Outerforce ZLC (5,9 мм, 11,3 / 11,1) и Outerforce CAF (6,3 мм, 11,3 / 9,1)."
+      },
+      "href": "/butterfly/osnovaniya/outerforce-alc",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/37341.html",
+        "https://www.butterfly-global.com/en/products/detail/37361.html",
+        "https://www.butterfly-global.com/en/products/detail/37351.html",
+        "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+      ]
+    },
+    {
+      "slug": "reaction",
+      "cat": "blades",
+      "term": {
+        "ua": "Реакція основи (Butterfly)",
+        "ru": "Реакция основания (Butterfly)"
+      },
+      "aka": {
+        "ua": [
+          "reaction property",
+          "швидкість основи",
+          "реакція Butterfly"
+        ],
+        "ru": [
+          "reaction property",
+          "скорость основания",
+          "реакция Butterfly"
+        ]
+      },
+      "def": {
+        "ua": "Реакція (reaction property) — офіційний показник Butterfly, що описує базову швидкість основи: що вище число, то швидше мʼяч відлітає після контакту. Одиниць Butterfly не вказує, тож порівнювати числа варто лише між основами Butterfly. Приклади: Innerforce Layer ALC.S — 10,1, Viscaria — 11,8, Primorac Carbon — 12,5.",
+        "ru": "Реакция (reaction property) — официальный показатель Butterfly для базовую скорость основания: чем выше число, тем быстрее мяч улетает после контакта. Единиц Butterfly не указывает, так что сравнивать числа стоит только между основаниями Butterfly. Примеры: Innerforce Layer ALC.S — 10,1, Viscaria — 11,8, Primorac Carbon — 12,5."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/matrix.html",
+        "https://www.butterfly-global.com/en/products/detail/36861.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/30101.html"
+      ]
+    },
+    {
+      "slug": "vibration",
+      "cat": "blades",
+      "term": {
+        "ua": "Вібрація основи (Butterfly)",
+        "ru": "Вибрация основания (Butterfly)"
+      },
+      "aka": {
+        "ua": [
+          "vibration property",
+          "жорсткість основи",
+          "відчуття удару"
+        ],
+        "ru": [
+          "vibration property",
+          "жёсткость основания",
+          "ощущение удара"
+        ]
+      },
+      "def": {
+        "ua": "Вібрація (vibration property) — офіційний показник Butterfly, що описує відчуття від удару: нижче число — мʼякший дотик, вище — жорсткіший. Це шкала виробника без одиниць. Приклади: Innerforce Layer ALC.S — 8,4, Viscaria — 10,3, Primorac Carbon — 13,3.",
+        "ru": "Вибрация (vibration property) — официальный показатель Butterfly, описывающий ощущение от удара: ниже число — мягче касание, выше — жёстче. Это шкала производителя без единиц. Примеры: Innerforce Layer ALC.S — 8,4, Viscaria — 10,3, Primorac Carbon — 13,3."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/matrix.html",
+        "https://www.butterfly-global.com/en/products/detail/36861.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/30101.html"
+      ]
+    },
+    {
+      "slug": "blade-class",
+      "cat": "blades",
+      "term": {
+        "ua": "Клас основи (OFF, ALL, DEF)",
+        "ru": "Класс основания (OFF, ALL, DEF)"
+      },
+      "aka": {
+        "ua": [
+          "OFF+",
+          "OFF",
+          "OFF-",
+          "ALL+",
+          "ALL",
+          "DEF",
+          "атакуюча основа",
+          "універсальна основа",
+          "захисна основа"
+        ],
+        "ru": [
+          "OFF+",
+          "OFF",
+          "OFF-",
+          "ALL+",
+          "ALL",
+          "DEF",
+          "атакующее основание",
+          "универсальное основание",
+          "защитное основание"
+        ]
+      },
+      "def": {
+        "ua": "Клас основи — поширена в настільному тенісі шкала швидкості від DEF (захист) через ALL/ALL+ (універсальні) до OFF−, OFF і OFF+ (атака). Це орієнтир магазинів, а не показник Butterfly: на своєму сайті виробник ділить основи на атакувальні, захисні, повністю деревʼяні та зі штучним волокном.",
+        "ru": "Класс основания — распространённая в настольном теннисе шкала скорости от DEF (защита) через ALL/ALL+ (универсальные) до OFF−, OFF и OFF+ (атака). Это ориентир магазинов, а не показатель Butterfly: на своём сайте производитель делит основания на атакующие, защитные, полностью деревянные и с искусственным волокном."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/"
+      ]
+    },
+    {
+      "slug": "blade-thickness",
+      "cat": "blades",
+      "term": {
+        "ua": "Товщина основи",
+        "ru": "Толщина основания"
+      },
+      "aka": {
+        "ua": [
+          "товщина лопаті",
+          "товщина ракетки",
+          "мм основи"
+        ],
+        "ru": [
+          "толщина лопасти",
+          "толщина ракетки",
+          "мм основания"
+        ]
+      },
+      "def": {
+        "ua": "Товщина основи — товщина лопаті без накладок у міліметрах; правила ITTF її окремо не обмежують. Приклади Butterfly: SK Carbon — 5,2 мм, Viscaria — 5,8 мм, Primorac Carbon — 7,0 мм, одношарова Cypress G-MAX для японського пера — 10,0 мм.",
+        "ru": "Толщина основания — толщина лопасти без накладок в миллиметрах; правила ITTF её отдельно не ограничивают. Примеры у Butterfly: SK Carbon — 5,2 мм, Viscaria — 5,8 мм, Primorac Carbon — 7,0 мм, однослойное Cypress G-MAX для японского пера — 10,0 мм."
+      },
+      "href": "/blog/tablytsia-osnov-butterfly",
+      "sources": [
+        "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf",
+        "https://www.butterfly-global.com/en/products/detail/36891.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/30101.html",
+        "https://www.butterfly-global.com/en/products/detail/23930.html"
+      ]
+    },
+    {
+      "slug": "blade-weight",
+      "cat": "blades",
+      "term": {
+        "ua": "Вага основи",
+        "ru": "Вес основания"
+      },
+      "aka": {
+        "ua": [
+          "скільки важить основа",
+          "вага лопаті",
+          "грамів основа"
+        ],
+        "ru": [
+          "сколько весит основание",
+          "вес лопасти",
+          "граммов основание"
+        ]
+      },
+      "def": {
+        "ua": "Вага основи — маса лопаті з ручкою без накладок. Butterfly попереджає, що вона змінюється залежно від вологості й температури, тому для моделей наводить середню вагу: наприклад, Viscaria — у середньому 87 г.",
+        "ru": "Вес основания — масса лопасти с ручкой без накладок. Butterfly предупреждает, что он меняется в зависимости от влажности и температуры, поэтому для моделей приводит средний вес: например, у Viscaria — в среднем 87 г."
+      },
+      "href": "/blog/versii-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/weight.html",
+        "https://www.butterfly.co.jp/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "blade-size",
+      "cat": "blades",
+      "term": {
+        "ua": "Розмір лопаті",
+        "ru": "Размер лопасти"
+      },
+      "aka": {
+        "ua": [
+          "розмір основи",
+          "head size",
+          "розмір ігрової поверхні",
+          "збільшена лопать"
+        ],
+        "ru": [
+          "размер основания",
+          "head size",
+          "размер игровой поверхности",
+          "увеличенная лопасть"
+        ]
+      },
+      "def": {
+        "ua": "Розмір лопаті — довжина × ширина ігрової частини основи без ручки (head size); правила ITTF його не обмежують. Стандартна лопать Butterfly — 157×150 мм (Viscaria), трохи збільшена — 158×152 мм (Harimoto Tomokazu Innerforce ALC), у Cypress G-MAX для японського пера — 163×135 мм.",
+        "ru": "Размер лопасти — длина × ширина игровой части основания без ручки (head size); правила ITTF его не ограничивают. Стандартная лопасть Butterfly — 157×150 мм (Viscaria), немного увеличенная — 158×152 мм (Harimoto Tomokazu Innerforce ALC), у Cypress G-MAX для японского пера — 163×135 мм."
+      },
+      "href": "/blog/viscaria-timo-boll-alc-fan-zhendong-alc",
+      "sources": [
+        "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf",
+        "https://www.butterfly-global.com/en/products/detail/30041.html",
+        "https://www.butterfly-global.com/en/products/detail/36991.html",
+        "https://www.butterfly-global.com/en/products/detail/23930.html"
+      ]
+    },
+    {
+      "slug": "sweet-spot",
+      "cat": "blades",
+      "term": {
+        "ua": "Солодка зона (sweet spot)",
+        "ru": "Сладкая зона (sweet spot)"
+      },
+      "aka": {
+        "ua": [
+          "sweet spot",
+          "світ спот",
+          "ігрова зона лопаті",
+          "центр удару"
+        ],
+        "ru": [
+          "sweet spot",
+          "свит спот",
+          "игровая зона лопасти",
+          "центр удара"
+        ]
+      },
+      "def": {
+        "ua": "Солодка зона (sweet spot) — ділянка лопаті, удар у яку дає найстабільніший відскок і найменшу віддачу в руку; ближче до краю мʼяч відлітає слабше й менш точно.",
+        "ru": "Сладкая зона (sweet spot) — участок лопасти, удар в который даёт самый стабильный отскок и наименьшую отдачу в руку; ближе к краю мяч улетает слабее и менее точно."
+      },
+      "href": null,
+      "sources": []
+    },
+    {
+      "slug": "fl-handle",
+      "cat": "blades",
+      "term": {
+        "ua": "Ручка FL (flared, конічна)",
+        "ru": "Ручка FL (flared, коническая)"
+      },
+      "aka": {
+        "ua": [
+          "FL",
+          "flared",
+          "конічна ручка",
+          "розширена ручка",
+          "увігнута ручка"
+        ],
+        "ru": [
+          "FL",
+          "flared",
+          "коническая ручка",
+          "расширенная ручка",
+          "вогнутая ручка"
+        ]
+      },
+      "def": {
+        "ua": "FL (flared) — ручка для європейської хватки, що розширюється до кінця й тому надійніше фіксується в долоні. У Viscaria ручка FL — 100×25×34 мм (довжина × товщина × ширина на кінці) проти 100×23×28 мм у ST.",
+        "ru": "FL (flared) — ручка для европейской хватки, которая расширяется к концу и поэтому надёжнее фиксируется в ладони. У Viscaria ручка FL — 100×25×34 мм (длина × толщина × ширина на конце) против 100×23×28 мм у ST."
+      },
+      "href": "/blog/yak-vybraty-raketku",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "st-handle",
+      "cat": "blades",
+      "term": {
+        "ua": "Ручка ST (straight, пряма)",
+        "ru": "Ручка ST (straight, прямая)"
+      },
+      "aka": {
+        "ua": [
+          "ST",
+          "straight",
+          "пряма ручка"
+        ],
+        "ru": [
+          "ST",
+          "straight",
+          "прямая ручка"
+        ]
+      },
+      "def": {
+        "ua": "ST (straight) — пряма ручка для європейської хватки, майже без розширення на кінці; у долоні лежить вільніше, ніж FL. У Viscaria ручка ST — 100×23×28 мм проти 100×25×34 мм у FL.",
+        "ru": "ST (straight) — прямая ручка для европейской хватки, почти без расширения на конце; в ладони лежит свободнее, чем FL. У Viscaria ручка ST — 100×23×28 мм против 100×25×34 мм у FL."
+      },
+      "href": "/blog/yak-vybraty-raketku",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "an-handle",
+      "cat": "blades",
+      "term": {
+        "ua": "Ручка AN (anatomic, анатомічна)",
+        "ru": "Ручка AN (anatomic, анатомическая)"
+      },
+      "aka": {
+        "ua": [
+          "AN",
+          "anatomic",
+          "анатомічна ручка"
+        ],
+        "ru": [
+          "AN",
+          "anatomic",
+          "анатомическая ручка"
+        ]
+      },
+      "def": {
+        "ua": "AN (anatomic) — анатомічна ручка для європейської хватки з потовщенням посередині під долоню. Butterfly випускає її не для всіх моделей: AN є, наприклад, у Timo Boll ALC та Innerforce Layer ALC, а Viscaria випускають лише з FL і ST.",
+        "ru": "AN (anatomic) — анатомическая ручка для европейской хватки с утолщением посередине под ладонь. Butterfly выпускает её не для всех моделей: AN есть, например, у Timo Boll ALC и Innerforce Layer ALC, а Viscaria выпускают только с FL и ST."
+      },
+      "href": "/blog/yak-vybraty-raketku",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/35861.html",
+        "https://www.butterfly-global.com/en/products/detail/36701.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "cs-handle",
+      "cat": "blades",
+      "term": {
+        "ua": "CS (китайське перо)",
+        "ru": "CS (китайское перо)"
+      },
+      "aka": {
+        "ua": [
+          "CS",
+          "Chinese penhold",
+          "китайське перо",
+          "основа для пера",
+          "CPen"
+        ],
+        "ru": [
+          "CS",
+          "Chinese penhold",
+          "китайское перо",
+          "основание для пера",
+          "CPen"
+        ]
+      },
+      "def": {
+        "ua": "CS — позначка основ Butterfly для китайського пера: коротша ручка й дещо інші параметри, ніж у версії для європейської хватки. Наприклад, Viscaria - CS має ручку 82×22×31,5 мм, лопать 158×150 мм і вібрацію 10,6 замість 10,3 у звичайної Viscaria.",
+        "ru": "CS — обозначение оснований Butterfly для китайского пера: более короткая ручка и немного другие параметры, чем у версии для европейской хватки. Например, у Viscaria - CS ручка 82×22×31,5 мм, лопасть 158×150 мм и вибрация 10,6 вместо 10,3 у обычной Viscaria."
+      },
+      "href": "/blog/yak-vybraty-raketku",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/detail/24010.html",
+        "https://www.butterfly-global.com/en/products/detail/30041.html"
+      ]
+    },
+    {
+      "slug": "jpen-handle",
+      "cat": "blades",
+      "term": {
+        "ua": "Японське перо (JPen)",
+        "ru": "Японское перо (JPen)"
+      },
+      "aka": {
+        "ua": [
+          "JPen",
+          "Japanese penhold",
+          "японське перо",
+          "основа для японського пера"
+        ],
+        "ru": [
+          "JPen",
+          "Japanese penhold",
+          "японское перо",
+          "основание для японского пера"
+        ]
+      },
+      "def": {
+        "ua": "Японське перо (JPen) — основа для хватки пером японського типу; Butterfly виділяє такі основи окремо від китайського пера. Приклад — Cypress G-MAX: 1 шар Kiso Hinoki, 10,0 мм, лопать 163×135 мм, ручка завдовжки 92 мм, реакція 13,6.",
+        "ru": "Японское перо (JPen) — основание для хвата пером японского типа; Butterfly выделяет такие основания отдельно от китайского пера. Пример — Cypress G-MAX: 1 слой Kiso Hinoki, 10,0 мм, лопасть 163×135 мм, ручка длиной 92 мм, реакция 13,6."
+      },
+      "href": "/blog/yak-vybraty-raketku",
+      "sources": [
+        "https://www.butterfly-global.com/en/products/blade/",
+        "https://www.butterfly-global.com/en/products/detail/23930.html"
+      ]
+    },
+    {
+      "slug": "japanese-version",
+      "cat": "blades",
+      "term": {
+        "ua": "Японська версія основи Butterfly",
+        "ru": "Японская версия основания Butterfly"
+      },
+      "aka": {
+        "ua": [
+          "японська версія",
+          "made in Japan",
+          "японська Viscaria",
+          "європейська версія",
+          "китайська версія",
+          "гохан"
+        ],
+        "ru": [
+          "японская версия",
+          "made in Japan",
+          "японская Viscaria",
+          "европейская версия",
+          "китайская версия",
+          "гохан"
+        ]
+      },
+      "def": {
+        "ua": "Японська версія — неофіційна назва основ Butterfly японського виробництва, нібито кращих за ті, що продають поза Японією. Butterfly називає такі твердження повністю неправдивими: усе японського виробництва робить завод Butterfly TEC у Токородзаві, і покупці в усьому світі отримують ті самі товари.",
+        "ru": "Японская версия — неофициальное название оснований Butterfly японского производства, якобы лучших, чем продаваемые за пределами Японии. Butterfly называет такие утверждения полностью ложными: всё японского производства делает завод Butterfly TEC в Токородзаве, и покупатели во всём мире получают одни и те же товары."
+      },
+      "href": "/blog/versii-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/news/detail/20240514-2.html"
+      ]
+    },
+    {
+      "slug": "authenticity",
+      "cat": "blades",
+      "term": {
+        "ua": "Оригінальна основа Butterfly",
+        "ru": "Оригинальное основание Butterfly"
+      },
+      "aka": {
+        "ua": [
+          "як відрізнити підробку",
+          "підробка Butterfly",
+          "fake Viscaria",
+          "перевірка оригінальності"
+        ],
+        "ru": [
+          "как отличить подделку",
+          "подделка Butterfly",
+          "fake Viscaria",
+          "проверка оригинальности"
+        ]
+      },
+      "def": {
+        "ua": "Оригінальна основа Butterfly — справжній виріб, а не підробка. За Butterfly, підробку видають грубий друк на лопаті, інший шрифт серійного номера, знебарвлена чи грубо зроблена табличка з логотипом, перекошена табличка на торці ручки. Butterfly куплені товари не перевіряє й радить авторизованих продавців.",
+        "ru": "Оригинальное основание Butterfly — подлинное изделие, а не подделка. По данным Butterfly, подделку выдают грубая печать на лопасти, другой шрифт серийного номера, выцветшая или грубая табличка с логотипом, перекошенная табличка на торце ручки. Butterfly купленные товары не проверяет и советует авторизованных продавцов."
+      },
+      "href": "/blog/versii-osnov-butterfly",
+      "sources": [
+        "https://www.butterfly-global.com/en/news/detail/20240514-1.html"
+      ]
+    }
+  ]
+}

@@ -656,9 +656,30 @@ export function itemListJsonLd(opts: {
   url: string;
   name: string;
   items: { url: string; name: string; price?: number; inStock?: boolean; image?: string }[];
+  /**
+   * ⚠️ Тип елементів. За замовчуванням Product (лістинги каталогу). Для списку гравців —
+   * "Person": інакше люди потрапляли в розмітку як товари без ціни, і Search Console
+   * рахував би їх у звіті «Фрагменти товарів» як недійсні елементи.
+   */
+  itemType?: "Product" | "Person";
 }) {
-  const { url, name, items } = opts;
+  const { url, name, items, itemType = "Product" } = opts;
   if (items.length === 0) return null;
+  if (itemType === "Person") {
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "@id": itemListId(url),
+      name,
+      url,
+      numberOfItems: items.length,
+      itemListElement: items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: { "@type": "Person", "@id": `${it.url}#person`, name: it.name, url: it.url },
+      })),
+    };
+  }
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -689,6 +710,41 @@ export function itemListJsonLd(opts: {
             }
           : {}),
       },
+    })),
+  };
+}
+
+/**
+ * Словник (/slovnyk): DefinedTermSet + DefinedTerm на кожен термін. @id терміна — URL сторінки
+ * з якорем (#slug), тож на нього посилаються статті й асистенти, а розмітка збігається з видимим
+ * текстом (визначення на сторінці те саме, що в description).
+ */
+export function definedTermSetJsonLd(opts: {
+  url: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+  terms: { slug: string; name: string; alternateName: string[]; description: string }[];
+}) {
+  const { url, name, description, inLanguage, terms } = opts;
+  const setId = `${url}#set`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": setId,
+    name,
+    description,
+    url,
+    inLanguage,
+    publisher: ref(orgId()),
+    hasDefinedTerm: terms.map((t) => ({
+      "@type": "DefinedTerm",
+      "@id": `${url}#${t.slug}`,
+      name: t.name,
+      ...(t.alternateName.length ? { alternateName: t.alternateName } : {}),
+      description: t.description,
+      url: `${url}#${t.slug}`,
+      inDefinedTermSet: ref(setId),
     })),
   };
 }

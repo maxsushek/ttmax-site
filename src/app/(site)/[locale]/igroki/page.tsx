@@ -64,6 +64,7 @@ export default async function PlayersIndex({ params }: { params: Promise<{ local
     url: `${siteConfig.url}/${locale}/igroki`,
     name: t.h1,
     items: profiles.map((p) => ({ name: PLAYERS[p.slug].name[locale], url: `${siteConfig.url}/${locale}/igroki/${p.slug}` })),
+    itemType: "Person",
   });
 
   return (

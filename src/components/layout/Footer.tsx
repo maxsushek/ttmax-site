@@ -147,6 +147,7 @@ export function Footer({
   const brandLinks: FootLink[] = [
     { label: "Butterfly", href: `/${locale}/butterfly` },
     { label: locale === "ua" ? "Гравці Butterfly" : "Игроки Butterfly", href: `/${locale}/igroki` },
+    { label: locale === "ua" ? "Словник настільного тенісу" : "Словарь настольного тенниса", href: `/${locale}/slovnyk` },
   ];
   // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
   // ⚠️ ПОРЯДОК = m.infoLinks. «Блог» доданий другим: статей уже 5, вони збирають інфо-трафік
