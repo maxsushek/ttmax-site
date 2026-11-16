@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -11,6 +11,7 @@ import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
+import { useDialogFocus } from "@/components/ui/useDialogFocus";
 
 export function MobileMenu({
   open,
@@ -27,6 +28,8 @@ export function MobileMenu({
 }) {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const cart = useCart();
+  const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, panelRef);
 
   // Lock scroll
   useEffect(() => {
@@ -60,12 +63,19 @@ export function MobileMenu({
         aria-hidden="true"
       />
 
-      <aside
+      {/* ⚠️ НАВІЩО <div>, а не <aside>: role="dialog" на <aside> заборонений ARIA in HTML
+          (axe aria-allowed-role) — через це PageSpeed валив аудит «Дерево доступності»
+          в категорії Agentic Browsing. `inert` на закритій панелі прибирає її з дерева
+          доступності й табуляції: інакше «модальне вікно» існує на сторінці завжди. */}
+      <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu"
+        aria-label={messages.common.menu}
+        tabIndex={-1}
+        inert={!open}
         className={cn(
-          "fixed bottom-0 right-0 top-0 z-[800] flex w-[min(320px,85vw)] flex-col overflow-y-auto",
+          "fixed bottom-0 right-0 top-0 z-[800] flex w-[min(320px,85vw)] flex-col overflow-y-auto outline-none",
           "border-l border-border-subtle bg-[#0A0C12] transition-transform duration-[380ms] ease-[cubic-bezier(0.23,1,0.32,1)] lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
@@ -82,7 +92,7 @@ export function MobileMenu({
           </button>
         </div>
 
-        <nav aria-label="Mobile" className="flex-1 py-2">
+        <nav aria-label={messages.common.menu} className="flex-1 py-2">
           {navigation.map((link) => {
             const label = messages.nav[link.key as keyof Messages["nav"]];
             const isActive = activeKey === link.key;
@@ -118,7 +128,7 @@ export function MobileMenu({
                         type="button"
                         onClick={() => setActiveKey(isActive ? null : link.key)}
                         aria-expanded={isActive}
-                        aria-label={isActive ? "Згорнути" : "Розгорнути"}
+                        aria-label={`${isActive ? messages.common.collapse : messages.common.expand}: ${label}`}
                         className="flex items-center border-l border-white/[0.06] px-4 transition-colors hover:bg-white/[0.03]"
                       >
                         <span
@@ -183,7 +193,7 @@ export function MobileMenu({
         </nav>
 
         <div className="flex items-center justify-between border-t border-border-subtle px-6 py-4">
-          <span className="font-body text-xs text-ink-dim">Language</span>
+          <span className="font-body text-xs text-ink-dim">{messages.common.language}</span>
           <LocaleSwitcher currentLocale={locale} />
         </div>
 
@@ -203,7 +213,7 @@ export function MobileMenu({
             {cart.count > 0 ? ` (${cart.count})` : ""}
           </Button>
         </div>
-      </aside>
+      </div>
     </>
   );
 }

@@ -132,7 +132,7 @@ export function Header({
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
-              aria-label="Menu"
+              aria-label={messages.common.menu}
               className={cn(
                 "flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-xl border border-border xl:hidden",
                 scrolled ? "bg-white/[0.07]" : "bg-white/10",

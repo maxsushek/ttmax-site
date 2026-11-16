@@ -266,5 +266,9 @@ export const ru: Messages = {
     open: "Открыть",
     close: "Закрыть",
     loading: "Загрузка…",
+    menu: "Меню",
+    expand: "Развернуть",
+    collapse: "Свернуть",
+    language: "Язык",
   },
 };

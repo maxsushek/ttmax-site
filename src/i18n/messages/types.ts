@@ -222,5 +222,9 @@ export type Messages = {
     open: string;
     close: string;
     loading: string;
+    menu: string;
+    expand: string;
+    collapse: string;
+    language: string;
   };
 };

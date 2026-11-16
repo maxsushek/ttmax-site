@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "./CartProvider";
 import { Button } from "@/components/ui/Button";
 import { formatPrice } from "@/utils/format";
@@ -15,6 +15,7 @@ import type { Messages } from "@/i18n/messages/types";
 import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
+import { useDialogFocus } from "@/components/ui/useDialogFocus";
 
 type Props = {
   messages: Messages;
@@ -36,6 +37,9 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
   }, []);
 
   const m = messages.cart;
+
+  const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(cart.isOpen, panelRef, { onEscape: cart.close });
 
   const goCheckout = () => {
     trackEvent({
@@ -59,12 +63,17 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
       />
 
       {/* Drawer */}
-      <aside
+      {/* ⚠️ НАВІЩО <div> + inert: див. коментар у layout/MobileMenu.tsx (ARIA: role="dialog"
+          не можна ставити на <aside>; закрита шухляда не має бути в дереві доступності). */}
+      <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={m.title}
+        tabIndex={-1}
+        inert={!cart.isOpen}
         className={cn(
-          "fixed bottom-0 right-0 top-0 z-[810] flex w-full max-w-[420px] flex-col",
+          "fixed bottom-0 right-0 top-0 z-[810] flex w-full max-w-[420px] flex-col outline-none",
           "border-l border-border-subtle bg-[#0A0C12]",
           "transition-transform duration-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)]",
           cart.isOpen ? "translate-x-0" : "translate-x-full",
@@ -287,7 +296,7 @@ export function CartDrawer({ messages, locale, logoUrl }: Props) {
             </div>
           </div>
         )}
-      </aside>
+      </div>
 
       {/* Checkout Modal */}
       {checkoutOpen && (

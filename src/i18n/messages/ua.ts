@@ -285,5 +285,9 @@ export const ua: Messages = {
     open: "Відкрити",
     close: "Закрити",
     loading: "Завантаження…",
+    menu: "Меню",
+    expand: "Розгорнути",
+    collapse: "Згорнути",
+    language: "Мова",
   },
 };

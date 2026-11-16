@@ -12,6 +12,7 @@ import { type Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { ArrowRight } from "@/components/ui/ArrowRight";
+import { useDialogFocus } from "@/components/ui/useDialogFocus";
 
 // Той самий валідатор укр. номера (з кодом оператора), що й у чекауті та на бекенді (/api/leads).
 import { UA_PHONE } from "@/utils/validators";
@@ -157,7 +158,12 @@ export function QuickOrder({
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [phoneErr, setPhoneErr] = useState(false);
   const phoneRef = useRef<HTMLInputElement>(null);
+  // Tab по колу в межах вікна + повернення фокуса на кнопку після закриття.
+  // autoFocus вимкнено: фокус на поле телефону ставить ефект нижче.
+  const dialogRef = useRef<HTMLDivElement>(null);
   const startedRef = useRef(false);
+
+  useDialogFocus(open, dialogRef, { autoFocus: false });
 
   useEffect(() => {
     if (!open) return;
@@ -258,6 +264,7 @@ export function QuickOrder({
         // ⚠️ z-[900], а не z-[100]: з кошика вікно відкривається поверх шухляди кошика (z-[810]),
         // інакше воно опинилося б під нею і кнопка «1 клік» нічого б не показувала.
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={t.title}
