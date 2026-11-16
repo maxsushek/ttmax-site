@@ -173,7 +173,7 @@ export function buildLlmsIndex(opts: {
       "",
       "## Словник настільного тенісу",
       "",
-      `- [Словник: ${GLOSSARY.length} термінів](${url("/ua/slovnyk")}) — правила ITTF, удари, обертання, накладки й основи; у кожного терміна свій якір (#slug). Повний текст — ${url("/llms/slovnyk.txt")}`,
+      `- [Словник: ${plural(GLOSSARY.length, "термін", "терміни", "термінів")}](${url("/ua/slovnyk")}) — правила ITTF, удари, обертання, накладки й основи; у кожного терміна свій якір (#slug). Повний текст — ${url("/llms/slovnyk.txt")}`,
     );
   }
 
@@ -331,7 +331,7 @@ export function llmsParts(opts: Pick<LlmsOpts, "media" | "overrides">): LlmsPart
   parts.push({ slug: "gaidy", title: "Як обрати: гайди підкатегорій", note: "«Коротко» й FAQ хабів (основи ALC/ZLC, шипи, клей тощо)" });
   parts.push({ slug: "dovidnyk", title: "Довідник: статті блогу", note: "«Коротко» й FAQ кожної статті" });
   if (allProfiles().length > 0) parts.push({ slug: "gravtsi", title: "Гравці: на чому грають", note: "інвентар за даними Butterfly з датою, титули" });
-  if (GLOSSARY.length > 0) parts.push({ slug: "slovnyk", title: "Словник настільного тенісу", note: `${GLOSSARY.length} термінів із визначеннями` });
+  if (GLOSSARY.length > 0) parts.push({ slug: "slovnyk", title: "Словник настільного тенісу", note: `${plural(GLOSSARY.length, "термін", "терміни", "термінів")} із визначеннями` });
   return parts;
 }
 

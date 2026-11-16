@@ -17,7 +17,7 @@ const T = {
   ua: {
     title: "Словник настільного тенісу: терміни й визначення | TTMAX",
     description:
-      "📖 Словник настільного тенісу: {n} термінів — правила ITTF, удари, обертання, накладки й основи (ALC, ZLC, тензор, OX). Коротко, з посиланнями на гайди.",
+      "📖 Словник настільного тенісу: {n} — правила ITTF, удари, обертання, накладки й основи (ALC, ZLC, тензор, OX). Коротко, з посиланнями на гайди.",
     h1: "Словник настільного тенісу",
     intro:
       "Короткі визначення термінів настільного тенісу — від правил ITTF і назв ударів до матеріалів основ і типів накладок. Кожен термін має своє посилання (якір), а поруч — стаття чи розділ каталогу, де тема розібрана докладно.",
@@ -26,12 +26,11 @@ const T = {
     more: "Докладніше",
     aka: "Також",
     updated: "Оновлено",
-    terms: "термінів",
   },
   ru: {
     title: "Словарь настольного тенниса: термины и определения | TTMAX",
     description:
-      "📖 Словарь настольного тенниса: {n} терминов — правила ITTF, удары, вращение, накладки и основания (ALC, ZLC, тензор, OX). Коротко, со ссылками на гайды.",
+      "📖 Словарь настольного тенниса: {n} — правила ITTF, удары, вращение, накладки и основания (ALC, ZLC, тензор, OX). Коротко, со ссылками на гайды.",
     h1: "Словарь настольного тенниса",
     intro:
       "Короткие определения терминов настольного тенниса — от правил ITTF и названий ударов до материалов оснований и типов накладок. У каждого термина своя ссылка (якорь), а рядом — статья или раздел каталога, где тема разобрана подробно.",
@@ -40,9 +39,17 @@ const T = {
     more: "Подробнее",
     aka: "Также",
     updated: "Обновлено",
-    terms: "терминов",
   },
 } satisfies Record<Locale, Record<string, string>>;
+
+/** «162 терміни» / «162 термина» — число разом зі словом у правильній формі. */
+function termsCount(n: number, locale: Locale): string {
+  const forms = locale === "ua" ? ["термін", "терміни", "термінів"] : ["термин", "термина", "терминов"];
+  const m10 = n % 10;
+  const m100 = n % 100;
+  const f = m10 === 1 && m100 !== 11 ? 0 : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 1 : 2;
+  return `${n} ${forms[f]}`;
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: l } = await params;
@@ -51,7 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale: l,
     pathname: "/slovnyk",
     title: T[l].title,
-    description: T[l].description.replace("{n}", String(GLOSSARY.length)),
+    description: T[l].description.replace("{n}", termsCount(GLOSSARY.length, l)),
   });
 }
 
@@ -99,7 +106,7 @@ export default async function GlossaryPage({ params }: { params: Promise<{ local
         <h1 className="mt-3 font-display text-display-md font-black uppercase">{t.h1}</h1>
         <p className="mt-4 max-w-3xl font-body text-[15px] leading-relaxed text-ink-muted">{t.intro}</p>
         <p className="mt-2 font-body text-[12px] text-ink-dim">
-          {GLOSSARY.length} {t.terms} · {t.updated} {fmtDate(GLOSSARY_CHECKED)}
+          {termsCount(GLOSSARY.length, locale)} · {t.updated} {fmtDate(GLOSSARY_CHECKED)}
         </p>
 
         {/* Зміст розділів: на телефоні — горизонтальні «чіпи», що переносяться. */}
