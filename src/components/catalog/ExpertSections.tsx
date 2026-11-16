@@ -3,6 +3,7 @@
 // порівняння → FAQ → готова ракетка. Серверний компонент, без клієнтського JS,
 // mobile-first, високий контраст тексту на темному тлі (читабельність/WCAG).
 import Link from "next/link";
+import { createGlossaryLinker } from "@/lib/glossary/autolink";
 import type { Locale } from "@/i18n/config";
 import { R, type ExpertEntry } from "@/data/catalog/expert";
 import { getProductBySlug } from "@/data/catalog";
@@ -123,6 +124,8 @@ export function ExpertSections({
   const h2 = "font-display text-lg font-bold uppercase tracking-[0.05em] text-ink sm:text-xl";
   const h3 = "mb-1.5 font-display text-[15px] font-bold uppercase tracking-[0.04em] text-ink sm:text-base";
 
+  // Автопосилання на словник у розділі «Опис»: до 5 термінів, кожен один раз.
+  const glossary = createGlossaryLinker(locale, { max: 5 });
   return (
     <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-12">
       {/* 1 · Короткий вердикт */}
@@ -145,7 +148,7 @@ export function ExpertSections({
           {entry.descriptionSections.map((s, i) => (
             <div key={i}>
               <h3 className={h3}>{s.title[locale]}</h3>
-              <p className="font-body text-[15px] leading-[1.75] text-white/80">{s.body[locale]}</p>
+              <p className="font-body text-[15px] leading-[1.75] text-white/80">{glossary(s.body[locale], `d${i}`)}</p>
             </div>
           ))}
           {entry.features.length > 0 && (

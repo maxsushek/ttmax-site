@@ -1,0 +1,1665 @@
+{
+ "decisions": [
+  {
+   "slug": "spring-sponge-x",
+   "accepted": true,
+   "why": "Отдельного h2 или FAQ «что такое Spring Sponge X» нет ни в одной статье и ни в одном хабе. В zyre-03-vs-dignics-tenergy (h2 «Чотири покоління за 28 років») губке отведён один абзац; в tenergy-chy-dignics и хабе /nakladki/dignics она упоминается как свойство серии. Материала хватает из официальных страниц: 14 % / 3 % / 3 %, 40° против 36°, восемь накладок из раздела Spring Sponge X на butterfly-global (включая шипы Bugller). Риск умеренный: статья zyre-03-vs-dignics-tenergy содержит «Spring Sponge» в H1 — из её абзаца про Spring Sponge X нужна ссылка на эту страницу. После проверки: страница spring-sponge отклонена, так что это единственная страница словаря про губки семейства Spring Sponge — она же объясняет отличие от Spring Sponge первого поколения."
+  },
+  {
+   "slug": "spring-sponge",
+   "accepted": false,
+   "why": "Отклонено при проверке. Термин стоит в H1 статьи zyre-03-vs-dignics-tenergy («Як влаштовані накладки Butterfly: від Spring Sponge до Ricosheet»), а её раздел «Чотири покоління за 28 років» уже даёт официальное определение (витая пружина, Tenergy 05, 2008) и сравнение со Spring Sponge X; модели Tenergy с твёрдостью губки перечислены в tablytsia-nakladok-butterfly, коммерческий запрос закрывает хаб /nakladki/tenergy. Вторая причина — соседняя страница spring-sponge-x: по запросу «spring sponge» конкурировали бы сразу три URL (две страницы словаря и статья), причём основные факты (14 % / 3 % / 3 %, Tenergy 05 — 2008, Dignics 05 — 2019, клей Free Chack вместо Chack Sheet) повторялись бы на обеих страницах словаря. Единственное, чего нет в статье, — число накладок раздела Spring Sponge (11, губка 32–43°) — перенесено одним предложением на страницу spring-sponge-x. Термин остаётся в словаре с короткой дефиницией и ссылкой на /nakladki/tenergy. Сверенный с источниками текст страницы сохранён в .work/glossary2/dropped/spring-sponge.page.json."
+  },
+  {
+   "slug": "high-tension",
+   "accepted": true,
+   "why": "Запрос «тензор / тензорные накладки» принадлежит статье lypki-chy-tenzorni-nakladky, но фирменный термин High Tension нигде не вынесен в h2 или FAQ: в zyre-03-vs-dignics-tenergy — один абзац, в хабе /nakladki/korotki-shypy — пункт «High Tension чи класика» про три модели. Страница строго про термин Butterfly: официальное определение, Bryce 1997, 22 накладки из 36 с этой меткой, три типа, модели без неё; на статью про тензоры стоит ссылка. Пограничный случай: если страницу начнут показывать по «тензорные накладки», её стоит свернуть в статью."
+  },
+  {
+   "slug": "larc",
+   "accepted": true,
+   "why": "LARC в статьях только упоминается: в yak-hraty-proty-shypiv (h2 про типы шипов и h2 «Чи легальні шипи…» — про «запрещённые шипы», а не про сам список) и в FAQ yak-hraty-shypamy; h2 «Інвентар: ракетка і м'яч» в pravyla-nastilnogo-tenisu списка не объясняет. Отдельной статьи, h2 или хаба нет. Материала много и он не дублируется: пункт 3.2.1.3, критерии T4, маркировка (логотип 10 мм, номер 5–6 цифр), ежедневное обновление по T9 2024. Пересечение с термином rubber-rules из группы правил — если тот получит страницу, развести: там правило 2.4.3, здесь список и маркировка. После проверки: частота выхода списка дана по трём документам (T4 2017 — дважды в год, M4 2022 — раз в квартал, T9 2024 — ежедневно); критерии шипов в M4 2022 те же, что в T4 2017 (10–30 на см², 2,00 мм, 1,10, 0,89). Пять строк таблицы (плотность, слой резины, высота к диаметру, трение, общая толщина) повторяют таблицу h2 «Чи легальні шипи…» статьи yak-hraty-proty-shypiv — запрос у страниц разный («LARC / список ITTF» против «запрещённые шипы»), но со статьи нужна ссылка на страницу."
+  },
+  {
+   "slug": "booster",
+   "accepted": true,
+   "why": "В статьях бустеры упомянуты мимоходом: одна фраза в h2 «Яким клеєм клеїти накладку» и одна в «Типові помилки при поклейці» (yak-nakleity-nakladku), строка таблицы правил в yak-vybraty-raketku («2.4.7 Обробка»). Ни h2, ни FAQ «что такое бустер» нет. Содержание — из правил 2.4.7, регламента 3.4.2.2 / 3.2.4 и T9 2024 (что измеряет контроль, санкции до CHF 10 000). Внимание: в глоссарии есть термин rubber-treatment-ban (группа правил) о том же запрете — страницу должен получить только один из двух; по спросу это «бустер»."
+  },
+  {
+   "slug": "speed-glue",
+   "accepted": true,
+   "why": "Скоростной клей в статьях — по одной фразе (yak-nakleity-nakladku, zyre-03-vs-dignics-tenergy); h2, FAQ и хаба нет, а хаб /aksessuary/klei продаёт водные клеи. Страница про историю и запрет: механизм, хронология 1970-е → 1995 → 2004 → 01.09.2008, VOC-тест 3,0 ppm по T9 2024, регламент 3.2.4.1. Ограничение: исторические даты взяты из английской Википедии (вторичный источник, в тексте это оговорено); официальный ittf.com отдаёт 403, поэтому первичного документа ITTF о дате 01.09.2008 открыть не удалось."
+  },
+  {
+   "slug": "water-based-glue",
+   "accepted": false,
+   "why": "Отклонено: запрос закрыт статьёй yak-nakleity-nakladku — h2 «Яким клеєм клеїти накладку» (с таблицей клеёв) и FAQ «Яким клеєм клеїти накладку на основу?», «Скільки сохне клей Free Chack?», а коммерческий запрос «клей для накладок» — хабом /aksessuary/klei. Отдельная страница спорила бы сразу с двумя."
+  },
+  {
+   "slug": "stability-variation",
+   "accepted": false,
+   "why": "Отклонено: в yak-hraty-shypamy есть h2 «Які довгі шипи вибрати: стабільність проти варіативності» — с определением обоих индексов и числами всех моделей; то же в таблице yak-hraty-proty-shypiv и в FAQ «Чому для довгих шипів немає швидкості й обертання?» (tablytsia-nakladok-butterfly). Плюс хаб /nakladki/dovgi-shypy. Новых фактов для страницы нет."
+  },
+  {
+   "slug": "max-thickness",
+   "accepted": false,
+   "why": "Отклонено: в статье tovshchyna-hubky-nakladky есть отдельный h2 «MAX — це не окрема товщина», тема толщины целиком принадлежит этой статье."
+  },
+  {
+   "slug": "medium-pips",
+   "accepted": false,
+   "why": "Отклонено по двум причинам. Термин назван в h2 «Які бувають шипи: короткі, середні, довгі, OX і анти» статьи yak-hraty-proty-shypiv, где ему отведены абзац и строка таблицы. И писать не из чего: официальной категории нет ни в LARC (только In / Anti / Out / Long), ни у Butterfly, моделей такого класса в каталоге нет — 180 слов по источникам не набирается. Граница 0,89 описана на принятой странице larc."
+  }
+ ],
+ "pages": [
+  {
+   "slug": "spring-sponge-x",
+   "page": {
+    "metaTitle": {
+     "ua": "Spring Sponge X — що це за губка Butterfly | TTMAX",
+     "ru": "Spring Sponge X — что это за губка Butterfly | TTMAX"
+    },
+    "metaDescription": {
+     "ua": "🧽 Spring Sponge X — губка Butterfly з 2019 року: стискається на 14 % легше й пружинить на 3 % краще за Spring Sponge. Стоїть у 8 накладках, як-от Dignics.",
+     "ru": "🧽 Spring Sponge X — губка Butterfly с 2019 года: сжимается на 14 % легче и пружинит на 3 % лучше, чем Spring Sponge. Стоит в 8 накладках, включая Dignics."
+    },
+    "h1": {
+     "ua": "Spring Sponge X — що це за губка в накладках Butterfly",
+     "ru": "Spring Sponge X — что это за губка в накладках Butterfly"
+    },
+    "body": {
+     "ua": [
+      "Spring Sponge X — губка накладок Butterfly, наступне покоління після Spring Sponge: уперше вона зʼявилася в Dignics 05 у 2019 році. За описом виробника, вона легше продавлюється при ударі й сильніше відкидає мʼяч, ніж Spring Sponge, дає більше обертання й потужності та важить приблизно на 3 % менше за губку Spring Sponge тієї самої твердості й товщини.",
+      "Butterfly наводить для неї конкретні числа. Проти Spring Sponge ця губка на 14 % легше стискається під мʼячем і на 3 % краще повертає енергію (impact resilience). У Dignics 05, 80 і 64 її твердість — 40°, на чотири градуси більше, ніж у базових Tenergy, але важить така губка, за даними виробника, стільки ж, скільки 36-градусна Spring Sponge. Розробка, за словами Butterfly, тривала девʼять років.",
+      "Чим вона відрізняється від сусідніх термінів. Spring Sponge (2008, серія Tenergy) Butterfly описує як губку, що поєднала сильне стискання під мʼячем із високою пружністю; у Spring Sponge X обидві властивості, за таблицею виробника, ще вищі. Сама Spring Sponge нікуди не зникла: на 16.11.2026 вона стоїть в 11 накладках — десяти Tenergy і Rozena, з губкою від 32° до 43°. High Tension — технологія гуми топшита, а не губки, тому в характеристиках накладок вони стоять поруч: «High Tension, Spring Sponge X». Ricosheet у Zyre 03 — теж про топшит: низькі й густі шипи поверх тієї самої Spring Sponge X, тільки твердішої.",
+      "На сайті Butterfly Global станом на 16.11.2026 у розділі Spring Sponge X вісім накладок. Dignics 05, 80 і 64 мають губку 40°, Glayzer — 38° (сіра Spring Sponge X), Glayzer 09C — 42°, Dignics 09C і Zyre 03 — по 44°. Восьма — Bugller: короткі шипи назовні на губці 42°. Усі вісім Butterfly відносить до High Tension. Товщини губки — 1,9 і 2,1 мм, у Bugller ще й 1,7 мм, а в Zyre 03 — 2,5 і 2,7 мм.",
+      "Кому це потрібно. Butterfly застерігає, що її опис Spring Sponge X стосується загальних властивостей гладких накладок із цією губкою. Glayzer з губкою 38° виробник адресує гравцям ширшого діапазону рівнів, Dignics 05 — тим, хто будує гру на потужному топспіні й контртопспіні біля столу та із середньої дистанції, Zyre 03 — тим, хто хоче домінувати в розіграшах потужними ударами з сильним обертанням. Клеїти накладки зі Spring Sponge X Butterfly радить рідким клеєм Free Chack, а не клейким листом Chack Sheet."
+     ],
+     "ru": [
+      "Spring Sponge X — губка накладок Butterfly, следующее поколение после Spring Sponge: впервые она появилась в Dignics 05 в 2019 году. По описанию производителя, она легче продавливается при ударе и сильнее отбрасывает мяч, чем Spring Sponge, даёт больше вращения и мощности и весит примерно на 3 % меньше губки Spring Sponge той же твёрдости и толщины.",
+      "Butterfly приводит для неё конкретные числа. По сравнению со Spring Sponge эта губка на 14 % легче сжимается под мячом и на 3 % лучше возвращает энергию (impact resilience). В Dignics 05, 80 и 64 её твёрдость — 40°, на четыре градуса больше, чем у базовых Tenergy, но весит такая губка, по данным производителя, столько же, сколько 36-градусная Spring Sponge. Разработка, по словам Butterfly, заняла девять лет.",
+      "Чем она отличается от соседних терминов. Spring Sponge (2008, серия Tenergy) Butterfly описывает как губку, которая соединила сильное сжатие под мячом с высокой упругостью; у Spring Sponge X оба свойства, по таблице производителя, ещё выше. Сама Spring Sponge никуда не исчезла: на 16.11.2026 она стоит в 11 накладках — десяти Tenergy и Rozena, с губкой от 32° до 43°. High Tension — технология резины топшита, а не губки, поэтому в характеристиках накладок они стоят рядом: «High Tension, Spring Sponge X». Ricosheet в Zyre 03 — тоже про топшит: низкие и частые шипы поверх той же Spring Sponge X, только более твёрдой.",
+      "На сайте Butterfly Global на 16.11.2026 в разделе Spring Sponge X восемь накладок. У Dignics 05, 80 и 64 губка 40°, у Glayzer — 38° (серая Spring Sponge X), у Glayzer 09C — 42°, у Dignics 09C и Zyre 03 — по 44°. Восьмая — Bugller: короткие шипы наружу на губке 42°. Все восемь Butterfly относит к High Tension. Толщины губки — 1,9 и 2,1 мм, у Bugller ещё и 1,7 мм, а у Zyre 03 — 2,5 и 2,7 мм.",
+      "Кому это нужно. Butterfly оговаривает, что её описание Spring Sponge X относится к общим свойствам гладких накладок с этой губкой. Glayzer с губкой 38° производитель адресует игрокам более широкого диапазона уровней, Dignics 05 — тем, кто строит игру на мощном топспине и контртопспине у стола и со средней дистанции, Zyre 03 — тем, кто хочет доминировать в розыгрышах мощными ударами с сильным вращением. Клеить накладки со Spring Sponge X Butterfly советует жидким клеем Free Chack, а не клеящим листом Chack Sheet."
+     ]
+    },
+    "facts": {
+     "columns": [
+      {
+       "ua": "Накладка",
+       "ru": "Накладка"
+      },
+      {
+       "ua": "Тип за Butterfly",
+       "ru": "Тип по Butterfly"
+      },
+      {
+       "ua": "Твердість губки",
+       "ru": "Твёрдость губки"
+      },
+      {
+       "ua": "Товщина губки, мм",
+       "ru": "Толщина губки, мм"
+      },
+      {
+       "ua": "Швидкість / обертання / дуга (індекс Butterfly)",
+       "ru": "Скорость / вращение / дуга (индекс Butterfly)"
+      }
+     ],
+     "rows": [
+      [
+       {
+        "ua": "Dignics 05",
+        "ru": "Dignics 05",
+        "href": "/butterfly/nakladki/dignics-05"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "40°",
+        "ru": "40°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "86 / 85 / 88",
+        "ru": "86 / 85 / 88"
+       }
+      ],
+      [
+       {
+        "ua": "Dignics 80",
+        "ru": "Dignics 80",
+        "href": "/butterfly/nakladki/dignics-80"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "40°",
+        "ru": "40°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "88 / 82 / 86",
+        "ru": "88 / 82 / 86"
+       }
+      ],
+      [
+       {
+        "ua": "Dignics 64",
+        "ru": "Dignics 64",
+        "href": "/butterfly/nakladki/dignics-64"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "40°",
+        "ru": "40°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "90 / 79 / 84",
+        "ru": "90 / 79 / 84"
+       }
+      ],
+      [
+       {
+        "ua": "Dignics 09C",
+        "ru": "Dignics 09C",
+        "href": "/butterfly/nakladki/dignics-09c"
+       },
+       {
+        "ua": "High friction High Tension, гладка",
+        "ru": "High friction High Tension, гладкая"
+       },
+       {
+        "ua": "44°",
+        "ru": "44°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "79 / 96 / 96",
+        "ru": "79 / 96 / 96"
+       }
+      ],
+      [
+       {
+        "ua": "Glayzer",
+        "ru": "Glayzer",
+        "href": "/butterfly/nakladki/glayzer"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "38°",
+        "ru": "38°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "81 / 73 / 82",
+        "ru": "81 / 73 / 82"
+       }
+      ],
+      [
+       {
+        "ua": "Glayzer 09C",
+        "ru": "Glayzer 09C",
+        "href": "/butterfly/nakladki/glayzer-09c"
+       },
+       {
+        "ua": "High friction High Tension, гладка",
+        "ru": "High friction High Tension, гладкая"
+       },
+       {
+        "ua": "42°",
+        "ru": "42°"
+       },
+       {
+        "ua": "1,9 · 2,1",
+        "ru": "1,9 · 2,1"
+       },
+       {
+        "ua": "75 / 87 / 95",
+        "ru": "75 / 87 / 95"
+       }
+      ],
+      [
+       {
+        "ua": "Zyre 03",
+        "ru": "Zyre 03",
+        "href": "/butterfly/nakladki/zyre-03"
+       },
+       {
+        "ua": "High Tension, гладка (Ricosheet)",
+        "ru": "High Tension, гладкая (Ricosheet)"
+       },
+       {
+        "ua": "44°",
+        "ru": "44°"
+       },
+       {
+        "ua": "2,5 · 2,7",
+        "ru": "2,5 · 2,7"
+       },
+       {
+        "ua": "88 / 100 / 96",
+        "ru": "88 / 100 / 96"
+       }
+      ],
+      [
+       {
+        "ua": "Bugller",
+        "ru": "Bugller",
+        "href": "/butterfly/nakladki/bugller"
+       },
+       {
+        "ua": "High Tension, шипи назовні",
+        "ru": "High Tension, шипы наружу"
+       },
+       {
+        "ua": "42°",
+        "ru": "42°"
+       },
+       {
+        "ua": "1,7 · 1,9 · 2,1",
+        "ru": "1,7 · 1,9 · 2,1"
+       },
+       {
+        "ua": "53 / 36 / 27 (шкала шипів назовні)",
+        "ru": "53 / 36 / 27 (шкала шипов наружу)"
+       }
+      ]
+     ]
+    },
+    "faq": [
+     {
+      "q": {
+       "ua": "Чим Spring Sponge X відрізняється від Spring Sponge?",
+       "ru": "Чем Spring Sponge X отличается от Spring Sponge?"
+      },
+      "a": {
+       "ua": "За даними Butterfly, Spring Sponge X на 14 % легше стискається під мʼячем, на 3 % краще повертає енергію й приблизно на 3 % легша за Spring Sponge тієї самої твердості й товщини. Перша накладка зі Spring Sponge X — Dignics 05 (2019), зі Spring Sponge — Tenergy 05 (2008).",
+       "ru": "По данным Butterfly, Spring Sponge X на 14 % легче сжимается под мячом, на 3 % лучше возвращает энергию и примерно на 3 % легче Spring Sponge той же твёрдости и толщины. Первая накладка со Spring Sponge X — Dignics 05 (2019), со Spring Sponge — Tenergy 05 (2008)."
+      }
+     },
+     {
+      "q": {
+       "ua": "У яких накладках Butterfly стоїть Spring Sponge X?",
+       "ru": "В каких накладках Butterfly стоит Spring Sponge X?"
+      },
+      "a": {
+       "ua": "На сайті Butterfly Global на 16.11.2026 їх вісім: Dignics 05, Dignics 80, Dignics 64 (губка 40°), Dignics 09C і Zyre 03 (44°), Glayzer (38°), Glayzer 09C (42°) і накладка з короткими шипами Bugller (42°).",
+       "ru": "На сайте Butterfly Global на 16.11.2026 их восемь: Dignics 05, Dignics 80, Dignics 64 (губка 40°), Dignics 09C и Zyre 03 (44°), Glayzer (38°), Glayzer 09C (42°) и накладка с короткими шипами Bugller (42°)."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чи важча накладка зі Spring Sponge X через твердішу губку?",
+       "ru": "Тяжелее ли накладка со Spring Sponge X из-за более твёрдой губки?"
+      },
+      "a": {
+       "ua": "За Butterfly — ні. Зазвичай твердіша губка важча, але 40-градусна Spring Sponge X у Dignics важить стільки ж, скільки 36-градусна Spring Sponge у Tenergy, а за однакової твердості й товщини вона приблизно на 3 % легша.",
+       "ru": "По данным Butterfly — нет. Обычно более твёрдая губка тяжелее, но 40-градусная Spring Sponge X в Dignics весит столько же, сколько 36-градусная Spring Sponge в Tenergy, а при одинаковой твёрдости и толщине она примерно на 3 % легче."
+      }
+     },
+     {
+      "q": {
+       "ua": "Яким клеєм клеїти накладку зі Spring Sponge X?",
+       "ru": "Каким клеем клеить накладку со Spring Sponge X?"
+      },
+      "a": {
+       "ua": "Водним клеєм Butterfly. Виробник прямо пише: для накладок поколінь Spring Sponge і Spring Sponge X — Dignics, Tenergy, Glayzer і Rozena — використовуйте рідкий клей Free Chack, а не клейкий лист Chack Sheet II. Клею дають висохнути щонайменше 10 хвилин, доки він не стане прозорим.",
+       "ru": "Водным клеем Butterfly. Производитель прямо пишет: для накладок поколений Spring Sponge и Spring Sponge X — Dignics, Tenergy, Glayzer и Rozena — используйте жидкий клей Free Chack, а не клеящий лист Chack Sheet II. Клею дают высохнуть минимум 10 минут, пока он не станет прозрачным."
+      }
+     }
+    ],
+    "related": [
+     "spring-sponge",
+     "high-tension",
+     "sponge",
+     "sponge-hardness",
+     "sponge-thickness",
+     "hybrid-rubber"
+    ],
+    "links": [
+     {
+      "label": {
+       "ua": "Як влаштовані накладки Butterfly: від Spring Sponge до Ricosheet",
+       "ru": "Как устроены накладки Butterfly: от Spring Sponge до Ricosheet"
+      },
+      "href": "/blog/zyre-03-vs-dignics-tenergy"
+     },
+     {
+      "label": {
+       "ua": "Tenergy чи Dignics: у чому різниця й за що переплата",
+       "ru": "Tenergy или Dignics: в чём разница и за что переплата"
+      },
+      "href": "/blog/tenergy-chy-dignics"
+     },
+     {
+      "label": {
+       "ua": "Накладки Butterfly Dignics",
+       "ru": "Накладки Butterfly Dignics"
+      },
+      "href": "/nakladki/dignics"
+     },
+     {
+      "label": {
+       "ua": "Накладка Butterfly Dignics 05",
+       "ru": "Накладка Butterfly Dignics 05"
+      },
+      "href": "/butterfly/nakladki/dignics-05"
+     }
+    ],
+    "sources": [
+     {
+      "label": {
+       "ua": "Butterfly Global: технології накладок — High Tension, Spring Sponge, Spring Sponge X, Ricosheet",
+       "ru": "Butterfly Global: технологии накладок — High Tension, Spring Sponge, Spring Sponge X, Ricosheet"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/technology.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Dignics — губка Spring Sponge X (14 %, 3 %, 40°)",
+       "ru": "Butterfly Global: Dignics — губка Spring Sponge X (14 %, 3 %, 40°)"
+      },
+      "url": "https://www.butterfly-global.com/en/product/dignics/sponge.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: накладки зі Spring Sponge X (перелік на 16.11.2026)",
+       "ru": "Butterfly Global: накладки со Spring Sponge X (список на 16.11.2026)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/spring_sponge_x/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: накладки зі Spring Sponge (перелік на 16.11.2026)",
+       "ru": "Butterfly Global: накладки со Spring Sponge (список на 16.11.2026)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/spring_sponge/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: історія компанії — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)",
+       "ru": "Butterfly Global: история компании — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)"
+      },
+      "url": "https://www.butterfly-global.com/en/about/history/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Dignics 05 (код 06040)",
+       "ru": "Butterfly Global: Dignics 05 (код 06040)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/06040.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Glayzer (код 06100)",
+       "ru": "Butterfly Global: Glayzer (код 06100)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/06100.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Zyre 03 (код 06140)",
+       "ru": "Butterfly Global: Zyre 03 (код 06140)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/06140.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Chack Sheet — застереження щодо Spring Sponge і Spring Sponge X",
+       "ru": "Butterfly Global: Chack Sheet — предупреждение о Spring Sponge и Spring Sponge X"
+      },
+      "url": "https://www.butterfly-global.com/en/products/care/chack_sheet.html"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "high-tension",
+   "page": {
+    "metaTitle": {
+     "ua": "High Tension — що це в накладках Butterfly | TTMAX",
+     "ru": "High Tension — что это в накладках Butterfly | TTMAX"
+    },
+    "metaDescription": {
+     "ua": "⚡ High Tension — технологія Butterfly, що додає натяг молекулам гуми; перша така накладка — Bryce, 1997 рік. Сьогодні її мають 22 накладки бренду з 36.",
+     "ru": "⚡ High Tension — технология Butterfly, которая добавляет натяжение молекулам резины; первая такая накладка — Bryce, 1997 год. Сегодня это 22 накладки из 36."
+    },
+    "h1": {
+     "ua": "High Tension — що це за технологія в накладках Butterfly",
+     "ru": "High Tension — что это за технология в накладках Butterfly"
+    },
+    "body": {
+     "ua": [
+      "High Tension — технологія Butterfly для гуми накладки: за офіційним описом, вона підсилює реакцію ігрової поверхні, додаючи натяг самій молекулі гуми: для цього гумові матеріали обробляють спеціальними речовинами. Першою у світі накладкою High Tension Butterfly називає Bryce 1997 року. Гладку накладку цього типу виробник описує як гуму з дуже високою пружністю й тертям.",
+      "High Tension — це позначка типу, а не модель чи серія. На сайті Butterfly Global станом на 16.11.2026 її мають 22 накладки з 36: 17 гладких, дві гладкі з підвищеним тертям — Dignics 09C і Glayzer 09C (High friction High Tension) — і три з шипами назовні: Impartial XS, Impartial XB та Bugller. Решта 14 цієї позначки не мають: класичні Sriver, Sriver EL і Flextra, липка Tackiness Chop, шипи назовні Speedy P.O., Challenger Attack та Orthodox DX, шість накладок із довгими шипами й Super Anti.",
+      "Як High Tension співвідноситься з губками. Це технологія гуми, а Spring Sponge і Spring Sponge X — технології губки, тому в характеристиках вони стоять разом: у Tenergy 05 — «High Tension, Spring Sponge», у Dignics 05 — «High Tension, Spring Sponge X», у Zyre 03 до них додано Ricosheet. Але High Tension буває й без «пружинної» губки: у Roundell, Impartial XS та Impartial XB у графі технологій вказано лише High Tension.",
+      "Різницю видно в індексах Butterfly. Класична Sriver, для якої виробник технологій не вказує, має швидкість 38, обертання 23 і дугу 23. Roundell із самим лише High Tension — 77 / 43 / 58, Tenergy 05 з High Tension і Spring Sponge — 83 / 76 / 79. Числа відносні й порівнюються тільки між накладками Butterfly, а для шипів назовні в бренду окрема шкала.",
+      "Кому це потрібно. Якщо обираєте між Sriver чи Flextra й будь-якою накладкою High Tension, ви обираєте між помірними швидкістю, обертанням і дугою — так Butterfly описує Sriver — і значно вищими індексами. У побуті такі накладки називають тензорними, але на сторінках технологій і типів Butterfly Global цього слова немає. У каталозі TTMAX із серії Bryce, з якої технологія почалася, є Bryce High Speed; у нинішньому списку Butterfly Global цієї моделі немає."
+     ],
+     "ru": [
+      "High Tension — технология Butterfly для резины накладки: по официальному описанию, она усиливает реакцию игровой поверхности, добавляя натяжение самой молекуле резины: для этого резиновые материалы обрабатывают специальными веществами. Первой в мире накладкой High Tension Butterfly называет Bryce 1997 года. Гладкую накладку этого типа производитель описывает как резину с очень высокой упругостью и трением.",
+      "High Tension — это обозначение типа, а не модель и не серия. На сайте Butterfly Global на 16.11.2026 оно есть у 22 накладок из 36: 17 гладких, две гладкие с повышенным трением — Dignics 09C и Glayzer 09C (High friction High Tension) — и три с шипами наружу: Impartial XS, Impartial XB и Bugller. У остальных 14 такого обозначения нет: это классические Sriver, Sriver EL и Flextra, липкая Tackiness Chop, шипы наружу Speedy P.O., Challenger Attack и Orthodox DX, шесть накладок с длинными шипами и Super Anti.",
+      "Как High Tension соотносится с губками. Это технология резины, а Spring Sponge и Spring Sponge X — технологии губки, поэтому в характеристиках они стоят вместе: у Tenergy 05 — «High Tension, Spring Sponge», у Dignics 05 — «High Tension, Spring Sponge X», у Zyre 03 к ним добавлен Ricosheet. Но High Tension бывает и без «пружинной» губки: у Roundell, Impartial XS и Impartial XB в графе технологий указан только High Tension.",
+      "Разницу видно по индексам Butterfly. У классической Sriver, для которой производитель технологий не указывает, скорость 38, вращение 23 и дуга 23. У Roundell с одним только High Tension — 77 / 43 / 58, у Tenergy 05 с High Tension и Spring Sponge — 83 / 76 / 79. Числа относительные и сравниваются только между накладками Butterfly, а для шипов наружу у бренда отдельная шкала.",
+      "Кому это нужно. Если выбираете между Sriver или Flextra и любой накладкой High Tension, вы выбираете между умеренными скоростью, вращением и дугой — так Butterfly описывает Sriver — и заметно более высокими индексами. В обиходе такие накладки называют тензорными, но на страницах технологий и типов Butterfly Global этого слова нет. В каталоге TTMAX из серии Bryce, с которой технология началась, есть Bryce High Speed; в нынешнем списке Butterfly Global этой модели нет."
+     ]
+    },
+    "facts": {
+     "columns": [
+      {
+       "ua": "Накладка",
+       "ru": "Накладка"
+      },
+      {
+       "ua": "Тип за Butterfly",
+       "ru": "Тип по Butterfly"
+      },
+      {
+       "ua": "Технології",
+       "ru": "Технологии"
+      },
+      {
+       "ua": "Твердість губки",
+       "ru": "Твёрдость губки"
+      },
+      {
+       "ua": "Швидкість / обертання / дуга (індекс Butterfly)",
+       "ru": "Скорость / вращение / дуга (индекс Butterfly)"
+      }
+     ],
+     "rows": [
+      [
+       {
+        "ua": "Zyre 03",
+        "ru": "Zyre 03",
+        "href": "/butterfly/nakladki/zyre-03"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension, Spring Sponge X, Ricosheet",
+        "ru": "High Tension, Spring Sponge X, Ricosheet"
+       },
+       {
+        "ua": "44°",
+        "ru": "44°"
+       },
+       {
+        "ua": "88 / 100 / 96",
+        "ru": "88 / 100 / 96"
+       }
+      ],
+      [
+       {
+        "ua": "Dignics 05",
+        "ru": "Dignics 05",
+        "href": "/butterfly/nakladki/dignics-05"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension, Spring Sponge X",
+        "ru": "High Tension, Spring Sponge X"
+       },
+       {
+        "ua": "40°",
+        "ru": "40°"
+       },
+       {
+        "ua": "86 / 85 / 88",
+        "ru": "86 / 85 / 88"
+       }
+      ],
+      [
+       {
+        "ua": "Dignics 09C",
+        "ru": "Dignics 09C",
+        "href": "/butterfly/nakladki/dignics-09c"
+       },
+       {
+        "ua": "High friction High Tension, гладка",
+        "ru": "High friction High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension, Spring Sponge X",
+        "ru": "High Tension, Spring Sponge X"
+       },
+       {
+        "ua": "44°",
+        "ru": "44°"
+       },
+       {
+        "ua": "79 / 96 / 96",
+        "ru": "79 / 96 / 96"
+       }
+      ],
+      [
+       {
+        "ua": "Tenergy 05",
+        "ru": "Tenergy 05",
+        "href": "/butterfly/nakladki/tenergy-05"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension, Spring Sponge",
+        "ru": "High Tension, Spring Sponge"
+       },
+       {
+        "ua": "36°",
+        "ru": "36°"
+       },
+       {
+        "ua": "83 / 76 / 79",
+        "ru": "83 / 76 / 79"
+       }
+      ],
+      [
+       {
+        "ua": "Rozena",
+        "ru": "Rozena",
+        "href": "/butterfly/nakladki/rozena"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension, Spring Sponge",
+        "ru": "High Tension, Spring Sponge"
+       },
+       {
+        "ua": "35°",
+        "ru": "35°"
+       },
+       {
+        "ua": "83 / 70 / 75",
+        "ru": "83 / 70 / 75"
+       }
+      ],
+      [
+       {
+        "ua": "Roundell",
+        "ru": "Roundell",
+        "href": "/butterfly/nakladki/roundell"
+       },
+       {
+        "ua": "High Tension, гладка",
+        "ru": "High Tension, гладкая"
+       },
+       {
+        "ua": "High Tension",
+        "ru": "High Tension"
+       },
+       {
+        "ua": "35°",
+        "ru": "35°"
+       },
+       {
+        "ua": "77 / 43 / 58",
+        "ru": "77 / 43 / 58"
+       }
+      ],
+      [
+       {
+        "ua": "Impartial XS",
+        "ru": "Impartial XS",
+        "href": "/butterfly/nakladki/impartial-xs"
+       },
+       {
+        "ua": "High Tension, шипи назовні",
+        "ru": "High Tension, шипы наружу"
+       },
+       {
+        "ua": "High Tension",
+        "ru": "High Tension"
+       },
+       {
+        "ua": "30°",
+        "ru": "30°"
+       },
+       {
+        "ua": "70 / 70 / 70 (шкала шипів назовні)",
+        "ru": "70 / 70 / 70 (шкала шипов наружу)"
+       }
+      ],
+      [
+       {
+        "ua": "Sriver",
+        "ru": "Sriver",
+        "href": "/butterfly/nakladki/sriver"
+       },
+       {
+        "ua": "Гладка, без High Tension",
+        "ru": "Гладкая, без High Tension"
+       },
+       {
+        "ua": "—",
+        "ru": "—"
+       },
+       {
+        "ua": "38°",
+        "ru": "38°"
+       },
+       {
+        "ua": "38 / 23 / 23",
+        "ru": "38 / 23 / 23"
+       }
+      ]
+     ]
+    },
+    "faq": [
+     {
+      "q": {
+       "ua": "High Tension і тензорна накладка — це одне й те саме?",
+       "ru": "High Tension и тензорная накладка — это одно и то же?"
+      },
+      "a": {
+       "ua": "Тензорними в побуті називають накладки, у гумі яких створено внутрішній натяг. У Butterfly такий тип офіційно називається High Tension: технологія додає натяг самій молекулі гуми. Слова «тензор» на сторінках технологій і типів накладок Butterfly Global немає.",
+       "ru": "Тензорными в обиходе называют накладки, в резине которых создано внутреннее натяжение. У Butterfly такой тип официально называется High Tension: технология добавляет натяжение самой молекуле резины. Слова «тензор» на страницах технологий и типов накладок Butterfly Global нет."
+      }
+     },
+     {
+      "q": {
+       "ua": "Які накладки Butterfly не мають High Tension?",
+       "ru": "У каких накладок Butterfly нет High Tension?"
+      },
+      "a": {
+       "ua": "На 16.11.2026 — 14 із 36 накладок на сайті Butterfly Global: Sriver, Sriver EL, Flextra, Tackiness Chop, Speedy P.O., Challenger Attack, Orthodox DX, довгі шипи Feint Long II, Feint Long III, Feint Soft, Feint OX, Ilius S, Ilius B і антиспін Super Anti.",
+       "ru": "На 16.11.2026 — у 14 из 36 накладок на сайте Butterfly Global: Sriver, Sriver EL, Flextra, Tackiness Chop, Speedy P.O., Challenger Attack, Orthodox DX, длинные шипы Feint Long II, Feint Long III, Feint Soft, Feint OX, Ilius S, Ilius B и антиспин Super Anti."
+      }
+     },
+     {
+      "q": {
+       "ua": "Яка накладка High Tension була першою?",
+       "ru": "Какая накладка High Tension была первой?"
+      },
+      "a": {
+       "ua": "Bryce 1997 року — Butterfly називає її першою у світі накладкою High Tension. Далі в хронології бренду — Tenergy 05 (2008, перша зі Spring Sponge), Dignics 05 (2019, перша зі Spring Sponge X) і Zyre 03 (2025, Ricosheet).",
+       "ru": "Bryce 1997 года — Butterfly называет её первой в мире накладкой High Tension. Дальше в хронологии бренда — Tenergy 05 (2008, первая со Spring Sponge), Dignics 05 (2019, первая со Spring Sponge X) и Zyre 03 (2025, Ricosheet)."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чи бувають шипи High Tension?",
+       "ru": "Бывают ли шипы High Tension?"
+      },
+      "a": {
+       "ua": "Так, короткі шипи назовні: Impartial XS (70 / 70 / 70, губка 30°), Impartial XB (58 / 47 / 48, губка 30°) і Bugller (53 / 36 / 27, Spring Sponge X 42°) — індекси за шкалою шипів назовні. Довгих шипів High Tension у списку Butterfly Global на 16.11.2026 немає.",
+       "ru": "Да, короткие шипы наружу: Impartial XS (70 / 70 / 70, губка 30°), Impartial XB (58 / 47 / 48, губка 30°) и Bugller (53 / 36 / 27, Spring Sponge X 42°) — индексы по шкале шипов наружу. Длинных шипов High Tension в списке Butterfly Global на 16.11.2026 нет."
+      }
+     }
+    ],
+    "related": [
+     "tensor",
+     "spring-sponge",
+     "spring-sponge-x",
+     "topsheet",
+     "classic-rubber",
+     "hybrid-rubber"
+    ],
+    "links": [
+     {
+      "label": {
+       "ua": "Липкі чи тензорні накладки: у чому різниця насправді",
+       "ru": "Липкие или тензорные накладки: в чём разница на самом деле"
+      },
+      "href": "/blog/lypki-chy-tenzorni-nakladky"
+     },
+     {
+      "label": {
+       "ua": "Таблиця накладок Butterfly: швидкість, обертання й жорсткість губки",
+       "ru": "Таблица накладок Butterfly: скорость, вращение и жёсткость губки"
+      },
+      "href": "/blog/tablytsia-nakladok-butterfly"
+     },
+     {
+      "label": {
+       "ua": "Як влаштовані накладки Butterfly: від Spring Sponge до Ricosheet",
+       "ru": "Как устроены накладки Butterfly: от Spring Sponge до Ricosheet"
+      },
+      "href": "/blog/zyre-03-vs-dignics-tenergy"
+     },
+     {
+      "label": {
+       "ua": "Усі накладки Butterfly в каталозі TTMAX",
+       "ru": "Все накладки Butterfly в каталоге TTMAX"
+      },
+      "href": "/nakladki"
+     }
+    ],
+    "sources": [
+     {
+      "label": {
+       "ua": "Butterfly Global: технології накладок — High Tension, Spring Sponge, Spring Sponge X, Ricosheet",
+       "ru": "Butterfly Global: технологии накладок — High Tension, Spring Sponge, Spring Sponge X, Ricosheet"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/technology.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: типи накладок (High Tension pimples-in, High friction High Tension, pimples-out)",
+       "ru": "Butterfly Global: типы накладок (High Tension pimples-in, High friction High Tension, pimples-out)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/type.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: історія компанії — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)",
+       "ru": "Butterfly Global: история компании — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)"
+      },
+      "url": "https://www.butterfly-global.com/en/about/history/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: накладки High Tension (перелік на 16.11.2026)",
+       "ru": "Butterfly Global: накладки High Tension (список на 16.11.2026)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/high_tension/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: усі накладки (36 моделей на 16.11.2026)",
+       "ru": "Butterfly Global: все накладки (36 моделей на 16.11.2026)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Tenergy 05 (код 05800)",
+       "ru": "Butterfly Global: Tenergy 05 (код 05800)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/05800.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Roundell (код 05860)",
+       "ru": "Butterfly Global: Roundell (код 05860)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/05860.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Sriver (код 05050)",
+       "ru": "Butterfly Global: Sriver (код 05050)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/05050.html"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "larc",
+   "page": {
+    "metaTitle": {
+     "ua": "LARC — що це: список накладок ITTF | TTMAX",
+     "ru": "LARC — что это: список накладок ITTF | TTMAX"
+    },
+    "metaDescription": {
+     "ua": "📋 LARC — список накладок, схвалених ITTF. На турнірах грають лише накладкою з нього; логотип ITTF і назва моделі мають бути видні біля ручки (п. 3.2.1.3).",
+     "ru": "📋 LARC — список накладок, одобренных ITTF. На турнирах играют лишь накладкой из него; логотип ITTF и название модели должны быть видны у ручки (п. 3.2.1.3)."
+    },
+    "h1": {
+     "ua": "LARC — що це за список накладок, схвалених ITTF",
+     "ru": "LARC — что это за список накладок, одобренных ITTF"
+    },
+    "body": {
+     "ua": [
+      "LARC (List of Authorised Racket Coverings) — список накладок, які ITTF допустила до гри. На змаганнях за регламентом ITTF будь-яка накладка — шипи без губки чи сендвіч із губкою, гладкий або шипами назовні, — має бути чинно схваленою, тобто стояти в цьому списку, і наклеєною так, щоб біля ручки чітко читалися логотип ITTF, номер ITTF (якщо він є), назви постачальника й моделі (пункт 3.2.1.3).",
+      "Що перевіряють перед внесенням до списку. Технічний документ ITTF T4 (редакція 2017 року) описує критерії: шипів від 10 до 30 на см², шар шипованої гуми не товщий за 2,0 мм, відношення висоти шипа до його діаметра — не більше 1,10, коефіцієнт тертя шипів назовні об мʼяч — щонайменше 0,50. Схвалення дають топшиту разом із його комбінаціями з губкою, а приблизно раз на десять років накладку тестують повторно.",
+      "У списку чотири типи накладок: In — шипи всередину, тобто гладкі; Anti — теж шипи всередину, позначка на прохання постачальника; Out — шипи назовні; Long — шипи назовні, у яких відношення висоти до діаметра більше за 0,89. Окремих «середніх шипів» у LARC немає. Номер ITTF на нових накладках складається з 5–6 цифр: перші дві-три — номер постачальника, після дефіса три — номер моделі.",
+      "Як часто оновлюється список. За T4 редакції 2017 року LARC виходив двічі на рік — 1 квітня й 1 жовтня; у пізнішому посібнику M4 — уже чотири рази, першого числа кожного кварталу. У документі T9 про контроль ракеток (2024) ITTF пише ще інакше: актуальний список на equipment.ittf.com оновлюється щодня, нові накладки дозволені одразу, а вилучені одразу втрачають допуск. Виняток — накладкою, яка була допущена в перший день турніру, можна дограти його до кінця. Національні асоціації можуть подовжувати термін для своїх змагань.",
+      "Кому це потрібно. Якщо граєте офіційні турніри, перед покупкою рідкісної чи давно знятої моделі звірте її з LARC: під час контролю ракетки звіряють назву постачальника, назву моделі й логотип ITTF на відбитку накладки. Butterfly заявляє, що всі її накладки схвалені ITTF. Основ список не стосується: у пункті 3.2.1 регламенту серед схваленого інвентарю названо стіл, сітку, мʼяч, покриття підлоги й накладки, а для основи правило 2.4.2 задає лише склад."
+     ],
+     "ru": [
+      "LARC (List of Authorised Racket Coverings) — список накладок, которые ITTF допустила к игре. На соревнованиях по регламенту ITTF любая накладка — шипы без губки или сэндвич с губкой, гладкий либо шипами наружу, — должна иметь действующее одобрение, то есть стоять в этом списке, и быть наклеена так, чтобы у ручки чётко читались логотип ITTF, номер ITTF (если он есть), названия поставщика и модели (пункт 3.2.1.3).",
+      "Что проверяют перед внесением в список. Технический документ ITTF T4 (редакция 2017 года) описывает критерии: шипов от 10 до 30 на см², слой шипованной резины не толще 2,0 мм, отношение высоты шипа к его диаметру — не больше 1,10, коэффициент трения шипов наружу о мяч — не меньше 0,50. Одобрение дают топшиту вместе с его комбинациями с губкой, а примерно раз в десять лет накладку тестируют повторно.",
+      "В списке четыре типа накладок: In — шипы внутрь, то есть гладкие; Anti — тоже шипы внутрь, отметка по просьбе поставщика; Out — шипы наружу; Long — шипы наружу, у которых отношение высоты к диаметру больше 0,89. Отдельных «средних шипов» в LARC нет. Номер ITTF на новых накладках состоит из 5–6 цифр: первые две-три — номер поставщика, после дефиса три — номер модели.",
+      "Как часто обновляется список. По T4 в редакции 2017 года LARC выходил дважды в год — 1 апреля и 1 октября; в более позднем руководстве M4 — уже четыре раза, первого числа каждого квартала. В документе T9 о контроле ракеток (2024) ITTF пишет ещё иначе: актуальный список на equipment.ittf.com обновляется ежедневно, новые накладки разрешены сразу, а исключённые сразу теряют допуск. Исключение — накладкой, которая была допущена в первый день турнира, можно доиграть его до конца. Национальные ассоциации могут продлевать срок для своих соревнований.",
+      "Кому это нужно. Если играете официальные турниры, перед покупкой редкой или давно снятой модели сверьте её с LARC: при контроле ракетки сверяют название поставщика, название модели и логотип ITTF на оттиске накладки. Butterfly заявляет, что все её накладки одобрены ITTF. Оснований список не касается: в пункте 3.2.1 регламента среди одобряемого инвентаря названы стол, сетка, мяч, покрытие пола и накладки, а для основания правило 2.4.2 задаёт только состав."
+     ]
+    },
+    "facts": {
+     "columns": [
+      {
+       "ua": "Параметр",
+       "ru": "Параметр"
+      },
+      {
+       "ua": "Вимога",
+       "ru": "Требование"
+      },
+      {
+       "ua": "Документ ITTF",
+       "ru": "Документ ITTF"
+      }
+     ],
+     "rows": [
+      [
+       {
+        "ua": "Логотип ITTF на накладці",
+        "ru": "Логотип ITTF на накладке"
+       },
+       {
+        "ua": "заввишки щонайменше 10 мм, того ж кольору, що й накладка",
+        "ru": "высотой не менее 10 мм, того же цвета, что и накладка"
+       },
+       {
+        "ua": "T4, розділ C",
+        "ru": "T4, раздел C"
+       }
+      ],
+      [
+       {
+        "ua": "Номер ITTF",
+        "ru": "Номер ITTF"
+       },
+       {
+        "ua": "5–6 цифр, заввишки щонайменше 5 мм, поруч із логотипом",
+        "ru": "5–6 цифр, высотой не менее 5 мм, рядом с логотипом"
+       },
+       {
+        "ua": "T4, розділ C",
+        "ru": "T4, раздел C"
+       }
+      ],
+      [
+       {
+        "ua": "Зона маркування",
+        "ru": "Зона маркировки"
+       },
+       {
+        "ua": "не вища за 25 мм; на ракетці — біля ручки",
+        "ru": "не выше 25 мм; на ракетке — у ручки"
+       },
+       {
+        "ua": "T4, розділ C; регламент 3.2.1.3",
+        "ru": "T4, раздел C; регламент 3.2.1.3"
+       }
+      ],
+      [
+       {
+        "ua": "Густота шипів",
+        "ru": "Плотность шипов"
+       },
+       {
+        "ua": "від 10 до 30 на см²",
+        "ru": "от 10 до 30 на см²"
+       },
+       {
+        "ua": "правило 2.4.3.1",
+        "ru": "правило 2.4.3.1"
+       }
+      ],
+      [
+       {
+        "ua": "Шар шипованої гуми",
+        "ru": "Слой шипованной резины"
+       },
+       {
+        "ua": "не товщий за 2,0 мм",
+        "ru": "не толще 2,0 мм"
+       },
+       {
+        "ua": "правило 2.4.3.2; T4, B.3",
+        "ru": "правило 2.4.3.2; T4, B.3"
+       }
+      ],
+      [
+       {
+        "ua": "Висота шипа до діаметра",
+        "ru": "Высота шипа к диаметру"
+       },
+       {
+        "ua": "не більше 1,10; понад 0,89 — тип Long",
+        "ru": "не больше 1,10; больше 0,89 — тип Long"
+       },
+       {
+        "ua": "T4, B.2 і B.4",
+        "ru": "T4, B.2 и B.4"
+       }
+      ],
+      [
+       {
+        "ua": "Тертя шипів назовні",
+        "ru": "Трение шипов наружу"
+       },
+       {
+        "ua": "коефіцієнт щонайменше 0,50",
+        "ru": "коэффициент не менее 0,50"
+       },
+       {
+        "ua": "T4, B.8",
+        "ru": "T4, B.8"
+       }
+      ],
+      [
+       {
+        "ua": "Загальна товщина з клеєм",
+        "ru": "Общая толщина с клеем"
+       },
+       {
+        "ua": "сендвіч — менше 4,05 мм; шипи без губки — менше 2,05 мм",
+        "ru": "сэндвич — меньше 4,05 мм; шипы без губки — меньше 2,05 мм"
+       },
+       {
+        "ua": "правило 2.4.3",
+        "ru": "правило 2.4.3"
+       }
+      ]
+     ]
+    },
+    "faq": [
+     {
+      "q": {
+       "ua": "Де перевірити, чи є накладка в LARC?",
+       "ru": "Где проверить, есть ли накладка в LARC?"
+      },
+      "a": {
+       "ua": "За документом ITTF T9 (2024), актуальний список — на equipment.ittf.com у розділі Racket Coverings; він оновлюється щодня. У PDF-версії є остання сторінка з накладками, допуск яких спливає, — на ній треба звіряти дату.",
+       "ru": "По документу ITTF T9 (2024), актуальный список — на equipment.ittf.com в разделе Racket Coverings; он обновляется ежедневно. В PDF-версии есть последняя страница с накладками, допуск которых истекает, — на ней нужно сверять дату."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чи можна грати накладкою без логотипа ITTF?",
+       "ru": "Можно ли играть накладкой без логотипа ITTF?"
+      },
+      "a": {
+       "ua": "На змаганнях за регламентом ITTF — ні. Пункт 3.2.1.3 вимагає, щоб біля ручки було видно логотип ITTF, назви постачальника й моделі, а номер ITTF — якщо він є. За T9 номер обовʼязковий, коли накладка стоїть у LARC лише з номером.",
+       "ru": "На соревнованиях по регламенту ITTF — нет. Пункт 3.2.1.3 требует, чтобы у ручки были видны логотип ITTF, названия поставщика и модели, а номер ITTF — если он есть. По T9 номер обязателен, когда накладка стоит в LARC только с номером."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чи є в LARC категорія «середні шипи»?",
+       "ru": "Есть ли в LARC категория «средние шипы»?"
+      },
+      "a": {
+       "ua": "Ні. У LARC чотири типи: In, Anti, Out і Long. Шипи назовні потрапляють у Long, коли відношення висоти шипа до діаметра більше за 0,89; дозволений максимум — 1,10. Усе, що не вище за 0,89, — тип Out, хоч би як модель називали в магазинах.",
+       "ru": "Нет. В LARC четыре типа: In, Anti, Out и Long. Шипы наружу попадают в Long, когда отношение высоты шипа к диаметру больше 0,89; разрешённый максимум — 1,10. Всё, что не выше 0,89, — тип Out, как бы модель ни называли в магазинах."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чи вносить ITTF до списку основи?",
+       "ru": "Вносит ли ITTF в список основания?"
+      },
+      "a": {
+       "ua": "Ні, LARC — список саме накладок. Для основи правило 2.4.2 задає склад: щонайменше 85 % товщини — натуральне дерево, а шар, армований волокном, не товщий за 7,5 % загальної товщини або 0,35 мм — залежно від того, що менше.",
+       "ru": "Нет, LARC — список именно накладок. Для основания правило 2.4.2 задаёт состав: не менее 85 % толщины — натуральное дерево, а слой, армированный волокном, не толще 7,5 % общей толщины или 0,35 мм — смотря что меньше."
+      }
+     }
+    ],
+    "related": [
+     "rubber-rules",
+     "rubber-treatment-ban",
+     "pips-out",
+     "long-pips",
+     "anti-spin",
+     "medium-pips"
+    ],
+    "links": [
+     {
+      "label": {
+       "ua": "Як грати проти шипів і які шипи легальні",
+       "ru": "Как играть против шипов и какие шипы легальны"
+      },
+      "href": "/blog/yak-hraty-proty-shypiv"
+     },
+     {
+      "label": {
+       "ua": "Як грати шипами: правила ITTF для гравця з шипами",
+       "ru": "Как играть шипами: правила ITTF для игрока с шипами"
+      },
+      "href": "/blog/yak-hraty-shypamy"
+     },
+     {
+      "label": {
+       "ua": "Правила гри в настільний теніс: подача, рахунок, інвентар",
+       "ru": "Правила настольного тенниса: подача, счёт и инвентарь"
+      },
+      "href": "/blog/pravyla-nastilnogo-tenisu"
+     },
+     {
+      "label": {
+       "ua": "Усі накладки Butterfly в каталозі TTMAX",
+       "ru": "Все накладки Butterfly в каталоге TTMAX"
+      },
+      "href": "/nakladki"
+     }
+    ],
+    "sources": [
+     {
+      "label": {
+       "ua": "ITTF Statutes 2026, розділ 3 — пункти 3.2.1, 3.2.4, 3.4.2 (копія HKTTA)",
+       "ru": "ITTF Statutes 2026, глава 3 — пункты 3.2.1, 3.2.4, 3.4.2 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/2026_Statutes_Chapter3.pdf"
+     },
+     {
+      "label": {
+       "ua": "Правила настільного тенісу 2026–27 (текст ITTF, копія Table Tennis England) — розділ 2.4",
+       "ru": "Правила настольного тенниса 2026–27 (текст ITTF, копия Table Tennis England) — раздел 2.4"
+      },
+      "url": "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T4 «Racket Coverings», редакція 2017 року (копія BTTV)",
+       "ru": "ITTF Technical Leaflet T4 «Racket Coverings», редакция 2017 года (копия BTTV)"
+      },
+      "url": "https://sr.bttv.de/fileadmin/bttv/media/SR/pdf/T4_Racket_Coverings_BOD2017.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Manual M4 «Racket Coverings» — наступник T4, файл датовано вереснем 2022 року (копія BTTV)",
+       "ru": "ITTF Manual M4 «Racket Coverings» — преемник T4, файл датирован сентябрём 2022 года (копия BTTV)"
+      },
+      "url": "https://sr.bttv.de/fileadmin/bttv/media/SR/pdf/2022-09_M4_RC_MANUAL_07.09.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копія HKTTA)",
+       "ru": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/T9%20Racket%20Control%20September%202024%20rev1.pdf"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: показники накладок — «усі накладки Butterfly схвалені ITTF»",
+       "ru": "Butterfly Global: показатели накладок — «все накладки Butterfly одобрены ITTF»"
+      },
+      "url": "https://www.butterfly-global.com/en/products/rubber/performance.html"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "booster",
+   "page": {
+    "metaTitle": {
+     "ua": "Бустер для накладок — що це, чи дозволений | TTMAX",
+     "ru": "Бустер для накладок — что это, разрешён ли | TTMAX"
+    },
+    "metaDescription": {
+     "ua": "🚫 Бустер (тюнер) — рідина, якою обробляють накладку після заводу. Правило ITTF 2.4.7 це забороняє; на турнірах ITTF штраф — до 10 000 франків.",
+     "ru": "🚫 Бустер (тюнер) — жидкость, которой обрабатывают накладку после завода. Правило ITTF 2.4.7 это запрещает; на турнирах ITTF штраф — до 10 000 франков."
+    },
+    "h1": {
+     "ua": "Бустер (тюнер) — що це і чому ITTF його забороняє",
+     "ru": "Бустер (тюнер) — что это и почему ITTF его запрещает"
+    },
+    "body": {
+     "ua": [
+      "Бустером, або тюнером, називають рідину чи спрей, якими накладку обробляють уже після заводу, щоб «оживити» її й підсилити ігрові властивості. На змаганнях за правилами ITTF це заборонено: правило 2.4.7 вимагає грати накладкою без будь-якої фізичної, хімічної чи іншої обробки, а регламент 3.4.2.2 уточнює — без змін ігрових властивостей, тертя, вигляду, кольору, структури чи поверхні й без жодних добавок.",
+      "Чим бустер відрізняється від швидкісного клею. Швидкісний клей містив леткі органічні розчинники й водночас кріпив накладку до основи; бустер нічого не клеїть — це саме обробка. ITTF у документі T9 про контроль ракеток описує послідовність так: спершу незаконним оголосили швидкісне переклеювання, потім бустинг і будь-яку іншу обробку накладок. Звичайний водний клей під цю заборону не підпадає: до клеїв регламент 3.2.4.1 має одну вимогу — без шкідливих летких розчинників.",
+      "Як це перевіряють. За T9, оброблену накладку важко визначити напевно без еталонного зразка, тому на контролі дивляться на вимірювані ознаки: поверхня має бути чистою, без сторонніх речовин; накладка з губкою разом із клеєм — тоншою за 4,05 мм; опуклість — не більше 0,20 мм; леткі органічні сполуки — у межах 3,0 ppm за 20 секунд вимірювання. Документ T4 попереджає, що післязаводська обробка може вивести накладку за дозволені товщину, тертя чи густоту шипів.",
+      "Що загрожує. Ракеткою, яка не пройшла контроль перед матчем, грати не можна — її замінюють другою. Якщо порушення знайшли після матчу, гравця вносять до реєстру порушень, а рефері може додати попередження, штраф до 10 000 швейцарських франків, анулювання результатів чи відсторонення до 12 місяців (T9, розділ 8.3). За чотири провали контролю протягом чотирьох років регламент 3.2.4.3 передбачає відсторонення на 12 місяців.",
+      "Кому це потрібно знати. Тим, хто грає офіційні турніри: за T4, саме гравець відповідає за те, що його накладка відповідає правилам, а перевірити ракетку можна добровільно ще до матчу, без санкцій (3.2.4.2.4). Постачальникам, повʼязаним із забороненими речовинами й обробками, ITTF схвалення накладок не дає. Butterfly на сторінках накладок попереджає, що після модифікації виробу його властивості та якість можуть погіршитися. У каталозі TTMAX бустерів немає — лише водні клеї й засоби догляду Butterfly."
+     ],
+     "ru": [
+      "Бустером, или тюнером, называют жидкость или спрей, которыми накладку обрабатывают уже после завода, чтобы «оживить» её и усилить игровые свойства. На соревнованиях по правилам ITTF это запрещено: правило 2.4.7 требует играть накладкой без какой-либо физической, химической или иной обработки, а регламент 3.4.2.2 уточняет — без изменения игровых свойств, трения, вида, цвета, структуры или поверхности и без каких-либо добавок.",
+      "Чем бустер отличается от скоростного клея. Скоростной клей содержал летучие органические растворители и одновременно крепил накладку к основанию; бустер ничего не клеит — это именно обработка. ITTF в документе T9 о контроле ракеток описывает последовательность так: сначала незаконным объявили скоростную переклейку, затем бустинг и любую другую обработку накладок. Обычный водный клей под этот запрет не подпадает: к клеям у регламента 3.2.4.1 одно требование — без вредных летучих растворителей.",
+      "Как это проверяют. По T9, обработанную накладку трудно определить наверняка без эталонного образца, поэтому на контроле смотрят на измеримые признаки: поверхность должна быть чистой, без посторонних веществ; накладка с губкой вместе с клеем — тоньше 4,05 мм; выпуклость — не больше 0,20 мм; летучие органические соединения — в пределах 3,0 ppm за 20 секунд измерения. Документ T4 предупреждает, что послезаводская обработка может вывести накладку за разрешённые толщину, трение или плотность шипов.",
+      "Чем это грозит. Ракеткой, не прошедшей контроль перед матчем, играть нельзя — её заменяют второй. Если нарушение нашли после матча, игрока вносят в реестр нарушений, а рефери может добавить предупреждение, штраф до 10 000 швейцарских франков, аннулирование результатов или отстранение до 12 месяцев (T9, раздел 8.3). За четыре провала контроля в течение четырёх лет регламент 3.2.4.3 предусматривает отстранение на 12 месяцев.",
+      "Кому это нужно знать. Тем, кто играет официальные турниры: по T4, именно игрок отвечает за то, что его накладка соответствует правилам, а проверить ракетку можно добровольно ещё до матча, без санкций (3.2.4.2.4). Поставщикам, связанным с запрещёнными веществами и обработками, ITTF одобрение накладок не даёт. Butterfly на страницах накладок предупреждает, что после модификации изделия его свойства и качество могут ухудшиться. В каталоге TTMAX бустеров нет — только водные клеи и средства ухода Butterfly."
+     ]
+    },
+    "facts": {
+     "columns": [
+      {
+       "ua": "Що перевіряє контроль ракеток",
+       "ru": "Что проверяет контроль ракеток"
+      },
+      {
+       "ua": "Межа",
+       "ru": "Предел"
+      },
+      {
+       "ua": "Примітка (ITTF T9, 2024)",
+       "ru": "Примечание (ITTF T9, 2024)"
+      }
+     ],
+     "rows": [
+      [
+       {
+        "ua": "Допуск накладки",
+        "ru": "Допуск накладки"
+       },
+       {
+        "ua": "є в чинному LARC",
+        "ru": "есть в действующем LARC"
+       },
+       {
+        "ua": "на накладці — назва постачальника, моделі й логотип ITTF",
+        "ru": "на накладке — название поставщика, модели и логотип ITTF"
+       }
+      ],
+      [
+       {
+        "ua": "Обробка накладки",
+        "ru": "Обработка накладки"
+       },
+       {
+        "ua": "поверхня чиста, без сторонніх речовин",
+        "ru": "поверхность чистая, без посторонних веществ"
+       },
+       {
+        "ua": "без еталонного зразка обробку важко встановити напевно",
+        "ru": "без эталонного образца обработку трудно установить наверняка"
+       }
+      ],
+      [
+       {
+        "ua": "Товщина накладки з губкою",
+        "ru": "Толщина накладки с губкой"
+       },
+       {
+        "ua": "менше 4,05 мм разом із клеєм",
+        "ru": "меньше 4,05 мм вместе с клеем"
+       },
+       {
+        "ua": "середнє з чотирьох вимірів",
+        "ru": "среднее из четырёх измерений"
+       }
+      ],
+      [
+       {
+        "ua": "Товщина шипів без губки",
+        "ru": "Толщина шипов без губки"
+       },
+       {
+        "ua": "менше 2,05 мм разом із клеєм",
+        "ru": "меньше 2,05 мм вместе с клеем"
+       },
+       {
+        "ua": "середнє з чотирьох вимірів",
+        "ru": "среднее из четырёх измерений"
+       }
+      ],
+      [
+       {
+        "ua": "Пласкість",
+        "ru": "Плоскостность"
+       },
+       {
+        "ua": "опуклість до +0,20 мм, увігнутість до −0,50 мм",
+        "ru": "выпуклость до +0,20 мм, вогнутость до −0,50 мм"
+       },
+       {
+        "ua": "беруть гірший із двох вимірів, не середнє",
+        "ru": "берут худшее из двух измерений, не среднее"
+       }
+      ],
+      [
+       {
+        "ua": "Леткі органічні сполуки (VOC)",
+        "ru": "Летучие органические соединения (VOC)"
+       },
+       {
+        "ua": "3,0 ppm",
+        "ru": "3,0 ppm"
+       },
+       {
+        "ua": "20 секунд приладом MiniRAE-Lite; допуск приладу ±10 %",
+        "ru": "20 секунд прибором MiniRAE-Lite; допуск прибора ±10 %"
+       }
+      ]
+     ]
+    },
+    "faq": [
+     {
+      "q": {
+       "ua": "Чи можна користуватися бустером на аматорських турнірах?",
+       "ru": "Можно ли пользоваться бустером на любительских турнирах?"
+      },
+      "a": {
+       "ua": "Правило 2.4.7 входить до Правил настільного тенісу й винятків за рівнем гри не робить. Центр контролю ракеток обовʼязковий на чемпіонатах світу, Олімпійських і Паралімпійських іграх та частині інших турнірів ITTF (3.2.4.2), тож на аматорських змаганнях приладів може не бути — але правило те саме.",
+       "ru": "Правило 2.4.7 входит в Правила настольного тенниса и исключений по уровню игры не делает. Центр контроля ракеток обязателен на чемпионатах мира, Олимпийских и Паралимпийских играх и части других турниров ITTF (3.2.4.2), так что на любительских соревнованиях приборов может не быть — но правило то же."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чим бустер відрізняється від швидкісного клею?",
+       "ru": "Чем бустер отличается от скоростного клея?"
+      },
+      "a": {
+       "ua": "Швидкісний клей — клей із леткими органічними розчинниками, яким накладку переклеювали перед грою. Бустер нічого не клеїть: це рідина для обробки накладки. За документом ITTF T9, незаконним спершу оголосили швидкісне переклеювання, потім бустинг і будь-яку іншу обробку.",
+       "ru": "Скоростной клей — клей с летучими органическими растворителями, которым накладку переклеивали перед игрой. Бустер ничего не клеит: это жидкость для обработки накладки. По документу ITTF T9, незаконной сначала объявили скоростную переклейку, затем бустинг и любую другую обработку."
+      }
+     },
+     {
+      "q": {
+       "ua": "Як на змаганнях виявляють оброблену накладку?",
+       "ru": "Как на соревнованиях выявляют обработанную накладку?"
+      },
+      "a": {
+       "ua": "Прямого тесту «на бустер» у T9 немає: без еталонного зразка обробку важко довести. Контроль міряє наслідки — товщину (менше 4,05 мм із клеєм), пласкість (опуклість до 0,20 мм), леткі органічні сполуки (межа 3,0 ppm) — і перевіряє, що поверхня чиста.",
+       "ru": "Прямого теста «на бустер» в T9 нет: без эталонного образца обработку трудно доказать. Контроль измеряет последствия — толщину (меньше 4,05 мм с клеем), плоскостность (выпуклость до 0,20 мм), летучие органические соединения (предел 3,0 ppm) — и проверяет, что поверхность чистая."
+      }
+     },
+     {
+      "q": {
+       "ua": "Що буде, якщо ракетка не пройде контроль?",
+       "ru": "Что будет, если ракетка не пройдёт контроль?"
+      },
+      "a": {
+       "ua": "Перед матчем — ракетку не допускають, грати можна другою (3.2.4.2.3). Після матчу — запис у реєстрі порушень і, на розсуд рефері, попередження, штраф до 10 000 швейцарських франків, анулювання результатів або відсторонення до 12 місяців. Чотири провали за чотири роки — відсторонення на 12 місяців.",
+       "ru": "Перед матчем — ракетку не допускают, играть можно второй (3.2.4.2.3). После матча — запись в реестре нарушений и, на усмотрение рефери, предупреждение, штраф до 10 000 швейцарских франков, аннулирование результатов или отстранение до 12 месяцев. Четыре провала за четыре года — отстранение на 12 месяцев."
+      }
+     }
+    ],
+    "related": [
+     "speed-glue",
+     "rubber-treatment-ban",
+     "water-based-glue",
+     "larc",
+     "rubber-rules",
+     "sponge"
+    ],
+    "links": [
+     {
+      "label": {
+       "ua": "Як наклеїти накладку на основу: покрокова інструкція Butterfly",
+       "ru": "Как наклеить накладку на основание: пошаговая инструкция Butterfly"
+      },
+      "href": "/blog/yak-nakleity-nakladku"
+     },
+     {
+      "label": {
+       "ua": "Як доглядати за накладками і коли їх міняти",
+       "ru": "Как ухаживать за накладками и когда их менять"
+      },
+      "href": "/blog/doglyad-za-nakladkamy"
+     },
+     {
+      "label": {
+       "ua": "Правила гри в настільний теніс: подача, рахунок, інвентар",
+       "ru": "Правила настольного тенниса: подача, счёт и инвентарь"
+      },
+      "href": "/blog/pravyla-nastilnogo-tenisu"
+     },
+     {
+      "label": {
+       "ua": "Водні клеї Butterfly для накладок",
+       "ru": "Водные клеи Butterfly для накладок"
+      },
+      "href": "/aksessuary/klei"
+     }
+    ],
+    "sources": [
+     {
+      "label": {
+       "ua": "Правила настільного тенісу 2026–27 (текст ITTF, копія Table Tennis England) — розділ 2.4",
+       "ru": "Правила настольного тенниса 2026–27 (текст ITTF, копия Table Tennis England) — раздел 2.4"
+      },
+      "url": "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Statutes 2026, розділ 3 — пункти 3.2.1, 3.2.4, 3.4.2 (копія HKTTA)",
+       "ru": "ITTF Statutes 2026, глава 3 — пункты 3.2.1, 3.2.4, 3.4.2 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/2026_Statutes_Chapter3.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копія HKTTA)",
+       "ru": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/T9%20Racket%20Control%20September%202024%20rev1.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T4 «Racket Coverings», редакція 2017 року (копія BTTV)",
+       "ru": "ITTF Technical Leaflet T4 «Racket Coverings», редакция 2017 года (копия BTTV)"
+      },
+      "url": "https://sr.bttv.de/fileadmin/bttv/media/SR/pdf/T4_Racket_Coverings_BOD2017.pdf"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Tenergy 05 (код 05800)",
+       "ru": "Butterfly Global: Tenergy 05 (код 05800)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/05800.html"
+     },
+     {
+      "label": {
+       "ua": "All About Table Tennis: Racket Control — бустери й тюнери",
+       "ru": "All About Table Tennis: Racket Control — бустеры и тюнеры"
+      },
+      "url": "https://allabouttabletennis.com/table-tennis-bats.html"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "speed-glue",
+   "page": {
+    "metaTitle": {
+     "ua": "Швидкісний клей (спідглю) — що це | TTMAX",
+     "ru": "Скоростной клей (спидглю) — что это | TTMAX"
+    },
+    "metaDescription": {
+     "ua": "💨 Швидкісний клей (спідглю) — клей із леткими розчинниками, що розпирав губку й на 3–6 годин пришвидшував накладку. ITTF заборонила його з 1.09.2008.",
+     "ru": "💨 Скоростной клей (спидглю) — клей с летучими растворителями, который распирал губку и на 3–6 часов ускорял накладку. ITTF запретила его с 1.09.2008."
+    },
+    "h1": {
+     "ua": "Швидкісний клей (спідглю) — що це і чому його заборонили",
+     "ru": "Скоростной клей (спидглю) — что это и почему его запретили"
+    },
+    "body": {
+     "ua": [
+      "Швидкісний клей (спідглю, speed glue) — клей на леткому органічному розчиннику, яким накладку переклеювали незадовго до гри. Пари розчинника розширювали пори губки, вона розтягувала гуму топшита, і накладка на кілька годин ставала швидшою та сильніше крутила мʼяч. Сьогодні регламент ITTF 3.2.4.1 вимагає клеїти накладки лише клеями без шкідливих летких розчинників.",
+      "Звідки він узявся. За англомовною Вікіпедією, ефект помітили випадково в 1970-х, коли гравець приклеїв накладку клеєм для велосипедних камер, а популяризував прийом югославський гравець Драгутин Шурбек у 1979–1983 роках. Клей наносили приблизно за пів години до матчу, ефект тримався 3–6 годин, тож накладку доводилося переклеювати знову й знову.",
+      "Як його забороняли (дати — за Вікіпедією). У 1995 році ITTF заборонила частину розчинників — галогеновані, з бензольним кільцем і н-гексан. У 2004-му ухвалила рішення заборонити всі клеї з леткими органічними розчинниками з 1 вересня 2007 року, згодом дату перенесли на 1 вересня 2008-го; Олімпіада 2008 року стала останньою, де швидкісний клей дозволяли. Сама ITTF у документі T9 пояснює заборону ризиком для здоровʼя й тим, що переклеювання просто перед матчем заважало нормальній підготовці гравців.",
+      "Що діє зараз. На контролі ракеток леткі органічні сполуки (VOC) вимірюють приладом MiniRAE-Lite: насадку на 20 секунд прикладають до накладки й віднімають фоновий рівень. Чинна межа за T9 (2024) — 3,0 ppm, з допуском приладу ±10 % — до 3,3 ppm. Нову накладку й щойно склеєну ракетку ITTF радить провітрювати до 72 годин. Чотири провали контролю за чотири роки — відсторонення на 12 місяців (3.2.4.3).",
+      "Що прийшло на зміну. Накладки клеять водними клеями: Butterfly на сторінках своїх накладок прямо просить використовувати водний клей Butterfly, а в інструкції до Free Chack дає йому висохнути щонайменше 10 хвилин. Пружність тепер закладають у саму накладку на заводі: у Butterfly це High Tension (перша накладка — Bryce, 1997) і губка Spring Sponge, що зʼявилася в Tenergy 05 у 2008 році. Знати це варто кожному, хто чує пораду «підклеїти для швидкості»: на змаганнях це порушення."
+     ],
+     "ru": [
+      "Скоростной клей (спидглю, speed glue) — клей на летучем органическом растворителе, которым накладку переклеивали незадолго до игры. Пары растворителя расширяли поры губки, она растягивала резину топшита, и накладка на несколько часов становилась быстрее и сильнее крутила мяч. Сегодня регламент ITTF 3.2.4.1 требует клеить накладки только клеями без вредных летучих растворителей.",
+      "Откуда он взялся. По англоязычной Википедии, эффект заметили случайно в 1970-х, когда игрок приклеил накладку клеем для велосипедных камер, а популяризировал приём югославский игрок Драгутин Шурбек в 1979–1983 годах. Клей наносили примерно за полчаса до матча, эффект держался 3–6 часов, поэтому накладку приходилось переклеивать снова и снова.",
+      "Как его запрещали (даты — по Википедии). В 1995 году ITTF запретила часть растворителей — галогенированные, с бензольным кольцом и н-гексан. В 2004-м приняла решение запретить все клеи с летучими органическими растворителями с 1 сентября 2007 года, позже дату перенесли на 1 сентября 2008-го; Олимпиада 2008 года стала последней, где скоростной клей разрешали. Сама ITTF в документе T9 объясняет запрет риском для здоровья и тем, что переклейка прямо перед матчем мешала нормальной подготовке игроков.",
+      "Что действует сейчас. На контроле ракеток летучие органические соединения (VOC) измеряют прибором MiniRAE-Lite: насадку на 20 секунд прикладывают к накладке и вычитают фоновый уровень. Действующий предел по T9 (2024) — 3,0 ppm, с допуском прибора ±10 % — до 3,3 ppm. Новую накладку и только что склеенную ракетку ITTF советует проветривать до 72 часов. Четыре провала контроля за четыре года — отстранение на 12 месяцев (3.2.4.3).",
+      "Что пришло на смену. Накладки клеят водными клеями: Butterfly на страницах своих накладок прямо просит использовать водный клей Butterfly, а в инструкции к Free Chack даёт ему высохнуть минимум 10 минут. Упругость теперь закладывают в саму накладку на заводе: у Butterfly это High Tension (первая накладка — Bryce, 1997) и губка Spring Sponge, появившаяся в Tenergy 05 в 2008 году. Знать это стоит каждому, кто слышит совет «подклеить для скорости»: на соревнованиях это нарушение."
+     ]
+    },
+    "facts": {
+     "columns": [
+      {
+       "ua": "Рік",
+       "ru": "Год"
+      },
+      {
+       "ua": "Подія",
+       "ru": "Событие"
+      },
+      {
+       "ua": "Джерело",
+       "ru": "Источник"
+      }
+     ],
+     "rows": [
+      [
+       {
+        "ua": "1970-ті",
+        "ru": "1970-е"
+       },
+       {
+        "ua": "ефект помітили випадково — на клеї для велосипедних камер",
+        "ru": "эффект заметили случайно — на клее для велосипедных камер"
+       },
+       {
+        "ua": "Wikipedia (англ.)",
+        "ru": "Wikipedia (англ.)"
+       }
+      ],
+      [
+       {
+        "ua": "1979–1983",
+        "ru": "1979–1983"
+       },
+       {
+        "ua": "Драгутин Шурбек популяризує швидкісне переклеювання",
+        "ru": "Драгутин Шурбек популяризирует скоростную переклейку"
+       },
+       {
+        "ua": "Wikipedia (англ.)",
+        "ru": "Wikipedia (англ.)"
+       }
+      ],
+      [
+       {
+        "ua": "1995",
+        "ru": "1995"
+       },
+       {
+        "ua": "ITTF забороняє галогеновані розчинники, розчинники з бензольним кільцем і н-гексан",
+        "ru": "ITTF запрещает галогенированные растворители, растворители с бензольным кольцом и н-гексан"
+       },
+       {
+        "ua": "Wikipedia (англ.)",
+        "ru": "Wikipedia (англ.)"
+       }
+      ],
+      [
+       {
+        "ua": "2004",
+        "ru": "2004"
+       },
+       {
+        "ua": "рішення заборонити клеї з леткими органічними розчинниками",
+        "ru": "решение запретить клеи с летучими органическими растворителями"
+       },
+       {
+        "ua": "Wikipedia (англ.)",
+        "ru": "Wikipedia (англ.)"
+       }
+      ],
+      [
+       {
+        "ua": "1 вересня 2008",
+        "ru": "1 сентября 2008"
+       },
+       {
+        "ua": "заборона чинна (спершу планували 1 вересня 2007 року)",
+        "ru": "запрет действует (сначала планировали 1 сентября 2007 года)"
+       },
+       {
+        "ua": "Wikipedia (англ.)",
+        "ru": "Wikipedia (англ.)"
+       }
+      ],
+      [
+       {
+        "ua": "2008",
+        "ru": "2008"
+       },
+       {
+        "ua": "остання Олімпіада зі швидкісним клеєм; Butterfly випускає Tenergy 05 — першу накладку зі Spring Sponge",
+        "ru": "последняя Олимпиада со скоростным клеем; Butterfly выпускает Tenergy 05 — первую накладку со Spring Sponge"
+       },
+       {
+        "ua": "Wikipedia (англ.); історія Butterfly",
+        "ru": "Wikipedia (англ.); история Butterfly"
+       }
+      ],
+      [
+       {
+        "ua": "1 вересня 2010",
+        "ru": "1 сентября 2010"
+       },
+       {
+        "ua": "ITTF веде реєстр усіх провалів контролю ракеток",
+        "ru": "ITTF ведёт реестр всех провалов контроля ракеток"
+       },
+       {
+        "ua": "регламент ITTF 3.2.4.4",
+        "ru": "регламент ITTF 3.2.4.4"
+       }
+      ],
+      [
+       {
+        "ua": "2024",
+        "ru": "2024"
+       },
+       {
+        "ua": "чинна редакція T9: межа летких органічних сполук на контролі — 3,0 ppm",
+        "ru": "действующая редакция T9: предел летучих органических соединений на контроле — 3,0 ppm"
+       },
+       {
+        "ua": "ITTF T9",
+        "ru": "ITTF T9"
+       }
+      ]
+     ]
+    },
+    "faq": [
+     {
+      "q": {
+       "ua": "Чи заборонений швидкісний клей зараз?",
+       "ru": "Запрещён ли скоростной клей сейчас?"
+      },
+      "a": {
+       "ua": "Так. Регламент ITTF 3.2.4.1 покладає на гравця відповідальність за те, щоб накладки були приклеєні клеями без шкідливих летких розчинників. За Вікіпедією, заборона клеїв із леткими органічними розчинниками діє з 1 вересня 2008 року.",
+       "ru": "Да. Регламент ITTF 3.2.4.1 возлагает на игрока ответственность за то, чтобы накладки были приклеены клеями без вредных летучих растворителей. По Википедии, запрет клеев с летучими органическими растворителями действует с 1 сентября 2008 года."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чому заборонили швидкісний клей?",
+       "ru": "Почему запретили скоростной клей?"
+      },
+      "a": {
+       "ua": "ITTF у документі T9 називає дві причини: ризик для здоровʼя гравців, глядачів і всіх присутніх через леткі органічні сполуки та те, що клей треба було наносити просто перед матчем, а це заважало нормальній підготовці гравців і тренерів.",
+       "ru": "ITTF в документе T9 называет две причины: риск для здоровья игроков, зрителей и всех присутствующих из-за летучих органических соединений и то, что клей нужно было наносить прямо перед матчем, а это мешало нормальной подготовке игроков и тренеров."
+      }
+     },
+     {
+      "q": {
+       "ua": "Як перевіряють ракетку на леткі розчинники?",
+       "ru": "Как проверяют ракетку на летучие растворители?"
+      },
+      "a": {
+       "ua": "Приладом MiniRAE-Lite: спершу записують фоновий рівень, потім на 20 секунд прикладають насадку до середини накладки; різниця — результат. Межа за T9 (2024) — 3,0 ppm, з допуском приладу ±10 % гравця не карають до 3,3 ppm.",
+       "ru": "Прибором MiniRAE-Lite: сначала записывают фоновый уровень, затем на 20 секунд прикладывают насадку к середине накладки; разница — результат. Предел по T9 (2024) — 3,0 ppm, с допуском прибора ±10 % игрока не наказывают до 3,3 ppm."
+      }
+     },
+     {
+      "q": {
+       "ua": "Чим клеїти накладку замість швидкісного клею?",
+       "ru": "Чем клеить накладку вместо скоростного клея?"
+      },
+      "a": {
+       "ua": "Водним клеєм. Butterfly для своїх накладок вказує водний клей Butterfly; за інструкцією до Free Chack його наносять на губку й на основу та чекають щонайменше 10 хвилин, доки молочно-білий шар не стане прозорим. Це звичайна поклейка, а не переклеювання «для швидкості».",
+       "ru": "Водным клеем. Butterfly для своих накладок указывает водный клей Butterfly; по инструкции к Free Chack его наносят на губку и на основание и ждут минимум 10 минут, пока молочно-белый слой не станет прозрачным. Это обычная поклейка, а не переклейка «для скорости»."
+      }
+     }
+    ],
+    "related": [
+     "water-based-glue",
+     "booster",
+     "rubber-gluing",
+     "rubber-treatment-ban",
+     "spring-sponge",
+     "high-tension"
+    ],
+    "links": [
+     {
+      "label": {
+       "ua": "Як наклеїти накладку на основу: покрокова інструкція Butterfly",
+       "ru": "Как наклеить накладку на основание: пошаговая инструкция Butterfly"
+      },
+      "href": "/blog/yak-nakleity-nakladku"
+     },
+     {
+      "label": {
+       "ua": "Водні клеї Butterfly для накладок",
+       "ru": "Водные клеи Butterfly для накладок"
+      },
+      "href": "/aksessuary/klei"
+     },
+     {
+      "label": {
+       "ua": "Клей Butterfly Free Chack 90 мл",
+       "ru": "Клей Butterfly Free Chack 90 мл"
+      },
+      "href": "/butterfly/aksessuary/klei-butterfly-free-chack-90-ml"
+     },
+     {
+      "label": {
+       "ua": "Як влаштовані накладки Butterfly: від Spring Sponge до Ricosheet",
+       "ru": "Как устроены накладки Butterfly: от Spring Sponge до Ricosheet"
+      },
+      "href": "/blog/zyre-03-vs-dignics-tenergy"
+     }
+    ],
+    "sources": [
+     {
+      "label": {
+       "ua": "ITTF Statutes 2026, розділ 3 — пункти 3.2.1, 3.2.4, 3.4.2 (копія HKTTA)",
+       "ru": "ITTF Statutes 2026, глава 3 — пункты 3.2.1, 3.2.4, 3.4.2 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/2026_Statutes_Chapter3.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копія HKTTA)",
+       "ru": "ITTF Technical Leaflet T9 «Racket Control», 2024 (копия HKTTA)"
+      },
+      "url": "https://www.hktta.org.hk/referee/application/T9%20Racket%20Control%20September%202024%20rev1.pdf"
+     },
+     {
+      "label": {
+       "ua": "ITTF Technical Leaflet T4 «Racket Coverings», редакція 2017 року (копія BTTV)",
+       "ru": "ITTF Technical Leaflet T4 «Racket Coverings», редакция 2017 года (копия BTTV)"
+      },
+      "url": "https://sr.bttv.de/fileadmin/bttv/media/SR/pdf/T4_Racket_Coverings_BOD2017.pdf"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: історія компанії — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)",
+       "ru": "Butterfly Global: история компании — Bryce (1997), Tenergy 05 (2008), Dignics 05 (2019), Zyre 03 (2025)"
+      },
+      "url": "https://www.butterfly-global.com/en/about/history/"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: поклейка накладки клеєм Free Chack — 6 кроків",
+       "ru": "Butterfly Global: поклейка накладки клеем Free Chack — 6 шагов"
+      },
+      "url": "https://www.butterfly-global.com/en/products/care/free_chack.html"
+     },
+     {
+      "label": {
+       "ua": "Butterfly Global: Tenergy 05 (код 05800)",
+       "ru": "Butterfly Global: Tenergy 05 (код 05800)"
+      },
+      "url": "https://www.butterfly-global.com/en/products/detail/05800.html"
+     },
+     {
+      "label": {
+       "ua": "Wikipedia (англ.): Speed glue — історія й дати заборони",
+       "ru": "Wikipedia (англ.): Speed glue — история и даты запрета"
+      },
+      "url": "https://en.wikipedia.org/wiki/Speed_glue"
+     }
+    ]
+   }
+  }
+ ]
+}

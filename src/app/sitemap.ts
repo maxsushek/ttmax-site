@@ -14,7 +14,7 @@ import { surfaceGroups, seriesIndexable, productsInGroup } from "@/lib/catalog/r
 import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { allProfiles } from "@/data/playerProfiles";
-import { GLOSSARY, GLOSSARY_CHECKED } from "@/data/glossary";
+import { GLOSSARY, GLOSSARY_CHECKED, glossaryPages } from "@/data/glossary";
 import { PLAYERS } from "@/data/players";
 import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
@@ -83,6 +83,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Словник: lastMod — дата звірки термінів із джерелами.
   if (GLOSSARY.length > 0) {
     paths.push({ path: "/slovnyk", priority: 0.6, freq: "monthly", lastMod: new Date(GLOSSARY_CHECKED) });
+    for (const g of glossaryPages()) {
+      paths.push({ path: `/slovnyk/${g.slug}`, priority: 0.5, freq: "monthly", lastMod: new Date(GLOSSARY_CHECKED) });
+    }
   }
 
   // Сторінки гравців: lastMod — дата нашої звірки з джерелами (checked), не час білда.

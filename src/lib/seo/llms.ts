@@ -22,7 +22,7 @@ import {
 } from "@/data/catalog";
 import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
-import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory } from "@/data/glossary";
+import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory, glossaryTermPath } from "@/data/glossary";
 import { allProfiles } from "@/data/playerProfiles";
 import { PLAYERS } from "@/data/players";
 import { productIndexable } from "@/lib/catalog/indexability";
@@ -287,7 +287,7 @@ function glossaryLines(): string[] {
     for (const g of items) {
       const aka = g.aka.ua.length ? ` (також: ${g.aka.ua.join(", ")})` : "";
       const more = g.href ? ` Докладно: ${url(`/ua${g.href}`)}` : "";
-      out.push(`- **${g.term.ua}**${aka} — ${g.def.ua} [${url(`/ua/slovnyk#${g.slug}`)}]${more}`);
+      out.push(`- **${g.term.ua}**${aka} — ${g.def.ua} [${url(`/ua${glossaryTermPath(g)}`)}]${more}`);
     }
     out.push("");
   }

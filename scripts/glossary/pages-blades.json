@@ -1,0 +1,2787 @@
+{
+  "decisions": [
+    {
+      "slug": "zlf",
+      "accepted": true,
+      "why": "Ни одна статья или хаб не делает ZLF главной темой или отдельным h2: в alc-chy-zlc это одна фраза внутри раздела про ZLC, в tablytsia-osnov-butterfly — заголовок таблицы «T5000, CNF, CAF, ZLF і карбон: 18 основ» без определения. Хаба /osnovaniya/zlf нет. Материала хватает: описание волокна на butterfly-global и butterfly.co.jp, Innershield Layer ZLF (5,5 / 4,9), четыре ZLF-карточки каталога. Проверка: Liu Shiwen и Fukuhara Ai Pro ZLF описаны в znyati-osnovy-butterfly (FAQ «Чим основа Liu Shiwen відрізняється від основ з ALC?») — это вопрос о модели, а не определение волокна; на страницу добавлена ссылка на эту статью."
+    },
+    {
+      "slug": "t5000",
+      "accepted": false,
+      "why": "Отклонено: в статье alc-chy-zlc есть h2 «Що таке ALC, ZLC, CNF, CAF і T5000» — запрос «що таке T5000» уже назван в заголовке раздела, плюс h2 «T5000, CNF, CAF, ZLF і карбон: 18 основ» в tablytsia-osnov-butterfly. Отдельная страница спорила бы с этим разделом. Пограничный случай: в статье термину отведено одно предложение, так что страницу можно вернуть, если сузить h2 статьи до ALC и ZLC и поставить из него ссылку на словарь."
+    },
+    {
+      "slug": "caf",
+      "accepted": false,
+      "why": "Отклонено по той же причине, что T5000: CAF прямо назван в h2 «Що таке ALC, ZLC, CNF, CAF і T5000» статьи alc-chy-zlc. Дополнительно — в актуальном каталоге Butterfly всего две модели для европейского хвата с CAF (Outerforce CAF, Timo Boll CAF), таблица получилась бы из двух строк; CAF раскрыт на принятой странице outerforce."
+    },
+    {
+      "slug": "cnf",
+      "accepted": false,
+      "why": "Отклонено: CNF назван в h2 «Що таке ALC, ZLC, CNF, CAF і T5000» статьи alc-chy-zlc; кроме того, глоссарий уже ведёт термин на карточку /butterfly/osnovaniya/revoldia-cnf, а моделей всего две и с одинаковыми числами (Revoldia CNF и Fan Zhendong CNF — 11,7 / 9,5, 5,7 мм). Страница конкурировала бы и со статьёй, и с карточкой."
+    },
+    {
+      "slug": "super-alc",
+      "accepted": true,
+      "why": "Отдельного h2 «что такое Super ALC» нет: в alc-chy-zlc — строка таблицы, одно предложение и FAQ-вопрос «Що таке Super ALC і Super ZLC?» с ответом в два предложения; в tablytsia-osnov-butterfly и viscaria-timo-boll-alc-fan-zhendong-alc — разделы с таблицами моделей, не определение. Хаб /osnovaniya/alc коммерческий («купить») и Super ALC в title не содержит. Страница даёт то, чего нет в статьях: сравнение трёх пар ALC → Super ALC, CS-версии, игроки. Риск умеренный из-за FAQ-вопроса — ответ в статье стоит связать ссылкой с этой страницей. Проверка: FAQ-вопрос «Що таке Super ALC і Super ZLC?» в alc-chy-zlc — прямое совпадение с запросом; без ссылки из этого ответа на страницу публиковать не стоит."
+    },
+    {
+      "slug": "super-zlc",
+      "accepted": true,
+      "why": "Как и Super ALC: в alc-chy-zlc — строка таблицы, одно предложение и общий FAQ-вопрос; h2 «ZLC і Super ZLC: 16 основ» в tablytsia-osnov-butterfly — таблица моделей без определения; хаб /osnovaniya/zlc коммерческий. Отдельного h2 или статьи про Super ZLC нет. На странице — пять моделей (четыре с официальными числами), пары ZLC → Super ZLC, сравнение с Super ALC, inner-версия. Проверка: статья alc-chy-zlc по комментарию в коде уже собирает запросы по Super ZLC, а её FAQ прямо отвечает на «Що таке Super ALC і Super ZLC?» — ссылка из этого ответа на страницу обязательна."
+    },
+    {
+      "slug": "innerforce",
+      "accepted": true,
+      "why": "h2 «Inner чи outer: де лежить волокно» в alc-chy-zlc владеет понятием inner/outer (термины innerfiber/outerfiber — им страницы не нужны), а Innerforce как линейка там упомянута одной фразой и одним FAQ-ответом в одно предложение. Серийный хаб /osnovaniya/innerforce закрыт от индексации (нет в SERIES_WITH_CONTENT). Страница построена про линейку: девять моделей, диапазон чисел, ALC.S, отличия названий в каталоге. Риск умеренный: первый абзац неизбежно пересекается с разделом inner/outer, поэтому страница ссылается на статью, а FAQ статьи стоит связать ссылкой со страницей. Проверка: в комментарии к статье alc-chy-zlc указано, что она уже собирает запросы GSC по моделям Innerforce / Outerforce / Super ZLC — после публикации страницы сверить в GSC, какая из двух страниц показывается по «innerforce», и поставить ссылку из FAQ статьи. Если серийному хабу /osnovaniya/innerforce дадут текст и откроют индексацию (SERIES_WITH_CONTENT), страницу нужно будет развести с ним заново."
+    },
+    {
+      "slug": "outerforce",
+      "accepted": true,
+      "why": "Статьи упоминают Outerforce только списком моделей и одной фразой в FAQ alc-chy-zlc; отдельного h2 нет, серийный хаб /osnovaniya/outerforce не индексируется. У серии свой смысл, которого нет в разделе inner/outer: outer-основания с умеренной скоростью (11,3–11,4 против 11,8 у Viscaria), три волокна, CS-версии. Все три модели есть в каталоге. Проверка: то же, что для innerforce, — статья alc-chy-zlc по комментарию в коде собирает запросы по моделям Outerforce, а серийный хаб /osnovaniya/outerforce сейчас noindex (нет в SERIES_WITH_CONTENT); при открытии хаба пересмотреть."
+    },
+    {
+      "slug": "hinoki",
+      "accepted": false,
+      "why": "Отклонено: официальные страницы Butterfly подтверждают хиноки только у двух оснований для японского пера (Cypress G-MAX и V-MAX, 1 слой Kiso Hinoki) — на остальных страницах порода шпона не указана, а данные о хиноки в Garaydia у нас из стороннего обзора. Страница почти дословно повторяла бы принятую jpen-handle (те же две модели и числа) и конкурировала бы с ней; факты о хиноки вошли туда. Ни одной основы с подтверждённым хиноки в продаже у нас нет."
+    },
+    {
+      "slug": "balsa",
+      "accepted": false,
+      "why": "Отклонено: не набирается 180 слов проверяемого текста. В глобальном каталоге Butterfly (75 оснований на 16.11.2026) бальзовых моделей нет, официальных страниц Balsa Carbo X5 и Balsa X7 открыть не удалось; в нашем каталоге по ним только вес и толщина (≈72 г / 6,2 мм и ≈75 г / 7,5 мм), и они уже разобраны в tablytsia-osnov-butterfly. Остальное было бы общими словами о древесине."
+    },
+    {
+      "slug": "sweet-spot",
+      "accepted": false,
+      "why": "Отклонено: нет авторитетного источника с определением и числами. На официальных страницах Butterfly «sweet spot» встречается один раз (описание Innershield Layer ZLF) и ещё раз как «high-reaction area» у Super ZLC — без измерений. Текст получился бы общим; термин остаётся якорем в словаре."
+    },
+    {
+      "slug": "cs-handle",
+      "accepted": true,
+      "why": "В yak-vybraty-raketku ручка CS — два предложения внутри h2 про FL/ST/AN и абзац про перо; в viscaria-статье — один FAQ про Дан Цю. Отдельного раздела «что такое CS» нет, хабов нет. Материал богатый и нигде у нас не собран: 23 CS-модели из 75, четыре варианта размеров ручки и лопасти, расхождение вибрации в 9 парах из 23. Оговорка: версий CS в нашем каталоге нет — страница честно это говорит и ведёт на ту же модель для европейского хвата."
+    },
+    {
+      "slug": "jpen-handle",
+      "accepted": true,
+      "why": "В блоге японское перо упомянуто одной фразой в yak-vybraty-raketku (слов «японське перо», JPen, Cypress в заголовках нет). Официальных данных достаточно: три основания типа Japanese penhold, Cypress G-MAX с самой высокой реакцией в каталоге (13,6), размеры, правила ITTF об одной накладке. Сюда же вошли факты о хиноки. Оговорка: оснований для пера в нашем каталоге нет — страница чисто справочная."
+    }
+  ],
+  "pages": [
+    {
+      "slug": "zlf",
+      "page": {
+        "metaTitle": {
+          "ua": "ZLF (ZL-Fiber) — що це за волокно Butterfly | TTMAX",
+          "ru": "ZLF (ZL-Fiber) — что это за волокно Butterfly | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🧵 ZLF (ZL-Fiber) — органічне волокно Butterfly без карбону: питома вага на 10 % нижча, ніж у карбону. Чим відрізняється від ZLC і в яких основах стоїть.",
+          "ru": "🧵 ZLF (ZL-Fiber) — органическое волокно Butterfly без карбона: удельный вес на 10 % ниже, чем у карбона. Чем отличается от ZLC и в каких основаниях стоит."
+        },
+        "h1": {
+          "ua": "ZLF (ZL-Fiber) — що це за волокно в основах Butterfly",
+          "ru": "ZLF (ZL-Fiber) — что это за волокно в основаниях Butterfly"
+        },
+        "body": {
+          "ua": [
+            "ZLF (ZL-Fiber, ZL-волокно) — штучне органічне волокно, яке Butterfly вклеює в основу двома тонкими шарами між деревом. За описом виробника, за міцністю на розрив і пружністю воно належить до найкращих органічних волокон, а його питома вага на 10 % нижча, ніж у карбонового волокна. Карбону в ZLF немає — цим воно й відрізняється від ZLC.",
+            "ZLC (ZL-Carbon) — те саме ZL-волокно, сплетене з карбоном: за Butterfly, карбон відповідає за високу реакцію, а ZL-волокно — за міцність, пружність і легкість. Super ZLC — щільніше плетіння тих самих двох волокон. Виходить, ZLF — це ZLC без карбонової складової, тобто без того компонента, який, за описом Butterfly, відповідає за високу реакцію.",
+            "У глобальному каталозі Butterfly станом на 16.11.2026 волокно ZLF є в одній основі — захисній Innershield Layer ZLF: 5 шарів дерева + 2 шари ZL-Fiber біля ядра (Innerfiber), товщина 5,1 мм, велика лопать 166×155 мм. Її реакція 5,5 і вібрація 4,9 — найнижчі серед усіх 75 основ цього каталогу. Butterfly пише, що ZL-волокно дає їй високу гнучкість, більшу «солодку зону» й достатньо швидкості для атак сучасного захисника.",
+            "У каталозі TTMAX чотири основи з ZLF, усі за схемою 5+2: Innerforce Layer ZLF (5,3 мм, 85–86 г), Timo Boll ZLF (5,4 мм, 83–87 г), Liu Shiwen (5,6 мм, 85–90 г) і Fukuhara Ai Pro ZLF (5,8 мм, 85–86 г). У Timo Boll ZLF волокно лежить під верхнім шпоном (outer), у решти — біля ядра (inner). На сайті Butterfly Global цих моделей зараз немає, тому офіційних чисел реакції й вібрації для них ми не наводимо.",
+            "Кому це потрібно. ZLF — вибір для тих, хто хоче в основі штучне волокно, але не карбон. Сам виробник сьогодні пропонує його для сучасного захисту. Якщо ж потрібна швидкість атакувальної основи з тим самим ZL-волокном, дивіться ZLC: в Innerforce Layer ZLC з inner-розташуванням реакція 10,5 і вібрація 9,5."
+          ],
+          "ru": [
+            "ZLF (ZL-Fiber, ZL-волокно) — искусственное органическое волокно, которое Butterfly вклеивает в основание двумя тонкими слоями между деревом. По описанию производителя, по прочности на разрыв и упругости оно относится к лучшим органическим волокнам, а его удельный вес на 10 % ниже, чем у карбонового волокна. Карбона в ZLF нет — этим оно и отличается от ZLC.",
+            "ZLC (ZL-Carbon) — то же ZL-волокно, сплетённое с карбоном: по данным Butterfly, карбон отвечает за высокую реакцию, а ZL-волокно — за прочность, упругость и лёгкость. Super ZLC — более плотное плетение тех же двух волокон. Получается, ZLF — это ZLC без карбоновой составляющей, то есть без того компонента, который, по описанию Butterfly, отвечает за высокую реакцию.",
+            "В глобальном каталоге Butterfly на 16.11.2026 волокно ZLF есть в одном основании — защитном Innershield Layer ZLF: 5 слоёв дерева + 2 слоя ZL-Fiber у ядра (Innerfiber), толщина 5,1 мм, большая лопасть 166×155 мм. Его реакция 5,5 и вибрация 4,9 — самые низкие среди всех 75 оснований этого каталога. Butterfly пишет, что ZL-волокно даёт ему высокую гибкость, увеличенную «сладкую зону» и достаточно скорости для атак современного защитника.",
+            "В каталоге TTMAX четыре основания с ZLF, все по схеме 5+2: Innerforce Layer ZLF (5,3 мм, 85–86 г), Timo Boll ZLF (5,4 мм, 83–87 г), Liu Shiwen (5,6 мм, 85–90 г) и Fukuhara Ai Pro ZLF (5,8 мм, 85–86 г). У Timo Boll ZLF волокно лежит под верхним шпоном (outer), у остальных — у ядра (inner). На сайте Butterfly Global этих моделей сейчас нет, поэтому официальных чисел реакции и вибрации для них мы не приводим.",
+            "Кому это нужно. ZLF — выбор для тех, кто хочет в основании искусственное волокно, но не карбон. Сам производитель сегодня предлагает его для современной защиты. Если же нужна скорость атакующего основания с тем же ZL-волокном, смотрите ZLC: у Innerforce Layer ZLC с inner-расположением реакция 10,5 и вибрация 9,5."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Волокно й розташування",
+              "ru": "Волокно и расположение"
+            },
+            {
+              "ua": "Товщина",
+              "ru": "Толщина"
+            },
+            {
+              "ua": "Вага (каталог TTMAX)",
+              "ru": "Вес (каталог TTMAX)"
+            },
+            {
+              "ua": "Реакція / вібрація (Butterfly)",
+              "ru": "Реакция / вибрация (Butterfly)"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Innershield Layer ZLF (захисна)",
+                "ru": "Innershield Layer ZLF (защитное)"
+              },
+              {
+                "ua": "ZLF, inner",
+                "ru": "ZLF, inner"
+              },
+              {
+                "ua": "5,1 мм",
+                "ru": "5,1 мм"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              },
+              {
+                "ua": "5,5 / 4,9",
+                "ru": "5,5 / 4,9"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ZLF",
+                "ru": "Innerforce Layer ZLF",
+                "href": "/butterfly/osnovaniya/innerforce-layer-zlf"
+              },
+              {
+                "ua": "ZLF, inner",
+                "ru": "ZLF, inner"
+              },
+              {
+                "ua": "5,3 мм",
+                "ru": "5,3 мм"
+              },
+              {
+                "ua": "85–86 г",
+                "ru": "85–86 г"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              }
+            ],
+            [
+              {
+                "ua": "Timo Boll ZLF",
+                "ru": "Timo Boll ZLF",
+                "href": "/butterfly/osnovaniya/timo-boll-zlf"
+              },
+              {
+                "ua": "ZLF, outer",
+                "ru": "ZLF, outer"
+              },
+              {
+                "ua": "5,4 мм",
+                "ru": "5,4 мм"
+              },
+              {
+                "ua": "83–87 г",
+                "ru": "83–87 г"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              }
+            ],
+            [
+              {
+                "ua": "Liu Shiwen",
+                "ru": "Liu Shiwen",
+                "href": "/butterfly/osnovaniya/liu-shiwen"
+              },
+              {
+                "ua": "ZLF, inner",
+                "ru": "ZLF, inner"
+              },
+              {
+                "ua": "5,6 мм",
+                "ru": "5,6 мм"
+              },
+              {
+                "ua": "85–90 г",
+                "ru": "85–90 г"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              }
+            ],
+            [
+              {
+                "ua": "Fukuhara Ai Pro ZLF",
+                "ru": "Fukuhara Ai Pro ZLF",
+                "href": "/butterfly/osnovaniya/fukuhara-ai-pro-zlf"
+              },
+              {
+                "ua": "ZLF, inner",
+                "ru": "ZLF, inner"
+              },
+              {
+                "ua": "5,8 мм",
+                "ru": "5,8 мм"
+              },
+              {
+                "ua": "85–86 г",
+                "ru": "85–86 г"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ZLC (для порівняння)",
+                "ru": "Innerforce Layer ZLC (для сравнения)",
+                "href": "/butterfly/osnovaniya/innerforce-layer-zlc"
+              },
+              {
+                "ua": "ZLC, inner",
+                "ru": "ZLC, inner"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "85–90 г",
+                "ru": "85–90 г"
+              },
+              {
+                "ua": "10,5 / 9,5",
+                "ru": "10,5 / 9,5"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим ZLF відрізняється від ZLC?",
+              "ru": "Чем ZLF отличается от ZLC?"
+            },
+            "a": {
+              "ua": "ZLF — це саме ZL-волокно без карбону, а ZLC — тканина, у якій ZL-волокно сплетене з карбоном. За Butterfly, карбон дає високу реакцію, ZL-волокно — міцність, пружність і легкість. Приклад inner-ZLC: Innerforce Layer ZLC — реакція 10,5, вібрація 9,5.",
+              "ru": "ZLF — это само ZL-волокно без карбона, а ZLC — ткань, в которой ZL-волокно сплетено с карбоном. По данным Butterfly, карбон даёт высокую реакцию, ZL-волокно — прочность, упругость и лёгкость. Пример inner-ZLC: Innerforce Layer ZLC — реакция 10,5, вибрация 9,5."
+            }
+          },
+          {
+            "q": {
+              "ua": "Які основи Butterfly мають волокно ZLF?",
+              "ru": "В каких основаниях Butterfly стоит волокно ZLF?"
+            },
+            "a": {
+              "ua": "У глобальному каталозі Butterfly на 16.11.2026 — лише захисна Innershield Layer ZLF (5,1 мм, реакція 5,5, вібрація 4,9). У каталозі TTMAX є ще чотири основи з ZLF: Innerforce Layer ZLF, Timo Boll ZLF, Liu Shiwen і Fukuhara Ai Pro ZLF.",
+              "ru": "В глобальном каталоге Butterfly на 16.11.2026 — только в защитном Innershield Layer ZLF (5,1 мм, реакция 5,5, вибрация 4,9). В каталоге TTMAX есть ещё четыре основания с ZLF: Innerforce Layer ZLF, Timo Boll ZLF, Liu Shiwen и Fukuhara Ai Pro ZLF."
+            }
+          },
+          {
+            "q": {
+              "ua": "ZLF — це карбон?",
+              "ru": "ZLF — это карбон?"
+            },
+            "a": {
+              "ua": "Ні. ZLF — органічне волокно без карбону; за Butterfly, його питома вага на 10 % нижча, ніж у карбонового волокна. Для правил ITTF різниці немає: армований волокном шар в основі має бути не товщим за 7,5 % її товщини або 0,35 мм (що менше), а щонайменше 85 % товщини — натуральна деревина (2.4.2).",
+              "ru": "Нет. ZLF — органическое волокно без карбона; по данным Butterfly, его удельный вес на 10 % ниже, чем у карбонового волокна. Для правил ITTF разницы нет: армированный волокном слой в основании должен быть не толще 7,5 % его толщины или 0,35 мм (что меньше), а минимум 85 % толщины — натуральная древесина (2.4.2)."
+            }
+          },
+          {
+            "q": {
+              "ua": "Що робити, якщо під час шліфування ручки волокно ZLF розпушилось?",
+              "ru": "Что делать, если при шлифовке ручки волокно ZLF распушилось?"
+            },
+            "a": {
+              "ua": "Butterfly Japan попереджає, що ZLF, ZLC і Super ZLC — дуже міцні волокна. Якщо під час підшліфовування ручки чи місця під пальці волокно розпушилось, його загладжують дрібним наждачним папером — зернистістю 240 і дрібніше.",
+              "ru": "Butterfly Japan предупреждает, что ZLF, ZLC и Super ZLC — очень прочные волокна. Если при подшлифовке ручки или места под пальцы волокно распушилось, его заглаживают мелкой наждачной бумагой — зернистостью 240 и мельче."
+            }
+          }
+        ],
+        "related": [
+          "zlc",
+          "super-zlc",
+          "alc",
+          "innerfiber",
+          "innerforce",
+          "vibration"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "ALC чи ZLC, inner чи outer: карбонові основи Butterfly",
+              "ru": "ALC или ZLC, inner или outer: карбоновые основания Butterfly"
+            },
+            "href": "/blog/alc-chy-zlc"
+          },
+          {
+            "label": {
+              "ua": "Таблиця основ Butterfly: T5000, CNF, CAF і ZLF",
+              "ru": "Таблица оснований Butterfly: T5000, CNF, CAF и ZLF"
+            },
+            "href": "/blog/tablytsia-osnov-butterfly"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Innerforce Layer ZLF",
+              "ru": "Основание Butterfly Innerforce Layer ZLF"
+            },
+            "href": "/butterfly/osnovaniya/innerforce-layer-zlf"
+          },
+          {
+            "label": {
+              "ua": "Основи Butterfly ZLC",
+              "ru": "Основания Butterfly ZLC"
+            },
+            "href": "/osnovaniya/zlc"
+          },
+          {
+            "label": {
+              "ua": "Зняті з виробництва основи Butterfly: Liu Shiwen і Fukuhara Ai Pro ZLF",
+              "ru": "Снятые с производства основания Butterfly: Liu Shiwen и Fukuhara Ai Pro ZLF"
+            },
+            "href": "/blog/znyati-osnovy-butterfly"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — штучні волокна в основах (Artificial fibers)",
+              "ru": "Butterfly Global — искусственные волокна в основаниях (Artificial fibers)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/fiber.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Japan — властивості спеціальних матеріалів (特殊素材の性能)",
+              "ru": "Butterfly Japan — свойства специальных материалов (特殊素材の性能)"
+            },
+            "url": "https://www.butterfly.co.jp/products/blade/material.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innershield Layer ZLF",
+              "ru": "Butterfly Global — Innershield Layer ZLF"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36691.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ZLC",
+              "ru": "Butterfly Global — Innerforce Layer ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36681.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          },
+          {
+            "label": {
+              "ua": "Laws of Table Tennis 2026-27 (копія правил ITTF, Table Tennis England)",
+              "ru": "Laws of Table Tennis 2026-27 (копия правил ITTF, Table Tennis England)"
+            },
+            "url": "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "super-alc",
+      "page": {
+        "metaTitle": {
+          "ua": "Super ALC — що це і чим відрізняється від ALC | TTMAX",
+          "ru": "Super ALC — что это и чем отличается от ALC | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "⚡ Super ALC — це ALC, у яку вплетено більше волокна: реакція 12,1 проти 11,8 у Viscaria, вібрація не вища. Моделі Butterfly, цифри й кому підходить.",
+          "ru": "⚡ Super ALC — это ALC, в которую вплетено больше волокна: реакция 12,1 против 11,8 у Viscaria, вибрация не выше. Модели Butterfly, цифры и кому подходит."
+        },
+        "h1": {
+          "ua": "Super ALC — що це за волокно і чим воно відрізняється від ALC",
+          "ru": "Super ALC — что это за волокно и чем оно отличается от ALC"
+        },
+        "body": {
+          "ua": [
+            "Super ALC (Super Arylate-Carbon) — посилена версія волокна ALC в основах Butterfly: у тканину з арилату й карбону вплетено більше волокон, тому мʼяч відскакує сильніше. Водночас, за описом Butterfly, співвідношення арилату й карбону підібране так, щоб основа лишилась такою ж гнучкою, як зі звичайною ALC. У цифрах: Viscaria Super ALC має реакцію 12,1 і вібрацію 10,1, Viscaria з ALC — 11,8 і 10,3.",
+            "Реакція в Butterfly — базова швидкість основи, вібрація — наскільки жорстко відчувається удар. Тобто в парі Viscaria волокно Super ALC додає 0,3 реакції, а за відчуттям основа не стає жорсткішою: вібрація навіть на 0,2 нижча. Саме це Butterfly підкреслює в описі Viscaria Super ALC — першої основи з цим волокном: реакцію підняли, не піднімаючи вібрацію. Конструкція шпонів узята в класичної Viscaria, товщина — 5,7 мм замість 5,8.",
+            "У глобальному каталозі Butterfly на 16.11.2026 три основи з Super ALC для європейського хвату. Viscaria Super ALC і Fan Zhendong Super ALC — outer: волокно під верхнім шпоном, 5,7 мм, 12,1 / 10,1. Harimoto Tomokazu Innerforce Super ALC — inner: волокно біля ядра, 5,9 мм, збільшена лопать 158×152 мм, 11,4 / 9,5; у тієї самої основи Харімото зі звичайною ALC — 10,7 / 9,2, тож в inner-парі зростають обидва числа: реакція на 0,7, вібрація на 0,3. Усі три випускаються й у версії CS для китайського пера.",
+            "Від Super ZLC волокно відрізняється відчуттям. Fan Zhendong Super ZLC трохи швидша (реакція 12,3), але помітно жорсткіша: вібрація 11,1 проти 10,1 у Fan Zhendong Super ALC. Тож Super ALC — це швидкість, близька до Super ZLC, але з мʼякшим дотиком.",
+            "Кому підходить. Butterfly радить Viscaria Super ALC не лише топ-гравцям, а й гравцям середнього та просунутого рівня, яким на звичайній ALC бракує потужності. Серед професіоналів на Viscaria Super ALC грає Лінь Юньжу, а на Harimoto Tomokazu Innerforce Super ALC — Томокадзу й Міва Харімото (сторінки гравців Butterfly, перевірено 16.11.2026). У нашому каталозі основа Харімото записана коротше — Harimoto Tomokazu Super ALC."
+          ],
+          "ru": [
+            "Super ALC (Super Arylate-Carbon) — усиленная версия волокна ALC в основаниях Butterfly: в ткань из арилата и карбона вплетено больше волокон, поэтому мяч отскакивает сильнее. При этом, по описанию Butterfly, соотношение арилата и карбона подобрано так, чтобы основание осталось таким же гибким, как с обычной ALC. В цифрах: у Viscaria Super ALC реакция 12,1 и вибрация 10,1, у Viscaria с ALC — 11,8 и 10,3.",
+            "Реакция у Butterfly — базовая скорость основания, вибрация — насколько жёстко ощущается удар. То есть в паре Viscaria волокно Super ALC добавляет 0,3 реакции, а по ощущению основание не становится жёстче: вибрация даже на 0,2 ниже. Именно это Butterfly подчёркивает в описании Viscaria Super ALC — первого основания с этим волокном: реакцию подняли, не поднимая вибрацию. Конструкция шпонов взята у классической Viscaria, толщина — 5,7 мм вместо 5,8.",
+            "В глобальном каталоге Butterfly на 16.11.2026 три основания с Super ALC для европейского хвата. Viscaria Super ALC и Fan Zhendong Super ALC — outer: волокно под верхним шпоном, 5,7 мм, 12,1 / 10,1. Harimoto Tomokazu Innerforce Super ALC — inner: волокно у ядра, 5,9 мм, увеличенная лопасть 158×152 мм, 11,4 / 9,5; у того же основания Харимото с обычной ALC — 10,7 / 9,2, так что в inner-паре растут оба числа: реакция на 0,7, вибрация на 0,3. Все три выпускаются и в версии CS для китайского пера.",
+            "От Super ZLC волокно отличается ощущением. Fan Zhendong Super ZLC чуть быстрее (реакция 12,3), но заметно жёстче: вибрация 11,1 против 10,1 у Fan Zhendong Super ALC. Так что Super ALC — это скорость, близкая к Super ZLC, но с более мягким касанием.",
+            "Кому подходит. Butterfly рекомендует Viscaria Super ALC не только топ-игрокам, но и игрокам среднего и продвинутого уровня, которым на обычной ALC не хватает мощности. Среди профессионалов на Viscaria Super ALC играет Линь Юньжу, а на Harimoto Tomokazu Innerforce Super ALC — Томокадзу и Мива Харимото (страницы игроков Butterfly, проверено 16.11.2026). В нашем каталоге основание Харимото записано короче — Harimoto Tomokazu Super ALC."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Волокно й розташування",
+              "ru": "Волокно и расположение"
+            },
+            {
+              "ua": "Товщина",
+              "ru": "Толщина"
+            },
+            {
+              "ua": "Реакція",
+              "ru": "Реакция"
+            },
+            {
+              "ua": "Вібрація",
+              "ru": "Вибрация"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Viscaria Super ALC",
+                "ru": "Viscaria Super ALC",
+                "href": "/butterfly/osnovaniya/viscaria-super-alc"
+              },
+              {
+                "ua": "Super ALC, outer",
+                "ru": "Super ALC, outer"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "12,1",
+                "ru": "12,1"
+              },
+              {
+                "ua": "10,1",
+                "ru": "10,1"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong Super ALC",
+                "ru": "Fan Zhendong Super ALC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-super-alc"
+              },
+              {
+                "ua": "Super ALC, outer",
+                "ru": "Super ALC, outer"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "12,1",
+                "ru": "12,1"
+              },
+              {
+                "ua": "10,1",
+                "ru": "10,1"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce Super ALC",
+                "ru": "Harimoto Tomokazu Innerforce Super ALC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-super-alc"
+              },
+              {
+                "ua": "Super ALC, inner",
+                "ru": "Super ALC, inner"
+              },
+              {
+                "ua": "5,9 мм",
+                "ru": "5,9 мм"
+              },
+              {
+                "ua": "11,4",
+                "ru": "11,4"
+              },
+              {
+                "ua": "9,5",
+                "ru": "9,5"
+              }
+            ],
+            [
+              {
+                "ua": "Viscaria (для порівняння)",
+                "ru": "Viscaria (для сравнения)",
+                "href": "/butterfly/osnovaniya/viscaria"
+              },
+              {
+                "ua": "ALC, outer",
+                "ru": "ALC, outer"
+              },
+              {
+                "ua": "5,8 мм",
+                "ru": "5,8 мм"
+              },
+              {
+                "ua": "11,8",
+                "ru": "11,8"
+              },
+              {
+                "ua": "10,3",
+                "ru": "10,3"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong ALC",
+                "ru": "Fan Zhendong ALC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-alc"
+              },
+              {
+                "ua": "ALC, outer",
+                "ru": "ALC, outer"
+              },
+              {
+                "ua": "5,8 мм",
+                "ru": "5,8 мм"
+              },
+              {
+                "ua": "11,8",
+                "ru": "11,8"
+              },
+              {
+                "ua": "10,3",
+                "ru": "10,3"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce ALC",
+                "ru": "Harimoto Tomokazu Innerforce ALC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-alc"
+              },
+              {
+                "ua": "ALC, inner",
+                "ru": "ALC, inner"
+              },
+              {
+                "ua": "6,0 мм",
+                "ru": "6,0 мм"
+              },
+              {
+                "ua": "10,7",
+                "ru": "10,7"
+              },
+              {
+                "ua": "9,2",
+                "ru": "9,2"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong Super ZLC",
+                "ru": "Fan Zhendong Super ZLC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, outer",
+                "ru": "Super ZLC, outer"
+              },
+              {
+                "ua": "5,6 мм",
+                "ru": "5,6 мм"
+              },
+              {
+                "ua": "12,3",
+                "ru": "12,3"
+              },
+              {
+                "ua": "11,1",
+                "ru": "11,1"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим Super ALC відрізняється від ALC?",
+              "ru": "Чем Super ALC отличается от ALC?"
+            },
+            "a": {
+              "ua": "У Super ALC вплетено більше волокна, ніж у звичайну ALC, тому відскок вищий; співвідношення арилату й карбону Butterfly підібрала так, щоб зберегти гнучкість. Viscaria Super ALC: реакція 12,1, вібрація 10,1, товщина 5,7 мм. Viscaria: 11,8, 10,3 і 5,8 мм.",
+              "ru": "В Super ALC вплетено больше волокна, чем в обычную ALC, поэтому отскок выше; соотношение арилата и карбона Butterfly подобрала так, чтобы сохранить гибкость. Viscaria Super ALC: реакция 12,1, вибрация 10,1, толщина 5,7 мм. Viscaria: 11,8, 10,3 и 5,8 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Що жорсткіше — Super ALC чи Super ZLC?",
+              "ru": "Что жёстче — Super ALC или Super ZLC?"
+            },
+            "a": {
+              "ua": "Super ZLC. Вібрація Fan Zhendong Super ZLC — 11,1, Fan Zhendong Super ALC — 10,1; що вище це число Butterfly, то жорсткіше відчувається удар. За реакцією різниця менша: 12,3 проти 12,1.",
+              "ru": "Super ZLC. Вибрация Fan Zhendong Super ZLC — 11,1, Fan Zhendong Super ALC — 10,1; чем выше это число Butterfly, тем жёстче ощущается удар. По реакции разница меньше: 12,3 против 12,1."
+            }
+          },
+          {
+            "q": {
+              "ua": "Які основи Butterfly зроблені з Super ALC?",
+              "ru": "Какие основания Butterfly сделаны с Super ALC?"
+            },
+            "a": {
+              "ua": "Viscaria Super ALC і Fan Zhendong Super ALC (outer, 5,7 мм, 12,1 / 10,1) та Harimoto Tomokazu Innerforce Super ALC (inner, 5,9 мм, 11,4 / 9,5). Кожна має й версію CS для китайського пера — разом шість моделей у глобальному каталозі Butterfly на 16.11.2026.",
+              "ru": "Viscaria Super ALC и Fan Zhendong Super ALC (outer, 5,7 мм, 12,1 / 10,1) и Harimoto Tomokazu Innerforce Super ALC (inner, 5,9 мм, 11,4 / 9,5). У каждого есть и версия CS для китайского пера — всего шесть моделей в глобальном каталоге Butterfly на 16.11.2026."
+            }
+          },
+          {
+            "q": {
+              "ua": "Хто з професіоналів грає основами Super ALC?",
+              "ru": "Кто из профессионалов играет основаниями Super ALC?"
+            },
+            "a": {
+              "ua": "За сторінками гравців Butterfly на 16.11.2026: Лінь Юньжу — Viscaria Super ALC, Томокадзу Харімото й Міва Харімото — Harimoto Tomokazu Innerforce Super ALC.",
+              "ru": "По страницам игроков Butterfly на 16.11.2026: Линь Юньжу — Viscaria Super ALC, Томокадзу Харимото и Мива Харимото — Harimoto Tomokazu Innerforce Super ALC."
+            }
+          }
+        ],
+        "related": [
+          "alc",
+          "super-zlc",
+          "zlc",
+          "outerfiber",
+          "innerfiber",
+          "reaction"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "ALC чи ZLC, inner чи outer: карбонові основи Butterfly",
+              "ru": "ALC или ZLC, inner или outer: карбоновые основания Butterfly"
+            },
+            "href": "/blog/alc-chy-zlc"
+          },
+          {
+            "label": {
+              "ua": "Viscaria, Timo Boll ALC чи Fan Zhendong ALC: порівняння",
+              "ru": "Viscaria, Timo Boll ALC или Fan Zhendong ALC: сравнение"
+            },
+            "href": "/blog/viscaria-timo-boll-alc-fan-zhendong-alc"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Viscaria Super ALC",
+              "ru": "Основание Butterfly Viscaria Super ALC"
+            },
+            "href": "/butterfly/osnovaniya/viscaria-super-alc"
+          },
+          {
+            "label": {
+              "ua": "Основи Butterfly ALC і Super ALC",
+              "ru": "Основания Butterfly ALC и Super ALC"
+            },
+            "href": "/osnovaniya/alc"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — штучні волокна в основах (Artificial fibers)",
+              "ru": "Butterfly Global — искусственные волокна в основаниях (Artificial fibers)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/fiber.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Japan — властивості спеціальних матеріалів (特殊素材の性能)",
+              "ru": "Butterfly Japan — свойства специальных материалов (特殊素材の性能)"
+            },
+            "url": "https://www.butterfly.co.jp/products/blade/material.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria Super ALC",
+              "ru": "Butterfly Global — Viscaria Super ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37191.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong Super ALC",
+              "ru": "Butterfly Global — Fan Zhendong Super ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37241.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37331.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria",
+              "ru": "Butterfly Global — Viscaria"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30041.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong ALC",
+              "ru": "Butterfly Global — Fan Zhendong ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37221.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce ALC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36991.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong Super ZLC",
+              "ru": "Butterfly Global — Fan Zhendong Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37251.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Лінь Юньжу",
+              "ru": "Butterfly Global — страница игрока: Линь Юньжу"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/lin-yunju.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Томокадзу Харімото",
+              "ru": "Butterfly Global — страница игрока: Томокадзу Харимото"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/harimoto-tomokazu.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Міва Харімото",
+              "ru": "Butterfly Global — страница игрока: Мива Харимото"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/harimoto-miwa.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "super-zlc",
+      "page": {
+        "metaTitle": {
+          "ua": "Super ZLC — що це і чим відрізняється від ZLC | TTMAX",
+          "ru": "Super ZLC — что это и чем отличается от ZLC | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🚀 Super ZLC — у 1,8 раза більше карбону й ZL-волокна за масою, ніж у ZLC: реакція до 12,5. Моделі Butterfly, офіційні цифри, порівняння з Super ALC.",
+          "ru": "🚀 Super ZLC — в 1,8 раза больше карбона и ZL-волокна по массе, чем в ZLC: реакция до 12,5. Модели Butterfly, официальные цифры, сравнение с Super ALC."
+        },
+        "h1": {
+          "ua": "Super ZLC — що це за волокно і чим воно відрізняється від ZLC",
+          "ru": "Super ZLC — что это за волокно и чем оно отличается от ZLC"
+        },
+        "body": {
+          "ua": [
+            "Super ZLC (Super ZL-Carbon) — ущільнена версія волокна ZLC в основах Butterfly: за даними виробника, карбонових і ZL-волокон у ньому за масою в 1,8 раза більше, ніж у звичайному ZL-Carbon. Щільніше плетіння розширює на лопаті зону високого відскоку й піднімає швидкість: у Fan Zhendong Super ZLC реакція 12,3 і вібрація 11,1, у Fan Zhendong ZLC — 11,7 і 10,8.",
+            "Що означають ці числа. Реакція в Butterfly — базова швидкість основи, вібрація — наскільки жорстко відчувається удар. У парі основ Fan Zhendong Super ZLC додає до ZLC 0,6 реакції й 0,3 вібрації: основа стає і швидшою, і жорсткішою. У Super ALC інакше: Fan Zhendong Super ALC має 12,1 / 10,1 — майже та сама швидкість, але на цілу одиницю мʼякше відчуття.",
+            "У глобальному каталозі Butterfly на 16.11.2026 чотири основи з Super ZLC для європейського хвату. Найшвидша — Mizutani Jun Super ZLC: 5,8 мм, реакція 12,5, вібрація 11,6. Fan Zhendong Super ZLC і Lin Yun-Ju Super ZLC мають однакові числа — 5,6 мм, 12,3 / 11,1. Harimoto Tomokazu Innerforce Super ZLC — перша основа, де Super ZLC лежить біля ядра (inner): 6,2 мм, лопать 158×152 мм, 12,0 / 10,5; за Butterfly, це найвища реакція серед основ з inner-конструкцією.",
+            "У каталозі TTMAX є ще Zhang Jike Super ZLC (outer, 5,6 мм). На сайті Butterfly Global цієї моделі зараз немає, тому офіційних чисел реакції й вібрації для неї ми не наводимо.",
+            "Кому підходить. Super ZLC дає найвищу реакцію серед волокон родини ALC/ZLC — до 12,5 — разом із жорстким відчуттям удару, тож це вибір для гравця з поставленою атакою, якому на ZLC бракує швидкості. Inner-версію Харімото Butterfly радить тим, хто хоче потужність Super ZLC і відчуття, що мʼяч «тримається» на ракетці. Якщо важливіший контроль, почніть зі звичайної ZLC або з inner-ZLC на кшталт Innerforce Layer ZLC (10,5 / 9,5)."
+          ],
+          "ru": [
+            "Super ZLC (Super ZL-Carbon) — уплотнённая версия волокна ZLC в основаниях Butterfly: по данным производителя, карбоновых и ZL-волокон в нём по массе в 1,8 раза больше, чем в обычном ZL-Carbon. Более плотное плетение расширяет на лопасти зону высокого отскока и поднимает скорость: у Fan Zhendong Super ZLC реакция 12,3 и вибрация 11,1, у Fan Zhendong ZLC — 11,7 и 10,8.",
+            "Что значат эти числа. Реакция у Butterfly — базовая скорость основания, вибрация — насколько жёстко ощущается удар. В паре оснований Fan Zhendong Super ZLC добавляет к ZLC 0,6 реакции и 0,3 вибрации: основание становится и быстрее, и жёстче. У Super ALC иначе: у Fan Zhendong Super ALC 12,1 / 10,1 — почти та же скорость, но ощущение на целую единицу мягче.",
+            "В глобальном каталоге Butterfly на 16.11.2026 четыре основания с Super ZLC для европейского хвата. Самое быстрое — Mizutani Jun Super ZLC: 5,8 мм, реакция 12,5, вибрация 11,6. У Fan Zhendong Super ZLC и Lin Yun-Ju Super ZLC числа одинаковые — 5,6 мм, 12,3 / 11,1. Harimoto Tomokazu Innerforce Super ZLC — первое основание, где Super ZLC лежит у ядра (inner): 6,2 мм, лопасть 158×152 мм, 12,0 / 10,5; по данным Butterfly, это самая высокая реакция среди оснований с inner-конструкцией.",
+            "В каталоге TTMAX есть ещё Zhang Jike Super ZLC (outer, 5,6 мм). На сайте Butterfly Global этой модели сейчас нет, поэтому официальных чисел реакции и вибрации для неё мы не приводим.",
+            "Кому подходит. Super ZLC даёт самую высокую реакцию среди волокон семейства ALC/ZLC — до 12,5 — вместе с жёстким ощущением удара, так что это выбор для игрока с поставленной атакой, которому на ZLC не хватает скорости. Inner-версию Харимото Butterfly советует тем, кто хочет мощность Super ZLC и ощущение, что мяч «держится» на ракетке. Если важнее контроль, начните с обычной ZLC или с inner-ZLC вроде Innerforce Layer ZLC (10,5 / 9,5)."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Волокно й розташування",
+              "ru": "Волокно и расположение"
+            },
+            {
+              "ua": "Товщина",
+              "ru": "Толщина"
+            },
+            {
+              "ua": "Реакція",
+              "ru": "Реакция"
+            },
+            {
+              "ua": "Вібрація",
+              "ru": "Вибрация"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Mizutani Jun Super ZLC",
+                "ru": "Mizutani Jun Super ZLC",
+                "href": "/butterfly/osnovaniya/mizutani-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, outer",
+                "ru": "Super ZLC, outer"
+              },
+              {
+                "ua": "5,8 мм",
+                "ru": "5,8 мм"
+              },
+              {
+                "ua": "12,5",
+                "ru": "12,5"
+              },
+              {
+                "ua": "11,6",
+                "ru": "11,6"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong Super ZLC",
+                "ru": "Fan Zhendong Super ZLC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, outer",
+                "ru": "Super ZLC, outer"
+              },
+              {
+                "ua": "5,6 мм",
+                "ru": "5,6 мм"
+              },
+              {
+                "ua": "12,3",
+                "ru": "12,3"
+              },
+              {
+                "ua": "11,1",
+                "ru": "11,1"
+              }
+            ],
+            [
+              {
+                "ua": "Lin Yun-Ju Super ZLC",
+                "ru": "Lin Yun-Ju Super ZLC",
+                "href": "/butterfly/osnovaniya/lin-yun-ju-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, outer",
+                "ru": "Super ZLC, outer"
+              },
+              {
+                "ua": "5,6 мм",
+                "ru": "5,6 мм"
+              },
+              {
+                "ua": "12,3",
+                "ru": "12,3"
+              },
+              {
+                "ua": "11,1",
+                "ru": "11,1"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce Super ZLC",
+                "ru": "Harimoto Tomokazu Innerforce Super ZLC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-innerforce-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, inner",
+                "ru": "Super ZLC, inner"
+              },
+              {
+                "ua": "6,2 мм",
+                "ru": "6,2 мм"
+              },
+              {
+                "ua": "12,0",
+                "ru": "12,0"
+              },
+              {
+                "ua": "10,5",
+                "ru": "10,5"
+              }
+            ],
+            [
+              {
+                "ua": "Zhang Jike Super ZLC",
+                "ru": "Zhang Jike Super ZLC",
+                "href": "/butterfly/osnovaniya/zhang-jike-super-zlc"
+              },
+              {
+                "ua": "Super ZLC, outer",
+                "ru": "Super ZLC, outer"
+              },
+              {
+                "ua": "5,6 мм",
+                "ru": "5,6 мм"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              },
+              {
+                "ua": "—",
+                "ru": "—"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong ZLC (для порівняння)",
+                "ru": "Fan Zhendong ZLC (для сравнения)",
+                "href": "/butterfly/osnovaniya/fan-zhendong-zlc"
+              },
+              {
+                "ua": "ZLC, outer",
+                "ru": "ZLC, outer"
+              },
+              {
+                "ua": "5,5 мм",
+                "ru": "5,5 мм"
+              },
+              {
+                "ua": "11,7",
+                "ru": "11,7"
+              },
+              {
+                "ua": "10,8",
+                "ru": "10,8"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce ZLC",
+                "ru": "Harimoto Tomokazu Innerforce ZLC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-innerforce-zlc"
+              },
+              {
+                "ua": "ZLC, inner",
+                "ru": "ZLC, inner"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "10,5",
+                "ru": "10,5"
+              },
+              {
+                "ua": "9,3",
+                "ru": "9,3"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong Super ALC",
+                "ru": "Fan Zhendong Super ALC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-super-alc"
+              },
+              {
+                "ua": "Super ALC, outer",
+                "ru": "Super ALC, outer"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "12,1",
+                "ru": "12,1"
+              },
+              {
+                "ua": "10,1",
+                "ru": "10,1"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим Super ZLC відрізняється від ZLC?",
+              "ru": "Чем Super ZLC отличается от ZLC?"
+            },
+            "a": {
+              "ua": "Щільністю плетіння: за Butterfly, у Super ZLC карбонових і ZL-волокон за масою в 1,8 раза більше. Основа стає швидшою й жорсткішою: Fan Zhendong Super ZLC — реакція 12,3, вібрація 11,1, Fan Zhendong ZLC — 11,7 і 10,8.",
+              "ru": "Плотностью плетения: по данным Butterfly, в Super ZLC карбоновых и ZL-волокон по массе в 1,8 раза больше. Основание становится быстрее и жёстче: Fan Zhendong Super ZLC — реакция 12,3, вибрация 11,1, Fan Zhendong ZLC — 11,7 и 10,8."
+            }
+          },
+          {
+            "q": {
+              "ua": "Що швидше — Super ZLC чи Super ALC?",
+              "ru": "Что быстрее — Super ZLC или Super ALC?"
+            },
+            "a": {
+              "ua": "Super ZLC, але ненабагато: реакція Fan Zhendong Super ZLC — 12,3, Fan Zhendong Super ALC — 12,1. Помітніша різниця у відчутті: вібрація 11,1 проти 10,1, тобто Super ZLC жорсткіша.",
+              "ru": "Super ZLC, но ненамного: реакция Fan Zhendong Super ZLC — 12,3, Fan Zhendong Super ALC — 12,1. Заметнее разница в ощущении: вибрация 11,1 против 10,1, то есть Super ZLC жёстче."
+            }
+          },
+          {
+            "q": {
+              "ua": "Яка основа з Super ZLC найшвидша?",
+              "ru": "Какое основание с Super ZLC самое быстрое?"
+            },
+            "a": {
+              "ua": "За офіційною реакцією Butterfly — Mizutani Jun Super ZLC: 12,5 при товщині 5,8 мм і вібрації 11,6. У Fan Zhendong Super ZLC і Lin Yun-Ju Super ZLC — 12,3, у inner-моделі Harimoto Tomokazu Innerforce Super ZLC — 12,0.",
+              "ru": "По официальной реакции Butterfly — Mizutani Jun Super ZLC: 12,5 при толщине 5,8 мм и вибрации 11,6. У Fan Zhendong Super ZLC и Lin Yun-Ju Super ZLC — 12,3, у inner-модели Harimoto Tomokazu Innerforce Super ZLC — 12,0."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чи буває Super ZLC із внутрішнім розташуванням волокна?",
+              "ru": "Бывает ли Super ZLC с внутренним расположением волокна?"
+            },
+            "a": {
+              "ua": "Так. Harimoto Tomokazu Innerforce Super ZLC — перша основа Butterfly, де Super ZLC лежить біля ядра: 6,2 мм, лопать 158×152 мм, реакція 12,0, вібрація 10,5. Для порівняння, outer-модель Fan Zhendong Super ZLC має 12,3 / 11,1.",
+              "ru": "Да. Harimoto Tomokazu Innerforce Super ZLC — первое основание Butterfly, где Super ZLC лежит у ядра: 6,2 мм, лопасть 158×152 мм, реакция 12,0, вибрация 10,5. Для сравнения, у outer-модели Fan Zhendong Super ZLC — 12,3 / 11,1."
+            }
+          }
+        ],
+        "related": [
+          "zlc",
+          "super-alc",
+          "zlf",
+          "alc",
+          "innerfiber",
+          "vibration"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "ALC чи ZLC, inner чи outer: карбонові основи Butterfly",
+              "ru": "ALC или ZLC, inner или outer: карбоновые основания Butterfly"
+            },
+            "href": "/blog/alc-chy-zlc"
+          },
+          {
+            "label": {
+              "ua": "Таблиця основ Butterfly: ZLC і Super ZLC",
+              "ru": "Таблица оснований Butterfly: ZLC и Super ZLC"
+            },
+            "href": "/blog/tablytsia-osnov-butterfly"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Fan Zhendong Super ZLC",
+              "ru": "Основание Butterfly Fan Zhendong Super ZLC"
+            },
+            "href": "/butterfly/osnovaniya/fan-zhendong-super-zlc"
+          },
+          {
+            "label": {
+              "ua": "Основи Butterfly ZLC і Super ZLC",
+              "ru": "Основания Butterfly ZLC и Super ZLC"
+            },
+            "href": "/osnovaniya/zlc"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — штучні волокна в основах (Artificial fibers)",
+              "ru": "Butterfly Global — искусственные волокна в основаниях (Artificial fibers)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/fiber.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Japan — властивості спеціальних матеріалів (特殊素材の性能)",
+              "ru": "Butterfly Japan — свойства специальных материалов (特殊素材の性能)"
+            },
+            "url": "https://www.butterfly.co.jp/products/blade/material.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Mizutani Jun Super ZLC",
+              "ru": "Butterfly Global — Mizutani Jun Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36601.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong Super ZLC",
+              "ru": "Butterfly Global — Fan Zhendong Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37251.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Lin Yun-Ju Super ZLC",
+              "ru": "Butterfly Global — Lin Yun-Ju Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37131.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce Super ZLC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37021.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong ZLC",
+              "ru": "Butterfly Global — Fan Zhendong ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37261.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce ZLC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37031.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong Super ALC",
+              "ru": "Butterfly Global — Fan Zhendong Super ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37241.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ZLC",
+              "ru": "Butterfly Global — Innerforce Layer ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36681.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "innerforce",
+      "page": {
+        "metaTitle": {
+          "ua": "Innerforce — що це за основи Butterfly, моделі | TTMAX",
+          "ru": "Innerforce — что это за основания Butterfly | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🎯 Innerforce — основи Butterfly з волокном біля ядра (схема Innerfiber, з 2009 року): реакція від 10,1 до 12,0. Моделі, цифри й відмінність від outer.",
+          "ru": "🎯 Innerforce — основания Butterfly с волокном у ядра (схема Innerfiber, с 2009 года): реакция от 10,1 до 12,0. Модели, цифры и отличие от outer."
+        },
+        "h1": {
+          "ua": "Innerforce — що це за основи Butterfly і які моделі в лінійці",
+          "ru": "Innerforce — что это за основания Butterfly и какие модели в линейке"
+        },
+        "body": {
+          "ua": [
+            "Innerforce — назва основ Butterfly, у яких шари штучного волокна лежать не під верхнім шпоном, а глибше, біля деревʼяного ядра. Таку конструкцію Butterfly називає Innerfiber і застосовує з 2009 року: мʼяч трохи довше тримається на ракетці, а характер волокна зберігається. Приклад — Innerforce Layer ALC: 5 шарів дерева + 2 шари ALC біля ядра, 6,0 мм, реакція 10,7, вібрація 9,4.",
+            "Порівняйте з основами, де те саме волокно стоїть зовні (outer). Viscaria з ALC під верхнім шпоном має реакцію 11,8 і вібрацію 10,3, Timo Boll ZLC — 11,7 і 10,8, а Innerforce Layer ZLC — 10,5 і 9,5. Тобто у звичайних ALC і ZLC внутрішнє розташування знімає приблизно одиницю і швидкості, і жорсткості відчуття.",
+            "У глобальному каталозі Butterfly на 16.11.2026 слово Innerforce є в назвах девʼяти основ для європейського хвату. Базова трійка — Innerforce Layer ALC, тонша й мʼякша Innerforce Layer ALC.S (5,5 мм, 10,1 / 8,4) та Innerforce Layer ZLC. Чотири іменні моделі Харімото мають збільшену лопать 158×152 мм: Innerforce ALC, ZLC, Super ALC і Super ZLC. Ще дві — Ovtcharov Innerforce ALC і Franziska Innerforce ZLC (5,7 мм, 10,5 / 9,5). Сім моделей випускаються й у версії CS для китайського пера.",
+            "Inner не означає «повільна». Моделі завтовшки 6,2 мм майже наздоганяють outer-основи: Ovtcharov Innerforce ALC — 11,7 / 10,5, Harimoto Tomokazu Innerforce Super ZLC — 12,0 / 10,5, і це, за Butterfly, найвища реакція серед основ з inner-конструкцією. Тож розкид усередині лінійки великий: реакція від 10,1 до 12,0, вібрація від 8,4 до 10,5.",
+            "Кому підходить. Butterfly описує Innerforce Layer як основи з відчуттям, що мʼяч «тримається» на ракетці, без втрати потужності, а ALC.S радить для атаки з акцентом на обертання. Зважайте на назви: не кожна inner-основа зветься Innerforce — Apolonia ZLC має ту саму конструкцію й ті самі 10,5 / 9,5. А в нашому каталозі дві основи Харімото записані коротше, Harimoto Tomokazu ALC і Harimoto Tomokazu Super ALC, — це ті самі Innerforce-моделі."
+          ],
+          "ru": [
+            "Innerforce — название оснований Butterfly, в которых слои искусственного волокна лежат не под верхним шпоном, а глубже, у деревянного ядра. Такую конструкцию Butterfly называет Innerfiber и применяет с 2009 года: мяч чуть дольше держится на ракетке, а характер волокна сохраняется. Пример — Innerforce Layer ALC: 5 слоёв дерева + 2 слоя ALC у ядра, 6,0 мм, реакция 10,7, вибрация 9,4.",
+            "Сравните с основаниями, где то же волокно стоит снаружи (outer). У Viscaria с ALC под верхним шпоном реакция 11,8 и вибрация 10,3, у Timo Boll ZLC — 11,7 и 10,8, а у Innerforce Layer ZLC — 10,5 и 9,5. То есть в обычных ALC и ZLC внутреннее расположение снимает примерно единицу и скорости, и жёсткости ощущения.",
+            "В глобальном каталоге Butterfly на 16.11.2026 слово Innerforce есть в названиях девяти оснований для европейского хвата. Базовая тройка — Innerforce Layer ALC, более тонкое и мягкое Innerforce Layer ALC.S (5,5 мм, 10,1 / 8,4) и Innerforce Layer ZLC. У четырёх именных моделей Харимото увеличенная лопасть 158×152 мм: Innerforce ALC, ZLC, Super ALC и Super ZLC. Ещё две — Ovtcharov Innerforce ALC и Franziska Innerforce ZLC (5,7 мм, 10,5 / 9,5). Семь моделей выпускаются и в версии CS для китайского пера.",
+            "Inner не значит «медленное». Модели толщиной 6,2 мм почти догоняют outer-основания: Ovtcharov Innerforce ALC — 11,7 / 10,5, Harimoto Tomokazu Innerforce Super ZLC — 12,0 / 10,5, и это, по данным Butterfly, самая высокая реакция среди оснований с inner-конструкцией. Так что разброс внутри линейки большой: реакция от 10,1 до 12,0, вибрация от 8,4 до 10,5.",
+            "Кому подходит. Butterfly описывает Innerforce Layer как основания с ощущением, что мяч «держится» на ракетке, без потери мощности, а ALC.S советует для атаки с упором на вращение. Обращайте внимание на названия: не каждое inner-основание называется Innerforce — у Apolonia ZLC та же конструкция и те же 10,5 / 9,5. А в нашем каталоге два основания Харимото записаны короче, Harimoto Tomokazu ALC и Harimoto Tomokazu Super ALC, — это те же Innerforce-модели."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Волокно (inner)",
+              "ru": "Волокно (inner)"
+            },
+            {
+              "ua": "Товщина",
+              "ru": "Толщина"
+            },
+            {
+              "ua": "Лопать",
+              "ru": "Лопасть"
+            },
+            {
+              "ua": "Реакція / вібрація",
+              "ru": "Реакция / вибрация"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Innerforce Layer ALC.S",
+                "ru": "Innerforce Layer ALC.S",
+                "href": "/butterfly/osnovaniya/innerforce-layer-alc-s"
+              },
+              {
+                "ua": "ALC",
+                "ru": "ALC"
+              },
+              {
+                "ua": "5,5 мм",
+                "ru": "5,5 мм"
+              },
+              {
+                "ua": "157×150 мм",
+                "ru": "157×150 мм"
+              },
+              {
+                "ua": "10,1 / 8,4",
+                "ru": "10,1 / 8,4"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ZLC",
+                "ru": "Innerforce Layer ZLC",
+                "href": "/butterfly/osnovaniya/innerforce-layer-zlc"
+              },
+              {
+                "ua": "ZLC",
+                "ru": "ZLC"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "157×150 мм",
+                "ru": "157×150 мм"
+              },
+              {
+                "ua": "10,5 / 9,5",
+                "ru": "10,5 / 9,5"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ALC",
+                "ru": "Innerforce Layer ALC",
+                "href": "/butterfly/osnovaniya/innerforce-layer-alc"
+              },
+              {
+                "ua": "ALC",
+                "ru": "ALC"
+              },
+              {
+                "ua": "6,0 мм",
+                "ru": "6,0 мм"
+              },
+              {
+                "ua": "157×150 мм",
+                "ru": "157×150 мм"
+              },
+              {
+                "ua": "10,7 / 9,4",
+                "ru": "10,7 / 9,4"
+              }
+            ],
+            [
+              {
+                "ua": "Franziska Innerforce ZLC",
+                "ru": "Franziska Innerforce ZLC",
+                "href": "/butterfly/osnovaniya/franziska-innerforce-zlc"
+              },
+              {
+                "ua": "ZLC",
+                "ru": "ZLC"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "157×150 мм",
+                "ru": "157×150 мм"
+              },
+              {
+                "ua": "10,5 / 9,5",
+                "ru": "10,5 / 9,5"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce ZLC",
+                "ru": "Harimoto Tomokazu Innerforce ZLC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-innerforce-zlc"
+              },
+              {
+                "ua": "ZLC",
+                "ru": "ZLC"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "158×152 мм",
+                "ru": "158×152 мм"
+              },
+              {
+                "ua": "10,5 / 9,3",
+                "ru": "10,5 / 9,3"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce ALC",
+                "ru": "Harimoto Tomokazu Innerforce ALC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-alc"
+              },
+              {
+                "ua": "ALC",
+                "ru": "ALC"
+              },
+              {
+                "ua": "6,0 мм",
+                "ru": "6,0 мм"
+              },
+              {
+                "ua": "158×152 мм",
+                "ru": "158×152 мм"
+              },
+              {
+                "ua": "10,7 / 9,2",
+                "ru": "10,7 / 9,2"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce Super ALC",
+                "ru": "Harimoto Tomokazu Innerforce Super ALC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-super-alc"
+              },
+              {
+                "ua": "Super ALC",
+                "ru": "Super ALC"
+              },
+              {
+                "ua": "5,9 мм",
+                "ru": "5,9 мм"
+              },
+              {
+                "ua": "158×152 мм",
+                "ru": "158×152 мм"
+              },
+              {
+                "ua": "11,4 / 9,5",
+                "ru": "11,4 / 9,5"
+              }
+            ],
+            [
+              {
+                "ua": "Ovtcharov Innerforce ALC",
+                "ru": "Ovtcharov Innerforce ALC",
+                "href": "/butterfly/osnovaniya/dimitrij-ovtcharov-innerforce-alc"
+              },
+              {
+                "ua": "ALC",
+                "ru": "ALC"
+              },
+              {
+                "ua": "6,2 мм",
+                "ru": "6,2 мм"
+              },
+              {
+                "ua": "158×152 мм",
+                "ru": "158×152 мм"
+              },
+              {
+                "ua": "11,7 / 10,5",
+                "ru": "11,7 / 10,5"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce Super ZLC",
+                "ru": "Harimoto Tomokazu Innerforce Super ZLC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-innerforce-super-zlc"
+              },
+              {
+                "ua": "Super ZLC",
+                "ru": "Super ZLC"
+              },
+              {
+                "ua": "6,2 мм",
+                "ru": "6,2 мм"
+              },
+              {
+                "ua": "158×152 мм",
+                "ru": "158×152 мм"
+              },
+              {
+                "ua": "12,0 / 10,5",
+                "ru": "12,0 / 10,5"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим Innerforce відрізняється від Outerforce?",
+              "ru": "Чем Innerforce отличается от Outerforce?"
+            },
+            "a": {
+              "ua": "Розташуванням волокна. В Innerforce воно лежить біля ядра (inner), в Outerforce — одразу під верхнім шпоном (outer). У цифрах Butterfly: Innerforce Layer ALC — 6,0 мм, реакція 10,7, вібрація 9,4; Outerforce ALC — 6,2 мм, 11,4 і 10,4.",
+              "ru": "Расположением волокна. В Innerforce оно лежит у ядра (inner), в Outerforce — сразу под верхним шпоном (outer). В цифрах Butterfly: Innerforce Layer ALC — 6,0 мм, реакция 10,7, вибрация 9,4; Outerforce ALC — 6,2 мм, 11,4 и 10,4."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чим Innerforce Layer ALC.S відрізняється від Innerforce Layer ALC?",
+              "ru": "Чем Innerforce Layer ALC.S отличается от Innerforce Layer ALC?"
+            },
+            "a": {
+              "ua": "У ALC.S тонше ядро, тому, за Butterfly, основа легша й має нижчу вібрацію: 5,5 мм, реакція 10,1, вібрація 8,4 проти 6,0 мм і 10,7 / 9,4 в Innerforce Layer ALC. Виробник радить ALC.S для атакувальної гри з акцентом на обертання.",
+              "ru": "У ALC.S тоньше ядро, поэтому, по данным Butterfly, основание легче и с более низкой вибрацией: 5,5 мм, реакция 10,1, вибрация 8,4 против 6,0 мм и 10,7 / 9,4 у Innerforce Layer ALC. Производитель советует ALC.S для атакующей игры с упором на вращение."
+            }
+          },
+          {
+            "q": {
+              "ua": "Яка основа Innerforce найшвидша?",
+              "ru": "Какое основание Innerforce самое быстрое?"
+            },
+            "a": {
+              "ua": "Harimoto Tomokazu Innerforce Super ZLC: реакція 12,0 при вібрації 10,5 і товщині 6,2 мм. Butterfly називає це найвищою реакцією серед основ з inner-конструкцією. Найповільніша в лінійці — Innerforce Layer ALC.S із реакцією 10,1.",
+              "ru": "Harimoto Tomokazu Innerforce Super ZLC: реакция 12,0 при вибрации 10,5 и толщине 6,2 мм. Butterfly называет это самой высокой реакцией среди оснований с inner-конструкцией. Самое медленное в линейке — Innerforce Layer ALC.S с реакцией 10,1."
+            }
+          },
+          {
+            "q": {
+              "ua": "Хто з професіоналів грає основами Innerforce?",
+              "ru": "Кто из профессионалов играет основаниями Innerforce?"
+            },
+            "a": {
+              "ua": "За сторінками гравців Butterfly на 16.11.2026: Томокадзу Харімото й Міва Харімото — Harimoto Tomokazu Innerforce Super ALC, Патрік Франціска — Franziska Innerforce ZLC.",
+              "ru": "По страницам игроков Butterfly на 16.11.2026: Томокадзу Харимото и Мива Харимото — Harimoto Tomokazu Innerforce Super ALC, Патрик Франциска — Franziska Innerforce ZLC."
+            }
+          }
+        ],
+        "related": [
+          "innerfiber",
+          "outerforce",
+          "outerfiber",
+          "alc",
+          "zlc",
+          "super-alc"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "Inner чи outer: де лежить волокно — стаття «ALC чи ZLC»",
+              "ru": "Inner или outer: где лежит волокно — статья «ALC или ZLC»"
+            },
+            "href": "/blog/alc-chy-zlc"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Innerforce Layer ALC",
+              "ru": "Основание Butterfly Innerforce Layer ALC"
+            },
+            "href": "/butterfly/osnovaniya/innerforce-layer-alc"
+          },
+          {
+            "label": {
+              "ua": "Огляд Apolonia ZLC: що означає inner-ZLC",
+              "ru": "Обзор Apolonia ZLC: что значит inner-ZLC"
+            },
+            "href": "/blog/apolonia-zlc-oglyad"
+          },
+          {
+            "label": {
+              "ua": "Таблиця основ Butterfly з офіційними числами",
+              "ru": "Таблица оснований Butterfly с официальными числами"
+            },
+            "href": "/blog/tablytsia-osnov-butterfly"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerfiber / Innerfiber",
+              "ru": "Butterfly Global — Outerfiber / Innerfiber"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ALC",
+              "ru": "Butterfly Global — Innerforce Layer ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36701.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ALC.S",
+              "ru": "Butterfly Global — Innerforce Layer ALC.S"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36861.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ZLC",
+              "ru": "Butterfly Global — Innerforce Layer ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36681.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce ALC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36991.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce ZLC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37031.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37331.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce Super ZLC",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce Super ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37021.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Ovtcharov Innerforce ALC",
+              "ru": "Butterfly Global — Ovtcharov Innerforce ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37091.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Franziska Innerforce ZLC",
+              "ru": "Butterfly Global — Franziska Innerforce ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37121.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Apolonia ZLC",
+              "ru": "Butterfly Global — Apolonia ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36831.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria",
+              "ru": "Butterfly Global — Viscaria"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30041.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Timo Boll ZLC",
+              "ru": "Butterfly Global — Timo Boll ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/35831.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ALC",
+              "ru": "Butterfly Global — Outerforce ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37341.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Томокадзу Харімото",
+              "ru": "Butterfly Global — страница игрока: Томокадзу Харимото"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/harimoto-tomokazu.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Міва Харімото",
+              "ru": "Butterfly Global — страница игрока: Мива Харимото"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/harimoto-miwa.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Патрік Франціска",
+              "ru": "Butterfly Global — страница игрока: Патрик Франциска"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/franziska-patrick.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "outerforce",
+      "page": {
+        "metaTitle": {
+          "ua": "Outerforce — що це за серія основ Butterfly | TTMAX",
+          "ru": "Outerforce — что это за серия оснований Butterfly | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🏓 Outerforce — три основи Butterfly з волокном під верхнім шпоном і помірною швидкістю: реакція 11,3–11,4. ALC, ZLC чи CAF — офіційні цифри й кому яка.",
+          "ru": "🏓 Outerforce — три основания Butterfly с волокном под верхним шпоном и умеренной скоростью: реакция 11,3–11,4. ALC, ZLC или CAF — цифры и кому какое."
+        },
+        "h1": {
+          "ua": "Outerforce — що це за серія основ Butterfly",
+          "ru": "Outerforce — что это за серия оснований Butterfly"
+        },
+        "body": {
+          "ua": [
+            "Outerforce — серія з трьох основ Butterfly, у яких шари штучного волокна лежать одразу під верхнім шпоном (конструкція Outerfiber): Outerforce ALC, Outerforce ZLC і Outerforce CAF. На відміну від класичних outer-основ на кшталт Viscaria, серію налаштовано на помірну швидкість і простоту в грі: реакція 11,3–11,4 проти 11,8 у Viscaria.",
+            "Що таке outer. За Butterfly, волокно під верхнім шпоном — давня класична схема: вона підсилює відчуття волокна й робить удар швидшим. Протилежна схема, Innerfiber, ховає волокно біля ядра; так зроблена лінійка Innerforce. У цифрах: Innerforce Layer ALC — реакція 10,7 і вібрація 9,4, Outerforce ALC — 11,4 і 10,4.",
+            "Три моделі різняться волокном. Outerforce ALC (6,2 мм, 11,4 / 10,4) — арилат-карбон, який Butterfly описує як поєднання швидкості й стабільності. Outerforce ZLC (5,9 мм, 11,3 / 11,1) — найжорсткіша за відчуттям у серії; виробник обіцяє потужний удар навіть із середньої дистанції. Outerforce CAF (6,3 мм, 11,3 / 9,1) — на волокні CAF (Control Assist Fiber) з дотиком, близьким до суто деревʼяної основи; Butterfly радить її як першу основу або на заміну початковій.",
+            "Спільне в усіх трьох: 5 шарів дерева + 2 шари волокна, стандартна лопать 157×150 мм, виробництво — Японія. Кожна є й у версії CS для китайського пера — з короткою ручкою 82 мм і трохи вищою вібрацією: 10,7, 11,4 і 9,4 відповідно.",
+            "Кому підходить. Outerforce — зрозумілий перший крок до основи з волокном для гравця, який переходить із дерева: швидкість вища, ніж в Innerforce Layer, але нижча, ніж у Viscaria чи Timo Boll ZLC (11,7 / 10,8). Якщо важливіше мʼяке відчуття — дивіться Outerforce CAF; якщо потрібна повна швидкість ALC — Viscaria або основи з Super ALC."
+          ],
+          "ru": [
+            "Outerforce — серия из трёх оснований Butterfly, в которых слои искусственного волокна лежат сразу под верхним шпоном (конструкция Outerfiber): Outerforce ALC, Outerforce ZLC и Outerforce CAF. В отличие от классических outer-оснований вроде Viscaria, серия настроена на умеренную скорость и простоту в игре: реакция 11,3–11,4 против 11,8 у Viscaria.",
+            "Что такое outer. По данным Butterfly, волокно под верхним шпоном — давняя классическая схема: она усиливает ощущение волокна и делает удар быстрее. Противоположная схема, Innerfiber, прячет волокно у ядра; так сделана линейка Innerforce. В цифрах: Innerforce Layer ALC — реакция 10,7 и вибрация 9,4, Outerforce ALC — 11,4 и 10,4.",
+            "Три модели различаются волокном. Outerforce ALC (6,2 мм, 11,4 / 10,4) — арилат-карбон, который Butterfly описывает как сочетание скорости и стабильности. Outerforce ZLC (5,9 мм, 11,3 / 11,1) — самое жёсткое по ощущению в серии; производитель обещает мощный удар даже со средней дистанции. Outerforce CAF (6,3 мм, 11,3 / 9,1) — на волокне CAF (Control Assist Fiber) с касанием, близким к чисто деревянному основанию; Butterfly советует его как первое основание или на замену начальному.",
+            "Общее у всех трёх: 5 слоёв дерева + 2 слоя волокна, стандартная лопасть 157×150 мм, производство — Япония. Каждое есть и в версии CS для китайского пера — с короткой ручкой 82 мм и чуть более высокой вибрацией: 10,7, 11,4 и 9,4 соответственно.",
+            "Кому подходит. Outerforce — понятный первый шаг к основанию с волокном для игрока, который переходит с дерева: скорость выше, чем у Innerforce Layer, но ниже, чем у Viscaria или Timo Boll ZLC (11,7 / 10,8). Если важнее мягкое ощущение — смотрите Outerforce CAF; если нужна полная скорость ALC — Viscaria или основания с Super ALC."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Волокно й розташування",
+              "ru": "Волокно и расположение"
+            },
+            {
+              "ua": "Товщина",
+              "ru": "Толщина"
+            },
+            {
+              "ua": "Реакція",
+              "ru": "Реакция"
+            },
+            {
+              "ua": "Вібрація",
+              "ru": "Вибрация"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Outerforce ALC",
+                "ru": "Outerforce ALC",
+                "href": "/butterfly/osnovaniya/outerforce-alc"
+              },
+              {
+                "ua": "ALC, outer",
+                "ru": "ALC, outer"
+              },
+              {
+                "ua": "6,2 мм",
+                "ru": "6,2 мм"
+              },
+              {
+                "ua": "11,4",
+                "ru": "11,4"
+              },
+              {
+                "ua": "10,4",
+                "ru": "10,4"
+              }
+            ],
+            [
+              {
+                "ua": "Outerforce ZLC",
+                "ru": "Outerforce ZLC",
+                "href": "/butterfly/osnovaniya/outerforce-zlc"
+              },
+              {
+                "ua": "ZLC, outer",
+                "ru": "ZLC, outer"
+              },
+              {
+                "ua": "5,9 мм",
+                "ru": "5,9 мм"
+              },
+              {
+                "ua": "11,3",
+                "ru": "11,3"
+              },
+              {
+                "ua": "11,1",
+                "ru": "11,1"
+              }
+            ],
+            [
+              {
+                "ua": "Outerforce CAF",
+                "ru": "Outerforce CAF",
+                "href": "/butterfly/osnovaniya/outerforce-caf"
+              },
+              {
+                "ua": "CAF, outer",
+                "ru": "CAF, outer"
+              },
+              {
+                "ua": "6,3 мм",
+                "ru": "6,3 мм"
+              },
+              {
+                "ua": "11,3",
+                "ru": "11,3"
+              },
+              {
+                "ua": "9,1",
+                "ru": "9,1"
+              }
+            ],
+            [
+              {
+                "ua": "Viscaria (для порівняння)",
+                "ru": "Viscaria (для сравнения)",
+                "href": "/butterfly/osnovaniya/viscaria"
+              },
+              {
+                "ua": "ALC, outer",
+                "ru": "ALC, outer"
+              },
+              {
+                "ua": "5,8 мм",
+                "ru": "5,8 мм"
+              },
+              {
+                "ua": "11,8",
+                "ru": "11,8"
+              },
+              {
+                "ua": "10,3",
+                "ru": "10,3"
+              }
+            ],
+            [
+              {
+                "ua": "Timo Boll ZLC",
+                "ru": "Timo Boll ZLC",
+                "href": "/butterfly/osnovaniya/timo-boll-zlc"
+              },
+              {
+                "ua": "ZLC, outer",
+                "ru": "ZLC, outer"
+              },
+              {
+                "ua": "5,5 мм",
+                "ru": "5,5 мм"
+              },
+              {
+                "ua": "11,7",
+                "ru": "11,7"
+              },
+              {
+                "ua": "10,8",
+                "ru": "10,8"
+              }
+            ],
+            [
+              {
+                "ua": "Timo Boll CAF",
+                "ru": "Timo Boll CAF",
+                "href": "/butterfly/osnovaniya/timo-boll-caf"
+              },
+              {
+                "ua": "CAF, 3+2",
+                "ru": "CAF, 3+2"
+              },
+              {
+                "ua": "5,7 мм",
+                "ru": "5,7 мм"
+              },
+              {
+                "ua": "10,6",
+                "ru": "10,6"
+              },
+              {
+                "ua": "10,4",
+                "ru": "10,4"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ALC",
+                "ru": "Innerforce Layer ALC",
+                "href": "/butterfly/osnovaniya/innerforce-layer-alc"
+              },
+              {
+                "ua": "ALC, inner",
+                "ru": "ALC, inner"
+              },
+              {
+                "ua": "6,0 мм",
+                "ru": "6,0 мм"
+              },
+              {
+                "ua": "10,7",
+                "ru": "10,7"
+              },
+              {
+                "ua": "9,4",
+                "ru": "9,4"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим Outerforce відрізняється від Innerforce?",
+              "ru": "Чем Outerforce отличается от Innerforce?"
+            },
+            "a": {
+              "ua": "Розташуванням волокна: в Outerforce воно одразу під верхнім шпоном, в Innerforce — біля ядра. Outerforce ALC має реакцію 11,4 і вібрацію 10,4, Innerforce Layer ALC — 10,7 і 9,4, тобто outer-версія швидша й жорсткіша за відчуттям.",
+              "ru": "Расположением волокна: в Outerforce оно сразу под верхним шпоном, в Innerforce — у ядра. У Outerforce ALC реакция 11,4 и вибрация 10,4, у Innerforce Layer ALC — 10,7 и 9,4, то есть outer-версия быстрее и жёстче по ощущению."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чим Outerforce ALC відрізняється від Viscaria?",
+              "ru": "Чем Outerforce ALC отличается от Viscaria?"
+            },
+            "a": {
+              "ua": "Обидві — 5 шарів дерева + 2 шари ALC під верхнім шпоном, лопать 157×150 мм. Але Outerforce ALC товща (6,2 мм проти 5,8) і повільніша: реакція 11,4 проти 11,8 за майже однакової вібрації — 10,4 і 10,3.",
+              "ru": "Оба — 5 слоёв дерева + 2 слоя ALC под верхним шпоном, лопасть 157×150 мм. Но Outerforce ALC толще (6,2 мм против 5,8) и медленнее: реакция 11,4 против 11,8 при почти одинаковой вибрации — 10,4 и 10,3."
+            }
+          },
+          {
+            "q": {
+              "ua": "Яку Outerforce обрати — ALC, ZLC чи CAF?",
+              "ru": "Какое Outerforce выбрать — ALC, ZLC или CAF?"
+            },
+            "a": {
+              "ua": "За швидкістю вони майже рівні (реакція 11,3–11,4), різниця у відчутті. CAF наймʼякша — вібрація 9,1, Butterfly радить її як першу основу. ALC посередині — 10,4. ZLC найжорсткіша — 11,1, для потужної гри й із середньої дистанції.",
+              "ru": "По скорости они почти равны (реакция 11,3–11,4), разница в ощущении. CAF самое мягкое — вибрация 9,1, Butterfly советует его как первое основание. ALC посередине — 10,4. ZLC самое жёсткое — 11,1, для мощной игры и со средней дистанции."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чи є Outerforce для гри пером?",
+              "ru": "Есть ли Outerforce для игры пером?"
+            },
+            "a": {
+              "ua": "Так, у глобальному каталозі Butterfly всі три моделі мають версію CS для китайського пера: ручка 82×23×31,5 мм, лопать 158×150 мм, вібрація 10,7 (ALC), 11,4 (ZLC) і 9,4 (CAF). У каталозі TTMAX основи представлені з ручками для європейського хвату.",
+              "ru": "Да, в глобальном каталоге Butterfly у всех трёх моделей есть версия CS для китайского пера: ручка 82×23×31,5 мм, лопасть 158×150 мм, вибрация 10,7 (ALC), 11,4 (ZLC) и 9,4 (CAF). В каталоге TTMAX основания представлены с ручками для европейского хвата."
+            }
+          }
+        ],
+        "related": [
+          "outerfiber",
+          "innerforce",
+          "innerfiber",
+          "alc",
+          "zlc",
+          "caf"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "Inner чи outer: де лежить волокно — стаття «ALC чи ZLC»",
+              "ru": "Inner или outer: где лежит волокно — статья «ALC или ZLC»"
+            },
+            "href": "/blog/alc-chy-zlc"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Outerforce ALC",
+              "ru": "Основание Butterfly Outerforce ALC"
+            },
+            "href": "/butterfly/osnovaniya/outerforce-alc"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Outerforce CAF",
+              "ru": "Основание Butterfly Outerforce CAF"
+            },
+            "href": "/butterfly/osnovaniya/outerforce-caf"
+          },
+          {
+            "label": {
+              "ua": "Як вибрати ракетку для настільного тенісу",
+              "ru": "Как выбрать ракетку для настольного тенниса"
+            },
+            "href": "/blog/yak-vybraty-raketku"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerfiber / Innerfiber",
+              "ru": "Butterfly Global — Outerfiber / Innerfiber"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/outer_inner_fiber.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ALC",
+              "ru": "Butterfly Global — Outerforce ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37341.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ZLC",
+              "ru": "Butterfly Global — Outerforce ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37361.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce CAF",
+              "ru": "Butterfly Global — Outerforce CAF"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/37351.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ALC - CS",
+              "ru": "Butterfly Global — Outerforce ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24250.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ZLC - CS",
+              "ru": "Butterfly Global — Outerforce ZLC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24270.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce CAF - CS",
+              "ru": "Butterfly Global — Outerforce CAF - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24260.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria",
+              "ru": "Butterfly Global — Viscaria"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30041.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Timo Boll ZLC",
+              "ru": "Butterfly Global — Timo Boll ZLC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/35831.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Timo Boll CAF",
+              "ru": "Butterfly Global — Timo Boll CAF"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36951.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ALC",
+              "ru": "Butterfly Global — Innerforce Layer ALC"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/36701.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "cs-handle",
+      "page": {
+        "metaTitle": {
+          "ua": "CS (китайське перо) — що це за ручка основи | TTMAX",
+          "ru": "CS (китайское перо) — что это за ручка | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🏓 CS — версія основи Butterfly для китайського пера: ручка 82 мм замість 100 мм. Розміри, 23 моделі, чим CS відрізняється від FL, ST і японського пера.",
+          "ru": "🏓 CS — версия основания Butterfly для китайского пера: ручка 82 мм вместо 100 мм. Размеры, 23 модели, чем CS отличается от FL, ST и японского пера."
+        },
+        "h1": {
+          "ua": "CS — що це за ручка: основи Butterfly для китайського пера",
+          "ru": "CS — что это за ручка: основания Butterfly для китайского пера"
+        },
+        "body": {
+          "ua": [
+            "CS у назві основи Butterfly означає версію для китайського пера (Chinese penhold): лопать майже як у звичайної основи, а ручка коротка — 82 мм замість 100 мм у ручок FL і ST для європейського хвату. Наприклад, Viscaria - CS має ручку 82×22×31,5 мм (довжина × товщина × ширина біля торця) і лопать 158×150 мм, а звичайна Viscaria — ручку FL 100×25×34 мм і лопать 157×150 мм.",
+            "У глобальному каталозі Butterfly на 16.11.2026 таких основ 23 із 75, і кожна — пара до моделі для європейського хвату: від деревʼяних Hadraw 5 і Falcima до Fan Zhendong Super ZLC. Розміри залежать від моделі. У 16 основ ручка 82×24×32 мм і лопать 161×150 мм; у Falcima - CS і Timo Boll CAF - CS ручка на міліметр тонша; у трьох Outerforce — 82×23×31,5 мм і лопать 158×150 мм; у Viscaria - CS і Viscaria Super ALC - CS ручка найтонша — 22 мм.",
+            "Склад, товщина й реакція в кожній парі однакові. А от вібрація — показник того, наскільки жорстко відчувається удар, — у девʼяти з 23 пар у версії CS вища на 0,2–0,3: Viscaria - CS — 10,6 замість 10,3, Outerforce ALC - CS — 10,7 замість 10,4, Harimoto Tomokazu Innerforce Super ALC - CS — 9,7 замість 9,5. У решти 14, зокрема в усіх пʼяти Fan Zhendong, числа збігаються. Тож CS — не завжди «та сама основа з короткою ручкою»: звіряйте цифри конкретної моделі.",
+            "Від японського пера CS відрізняється сильно. Основи типу Japanese penhold у Butterfly — це, наприклад, Cypress G-MAX: один шар хінокі завтовшки 10 мм, вузька лопать 163×135 мм і ручка завдовжки 92 мм. CS натомість повторює конструкцію звичайної основи, і накладки на неї можна клеїти з обох боків. Так грає Дан Цю: Viscaria - CS із Dignics 09C на обох сторонах (сторінка гравця Butterfly, перевірено 16.11.2026).",
+            "У каталозі TTMAX основи представлені з ручками FL, ST і AN для європейського хвату; версій CS у ньому немає. У таблиці нижче — офіційні розміри кількох основ CS і посилання на ту саму модель для європейського хвату."
+          ],
+          "ru": [
+            "CS в названии основания Butterfly означает версию для китайского пера (Chinese penhold): лопасть почти как у обычного основания, а ручка короткая — 82 мм вместо 100 мм у ручек FL и ST для европейского хвата. Например, у Viscaria - CS ручка 82×22×31,5 мм (длина × толщина × ширина у торца) и лопасть 158×150 мм, а у обычной Viscaria — ручка FL 100×25×34 мм и лопасть 157×150 мм.",
+            "В глобальном каталоге Butterfly на 16.11.2026 таких оснований 23 из 75, и каждое — пара к модели для европейского хвата: от деревянных Hadraw 5 и Falcima до Fan Zhendong Super ZLC. Размеры зависят от модели. У 16 оснований ручка 82×24×32 мм и лопасть 161×150 мм; у Falcima - CS и Timo Boll CAF - CS ручка на миллиметр тоньше; у трёх Outerforce — 82×23×31,5 мм и лопасть 158×150 мм; у Viscaria - CS и Viscaria Super ALC - CS ручка самая тонкая — 22 мм.",
+            "Состав, толщина и реакция в каждой паре одинаковые. А вот вибрация — показатель того, насколько жёстко ощущается удар, — в девяти из 23 пар у версии CS выше на 0,2–0,3: Viscaria - CS — 10,6 вместо 10,3, Outerforce ALC - CS — 10,7 вместо 10,4, Harimoto Tomokazu Innerforce Super ALC - CS — 9,7 вместо 9,5. У остальных 14, в том числе у всех пяти Fan Zhendong, числа совпадают. Так что CS — не всегда «то же основание с короткой ручкой»: сверяйте цифры конкретной модели.",
+            "От японского пера CS отличается сильно. Основания типа Japanese penhold у Butterfly — это, например, Cypress G-MAX: один слой хиноки толщиной 10 мм, узкая лопасть 163×135 мм и ручка длиной 92 мм. CS же повторяет конструкцию обычного основания, и накладки на него можно клеить с обеих сторон. Так играет Дан Цю: Viscaria - CS с Dignics 09C на обеих сторонах (страница игрока Butterfly, проверено 16.11.2026).",
+            "В каталоге TTMAX основания представлены с ручками FL, ST и AN для европейского хвата; версий CS в нём нет. В таблице ниже — официальные размеры нескольких оснований CS и ссылка на ту же модель для европейского хвата."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа CS",
+              "ru": "Основание CS"
+            },
+            {
+              "ua": "Ручка CS (довжина × товщина × ширина торця)",
+              "ru": "Ручка CS (длина × толщина × ширина торца)"
+            },
+            {
+              "ua": "Лопать CS",
+              "ru": "Лопасть CS"
+            },
+            {
+              "ua": "Вібрація: CS / європейський хват",
+              "ru": "Вибрация: CS / европейский хват"
+            },
+            {
+              "ua": "Та сама модель для європейського хвату",
+              "ru": "Та же модель для европейского хвата"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Viscaria - CS",
+                "ru": "Viscaria - CS"
+              },
+              {
+                "ua": "82×22×31,5 мм",
+                "ru": "82×22×31,5 мм"
+              },
+              {
+                "ua": "158×150 мм",
+                "ru": "158×150 мм"
+              },
+              {
+                "ua": "10,6 / 10,3",
+                "ru": "10,6 / 10,3"
+              },
+              {
+                "ua": "Viscaria",
+                "ru": "Viscaria",
+                "href": "/butterfly/osnovaniya/viscaria"
+              }
+            ],
+            [
+              {
+                "ua": "Viscaria Super ALC - CS",
+                "ru": "Viscaria Super ALC - CS"
+              },
+              {
+                "ua": "82×22×31,5 мм",
+                "ru": "82×22×31,5 мм"
+              },
+              {
+                "ua": "158×150 мм",
+                "ru": "158×150 мм"
+              },
+              {
+                "ua": "10,4 / 10,1",
+                "ru": "10,4 / 10,1"
+              },
+              {
+                "ua": "Viscaria Super ALC",
+                "ru": "Viscaria Super ALC",
+                "href": "/butterfly/osnovaniya/viscaria-super-alc"
+              }
+            ],
+            [
+              {
+                "ua": "Outerforce ALC - CS",
+                "ru": "Outerforce ALC - CS"
+              },
+              {
+                "ua": "82×23×31,5 мм",
+                "ru": "82×23×31,5 мм"
+              },
+              {
+                "ua": "158×150 мм",
+                "ru": "158×150 мм"
+              },
+              {
+                "ua": "10,7 / 10,4",
+                "ru": "10,7 / 10,4"
+              },
+              {
+                "ua": "Outerforce ALC",
+                "ru": "Outerforce ALC",
+                "href": "/butterfly/osnovaniya/outerforce-alc"
+              }
+            ],
+            [
+              {
+                "ua": "Fan Zhendong ALC - CS",
+                "ru": "Fan Zhendong ALC - CS"
+              },
+              {
+                "ua": "82×24×32 мм",
+                "ru": "82×24×32 мм"
+              },
+              {
+                "ua": "161×150 мм",
+                "ru": "161×150 мм"
+              },
+              {
+                "ua": "10,3 / 10,3",
+                "ru": "10,3 / 10,3"
+              },
+              {
+                "ua": "Fan Zhendong ALC",
+                "ru": "Fan Zhendong ALC",
+                "href": "/butterfly/osnovaniya/fan-zhendong-alc"
+              }
+            ],
+            [
+              {
+                "ua": "Innerforce Layer ALC - CS",
+                "ru": "Innerforce Layer ALC - CS"
+              },
+              {
+                "ua": "82×24×32 мм",
+                "ru": "82×24×32 мм"
+              },
+              {
+                "ua": "161×150 мм",
+                "ru": "161×150 мм"
+              },
+              {
+                "ua": "9,4 / 9,4",
+                "ru": "9,4 / 9,4"
+              },
+              {
+                "ua": "Innerforce Layer ALC",
+                "ru": "Innerforce Layer ALC",
+                "href": "/butterfly/osnovaniya/innerforce-layer-alc"
+              }
+            ],
+            [
+              {
+                "ua": "Harimoto Tomokazu Innerforce Super ALC - CS",
+                "ru": "Harimoto Tomokazu Innerforce Super ALC - CS"
+              },
+              {
+                "ua": "82×24×32 мм",
+                "ru": "82×24×32 мм"
+              },
+              {
+                "ua": "161×150 мм",
+                "ru": "161×150 мм"
+              },
+              {
+                "ua": "9,7 / 9,5",
+                "ru": "9,7 / 9,5"
+              },
+              {
+                "ua": "Harimoto Tomokazu Super ALC",
+                "ru": "Harimoto Tomokazu Super ALC",
+                "href": "/butterfly/osnovaniya/harimoto-tomokazu-super-alc"
+              }
+            ],
+            [
+              {
+                "ua": "Timo Boll CAF - CS",
+                "ru": "Timo Boll CAF - CS"
+              },
+              {
+                "ua": "82×23×32 мм",
+                "ru": "82×23×32 мм"
+              },
+              {
+                "ua": "161×150 мм",
+                "ru": "161×150 мм"
+              },
+              {
+                "ua": "10,4 / 10,4",
+                "ru": "10,4 / 10,4"
+              },
+              {
+                "ua": "Timo Boll CAF",
+                "ru": "Timo Boll CAF",
+                "href": "/butterfly/osnovaniya/timo-boll-caf"
+              }
+            ],
+            [
+              {
+                "ua": "SK Carbon - CS",
+                "ru": "SK Carbon - CS"
+              },
+              {
+                "ua": "82×24×32 мм",
+                "ru": "82×24×32 мм"
+              },
+              {
+                "ua": "161×150 мм",
+                "ru": "161×150 мм"
+              },
+              {
+                "ua": "10,5 / 10,5",
+                "ru": "10,5 / 10,5"
+              },
+              {
+                "ua": "SK Carbon",
+                "ru": "SK Carbon",
+                "href": "/butterfly/osnovaniya/sk-carbon"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Що означає CS у назві основи Butterfly?",
+              "ru": "Что означает CS в названии основания Butterfly?"
+            },
+            "a": {
+              "ua": "Це версія основи для китайського пера: у каталозі Butterfly такі моделі мають тип Chinese penhold і коротку ручку 82 мм. Наприклад, Viscaria - CS — ручка 82×22×31,5 мм, лопать 158×150 мм, 5 шарів дерева + 2 шари ALC, 5,8 мм.",
+              "ru": "Это версия основания для китайского пера: в каталоге Butterfly у таких моделей тип Chinese penhold и короткая ручка 82 мм. Например, Viscaria - CS — ручка 82×22×31,5 мм, лопасть 158×150 мм, 5 слоёв дерева + 2 слоя ALC, 5,8 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чим ручка CS відрізняється від FL і ST?",
+              "ru": "Чем ручка CS отличается от FL и ST?"
+            },
+            "a": {
+              "ua": "Довжиною та призначенням. FL і ST — ручки для європейського хвату завдовжки 100 мм: у Viscaria це 100×25×34 мм (FL) і 100×23×28 мм (ST). CS — ручка для хвату пером завдовжки 82 мм: у Viscaria - CS вона 82×22×31,5 мм.",
+              "ru": "Длиной и назначением. FL и ST — ручки для европейского хвата длиной 100 мм: у Viscaria это 100×25×34 мм (FL) и 100×23×28 мм (ST). CS — ручка для хвата пером длиной 82 мм: у Viscaria - CS она 82×22×31,5 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чи відрізняється основа CS від звичайної за характеристиками?",
+              "ru": "Отличается ли основание CS от обычного по характеристикам?"
+            },
+            "a": {
+              "ua": "Склад, товщина й реакція в парах збігаються. Вібрація в девʼяти з 23 моделей CS вища на 0,2–0,3 — наприклад, 10,6 у Viscaria - CS проти 10,3 у Viscaria; у решти 14 вона та сама. Лопать CS — 158×150 або 161×150 мм замість 157×150 чи 158×152 мм.",
+              "ru": "Состав, толщина и реакция в парах совпадают. Вибрация у девяти из 23 моделей CS выше на 0,2–0,3 — например, 10,6 у Viscaria - CS против 10,3 у Viscaria; у остальных 14 она та же. Лопасть CS — 158×150 или 161×150 мм вместо 157×150 или 158×152 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Хто з професіоналів грає основою CS?",
+              "ru": "Кто из профессионалов играет основанием CS?"
+            },
+            "a": {
+              "ua": "Дан Цю (Німеччина): за сторінкою гравця Butterfly на 16.11.2026, його основа — Viscaria - CS, накладки — Dignics 09C з обох боків.",
+              "ru": "Дан Цю (Германия): по странице игрока Butterfly на 16.11.2026, его основание — Viscaria - CS, накладки — Dignics 09C с обеих сторон."
+            }
+          }
+        ],
+        "related": [
+          "jpen-handle",
+          "penhold-grip",
+          "reverse-penhold-backhand",
+          "fl-handle",
+          "st-handle",
+          "penkholder"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "Хват і ручка: shakehand чи перо, FL, ST чи AN",
+              "ru": "Хват и ручка: shakehand или перо, FL, ST или AN"
+            },
+            "href": "/blog/yak-vybraty-raketku"
+          },
+          {
+            "label": {
+              "ua": "Дан Цю — профіль гравця й інвентар",
+              "ru": "Дан Цю — профиль игрока и инвентарь"
+            },
+            "href": "/igroki/qiu-dang"
+          },
+          {
+            "label": {
+              "ua": "Viscaria, Timo Boll ALC чи Fan Zhendong ALC: розміри ручок",
+              "ru": "Viscaria, Timo Boll ALC или Fan Zhendong ALC: размеры ручек"
+            },
+            "href": "/blog/viscaria-timo-boll-alc-fan-zhendong-alc"
+          },
+          {
+            "label": {
+              "ua": "Основа Butterfly Viscaria",
+              "ru": "Основание Butterfly Viscaria"
+            },
+            "href": "/butterfly/osnovaniya/viscaria"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria - CS",
+              "ru": "Butterfly Global — Viscaria - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24010.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria",
+              "ru": "Butterfly Global — Viscaria"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30041.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria Super ALC - CS",
+              "ru": "Butterfly Global — Viscaria Super ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24170.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Outerforce ALC - CS",
+              "ru": "Butterfly Global — Outerforce ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24250.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Fan Zhendong ALC - CS",
+              "ru": "Butterfly Global — Fan Zhendong ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24180.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Innerforce Layer ALC - CS",
+              "ru": "Butterfly Global — Innerforce Layer ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23680.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC - CS",
+              "ru": "Butterfly Global — Harimoto Tomokazu Innerforce Super ALC - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24240.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Timo Boll CAF - CS",
+              "ru": "Butterfly Global — Timo Boll CAF - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23990.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — SK Carbon - CS",
+              "ru": "Butterfly Global — SK Carbon - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23920.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Cypress G-MAX",
+              "ru": "Butterfly Global — Cypress G-MAX"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23930.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — сторінка гравця: Дан Цю",
+              "ru": "Butterfly Global — страница игрока: Дан Цю"
+            },
+            "url": "https://www.butterfly-global.com/en/sponsoring/detail/qiu-dang.html"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "jpen-handle",
+      "page": {
+        "metaTitle": {
+          "ua": "Японське перо (JPen) — що це за основа | TTMAX",
+          "ru": "Японское перо (JPen) — что это за основание | TTMAX"
+        },
+        "metaDescription": {
+          "ua": "🪵 Японське перо (JPen) — основа з вузькою лопаттю: Cypress G-MAX — 1 шар хінокі 10 мм, лопать 163×135 мм, реакція 13,6. Моделі й відмінність від CS.",
+          "ru": "🪵 Японское перо (JPen) — основание с узкой лопастью: Cypress G-MAX — 1 слой хиноки 10 мм, лопасть 163×135 мм, реакция 13,6. Модели и отличие от CS."
+        },
+        "h1": {
+          "ua": "Японське перо (JPen) — що це за основа і чим вона відрізняється від китайського пера",
+          "ru": "Японское перо (JPen) — что это за основание и чем оно отличается от китайского пера"
+        },
+        "body": {
+          "ua": [
+            "Японське перо (JPen, Japanese penhold) — тип основи для хвату пером: вузька витягнута лопать і ручка, довша, ніж у китайського пера, а в класичному варіанті — один товстий шар дерева замість клеєного пакета шпонів. У Butterfly це Cypress G-MAX: один шар кісо-хінокі (японського кипариса) завтовшки 10,0 мм, лопать 163×135 мм, ручка завдовжки 92 мм, реакція 13,6 і вібрація 12,9.",
+            "Для порівняння: Viscaria для європейського хвату — це 5 шарів дерева + 2 шари ALC, 5,8 мм, лопать 157×150 мм, реакція 11,8. Тобто одношарова основа в 1,7 раза товща, на 6 мм довша й на 15 мм вужча. А реакція 13,6 у Cypress G-MAX — найвища серед усіх 75 основ глобального каталогу Butterfly на 16.11.2026; на другому місці Cypress V-MAX із 13,5.",
+            "До типу Japanese penhold Butterfly відносить три основи. Cypress G-MAX — із добірного кісо-хінокі найвищого ґатунку, для просунутих гравців. Cypress V-MAX — така сама за розмірами (10,0 мм, 163×135 мм), із числами 13,5 / 12,8; виробник радить її гравцям середнього й просунутого рівня для потужного топспіну. Третя, Garaydia Revolver, зовсім інша: 3 шари дерева + 2 шари ALC, 6,4 мм, лопать 161×141 мм, реакція 10,5 і вібрація 8,2. Butterfly називає її комбінаційним пером для атаки й захисту біля столу.",
+            "Від китайського пера (CS) японське відрізняється і формою, і конструкцією. CS-основи Butterfly — це версії звичайних моделей із короткою ручкою 82 мм і майже стандартною лопаттю: у Viscaria - CS вона 158×150 мм. У розмірах ручки японського пера Butterfly вказує дві ширини торця — верхню й нижню: 92×20×{15, 21} мм у Cypress і 86×16×{20, 20} мм у Garaydia Revolver.",
+            "За правилами ITTF ракетка може бути будь-якого розміру, форми й ваги (2.4.1), тож обидва типи пера дозволені. Але сторона, якою бʼють по мʼячу, має бути вкрита накладкою (2.4.3), а якщо другу сторону лишили без накладки, вона однаково має бути матовою й мати свій колір: одна сторона ракетки чорна, інша — яскрава (2.4.6). У каталозі TTMAX основи представлені з ручками FL, ST і AN для європейського хвату; основ для японського пера в ньому немає."
+          ],
+          "ru": [
+            "Японское перо (JPen, Japanese penhold) — тип основания для хвата пером: узкая вытянутая лопасть и ручка длиннее, чем у китайского пера, а в классическом варианте — один толстый слой дерева вместо клеёного пакета шпонов. У Butterfly это Cypress G-MAX: один слой кисо-хиноки (японского кипариса) толщиной 10,0 мм, лопасть 163×135 мм, ручка длиной 92 мм, реакция 13,6 и вибрация 12,9.",
+            "Для сравнения: Viscaria для европейского хвата — это 5 слоёв дерева + 2 слоя ALC, 5,8 мм, лопасть 157×150 мм, реакция 11,8. То есть однослойное основание в 1,7 раза толще, на 6 мм длиннее и на 15 мм уже. А реакция 13,6 у Cypress G-MAX — самая высокая среди всех 75 оснований глобального каталога Butterfly на 16.11.2026; на втором месте Cypress V-MAX с 13,5.",
+            "К типу Japanese penhold Butterfly относит три основания. Cypress G-MAX — из отборного кисо-хиноки высшего сорта, для продвинутых игроков. Cypress V-MAX — такое же по размерам (10,0 мм, 163×135 мм), с числами 13,5 / 12,8; производитель советует его игрокам среднего и продвинутого уровня для мощного топспина. Третье, Garaydia Revolver, совсем другое: 3 слоя дерева + 2 слоя ALC, 6,4 мм, лопасть 161×141 мм, реакция 10,5 и вибрация 8,2. Butterfly называет его комбинационным пером для атаки и защиты у стола.",
+            "От китайского пера (CS) японское отличается и формой, и конструкцией. CS-основания Butterfly — это версии обычных моделей с короткой ручкой 82 мм и почти стандартной лопастью: у Viscaria - CS она 158×150 мм. В размерах ручки японского пера Butterfly указывает две ширины торца — верхнюю и нижнюю: 92×20×{15, 21} мм у Cypress и 86×16×{20, 20} мм у Garaydia Revolver.",
+            "По правилам ITTF ракетка может быть любого размера, формы и веса (2.4.1), так что оба типа пера разрешены. Но сторона, которой бьют по мячу, должна быть покрыта накладкой (2.4.3), а если вторую сторону оставили без накладки, она всё равно должна быть матовой и своего цвета: одна сторона ракетки чёрная, другая — яркая (2.4.6). В каталоге TTMAX основания представлены с ручками FL, ST и AN для европейского хвата; оснований для японского пера в нём нет."
+          ]
+        },
+        "facts": {
+          "columns": [
+            {
+              "ua": "Основа",
+              "ru": "Основание"
+            },
+            {
+              "ua": "Тип (за Butterfly)",
+              "ru": "Тип (по Butterfly)"
+            },
+            {
+              "ua": "Конструкція й товщина",
+              "ru": "Конструкция и толщина"
+            },
+            {
+              "ua": "Лопать",
+              "ru": "Лопасть"
+            },
+            {
+              "ua": "Ручка",
+              "ru": "Ручка"
+            },
+            {
+              "ua": "Реакція / вібрація",
+              "ru": "Реакция / вибрация"
+            }
+          ],
+          "rows": [
+            [
+              {
+                "ua": "Cypress G-MAX",
+                "ru": "Cypress G-MAX"
+              },
+              {
+                "ua": "японське перо",
+                "ru": "японское перо"
+              },
+              {
+                "ua": "1 шар кісо-хінокі, 10,0 мм",
+                "ru": "1 слой кисо-хиноки, 10,0 мм"
+              },
+              {
+                "ua": "163×135 мм",
+                "ru": "163×135 мм"
+              },
+              {
+                "ua": "92×20×{15, 21} мм",
+                "ru": "92×20×{15, 21} мм"
+              },
+              {
+                "ua": "13,6 / 12,9",
+                "ru": "13,6 / 12,9"
+              }
+            ],
+            [
+              {
+                "ua": "Cypress V-MAX",
+                "ru": "Cypress V-MAX"
+              },
+              {
+                "ua": "японське перо",
+                "ru": "японское перо"
+              },
+              {
+                "ua": "1 шар кісо-хінокі, 10,0 мм",
+                "ru": "1 слой кисо-хиноки, 10,0 мм"
+              },
+              {
+                "ua": "163×135 мм",
+                "ru": "163×135 мм"
+              },
+              {
+                "ua": "92×20×{15, 21} мм",
+                "ru": "92×20×{15, 21} мм"
+              },
+              {
+                "ua": "13,5 / 12,8",
+                "ru": "13,5 / 12,8"
+              }
+            ],
+            [
+              {
+                "ua": "Garaydia Revolver",
+                "ru": "Garaydia Revolver"
+              },
+              {
+                "ua": "японське перо",
+                "ru": "японское перо"
+              },
+              {
+                "ua": "3 шари дерева + 2 ALC, 6,4 мм",
+                "ru": "3 слоя дерева + 2 ALC, 6,4 мм"
+              },
+              {
+                "ua": "161×141 мм",
+                "ru": "161×141 мм"
+              },
+              {
+                "ua": "86×16×{20, 20} мм",
+                "ru": "86×16×{20, 20} мм"
+              },
+              {
+                "ua": "10,5 / 8,2",
+                "ru": "10,5 / 8,2"
+              }
+            ],
+            [
+              {
+                "ua": "Viscaria - CS",
+                "ru": "Viscaria - CS"
+              },
+              {
+                "ua": "китайське перо",
+                "ru": "китайское перо"
+              },
+              {
+                "ua": "5 шарів дерева + 2 ALC, 5,8 мм",
+                "ru": "5 слоёв дерева + 2 ALC, 5,8 мм"
+              },
+              {
+                "ua": "158×150 мм",
+                "ru": "158×150 мм"
+              },
+              {
+                "ua": "82×22×31,5 мм",
+                "ru": "82×22×31,5 мм"
+              },
+              {
+                "ua": "11,8 / 10,6",
+                "ru": "11,8 / 10,6"
+              }
+            ],
+            [
+              {
+                "ua": "Viscaria",
+                "ru": "Viscaria",
+                "href": "/butterfly/osnovaniya/viscaria"
+              },
+              {
+                "ua": "європейський хват",
+                "ru": "европейский хват"
+              },
+              {
+                "ua": "5 шарів дерева + 2 ALC, 5,8 мм",
+                "ru": "5 слоёв дерева + 2 ALC, 5,8 мм"
+              },
+              {
+                "ua": "157×150 мм",
+                "ru": "157×150 мм"
+              },
+              {
+                "ua": "FL 100×25×34 мм",
+                "ru": "FL 100×25×34 мм"
+              },
+              {
+                "ua": "11,8 / 10,3",
+                "ru": "11,8 / 10,3"
+              }
+            ]
+          ]
+        },
+        "faq": [
+          {
+            "q": {
+              "ua": "Чим японське перо відрізняється від китайського?",
+              "ru": "Чем японское перо отличается от китайского?"
+            },
+            "a": {
+              "ua": "Формою й конструкцією основи. У Butterfly японське перо Cypress G-MAX — це один шар хінокі 10,0 мм, лопать 163×135 мм і ручка 92 мм. Китайське перо (CS) — версія звичайної основи з короткою ручкою 82 мм: Viscaria - CS має 5 шарів дерева + 2 шари ALC, 5,8 мм і лопать 158×150 мм.",
+              "ru": "Формой и конструкцией основания. У Butterfly японское перо Cypress G-MAX — это один слой хиноки 10,0 мм, лопасть 163×135 мм и ручка 92 мм. Китайское перо (CS) — версия обычного основания с короткой ручкой 82 мм: у Viscaria - CS 5 слоёв дерева + 2 слоя ALC, 5,8 мм и лопасть 158×150 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чому основи Cypress такі товсті?",
+              "ru": "Почему основания Cypress такие толстые?"
+            },
+            "a": {
+              "ua": "Бо це один суцільний шар дерева, а не пакет шпонів: Cypress G-MAX і V-MAX вирізані з кісо-хінокі завтовшки 10,0 мм. За Butterfly, саме така товщина дає цим основам потужність і відчуття мʼяча. Для порівняння, Viscaria зі схемою 5+2 має 5,8 мм.",
+              "ru": "Потому что это один сплошной слой дерева, а не пакет шпонов: Cypress G-MAX и V-MAX вырезаны из кисо-хиноки толщиной 10,0 мм. По данным Butterfly, именно такая толщина даёт этим основаниям мощность и чувство мяча. Для сравнения, у Viscaria со схемой 5+2 — 5,8 мм."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чи правда, що основи з хінокі — найшвидші в Butterfly?",
+              "ru": "Правда ли, что основания из хиноки — самые быстрые у Butterfly?"
+            },
+            "a": {
+              "ua": "За офіційною реакцією — так: Cypress G-MAX має 13,6, Cypress V-MAX — 13,5, і це два найвищі показники серед 75 основ глобального каталогу Butterfly на 16.11.2026. Найшвидша основа для європейського хвату, Sardius, має 12,8. Вібрація в Cypress G-MAX теж висока — 12,9, тобто удар відчувається жорстко.",
+              "ru": "По официальной реакции — да: у Cypress G-MAX 13,6, у Cypress V-MAX — 13,5, и это два самых высоких показателя среди 75 оснований глобального каталога Butterfly на 16.11.2026. У самого быстрого основания для европейского хвата, Sardius, — 12,8. Вибрация у Cypress G-MAX тоже высокая — 12,9, то есть удар ощущается жёстко."
+            }
+          },
+          {
+            "q": {
+              "ua": "Чи можна грати ракеткою з однією накладкою?",
+              "ru": "Можно ли играть ракеткой с одной накладкой?"
+            },
+            "a": {
+              "ua": "Так, якщо бити лише тією стороною, де є накладка: за правилом ITTF 2.4.3 сторона, якою бʼють по мʼячу, має бути вкрита накладкою. Сторона без накладки має бути матовою й іншого кольору: одна сторона ракетки чорна, інша — яскрава, відмінна від чорного й від кольору мʼяча (2.4.6).",
+              "ru": "Да, если бить только той стороной, где есть накладка: по правилу ITTF 2.4.3 сторона, которой бьют по мячу, должна быть покрыта накладкой. Сторона без накладки должна быть матовой и другого цвета: одна сторона ракетки чёрная, другая — яркая, отличная от чёрного и от цвета мяча (2.4.6)."
+            }
+          }
+        ],
+        "related": [
+          "cs-handle",
+          "penhold-grip",
+          "hinoki",
+          "penkholder",
+          "blade-size",
+          "blade-thickness"
+        ],
+        "links": [
+          {
+            "label": {
+              "ua": "Хват і ручка: shakehand чи перо — як вибрати ракетку",
+              "ru": "Хват и ручка: shakehand или перо — как выбрать ракетку"
+            },
+            "href": "/blog/yak-vybraty-raketku"
+          },
+          {
+            "label": {
+              "ua": "Правила настільного тенісу: вимоги до ракетки",
+              "ru": "Правила настольного тенниса: требования к ракетке"
+            },
+            "href": "/blog/pravyla-nastilnogo-tenisu"
+          },
+          {
+            "label": {
+              "ua": "Таблиця основ Butterfly з офіційними числами",
+              "ru": "Таблица оснований Butterfly с официальными числами"
+            },
+            "href": "/blog/tablytsia-osnov-butterfly"
+          }
+        ],
+        "sources": [
+          {
+            "label": {
+              "ua": "Butterfly Global — каталог основ (75 моделей, перевірено 16.11.2026)",
+              "ru": "Butterfly Global — каталог оснований (75 моделей, проверено 16.11.2026)"
+            },
+            "url": "https://www.butterfly-global.com/en/products/blade/"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Cypress G-MAX",
+              "ru": "Butterfly Global — Cypress G-MAX"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23930.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Cypress V-MAX",
+              "ru": "Butterfly Global — Cypress V-MAX"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23960.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Garaydia Revolver",
+              "ru": "Butterfly Global — Garaydia Revolver"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/23840.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria - CS",
+              "ru": "Butterfly Global — Viscaria - CS"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/24010.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Viscaria",
+              "ru": "Butterfly Global — Viscaria"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30041.html"
+          },
+          {
+            "label": {
+              "ua": "Butterfly Global — Sardius",
+              "ru": "Butterfly Global — Sardius"
+            },
+            "url": "https://www.butterfly-global.com/en/products/detail/30091.html"
+          },
+          {
+            "label": {
+              "ua": "Laws of Table Tennis 2026-27 (копія правил ITTF, Table Tennis England)",
+              "ru": "Laws of Table Tennis 2026-27 (копия правил ITTF, Table Tennis England)"
+            },
+            "url": "https://www.tabletennisengland.co.uk/content/uploads/2026/07/Laws-of-Table-Tennis-2026-27.pdf"
+          }
+        ]
+      }
+    }
+  ]
+}

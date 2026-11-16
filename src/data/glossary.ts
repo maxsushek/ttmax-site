@@ -23,6 +23,31 @@ export type GlossaryTerm = {
   /** Наша сторінка, що пояснює термін докладно (шлях без локалі) або null. */
   href: string | null;
   sources: string[];
+  /**
+   * Словоформи для автопосилань у статтях і картках (lib/glossary/autolink.tsx). Є лише в
+   * термінів, які безпечно лінкувати: специфічна лексика, не побутові слова («очко», «гра»).
+   */
+  forms?: { ua: string[]; ru: string[]; caseSensitive?: boolean };
+  /**
+   * Окрема сторінка терміна /slovnyk/<slug>.
+   *
+   * ⚠️ ЛИШЕ для термінів БЕЗ власної статті чи хабу: ALC/ZLC, топспін, тензор, OX уже мають
+   * статті, і окрема сторінка терміна билася б із ними за той самий запит («alc это» веде на
+   * статтю alc-chy-zlc). Такі терміни лишаються якорями зі посиланням на статтю.
+   */
+  page?: GlossaryPage;
+};
+
+export type GlossaryPage = {
+  metaTitle: L;
+  metaDescription: L;
+  h1: L;
+  body: Record<Locale, string[]>;
+  facts: { columns: L[]; rows: (L & { href?: string })[][] } | null;
+  faq: { q: L; a: L }[];
+  related: string[];
+  links: { label: L; href: string }[];
+  sources: { label: L; url: string }[];
 };
 
 /** Порядок і назви розділів сторінки. */
@@ -43,4 +68,18 @@ export const GLOSSARY: GlossaryTerm[] = GLOSSARY_DATA;
 export function glossaryByCategory(cat: GlossaryCategory, locale: Locale): GlossaryTerm[] {
   const collator = new Intl.Collator(locale === "ua" ? "uk" : "ru");
   return GLOSSARY.filter((t) => t.cat === cat).sort((a, b) => collator.compare(a.term[locale], b.term[locale]));
+}
+
+export function getGlossaryTerm(slug: string): GlossaryTerm | null {
+  return GLOSSARY.find((t) => t.slug === slug) ?? null;
+}
+
+/** Терміни з окремою сторінкою. */
+export function glossaryPages(): GlossaryTerm[] {
+  return GLOSSARY.filter((t) => t.page);
+}
+
+/** Куди веде посилання на термін: окрема сторінка, якщо є, інакше якір у словнику. */
+export function glossaryTermPath(t: GlossaryTerm): string {
+  return t.page ? `/slovnyk/${t.slug}` : `/slovnyk#${t.slug}`;
 }

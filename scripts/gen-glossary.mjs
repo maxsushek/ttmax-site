@@ -19,8 +19,21 @@ const CATS = new Set(["blades", "rubbers", "technique", "rules", "play"]);
 const terms = [];
 const seen = new Set();
 const errors = [];
+// Додаткові файли в тій самій теці: forms.json ({forms: {slug: {ua, ru, caseSensitive}}}) —
+// словоформи для автопосилань; pages-*.json ({pages: [{slug, page}]}) — окремі сторінки термінів.
+const forms = {};
+const pages = {};
+// guards — фрази, всередині яких термін НЕ лінкується («чоп-блок» ≠ «чоп», «Гранд Смеш» ≠ «смеш»).
+const guards = { ua: [], ru: [] };
+for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
+  const json = JSON.parse(readFileSync(join(dir, f), "utf8"));
+  if (json.forms) Object.assign(forms, json.forms);
+  if (json.guards) for (const l of ["ua", "ru"]) guards[l].push(...(json.guards[l] ?? []));
+  for (const p of json.pages ?? []) pages[p.slug] = p.page;
+}
 for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
   const { terms: list } = JSON.parse(readFileSync(join(dir, f), "utf8"));
+  if (!list) continue;
   for (const t of list) {
     const where = `${f}:${t.slug}`;
     if (!/^[a-z0-9-]+$/.test(t.slug ?? "")) errors.push(`${where}: поганий slug`);
@@ -41,8 +54,22 @@ for (const f of readdirSync(dir).filter((f) => f.endsWith(".json")).sort()) {
       def: { ua: t.def.ua, ru: t.def.ru },
       href: t.href ?? null,
       sources: t.sources ?? [],
+      ...(forms[t.slug] ? { forms: forms[t.slug] } : {}),
+      ...(pages[t.slug] ? { page: pages[t.slug] } : {}),
     });
   }
+}
+for (const slug of [...Object.keys(forms), ...Object.keys(pages)]) {
+  if (!seen.has(slug)) errors.push(`forms/pages: немає терміна ${slug}`);
+}
+for (const [slug, p] of Object.entries(pages)) {
+  for (const l of ["ua", "ru"]) {
+    if ((p.metaTitle?.[l] ?? "").length > 60) errors.push(`page ${slug}: metaTitle.${l} > 60`);
+    const d = (p.metaDescription?.[l] ?? "").length;
+    if (d < 110 || d > 158) errors.push(`page ${slug}: metaDescription.${l} ${d} поза 110–158`);
+  }
+  if (p.body.ua.length !== p.body.ru.length) errors.push(`page ${slug}: різна кількість абзаців`);
+  for (const r of p.related ?? []) if (!seen.has(r)) errors.push(`page ${slug}: related ${r} не існує`);
 }
 if (errors.length) {
   console.error(errors.join("\n"));
@@ -52,6 +79,8 @@ const out = `// АВТОГЕНЕРОВАНО scripts/gen-glossary.mjs — не �
 import type { GlossaryTerm } from "@/data/glossary";
 
 export const GLOSSARY_DATA: GlossaryTerm[] = ${JSON.stringify(terms, null, 2)};
+
+export const GLOSSARY_GUARDS: { ua: string[]; ru: string[] } = ${JSON.stringify(guards, null, 2)};
 `;
 writeFileSync(join(ROOT, "src/data/glossaryData.ts"), out);
-console.log(`  термінів: ${terms.length} → src/data/glossaryData.ts`);
+console.log(`  термінів: ${terms.length} (автопосилань: ${Object.keys(forms).length}, окремих сторінок: ${Object.keys(pages).length}) → src/data/glossaryData.ts`);

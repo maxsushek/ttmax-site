@@ -1,6 +1,7 @@
 import { blogOgImage } from "@/lib/seo/blog-og";
 import Image from "next/image";
 import Link from "next/link";
+import { createGlossaryLinker } from "@/lib/glossary/autolink";
 import { Container } from "@/components/ui/Section";
 import { breadcrumbJsonLd, blogPostingJsonLd, faqJsonLd, howToJsonLd } from "@/lib/seo/jsonld";
 import { cldUrl } from "@/lib/cloudinary/url";
@@ -199,6 +200,12 @@ function profileLabel(url: string): string {
 
 export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }) {
   const ui = UI[locale];
+  // Автопосилання на словник: перша згадка терміна в абзацах розділів (не у вступі й не в FAQ).
+  const glossary = createGlossaryLinker(locale, {
+    skipHrefs: [`/blog/${post.slug}`],
+    skipIfIn: [post.h1[locale], post.metaTitle[locale]],
+    max: 10,
+  });
   const author = getAuthor(post.author);
   const authorPath = `/author/${author.slug}`;
   const authorUrl = `${siteConfig.url}/${locale}${authorPath}`;
@@ -389,7 +396,7 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
               <div className="flex flex-col gap-2.5">
                 {s.p[locale].map((para, j) => (
                   <p key={j} className="font-body text-[15px] leading-relaxed text-ink-muted">
-                    {para}
+                    {glossary(para, `${s.id}-${j}`)}
                   </p>
                 ))}
               </div>

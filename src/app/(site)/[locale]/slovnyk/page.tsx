@@ -24,6 +24,7 @@ const T = {
     home: "Головна",
     crumb: "Словник",
     more: "Докладніше",
+    termPage: "Про термін",
     aka: "Також",
     updated: "Оновлено",
   },
@@ -37,6 +38,7 @@ const T = {
     home: "Главная",
     crumb: "Словарь",
     more: "Подробнее",
+    termPage: "О термине",
     aka: "Также",
     updated: "Обновлено",
   },
@@ -145,6 +147,15 @@ export default async function GlossaryPage({ params }: { params: Promise<{ local
                       <span className="mt-1 block text-[13px] text-ink-dim">
                         {t.aka}: {g.aka[locale].join(", ")}
                       </span>
+                    )}
+                    {g.page && (
+                      <Link
+                        href={`/${locale}/slovnyk/${g.slug}`}
+                        prefetch={false}
+                        className="mr-4 mt-1.5 inline-block text-[13px] font-semibold text-accent hover:underline"
+                      >
+                        {t.termPage} →
+                      </Link>
                     )}
                     {g.href && (
                       <Link
