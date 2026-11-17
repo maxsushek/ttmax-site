@@ -151,6 +151,7 @@ export function ReviewForm({
           <span className="mb-1 block font-body text-[12px] font-medium text-ink-muted">{t.name}</span>
           <input
             type="text"
+            name="name"
             autoComplete="given-name"
             maxLength={60}
             placeholder={t.namePh}
@@ -164,6 +165,7 @@ export function ReviewForm({
           <span className="mb-1 block font-body text-[12px] font-medium text-ink-muted">{t.city}</span>
           <input
             type="text"
+            name="city"
             autoComplete="address-level2"
             maxLength={60}
             placeholder={t.cityPh}
@@ -177,6 +179,7 @@ export function ReviewForm({
       <label className="block">
         <span className="mb-1 block font-body text-[12px] font-medium text-ink-muted">{t.body}</span>
         <textarea
+          name="text"
           rows={compact ? 4 : 5}
           maxLength={3000}
           placeholder={kind === "store" ? t.bodyStorePh : t.bodyPh}
@@ -197,6 +200,7 @@ export function ReviewForm({
           <input
             type="tel"
             inputMode="tel"
+            name="phone"
             autoComplete="tel"
             maxLength={20}
             placeholder="067 123 45 67"
