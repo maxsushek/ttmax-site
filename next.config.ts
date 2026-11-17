@@ -71,15 +71,20 @@ const CSP_REPORT_ONLY = [
   "form-action 'self'",
   // PostHog: бібліотека — з нашого бандла, а запис сеансів, помилки й теплові карти довантажує
   // скриптами з eu-assets.i.posthog.com (після проксі — з e.ttmax.com.ua).
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua",
+  // Ahrefs Web Analytics (analytics.ahrefs.com): скрипт /analytics.js і його запити /api/event.
+  // У коді сайту його немає — підключений поза репозиторієм, тож у CSP про нього забули, і
+  // PageSpeed (17.11.2026) показував порушення політики на кожній сторінці.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://va.vercel-scripts.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua https://analytics.ahrefs.com",
   "worker-src 'self' blob:",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://i.ytimg.com",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://api.cloudinary.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua",
+  "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://api.cloudinary.com https://vitals.vercel-insights.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://e.ttmax.com.ua https://analytics.ahrefs.com",
   // YouTube: обкладинки відео на картках (i.ytimg.com) і плеєр після кліку (youtube-nocookie.com).
   "frame-src 'self' https://www.googletagmanager.com https://www.youtube-nocookie.com",
-  "upgrade-insecure-requests",
+  // ⚠️ `upgrade-insecure-requests` тут СВІДОМО немає: у режимі Report-Only браузер цю директиву
+  // ігнорує і пише про це помилку в консоль на кожній сторінці (PageSpeed, «Помилки браузера
+  // занесені в журнал консолі»). Повернути її разом із переходом на enforce.
 ].join("; ");
 
 const nextConfig: NextConfig = {
@@ -210,6 +215,10 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
           },
+          // COOP: чужа сторінка, яка відкрила наш сайт у новому вікні, не отримує посилання на
+          // нього (window.opener). `allow-popups`, а не суворий same-origin: вікна, які відкриває
+          // сам сайт (месенджери, оплата в майбутньому), мають працювати як раніше.
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
           // Report-Only: нічого не блокує. Див. коментар до CSP_REPORT_ONLY вище.
           { key: "Content-Security-Policy-Report-Only", value: CSP_REPORT_ONLY },
         ],
