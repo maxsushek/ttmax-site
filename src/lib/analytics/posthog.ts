@@ -28,6 +28,50 @@ const queue: Job[] = [];
 const MAX_QUEUE = 100;
 let firstPageviewDated = false;
 
+/**
+ * Запис сеансів стартує лише після першої дії відвідувача (дотик, клік, клавіша, прокрутка).
+ *
+ * ⚠️ НАВІЩО (17.11.2026). Старт запису — це повний знімок DOM: на телефоні задача 80–90 мс
+ * одразу після завантаження сторінки. PageSpeed рахував її в Total Blocking Time (разом з
+ * ініціалізацією бібліотеки PostHog давав близько половини показника, і той «стрибав» між
+ * запусками). Запис візиту, де людина нічого не зробила, майже нічого не показує, тож втрата
+ * мінімальна; перегляди сторінок і події рахуються як раніше. Побічний плюс — боти й
+ * перевірки, які не взаємодіють зі сторінкою, не витрачають квоту записів.
+ *
+ * Слухачі ставимо одразу в initPosthog, а не після завантаження бібліотеки: вона вантажиться
+ * ліниво, і людина встигає прокрутити сторінку раніше.
+ */
+const INTERACTION_EVENTS = ["pointerdown", "keydown", "scroll", "touchstart"] as const;
+let interacted = false;
+let onInteraction: (() => void) | null = null;
+
+function watchFirstInteraction(): void {
+  const handler = () => {
+    interacted = true;
+    for (const type of INTERACTION_EVENTS) window.removeEventListener(type, handler, true);
+    onInteraction?.();
+  };
+  for (const type of INTERACTION_EVENTS) {
+    window.addEventListener(type, handler, { capture: true, passive: true });
+  }
+}
+
+/** Старт запису — у вільний час браузера, щоб знімок DOM не гальмував саму дію людини. */
+function startRecordingSoon(ph: PostHog): void {
+  const go = () => {
+    try {
+      ph.startSessionRecording();
+    } catch {
+      /* запис — не критична частина: сайт і події працюють і без нього */
+    }
+  };
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(go, { timeout: 2000 });
+  } else {
+    setTimeout(go, 300);
+  }
+}
+
 function enabledHere(): boolean {
   if (typeof window === "undefined" || !POSTHOG_TOKEN) return false;
   return POSTHOG_HOSTNAMES.includes(window.location.hostname);
@@ -92,6 +136,7 @@ export function initPosthog(): void {
     return;
   }
   state = "loading";
+  watchFirstInteraction();
 
   const start = () => {
     import("posthog-js")
@@ -106,6 +151,8 @@ export function initPosthog(): void {
           capture_exceptions: true,
           // Опитувань не використовуємо — не тягнемо surveys.js на кожну сторінку.
           disable_surveys: true,
+          // Запис сеансів вмикаємо самі після першої дії відвідувача — див. INTERACTION_EVENTS.
+          disable_session_recording: true,
           before_send: (event) => {
             // ⚠️ Перший $pageview бібліотека пише в момент ліниво відкладеного init — уже ПІСЛЯ
             // подій сторінки з черги (view_item тощо, з їхнім справжнім часом). Тоді у воронках
@@ -126,6 +173,8 @@ export function initPosthog(): void {
           },
         });
         if (isInternal()) posthog.register({ internal: true });
+        if (interacted) startRecordingSoon(posthog);
+        else onInteraction = () => startRecordingSoon(posthog);
         instance = posthog;
         state = "ready";
         for (const job of queue.splice(0)) {
