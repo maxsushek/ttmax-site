@@ -11,7 +11,14 @@ import type { Locale } from "@/i18n/config";
 import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
 import { catalogProducts, catalogBases, getProductPath } from "@/data/catalog";
 import { isWithdrawn } from "@/lib/catalog/hidden";
-import { setupsWithBlade, setupsWithRubber } from "@/data/proSetups";
+import {
+  bladeRanking,
+  rubberRanking,
+  setupsWithBlade,
+  setupsWithRubber,
+  type Count,
+  type SetupItem,
+} from "@/data/proSetups";
 import { PLAYERS } from "@/data/players";
 
 type L = Record<Locale, string>;
@@ -20,7 +27,13 @@ export type SpecTable = { columns: L[]; rows: SpecCell[][] };
 
 export type RubberGroup = "tenzor" | "lipka" | "klasyka" | "korotki-shypy" | "dovgi-shypy";
 export type BladeGroup = "alc" | "zlc" | "inshi-volokna" | "derevo";
-export type SpecTableRef = { kind: "rubbers"; group: RubberGroup } | { kind: "blades"; group: BladeGroup };
+export type SpecTableRef =
+  | { kind: "rubbers"; group: RubberGroup }
+  | { kind: "blades"; group: BladeGroup }
+  /** Скільки гравців Butterfly ставлять ці накладки (усі гравці з офіційним інвентарем, data/proSetups.ts). */
+  | { kind: "proRubbers"; slugs: string[] }
+  /** Скільки гравців Butterfly грають на цих основах і що на них ставлять. */
+  | { kind: "proBlades"; slugs: string[] };
 
 const same = (s: string): L => ({ ua: s, ru: s });
 const num = (n: number | undefined, digits = 0): string =>
@@ -215,8 +228,83 @@ function bladeTable(group: BladeGroup): SpecTable {
   return { columns, rows };
 }
 
+/* ───────────── Таблиці «у профі» для статей (ті самі дані, що /igroki/inventar) ─────────────
+ * ⚠️ Числа в тексті статті біля таких таблиць НЕ писати: дані оновлюються щомісяця
+ * (scripts/gen-pro-setups.mjs --fetch), а таблиця перерахується сама. */
+
+function proItemName(i: SetupItem, loc: Locale): string {
+  if (i.custom) return i.custom.label[loc];
+  const p = i.product ? catalogAll().find((x) => x.slug === i.product) : undefined;
+  return p?.model ?? i.name ?? "—";
+}
+
+/** «Dignics 09C (5)» або «Dignics 05 / Dignics 09C (по 3)»; основи на замовлення пропускаємо. */
+function proTop(xs: Count[]): SpecCell {
+  const list = xs.filter((c) => c.key !== "custom");
+  if (list.length === 0) return DASH;
+  const top = list[0]!.n;
+  const lead = list.filter((c) => c.n === top).slice(0, 3);
+  const cell = (loc: Locale) =>
+    lead.length > 1
+      ? `${lead.map((c) => proItemName(c.item, loc)).join(" / ")} (${loc === "ua" ? "по" : "по"} ${top})`
+      : `${proItemName(lead[0]!.item, loc)} (${top})`;
+  return { ua: cell("ua"), ru: cell("ru") };
+}
+
+const catalogAll = () => [...catalogProducts, ...catalogBases];
+
+function productCell(slug: string): SpecCell {
+  const p = catalogAll().find((x) => x.slug === slug);
+  return p ? modelCell(p) : same(slug);
+}
+
+function proRubberTable(slugs: string[]): SpecTable {
+  const rows = slugs.map((slug) => {
+    const uses = setupsWithRubber(slug);
+    const fh = uses.filter((u) => u.side === "fh" || u.side === "both").length;
+    const bh = uses.filter((u) => u.side === "bh" || u.side === "both").length;
+    return { n: uses.length, cells: [productCell(slug), same(String(uses.length)), same(String(fh)), same(String(bh)), proTop(bladeRanking(uses.map((u) => u.setup)))] };
+  });
+  return {
+    columns: [
+      { ua: "Накладка", ru: "Накладка" },
+      { ua: "Гравців Butterfly", ru: "Игроков Butterfly" },
+      { ua: "На форхенді", ru: "На форхенде" },
+      { ua: "На бекхенді", ru: "На бэкхенде" },
+      { ua: "Найчастіше з основою", ru: "Чаще всего с основанием" },
+    ],
+    rows: rows.sort((a, b) => b.n - a.n).map((r) => r.cells),
+  };
+}
+
+function proBladeTable(slugs: string[]): SpecTable {
+  const rows = slugs.map((slug) => {
+    const list = setupsWithBlade(slug);
+    const r = rubberRanking(list);
+    return { n: list.length, cells: [productCell(slug), same(String(list.length)), proTop(r.fh), proTop(r.bh)] };
+  });
+  return {
+    columns: [
+      { ua: "Основа", ru: "Основание" },
+      { ua: "Гравців Butterfly", ru: "Игроков Butterfly" },
+      { ua: "Форхенд — найчастіше", ru: "Форхенд — чаще всего" },
+      { ua: "Бекхенд — найчастіше", ru: "Бэкхенд — чаще всего" },
+    ],
+    rows: rows.sort((a, b) => b.n - a.n).map((r) => r.cells),
+  };
+}
+
 export function buildSpecTable(ref: SpecTableRef): SpecTable {
-  return ref.kind === "rubbers" ? rubberTable(ref.group) : bladeTable(ref.group);
+  switch (ref.kind) {
+    case "rubbers":
+      return rubberTable(ref.group);
+    case "blades":
+      return bladeTable(ref.group);
+    case "proRubbers":
+      return proRubberTable(ref.slugs);
+    case "proBlades":
+      return proBladeTable(ref.slugs);
+  }
 }
 
 /** Кількість моделей у групі — для тексту статті й перевірок («у таблиці N моделей»). */

@@ -4164,7 +4164,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Tenergy, Dignics, Zyre 03, Rozena — скорость, вращение, твёрдость в одной таблице и вердикт тренера, какую накладку взять под ваш уровень.",
     },
     datePublished: "2026-07-23",
-    dateModified: "2026-07-23",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     heroPublicId: undefined,
     coverSrc: "/blog/nakladki-cover.png",
@@ -4316,6 +4316,24 @@ const POSTS: Record<string, BlogPost> = {
         },
         links: [
           { label: { ua: "Огляд Zyre 03 →", ru: "Обзор Zyre 03 →" }, href: "/butterfly/nakladki/zyre-03" },
+        ],
+      },
+      {
+        id: "u-profi",
+        h: { ua: "Які накладки Butterfly ставлять профі", ru: "Какие накладки Butterfly ставят профи" },
+        p: {
+          ua: [
+            "Найкраща накладка для профі й для аматора — не одне й те саме, але інвентар гравців Butterfly показує, на чому зупиняються на найвищому рівні. Таблиця рахує всіх контрактних гравців, чий інвентар опубліковано на сайті Butterfly Japan.",
+            "Таблиця оновлюється щомісяця разом із даними Butterfly; повний рейтинг основ і накладок — на сторінці статистики інвентаря.",
+          ],
+          ru: [
+            "Лучшая накладка для профи и для любителя — не одно и то же, но инвентарь игроков Butterfly показывает, на чём останавливаются на высшем уровне. Таблица считает всех контрактных игроков, чей инвентарь опубликован на сайте Butterfly Japan.",
+            "Таблица обновляется ежемесячно вместе с данными Butterfly; полный рейтинг оснований и накладок — на странице статистики инвентаря.",
+          ],
+        },
+        specTable: { kind: "proRubbers", slugs: ["dignics-09c", "zyre-03", "dignics-05", "tenergy-05", "tenergy-05-hard", "dignics-80", "dignics-64", "tenergy-19", "tenergy-80", "glayzer-09c"] },
+        links: [
+          { label: { ua: "Статистика інвентаря профі Butterfly", ru: "Статистика инвентаря профи Butterfly" }, href: "/igroki/inventar" },
         ],
       },
       {
@@ -4571,7 +4589,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Разбираем конструкцию накладки по слоям и четыре поколения технологий Butterfly — по официальным документам производителя, с объяснением, что каждое решение даёт на столе.",
     },
     datePublished: "2026-08-10",
-    dateModified: "2026-11-08",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     heroPublicId: undefined,
     /**
@@ -4843,6 +4861,24 @@ const POSTS: Record<string, BlogPost> = {
         },
       },
       {
+        id: "u-profi",
+        h: { ua: "Zyre 03, Dignics чи Tenergy: що ставлять гравці Butterfly", ru: "Zyre 03, Dignics или Tenergy: что ставят игроки Butterfly" },
+        p: {
+          ua: [
+            "Характеристики показують, як накладка поводиться, а інвентар профі — що з цього обирають на найвищому рівні. Таблиця рахує всіх контрактних гравців, чий інвентар опубліковано на сайті Butterfly Japan: скільки з них ставлять кожну накладку, на яку сторону і з якою основою найчастіше.",
+            "Профі — не прямий орієнтир для аматора: вибір накладки залежить від техніки й швидкості гри, про що — у розділах вище. Таблиця оновлюється разом із даними Butterfly щомісяця.",
+          ],
+          ru: [
+            "Характеристики показывают, как накладка себя ведёт, а инвентарь профи — что из этого выбирают на высшем уровне. Таблица считает всех контрактных игроков, чей инвентарь опубликован на сайте Butterfly Japan: сколько из них ставят каждую накладку, на какую сторону и с каким основанием чаще всего.",
+            "Профи — не прямой ориентир для любителя: выбор накладки зависит от техники и скорости игры, об этом — в разделах выше. Таблица обновляется вместе с данными Butterfly ежемесячно.",
+          ],
+        },
+        specTable: { kind: "proRubbers", slugs: ["zyre-03", "dignics-09c", "dignics-05", "dignics-64", "dignics-80", "tenergy-05", "tenergy-05-hard", "tenergy-19", "tenergy-80", "tenergy-25-fx"] },
+        links: [
+          { label: { ua: "Статистика інвентаря профі Butterfly", ru: "Статистика инвентаря профи Butterfly" }, href: "/igroki/inventar" },
+        ],
+      },
+      {
         id: "vybir",
         h: { ua: "Що з цього випливає для вибору", ru: "Что из этого следует для выбора" },
         p: {
@@ -4982,7 +5018,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Разбираем по парам: Dignics 05 против Tenergy 05, 64 против 64, 80 против 80. Разница оказалась одинаковой во всех трёх парах — и это многое объясняет.",
     },
     datePublished: "2026-08-19",
-    dateModified: "2026-11-08",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     coverSrc: "/blog/tenergy-dignics-cover.svg",
     heroAlt: {
@@ -5111,6 +5147,24 @@ const POSTS: Record<string, BlogPost> = {
         links: [
           { label: { ua: "Butterfly Tenergy 05 Hard", ru: "Butterfly Tenergy 05 Hard" }, href: "/butterfly/nakladki/tenergy-05-hard" },
           { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
+        ],
+      },
+      {
+        id: "u-profi",
+        h: { ua: "Tenergy чи Dignics у профі Butterfly", ru: "Tenergy или Dignics у профи Butterfly" },
+        p: {
+          ua: [
+            "Скільки контрактних гравців Butterfly ставлять кожну накладку Tenergy і Dignics — за їхніми офіційними сторінками на сайті Butterfly Japan; сторони — за сталим порядком «основа → форхенд → бекхенд». Для порівняння в таблиці також Zyre 03.",
+            "Таблиця оновлюється разом із даними Butterfly щомісяця; повний рейтинг — на сторінці статистики інвентаря профі.",
+          ],
+          ru: [
+            "Сколько контрактных игроков Butterfly ставят каждую накладку Tenergy и Dignics — по их официальным страницам на сайте Butterfly Japan; стороны — по постоянному порядку «основание → форхенд → бэкхенд». Для сравнения в таблице также Zyre 03.",
+            "Таблица обновляется вместе с данными Butterfly ежемесячно; полный рейтинг — на странице статистики инвентаря профи.",
+          ],
+        },
+        specTable: { kind: "proRubbers", slugs: ["dignics-09c", "dignics-05", "dignics-64", "dignics-80", "tenergy-05", "tenergy-05-hard", "tenergy-19", "tenergy-80", "tenergy-64", "tenergy-25-fx", "zyre-03"] },
+        links: [
+          { label: { ua: "Статистика інвентаря профі Butterfly", ru: "Статистика инвентаря профи Butterfly" }, href: "/igroki/inventar" },
         ],
       },
       {
@@ -6412,7 +6466,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Основание, форхенд и бэкхенд 27 игроков Butterfly — от Томокадзу Харимото до Тимо Болля — по официальным страницам бренда с датой. Что из этого следует: ALC, Dignics 09C и Zyre 03.",
     },
     datePublished: "2026-10-27",
-    dateModified: "2026-10-27",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     coverSrc: "/blog/inventar-profi-cover.svg",
     heroAlt: {
@@ -6464,6 +6518,7 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Dignics 09C", ru: "Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
           { label: { ua: "Zyre 03", ru: "Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
           { label: { ua: "накладки Butterfly Dignics", ru: "накладки Butterfly Dignics" }, href: "/nakladki/dignics" },
+          { label: { ua: "рейтинг накладок і основ усіх гравців Butterfly", ru: "рейтинг накладок и оснований всех игроков Butterfly" }, href: "/igroki/inventar" },
         ],
       },
       {
@@ -10667,7 +10722,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Сравнение двух самых популярных Dignics по цифрам Butterfly, официальному описанию топшита и инвентарю 20 игроков: кто ставит 09C, кто 05 и на какую сторону.",
     },
     datePublished: "2026-11-07",
-    dateModified: "2026-11-07",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     coverSrc: "/blog/dignics-05-chy-09c-cover.svg",
     heroAlt: {
@@ -10865,6 +10920,24 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "Усі профілі гравців Butterfly", ru: "Все профили игроков Butterfly" }, href: "/igroki" },
           { label: { ua: "Інвентар профі Butterfly", ru: "Инвентарь профи Butterfly" }, href: "/blog/inventar-profi-butterfly" },
           { label: { ua: "основа Butterfly Timo Boll ALC", ru: "основание Butterfly Timo Boll ALC" }, href: "/butterfly/osnovaniya/timo-boll-alc" },
+        ],
+      },
+      {
+        id: "usi-hravtsi",
+        h: { ua: "Dignics 05 і 09C у всіх гравців Butterfly, а не лише в найвідоміших", ru: "Dignics 05 и 09C у всех игроков Butterfly, а не только у самых известных" },
+        p: {
+          ua: [
+            "Таблиця вище — гравці з профілями на нашому сайті. Butterfly Japan публікує інвентар значно більшої кількості контрактних гравців, і таблиця нижче рахує їх усіх: скільки гравців ставлять кожну накладку, на яку сторону і з якою основою найчастіше.",
+            "Сторони — за тим самим сталим порядком «основа → форхенд → бекхенд»; гравці, у яких Butterfly вказує одну накладку, враховані в загальній кількості, але не в стовпцях сторін. Таблиця оновлюється разом із даними Butterfly щомісяця, тож її числа можуть відрізнятися від підрахунків у тексті вище.",
+          ],
+          ru: [
+            "Таблица выше — игроки с профилями на нашем сайте. Butterfly Japan публикует инвентарь гораздо большего числа контрактных игроков, и таблица ниже считает их всех: сколько игроков ставят каждую накладку, на какую сторону и с каким основанием чаще всего.",
+            "Стороны — по тому же постоянному порядку «основание → форхенд → бэкхенд»; игроки, у которых Butterfly указывает одну накладку, учтены в общем количестве, но не в столбцах сторон. Таблица обновляется вместе с данными Butterfly ежемесячно, поэтому её числа могут отличаться от подсчётов в тексте выше.",
+          ],
+        },
+        specTable: { kind: "proRubbers", slugs: ["dignics-09c", "dignics-05", "zyre-03"] },
+        links: [
+          { label: { ua: "Статистика інвентаря профі Butterfly", ru: "Статистика инвентаря профи Butterfly" }, href: "/igroki/inventar" },
         ],
       },
       {
@@ -11148,7 +11221,7 @@ const POSTS: Record<string, BlogPost> = {
       ru: "Три основания Butterfly с одинаковыми официальными цифрами: что на самом деле отличает Viscaria, Timo Boll ALC и Fan Zhendong ALC, кто из профи ими играет и как выбрать своё.",
     },
     datePublished: "2026-11-07",
-    dateModified: "2026-11-07",
+    dateModified: "2026-11-21",
     author: "artem-maksymchuk",
     coverSrc: "/blog/viscaria-timo-boll-alc-fan-zhendong-alc-cover.svg",
     heroAlt: {
@@ -11392,6 +11465,24 @@ const POSTS: Record<string, BlogPost> = {
           { label: { ua: "інвентар профі Butterfly", ru: "инвентарь профи Butterfly" }, href: "/blog/inventar-profi-butterfly" },
           { label: { ua: "Butterfly Dignics 09C", ru: "Butterfly Dignics 09C" }, href: "/butterfly/nakladki/dignics-09c" },
           { label: { ua: "Butterfly Zyre 03", ru: "Butterfly Zyre 03" }, href: "/butterfly/nakladki/zyre-03" },
+        ],
+      },
+      {
+        id: "usi-hravtsi",
+        h: { ua: "Viscaria, Timo Boll ALC і Fan Zhendong ALC у всіх гравців Butterfly", ru: "Viscaria, Timo Boll ALC и Fan Zhendong ALC у всех игроков Butterfly" },
+        p: {
+          ua: [
+            "У таблиці вище — гравці з профілями на нашому сайті. Ширша картина — по всіх контрактних гравцях, чий інвентар опубліковано на сайті Butterfly Japan: скільки з них грають на кожній основі і які накладки найчастіше стоять на форхенді й бекхенді. Для порівняння додано Super-версії Viscaria і Fan Zhendong.",
+            "Таблиця оновлюється разом із даними Butterfly щомісяця; повний рейтинг основ і накладок — на сторінці статистики інвентаря.",
+          ],
+          ru: [
+            "В таблице выше — игроки с профилями на нашем сайте. Более широкая картина — по всем контрактным игрокам, чей инвентарь опубликован на сайте Butterfly Japan: сколько из них играют на каждом основании и какие накладки чаще всего стоят на форхенде и бэкхенде. Для сравнения добавлены Super-версии Viscaria и Fan Zhendong.",
+            "Таблица обновляется вместе с данными Butterfly ежемесячно; полный рейтинг оснований и накладок — на странице статистики инвентаря.",
+          ],
+        },
+        specTable: { kind: "proBlades", slugs: ["viscaria", "timo-boll-alc", "fan-zhendong-alc", "viscaria-super-alc", "fan-zhendong-super-alc"] },
+        links: [
+          { label: { ua: "Статистика інвентаря профі Butterfly", ru: "Статистика инвентаря профи Butterfly" }, href: "/igroki/inventar" },
         ],
       },
       {

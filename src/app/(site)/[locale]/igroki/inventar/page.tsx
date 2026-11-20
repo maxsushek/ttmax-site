@@ -72,11 +72,13 @@ function texts(locale: Locale) {
   const n = s.all.length;
   return {
     s,
-    title: ua ? "Інвентар профі Butterfly: основи й накладки | TTMAX" : "Инвентарь профи Butterfly: основания и накладки | TTMAX",
+    // ⚠️ Кут — «рейтинг / статистика». «Чим грають професіонали» — стаття /blog/inventar-profi-butterfly
+    // (розбір 27 гравців), «гравці» — /igroki. Не зближувати заголовки, інакше три сторінки на один запит.
+    title: ua ? "Рейтинг накладок і основ у профі Butterfly | TTMAX" : "Рейтинг накладок и оснований у профи Butterfly | TTMAX",
     description: ua
-      ? `📊 Інвентар гравців Butterfly (${n}): на форхенді найчастіше ${name(fh1, locale)} (${fh1?.n}), на бекхенді — ${name(bh1, locale)} (${bh1?.n}). Основи, збірки, джерела.`
-      : `📊 Инвентарь игроков Butterfly (${n}): на форхенде чаще всего ${name(fh1, locale)} (${fh1?.n}), на бэкхенде — ${name(bh1, locale)} (${bh1?.n}). Основания, сборки, источники.`,
-    h1: ua ? "Які основи й накладки у профі: статистика інвентаря Butterfly" : "Какие основания и накладки у профи: статистика инвентаря Butterfly",
+      ? `📊 Рейтинг накладок і основ у гравців Butterfly (${n}): на форхенді лідирує ${name(fh1, locale)} (${fh1?.n}), на бекхенді — ${name(bh1, locale)} (${bh1?.n}). Збірки, джерела.`
+      : `📊 Рейтинг накладок и оснований у игроков Butterfly (${n}): на форхенде лидирует ${name(fh1, locale)} (${fh1?.n}), на бэкхенде — ${name(bh1, locale)} (${bh1?.n}). Сборки, источники.`,
+    h1: ua ? "Рейтинг накладок і основ профі Butterfly: статистика інвентаря" : "Рейтинг накладок и оснований профи Butterfly: статистика инвентаря",
     answer: ua
       ? `Серед гравців Butterfly, чий інвентар опубліковано на сайті Butterfly Japan (їх ${n}), найпопулярніша накладка на форхенді — ${name(fh1, locale)}: вона стоїть у ${fh1?.n} з ${s.two.length}, у кого вказано обидві накладки. На бекхенді найчастіше ${topPhrase(s.r.bh, locale)}. З основ, що є в продажу, лідирує ${name(b1, locale)} (${b1?.n}), а ще ${playersN(s.custom, locale)} — на основах на замовлення.`
       : `Среди игроков Butterfly, чей инвентарь опубликован на сайте Butterfly Japan (их ${n}), самая популярная накладка на форхенде — ${name(fh1, locale)}: она стоит у ${fh1?.n} из ${s.two.length}, у кого указаны обе накладки. На бэкхенде чаще всего ${topPhrase(s.r.bh, locale)}. Из оснований, которые есть в продаже, лидирует ${name(b1, locale)} (${b1?.n}), а ещё ${playersN(s.custom, locale)} — на основаниях на заказ.`,
@@ -124,6 +126,7 @@ const UI = {
     methodText: (d: string) =>
       `Інвентар узято з офіційних сторінок контрактних гравців Butterfly на сайті Butterfly Japan (butterfly.co.jp/players): основа й накладки з датою «станом на». Сторони накладок Butterfly не підписує — форхенд і бекхенд указано за сталим порядком «основа → форхенд → бекхенд»; якщо накладка Butterfly одна, сторону не вказано. Гравців без опублікованого інвентарю не враховано. Остання перевірка — ${d}.`,
     profiles: "Гравці з окремими сторінками: карʼєра й інвентар",
+    article: "Розбір: чим грають 27 найвідоміших гравців Butterfly і що з цього взяти аматору",
   },
   ru: {
     home: "Главная",
@@ -158,6 +161,7 @@ const UI = {
     methodText: (d: string) =>
       `Инвентарь взят с официальных страниц контрактных игроков Butterfly на сайте Butterfly Japan (butterfly.co.jp/players): основание и накладки с датой «по состоянию на». Стороны накладок Butterfly не подписывает — форхенд и бэкхенд указаны по постоянному порядку «основание → форхенд → бэкхенд»; если накладка Butterfly одна, сторона не указана. Игроки без опубликованного инвентаря не учтены. Последняя проверка — ${d}.`,
     profiles: "Игроки с отдельными страницами: карьера и инвентарь",
+    article: "Разбор: чем играют 27 самых известных игроков Butterfly и что из этого взять любителю",
   },
 };
 
@@ -494,6 +498,14 @@ export default async function ProStatsPage({ params }: { params: Promise<{ local
           </div>
           <Link href={`/${locale}/igroki`} prefetch={false} className="mt-3 inline-block font-body text-[13px] font-semibold text-accent hover:underline">
             {u.profiles} →
+          </Link>
+          <br />
+          <Link
+            href={`/${locale}/blog/inventar-profi-butterfly`}
+            prefetch={false}
+            className="mt-2 inline-block font-body text-[13px] font-semibold text-accent hover:underline"
+          >
+            {u.article} →
           </Link>
         </section>
 
