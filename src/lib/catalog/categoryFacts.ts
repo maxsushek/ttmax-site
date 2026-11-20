@@ -222,10 +222,15 @@ export function categoryFacts(opts: {
 
   // 4. Розмір — для одягу й взуття.
   if (hasSizeCharts() && ((kind === "category" && (slug === "odyag" || slug === "obuv")) || (kind === "surfaceGroup" && WEAR_HUBS.has(slug)))) {
+    const shoes = kind === "category" && slug === "obuv";
     out.push({
-      text: ua
-        ? "Розмір обирайте за офіційними таблицями Butterfly: заміри виробу, мірки тіла, розміри кросівок EU / JPN / US."
-        : "Размер выбирайте по официальным таблицам Butterfly: замеры изделия, мерки тела, размеры кроссовок EU / JPN / US.",
+      text: shoes
+        ? ua
+          ? "Розмір кросівок звіряйте з офіційними таблицями Butterfly Europe: EU / JPN (см) / US — для Rifones і Levalis вони різні."
+          : "Размер кроссовок сверяйте с официальными таблицами Butterfly Europe: EU / JPN (см) / US — для Rifones и Levalis они разные."
+        : ua
+          ? "Розмір обирайте за офіційними таблицями Butterfly: заміри готового виробу й мірки тіла."
+          : "Размер выбирайте по официальным таблицам Butterfly: замеры готового изделия и мерки тела.",
       link: { href: SIZE_CHART_PATH, label: ua ? "Розмірна сітка Butterfly" : "Размерная сетка Butterfly" },
     });
   }
