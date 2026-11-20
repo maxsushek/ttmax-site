@@ -1,0 +1,2556 @@
+{
+  "checked": "2026-11-20",
+  "source": "https://www.butterfly.co.jp/players/",
+  "pagesTotal": 172,
+  "withoutEquipment": 65,
+  "players": [
+    {
+      "page": "afanador-brian.html",
+      "nameJp": "アファナドール",
+      "nameLatin": "AFANADOR Brian",
+      "country": "PUR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-03-13",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "aguirre-marcelo.html",
+      "nameJp": "アギーレ",
+      "nameLatin": "AGUIRRE Marcelo",
+      "country": "PAR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2022-09-26",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "alamian-nima.html",
+      "nameJp": "Ni. アラミアン",
+      "nameLatin": "ALAMIAN Nima",
+      "country": "IRI",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "36681",
+          "name": "インナーフォース レイヤー ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "alamiyan-noshad.html",
+      "nameJp": "No. アラミヤン",
+      "nameLatin": "Noshad ALAMIYAN",
+      "country": "IRI",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-01-07",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "apolonia-tiago.html",
+      "nameJp": "アポロニア",
+      "nameLatin": "APOLONIA Tiago",
+      "country": "POR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-04-11",
+      "items": [
+        {
+          "code": "36831",
+          "name": "アポロニア ZLC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "arinobu-taimu.html",
+      "nameJp": "有延大夢",
+      "nameLatin": "ARINOBU Taimu",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-07-28",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "assar-omar.html",
+      "nameJp": "O.アサール",
+      "nameLatin": "ASSAR Omar",
+      "country": "EGY",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": null,
+          "name": "Omar Assar Innerforce ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "日本未発売",
+      "section": "int_men"
+    },
+    {
+      "page": "bessho-kimie.html",
+      "nameJp": "別所キミヱ",
+      "nameLatin": "BESSHO Kimie",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2024-01-18",
+      "items": [
+        {
+          "code": "37061",
+          "name": "レボルディア CNF"
+        },
+        {
+          "code": "00260",
+          "name": "スピーディーP.O."
+        },
+        {
+          "code": "06110",
+          "name": "グレイザー09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "boll-timo.html",
+      "nameJp": "ティモ・ボル",
+      "nameLatin": "BOLL Timo",
+      "country": "GER",
+      "style": "左シェーク攻撃型",
+      "asOf": "2024-02-14",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "ティモボル ALC（グリップ特注：G-FLESS仕様）",
+      "section": "int_men"
+    },
+    {
+      "page": "burgos-nicolas.html",
+      "nameJp": "ブルゴス",
+      "nameLatin": "BURGOS Nicolas",
+      "country": "CHI",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-11-01",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "chen-kai-cheng.html",
+      "nameJp": "陳凱程",
+      "nameLatin": "Chen Kai-Cheng",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-08-19",
+      "items": [
+        {
+          "code": "37131",
+          "name": "林昀儒 SUPER ZLC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "chen-szu-yu.html",
+      "nameJp": "陳思羽",
+      "nameLatin": "CHEN Szu-Yu",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-12-15",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "スーパーZLカーボンシェーク／インナーファイバー&reg;仕様",
+      "section": "int_women"
+    },
+    {
+      "page": "cheng-i-ching.html",
+      "nameJp": "鄭怡静",
+      "nameLatin": "CHENG I-Ching",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-03-16",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "chitale-diya.html",
+      "nameJp": "チターレ",
+      "nameLatin": "CHITALE Diya",
+      "country": "IND",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-07-20",
+      "items": [
+        {
+          "code": "36681",
+          "name": "インナーフォース レイヤー ZLC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "chuang-chih-yuan.html",
+      "nameJp": "荘智淵",
+      "nameLatin": "CHUANG Chih-Yuan",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "スーパーZLカーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "diaconu-adina.html",
+      "nameJp": "ディアコヌ",
+      "nameLatin": "DIACONU Adina",
+      "country": "ROU",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-05-22",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "diaz-adriana.html",
+      "nameJp": "A.ディアス",
+      "nameLatin": "DIAZ Adriana",
+      "country": "PUR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-09-17",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "スーパー アリレート カーボンシェーク（G-FLESS仕様）",
+      "section": "int_women"
+    },
+    {
+      "page": "diaz-melanie.html",
+      "nameJp": "M. ディアス",
+      "nameLatin": "DIAZ Melanie",
+      "country": "PUR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-07-01",
+      "items": [
+        {
+          "code": "37061",
+          "name": "レボルディア CNF"
+        },
+        {
+          "code": "00420",
+          "name": "インパーシャルXS"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "fan-zhendong.html",
+      "nameJp": "樊振東",
+      "nameLatin": "FAN Zhendong",
+      "country": "CHN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2022-07-19",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "filus-ruwen.html",
+      "nameJp": "フィルス",
+      "nameLatin": "FILUS Ruwen",
+      "country": "GER",
+      "style": "右シェークカット主戦型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06030",
+          "name": "テナジー05ハード"
+        },
+        {
+          "code": "00320",
+          "name": "フェイント ロング3"
+        }
+      ],
+      "footnote": "合板シェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "franziska-patrick.html",
+      "nameJp": "フランチスカ",
+      "nameLatin": "FRANZISKA Patrick",
+      "country": "GER",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-06-15",
+      "items": [
+        {
+          "code": "37121",
+          "name": "フランチスカ インナーフォース ZLC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "freitas-marcos.html",
+      "nameJp": "フレイタス",
+      "nameLatin": "FREITAS Marcos",
+      "country": "POR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-03-24",
+      "items": [
+        {
+          "code": "36841",
+          "name": "フレイタス ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "funayama-mahiro.html",
+      "nameJp": "舟山真弘",
+      "nameLatin": "FUNAYAMA Mahiro",
+      "country": "JPN",
+      "style": "左シェーク攻撃",
+      "asOf": "2026-10-22",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "gacina-andrej.html",
+      "nameJp": "ガシナ",
+      "nameLatin": "GACINA Andrej",
+      "country": "CRO",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "gardos-robert.html",
+      "nameJp": "ガルドシュ",
+      "nameLatin": "GARDOS Robert",
+      "country": "AUT",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-01-07",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "geraldo-joao.html",
+      "nameJp": "ジェラルド",
+      "nameLatin": "GERALDO Joao",
+      "country": "POR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-05-21",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "gerassimenko_kirill.html",
+      "nameJp": "ゲラシメンコ",
+      "nameLatin": "GERASSIMENKO Kirill",
+      "country": "KAZ",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": "37131",
+          "name": "林昀儒 SUPER ZLC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "gionis-panagiotis.html",
+      "nameJp": "ジオニス",
+      "nameLatin": "GIONIS Panagiotis",
+      "country": "GRE",
+      "style": "右シェークカット主戦型",
+      "asOf": "2023-04-27",
+      "items": [
+        {
+          "code": "30271",
+          "name": "コルベル"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        },
+        {
+          "code": "00190",
+          "name": "フェイント ロング2"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "glayzerman.html",
+      "nameJp": "グレイザーマン",
+      "nameLatin": "GLAYZERMAN",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": null,
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06110",
+          "name": "グレイザー09C"
+        },
+        {
+          "code": "06100",
+          "name": "グレイザー"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "gnanasekaran-sathiyan.html",
+      "nameJp": "グナナセカラン",
+      "nameLatin": "GNANASEKARAN Sathiyan",
+      "country": "IND",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "groth-jonathan.html",
+      "nameJp": "グロート",
+      "nameLatin": "GROTH Jonathan",
+      "country": "DEN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "harimoto-miwa.html",
+      "nameJp": "張本美和",
+      "nameLatin": "HARIMOTO Miwa",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-12-18",
+      "items": [
+        {
+          "code": "37331",
+          "name": "張本智和 インナーフォース SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "harimoto-tomokazu.html",
+      "nameJp": "張本智和",
+      "nameLatin": "HARIMOTO Tomokazu",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-10-11",
+      "items": [
+        {
+          "code": "37331",
+          "name": "張本智和 インナーフォース SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "heo-yerim.html",
+      "nameJp": "ホ・イェリム",
+      "nameLatin": "許?? HEO Yerim",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-08-08",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "ho-kwankit.html",
+      "nameJp": "何鈞傑",
+      "nameLatin": "Ho Kwan-kit",
+      "country": "HKG",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-08-14",
+      "items": [
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "huang-yi-hua.html",
+      "nameJp": "黄怡樺",
+      "nameLatin": "HUANG Yi-Hua",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-10-10",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "hung-che-yen.html",
+      "nameJp": "洪哲硯",
+      "nameLatin": "HUNG Che-Yen",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-08-18",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "スーパー ZLカーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "ito-yuan.html",
+      "nameJp": "伊藤友杏",
+      "nameLatin": "ITO Yuan",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-01-29",
+      "items": [
+        {
+          "code": "37331",
+          "name": "張本智和 インナーフォース SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "iwaida-shunto.html",
+      "nameJp": "岩井田駿斗",
+      "nameLatin": "IWAIDA Shunto",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-05-28",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "ZLカーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "jain-payas.html",
+      "nameJp": "ジェイン",
+      "nameLatin": "JAIN Payas",
+      "country": "IND",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-02-04",
+      "items": [
+        {
+          "code": "35831",
+          "name": "ティモボル ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "jha-kanak.html",
+      "nameJp": "ジャア",
+      "nameLatin": "JHA Kanak",
+      "country": "USA",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-11",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "jouti-eric.html",
+      "nameJp": "ジョウチ",
+      "nameLatin": "JOUTI Eric",
+      "country": "BRA",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-02-03",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "kallberg-anton.html",
+      "nameJp": "ケルベリ",
+      "nameLatin": "KALLBERG Anton",
+      "country": "SWE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "karlsson-kristian.html",
+      "nameJp": "K.カールソン",
+      "nameLatin": "KARLSSON Kristian",
+      "country": "SWE",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": null,
+          "name": "コルベルSK7（海外専用品）"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "kasahara-hiromitsu.html",
+      "nameJp": "笠原弘光",
+      "nameLatin": "KASAHARA Hiromitsu",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-01-16",
+      "items": [
+        {
+          "code": "37261",
+          "name": "樊振東 ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "kawakami-ryusei.html",
+      "nameJp": "川上流星",
+      "nameLatin": "KAWAKAMI Ryuusei",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-04-21",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "kiho-nanami.html",
+      "nameJp": "木方菜々美",
+      "nameLatin": "KIHO Nanami",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-10-01",
+      "items": [
+        {
+          "code": "37121",
+          "name": "フランチスカ インナーフォース ZLC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "kim-donghyun.html",
+      "nameJp": "キム・ドンヒョン",
+      "nameLatin": "金東賢 KIM Donghyun",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-06-22",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "kim-gaon.html",
+      "nameJp": "キム・ガオン",
+      "nameLatin": "Kim Gaon",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-26",
+      "items": [
+        {
+          "code": "37331",
+          "name": "張本智和 インナーフォース SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "kim-seongjin.html",
+      "nameJp": "キム・ソンジン",
+      "nameLatin": "KIM Seongjin",
+      "country": "KOR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2024-06-19",
+      "items": [
+        {
+          "code": "37021",
+          "name": "張本智和 インナーフォース SUPER ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "kimura-kasumi.html",
+      "nameJp": "木村香純",
+      "nameLatin": "KIMURA Kasumi",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-11-19",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "kreanga-kalinikos.html",
+      "nameJp": "クレアンガ",
+      "nameLatin": "KREANGA Kalinikos",
+      "country": "GRE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06060",
+          "name": "ディグニクス64"
+        },
+        {
+          "code": "06060",
+          "name": "ディグニクス64"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "kuo-guanhong.html",
+      "nameJp": "郭冠宏",
+      "nameLatin": "KUO Guan-Hong",
+      "country": "TPE",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-09-16",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "lee-da-eun.html",
+      "nameJp": "イ・ダウン",
+      "nameLatin": "LEE Daeun",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-10",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_women"
+    },
+    {
+      "page": "lee-sangsu.html",
+      "nameJp": "イ・サンス",
+      "nameLatin": "李尚洙 LEE Sangsu",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2024-04-01",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "スーパー アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "leonardo-Iizuka.html",
+      "nameJp": "レオナルド・イイヅカ",
+      "nameLatin": "Leonardo Iizuka",
+      "country": "BRA",
+      "style": "右シェーク攻撃",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "liao-chengting.html",
+      "nameJp": "廖振珽",
+      "nameLatin": "LIAO Cheng-Ting",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2024-07-01",
+      "items": [
+        {
+          "code": "37091",
+          "name": "オフチャロフ インナーフォース ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "lim-jonghoon.html",
+      "nameJp": "イム・ジョンフン",
+      "nameLatin": "林鐘勳 LIM Jonghoon",
+      "country": "KOR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-10-07",
+      "items": [
+        {
+          "code": null,
+          "name": "Lim Jonghoon Advance"
+        },
+        {
+          "code": "06030",
+          "name": "テナジー05ハード"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "日本未発売",
+      "section": "int_men"
+    },
+    {
+      "page": "lin-shidong.html",
+      "nameJp": "林詩棟",
+      "nameLatin": "LIN Shidong",
+      "country": "CHN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2022-06-01",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "lin-yunju.html",
+      "nameJp": "林昀儒",
+      "nameLatin": "LIN Yun-Ju",
+      "country": "TPE",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-01-05",
+      "items": [
+        {
+          "code": "37191",
+          "name": "ビスカリア SUPER ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "liu-jia.html",
+      "nameJp": "リュウ・ジャ",
+      "nameLatin": "LIU Jia",
+      "country": "AUT",
+      "style": "左シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "36701",
+          "name": "インナーフォース レイヤー ALC"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "machi-asuka.html",
+      "nameJp": "町飛鳥",
+      "nameLatin": "MACHI Asuka",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-01-20",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06050",
+          "name": "ディグニクス80"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "matsushima-miku.html",
+      "nameJp": "松島美空",
+      "nameLatin": "MATSUSHIMA Miku",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-10-29",
+      "items": [
+        {
+          "code": "37021",
+          "name": "張本智和 インナーフォース SUPER ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "matsushima-sora.html",
+      "nameJp": "松島輝空",
+      "nameLatin": "MATSUSHIMA Sora",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-10-01",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "matsushita-taisei.html",
+      "nameJp": "松下大星",
+      "nameLatin": "MATSUSHITA Taisei",
+      "country": "JPN",
+      "style": "右ペン攻撃型",
+      "asOf": "2026-03-23",
+      "items": [
+        {
+          "code": null,
+          "name": "特注ペン ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "スーパー アリレート カーボンペン",
+      "section": "jpn_men"
+    },
+    {
+      "page": "matsuyama-yuki.html",
+      "nameJp": "松山祐季",
+      "nameLatin": "MATSUYAMA Yuki",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-07-28",
+      "items": [
+        {
+          "code": "37241",
+          "name": "樊振東 SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "maze-michael.html",
+      "nameJp": "メイス",
+      "nameLatin": "MAZE Michael",
+      "country": "DEN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "meshref-dina.html",
+      "nameJp": "メシュレフ",
+      "nameLatin": "MESHREF Dina",
+      "country": "EGY",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-09-09",
+      "items": [
+        {
+          "code": "37331",
+          "name": "張本智和 インナーフォース SUPER ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "mino-alberto.html",
+      "nameJp": "ミーニョ",
+      "nameLatin": "MINO Alberto",
+      "country": "ECU",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-01-23",
+      "items": [
+        {
+          "code": "37091",
+          "name": "オフチャロフ インナーフォース ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "mizutani-jun.html",
+      "nameJp": "水谷隼",
+      "nameLatin": "MIZUTANI Jun",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "36611",
+          "name": "水谷隼 ZLC"
+        },
+        {
+          "code": "06050",
+          "name": "ディグニクス80"
+        },
+        {
+          "code": "06050",
+          "name": "ディグニクス80"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "monteiro-dodean-daniela.html",
+      "nameJp": "モンテイロ・ドデアン",
+      "nameLatin": "MONTEIRO DODEAN Daniela",
+      "country": "ROU",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": "カーボンシェーク",
+      "section": "int_women"
+    },
+    {
+      "page": "monteiro-joao.html",
+      "nameJp": "モンテイロ",
+      "nameLatin": "MONTEIRO Joao",
+      "country": "POR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-01-15",
+      "items": [
+        {
+          "code": "37091",
+          "name": "オフチャロフ インナーフォース ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "oka-toshihiko.html",
+      "nameJp": "岡紀彦",
+      "nameLatin": "OKA Toshihiko",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-12-06",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "05930",
+          "name": "テナジー80"
+        },
+        {
+          "code": "05910",
+          "name": "テナジー25FX"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "ovtcharov-dimitrij.html",
+      "nameJp": "オフチャロフ",
+      "nameLatin": "OVTCHAROV Dimitrij",
+      "country": "GER",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-22",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "oya-hidetoshi.html",
+      "nameJp": "大矢英俊",
+      "nameLatin": "OYA Hidetoshi",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2024-04-23",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06030",
+          "name": "テナジー05ハード"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "park-gahyun.html",
+      "nameJp": "パク・ガヒョン",
+      "nameLatin": "PARK Gahyeon",
+      "country": "KOR",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-12",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "スーパー アリレート カーボンシェーク",
+      "section": "int_women"
+    },
+    {
+      "page": "park-ganghyeon.html",
+      "nameJp": "パク・ガンヒョン",
+      "nameLatin": "朴康賢 PARK Ganghyeon",
+      "country": "KOR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-10-07",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "park-gyuhyeon.html",
+      "nameJp": "パク・ギュヒョン",
+      "nameLatin": "Park Gyuhyeon",
+      "country": "KOR",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-06-19",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "polcanova-sofia.html",
+      "nameJp": "ポルカノバ",
+      "nameLatin": "POLCANOVA Sofia",
+      "country": "AUT",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-02-14",
+      "items": [
+        {
+          "code": "36681",
+          "name": "インナーフォース レイヤー ZLC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "qiu-dang.html",
+      "nameJp": "ダン・チウ",
+      "nameLatin": "QIU Dang",
+      "country": "GER",
+      "style": "右ペンドライブ型",
+      "asOf": "2026-09-20",
+      "items": [
+        {
+          "code": "24010",
+          "name": "ビスカリア - CS"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "sakai-asuka.html",
+      "nameJp": "酒井明日翔",
+      "nameLatin": "SAKAI Asuka",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-06-30",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "samara-elizabeta.html",
+      "nameJp": "サマラ",
+      "nameLatin": "SAMARA Elizabeta",
+      "country": "ROU",
+      "style": "左シェーク攻撃型",
+      "asOf": "2024-03-07",
+      "items": [
+        {
+          "code": "36601",
+          "name": "水谷隼 SUPER ZLC"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06090",
+          "name": "テナジー19"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "sambe-kohei.html",
+      "nameJp": "三部航平",
+      "nameLatin": "SAMBE Kohei",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-01-05",
+      "items": [
+        {
+          "code": "37031",
+          "name": "張本智和 インナーフォース ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "sareen-aditya.html",
+      "nameJp": "サリーン",
+      "nameLatin": "SAREEN Aditya",
+      "country": "AUS",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-06-18",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "sawettabut-jinnipa.html",
+      "nameJp": "J.サウェッタブート",
+      "nameLatin": "SAWETTABUT Jinnipa",
+      "country": "THA",
+      "style": "右シェーク攻撃型",
+      "asOf": "2022-04-26",
+      "items": [
+        {
+          "code": "35831",
+          "name": "ティモボル ZLC"
+        },
+        {
+          "code": "06090",
+          "name": "テナジー19"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "sawettabut-suthasini.html",
+      "nameJp": "S.サウェッタブート",
+      "nameLatin": "SAWETTABUT Suthasini",
+      "country": "THA",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-12-25",
+      "items": [
+        {
+          "code": "37241",
+          "name": "樊振東 SUPER ALC"
+        },
+        {
+          "code": "05800",
+          "name": "テナジー05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "shibaev-alexander.html",
+      "nameJp": "シバエフ",
+      "nameLatin": "SHIBAEV Alexander",
+      "country": "RUS",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_men"
+    },
+    {
+      "page": "shinozuka-hiroto.html",
+      "nameJp": "篠塚大登",
+      "nameLatin": "SHINOZUKA Hiroto",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-01-19",
+      "items": [
+        {
+          "code": "35861",
+          "name": "ティモボル ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "steger-bastian.html",
+      "nameJp": "シュテーガー",
+      "nameLatin": "STEGER Bastian",
+      "country": "GER",
+      "style": "右シェーク攻撃型",
+      "asOf": "2021-07-09",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_men"
+    },
+    {
+      "page": "suzuki-nonoka.html",
+      "nameJp": "鈴木希華",
+      "nameLatin": "SUZUKI Nonoka",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-01-01",
+      "items": [
+        {
+          "code": "37031",
+          "name": "張本智和 インナーフォース ZLC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06050",
+          "name": "ディグニクス80"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "takakiwa-taku.html",
+      "nameJp": "高木和卓",
+      "nameLatin": "TAKAKIWA Taku",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2022-01-17",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "ZLカーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "takeya-misuzu.html",
+      "nameJp": "竹谷美涼",
+      "nameLatin": "TAKEYA Misuzu",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-21",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_women"
+    },
+    {
+      "page": "tanaka-yuta.html",
+      "nameJp": "田中佑汰",
+      "nameLatin": "TANAKA Yuta",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-10-06",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "togami-shunsuke.html",
+      "nameJp": "戸上隼輔",
+      "nameLatin": "TOGAMI Shunsuke",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-05-21",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "tsuboi-yuma.html",
+      "nameJp": "坪井勇磨",
+      "nameLatin": "TSUBOI Yuma",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-01-05",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "uda-yukiya.html",
+      "nameJp": "宇田幸矢",
+      "nameLatin": "UDA Yukiya",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2025-06-18",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": "ZLカーボンシェーク／インナーファイバー&reg;仕様",
+      "section": "jpn_men"
+    },
+    {
+      "page": "wang-manyu.html",
+      "nameJp": "王曼昱",
+      "nameLatin": "WANG Manyu",
+      "country": "CHN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-11-09",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "watanabe-tamito.html",
+      "nameJp": "渡部民人",
+      "nameLatin": "WATANABE Tamito",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-10-01",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "wong-chun-ting.html",
+      "nameJp": "黄鎮廷",
+      "nameLatin": "WONG Chun Ting",
+      "country": "HKG",
+      "style": "右ペンドライブ型",
+      "asOf": "2021-08-06",
+      "items": [
+        {
+          "code": null,
+          "name": "特注ペン ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06030",
+          "name": "テナジー05ハード"
+        }
+      ],
+      "footnote": "アリレート カーボンペン",
+      "section": "int_men"
+    },
+    {
+      "page": "yeh-yi-tian.html",
+      "nameJp": "葉伊恬",
+      "nameLatin": "YEH Yi-Tian",
+      "country": "TPE",
+      "style": "右シェーク攻撃型",
+      "asOf": "2023-05-29",
+      "items": [
+        {
+          "code": "30041",
+          "name": "ビスカリア"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": null,
+      "section": "int_women"
+    },
+    {
+      "page": "yoshida-masaki.html",
+      "nameJp": "𠮷田雅己",
+      "nameLatin": "YOSHIDA Masaki",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-07-28",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "スーパー アリレート カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "yoshida-shinichi.html",
+      "nameJp": "吉田信一",
+      "nameLatin": "YOSHIDA SHINICHI",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2025-12-15",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "00470",
+          "name": "バグラー"
+        }
+      ],
+      "footnote": "合板シェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "yoshimura-maharu.html",
+      "nameJp": "吉村真晴",
+      "nameLatin": "YOSHIMURA Maharu",
+      "country": "JPN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-08-24",
+      "items": [
+        {
+          "code": "37221",
+          "name": "樊振東 ALC"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        },
+        {
+          "code": "06140",
+          "name": "ザイア03"
+        }
+      ],
+      "footnote": null,
+      "section": "jpn_men"
+    },
+    {
+      "page": "yoshiyama-kazuki.html",
+      "nameJp": "吉山和希",
+      "nameLatin": "YOSHIYAMA Kazuki",
+      "country": "JPN",
+      "style": "左シェーク攻撃型",
+      "asOf": "2026-11-01",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "カーボンシェーク",
+      "section": "jpn_men"
+    },
+    {
+      "page": "zhang-mo.html",
+      "nameJp": "チャン・モー",
+      "nameLatin": "ZHANG Mo",
+      "country": "CAN",
+      "style": "右シェーク異質攻撃型",
+      "asOf": "2025-05-09",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "00470",
+          "name": "バグラー"
+        },
+        {
+          "code": "06040",
+          "name": "ディグニクス05"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_women"
+    },
+    {
+      "page": "zhu-qihui.html",
+      "nameJp": "祝啓慧",
+      "nameLatin": "Zhu Qihui",
+      "country": "CHN",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-02",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "スーパーZLカーボンシェーク／インナーファイバー仕様",
+      "section": "int_women"
+    },
+    {
+      "page": "zhu-yuling.html",
+      "nameJp": "朱雨玲",
+      "nameLatin": "ZHU Yuling",
+      "country": "MAC",
+      "style": "右シェーク攻撃型",
+      "asOf": "2026-02-16",
+      "items": [
+        {
+          "code": null,
+          "name": "特注シェーク ※"
+        },
+        {
+          "code": "06030",
+          "name": "テナジー05ハード"
+        },
+        {
+          "code": "06070",
+          "name": "ディグニクス09C"
+        }
+      ],
+      "footnote": "アリレート カーボンシェーク",
+      "section": "int_women"
+    }
+  ]
+}

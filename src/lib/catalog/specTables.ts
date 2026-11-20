@@ -4,14 +4,14 @@
 // ⚠️ НАВІЩО ГЕНЕРУВАТИ, А НЕ ПИСАТИ РУКАМИ: у таблиці на 40–80 рядків цифри з картки товару
 // розійшлися б при першій же правці каталогу, і помітити це було б нікому. Тут рядки
 // будуються з того самого `products.ts` / `bases.ts`, що й картки, а колонка «Хто грає» —
-// з профілів гравців (/igroki). Стаття задає лише групу (`BlogSection.specTable`), а
+// з інвентаря гравців Butterfly (data/proSetups.ts). Стаття задає лише групу (`BlogSection.specTable`), а
 // getPost()/getAllPosts() у blog.ts підставляють готову таблицю — тож її бачать і сторінка,
 // і llms-файли.
 import type { Locale } from "@/i18n/config";
 import type { CatalogProduct, BladeClass, BladeSurface } from "@/types/catalog";
 import { catalogProducts, catalogBases, getProductPath } from "@/data/catalog";
 import { isWithdrawn } from "@/lib/catalog/hidden";
-import { playersUsingProduct } from "@/data/playerProfiles";
+import { setupsWithBlade, setupsWithRubber } from "@/data/proSetups";
 import { PLAYERS } from "@/data/players";
 
 type L = Record<Locale, string>;
@@ -40,12 +40,19 @@ function modelCell(p: CatalogProduct): SpecCell {
   return { ...same(p.model), href: getProductPath(p) };
 }
 
-/** «Харімото, Лінь Юньжу +2» — до двох прізвищ, решта числом; повний перелік — на /igroki. */
-function playersCell(slug: string): SpecCell {
-  const ps = playersUsingProduct(slug);
+/**
+ * «Харімото, Лінь Юньжу +9» — до двох імен, решта числом. Рахуємо ВСІХ гравців Butterfly з
+ * офіційним інвентарем (data/proSetups.ts), а не лише тих, хто має сторінку на сайті: гравці з
+ * профілем ідуть першими й підписані нашою мовою, решта — латиницею, як у Butterfly.
+ */
+function playersCell(slug: string, kind: "rubber" | "blade"): SpecCell {
+  const ps = kind === "blade" ? setupsWithBlade(slug) : setupsWithRubber(slug).map((u) => u.setup);
   if (ps.length === 0) return DASH;
   const names = (loc: Locale) => {
-    const head = ps.slice(0, 2).map((p) => PLAYERS[p.slug].name[loc]).join(", ");
+    const head = ps
+      .slice(0, 2)
+      .map((p) => (p.profile ? PLAYERS[p.profile].name[loc] : p.name))
+      .join(", ");
     return ps.length > 2 ? `${head} +${ps.length - 2}` : head;
   };
   return { ua: names("ua"), ru: names("ru") };
@@ -115,7 +122,7 @@ function rubberTable(group: RubberGroup): SpecTable {
       : []),
     same(num(p.specs.hardnessDeg)),
     same(p.thicknessOptions.join(" / ").replace(/\./g, ",")),
-    playersCell(p.slug),
+    playersCell(p.slug, "rubber"),
   ]);
   return { columns, rows };
 }
@@ -202,7 +209,7 @@ function bladeTable(group: BladeGroup): SpecTable {
       weight(p),
       ...(wood ? [same(CLASS[b.bladeClass])] : []),
       ...(hasRV ? [same(num(b.reaction, 1)), same(num(b.vibration, 1))] : []),
-      playersCell(p.slug),
+      playersCell(p.slug, "blade"),
     ];
   });
   return { columns, rows };

@@ -25,6 +25,18 @@ import { getAllPosts } from "@/data/blog";
 import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory, glossaryTermPath } from "@/data/glossary";
 import { allProfiles } from "@/data/playerProfiles";
 import {
+  PRO_SETUPS,
+  PRO_STATS_PATH,
+  bladeRanking,
+  proSetupUrl,
+  rubberRanking,
+  setupRanking,
+  setupsWithBlade,
+  setupsWithRubber,
+  type Count,
+  type SetupItem,
+} from "@/data/proSetups";
+import {
   SIZE_CHARTS,
   SIZE_CHART_PATH,
   getSizeChart,
@@ -168,7 +180,13 @@ export function buildLlmsIndex(opts: {
   // Гравці: інвентар з офіційних сторінок Butterfly з датою «станом на».
   const profiles = allProfiles();
   if (profiles.length > 0) {
-    out.push("", "## Гравці: на чому грають", "", `- [Усі гравці](${url("/ua/igroki")})`);
+    out.push(
+      "",
+      "## Гравці: на чому грають",
+      "",
+      `- [Статистика інвентаря профі Butterfly](${url(`/ua${PRO_STATS_PATH}`)}) — ${proStatsNote()}. Повний текст — ${url("/llms/inventar.txt")}`,
+      `- [Усі гравці](${url("/ua/igroki")})`,
+    );
     for (const pr of profiles) {
       const eq = pr.equipment;
       const kit = [eq.blade.name, eq.fh?.name, eq.bh?.name].filter(Boolean).join(" + ");
@@ -235,6 +253,8 @@ function productLines(inCat: CatalogProduct[]): string[] {
         ? `- Сторінка: ${url(`/ua${path}`)} (рос. ${url(`/ru${path}`)})`
         : `- Розділ: ${url(`/ua${sectionPath(p)}`)} (картка без окремої сторінки)`,
     );
+    const pro = proLine(p.slug, p.kind ?? "rubber");
+    if (pro) out.push(pro);
     const specs = specLine(p);
     if (specs) out.push(`- Характеристики: ${specs}`);
     // Одяг і взуття: якір таблиці розмірів саме для цієї моделі (тип + стать + лінійка).
@@ -372,6 +392,66 @@ function sizeChartLines(): string[] {
   return out;
 }
 
+/** Назва позиції інвентарю профі для текстових файлів. */
+function proItem(i: SetupItem | null): string {
+  if (!i) return "—";
+  if (i.custom) return `${i.custom.label.ua}${i.custom.spec ? ` (${i.custom.spec.ua})` : ""}`;
+  const p = i.product ? getAllProducts().find((x) => x.slug === i.product) : undefined;
+  return p?.model ?? i.name ?? "—";
+}
+
+const proTop = (xs: Count[], k = 3) => xs.slice(0, k).map((c) => `${c.key === "custom" ? "основи на замовлення" : proItem(c.item)} (${c.n})`).join(", ");
+
+function proStatsNote(): string {
+  return `${plural(PRO_SETUPS.setups.length, "гравець", "гравці", "гравців")} Butterfly: основи, накладки на форхенді й бекхенді, дата й джерело кожного рядка`;
+}
+
+/** Рядок для товару в llms: що стоїть у гравців Butterfly (основа — накладки, накладка — основи). */
+function proLine(slug: string, kind: string): string | null {
+  const d = PRO_SETUPS.checked;
+  if (kind === "base") {
+    const list = setupsWithBlade(slug);
+    if (list.length === 0) return null;
+    const r = rubberRanking(list);
+    return `- Гравці Butterfly на цій основі: ${list.length} (форхенд: ${proTop(r.fh)}; бекхенд: ${proTop(r.bh)}) — офіційні сторінки гравців Butterfly Japan, перевірено ${d}; список: ${url(`/ua${PRO_STATS_PATH}`)}`;
+  }
+  if (kind === "rubber") {
+    const uses = setupsWithRubber(slug);
+    if (uses.length === 0) return null;
+    const fh = uses.filter((u) => u.side === "fh" || u.side === "both").length;
+    const bh = uses.filter((u) => u.side === "bh" || u.side === "both").length;
+    return `- У гравців Butterfly: ${uses.length} (на форхенді ${fh}, на бекхенді ${bh}); найчастіше з основами ${proTop(bladeRanking(uses.map((u) => u.setup)))} — офіційні сторінки гравців Butterfly Japan, перевірено ${d}`;
+  }
+  return null;
+}
+
+/** Статистика інвентаря профі: підсумок, рейтинги, повний список із джерелом кожного рядка. */
+function proSetupLines(): string[] {
+  const all = PRO_SETUPS.setups;
+  const r = rubberRanking(all);
+  const blades = bladeRanking(all);
+  const two = all.filter((s) => s.fh && s.bh).length;
+  const out: string[] = [
+    `Сторінка: ${url(`/ua${PRO_STATS_PATH}`)} (рос. ${url(`/ru${PRO_STATS_PATH}`)}). Джерело: ${PRO_SETUPS.source} — офіційні сторінки гравців Butterfly Japan, перевірено ${PRO_SETUPS.checked}.`,
+    `Сторони накладок Butterfly не підписує: форхенд і бекхенд — за сталим порядком «основа → форхенд → бекхенд»; якщо накладка Butterfly одна, сторону не вказано.`,
+    "",
+    `Підсумок: ${all.length} гравців. Форхенд (з ${two}, у кого вказано обидві накладки): ${proTop(r.fh, 5)}. Бекхенд: ${proTop(r.bh, 5)}. Основи: ${proTop(blades, 6)}.`,
+    "",
+    "### Найчастіші збірки (основа з продажу + форхенд + бекхенд)",
+  ];
+  for (const x of setupRanking(all).filter((x) => x.n >= 2)) {
+    out.push(`- ${proItem(x.blade)} + ${proItem(x.fh)} / ${proItem(x.bh)} — ${x.n}: ${x.who.map((w) => w.name).join(", ")}`);
+  }
+  out.push("", "### Інвентар гравців", "", "| Гравець | Країна | Основа | Форхенд | Бекхенд | Станом на | Джерело |", "| --- | --- | --- | --- | --- | --- | --- |");
+  for (const s of [...all].sort((a, b) => a.name.localeCompare(b.name))) {
+    const fh = s.single ? `${proItem(s.single)} (сторону не вказано)` : proItem(s.fh);
+    const bh = s.single ? "—" : proItem(s.bh);
+    out.push(`| ${s.name} | ${s.country ?? "—"} | ${proItem(s.blade)} | ${fh} | ${bh} | ${s.asOf} | ${proSetupUrl(s)} |`);
+  }
+  out.push("");
+  return out;
+}
+
 /** Гравці: інвентар (Butterfly, з датою), головні титули, коротко. */
 function playerLines(): string[] {
   const out: string[] = [];
@@ -409,6 +489,7 @@ export function llmsParts(opts: Pick<LlmsOpts, "media" | "overrides">): LlmsPart
   parts.push({ slug: "gaidy", title: "Як обрати: гайди підкатегорій", note: "«Коротко» й FAQ хабів (основи ALC/ZLC, шипи, клей тощо)" });
   parts.push({ slug: "dovidnyk", title: "Довідник: статті блогу", note: "«Коротко» й FAQ кожної статті" });
   if (allProfiles().length > 0) parts.push({ slug: "gravtsi", title: "Гравці: на чому грають", note: "інвентар за даними Butterfly з датою, титули" });
+  if (PRO_SETUPS.setups.length > 0) parts.push({ slug: "inventar", title: "Статистика інвентаря профі Butterfly", note: proStatsNote() });
   if (GLOSSARY.length > 0) parts.push({ slug: "slovnyk", title: "Словник настільного тенісу", note: `${plural(GLOSSARY.length, "термін", "терміни", "термінів")} із визначеннями` });
   if (hasSizeCharts()) parts.push({ slug: "rozmiry", title: "Розмірна сітка Butterfly", note: sizeChartsNote() });
   return parts;
@@ -432,6 +513,7 @@ export function buildLlmsPart(slug: string, opts: LlmsOpts): string | null {
   else if (slug === "gravtsi") body = playerLines();
   else if (slug === "slovnyk") body = glossaryLines();
   else if (slug === "rozmiry") body = sizeChartLines();
+  else if (slug === "inventar") body = proSetupLines();
   else body = productLines(products.filter((p) => p.categorySlug === slug));
   return [...head, ...body].join("\n");
 }
@@ -466,6 +548,7 @@ export function buildLlmsFull(opts: LlmsOpts): string {
   if (allProfiles().length > 0) out.push("## Гравці: на чому грають", "", ...playerLines());
   if (GLOSSARY.length > 0) out.push("## Словник настільного тенісу", "", ...glossaryLines());
   if (hasSizeCharts()) out.push("## Розмірна сітка Butterfly", "", ...sizeChartLines());
+  if (PRO_SETUPS.setups.length > 0) out.push("## Статистика інвентаря профі Butterfly", "", ...proSetupLines());
 
   return out.join("\n");
 }
@@ -479,6 +562,7 @@ export function buildAiTxt(contact: ContactInfo): string {
     "/ua/rakety",
     "/ua/blog",
     "/ua/igroki",
+    `/ua${PRO_STATS_PATH}`,
     "/ua/slovnyk",
     ...(hasSizeCharts() ? [`/ua${SIZE_CHART_PATH}`] : []),
     "/ua/delivery",

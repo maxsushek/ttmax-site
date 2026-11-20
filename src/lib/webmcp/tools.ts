@@ -83,7 +83,7 @@ const norm = (s: string) =>
     .trim();
 
 /** Частини llms без товарів (гайди, статті, гравці, словник, розмірна сітка) — не качаємо їх заради пошуку. */
-const NON_PRODUCT_PARTS = new Set(["gaidy", "dovidnyk", "gravtsi", "slovnyk", "rozmiry"]);
+const NON_PRODUCT_PARTS = new Set(["gaidy", "dovidnyk", "gravtsi", "slovnyk", "rozmiry", "inventar"]);
 
 /**
  * Розбір /llms/<категорія>.txt. Формат задає productLines() у lib/seo/llms.ts:

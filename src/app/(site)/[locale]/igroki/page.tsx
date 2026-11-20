@@ -10,6 +10,7 @@ import { PLAYERS } from "@/data/players";
 import { allProfiles } from "@/data/playerProfiles";
 import { PlayerFace } from "@/components/content/PlayerFace";
 import { fmtDate } from "@/components/content/PlayerProfileView";
+import { PRO_SETUPS, PRO_STATS_PATH } from "@/data/proSetups";
 
 const T = {
   ua: {
@@ -74,6 +75,16 @@ export default async function PlayersIndex({ params }: { params: Promise<{ local
       <Container className="max-w-4xl">
         <h1 className="font-display text-display-md font-black uppercase">{t.h1}</h1>
         <p className="mt-4 max-w-3xl font-body text-[15px] leading-relaxed text-ink-muted">{t.intro}</p>
+        {/* Зведені цифри по всіх гравцях Butterfly — окрема сторінка (не дублює цей список). */}
+        <Link
+          href={`/${locale}${PRO_STATS_PATH}`}
+          prefetch={false}
+          className="mt-3 inline-block font-body text-[14px] font-semibold text-accent hover:underline"
+        >
+          {locale === "ua"
+            ? `Статистика інвентаря всіх ${PRO_SETUPS.setups.length} гравців Butterfly: які основи й накладки найпопулярніші →`
+            : `Статистика инвентаря всех ${PRO_SETUPS.setups.length} игроков Butterfly: какие основания и накладки самые популярные →`}
+        </Link>
         <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {profiles.map((p) => {
             const rubbers = [p.equipment.fh?.name, p.equipment.bh?.name].filter(Boolean).join(" / ");

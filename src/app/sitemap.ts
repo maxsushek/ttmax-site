@@ -16,6 +16,7 @@ import { allAuthors } from "@/data/authors";
 import { allProfiles } from "@/data/playerProfiles";
 import { GLOSSARY, GLOSSARY_CHECKED, glossaryPages } from "@/data/glossary";
 import { SIZE_CHARTS, SIZE_CHART_PATH, hasSizeCharts } from "@/data/sizeCharts";
+import { PRO_SETUPS, PRO_STATS_PATH } from "@/data/proSetups";
 import { PLAYERS } from "@/data/players";
 import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
@@ -98,6 +99,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const profiles = allProfiles();
   if (profiles.length > 0) {
     paths.push({ path: "/igroki", priority: 0.5, freq: "monthly" });
+    // Статистика інвентаря профі: lastMod — дата звірки зі сторінками Butterfly Japan.
+    if (PRO_SETUPS.setups.length > 0) {
+      paths.push({ path: PRO_STATS_PATH, priority: 0.6, freq: "monthly", lastMod: new Date(PRO_SETUPS.checked) });
+    }
     for (const pr of profiles) {
       const photo = PLAYERS[pr.slug].photo;
       paths.push({

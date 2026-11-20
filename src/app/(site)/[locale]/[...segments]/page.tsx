@@ -57,7 +57,7 @@ import { getOverrides, applyOverrides, type OverridesMap } from "@/lib/catalog/o
 import { isRacket, resolveCombo } from "@/lib/catalog/racket";
 import { RacketBenefits } from "@/components/catalog/RacketBenefits";
 import { ProductVideos } from "@/components/catalog/ProductVideos";
-import { PlayersUsing } from "@/components/catalog/PlayersUsing";
+import { ProSetupsBlock, ProSetupsHub, hubScopeFor } from "@/components/catalog/ProSetupsBlock";
 import { getProductVideos, type ProductVideo } from "@/data/catalog/videos";
 import { RacketComboPanel } from "@/components/catalog/RacketComboPanel";
 import { getMediaMap, pickPrimary, pickAll, type EntityMediaMap } from "@/lib/media/get";
@@ -709,6 +709,16 @@ function ListingView({
           />
         </Suspense>
       )}
+      {/* Що стоїть у профі Butterfly (основи / накладки / збірки) — факти з data/proSetups.ts. */}
+      {(() => {
+        const scope =
+          route.kind === "category"
+            ? hubScopeFor("category", route.category.slug)
+            : route.kind === "surfaceGroup"
+              ? hubScopeFor("surfaceGroup", route.group.slug)
+              : null;
+        return scope ? <ProSetupsHub scope={scope} locale={locale} /> : null;
+      })()}
       {(() => {
         const richSlug =
           route.kind === "category"
@@ -1386,7 +1396,8 @@ function ProductShell({
         </div>
 
         <div className="min-w-0 lg:col-span-2 empty:hidden">
-          <PlayersUsing productSlug={reviewSlug} locale={locale} />
+          {/* Що ставлять гравці Butterfly: на основі / з накладкою (data/proSetups.ts). */}
+          <ProSetupsBlock productSlug={reviewSlug} locale={locale} />
         </div>
 
         {videos.length > 0 && (
@@ -1952,6 +1963,10 @@ async function RacketComboView({
             })}
           </ul>
         </div>
+      </div>
+
+      <div className="min-w-0 lg:col-span-2 empty:hidden">
+        <ProSetupsBlock productSlug={product.slug} locale={locale} />
       </div>
 
       {related.length > 0 && (

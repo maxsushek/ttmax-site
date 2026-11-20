@@ -1,0 +1,297 @@
+{
+  "_comment": "Словник для scripts/gen-pro-setups.mjs: артикул Butterfly Japan → наш slug. Новий артикул на сторінках гравців → генератор падає зі списком; дописати сюди.",
+  "products": {
+    "06070": {
+      "slug": "dignics-09c",
+      "en": "Dignics 09C"
+    },
+    "06140": {
+      "slug": "zyre-03",
+      "en": "Zyre 03"
+    },
+    "06040": {
+      "slug": "dignics-05",
+      "en": "Dignics 05"
+    },
+    "05800": {
+      "slug": "tenergy-05",
+      "en": "Tenergy 05"
+    },
+    "06030": {
+      "slug": "tenergy-05-hard",
+      "en": "Tenergy 05 Hard"
+    },
+    "06050": {
+      "slug": "dignics-80",
+      "en": "Dignics 80"
+    },
+    "06110": {
+      "slug": "glayzer-09c",
+      "en": "Glayzer 09C"
+    },
+    "06060": {
+      "slug": "dignics-64",
+      "en": "Dignics 64"
+    },
+    "06090": {
+      "slug": "tenergy-19",
+      "en": "Tenergy 19"
+    },
+    "00470": {
+      "slug": "bugller",
+      "en": "Bugller"
+    },
+    "00260": {
+      "slug": "speedy-po",
+      "en": "Speedy P.O."
+    },
+    "00420": {
+      "slug": "impartial-xs",
+      "en": "Impartial XS"
+    },
+    "00320": {
+      "slug": "feint-long-iii",
+      "en": "Feint Long III"
+    },
+    "00190": {
+      "slug": "feint-long-ii",
+      "en": "Feint Long II"
+    },
+    "06100": {
+      "slug": "glayzer",
+      "en": "Glayzer"
+    },
+    "05930": {
+      "slug": "tenergy-80",
+      "en": "Tenergy 80"
+    },
+    "05910": {
+      "slug": "tenergy-25-fx",
+      "en": "Tenergy 25 FX"
+    },
+    "37221": {
+      "slug": "fan-zhendong-alc",
+      "en": "Fan Zhendong ALC"
+    },
+    "35861": {
+      "slug": "timo-boll-alc",
+      "en": "Timo Boll ALC"
+    },
+    "30041": {
+      "slug": "viscaria",
+      "en": "Viscaria"
+    },
+    "37191": {
+      "slug": "viscaria-super-alc",
+      "en": "Viscaria Super ALC"
+    },
+    "37331": {
+      "slug": "harimoto-tomokazu-super-alc",
+      "en": "Harimoto Tomokazu Innerforce Super ALC"
+    },
+    "36681": {
+      "slug": "innerforce-layer-zlc",
+      "en": "Innerforce Layer ZLC"
+    },
+    "37091": {
+      "slug": "dimitrij-ovtcharov-innerforce-alc",
+      "en": "Dimitrij Ovtcharov Innerforce ALC"
+    },
+    "37061": {
+      "slug": "revoldia-cnf",
+      "en": "Revoldia CNF"
+    },
+    "37131": {
+      "slug": "lin-yun-ju-super-zlc",
+      "en": "Lin Yun-Ju Super ZLC"
+    },
+    "37121": {
+      "slug": "franziska-innerforce-zlc",
+      "en": "Franziska Innerforce ZLC"
+    },
+    "35831": {
+      "slug": "timo-boll-zlc",
+      "en": "Timo Boll ZLC"
+    },
+    "37021": {
+      "slug": "harimoto-tomokazu-innerforce-super-zlc",
+      "en": "Harimoto Tomokazu Innerforce Super ZLC"
+    },
+    "37241": {
+      "slug": "fan-zhendong-super-alc",
+      "en": "Fan Zhendong Super ALC"
+    },
+    "37031": {
+      "slug": "harimoto-tomokazu-innerforce-zlc",
+      "en": "Harimoto Tomokazu Innerforce ZLC"
+    },
+    "36831": {
+      "slug": "apolonia-zlc",
+      "en": "Apolonia ZLC"
+    },
+    "36841": {
+      "slug": "freitas-alc",
+      "en": "Freitas ALC"
+    },
+    "30271": {
+      "slug": "petr-korbel-japan",
+      "en": "Korbel"
+    },
+    "37261": {
+      "slug": "fan-zhendong-zlc",
+      "en": "Fan Zhendong ZLC"
+    },
+    "36701": {
+      "slug": "innerforce-layer-alc",
+      "en": "Innerforce Layer ALC"
+    },
+    "36611": {
+      "slug": "mizutani-zlc",
+      "en": "Mizutani Jun ZLC"
+    },
+    "24010": {
+      "slug": "viscaria",
+      "en": "Viscaria - CS"
+    },
+    "36601": {
+      "slug": "mizutani-super-zlc",
+      "en": "Mizutani Jun Super ZLC"
+    }
+  },
+  "unlinked": {
+    "Omar Assar Innerforce ZLC": {
+      "slug": "omar-assar-zlc",
+      "en": "Omar Assar Innerforce ZLC"
+    },
+    "コルベルSK7（海外専用品）": {
+      "slug": "korbel-sk7",
+      "en": "Korbel SK7"
+    },
+    "Lim Jonghoon Advance": {
+      "slug": null,
+      "en": "Lim Jonghoon Advance",
+      "label": {
+        "ua": "Lim Jonghoon Advance — іменна основа, у нашому каталозі її немає",
+        "ru": "Lim Jonghoon Advance — именное основание, в нашем каталоге его нет"
+      }
+    }
+  },
+  "custom": {
+    "特注シェーク ※": {
+      "ua": "Основа на замовлення",
+      "ru": "Основание на заказ"
+    },
+    "特注ペン ※": {
+      "ua": "Основа на замовлення (хватка пером)",
+      "ru": "Основание на заказ (хватка пером)"
+    }
+  },
+  "footnotes": {
+    "アリレート カーボンシェーク": {
+      "ua": "арилат-карбон (ALC)",
+      "ru": "арилат-карбон (ALC)",
+      "surface": "alc"
+    },
+    "スーパー アリレート カーボンシェーク": {
+      "ua": "Super ALC",
+      "ru": "Super ALC",
+      "surface": "super-alc"
+    },
+    "スーパー アリレート カーボンシェーク（G-FLESS仕様）": {
+      "ua": "Super ALC, ручка G-Fless",
+      "ru": "Super ALC, ручка G-Fless",
+      "surface": "super-alc"
+    },
+    "スーパー アリレート カーボンペン": {
+      "ua": "Super ALC, хватка пером",
+      "ru": "Super ALC, хватка пером",
+      "surface": "super-alc"
+    },
+    "アリレート カーボンペン": {
+      "ua": "ALC, хватка пером",
+      "ru": "ALC, хватка пером",
+      "surface": "alc"
+    },
+    "ZLカーボンシェーク": {
+      "ua": "ZL-карбон (ZLC)",
+      "ru": "ZL-карбон (ZLC)",
+      "surface": "zlc"
+    },
+    "ZLカーボンシェーク／インナーファイバー&reg;仕様": {
+      "ua": "ZLC, волокно ближче до ручки (Innerforce)",
+      "ru": "ZLC, волокно ближе к рукоятке (Innerforce)",
+      "surface": "zlc"
+    },
+    "スーパーZLカーボンシェーク": {
+      "ua": "Super ZLC",
+      "ru": "Super ZLC",
+      "surface": "super-zlc"
+    },
+    "スーパー ZLカーボンシェーク": {
+      "ua": "Super ZLC",
+      "ru": "Super ZLC",
+      "surface": "super-zlc"
+    },
+    "スーパーZLカーボンシェーク／インナーファイバー&reg;仕様": {
+      "ua": "Super ZLC, волокно ближче до ручки (Innerforce)",
+      "ru": "Super ZLC, волокно ближе к рукоятке (Innerforce)",
+      "surface": "super-zlc"
+    },
+    "スーパーZLカーボンシェーク／インナーファイバー仕様": {
+      "ua": "Super ZLC, волокно ближче до ручки (Innerforce)",
+      "ru": "Super ZLC, волокно ближе к рукоятке (Innerforce)",
+      "surface": "super-zlc"
+    },
+    "カーボンシェーク": {
+      "ua": "карбон",
+      "ru": "карбон",
+      "surface": "carbon"
+    },
+    "合板シェーク": {
+      "ua": "дерево",
+      "ru": "дерево",
+      "surface": "wood"
+    },
+    "ティモボル ALC（グリップ特注：G-FLESS仕様）": {
+      "ua": "Timo Boll ALC з ручкою G-Fless на замовлення",
+      "ru": "Timo Boll ALC с рукояткой G-Fless на заказ",
+      "surface": "alc",
+      "slug": "timo-boll-alc"
+    },
+    "日本未発売": null
+  },
+  "styles": {
+    "右シェーク攻撃型": {
+      "ua": "правша, європейська хватка, атака",
+      "ru": "правша, европейская хватка, атака"
+    },
+    "右シェーク攻撃": {
+      "ua": "правша, європейська хватка, атака",
+      "ru": "правша, европейская хватка, атака"
+    },
+    "左シェーク攻撃型": {
+      "ua": "шульга, європейська хватка, атака",
+      "ru": "левша, европейская хватка, атака"
+    },
+    "左シェーク攻撃": {
+      "ua": "шульга, європейська хватка, атака",
+      "ru": "левша, европейская хватка, атака"
+    },
+    "右シェークカット主戦型": {
+      "ua": "правша, європейська хватка, захист підрізкою",
+      "ru": "правша, европейская хватка, защита подрезкой"
+    },
+    "右ペンドライブ型": {
+      "ua": "правша, хватка пером, атака",
+      "ru": "правша, хватка пером, атака"
+    },
+    "右ペン攻撃型": {
+      "ua": "правша, хватка пером, атака",
+      "ru": "правша, хватка пером, атака"
+    },
+    "右シェーク異質攻撃型": {
+      "ua": "правша, європейська хватка, атака з шипами на одній стороні",
+      "ru": "правша, европейская хватка, атака с шипами на одной стороне"
+    }
+  }
+}

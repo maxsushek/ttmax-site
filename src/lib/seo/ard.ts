@@ -102,6 +102,8 @@ export function buildAgentSkill(): string {
     "   specifications, a short verdict and FAQ. The exact list of parts is in llms.txt, section «Повні дані».",
     `3. ${url("/llms/slovnyk.txt")} — table tennis glossary (ITTF rules, strokes, spin, rubber and blade terms);`,
     `   human-readable version: ${url("/ua/slovnyk")}.`,
+    `   ${url("/llms/inventar.txt")} — what ~100 Butterfly pros actually use (blade, forehand and backhand rubber,`,
+    `   date and official source per player); human-readable version: ${url("/ua/igroki/inventar")}.`,
     `4. ${url("/llms/rozmiry.txt")} — Butterfly size charts for apparel and shoes, copied from official Butterfly`,
     `   sources with the check date; human-readable version: ${url("/ua/rozmirna-sitka")}. Use it for "which size" questions.`,
     `5. ${url("/llms-full.txt")} — everything in one file (about 0.9 MB). Prefer the per-category files.`,
