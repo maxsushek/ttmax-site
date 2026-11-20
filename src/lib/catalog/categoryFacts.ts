@@ -238,11 +238,20 @@ export function categoryFacts(opts: {
   // 5. Доставка й оплата — з тих самих налаштувань, що сторінка /delivery і розмітка Offer.
   const np = daysLabel(DELIVERY_DAYS.np, locale);
   const up = daysLabel(DELIVERY_DAYS.ukrposhta, locale);
-  const free = formatPrice(opts.freeShippingFrom ?? siteConfig.freeShippingThreshold);
+  const threshold = opts.freeShippingFrom ?? siteConfig.freeShippingThreshold;
+  const free = formatPrice(threshold);
+  // Усе в розділі дорожче за поріг (готові ракетки, частина основ) — доставка безкоштовна для
+  // будь-якої покупки звідси. Так текст збігається з обіцянкою «безкоштовна доставка» в описах
+  // готових ракеток і сам зміниться, якщо зʼявиться дешевший товар чи поріг підніметься в адмінці.
+  const allFree = prices.length === n && n > 0 && Math.min(...prices) >= threshold;
   out.push({
-    text: ua
-      ? `Доставка Новою Поштою за ${np} (Укрпоштою — ${up}), безкоштовно від ${free}; оплата при отриманні.`
-      : `Доставка Новой Почтой за ${np} (Укрпочтой — ${up}), бесплатно от ${free}; оплата при получении.`,
+    text: allFree
+      ? ua
+        ? `Доставка Новою Поштою за ${np} (Укрпоштою — ${up}) — безкоштовна: кожна позиція тут дорожча за ${free}, від яких доставка безкоштовна; оплата при отриманні.`
+        : `Доставка Новой Почтой за ${np} (Укрпочтой — ${up}) — бесплатная: каждая позиция здесь дороже ${free}, от которых доставка бесплатна; оплата при получении.`
+      : ua
+        ? `Доставка Новою Поштою за ${np} (Укрпоштою — ${up}), безкоштовно від ${free}; оплата при отриманні.`
+        : `Доставка Новой Почтой за ${np} (Укрпочтой — ${up}), бесплатно от ${free}; оплата при получении.`,
     link: { href: "/delivery", label: ua ? "Доставка й оплата" : "Доставка и оплата" },
   });
   return out;
