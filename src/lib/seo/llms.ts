@@ -400,7 +400,7 @@ function proItem(i: SetupItem | null): string {
   return p?.model ?? i.name ?? "—";
 }
 
-const proTop = (xs: Count[], k = 3) => xs.slice(0, k).map((c) => `${c.key === "custom" ? "основи на замовлення" : proItem(c.item)} (${c.n})`).join(", ");
+const proTop = (xs: Count[], k = 3) => xs.slice(0, k).map((c) => `${c.key === "custom" ? "на замовлення" : proItem(c.item)} (${c.n})`).join(", ");
 
 function proStatsNote(): string {
   return `${plural(PRO_SETUPS.setups.length, "гравець", "гравці", "гравців")} Butterfly: основи, накладки на форхенді й бекхенді, дата й джерело кожного рядка`;
@@ -420,7 +420,7 @@ function proLine(slug: string, kind: string): string | null {
     if (uses.length === 0) return null;
     const fh = uses.filter((u) => u.side === "fh" || u.side === "both").length;
     const bh = uses.filter((u) => u.side === "bh" || u.side === "both").length;
-    return `- У гравців Butterfly: ${uses.length} (на форхенді ${fh}, на бекхенді ${bh}); найчастіше з основами ${proTop(bladeRanking(uses.map((u) => u.setup)))} — офіційні сторінки гравців Butterfly Japan, перевірено ${d}`;
+    return `- У гравців Butterfly: ${uses.length} (на форхенді ${fh}, на бекхенді ${bh}); основи — ${proTop(bladeRanking(uses.map((u) => u.setup)))} — офіційні сторінки гравців Butterfly Japan, перевірено ${d}`;
   }
   return null;
 }
