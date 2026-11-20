@@ -37,7 +37,8 @@ import { promoOldPrice } from "@/data/catalog/promos";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
 import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
 import { SizeHelp } from "@/components/catalog/SizeHelp";
-import { SIZE_CHART_PATH, listingHasSizedGear } from "@/data/sizeCharts";
+import { CategoryFacts } from "@/components/catalog/CategoryFacts";
+import { categoryFacts } from "@/lib/catalog/categoryFacts";
 import {
   CatalogFilters,
   type CatalogCardVM,
@@ -574,6 +575,8 @@ export default async function CatalogPage({
             media={media}
             content={content}
             ratings={await getRatingsMap()}
+            overrides={overrides}
+            freeShippingFrom={deliveryContact.freeShippingThreshold}
           />
         )}
       </Container>
@@ -600,12 +603,16 @@ function ListingView({
   media,
   content,
   ratings,
+  overrides,
+  freeShippingFrom,
 }: {
   route: Exclude<CatalogRoute, { kind: "product" }>;
   locale: Locale;
   media: EntityMediaMap;
   content: ContentBlock | null;
   ratings: RatingsMap;
+  overrides: OverridesMap;
+  freeShippingFrom: number;
 }) {
   // ⏸️ Ховаємо товари без фото у визначених категоріях (одяг) — оборотно, див. lib/catalog/hidden.
   const visibleProducts = filterVisible(route.products, media);
@@ -641,6 +648,23 @@ function ListingView({
         <ContentIntro text={introText} />
       </header>
 
+      {/* «Головне»: відповідь першою — скільки, за скільки, що беруть профі, розмір, доставка.
+          Генерується з тих самих даних, що й сітка нижче (lib/catalog/categoryFacts.ts). */}
+      {(route.kind === "category" || route.kind === "surfaceGroup") && (
+        <CategoryFacts
+          locale={locale}
+          facts={categoryFacts({
+            slug: route.kind === "category" ? route.category.slug : route.group.slug,
+            kind: route.kind,
+            products: visibleProducts,
+            locale,
+            // Готова ракетка: ціна — сума компонентів (з адмінки) зі знижкою збірки, як у сітці.
+            priceOf: (p) => (p.combo ? resolveCombo(p, overrides).promoPrice : getMinPrice(p)),
+            freeShippingFrom,
+          })}
+        />
+      )}
+
       {(route.kind === "category" || route.kind === "surfaceGroup") && (
         <SubcategoryChips
           categorySlug={route.category.slug}
@@ -650,19 +674,6 @@ function ListingView({
         />
       )}
 
-      {/* Одяг і взуття: посилання на розмірну сітку Butterfly — над сіткою товарів, поруч із вибором. */}
-      {(route.kind === "category" || route.kind === "surfaceGroup") && listingHasSizedGear(visibleProducts) && (
-        <p className="-mt-3 mb-8 font-body text-[14px] text-ink-muted" data-size-chart-link>
-          {locale === "ru" ? "Не уверены в размере?" : "Не впевнені в розмірі?"}{" "}
-          <Link
-            href={`/${locale}${SIZE_CHART_PATH}`}
-            prefetch={false}
-            className="font-semibold text-accent underline-offset-2 hover:underline"
-          >
-            {locale === "ru" ? "Размерная сетка Butterfly" : "Розмірна сітка Butterfly"} →
-          </Link>
-        </p>
-      )}
 
       {route.kind === "brand" ? (
         // Бренд-хаб — сайтвайдний анкор «Колекції» з ~700 URL, тобто один із найсильніших

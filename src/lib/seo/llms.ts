@@ -24,6 +24,8 @@ import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
 import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory, glossaryTermPath } from "@/data/glossary";
 import { allProfiles } from "@/data/playerProfiles";
+import { categoryFacts } from "@/lib/catalog/categoryFacts";
+import { resolveCombo } from "@/lib/catalog/racket";
 import {
   PRO_SETUPS,
   PRO_STATS_PATH,
@@ -392,6 +394,24 @@ function sizeChartLines(): string[] {
   return out;
 }
 
+/** «Головне» категорії — ті самі факти, що під H1 на сторінці (lib/catalog/categoryFacts.ts). */
+function factLines(slug: string, products: CatalogProduct[], opts: Pick<LlmsOpts, "overrides" | "contact">): string[] {
+  const facts = categoryFacts({
+    slug,
+    kind: "category",
+    products,
+    locale: UA,
+    priceOf: (p) => (p.combo ? resolveCombo(p, opts.overrides).promoPrice : getMinPrice(p)),
+    freeShippingFrom: opts.contact.freeShippingThreshold,
+  });
+  if (facts.length === 0) return [];
+  return [
+    "Головне:",
+    ...facts.map((f) => `- ${f.text}${f.link ? ` ${f.link.label}: ${url(`/ua${f.link.href}`)}` : ""}`),
+    "",
+  ];
+}
+
 /** Назва позиції інвентарю профі для текстових файлів. */
 function proItem(i: SetupItem | null): string {
   if (!i) return "—";
@@ -514,7 +534,10 @@ export function buildLlmsPart(slug: string, opts: LlmsOpts): string | null {
   else if (slug === "slovnyk") body = glossaryLines();
   else if (slug === "rozmiry") body = sizeChartLines();
   else if (slug === "inventar") body = proSetupLines();
-  else body = productLines(products.filter((p) => p.categorySlug === slug));
+  else {
+    const inCat = products.filter((p) => p.categorySlug === slug);
+    body = [...factLines(slug, inCat, opts), ...productLines(inCat)];
+  }
   return [...head, ...body].join("\n");
 }
 
@@ -540,7 +563,7 @@ export function buildLlmsFull(opts: LlmsOpts): string {
   for (const c of getIndexableCategories()) {
     const inCat = products.filter((p) => p.categorySlug === c.slug);
     if (inCat.length === 0) continue;
-    out.push(`## ${c.name[UA]} (${inCat.length})`, "", ...productLines(inCat));
+    out.push(`## ${c.name[UA]} (${inCat.length})`, "", ...factLines(c.slug, inCat, opts), ...productLines(inCat));
   }
 
   out.push("## Як обрати: гайди підкатегорій", "", ...guideLines(products));

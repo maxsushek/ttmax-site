@@ -114,7 +114,3 @@ export function isSizedGearType(gearType: string): boolean {
   return SIZE_CHARTS.charts.some((c) => c.gearTypes.includes(gearType));
 }
 
-/** Чи є в переліку товари з розмірною сіткою — для посилання на сторінку з лістингів. */
-export function listingHasSizedGear(products: readonly CatalogProduct[]): boolean {
-  return products.some((p) => p.gear && isSizedGearType(p.gear.gearType));
-}
