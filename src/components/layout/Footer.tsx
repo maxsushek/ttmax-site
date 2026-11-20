@@ -148,6 +148,9 @@ export function Footer({
     { label: "Butterfly", href: `/${locale}/butterfly` },
     { label: locale === "ua" ? "Гравці Butterfly" : "Игроки Butterfly", href: `/${locale}/igroki` },
     { label: locale === "ua" ? "Словник настільного тенісу" : "Словарь настольного тенниса", href: `/${locale}/slovnyk` },
+    // Розмірна сітка одягу й взуття (data/sizeCharts.ts). Шлях рядком, без імпорту даних:
+    // футер — клієнтський компонент, таблиці не мають потрапити в його бандл.
+    { label: locale === "ua" ? "Розмірна сітка Butterfly" : "Размерная сетка Butterfly", href: `/${locale}/rozmirna-sitka` },
   ];
   // Інфо-сторінки в тому ж порядку, що m.infoLinks: Про нас, Доставка, Оплата, Повернення, Контакти.
   // ⚠️ ПОРЯДОК = m.infoLinks. «Блог» доданий другим: статей уже 5, вони збирають інфо-трафік

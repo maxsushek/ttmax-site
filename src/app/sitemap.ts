@@ -15,6 +15,7 @@ import { getAllPosts } from "@/data/blog";
 import { allAuthors } from "@/data/authors";
 import { allProfiles } from "@/data/playerProfiles";
 import { GLOSSARY, GLOSSARY_CHECKED, glossaryPages } from "@/data/glossary";
+import { SIZE_CHARTS, SIZE_CHART_PATH, hasSizeCharts } from "@/data/sizeCharts";
 import { PLAYERS } from "@/data/players";
 import { getMediaMap, pickAll } from "@/lib/media/get";
 import { isHidden } from "@/lib/catalog/hidden";
@@ -86,6 +87,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const g of glossaryPages()) {
       paths.push({ path: `/slovnyk/${g.slug}`, priority: 0.5, freq: "monthly", lastMod: new Date(GLOSSARY_CHECKED) });
     }
+  }
+
+  // Розмірна сітка Butterfly: lastMod — дата звірки таблиць з офіційними джерелами.
+  if (hasSizeCharts()) {
+    paths.push({ path: SIZE_CHART_PATH, priority: 0.6, freq: "monthly", lastMod: new Date(SIZE_CHARTS.checked) });
   }
 
   // Сторінки гравців: lastMod — дата нашої звірки з джерелами (checked), не час білда.

@@ -82,8 +82,8 @@ const norm = (s: string) =>
     .replace(/[^a-z0-9а-яіїєґ]+/g, " ")
     .trim();
 
-/** Частини llms без товарів (гайди, статті, гравці, словник) — не качаємо їх заради пошуку. */
-const NON_PRODUCT_PARTS = new Set(["gaidy", "dovidnyk", "gravtsi", "slovnyk"]);
+/** Частини llms без товарів (гайди, статті, гравці, словник, розмірна сітка) — не качаємо їх заради пошуку. */
+const NON_PRODUCT_PARTS = new Set(["gaidy", "dovidnyk", "gravtsi", "slovnyk", "rozmiry"]);
 
 /**
  * Розбір /llms/<категорія>.txt. Формат задає productLines() у lib/seo/llms.ts:

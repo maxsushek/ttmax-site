@@ -24,6 +24,15 @@ import { getExpert } from "@/data/catalog/expert";
 import { getAllPosts } from "@/data/blog";
 import { GLOSSARY, GLOSSARY_CATEGORIES, glossaryByCategory, glossaryTermPath } from "@/data/glossary";
 import { allProfiles } from "@/data/playerProfiles";
+import {
+  SIZE_CHARTS,
+  SIZE_CHART_PATH,
+  getSizeChart,
+  hasSizeCharts,
+  isPageChart,
+  sizeChartsForProduct,
+  type SizeChart,
+} from "@/data/sizeCharts";
 import { PLAYERS } from "@/data/players";
 import { productIndexable } from "@/lib/catalog/indexability";
 import { inGroup, isFiberGroup, surfaceGroups } from "@/lib/catalog/routing";
@@ -177,6 +186,16 @@ export function buildLlmsIndex(opts: {
     );
   }
 
+  // Розмірна сітка: офіційні таблиці Butterfly — відповідь на «який розмір узяти».
+  if (hasSizeCharts()) {
+    out.push(
+      "",
+      "## Розмірна сітка Butterfly",
+      "",
+      `- [${SIZE_CHARTS.page.h1[UA]}](${url(`/ua${SIZE_CHART_PATH}`)}) — ${sizeChartsNote()}; звірено з джерелами Butterfly ${SIZE_CHARTS.checked}. Повний текст таблиць — ${url("/llms/rozmiry.txt")}`,
+    );
+  }
+
   out.push(
     "",
     "## Сервісні сторінки",
@@ -218,6 +237,9 @@ function productLines(inCat: CatalogProduct[]): string[] {
     );
     const specs = specLine(p);
     if (specs) out.push(`- Характеристики: ${specs}`);
+    // Одяг і взуття: якір таблиці розмірів саме для цієї моделі (тип + стать + лінійка).
+    const sizeChart = sizeChartsForProduct(p).find((c) => isPageChart(c.id));
+    if (sizeChart) out.push(`- Розмірна сітка: ${sizeChart.title[UA]} — ${url(`/ua${SIZE_CHART_PATH}#${sizeChart.id}`)}`);
     const e = getExpert(p.slug);
     if (e) {
       out.push(`- Коротко: ${e.verdict[UA]}`);
@@ -294,6 +316,62 @@ function glossaryLines(): string[] {
   return out;
 }
 
+/**
+ * «16 таблиць: одяг…» — підпис частини й рядка в llms.txt.
+ * ⚠️ Перелік складено руками (назви розділів містять двокрапки й бренд — у рядок через кому вони
+ * не лягають). Зʼявиться новий розділ у scripts/size-charts/data.json — дописати сюди.
+ */
+function sizeChartsNote(): string {
+  const onPage = SIZE_CHARTS.sections.reduce((n, sec) => n + sec.charts.length, 0);
+  return `${plural(onPage, "таблиця", "таблиці", "таблиць")} за офіційними даними Butterfly: одяг європейської та японської колекцій, кросівки Lezoline, шкарпетки`;
+}
+
+/**
+ * Розмірна сітка: ті самі таблиці, що на сторінці /rozmirna-sitka, у Markdown.
+ * Числа — з офіційних джерел Butterfly (див. data/sizeCharts.ts), тут нічого не перераховуємо.
+ */
+function sizeChartLines(): string[] {
+  const page = url(`/ua${SIZE_CHART_PATH}`);
+  const out: string[] = [`Сторінка: ${page} (рос. ${url(`/ru${SIZE_CHART_PATH}`)}). Звірено з джерелами: ${SIZE_CHARTS.checked}.`, ""];
+  for (const para of SIZE_CHARTS.page.intro[UA]) out.push(para);
+  out.push("");
+  const table = (c: SizeChart, heading: string) => {
+    out.push(heading, c.lead[UA], "");
+    out.push(`| ${c.columns.map((col) => col.label[UA]).join(" | ")} |`);
+    out.push(`| ${c.columns.map(() => "---").join(" | ")} |`);
+    for (const r of c.rows) out.push(`| ${c.columns.map((col) => r[col.key] ?? "").join(" | ")} |`);
+    if (c.note) out.push("", `Примітка: ${c.note[UA]}`);
+    out.push("", `Джерело: ${c.sources.map((src) => `${src.label[UA]} — ${src.url}`).join("; ")}`, "");
+  };
+  for (const s of SIZE_CHARTS.sections) {
+    out.push(`### ${s.title[UA]} — ${page}#${s.id}`);
+    if (s.text) out.push(s.text[UA]);
+    out.push("");
+    for (const id of s.charts) {
+      const c = getSizeChart(id);
+      if (!c) continue;
+      table(c, `#### ${c.title[UA]} — ${page}#${c.id}`);
+    }
+  }
+  // Заміри окремих моделей (японська колекція): на сайті вони показані на картці моделі.
+  const perModel = SIZE_CHARTS.charts.filter((c) => !isPageChart(c.id));
+  if (perModel.length > 0) {
+    out.push("### Заміри окремих моделей японської колекції", "На сайті ці таблиці показано на картці відповідної моделі.", "");
+    for (const c of perModel) table(c, `#### ${c.title[UA]}`);
+  }
+  if (SIZE_CHARTS.page.howTo.length > 0) {
+    out.push(`### ${SIZE_CHARTS.page.howToTitle[UA]}`);
+    SIZE_CHARTS.page.howTo.forEach((st, i) => out.push(`${i + 1}. ${st.name[UA]}: ${st.text[UA]}`));
+    out.push("");
+  }
+  if (SIZE_CHARTS.page.faq.length > 0) {
+    out.push("### Питання й відповіді");
+    for (const f of SIZE_CHARTS.page.faq) out.push(`- Питання: ${f.q[UA]} — ${f.a[UA]}`);
+    out.push("");
+  }
+  return out;
+}
+
 /** Гравці: інвентар (Butterfly, з датою), головні титули, коротко. */
 function playerLines(): string[] {
   const out: string[] = [];
@@ -332,6 +410,7 @@ export function llmsParts(opts: Pick<LlmsOpts, "media" | "overrides">): LlmsPart
   parts.push({ slug: "dovidnyk", title: "Довідник: статті блогу", note: "«Коротко» й FAQ кожної статті" });
   if (allProfiles().length > 0) parts.push({ slug: "gravtsi", title: "Гравці: на чому грають", note: "інвентар за даними Butterfly з датою, титули" });
   if (GLOSSARY.length > 0) parts.push({ slug: "slovnyk", title: "Словник настільного тенісу", note: `${plural(GLOSSARY.length, "термін", "терміни", "термінів")} із визначеннями` });
+  if (hasSizeCharts()) parts.push({ slug: "rozmiry", title: "Розмірна сітка Butterfly", note: sizeChartsNote() });
   return parts;
 }
 
@@ -352,6 +431,7 @@ export function buildLlmsPart(slug: string, opts: LlmsOpts): string | null {
   else if (slug === "dovidnyk") body = postLines(true);
   else if (slug === "gravtsi") body = playerLines();
   else if (slug === "slovnyk") body = glossaryLines();
+  else if (slug === "rozmiry") body = sizeChartLines();
   else body = productLines(products.filter((p) => p.categorySlug === slug));
   return [...head, ...body].join("\n");
 }
@@ -385,6 +465,7 @@ export function buildLlmsFull(opts: LlmsOpts): string {
   out.push("## Питання й відповіді з довідника", "", ...postLines(false));
   if (allProfiles().length > 0) out.push("## Гравці: на чому грають", "", ...playerLines());
   if (GLOSSARY.length > 0) out.push("## Словник настільного тенісу", "", ...glossaryLines());
+  if (hasSizeCharts()) out.push("## Розмірна сітка Butterfly", "", ...sizeChartLines());
 
   return out.join("\n");
 }
@@ -399,6 +480,7 @@ export function buildAiTxt(contact: ContactInfo): string {
     "/ua/blog",
     "/ua/igroki",
     "/ua/slovnyk",
+    ...(hasSizeCharts() ? [`/ua${SIZE_CHART_PATH}`] : []),
     "/ua/delivery",
     "/ua/contacts",
   ];

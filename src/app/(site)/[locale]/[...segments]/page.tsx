@@ -36,6 +36,8 @@ import { ProductPurchasePanel } from "@/components/catalog/ProductPurchasePanel"
 import { promoOldPrice } from "@/data/catalog/promos";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
 import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
+import { SizeHelp } from "@/components/catalog/SizeHelp";
+import { SIZE_CHART_PATH, listingHasSizedGear } from "@/data/sizeCharts";
 import {
   CatalogFilters,
   type CatalogCardVM,
@@ -646,6 +648,20 @@ function ListingView({
           locale={locale}
           media={media}
         />
+      )}
+
+      {/* Одяг і взуття: посилання на розмірну сітку Butterfly — над сіткою товарів, поруч із вибором. */}
+      {(route.kind === "category" || route.kind === "surfaceGroup") && listingHasSizedGear(visibleProducts) && (
+        <p className="-mt-3 mb-8 font-body text-[14px] text-ink-muted" data-size-chart-link>
+          {locale === "ru" ? "Не уверены в размере?" : "Не впевнені в розмірі?"}{" "}
+          <Link
+            href={`/${locale}${SIZE_CHART_PATH}`}
+            prefetch={false}
+            className="font-semibold text-accent underline-offset-2 hover:underline"
+          >
+            {locale === "ru" ? "Размерная сетка Butterfly" : "Розмірна сітка Butterfly"} →
+          </Link>
+        </p>
       )}
 
       {route.kind === "brand" ? (
@@ -1624,6 +1640,8 @@ function GearView({
           phone={siteConfig.phone}
           imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
         />
+        {/* Розмірна сітка — одразу під вибором розміру (лише одяг, взуття, шкарпетки, устілки). */}
+        <SizeHelp product={product} locale={locale} />
       </div>
 
       {rows.length > 0 && (
