@@ -1,7 +1,9 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { locales } from "@/i18n/config";
 import { siteConfig } from "@/config/site";
+import { POSTHOG_TOKEN } from "@/config/posthog";
+import { captureAiBotHit, detectAiBot, isMachineFile } from "@/lib/analytics/ai-bots";
 
 const DEFAULT_LOCALE = locales[0]; // 'ua'
 
@@ -37,7 +39,14 @@ const ENFORCE_CANONICAL_HOST =
   CANONICAL_HOST !== "" &&
   !CANONICAL_HOST.endsWith(".vercel.app");
 
-export async function middleware(request: NextRequest) {
+/**
+ * Лічильник ШІ-ботів (lib/analytics/ai-bots.ts): лише бойовий деплой і лише якщо не вимкнено
+ * змінною AI_BOT_TRACKING=off (аварійний вимикач без нового коду).
+ */
+const TRACK_AI_BOTS =
+  process.env.VERCEL_ENV === "production" && Boolean(POSTHOG_TOKEN) && process.env.AI_BOT_TRACKING !== "off";
+
+export async function middleware(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
 
   // ===== Канонічний хост (має бути ПЕРШИМ, до будь-якої іншої логіки) =====
@@ -50,6 +59,24 @@ export async function middleware(request: NextRequest) {
       url.protocol = "https:";
       return NextResponse.redirect(url, 308);
     }
+  }
+
+  // ===== ШІ-боти: подія в PostHog у фоні (відповідь на неї не чекає) =====
+  const userAgent = request.headers.get("user-agent");
+  const bot = TRACK_AI_BOTS ? detectAiBot(userAgent) : null;
+  const countBot = () => {
+    if (!bot) return;
+    event.waitUntil(
+      captureAiBotHit({ bot, url: request.nextUrl, userAgent: userAgent ?? "", country: request.headers.get("x-vercel-ip-country") }),
+    );
+  };
+
+  // Машинні файли (llms.txt, sitemap.xml, robots.txt, /.well-known/…, фіди) — лише рахуємо й
+  // віддаємо як є. ⚠️ Без цього раннього виходу правило «немає локалі → /ua» нижче завертало б
+  // /llms.txt на /ua/llms.txt (404).
+  if (isMachineFile(pathname)) {
+    countBot();
+    return NextResponse.next();
   }
 
   // ===== /admin/* — авторизация =====
@@ -150,6 +177,8 @@ export async function middleware(request: NextRequest) {
   // Тепер локаль береться з params маршруту в app/(site)/[locale]/layout.tsx, заголовок
   // не потрібен нікому (git grep x-locale → лише цей коментар), а сторінки статичні.
   // Повернути set("x-locale") = повернути динамічний рендер усього сайту.
+  // Редиректи вище бота не рахують: він піде за 308 і буде врахований на кінцевій сторінці.
+  countBot();
   return NextResponse.next();
 }
 
@@ -157,5 +186,17 @@ export const config = {
   matcher: [
     // Игнорируем: _next/*, api/*, файлы с расширением (.ico, .png, .txt и т.д.)
     "/((?!_next/|api/|.*\\..*).*)",
+    // …крім машинних файлів, які читають ШІ-системи: для них middleware лише рахує ботів
+    // (див. isMachineFile у lib/analytics/ai-bots.ts — списки мають збігатися).
+    "/llms.txt",
+    "/llms-full.txt",
+    "/llms/:path*",
+    "/ai.txt",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/.well-known/:path*",
+    "/agent-skills/:path*",
+    "/:locale(ua|ru)/feed.xml",
+    "/:locale(ua|ru)/google-merchant.xml",
   ],
 };
