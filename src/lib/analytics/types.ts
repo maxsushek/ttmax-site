@@ -45,6 +45,9 @@ export type AnalyticsEvent =
   | { name: "checkout_field_error"; params: { field: string; shipping_tier: string } }
   // Закрили оформлення без замовлення: крок і назви заповнених полів (без значень).
   | { name: "checkout_close"; params: { step: number; shipping_tier: string; filled: string } }
+  // Оформлення відкрили знову, і введене раніше підставилось із чернетки (lib/checkout/draft.ts):
+  // назви відновлених полів, без значень.
+  | { name: "checkout_draft_restored"; params: { filled: string } }
   | { name: "order_failed"; params: { reason: string } }
   // Клік по товару в кошику (фото або назва) — перехід на картку.
   | { name: "cart_item_click"; params: { product_slug: string } }

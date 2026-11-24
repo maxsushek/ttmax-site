@@ -383,6 +383,8 @@ export async function POST(request: NextRequest) {
         items_count: itemsCount,
         delivery_method: data.delivery.method,
         payment_method: data.payment.method,
+        // Лише ознака: сам текст коментаря в аналітику не йде.
+        has_comment: Boolean(data.comment?.trim()),
         locale: data.locale,
         product_ids: data.items.map((i) => i.productId),
         products: data.items.map((i) => `${i.brand} ${i.model}`),

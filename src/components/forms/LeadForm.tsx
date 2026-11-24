@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { formatPhone, keepPhoneCaret } from "@/utils/format";
+import { PhoneField } from "@/components/ui/PhoneField";
+import { phoneDigits, phoneE164 } from "@/utils/phone";
 import { validateName, validators } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
 import { getAttribution } from "@/lib/analytics/attribution";
@@ -11,6 +12,7 @@ import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 
+/** phone — цифри «0XXXXXXXXX» (ui/PhoneField), а не текст із дужками. */
 type FormState = { name: string; phone: string; email: string };
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
@@ -81,7 +83,8 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
     };
     const values: FormState = {
       name: read("name"),
-      phone: formatPhone(read("phone")),
+      // Агент може вписати номер у будь-якому записі («+380 67…», «067…») — зводимо до цифр.
+      phone: phoneDigits(read("phone")),
       email: read("email"),
     };
     setForm(values);
@@ -102,7 +105,7 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: values.name,
-          phone: values.phone,
+          phone: phoneE164(values.phone),
           email: values.email.trim() || null,
           source: "consultation",
           locale,
@@ -189,22 +192,29 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
           error={errors.name}
           onValueChange={(val) => update("name", val)}
         />
-        <PlainField
+        {/* Те саме поле телефону, що на оформленні й у «Швидкому замовленні» (ui/PhoneField):
+            «+38», маска, крапки, оператор. name і toolparamdescription — для WebMCP: агент
+            заповнює саме це поле, а «+38» перед ним уже стоїть. */}
+        <PhoneField
           label={m.phone}
-          placeholder={m.phone}
-          type="tel"
-          name="phone"
+          hideLabel
           required
-          toolparamdescription="Ukrainian mobile phone number of the user, e.g. +380 67 123 45 67. Never invent it."
-          autoComplete="tel"
-          inputMode="numeric"
+          tone="light"
+          locale={locale}
           value={form.phone}
-          error={errors.phone}
-          onValueChange={(val) => update("phone", formatPhone(val))}
+          onChange={(digits) => update("phone", digits)}
           // Як у чекауті: перевірка номера (код оператора) одразу після виходу з поля.
           onBlur={() =>
             setErrors((p) => ({ ...p, phone: form.phone ? validators.phone(form.phone, v) : "" }))
           }
+          error={errors.phone}
+          inputProps={{
+            name: "phone",
+            required: true,
+            // ≤ 150 символів — бюджет Chrome для опису параметра (правило 4 у lib/webmcp/tools.ts).
+            toolparamdescription:
+              "Ukrainian mobile number of the user: 10 digits starting with 0, e.g. 067 123 45 67. The +38 prefix is already shown in the field. Never invent it.",
+          }}
         />
         <PlainField
           label={m.email}
@@ -268,13 +278,12 @@ function PlainField({
       <input
         {...rest}
         value={value}
-        onChange={(e) => {
-          if (rest.type === "tel") keepPhoneCaret(e.target);
-          onValueChange(e.target.value);
-        }}
+        onChange={(e) => onValueChange(e.target.value)}
         aria-invalid={!!error || undefined}
         className={cn(
-          "w-full rounded-xl border-[1.5px] bg-white/60 px-4 py-3.5 font-display text-[16px] text-bg-base outline-none transition-colors",
+          // tt-field — автозаповнення браузера не міняє кольори поля (globals.css): без цього
+          // текст на світлій картці ставав білим на світлому.
+          "tt-field w-full rounded-xl border-[1.5px] bg-white/60 px-4 py-3.5 font-display text-[16px] text-bg-base outline-none transition-colors",
           "placeholder:text-black/40 focus:bg-white",
           error ? "border-danger" : "border-black/10 focus:border-black/30",
         )}

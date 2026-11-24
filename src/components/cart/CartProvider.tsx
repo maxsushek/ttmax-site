@@ -88,6 +88,9 @@ type CartContextValue = {
   shippingFee: number;
   ukrposhtaFee: number;
   freeShippingThreshold: number;
+  /** Телефон магазину з налаштувань (site_settings): для tel: і для показу — як у підвалі. */
+  shopPhone: string;
+  shopPhoneDisplay: string;
   isOpen: boolean;
   justAddedId: string | null;
   open: () => void;
@@ -105,6 +108,8 @@ export function CartProvider({
   freeShippingThreshold = siteConfig.freeShippingThreshold,
   shippingFee = 90,
   ukrposhtaFee = 80,
+  shopPhone = siteConfig.phone,
+  shopPhoneDisplay = siteConfig.phoneDisplay,
 }: {
   children: ReactNode;
   freeShippingThreshold?: number;
@@ -112,6 +117,12 @@ export function CartProvider({
   shippingFee?: number;
   /** Тариф Укрпошти, грн. Дефолти тут — лише страховка: реальні числа йдуть із site_settings. */
   ukrposhtaFee?: number;
+  /**
+   * Телефон магазину для екранів «Дякуємо» (оформлення, «Швидке замовлення»). Іде тим самим
+   * шляхом, що й тарифи: власник міняє номер у /admin — і він міняється всюди, не лише в підвалі.
+   */
+  shopPhone?: string;
+  shopPhoneDisplay?: string;
 }) {
   const [state, dispatch] = useReducer(reducer, { items: [], hydrated: false });
   const [isOpen, setIsOpen] = useState(false);
@@ -229,6 +240,8 @@ export function CartProvider({
     shippingFee,
     ukrposhtaFee,
     freeShippingThreshold: threshold,
+    shopPhone,
+    shopPhoneDisplay,
     isOpen,
     justAddedId,
     open,

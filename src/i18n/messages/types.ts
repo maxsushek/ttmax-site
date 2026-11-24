@@ -145,7 +145,6 @@ export type Messages = {
         fullName: string;
         fullNamePlaceholder: string;
         phone: string;
-        phonePlaceholder: string;
         email: string;
         emailPlaceholder: string;
         city: string;
@@ -191,6 +190,13 @@ export type Messages = {
       agreement: string;
       agreementTerms: string;
       agreementPrivacy: string;
+      /** Згорнуте поле коментаря: текст кнопки, що його розкриває. */
+      commentAdd: string;
+      commentLabel: string;
+      /** Приклад побажання — підпис під кнопкою й підказка в самому полі. */
+      commentHint: string;
+      /** Те саме для кошика, де є й основа, й накладки: першим — приклад про поклейку. */
+      commentHintGlue: string;
       submit: string;
     };
     success: {
@@ -202,6 +208,8 @@ export type Messages = {
        * надсилає — не повертати сюди «підтвердження надішлемо на e-mail».
        */
       callNote: string;
+      /** Підпис перед номером магазину на екрані успіху («Наш номер:»). */
+      shopPhone: string;
       deliveryNote: string;
       /** Для самовивозу замість deliveryNote: «відправимо й надішлемо ТТН» тут неправда. */
       pickupNote: string;

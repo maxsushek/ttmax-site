@@ -5,17 +5,18 @@
 // тобто той самий потік, що й форма-CTA: запис у CRM + Telegram-сповіщення менеджеру.
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { formatPhone, keepPhoneCaret } from "@/utils/format";
+import { Input } from "@/components/ui/Input";
+import { PhoneField } from "@/components/ui/PhoneField";
+// Той самий перелік кодів операторів, що й у чекауті та на бекенді (/api/leads).
+import { UA_PHONE, phoneDisplay, phoneE164 } from "@/utils/phone";
+import { useCart } from "@/components/cart/CartProvider";
 import { trackEvent } from "@/lib/analytics/events";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { type Locale } from "@/i18n/config";
-import { cn } from "@/utils/cn";
+
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { ArrowRight } from "@/components/ui/ArrowRight";
 import { useDialogFocus } from "@/components/ui/useDialogFocus";
-
-// Той самий валідатор укр. номера (з кодом оператора), що й у чекауті та на бекенді (/api/leads).
-import { UA_PHONE } from "@/utils/validators";
 
 const UI: Record<
   Locale,
@@ -30,6 +31,7 @@ const UI: Record<
     submitting: string;
     success: string;
     successHint: string;
+    shopPhone: string;
     error: string;
     phoneError: string;
     note: string;
@@ -47,8 +49,10 @@ const UI: Record<
     submitting: "Надсилаємо…",
     success: "Дякуємо! Ми передзвонимо найближчим часом.",
     successHint: "Зазвичай телефонуємо протягом робочого дня.",
+    shopPhone: "Наш номер:",
     error: "Щось пішло не так. Спробуйте ще раз або зателефонуйте нам.",
-    phoneError: "Введіть коректний номер (напр. 067 123 45 67)",
+    // Той самий текст, що на оформленні (messages.validators.phone): номер у записі поля.
+    phoneError: "Перевірте номер. Приклад: +38 (067) 123-45-67",
     note: "Без спаму. Номер потрібен лише для дзвінка щодо замовлення.",
     close: "Закрити",
   },
@@ -63,8 +67,9 @@ const UI: Record<
     submitting: "Отправляем…",
     success: "Спасибо! Мы перезвоним в ближайшее время.",
     successHint: "Обычно звоним в течение рабочего дня.",
+    shopPhone: "Наш номер:",
     error: "Что-то пошло не так. Попробуйте ещё раз или позвоните нам.",
-    phoneError: "Введите корректный номер (напр. 067 123 45 67)",
+    phoneError: "Проверьте номер. Пример: +38 (067) 123-45-67",
     note: "Без спама. Номер нужен только для звонка по заказу.",
     close: "Закрыть",
   },
@@ -151,9 +156,14 @@ export function QuickOrder({
       : UI[locale];
   // Одне ім'я на source заявки і на location подій — так воронки розділяють картку, кошик і блог.
   const source = cart ? "cart-quick-order" : consult ? "blog-consult" : "quick-order";
+  // Телефон магазину — з налаштувань (/admin → контакти), як у підвалі, а не з коду.
+  const { shopPhone, shopPhoneDisplay } = useCart();
   const [open, setOpen] = useState(false);
+  // Телефон — цифри «0XXXXXXXXX» (ui/PhoneField), а не текст із дужками.
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
+  // Що саме надіслали — для підсумку на екрані «Дякуємо» (поля після надсилання очищаються).
+  const [sent, setSent] = useState<{ phone: string; name: string } | null>(null);
   const [honey, setHoney] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [phoneErr, setPhoneErr] = useState(false);
@@ -203,8 +213,7 @@ export function QuickOrder({
     if (honey) return;
     if (status === "submitting") return;
 
-    const cleanPhone = phone.replace(/[\s\-()]/g, "");
-    if (!UA_PHONE.test(cleanPhone)) {
+    if (!UA_PHONE.test(phone)) {
       setPhoneErr(true);
       phoneRef.current?.focus();
       return;
@@ -217,7 +226,7 @@ export function QuickOrder({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: name.trim() || null,
-          phone: cleanPhone,
+          phone: phoneE164(phone),
           // Honeypot на сервер: у людини поле лишається порожнім, бот його заповнює.
           company: honey,
           source,
@@ -235,6 +244,7 @@ export function QuickOrder({
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       trackEvent({ name: "lead_form_submit", params: { location: source } });
       trackEvent({ name: "conversion", params: { type: "lead" } });
+      setSent({ phone, name: name.trim() });
       setStatus("success");
       setPhone("");
       setName("");
@@ -300,16 +310,59 @@ export function QuickOrder({
             </p>
 
             {status === "success" ? (
-              <div className="flex flex-col items-center gap-2 py-6 text-center">
-                <span aria-hidden className="text-4xl">
-                  ✅
-                </span>
+              // Екран «заявку прийнято» — як у формі запису sparkservice: галочка, що домальовується,
+              // і підсумок із номером, на який зателефонують (у записі «+38 (0XX) XXX-XX-XX»).
+              <div className="flex flex-col items-center py-4 text-center">
+                <svg viewBox="0 0 52 52" fill="none" aria-hidden className="mb-4 h-[72px] w-[72px]">
+                  <circle cx="26" cy="26" r="25" className="fill-success/[0.12]" />
+                  <path
+                    d="M15 27l7 7 15-16"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeDasharray="36"
+                    strokeDashoffset="36"
+                    className="animate-draw-check stroke-success motion-reduce:animate-none motion-reduce:[stroke-dashoffset:0]"
+                  />
+                </svg>
                 <p className="font-display text-base font-bold text-ink">{t.success}</p>
-                <p className="font-body text-[12px] text-ink-muted">{t.successHint}</p>
+                <p className="mt-1 font-body text-[12px] text-ink-muted">{t.successHint}</p>
+                {sent && (
+                  // ph-mask / ph-no-capture: номер та ім'я не йдуть ні в запис сеансу, ні в текст кліків.
+                  <dl className="ph-mask ph-no-capture mt-4 grid w-full gap-1.5 rounded-xl bg-white/[0.04] px-4 py-3 text-left font-body text-[13px]">
+                    <div className="flex justify-between gap-3">
+                      <dt className="text-ink-muted">{t.phone}</dt>
+                      <dd className="whitespace-nowrap font-semibold tabular-nums text-ink">
+                        {phoneDisplay(sent.phone)}
+                      </dd>
+                    </div>
+                    {sent.name && (
+                      <div className="flex justify-between gap-3">
+                        <dt className="text-ink-muted">{t.name}</dt>
+                        <dd className="min-w-0 break-words text-right font-semibold text-ink">
+                          {sent.name}
+                        </dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
+                {/* py-3 -my-3 — зона дотику 44 px: нижче, за 16 px, кнопка «Закрити». */}
+                <p className="mt-3 font-body text-[12px] text-ink-muted">
+                  {t.shopPhone}{" "}
+                  <a
+                    href={`tel:${shopPhone}`}
+                    onClick={() =>
+                      trackEvent({ name: "phone_click", params: { location: `${source}-success` } })
+                    }
+                    className="-my-3 inline-block whitespace-nowrap py-3 font-semibold text-ink underline decoration-white/30 underline-offset-[3px]"
+                  >
+                    {shopPhoneDisplay}
+                  </a>
+                </p>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="mt-3 font-body text-[13px] text-accent underline hover:no-underline"
+                  className="mt-4 font-body text-[13px] text-accent underline hover:no-underline"
                 >
                   {t.close}
                 </button>
@@ -327,59 +380,39 @@ export function QuickOrder({
                   />
                 </div>
 
-                <label className="block">
-                  <span className="mb-1 block font-body text-[12px] font-medium text-ink-muted">
-                    {t.phone}
-                  </span>
-                  <input
-                    ref={phoneRef}
-                    type="tel"
-                    inputMode="numeric"
-                    autoComplete="tel"
-                    placeholder="+380 67 123 45 67"
-                    value={phone}
-                    onChange={(e) => {
-                      keepPhoneCaret(e.target);
-                      setPhone(formatPhone(e.target.value));
-                      setPhoneErr(false);
-                      onFirstInput();
-                    }}
-                    // Як у чекауті: перевіряємо, щойно людина вийшла з поля, а не лише на сабміті —
-                    // інакше номер із неіснуючим кодом оператора (напр. 055) видно як «нормальний»
-                    // аж до натискання кнопки. Порожнє поле не підсвічуємо — це ще не помилка.
-                    onBlur={() => {
-                      const clean = phone.replace(/[\s\-()]/g, "");
-                      if (clean && !UA_PHONE.test(clean)) setPhoneErr(true);
-                    }}
-                    aria-invalid={phoneErr || undefined}
-                    className={cn(
-                      "w-full rounded-xl border-[1.5px] bg-white/[0.04] px-4 py-3 font-display text-[16px] text-ink outline-none transition-colors placeholder:text-ink-dim",
-                      phoneErr ? "border-danger" : "border-border-strong focus:border-accent/60",
-                    )}
-                  />
-                  {phoneErr && (
-                    <span role="alert" className="mt-1 block font-body text-[11px] text-danger">
-                      {t.phoneError}
-                    </span>
-                  )}
-                </label>
+                {/* Те саме поле телефону, що й на оформленні: «+38», маска, крапки, оператор.
+                    Помилку показуємо після спроби надіслати або коли вийшли з поля з неповним номером;
+                    порожнє поле не підсвічуємо — це ще не помилка. */}
+                <PhoneField
+                  label={t.phone}
+                  required
+                  locale={locale}
+                  inputRef={phoneRef}
+                  value={phone}
+                  onChange={(digits) => {
+                    setPhone(digits);
+                    setPhoneErr(false);
+                    onFirstInput();
+                  }}
+                  onBlur={() => {
+                    if (phone && !UA_PHONE.test(phone)) setPhoneErr(true);
+                  }}
+                  error={phoneErr ? t.phoneError : undefined}
+                />
 
-                <label className="block">
-                  <span className="mb-1 block font-body text-[12px] font-medium text-ink-muted">
-                    {t.name} <span className="text-ink-dim">· {t.nameHint}</span>
-                  </span>
-                  <input
-                    type="text"
-                    autoComplete="name"
-                    placeholder={t.name}
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                      onFirstInput();
-                    }}
-                    className="w-full rounded-xl border-[1.5px] border-border-strong bg-white/[0.04] px-4 py-3 font-display text-[16px] text-ink outline-none transition-colors placeholder:text-ink-dim focus:border-accent/60"
-                  />
-                </label>
+                <Input
+                  label={t.name}
+                  optional
+                  optionalLabel={t.nameHint}
+                  autoComplete="name"
+                  maxLength={120}
+                  placeholder={t.name}
+                  value={name}
+                  onValueChange={(val) => {
+                    setName(val);
+                    onFirstInput();
+                  }}
+                />
 
                 <Button
                   type="submit"

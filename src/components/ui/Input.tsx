@@ -2,7 +2,15 @@
 
 import { useId, useState, type InputHTMLAttributes } from "react";
 import { cn } from "@/utils/cn";
-import { keepPhoneCaret } from "@/utils/format";
+import {
+  fieldBox,
+  fieldCheck,
+  fieldInput,
+  fieldLabel,
+  fieldLabelTone,
+  fieldNote,
+  type FieldState,
+} from "./fieldStyles";
 
 type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
   label: string;
@@ -12,10 +20,12 @@ type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
   value: string;
   onValueChange: (value: string) => void;
   onBlurValidate?: () => void;
-  showValidIcon?: boolean;
-  successHint?: string;
 };
 
+/**
+ * Текстове поле форми. Вигляд спільний із полем телефону (ui/PhoneField) — див. ui/fieldStyles:
+ * рамка з кільцем у фокусі, галочка для чинного значення, червона рамка й текст для помилки.
+ */
 export function Input({
   label,
   error,
@@ -24,8 +34,6 @@ export function Input({
   value,
   onValueChange,
   onBlurValidate,
-  showValidIcon = true,
-  successHint,
   className,
   id: idProp,
   required,
@@ -39,41 +47,25 @@ export function Input({
   // кнопка мовчки «не працювала». 31.10.2026 покупець тричі натиснув її з порожньою формою
   // й пішов без замовлення (PostHog, checkout_error).
   const showError = !!error;
-  const isValid = touched && !error && value.length > 0;
+  const isValid = touched && !error && value.trim().length > 0;
+  const state: FieldState = showError ? "invalid" : isValid ? "valid" : "idle";
 
   return (
     <div className="min-w-0">
-      <label
-        htmlFor={id}
-        className="mb-1.5 flex items-center justify-between font-body text-xs font-medium"
-      >
-        <span
-          className={cn(
-            "transition-colors",
-            showError ? "text-danger" : isValid ? "text-success" : "text-ink-muted",
-          )}
-        >
+      <label htmlFor={id} className={fieldLabel}>
+        <span className={cn("transition-colors", fieldLabelTone(state))}>
           {label}
           {!optional && required && <span className="text-danger"> *</span>}
           {optional && <span className="font-normal text-ink-ghost"> — {optionalLabel}</span>}
         </span>
-        {isValid && showValidIcon && (
-          <span className="animate-slide-in text-[11px] font-bold text-success">
-            ✓ {successHint ?? "OK"}
-          </span>
-        )}
       </label>
 
-      <div className="relative">
+      <div className={fieldBox(state)}>
         <input
           {...rest}
           id={id}
           value={value}
-          onChange={(e) => {
-            // Телефон переформатовується на кожне натискання — курсор лишаємо на місці.
-            if (rest.type === "tel") keepPhoneCaret(e.target);
-            onValueChange(e.target.value);
-          }}
+          onChange={(e) => onValueChange(e.target.value)}
           onBlur={(e) => {
             setTouched(true);
             onBlurValidate?.();
@@ -83,39 +75,17 @@ export function Input({
           // required забирає компонент (малює зірочку) — до <input> він не доходив зовсім.
           aria-required={required || undefined}
           aria-describedby={showError ? `${id}-error` : undefined}
-          className={cn(
-            "w-full rounded-[10px] border-[1.5px] px-3.5 py-3 pr-10",
-            // ⚠️ 16 px, не менше, на будь-якій ширині: iOS Safari сам збільшує сторінку, коли
-            // курсор стає в поле зі шрифтом, дрібнішим за 16 px, і назад не зменшує — права
-            // частина форми (хрестик, «Змінити», позначки) їде за екран. iOS — 6 із 9 мобільних
-            // покупок. Без sm:-винятку: iPhone у горизонтальному положенні ширший за 640 px.
-            "font-body text-[16px] text-ink outline-none transition-all duration-200",
-            "placeholder:text-ink-ghost",
-            showError
-              ? "border-danger bg-danger/[0.05] focus:ring-2 focus:ring-danger/20"
-              : isValid
-                ? "border-success bg-success/[0.05] focus:ring-2 focus:ring-success/20"
-                : "border-white/10 bg-white/[0.05] focus:border-accent/45 focus:ring-2 focus:ring-accent/20",
-            className,
-          )}
+          className={cn(fieldInput(), "pl-3.5", className)}
         />
-        {showValidIcon && (isValid || showError) && (
-          <span
-            aria-hidden
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-base"
-          >
-            {isValid ? "✅" : "❌"}
-          </span>
-        )}
+        <span aria-hidden className={fieldCheck(isValid)}>
+          ✓
+        </span>
       </div>
 
       <div
         id={`${id}-error`}
         role={showError ? "alert" : undefined}
-        className={cn(
-          "mt-1 min-h-[16px] font-body text-[11px] leading-snug text-danger transition-opacity",
-          showError ? "opacity-100" : "opacity-0",
-        )}
+        className={cn(fieldNote, "font-semibold text-danger")}
       >
         {error ?? "\u200B"}
       </div>

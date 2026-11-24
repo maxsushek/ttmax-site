@@ -61,6 +61,30 @@
   :focus:not(:focus-visible) {
     outline: none;
   }
+
+  /* ── Автозаповнення браузера в полях форм (клас .tt-field — ui/fieldStyles, LeadForm) ──
+     ⚠️ НАВІЩО (24.11.2026). Автозаповнене поле браузер фарбує сам, через !important: Chrome —
+     синюватим, Safari — жовтим, і міняє колір тексту. Поле форми тепер — прозорий <input>
+     усередині рамки, тож заливка лягала б прямокутником у заокругленій рамці, а в полі
+     телефону — лише праворуч від «+38». На світлій картці консультації текст узагалі ставав
+     білим на світлому (сторінка оголошує color-scheme: dark). Зняти ці кольори не можна, тож
+     відкладаємо їх «назавжди»: поле лишається таким, яким ми його намалювали.
+     Саме delay, а не duration: правило для prefers-reduced-motion вище обнуляє тривалість
+     переходів, а затримку не чіпає. Два окремі блоки: якщо браузер не знає одного з
+     селекторів, він відкидає весь список. */
+  .tt-field:-webkit-autofill,
+  .tt-field:-webkit-autofill:hover,
+  .tt-field:-webkit-autofill:focus {
+    transition:
+      background-color 0s 600000s,
+      color 0s 600000s !important;
+  }
+
+  .tt-field:autofill {
+    transition:
+      background-color 0s 600000s,
+      color 0s 600000s !important;
+  }
 }
 
 @layer components {

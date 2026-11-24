@@ -1,10 +1,13 @@
 "use client";
 
-import { useCallback, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { PhoneField } from "@/components/ui/PhoneField";
+import { fieldBox, fieldLabel } from "@/components/ui/fieldStyles";
 import { useCart } from "@/components/cart/CartProvider";
-import { formatPrice, formatCardExp, formatCardNumber, formatPhone } from "@/utils/format";
+import { formatPrice, formatCardExp, formatCardNumber } from "@/utils/format";
+import { phoneDisplay, phoneE164 } from "@/utils/phone";
 import { validateName, validators, type FieldKey } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
 import { AVAILABLE_PAYMENT_METHODS, COD_ONLY, DEFAULT_PAYMENT_METHOD } from "@/config/payment";
@@ -16,6 +19,14 @@ import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { computeShipping } from "@/lib/checkout/shipping";
+import {
+  COMMENT_MAX,
+  DEFAULT_DELIVERY,
+  clearCheckoutDraft,
+  draftFilledFields,
+  readCheckoutDraft,
+  writeCheckoutDraft,
+} from "@/lib/checkout/draft";
 import { splitCartModel } from "@/lib/cart/line";
 
 type Delivery = "np" | "ukrposhta" | "pickup";
@@ -23,6 +34,7 @@ type Payment = "apple" | "cod" | "card";
 
 type FormState = {
   fullName: string;
+  /** Цифри «0XXXXXXXXX» (ui/PhoneField); на сервер — phoneE164, у тексті — phoneDisplay. */
   phone: string;
   email: string;
   city: string;
@@ -30,6 +42,8 @@ type FormState = {
   /** Відділення Укрпошти (індекс або адреса) — окремо від НП, щоб номер відділення НП не «переїхав» сюди. */
   ukrBranch: string;
   delivery: Delivery;
+  /** Коментар до замовлення (необов'язковий): побажання покупця — поклеїти накладки, коли дзвонити. */
+  comment: string;
   payment: Payment;
   cardNum: string;
   cardExp: string;
@@ -62,21 +76,52 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const [form, setForm] = useState<FormState>({
+  /**
+   * ⚠️ ВВЕДЕНЕ НЕ ЗНИКАЄ, КОЛИ ВІКНО ЗАКРИВАЮТЬ (24.11.2026) — див. lib/checkout/draft.ts.
+   * Форма монтується лише на час, поки відкрита, тож хрестик стирав ім'я, телефон і адресу.
+   * Тепер контакти, адреса, спосіб доставки й коментар лежать у чернетці (sessionStorage):
+   * читаємо її раз, при відкритті, і пишемо на кожну зміну. Оплата й поля картки в чернетку
+   * не потрапляють ніколи, крок — теж: відкриваємось завжди з першого, з уже заповненими полями.
+   * Форма з'являється лише в браузері після натискання «Оформити», тож читати сховище
+   * в початковому стані можна — серверного рендера, з яким він розійшовся б, тут немає.
+   */
+  const [restored] = useState(readCheckoutDraft);
+  const [form, setForm] = useState<FormState>(() => ({
     fullName: "",
     phone: "",
     email: "",
     city: "",
     npBranch: "",
     ukrBranch: "",
-    delivery: "np",
+    delivery: DEFAULT_DELIVERY,
+    comment: "",
+    ...restored,
     // Не «cod» рядком: дефолт іде з конфігу, щоб при поверненні онлайн-оплати
     // не лишився вибраним спосіб, якого вже немає в переліку (або навпаки).
     payment: DEFAULT_PAYMENT_METHOD,
     cardNum: "",
     cardExp: "",
     cardCvv: "",
-  });
+  }));
+
+  // Після успішного замовлення чернетку прибираємо й більше не пишемо: стан форми ще потрібен
+  // екрану «Замовлення оформлено», але наступне замовлення має починатись із чистого аркуша.
+  useEffect(() => {
+    if (ordered) clearCheckoutDraft();
+    else writeCheckoutDraft(form);
+  }, [form, ordered]);
+
+  // Скільки разів чернетка стала в пригоді: людина повернулась до оформлення, а дані на місці.
+  // Лише назви полів, без значень. Ref — щоб подвійний запуск ефектів у розробці не дав двох подій.
+  const restoreReported = useRef(false);
+  useEffect(() => {
+    if (restoreReported.current) return;
+    restoreReported.current = true;
+    const filled = draftFilledFields(restored);
+    if (filled.length) {
+      trackEvent({ name: "checkout_draft_restored", params: { filled: filled.join(",") } });
+    }
+  }, [restored]);
 
   const update = useCallback(<K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((p) => ({ ...p, [key]: value }));
@@ -84,6 +129,29 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
       setErrors((p) => ({ ...p, [key]: "" }));
     }
   }, []);
+
+  // Коментар згорнутий, доки його не попросили; збережений у чернетці — одразу розгорнутий.
+  const commentId = useId();
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+  const [commentOpen, setCommentOpen] = useState(() => !!restored.comment?.trim());
+  const focusComment = useRef(false);
+  const openComment = () => {
+    focusComment.current = true;
+    setCommentOpen(true);
+  };
+  // Курсор — у поле одразу після натискання «Додати коментар» (у тій самій дії, інакше iOS не
+  // відкриє клавіатуру). Лише після натискання: при поверненні на крок фокус не перехоплюємо.
+  useLayoutEffect(() => {
+    if (!commentOpen || !focusComment.current) return;
+    focusComment.current = false;
+    commentRef.current?.focus();
+  }, [commentOpen]);
+  // Приклад у підказці — за складом кошика: поклейка стосується замовлень, де є й основа,
+  // й накладки. У кошику з самою футболкою порада «поклейте накладки» була б чужою.
+  const commentHint =
+    cart.items.some((i) => i.category === "base") && cart.items.some((i) => i.category === "rubber")
+      ? m.confirm.commentHintGlue
+      : m.confirm.commentHint;
 
   // ⚠️ Рахуємо через спільну computeShipping — ту саму, якою рахує /api/orders.
   // Раніше тут була формула без урахування способу доставки, тож «Самовивіз ·
@@ -297,7 +365,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
         body: JSON.stringify({
           customer: {
             name: form.fullName.trim(),
-            phone: form.phone,
+            phone: phoneE164(form.phone),
             email: form.email.trim() || null,
           },
           // Адреса — лише та, що стосується обраного способу: при самовивозі її немає,
@@ -329,6 +397,9 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
             shipping,
             total,
           },
+          // Побажання покупця: картка замовлення в Telegram і нотатка в CRM показують його
+          // власникові (orders.comment). Порожній — не надсилаємо.
+          comment: form.comment.trim().slice(0, COMMENT_MAX) || null,
           agreed: true,
           locale,
           attribution: getAttribution(),
@@ -353,6 +424,9 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
 
       setOrderId(displayId);
       setOrdered(true);
+      // Чернетку прибираємо одразу, а не лише в ефекті: якщо вікно закрили, доки запит летів,
+      // ефект уже не спрацює — і наступне замовлення почалося б зі старим коментарем.
+      clearCheckoutDraft();
 
       trackEvent({
         name: "purchase",
@@ -398,14 +472,16 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   // Закрили оформлення, не замовивши: на якому кроці й які поля встигли заповнити
   // (лише назви полів, без значень) — щоб бачити, де саме люди йдуть.
   const closeCheckout = () => {
+    // ⚠️ Поки замовлення надсилається, вікно не закривається (ревʼю 24.11.2026). Інакше форма
+    // зникала посеред запиту, а відкрита наново — з тим самим кошиком і чернеткою — давала
+    // другий POST на той самий кошик і повертала в чернетку дані вже оформленого замовлення.
+    if (submitting) return;
     trackEvent({
       name: "checkout_close",
       params: {
         step,
         shipping_tier: form.delivery,
-        filled: (["fullName", "phone", "city", "npBranch", "ukrBranch", "email"] as const)
-          .filter((k) => form[k].trim())
-          .join(","),
+        filled: draftFilledFields(form).join(","),
       },
     });
     onClose();
@@ -452,10 +528,26 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
             (інакше дотик до абзацу слав би номер у PostHog як текст елемента).
             ⚠️ Замовлення підтверджують дзвінком — тому тут номер, на який зателефонують (покупець
             ще й бачить, чи не помилився в ньому), а не обіцянка листа: листів сайт не надсилає.
+            Номер — у тому самому записі, що й телефон магазину на сайті: «+38 (0XX) XXX-XX-XX».
             Нерозривні пробіли — щоб номер не розірвало перенесенням рядка. */}
-        <p className="ph-mask ph-no-capture mb-8 max-w-[320px] font-body text-sm text-ink-dim">
-          {m.success.callNote.replace("{phone}", form.phone.replace(/ /g, "\u00A0"))}{" "}
+        <p className="ph-mask ph-no-capture mb-3 max-w-[320px] font-body text-sm text-ink-dim">
+          {m.success.callNote.replace("{phone}", phoneDisplay(form.phone).replace(/ /g, "\u00A0"))}{" "}
           {form.delivery === "pickup" ? m.success.pickupNote : m.success.deliveryNote}
+        </p>
+        {/* Номер магазину — щоб дзвінок із нього впізнали й могли передзвонити самі. Береться
+            з налаштувань (/admin → контакти), як у підвалі, а не з коду. py-3 -my-3 — зона
+            дотику 44 px без зміни рядка. */}
+        <p className="mb-8 font-body text-sm text-ink-dim">
+          {m.success.shopPhone}{" "}
+          <a
+            href={`tel:${cart.shopPhone}`}
+            onClick={() =>
+              trackEvent({ name: "phone_click", params: { location: "checkout-success" } })
+            }
+            className="-my-3 inline-block whitespace-nowrap py-3 font-semibold text-ink underline decoration-white/30 underline-offset-[3px]"
+          >
+            {cart.shopPhoneDisplay}
+          </a>
         </p>
         <Button
           variant="primary"
@@ -508,9 +600,10 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
         <button
           type="button"
           onClick={closeCheckout}
+          disabled={submitting}
           aria-label={messages.common.close}
           // -m-2 p-3: зона дотику 44 px замість 26 — хрестик стоїть у кутку липкої шапки.
-          className="-m-2 p-3 text-lg text-ink-dim transition-colors hover:text-ink"
+          className="-m-2 p-3 text-lg text-ink-dim transition-colors hover:text-ink disabled:opacity-40"
         >
           <CloseIcon />
         </button>
@@ -590,7 +683,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                           помилка в номері губить замовлення з оплатою при отриманні. */}
                       <span className="ph-mask ph-no-capture mt-0.5 block font-body text-xs text-ink-muted">
                         {form.fullName.trim()} ·{" "}
-                        <span className="whitespace-nowrap">{form.phone}</span>
+                        <span className="whitespace-nowrap">{phoneDisplay(form.phone)}</span>
                       </span>
                     </>
                   )}
@@ -689,17 +782,15 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     />
                   </div>
                   <div className="col-span-full">
-                    <Input
+                    {/* Те саме поле, що й у «Швидкому замовленні»: «+38», маска, крапки, оператор. */}
+                    <PhoneField
                       label={m.delivery.fields.phone}
-                      placeholder={m.delivery.fields.phonePlaceholder}
                       required
-                      type="tel"
-                      inputMode="numeric"
-                      autoComplete="tel"
+                      locale={locale}
                       value={form.phone}
-                      onValueChange={(val) => update("phone", formatPhone(val))}
+                      onChange={(digits) => update("phone", digits)}
                       error={errors.phone}
-                      onBlurValidate={() => blurCheck("phone")}
+                      onBlur={() => blurCheck("phone")}
                     />
                   </div>
                   {form.delivery === "pickup" ? (
@@ -1085,6 +1176,58 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     </div>
                   </div>
                 </div>
+                {/**
+                 * ⚠️ КОМЕНТАР ДО ЗАМОВЛЕННЯ (24.11.2026). Поля не було зовсім: попросити
+                 * поклеїти накладки чи зателефонувати ввечері було ніде — хоча сервер, картка
+                 * в Telegram і нотатка в CRM коментар приймали від початку (orders.comment).
+                 * Стоїть на підтвердженні, поруч зі складом замовлення, і згорнутий: до кнопки
+                 * «Оформити» не додається жодного поля, яке треба заповнити чи пропустити.
+                 * Текст іде лише на сервер; в аналітику — сама ознака «коментар є».
+                 */}
+                {commentOpen ? (
+                  <div className="mb-4">
+                    <label htmlFor={commentId} className={fieldLabel}>
+                      <span className="text-ink-muted">
+                        {m.confirm.commentLabel}
+                        <span className="font-normal text-ink-ghost"> — {m.delivery.optional}</span>
+                      </span>
+                      {/* Лічильник — лише коли до межі лишається мало: раніше він тільки заважав би.
+                          aria-hidden: інакше цифри потрапили б у назву поля для скрінрідера. */}
+                      {form.comment.length > COMMENT_MAX - 100 && (
+                        <span aria-hidden className="shrink-0 tabular-nums text-ink-dim">
+                          {form.comment.length}/{COMMENT_MAX}
+                        </span>
+                      )}
+                    </label>
+                    <div className={fieldBox("idle")}>
+                      {/* 16 px — як у решті полів (див. fieldInput): iOS не збільшує сторінку. */}
+                      <textarea
+                        ref={commentRef}
+                        id={commentId}
+                        rows={3}
+                        maxLength={COMMENT_MAX}
+                        placeholder={commentHint}
+                        value={form.comment}
+                        onChange={(e) => update("comment", e.target.value)}
+                        className="block min-h-[96px] w-full resize-y bg-transparent px-3.5 py-3 font-body text-[16px] leading-snug text-ink outline-none placeholder:text-ink-ghost"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={openComment}
+                    className="mb-4 flex min-h-[44px] w-full flex-col items-start justify-center rounded-xl border border-dashed border-white/15 px-4 py-2.5 text-left transition-colors hover:border-accent/40 hover:bg-white/[0.03]"
+                  >
+                    <span className="font-body text-[14px] font-semibold text-accent">
+                      <span aria-hidden>+ </span>
+                      {m.confirm.commentAdd}
+                    </span>
+                    <span className="mt-0.5 font-body text-[12px] leading-snug text-ink-dim">
+                      {commentHint}
+                    </span>
+                  </button>
+                )}
                 {/**
                  * Згода дається самим оформленням — окремої галочки немає й не було.
                  * Раніше тут стояло «Я погоджуюсь з умовами використання» і текст

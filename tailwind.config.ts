@@ -93,9 +93,14 @@ const config: Config = {
         ripple: "ripple 0.65s ease-out forwards",
         "slide-in": "slideIn 0.3s ease",
         "check-bounce": "checkBounce 0.4s cubic-bezier(0.23,1,0.32,1)",
-        "badge-pop": "badgePop 0.3s cubic-bezier(0.23,1,0.32,1)",
+"badge-pop": "badgePop 0.3s cubic-bezier(0.23,1,0.32,1)",
+        // Галочка на екрані «заявку прийнято» домальовується штрихом (як у sparkservice, msDraw).
+        "draw-check": "drawCheck 0.55s ease 0.12s forwards",
       },
       keyframes: {
+        drawCheck: {
+          to: { strokeDashoffset: "0" },
+        },
         fadeUp: {
           from: { opacity: "0", transform: "translateY(28px)" },
           to: { opacity: "1", transform: "translateY(0)" },
