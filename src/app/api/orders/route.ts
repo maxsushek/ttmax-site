@@ -73,6 +73,8 @@ const OrderSchema = z.object({
     total: z.number().positive().max(10_000_000),
   }),
   comment: z.string().max(2000).optional().nullable(),
+  /** Галочка «Поклеїти накладки на основу» (кошик з основою й накладкою). Поклейка безкоштовна. */
+  glue: z.boolean().optional(),
   /**
    * ⚠️ literal(true), а не boolean — і послаблювати не можна.
    *
@@ -273,6 +275,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, persisted: false });
   }
 
+  // Поклейка — окрема галочка у формі (24.11.2026). Окремої колонки в БД немає: власник бачить її
+  // першим рядком коментаря — і в картці Telegram, і в нотатці CRM, — тож не пропустить.
+  const comment =
+    [data.glue ? "Поклеїти накладки на основу (безкоштовно)." : null, data.comment?.trim() || null]
+      .filter(Boolean)
+      .join("\n") || null;
+
   // 1) Створюємо шапку замовлення
   const { data: orderRow, error: orderError } = await supabase
     .from("orders")
@@ -290,7 +299,7 @@ export async function POST(request: NextRequest) {
       shipping_uah: computedShipping,
       total_uah: computedTotal,
       items_count: itemsCount,
-      comment: data.comment ?? null,
+      comment,
       agreed: data.agreed,
       attribution,
     })
@@ -331,7 +340,7 @@ export async function POST(request: NextRequest) {
     `Товари: ${itemsSummary}`,
     `Доставка: ${data.delivery.method}${data.delivery.city ? `, ${data.delivery.city}` : ""}${data.delivery.branch ? `, ${data.delivery.branch}` : ""}`,
     `Оплата: ${data.payment.method}`,
-    data.comment ? `Коментар: ${data.comment}` : null,
+    comment ? `Коментар: ${comment}` : null,
   ]
     .filter(Boolean)
     .join("\n");
@@ -383,8 +392,9 @@ export async function POST(request: NextRequest) {
         items_count: itemsCount,
         delivery_method: data.delivery.method,
         payment_method: data.payment.method,
-        // Лише ознака: сам текст коментаря в аналітику не йде.
+        // Лише ознаки: сам текст коментаря в аналітику не йде.
         has_comment: Boolean(data.comment?.trim()),
+        glue: Boolean(data.glue),
         locale: data.locale,
         product_ids: data.items.map((i) => i.productId),
         products: data.items.map((i) => `${i.brand} ${i.model}`),

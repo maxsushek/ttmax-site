@@ -6,10 +6,14 @@
 // закривала вікно, щоб глянути розмірну сітку чи додати товар, — і поверталась до порожньої
 // форми. Власник попросив це виправити.
 //
-// Де лежить: sessionStorage — доки відкрита вкладка. Переживає закриття вікна оформлення,
-// перехід між сторінками, перезавантаження й перемикання мови. localStorage НЕ беремо свідомо:
-// ім'я, телефон і адреса лишались би в браузері назавжди, а з одного комп'ютера (клуб, родина)
-// замовляють різні люди.
+// Де лежить і скільки: localStorage, 7 днів від останньої зміни; після успішного замовлення
+// стирається одразу. Власник спитав, як роблять великі магазини (24.11.2026): там, де можна
+// замовити без кабінету, введене живе разом із кошиком кілька днів (WooCommerce тримає сесію
+// покупця 2 доби, Shopify — кошик близько двох тижнів), а надовго дані запамʼятовує кабінет або
+// автозаповнення браузера. Спершу тут був sessionStorage (до закриття вкладки) — тоді людина,
+// що повернулась наступного дня, бачила кошик (він у localStorage без строку), але порожню
+// форму. Не прибирати строк: без нього імʼя, телефон і адреса лишались би в браузері назавжди,
+// а з одного компʼютера (клуб, родина) замовляють різні люди.
 //
 // Чого тут немає й бути не повинно:
 //  • даних картки — ніколи й ніде, крім самих полів форми;
@@ -19,6 +23,9 @@ import { phoneDigits } from "@/utils/phone";
 import type { DeliveryMethod } from "./shipping";
 
 const KEY = "ttmax_checkout_draft_v1";
+
+/** Скільки живе чернетка від останньої зміни. */
+const TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 /** Найбільша довжина коментаря у формі. Сервер (/api/orders) приймає до 2000 — із запасом. */
 export const COMMENT_MAX = 600;
@@ -36,6 +43,8 @@ export type CheckoutDraft = {
   ukrBranch: string;
   delivery: DeliveryMethod;
   comment: string;
+  /** Галочка «Поклеїти накладки на основу». */
+  glue: boolean;
 };
 
 /** Текстові поля чернетки й найбільша довжина кожного — та сама, що maxLength у полях форми. */
@@ -52,10 +61,10 @@ const TEXT_KEYS = Object.keys(TEXT_LIMITS) as TextKey[];
 
 const DELIVERY: readonly string[] = ["np", "ukrposhta", "pickup"] satisfies DeliveryMethod[];
 
-/** sessionStorage або null: на сервері його немає, а в браузері доступ можуть заборонити. */
+/** localStorage або null: на сервері його немає, а в браузері доступ можуть заборонити. */
 function storage(): Storage | null {
   try {
-    return typeof window === "undefined" ? null : window.sessionStorage;
+    return typeof window === "undefined" ? null : window.localStorage;
   } catch {
     return null;
   }
@@ -63,16 +72,24 @@ function storage(): Storage | null {
 
 /**
  * Збережена чернетка — лише поля, що пройшли перевірку типу й довжини. Сховище — не довірене
- * джерело: вміст міг лишитись від старої версії сайту або бути зміненим вручну.
+ * джерело: вміст міг лишитись від старої версії сайту або бути зміненим вручну. Прострочену
+ * чернетку (або без дати) стираємо.
  */
 export function readCheckoutDraft(): Partial<CheckoutDraft> {
   const out: Partial<CheckoutDraft> = {};
   try {
-    const raw = storage()?.getItem(KEY);
-    if (!raw) return out;
+    const store = storage();
+    const raw = store?.getItem(KEY);
+    if (!store || !raw) return out;
     const data: unknown = JSON.parse(raw);
     if (!data || typeof data !== "object") return out;
     const rec = data as Record<string, unknown>;
+    // Дата в майбутньому більш як на добу — переведений годинник або підробка: теж стираємо.
+    const age = typeof rec.savedAt === "number" ? Date.now() - rec.savedAt : NaN;
+    if (!(age >= -86_400_000 && age <= TTL_MS)) {
+      store.removeItem(KEY);
+      return out;
+    }
     for (const key of TEXT_KEYS) {
       const val = rec[key];
       if (typeof val === "string") out[key] = val.slice(0, TEXT_LIMITS[key]);
@@ -83,6 +100,7 @@ export function readCheckoutDraft(): Partial<CheckoutDraft> {
     if (typeof rec.delivery === "string" && DELIVERY.includes(rec.delivery)) {
       out.delivery = rec.delivery as DeliveryMethod;
     }
+    if (typeof rec.glue === "boolean") out.glue = rec.glue;
   } catch {
     // Зіпсований JSON або сховище недоступне — форма просто починає порожньою.
   }
@@ -105,13 +123,15 @@ export function writeCheckoutDraft(form: CheckoutDraft): void {
       ukrBranch: form.ukrBranch,
       delivery: form.delivery,
       comment: form.comment,
+      glue: form.glue,
     };
     const empty =
       !draft.phone &&
+      !draft.glue &&
       draft.delivery === DEFAULT_DELIVERY &&
       TEXT_KEYS.every((key) => !draft[key].trim());
     if (empty) store.removeItem(KEY);
-    else store.setItem(KEY, JSON.stringify(draft));
+    else store.setItem(KEY, JSON.stringify({ ...draft, savedAt: Date.now() }));
   } catch {
     // Сховище переповнене або заборонене — оформлення працює й без чернетки.
   }
@@ -128,7 +148,9 @@ export function clearCheckoutDraft(): void {
 
 /** Назви заповнених полів чернетки (без значень) — для аналітики. */
 export function draftFilledFields(draft: Partial<CheckoutDraft>): string[] {
-  return (
+  const filled: string[] = (
     ["fullName", "phone", "city", "npBranch", "ukrBranch", "email", "comment"] as const
   ).filter((key) => draft[key]?.trim());
+  if (draft.glue) filled.push("glue");
+  return filled;
 }

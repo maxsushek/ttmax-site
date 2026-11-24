@@ -195,8 +195,9 @@ export type Messages = {
       commentLabel: string;
       /** Приклад побажання — підпис під кнопкою й підказка в самому полі. */
       commentHint: string;
-      /** Те саме для кошика, де є й основа, й накладки: першим — приклад про поклейку. */
-      commentHintGlue: string;
+      /** Галочка поклейки (кошик з основою й накладкою) і рядок під нею. */
+      glue: string;
+      glueNote: string;
       submit: string;
     };
     success: {

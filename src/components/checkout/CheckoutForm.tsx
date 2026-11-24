@@ -42,8 +42,10 @@ type FormState = {
   /** Відділення Укрпошти (індекс або адреса) — окремо від НП, щоб номер відділення НП не «переїхав» сюди. */
   ukrBranch: string;
   delivery: Delivery;
-  /** Коментар до замовлення (необов'язковий): побажання покупця — поклеїти накладки, коли дзвонити. */
+  /** Коментар до замовлення (необов'язковий): побажання покупця — наприклад, коли дзвонити. */
   comment: string;
+  /** «Поклеїти накладки на основу» — лише коли в кошику є й основа, й накладка (canGlue). */
+  glue: boolean;
   payment: Payment;
   cardNum: string;
   cardExp: string;
@@ -79,8 +81,8 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
   /**
    * ⚠️ ВВЕДЕНЕ НЕ ЗНИКАЄ, КОЛИ ВІКНО ЗАКРИВАЮТЬ (24.11.2026) — див. lib/checkout/draft.ts.
    * Форма монтується лише на час, поки відкрита, тож хрестик стирав ім'я, телефон і адресу.
-   * Тепер контакти, адреса, спосіб доставки й коментар лежать у чернетці (sessionStorage):
-   * читаємо її раз, при відкритті, і пишемо на кожну зміну. Оплата й поля картки в чернетку
+   * Тепер контакти, адреса, спосіб доставки, коментар і галочка поклейки лежать у чернетці
+   * (localStorage, 7 днів): читаємо її раз, при відкритті, і пишемо на кожну зміну. Оплата й поля картки в чернетку
    * не потрапляють ніколи, крок — теж: відкриваємось завжди з першого, з уже заповненими полями.
    * Форма з'являється лише в браузері після натискання «Оформити», тож читати сховище
    * в початковому стані можна — серверного рендера, з яким він розійшовся б, тут немає.
@@ -95,6 +97,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     ukrBranch: "",
     delivery: DEFAULT_DELIVERY,
     comment: "",
+    glue: false,
     ...restored,
     // Не «cod» рядком: дефолт іде з конфігу, щоб при поверненні онлайн-оплати
     // не лишився вибраним спосіб, якого вже немає в переліку (або навпаки).
@@ -146,12 +149,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     focusComment.current = false;
     commentRef.current?.focus();
   }, [commentOpen]);
-  // Приклад у підказці — за складом кошика: поклейка стосується замовлень, де є й основа,
-  // й накладки. У кошику з самою футболкою порада «поклейте накладки» була б чужою.
-  const commentHint =
-    cart.items.some((i) => i.category === "base") && cart.items.some((i) => i.category === "rubber")
-      ? m.confirm.commentHintGlue
-      : m.confirm.commentHint;
+  // Галочка поклейки — лише коли в кошику є й основа, й накладка: у кошику з самою футболкою
+  // вона була б чужою. Збережена в чернетці галочка без такого кошика не показується й не йде.
+  const canGlue =
+    cart.items.some((i) => i.category === "base") &&
+    cart.items.some((i) => i.category === "rubber");
 
   // ⚠️ Рахуємо через спільну computeShipping — ту саму, якою рахує /api/orders.
   // Раніше тут була формула без урахування способу доставки, тож «Самовивіз ·
@@ -400,6 +402,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
           // Побажання покупця: картка замовлення в Telegram і нотатка в CRM показують його
           // власникові (orders.comment). Порожній — не надсилаємо.
           comment: form.comment.trim().slice(0, COMMENT_MAX) || null,
+          glue: canGlue && form.glue,
           agreed: true,
           locale,
           attribution: getAttribution(),
@@ -1184,6 +1187,30 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                  * «Оформити» не додається жодного поля, яке треба заповнити чи пропустити.
                  * Текст іде лише на сервер; в аналітику — сама ознака «коментар є».
                  */}
+                {/**
+                 * ⚠️ ПОКЛЕЙКА — ОКРЕМОЮ ГАЛОЧКОЮ (24.11.2026, рішення власника: «при необхідності
+                 * поклейка безкоштовно»). Раніше прохання поклеїти накладки було лише прикладом
+                 * у коментарі. Галочка за замовчуванням знята: поклеєні накладки вже не повернеш
+                 * як нові, а дехто клеїть сам. Який бік — уточнюють під час дзвінка-підтвердження.
+                 */}
+                {canGlue && (
+                  <label className="mb-3 flex min-h-[44px] cursor-pointer items-start gap-3 rounded-xl border border-border-subtle bg-white/[0.02] px-4 py-3 transition-colors hover:bg-white/[0.04] has-[:checked]:border-accent/60 has-[:checked]:bg-accent/[0.06]">
+                    <input
+                      type="checkbox"
+                      checked={form.glue}
+                      onChange={(e) => update("glue", e.target.checked)}
+                      className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-accent"
+                    />
+                    <span className="min-w-0">
+                      <span className="block font-body text-[14px] font-semibold text-ink">
+                        {m.confirm.glue}
+                      </span>
+                      <span className="mt-0.5 block font-body text-[12px] leading-snug text-ink-dim">
+                        {m.confirm.glueNote}
+                      </span>
+                    </span>
+                  </label>
+                )}
                 {commentOpen ? (
                   <div className="mb-4">
                     <label htmlFor={commentId} className={fieldLabel}>
@@ -1206,7 +1233,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                         id={commentId}
                         rows={3}
                         maxLength={COMMENT_MAX}
-                        placeholder={commentHint}
+                        placeholder={m.confirm.commentHint}
                         value={form.comment}
                         onChange={(e) => update("comment", e.target.value)}
                         className="block min-h-[96px] w-full resize-y bg-transparent px-3.5 py-3 font-body text-[16px] leading-snug text-ink outline-none placeholder:text-ink-ghost"
@@ -1224,7 +1251,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                       {m.confirm.commentAdd}
                     </span>
                     <span className="mt-0.5 font-body text-[12px] leading-snug text-ink-dim">
-                      {commentHint}
+                      {m.confirm.commentHint}
                     </span>
                   </button>
                 )}
