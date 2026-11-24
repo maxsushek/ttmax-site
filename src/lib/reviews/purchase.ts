@@ -8,6 +8,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { slugFromProductId } from "@/lib/catalog/product-url";
 import { variantOf } from "@/data/catalog/variants";
+import { UA_PHONE_NATIONAL } from "@/utils/phone";
 
 type Sb = SupabaseClient<Database>;
 
@@ -16,7 +17,7 @@ export function normalizePhone(raw: string | null | undefined): string | null {
   if (!raw) return null;
   const d = raw.replace(/\D/g, "");
   const nine = d.length === 12 && d.startsWith("380") ? d.slice(3) : d.length === 10 && d.startsWith("0") ? d.slice(1) : d.length === 9 ? d : null;
-  return nine && /^(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/.test(nine) ? `380${nine}` : null;
+  return nine && UA_PHONE_NATIONAL.test(nine) ? `380${nine}` : null;
 }
 
 const mainSlug = (slug: string) => variantOf(slug)?.main ?? slug;

@@ -152,7 +152,23 @@ export type Messages = {
         cityPlaceholder: string;
         npBranch: string;
         npBranchPlaceholder: string;
+        /** Укрпошта: індекс або адреса відділення (окреме поле, не «Відділення НП»). */
+        ukrBranch: string;
+        ukrBranchPlaceholder: string;
       };
+      /** Самовивіз: замість полів адреси — заголовок і пояснення, що буде далі. */
+      pickupTitle: string;
+      /** Містить {address} — адресу магазину (siteConfig.addressDisplay). */
+      pickupNote: string;
+      /** Рядок над кнопкою «Далі» на телефоні: сума з доставкою (підсумок там видно лише на 3-му кроці). */
+      totalWithDelivery: string;
+      totalFreeDelivery: string;
+      /**
+       * Як платити — над кнопкою «Далі». ⚠️ Показувати лише коли оплата при отриманні —
+       * єдиний спосіб (config/payment.ts): з онлайн-оплатою «без передоплати» стане неправдою.
+       */
+      payNote: string;
+      payNotePickup: string;
       optional: string;
       trustNote: string;
       next: string;
@@ -180,8 +196,12 @@ export type Messages = {
     success: {
       title: string;
       orderNumber: string;
-      emailNote: string;
-      emailFallback: string;
+      /**
+       * Як підтвердимо замовлення; містить {phone} — номер, на який зателефонують.
+       * ⚠️ Замовлення підтверджують ДЗВІНКОМ (рішення власника 23.11.2026). Листів сайт не
+       * надсилає — не повертати сюди «підтвердження надішлемо на e-mail».
+       */
+      callNote: string;
       deliveryNote: string;
       /** Для самовивозу замість deliveryNote: «відправимо й надішлемо ТТН» тут неправда. */
       pickupNote: string;
@@ -190,7 +210,14 @@ export type Messages = {
     edit: string;
   };
   validators: {
-    required: string;
+    /** Порожні обов'язкові поля — кожне своїм текстом, а не чотири однакові «Обов'язкове поле». */
+    fullNameEmpty: string;
+    nameEmpty: string;
+    phoneEmpty: string;
+    cityEmpty: string;
+    npBranchEmpty: string;
+    ukrBranchEmpty: string;
+    /** Ім'я одним словом там, де потрібне й прізвище (доставка перевізником). */
     fullName: string;
     phone: string;
     email: string;

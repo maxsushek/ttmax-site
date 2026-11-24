@@ -12,6 +12,7 @@ import { DeliveryPaymentInfo } from "@/components/catalog/DeliveryPaymentInfo";
 import type { Color } from "@/types/catalog";
 import { pickDefaultThickness } from "@/lib/catalog/thickness";
 import type { ProductCategory } from "@/types";
+import { cartModel } from "@/lib/cart/line";
 
 /** Сериализуемый срез варианта (server → client). */
 export type PanelVariant = {
@@ -24,6 +25,8 @@ export type PanelVariant = {
 type Props = {
   locale: "ua" | "ru";
   slug: string;
+  /** Шлях картки без локалі — рядок кошика веде назад на товар. */
+  href: string;
   brandLabel: string;
   model: string;
   cartCategory: ProductCategory;
@@ -67,6 +70,13 @@ const COLOR_LABELS: Record<"ua" | "ru", Record<Color, string>> = {
   ru: { black: "Чёрная", red: "Красная" },
 };
 
+// Назва кольору для підпису «Колір: чорний». COLOR_LABELS — у жіночому роді («Чорна» —
+// накладка): так вони стоять на кнопках і в рядку кошика, а після слова «Колір» не узгоджувались.
+const COLOR_NAMES: Record<"ua" | "ru", Record<Color, string>> = {
+  ua: { black: "чорний", red: "червоний" },
+  ru: { black: "чёрный", red: "красный" },
+};
+
 const COLOR_SWATCH: Record<Color, string> = {
   black: "#0c0c0c",
   red: "#d61f26",
@@ -75,6 +85,7 @@ const COLOR_SWATCH: Record<Color, string> = {
 export function ProductPurchasePanel({
   locale,
   slug,
+  href,
   brandLabel,
   model,
   cartCategory,
@@ -127,12 +138,13 @@ export function ProductPurchasePanel({
     cart.add({
       id: cartId,
       brand: brandLabel,
-      model: `${model} · ${thickness} мм · ${COLOR_LABELS[locale][color]}`,
+      model: cartModel(model, `${thickness} мм · ${COLOR_LABELS[locale][color]}`),
       category: cartCategory,
       price: selected!.price as number,
       accentColor,
       emoji: "",
       image: imageUrl,
+      href,
     });
   };
 
@@ -169,8 +181,11 @@ export function ProductPurchasePanel({
 
       {/* Колір */}
       <div className="mt-7">
+        {/* Обране значення — словами в підписі й заливкою на кнопці: колір і товщина обрані
+              наперед, тож покупець має ясно бачити, що саме піде в кошик. */}
         <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
           {t.color}
+          <span className="text-ink">: {COLOR_NAMES[locale][color]}</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {colors.map((c) => {
@@ -183,15 +198,20 @@ export function ProductPurchasePanel({
                   setColor(c);
                   trackEvent({
                     name: "select_variant",
-                    params: { product_slug: slug, option: "color", value: String(c) },
+                    params: {
+                      product_slug: slug,
+                      option: "color",
+                      value: String(c),
+                      variant_value: String(c),
+                    },
                   });
                 }}
                 aria-pressed={active}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-medium transition-all",
+                  "inline-flex min-h-[44px] items-center gap-2 rounded-xl border px-3.5 py-2 text-sm transition-all",
                   active
-                    ? "border-accent bg-accent/[0.08] text-ink"
-                    : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
+                    ? "border-accent bg-accent font-bold text-bg-base"
+                    : "border-border-strong font-medium text-ink-muted hover:border-border hover:text-ink",
                 )}
               >
                 <span
@@ -210,6 +230,7 @@ export function ProductPurchasePanel({
       <div className="mt-5">
         <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
           {t.thickness}
+          <span className="text-ink">: {thickness}</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {thicknessOptions.map((th) => {
@@ -222,15 +243,20 @@ export function ProductPurchasePanel({
                   setThickness(th);
                   trackEvent({
                     name: "select_variant",
-                    params: { product_slug: slug, option: "thickness", value: String(th) },
+                    params: {
+                      product_slug: slug,
+                      option: "thickness",
+                      value: String(th),
+                      variant_value: String(th),
+                    },
                   });
                 }}
                 aria-pressed={active}
                 className={cn(
-                  "min-w-[52px] rounded-xl border px-3.5 py-2 text-sm font-semibold tabular-nums transition-all",
+                  "min-h-[44px] min-w-[52px] rounded-xl border px-3.5 py-2 text-sm tabular-nums transition-all",
                   active
-                    ? "border-accent bg-accent/[0.08] text-ink"
-                    : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
+                    ? "border-accent bg-accent font-bold text-bg-base"
+                    : "border-border-strong font-semibold text-ink-muted hover:border-border hover:text-ink",
                 )}
               >
                 {th}

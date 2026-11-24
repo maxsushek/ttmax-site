@@ -11,11 +11,14 @@ import { getContact } from "@/lib/contact/get";
 import { AVAILABLE_PAYMENT_METHODS, PAYMENT_METHODS } from "@/config/payment";
 import { AttributionSchema } from "@/lib/analytics/attribution-schema";
 import { attributionProps, captureServerEvent, posthogContext } from "@/lib/analytics/posthog-server";
+import { UA_PHONE } from "@/utils/phone";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const phoneRe = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
+// Перелік кодів операторів — у utils/phone.ts, спільний із формою: сервер не може бути
+// суворішим за клієнта, інакше замовлення відхилиться на останньому кроці.
+const phoneRe = UA_PHONE;
 
 const OrderItemSchema = z.object({
   productId: z.string().min(1).max(120),
@@ -34,7 +37,14 @@ const OrderSchema = z.object({
       .string()
       .transform((v) => v.replace(/[\s\-()]/g, ""))
       .refine((v) => phoneRe.test(v), "Invalid Ukrainian phone"),
-    email: z.string().email().optional().nullable(),
+    /**
+     * ⚠️ .catch(null): необов'язковий e-mail НЕ має права відхилити замовлення.
+     * Перевірка на формі простіша за zod (.email()), і адреса з кириличною літерою-двійником
+     * чи крапкою в кінці проходила форму, а тут давала 400 — покупець бачив на останньому
+     * кроці «Не вдалося оформити замовлення» без жодної вказівки на поле. Листів магазин
+     * не надсилає, e-mail лише показується менеджеру, тож зіпсовану адресу просто не зберігаємо.
+     */
+    email: z.string().trim().email().optional().nullable().catch(null),
   }),
   delivery: z.object({
     method: z.enum(["np", "ukrposhta", "pickup"]),

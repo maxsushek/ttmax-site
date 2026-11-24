@@ -11,10 +11,13 @@ import { QuickOrder } from "@/components/catalog/QuickOrder";
 import { DeliveryPaymentInfo } from "@/components/catalog/DeliveryPaymentInfo";
 import type { Handle } from "@/types/catalog";
 import type { ProductCategory } from "@/types";
+import { cartModel } from "@/lib/cart/line";
 
 type Props = {
   locale: "ua" | "ru";
   slug: string;
+  /** Шлях картки без локалі — рядок кошика веде назад на товар. */
+  href: string;
   brandLabel: string;
   model: string;
   cartCategory: ProductCategory;
@@ -29,6 +32,7 @@ type Props = {
 const LABELS = {
   ua: {
     handle: "Тип ручки",
+    handleShort: "Ручка",
     addToCart: "В кошик",
     added: "Додано в кошик",
     request: "Запитати ціну",
@@ -39,6 +43,7 @@ const LABELS = {
   },
   ru: {
     handle: "Тип ручки",
+    handleShort: "Ручка",
     addToCart: "В корзину",
     added: "Добавлено в корзину",
     request: "Узнать цену",
@@ -67,6 +72,7 @@ const HANDLE_LABELS: Record<"ua" | "ru", Record<Handle, { code: string; note: st
 export function BasePurchasePanel({
   locale,
   slug,
+  href,
   brandLabel,
   model,
   cartCategory,
@@ -106,12 +112,14 @@ export function BasePurchasePanel({
     cart.add({
       id: cartId,
       brand: brandLabel,
-      model: `${model} · ${HANDLE_LABELS[locale][handle].code}`,
+      // «Viscaria · Ручка FL»: у кошику варіант іде окремим рядком, голе «FL» там незрозуміле.
+      model: cartModel(model, `${t.handleShort} ${HANDLE_LABELS[locale][handle].code}`),
       category: cartCategory,
       price: priceFrom as number,
       accentColor,
       emoji: "",
       image: imageUrl,
+      href,
     });
   };
 
@@ -133,8 +141,13 @@ export function BasePurchasePanel({
 
       {/* Тип ручки */}
       <div className="mt-7">
+        {/* Обране значення — словами в підписі й заливкою на кнопці. Ручка обрана наперед (FL —
+              найчастіша), тож покупець має ясно бачити, ЩО саме обрано: рамку в 1 px не помічали. */}
         <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
           {t.handle}
+          <span className="text-ink">
+            : {HANDLE_LABELS[locale][handle].code} — {HANDLE_LABELS[locale][handle].note}
+          </span>
         </div>
         <div className="flex flex-wrap gap-2">
           {handles.map((h) => {
@@ -148,19 +161,26 @@ export function BasePurchasePanel({
                   setHandle(h);
                   trackEvent({
                     name: "select_variant",
-                    params: { product_slug: slug, option: "handle", value: String(h) },
+                    params: {
+                      product_slug: slug,
+                      option: "handle",
+                      value: String(h),
+                      variant_value: String(h),
+                    },
                   });
                 }}
                 aria-pressed={active}
                 className={cn(
-                  "flex flex-col items-start rounded-xl border px-3.5 py-2 transition-all",
+                  "flex min-h-[44px] flex-col items-start justify-center rounded-xl border px-3.5 py-2 transition-all",
                   active
-                    ? "border-accent bg-accent/[0.08] text-ink"
+                    ? "border-accent bg-accent text-bg-base"
                     : "border-border-strong text-ink-muted hover:border-border hover:text-ink",
                 )}
               >
                 <span className="font-display text-sm font-bold">{lab.code}</span>
-                <span className="text-[10px] text-ink-dim">{lab.note}</span>
+                <span className={cn("text-[10px]", active ? "text-bg-base/75" : "text-ink-dim")}>
+                  {lab.note}
+                </span>
               </button>
             );
           })}

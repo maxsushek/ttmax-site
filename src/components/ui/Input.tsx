@@ -2,6 +2,7 @@
 
 import { useId, useState, type InputHTMLAttributes } from "react";
 import { cn } from "@/utils/cn";
+import { keepPhoneCaret } from "@/utils/format";
 
 type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
   label: string;
@@ -54,12 +55,10 @@ export function Input({
         >
           {label}
           {!optional && required && <span className="text-danger"> *</span>}
-          {optional && (
-            <span className="font-normal text-ink-ghost"> — {optionalLabel}</span>
-          )}
+          {optional && <span className="font-normal text-ink-ghost"> — {optionalLabel}</span>}
         </span>
         {isValid && showValidIcon && (
-          <span className="font-bold text-success text-[11px] animate-slide-in">
+          <span className="animate-slide-in text-[11px] font-bold text-success">
             ✓ {successHint ?? "OK"}
           </span>
         )}
@@ -70,17 +69,27 @@ export function Input({
           {...rest}
           id={id}
           value={value}
-          onChange={(e) => onValueChange(e.target.value)}
+          onChange={(e) => {
+            // Телефон переформатовується на кожне натискання — курсор лишаємо на місці.
+            if (rest.type === "tel") keepPhoneCaret(e.target);
+            onValueChange(e.target.value);
+          }}
           onBlur={(e) => {
             setTouched(true);
             onBlurValidate?.();
             rest.onBlur?.(e);
           }}
           aria-invalid={showError || undefined}
+          // required забирає компонент (малює зірочку) — до <input> він не доходив зовсім.
+          aria-required={required || undefined}
           aria-describedby={showError ? `${id}-error` : undefined}
           className={cn(
             "w-full rounded-[10px] border-[1.5px] px-3.5 py-3 pr-10",
-            "font-body text-[15px] text-ink outline-none transition-all duration-200",
+            // ⚠️ 16 px, не менше, на будь-якій ширині: iOS Safari сам збільшує сторінку, коли
+            // курсор стає в поле зі шрифтом, дрібнішим за 16 px, і назад не зменшує — права
+            // частина форми (хрестик, «Змінити», позначки) їде за екран. iOS — 6 із 9 мобільних
+            // покупок. Без sm:-винятку: iPhone у горизонтальному положенні ширший за 640 px.
+            "font-body text-[16px] text-ink outline-none transition-all duration-200",
             "placeholder:text-ink-ghost",
             showError
               ? "border-danger bg-danger/[0.05] focus:ring-2 focus:ring-danger/20"

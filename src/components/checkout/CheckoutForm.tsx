@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useCart } from "@/components/cart/CartProvider";
 import { formatPrice, formatCardExp, formatCardNumber, formatPhone } from "@/utils/format";
-import { validators, type FieldKey } from "@/utils/validators";
+import { validateName, validators, type FieldKey } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
-import { AVAILABLE_PAYMENT_METHODS, DEFAULT_PAYMENT_METHOD } from "@/config/payment";
+import { AVAILABLE_PAYMENT_METHODS, COD_ONLY, DEFAULT_PAYMENT_METHOD } from "@/config/payment";
 import { CURRENCY, toAnalyticsItems } from "@/lib/analytics/ecommerce";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { siteConfig } from "@/config/site";
@@ -16,6 +16,7 @@ import type { Locale } from "@/i18n/config";
 import { cn } from "@/utils/cn";
 import { CloseIcon } from "@/components/ui/CloseIcon";
 import { computeShipping } from "@/lib/checkout/shipping";
+import { splitCartModel } from "@/lib/cart/line";
 
 type Delivery = "np" | "ukrposhta" | "pickup";
 type Payment = "apple" | "cod" | "card";
@@ -26,12 +27,17 @@ type FormState = {
   email: string;
   city: string;
   npBranch: string;
+  /** Відділення Укрпошти (індекс або адреса) — окремо від НП, щоб номер відділення НП не «переїхав» сюди. */
+  ukrBranch: string;
   delivery: Delivery;
   payment: Payment;
   cardNum: string;
   cardExp: string;
   cardCvv: string;
 };
+
+/** Текстові поля першого кроку (усі — рядки у FormState). */
+type Step1Field = "fullName" | "phone" | "email" | "city" | "npBranch" | "ukrBranch";
 
 type Props = {
   messages: Messages;
@@ -48,6 +54,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const rootRef = useRef<HTMLDivElement>(null);
+  const methodLabelId = useId();
   const [done, setDone] = useState<Array<1 | 2>>([]);
   const [ordered, setOrdered] = useState(false);
   const [orderId, setOrderId] = useState<string>("");
@@ -61,6 +68,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     email: "",
     city: "",
     npBranch: "",
+    ukrBranch: "",
     delivery: "np",
     // Не «cod» рядком: дефолт іде з конфігу, щоб при поверненні онлайн-оплати
     // не лишився вибраним спосіб, якого вже немає в переліку (або навпаки).
@@ -103,20 +111,74 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
       ukrposhtaFee: cart.ukrposhtaFee,
     });
 
+  /**
+   * ⚠️ ПОЛЯ АДРЕСИ ЗАЛЕЖАТЬ ВІД СПОСОБУ ДОСТАВКИ (23.11.2026) — і перевірка разом із ними.
+   *
+   * Було: «Місто» й «Відділення НП» обов'язкові за будь-якого способу. Покупець обирав
+   * «Самовивіз», а форма вимагала відділення Нової Пошти: 15.11.2026 людина п'ять разів
+   * за 12 секунд натиснула «Далі», доки не вписала в поле будь-що (PostHog, checkout_error:
+   * 8 із 12 помилок — лише npBranch). Для Укрпошти те саме поле називалось «Відділення НП».
+   *
+   * Тепер: НП — місто й відділення/поштомат; Укрпошта — місто й індекс або адреса свого
+   * відділення (окреме поле ukrBranch); самовивіз — без адреси взагалі. Не повертати спільний
+   * перелік обов'язкових полів: сервер (/api/orders) місто й відділення не вимагає свідомо.
+   */
+  const addressFields = (method: Delivery): Array<"city" | "npBranch" | "ukrBranch"> =>
+    method === "np" ? ["city", "npBranch"] : method === "ukrposhta" ? ["city", "ukrBranch"] : [];
+
+  const setDelivery = (method: Delivery) => {
+    setForm((p) => ({ ...p, delivery: method }));
+    // Введені значення НЕ чистимо: за випадковий дотик не карають. Помилки — лише ті, що
+    // змінюються разом зі способом:
+    //  • відділення — поле іншого перевізника, його помилка нового поля не стосується;
+    //  • ім'я — правило залежить від способу (самовивіз приймає саме ім'я), тож заповнене
+    //    поле перевіряємо за новим правилом одразу: інакше «Іван» лишався б із зеленою
+    //    позначкою після переходу на Нову Пошту, де потрібне прізвище;
+    //  • місто — правило те саме для обох перевізників, помилку не чіпаємо; при самовивозі
+    //    поля немає.
+    const nameRule = method === "pickup" ? validateName : validators.fullName;
+    setErrors((p) => ({
+      ...p,
+      // Порожнє поле без помилки не чіпаємо: людина до нього ще не дійшла.
+      fullName: form.fullName.trim() || p.fullName ? nameRule(form.fullName, v) : "",
+      city: method === "pickup" ? "" : p.city,
+      npBranch: "",
+      ukrBranch: "",
+    }));
+  };
+
+  /**
+   * Одна перевірка поля — і для виходу з поля, і для «Далі», і для повторної перевірки перед
+   * відправленням. Самовивіз: прізвище потрібне перевізнику, а не магазину, тож досить імені.
+   */
+  const fieldError = (key: Step1Field): string =>
+    key === "fullName" && form.delivery === "pickup"
+      ? validateName(form.fullName, v)
+      : validators[key](form[key], v);
+
   const validate1 = () => {
     const errs: Partial<Record<FieldKey, string>> = {};
-    (["fullName", "phone", "city", "npBranch"] as const).forEach((k) => {
-      const validator = validators[k];
-      if (validator) {
-        const err = validator(form[k] as string, v);
-        if (err) errs[k] = err;
-      }
+    (["fullName", "phone", ...addressFields(form.delivery), "email"] as const).forEach((k) => {
+      const err = fieldError(k);
+      if (err) errs[k] = err;
     });
-    if (form.email) {
-      const err = validators.email(form.email, v);
-      if (err) errs.email = err;
-    }
     return errs;
+  };
+
+  // Вийшли з поля — показуємо помилку одразу. В аналітику — лише помилку формату (поле не
+  // порожнє), раз на поле й без значення: «Далі» могли й не натиснути (05.11.2026 покупець
+  // чотири хвилини заповнював форму й пішов — причини в даних не було).
+  const blurReported = useRef<Set<Step1Field>>(new Set());
+  const blurCheck = (key: Step1Field) => {
+    const err = fieldError(key);
+    setErrors((p) => ({ ...p, [key]: err }));
+    if (err && form[key].trim() && !blurReported.current.has(key)) {
+      blurReported.current.add(key);
+      trackEvent({
+        name: "checkout_field_error",
+        params: { field: key, shipping_tier: form.delivery },
+      });
+    }
   };
 
   const validate2 = () => {
@@ -136,7 +198,12 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     const fields = Object.keys(errs);
     trackEvent({
       name: "checkout_error",
-      params: { step, fields: fields.join(","), count: fields.length },
+      params: {
+        step,
+        fields: fields.join(","),
+        count: fields.length,
+        shipping_tier: form.delivery,
+      },
     });
     // На телефоні перше хибне поле часто вище екрана або під клавіатурою: показуємо його й
     // ставимо курсор, щоб було видно, чому «Далі» не спрацювало. Після рендера помилок.
@@ -163,7 +230,30 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     setStep(2);
   };
 
+  /**
+   * ⚠️ З ПЕРШОГО КРОКУ ВИХОДЯТЬ ЛИШЕ ЧЕРЕЗ ПЕРЕВІРКУ (23.11.2026).
+   * Заголовок кроку «Оплата» відкривався, щойно перший крок був пройдений хоч раз. Тож можна
+   * було натиснути «Змінити», стерти місто або змінити перевізника (поле його відділення
+   * порожнє) і піти далі через заголовок — замовлення йшло без адреси. Тепер повернення на
+   * перший крок знімає позначки «пройдено», а перед другим кроком і перед відправленням
+   * перший крок перевіряється ще раз.
+   */
+  const reopenStep1 = () => {
+    setDone([]);
+    setStep(1);
+  };
+  /** Перший крок не проходить перевірку — повертаємо на нього й показуємо, що виправити. */
+  const step1Blocked = (): boolean => {
+    const errs = validate1();
+    if (Object.keys(errs).length === 0) return false;
+    setErrors(errs);
+    reopenStep1();
+    reportErrors(1, errs);
+    return true;
+  };
+
   const goStep3 = () => {
+    if (step1Blocked()) return;
     const errs = validate2();
     if (Object.keys(errs).length) {
       setErrors(errs);
@@ -195,6 +285,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
       setSubmitError(t.emptyCart);
       return;
     }
+    if (step1Blocked()) return;
 
     setSubmitting(true);
     setSubmitError(null);
@@ -205,14 +296,21 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customer: {
-            name: form.fullName,
+            name: form.fullName.trim(),
             phone: form.phone,
-            email: form.email || null,
+            email: form.email.trim() || null,
           },
+          // Адреса — лише та, що стосується обраного способу: при самовивозі її немає,
+          // а введене раніше для іншого перевізника в замовлення не йде.
           delivery: {
             method: form.delivery,
-            city: form.city || null,
-            branch: form.npBranch || null,
+            city: form.delivery === "pickup" ? null : form.city.trim() || null,
+            branch:
+              form.delivery === "np"
+                ? form.npBranch.trim() || null
+                : form.delivery === "ukrposhta"
+                  ? form.ukrBranch.trim() || null
+                  : null,
           },
           payment: {
             method: form.payment,
@@ -283,6 +381,36 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
     }
   };
 
+  // Підсумок кроку «Доставка» у згорнутому вигляді: спосіб і адреса саме цього способу.
+  const deliverySummary =
+    form.delivery === "pickup"
+      ? m.delivery.pickupTitle
+      : [
+          m.delivery[form.delivery].label,
+          [form.city, form.delivery === "np" ? form.npBranch : form.ukrBranch]
+            .map((x) => x.trim())
+            .filter(Boolean)
+            .join(", "),
+        ]
+          .filter(Boolean)
+          .join(" · ");
+
+  // Закрили оформлення, не замовивши: на якому кроці й які поля встигли заповнити
+  // (лише назви полів, без значень) — щоб бачити, де саме люди йдуть.
+  const closeCheckout = () => {
+    trackEvent({
+      name: "checkout_close",
+      params: {
+        step,
+        shipping_tier: form.delivery,
+        filled: (["fullName", "phone", "city", "npBranch", "ukrBranch", "email"] as const)
+          .filter((k) => form[k].trim())
+          .join(","),
+      },
+    });
+    onClose();
+  };
+
   const STEPS: Array<{ n: 1 | 2 | 3; label: string }> = useMemo(
     () => [
       { n: 1, label: m.steps.delivery },
@@ -320,12 +448,14 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
         <p className="mb-2 font-body text-base text-ink-muted">
           {m.success.orderNumber} <strong className="text-accent">{orderId}</strong>
         </p>
-        {/* ph-mask: у записі сеансу PostHog цей текст (тут e-mail) прихований. */}
-        <p className="ph-mask mb-8 max-w-[320px] font-body text-sm text-ink-dim">
-          {form.email
-            ? m.success.emailNote.replace("{email}", form.email)
-            : m.success.emailNote.replace("{email}", m.success.emailFallback)}
-          . {form.delivery === "pickup" ? m.success.pickupNote : m.success.deliveryNote}
+        {/* ph-mask ховає текст у записі сеансу, ph-no-capture — в автозахопленні кліків
+            (інакше дотик до абзацу слав би номер у PostHog як текст елемента).
+            ⚠️ Замовлення підтверджують дзвінком — тому тут номер, на який зателефонують (покупець
+            ще й бачить, чи не помилився в ньому), а не обіцянка листа: листів сайт не надсилає.
+            Нерозривні пробіли — щоб номер не розірвало перенесенням рядка. */}
+        <p className="ph-mask ph-no-capture mb-8 max-w-[320px] font-body text-sm text-ink-dim">
+          {m.success.callNote.replace("{phone}", form.phone.replace(/ /g, "\u00A0"))}{" "}
+          {form.delivery === "pickup" ? m.success.pickupNote : m.success.deliveryNote}
         </p>
         <Button
           variant="primary"
@@ -367,15 +497,20 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
             </>
           )}
         </div>
+        {/* «Безпечна оплата» із замком натякала на оплату карткою, якої немає: людина йшла
+            шукати її на кроці «Оплата». Поки спосіб один — кажемо прямо, як платити. */}
         <div className="flex items-center gap-1.5">
-          <span aria-hidden>🔒</span>
-          <span className="font-body text-xs text-ink-dim">{m.secureCheckout}</span>
+          <span aria-hidden>{COD_ONLY ? "💵" : "🔒"}</span>
+          <span className="font-body text-xs text-ink-dim">
+            {COD_ONLY ? m.payment.cod.label : m.secureCheckout}
+          </span>
         </div>
         <button
           type="button"
-          onClick={onClose}
+          onClick={closeCheckout}
           aria-label={messages.common.close}
-          className="p-1 text-lg text-ink-dim transition-colors hover:text-ink"
+          // -m-2 p-3: зона дотику 44 px замість 26 — хрестик стоїть у кутку липкої шапки.
+          className="-m-2 p-3 text-lg text-ink-dim transition-colors hover:text-ink"
         >
           <CloseIcon />
         </button>
@@ -424,7 +559,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
           <div className={sectionBoxCls(1)}>
             <button
               type="button"
-              onClick={() => done.includes(1) && setStep(1)}
+              onClick={() => done.includes(1) && reopenStep1()}
               className="flex w-full items-center justify-between bg-transparent p-6"
               disabled={!done.includes(1) && step !== 1}
             >
@@ -440,9 +575,24 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     {m.steps.delivery}
                   </span>
                   {done.includes(1) && (
-                    <span className="ph-mask mt-0.5 block font-body text-xs text-success">
-                      ✓ {form.city}, {form.npBranch}
-                    </span>
+                    <>
+                      {/**
+                       * ⚠️ ph-no-capture ОБОВ'ЯЗКОВИЙ на обох рядках — не прибирати.
+                       * Цей заголовок — <button>, а posthog-js до кожного кліку по кнопці додає
+                       * текст усіх вкладених <span> ($el_text, $elements_chain). ph-mask ховає
+                       * текст лише в ЗАПИСІ сеансу; без ph-no-capture місто, відділення, ім'я й
+                       * телефон покупця йшли б в аналітику з кожним натисканням «Змінити».
+                       */}
+                      <span className="ph-mask ph-no-capture mt-0.5 block font-body text-xs text-success">
+                        ✓ {deliverySummary}
+                      </span>
+                      {/* Ім'я й телефон — щоб на підтвердженні було видно, куди подзвонять:
+                          помилка в номері губить замовлення з оплатою при отриманні. */}
+                      <span className="ph-mask ph-no-capture mt-0.5 block font-body text-xs text-ink-muted">
+                        {form.fullName.trim()} ·{" "}
+                        <span className="whitespace-nowrap">{form.phone}</span>
+                      </span>
+                    </>
                   )}
                 </span>
               </span>
@@ -455,10 +605,17 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
 
             {step === 1 && (
               <div className="px-6 pb-6 pt-1">
-                <div className="mb-2.5 font-body text-xs font-medium text-ink-muted">
+                <div
+                  id={methodLabelId}
+                  className="mb-2.5 font-body text-xs font-medium text-ink-muted"
+                >
                   {m.delivery.method}
                 </div>
-                <div className="mb-6 flex flex-col gap-2">
+                <div
+                  role="group"
+                  aria-labelledby={methodLabelId}
+                  className="mb-6 flex flex-col gap-2"
+                >
                   {[
                     { v: "np" as const, icon: "📦", ...m.delivery.np },
                     { v: "ukrposhta" as const, icon: "✉️", ...m.delivery.ukrposhta },
@@ -467,7 +624,8 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     <button
                       key={opt.v}
                       type="button"
-                      onClick={() => update("delivery", opt.v)}
+                      onClick={() => setDelivery(opt.v)}
+                      aria-pressed={form.delivery === opt.v}
                       className={cn(
                         "flex w-full cursor-pointer items-center gap-3.5 rounded-xl px-4 py-3.5 text-left transition-all",
                         form.delivery === opt.v
@@ -523,15 +681,11 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                       placeholder={m.delivery.fields.fullNamePlaceholder}
                       required
                       autoComplete="name"
+                      maxLength={120}
                       value={form.fullName}
                       onValueChange={(val) => update("fullName", val)}
                       error={errors.fullName}
-                      onBlurValidate={() =>
-                        setErrors((p) => ({
-                          ...p,
-                          fullName: validators.fullName(form.fullName, v),
-                        }))
-                      }
+                      onBlurValidate={() => blurCheck("fullName")}
                     />
                   </div>
                   <div className="col-span-full">
@@ -545,37 +699,70 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                       value={form.phone}
                       onValueChange={(val) => update("phone", formatPhone(val))}
                       error={errors.phone}
-                      onBlurValidate={() =>
-                        setErrors((p) => ({ ...p, phone: validators.phone(form.phone, v) }))
-                      }
+                      onBlurValidate={() => blurCheck("phone")}
                     />
                   </div>
-                  <Input
-                    label={m.delivery.fields.city}
-                    placeholder={m.delivery.fields.cityPlaceholder}
-                    required
-                    autoComplete="address-level2"
-                    value={form.city}
-                    onValueChange={(val) => update("city", val)}
-                    error={errors.city}
-                    onBlurValidate={() =>
-                      setErrors((p) => ({ ...p, city: validators.city(form.city, v) }))
-                    }
-                  />
-                  <Input
-                    label={m.delivery.fields.npBranch}
-                    placeholder={m.delivery.fields.npBranchPlaceholder}
-                    required
-                    value={form.npBranch}
-                    onValueChange={(val) => update("npBranch", val)}
-                    error={errors.npBranch}
-                    onBlurValidate={() =>
-                      setErrors((p) => ({
-                        ...p,
-                        npBranch: validators.npBranch(form.npBranch, v),
-                      }))
-                    }
-                  />
+                  {form.delivery === "pickup" ? (
+                    // Самовивіз: адреса покупця не потрібна — замість полів кажемо, куди їхати
+                    // (адреса магазину з siteConfig — та сама, що в підвалі й на «Оплаті») і що далі.
+                    <div
+                      role="note"
+                      className="col-span-full mb-4 rounded-xl border border-border-subtle bg-white/[0.03] px-4 py-3.5"
+                    >
+                      <div className="font-display text-[15px] font-bold text-ink">
+                        {m.delivery.pickupTitle}
+                      </div>
+                      <p className="mt-1 font-body text-[13px] leading-snug text-ink-muted">
+                        {m.delivery.pickupNote.replace(
+                          "{address}",
+                          siteConfig.addressDisplay[locale],
+                        )}
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <Input
+                        key="city"
+                        label={m.delivery.fields.city}
+                        placeholder={m.delivery.fields.cityPlaceholder}
+                        required
+                        autoComplete="address-level2"
+                        maxLength={120}
+                        value={form.city}
+                        onValueChange={(val) => update("city", val)}
+                        error={errors.city}
+                        onBlurValidate={() => blurCheck("city")}
+                      />
+                      {/* key — щоб при зміні перевізника поле змонтувалось заново (без «зеленої
+                          галочки» й тексту від попереднього). */}
+                      {form.delivery === "np" ? (
+                        <Input
+                          key="npBranch"
+                          label={m.delivery.fields.npBranch}
+                          placeholder={m.delivery.fields.npBranchPlaceholder}
+                          required
+                          maxLength={240}
+                          value={form.npBranch}
+                          onValueChange={(val) => update("npBranch", val)}
+                          error={errors.npBranch}
+                          onBlurValidate={() => blurCheck("npBranch")}
+                        />
+                      ) : (
+                        <Input
+                          key="ukrBranch"
+                          label={m.delivery.fields.ukrBranch}
+                          placeholder={m.delivery.fields.ukrBranchPlaceholder}
+                          required
+                          autoComplete="postal-code"
+                          maxLength={240}
+                          value={form.ukrBranch}
+                          onValueChange={(val) => update("ukrBranch", val)}
+                          error={errors.ukrBranch}
+                          onBlurValidate={() => blurCheck("ukrBranch")}
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
                 <Input
                   label={m.delivery.fields.email}
@@ -584,15 +771,48 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                   autoComplete="email"
                   optional
                   optionalLabel={m.delivery.optional}
+                  maxLength={254}
                   value={form.email}
                   onValueChange={(val) => update("email", val)}
                   error={errors.email}
-                  onBlurValidate={() =>
-                    setErrors((p) => ({ ...p, email: validators.email(form.email, v) }))
-                  }
+                  onBlurValidate={() => blurCheck("email")}
                 />
 
-                <div className="mb-5 mt-2 flex items-center gap-1.5">
+                {/**
+                 * ⚠️ СКІЛЬКИ Й ЯК ПЛАТИТИ — ДО КНОПКИ «ДАЛІ» (23.11.2026).
+                 * На телефоні підсумок замовлення видно лише на третьому кроці, а про оплату
+                 * каже другий. Троє з ~18 покупців натиснули «Далі» з порожньою формою —
+                 * схоже, щоб побачити саме це (PostHog, checkout_error), і двоє з них пішли.
+                 * Сума — тією ж computeShipping, що й рахунок; рядок про оплату — лише поки
+                 * оплата при отриманні єдина (COD_ONLY). Не писати «до сплати N грн»:
+                 * перевізник додає до накладеного платежу свою комісію.
+                 */}
+                <div className="mb-4 mt-1 flex flex-col gap-1.5">
+                  <div className="flex items-baseline justify-between gap-3 lg:hidden">
+                    <span className="font-body text-[13px] text-ink-muted">
+                      {shipping > 0
+                        ? m.delivery.totalWithDelivery
+                        : form.delivery === "pickup"
+                          ? messages.cart.total
+                          : m.delivery.totalFreeDelivery}
+                    </span>
+                    <span className="shrink-0 font-display text-lg font-black text-ink">
+                      {formatPrice(total)}
+                    </span>
+                  </div>
+                  {COD_ONLY && (
+                    <p className="flex items-center gap-2 font-body text-[13px] text-ink">
+                      <span aria-hidden>💵</span>
+                      {form.delivery === "pickup" ? m.delivery.payNotePickup : m.delivery.payNote}
+                    </p>
+                  )}
+                </div>
+
+                <Button variant="primary" size="lg" fullWidth onClick={goStep2}>
+                  {m.delivery.next} →
+                </Button>
+
+                <div className="mt-3 flex items-center justify-center gap-1.5">
                   <span aria-hidden className="text-[13px]">
                     🔒
                   </span>
@@ -600,10 +820,6 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     {m.delivery.trustNote}
                   </span>
                 </div>
-
-                <Button variant="primary" size="lg" fullWidth onClick={goStep2}>
-                  {m.delivery.next} →
-                </Button>
               </div>
             )}
           </div>
@@ -803,28 +1019,44 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     тому на десктопі ховаємо їх; на мобайлі сайдбара немає — показуємо тут. */}
                 <div className="lg:hidden">
                   <ul className="divide-y divide-border-subtle">
-                    {cart.items.map((item) => (
-                      <li key={item.id} className="flex items-center gap-2.5 py-2">
-                        <div
-                          aria-hidden
-                          className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
-                        >
-                          {item.image ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={item.image} alt="" className="h-full w-full object-contain" />
-                          ) : (
-                            item.emoji
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="truncate text-[13px] font-bold">{item.model}</div>
-                          <div className="font-body text-[11px] text-ink-dim">×{item.qty}</div>
-                        </div>
-                        <div className="shrink-0 font-display text-[14px] font-black text-accent">
-                          {formatPrice(item.price * item.qty)}
-                        </div>
-                      </li>
-                    ))}
+                    {cart.items.map((item) => {
+                      const line = splitCartModel(item.model);
+                      return (
+                        <li key={item.id} className="flex items-center gap-2.5 py-2">
+                          <div
+                            aria-hidden
+                            className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
+                          >
+                            {item.image ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={item.image}
+                                alt=""
+                                className="h-full w-full object-contain"
+                              />
+                            ) : (
+                              item.emoji
+                            )}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="break-words text-[13px] font-bold leading-snug">
+                              {line.name}
+                            </div>
+                            {/* Варіант (розмір, ручка, товщина) — окремим помітним рядком і без обрізання:
+    це остання нагода побачити не той розмір. */}
+                            {line.variant && (
+                              <div className="mt-0.5 font-body text-[13px] font-semibold leading-snug text-ink">
+                                {line.variant}
+                              </div>
+                            )}
+                            <div className="font-body text-[11px] text-ink-dim">×{item.qty}</div>
+                          </div>
+                          <div className="shrink-0 font-display text-[14px] font-black text-accent">
+                            {formatPrice(item.price * item.qty)}
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ul>
                   <div className="my-4 rounded-xl bg-white/[0.03] px-4 py-3.5">
                     <div className="mb-2 flex justify-between">
@@ -909,7 +1141,7 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                     ["🔒", "SSL"],
                     ["🚚", messages.trustBar.delivery],
                     ["↩️", messages.trustBar.returns],
-                    ["🇯🇵", "Оригінал Butterfly"],
+                    ["🇯🇵", locale === "ru" ? "Оригинал Butterfly" : "Оригінал Butterfly"],
                   ].map(([ic, tx]) => (
                     <span
                       key={tx}
@@ -933,35 +1165,46 @@ export function CheckoutForm({ messages, locale, onClose, onComplete, logoUrl }:
                 {m.summary}
               </div>
               <ul className="space-y-2.5">
-                {cart.items.map((item) => (
-                  <li key={item.id} className="flex items-center gap-2.5">
-                    <span
-                      aria-hidden
-                      className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
-                    >
-                      {item.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={item.image} alt="" className="h-full w-full object-contain" />
-                      ) : (
-                        item.emoji
-                      )}
-                      {item.qty > 1 && (
-                        <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[9px] font-black text-bg-base">
-                          {item.qty}
-                        </span>
-                      )}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13px] font-bold">{item.model}</span>
-                      <span className="block font-body text-[11px] text-ink-muted">
-                        {item.brand}
+                {cart.items.map((item) => {
+                  const line = splitCartModel(item.model);
+                  return (
+                    <li key={item.id} className="flex items-center gap-2.5">
+                      <span
+                        aria-hidden
+                        className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/[0.04] text-xl"
+                      >
+                        {item.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.image} alt="" className="h-full w-full object-contain" />
+                        ) : (
+                          item.emoji
+                        )}
+                        {item.qty > 1 && (
+                          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[9px] font-black text-bg-base">
+                            {item.qty}
+                          </span>
+                        )}
                       </span>
-                    </span>
-                    <span className="shrink-0 font-display text-sm font-extrabold">
-                      {formatPrice(item.price * item.qty)}
-                    </span>
-                  </li>
-                ))}
+                      <span className="min-w-0 flex-1">
+                        <span className="block break-words text-[13px] font-bold leading-snug">
+                          {line.name}
+                        </span>
+                        {line.variant ? (
+                          <span className="block font-body text-[12px] font-semibold leading-snug text-ink">
+                            {line.variant}
+                          </span>
+                        ) : (
+                          <span className="block font-body text-[11px] text-ink-muted">
+                            {item.brand}
+                          </span>
+                        )}
+                      </span>
+                      <span className="shrink-0 font-display text-sm font-extrabold">
+                        {formatPrice(item.price * item.qty)}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div className="px-5 py-3.5">

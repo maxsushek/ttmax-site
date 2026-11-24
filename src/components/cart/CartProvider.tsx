@@ -27,6 +27,30 @@ type CartAction =
 
 const STORAGE_KEY = "ttmax_cart_v1";
 
+/**
+ * ⚠️ Кошик із localStorage — чужі дані: їх могла записати стара версія сайту або розширення
+ * браузера. Кошик змонтовано на кожній сторінці, а рядок позиції тепер розбирається
+ * (id.split, model.indexOf — lib/cart/line.ts), тож один запис без рядкового id чи model
+ * зламав би відмальовку всього сайту в цьому браузері, доки сховище не очистять.
+ * Лишаємо тільки позиції з потрібними полями; решту мовчки відкидаємо.
+ */
+function isCartItem(x: unknown): x is CartItem {
+  if (typeof x !== "object" || x === null) return false;
+  const i = x as Record<string, unknown>;
+  return (
+    typeof i.id === "string" &&
+    i.id.length > 0 &&
+    typeof i.model === "string" &&
+    typeof i.brand === "string" &&
+    typeof i.price === "number" &&
+    Number.isFinite(i.price) &&
+    i.price > 0 &&
+    typeof i.qty === "number" &&
+    Number.isInteger(i.qty) &&
+    i.qty > 0
+  );
+}
+
 function reducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "hydrate":
@@ -99,7 +123,7 @@ export function CartProvider({
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const parsed = raw ? (JSON.parse(raw) as unknown) : null;
       if (Array.isArray(parsed)) {
-        dispatch({ type: "hydrate", items: parsed as CartItem[] });
+        dispatch({ type: "hydrate", items: parsed.filter(isCartItem) });
       } else {
         dispatch({ type: "hydrate", items: [] });
       }

@@ -5,7 +5,7 @@
 // тобто той самий потік, що й форма-CTA: запис у CRM + Telegram-сповіщення менеджеру.
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { formatPhone } from "@/utils/format";
+import { formatPhone, keepPhoneCaret } from "@/utils/format";
 import { trackEvent } from "@/lib/analytics/events";
 import { getAttribution } from "@/lib/analytics/attribution";
 import { type Locale } from "@/i18n/config";
@@ -339,6 +339,7 @@ export function QuickOrder({
                     placeholder="+380 67 123 45 67"
                     value={phone}
                     onChange={(e) => {
+                      keepPhoneCaret(e.target);
                       setPhone(formatPhone(e.target.value));
                       setPhoneErr(false);
                       onFirstInput();
@@ -352,7 +353,7 @@ export function QuickOrder({
                     }}
                     aria-invalid={phoneErr || undefined}
                     className={cn(
-                      "w-full rounded-xl border-[1.5px] bg-white/[0.04] px-4 py-3 font-display text-[15px] text-ink outline-none transition-colors placeholder:text-ink-dim",
+                      "w-full rounded-xl border-[1.5px] bg-white/[0.04] px-4 py-3 font-display text-[16px] text-ink outline-none transition-colors placeholder:text-ink-dim",
                       phoneErr ? "border-danger" : "border-border-strong focus:border-accent/60",
                     )}
                   />
@@ -376,7 +377,7 @@ export function QuickOrder({
                       setName(e.target.value);
                       onFirstInput();
                     }}
-                    className="w-full rounded-xl border-[1.5px] border-border-strong bg-white/[0.04] px-4 py-3 font-display text-[15px] text-ink outline-none transition-colors placeholder:text-ink-dim focus:border-accent/60"
+                    className="w-full rounded-xl border-[1.5px] border-border-strong bg-white/[0.04] px-4 py-3 font-display text-[16px] text-ink outline-none transition-colors placeholder:text-ink-dim focus:border-accent/60"
                   />
                 </label>
 

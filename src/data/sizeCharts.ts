@@ -114,3 +114,17 @@ export function isSizedGearType(gearType: string): boolean {
   return SIZE_CHARTS.charts.some((c) => c.gearTypes.includes(gearType));
 }
 
+/**
+ * Що показує блок «Розмірна сітка» на картці (components/catalog/SizeHelp.tsx):
+ * "table" — таблиця саме цієї моделі (або примітка до неї), "link" — лише посилання на
+ * сторінку сітки, null — блоку немає (напульсник, кепка). Одне правило на SizeHelp і на
+ * посилання біля вибору розміру в панелі покупки: посилання не може вести до блоку, якого немає.
+ */
+export function sizeHelpKind(product: CatalogProduct): "table" | "link" | null {
+  const gear = product.gear;
+  if (!gear) return null;
+  const note = sizeModelInfo(product.slug)?.note ?? null;
+  if (!isSizedGearType(gear.gearType) && !note) return null;
+  return sizeChartsForProduct(product).length === 0 && !note ? "link" : "table";
+}
+

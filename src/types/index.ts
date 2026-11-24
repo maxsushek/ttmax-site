@@ -20,6 +20,11 @@ export type Product = {
   emoji: string;
   /** Resolved Cloudinary URL для мініатюри в кошику (необов'язково). */
   image?: string;
+  /**
+   * Шлях картки товару без локалі («/butterfly/odyag/futbolka-…») — рядок кошика веде на неї.
+   * Необов'язкове: у кошиках, збережених до 24.11.2026, поля немає (див. lib/cart/line.ts).
+   */
+  href?: string;
 };
 
 export type CartItem = Product & { qty: number };

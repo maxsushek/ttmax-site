@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { formatPhone } from "@/utils/format";
-import { validators } from "@/utils/validators";
+import { formatPhone, keepPhoneCaret } from "@/utils/format";
+import { validateName, validators } from "@/utils/validators";
 import { trackEvent } from "@/lib/analytics/events";
 import { getAttribution } from "@/lib/analytics/attribution";
 import type { Messages } from "@/i18n/messages/types";
@@ -39,7 +39,9 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
 
   const validate = (f: FormState): FormErrors => {
     const errs: FormErrors = {};
-    const nameErr = validators.fullName(f.name, v);
+    // Поле називається «Ім'я» — прізвища не вимагаємо (було validators.fullName: «Максим»
+    // давав помилку «Введіть ім'я та прізвище»).
+    const nameErr = validateName(f.name, v);
     if (nameErr) errs.name = nameErr;
     const phoneErr = validators.phone(f.phone, v);
     if (phoneErr) errs.phone = phoneErr;
@@ -101,7 +103,7 @@ export function LeadForm({ locale, messages }: { locale: Locale; messages: Messa
         body: JSON.stringify({
           name: values.name,
           phone: values.phone,
-          email: values.email || null,
+          email: values.email.trim() || null,
           source: "consultation",
           locale,
           attribution: getAttribution(),
@@ -266,10 +268,13 @@ function PlainField({
       <input
         {...rest}
         value={value}
-        onChange={(e) => onValueChange(e.target.value)}
+        onChange={(e) => {
+          if (rest.type === "tel") keepPhoneCaret(e.target);
+          onValueChange(e.target.value);
+        }}
         aria-invalid={!!error || undefined}
         className={cn(
-          "w-full rounded-xl border-[1.5px] bg-white/60 px-4 py-3.5 font-display text-[15px] text-bg-base outline-none transition-colors",
+          "w-full rounded-xl border-[1.5px] bg-white/60 px-4 py-3.5 font-display text-[16px] text-bg-base outline-none transition-colors",
           "placeholder:text-black/40 focus:bg-white",
           error ? "border-danger" : "border-black/10 focus:border-black/30",
         )}

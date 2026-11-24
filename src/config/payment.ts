@@ -39,3 +39,11 @@ export const AVAILABLE_PAYMENT_METHODS: readonly PaymentMethod[] = ONLINE_PAYMEN
 
 /** Спосіб за замовчуванням — завжди перший з доступних. */
 export const DEFAULT_PAYMENT_METHOD: PaymentMethod = AVAILABLE_PAYMENT_METHODS[0] ?? "cod";
+
+/**
+ * Оплата при отриманні — єдиний доступний спосіб. Від цього залежать тексти «без передоплати»
+ * в оформленні й «Оплата при отриманні» замість «Безпечна оплата» в кошику: щойно онлайн-оплату
+ * увімкнуть, вони зникнуть самі й не стануть неправдою.
+ */
+export const COD_ONLY =
+  AVAILABLE_PAYMENT_METHODS.length === 1 && AVAILABLE_PAYMENT_METHODS[0] === "cod";

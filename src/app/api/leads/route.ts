@@ -9,20 +9,25 @@ import {
   captureServerEvent,
   posthogContext,
 } from "@/lib/analytics/posthog-server";
+import { UA_PHONE } from "@/utils/phone";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const phoneRe = /^(\+?380|0)(39|50|63|66|67|68|73|91|92|93|94|95|96|97|98|99)\d{7}$/;
+// Перелік кодів операторів — у utils/phone.ts, спільний із формами (див. коментар там).
+const phoneRe = UA_PHONE;
 
 const LeadSchema = z.object({
   // Ім'я опційне: швидке замовлення з картки збирає лише телефон (ім'я — бонус).
-  name: z.string().trim().min(2).max(120).optional().nullable(),
+  // ⚠️ .catch(null) тут і в email: необов'язкове поле не має права відхилити заявку. Одна
+  // літера в «Ім'я» чи адреса з крапкою в кінці давали 400 — людина бачила «Щось пішло не
+  // так», а заявка не доходила ні в CRM, ні в Telegram. Телефон перевіряється як і раніше.
+  name: z.string().trim().min(2).max(120).optional().nullable().catch(null),
   phone: z
     .string()
     .transform((v) => v.replace(/[\s\-()]/g, ""))
     .refine((v) => phoneRe.test(v), "Invalid Ukrainian phone"),
-  email: z.string().email().optional().nullable(),
+  email: z.string().trim().email().optional().nullable().catch(null),
   source: z.string().max(60),
   locale: z.enum(locales),
   /**

@@ -33,11 +33,30 @@ export type AnalyticsEvent =
   // Кроки всередині оформлення (назви — як у GA4: add_shipping_info / add_payment_info).
   | { name: "add_shipping_info"; params: EcommerceParams & { shippingTier: string } }
   | { name: "add_payment_info"; params: EcommerceParams & { paymentType: string } }
-  // Помилки валідації: лише назви полів, без введених значень.
-  | { name: "checkout_error"; params: { step: number; fields: string; count: number } }
+  // Помилки валідації після «Далі»: лише назви полів, без введених значень. shipping_tier —
+  // обраний спосіб доставки (та сама назва, що в add_shipping_info): без нього не було
+  // видно, що помилку «Відділення НП» давав самовивіз.
+  | {
+      name: "checkout_error";
+      params: { step: number; fields: string; count: number; shipping_tier?: string };
+    }
+  // Помилка формату в полі, щойно з нього вийшли (раз на поле): «Далі» могли й не натиснути.
+  // ⚠️ Окрема подія, а не checkout_error — інакше ряд checkout_error до й після не порівняти.
+  | { name: "checkout_field_error"; params: { field: string; shipping_tier: string } }
+  // Закрили оформлення без замовлення: крок і назви заповнених полів (без значень).
+  | { name: "checkout_close"; params: { step: number; shipping_tier: string; filled: string } }
   | { name: "order_failed"; params: { reason: string } }
+  // Клік по товару в кошику (фото або назва) — перехід на картку.
+  | { name: "cart_item_click"; params: { product_slug: string } }
   // Картка товару.
-  | { name: "select_variant"; params: { product_slug: string; option: string; value: string } }
+  // variant_value дублює value: у PostHog «value» вже числове (сума в e-commerce подіях), тож
+  // рядкове значення там читається як null. Нові запити — по variant_value.
+  | {
+      name: "select_variant";
+      params: { product_slug: string; option: string; value: string; variant_value?: string };
+    }
+  // Натиснули «купити», не обравши обов'язковий варіант (розмір одягу чи взуття).
+  | { name: "variant_required"; params: { product_slug: string; option: string } }
   | {
       name: "gallery_navigate";
       params: { method: "arrow" | "swipe" | "thumb" | "key"; index: number; count: number };

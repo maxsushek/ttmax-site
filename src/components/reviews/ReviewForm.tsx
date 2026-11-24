@@ -12,7 +12,7 @@ import { REVIEW_T } from "./strings";
 type ErrorKey = keyof (typeof REVIEW_T)["ua"]["errors"];
 
 const inputCls =
-  "w-full rounded-xl border-[1.5px] bg-white/[0.04] px-4 py-3 font-body text-[15px] text-ink outline-none transition-colors placeholder:text-ink-dim";
+  "w-full rounded-xl border-[1.5px] bg-white/[0.04] px-4 py-3 font-body text-[16px] text-ink outline-none transition-colors placeholder:text-ink-dim";
 
 export function ReviewForm({
   kind,

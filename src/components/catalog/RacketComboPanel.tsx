@@ -14,6 +14,8 @@ import type { ProductCategory } from "@/types";
 type Props = {
   locale: "ua" | "ru";
   slug: string;
+  /** Шлях картки без локалі — рядок кошика веде назад на товар. */
+  href: string;
   brandLabel: string;
   model: string;
   cartCategory: ProductCategory;
@@ -48,6 +50,7 @@ const LABELS = {
 export function RacketComboPanel({
   locale,
   slug,
+  href,
   brandLabel,
   model,
   cartCategory,
@@ -91,6 +94,7 @@ export function RacketComboPanel({
       accentColor,
       emoji: "",
       image: imageUrl,
+      href,
     });
   };
 

@@ -12,8 +12,8 @@ import type { CatalogProduct } from "@/types/catalog";
 import {
   SIZE_CHART_PATH,
   isPageChart,
-  isSizedGearType,
   sizeChartsForProduct,
+  sizeHelpKind,
   sizeModelInfo,
 } from "@/data/sizeCharts";
 import { SizeChartTable } from "@/components/content/SizeChartTable";
@@ -34,20 +34,21 @@ const T = {
 } satisfies Record<Locale, Record<string, string>>;
 
 export function SizeHelp({ product, locale }: { product: CatalogProduct; locale: Locale }) {
-  const gear = product.gear;
-  if (!gear) return null;
+  // Тип товару без розмірної сітки (напульсник, кепка) і без примітки — блоку немає.
+  // ⚠️ Правило — у sizeHelpKind: на нього ж спирається посилання «Розмірна сітка» біля
+  // вибору розміру (GearPurchasePanel), яке розкриває цей блок за data-size-help="table".
+  const kind = sizeHelpKind(product);
+  if (!kind) return null;
   const t = T[locale];
   const charts = sizeChartsForProduct(product);
   const note = sizeModelInfo(product.slug)?.note ?? null;
-  // Тип товару без розмірної сітки (напульсник, кепка) і без примітки — блоку немає.
-  if (!isSizedGearType(gear.gearType) && !note) return null;
 
   const pageHref = `/${locale}${SIZE_CHART_PATH}`;
   // Якір — на першу таблицю моделі, яка є на сторінці (заміри окремих моделей живуть лише на картках).
   const anchor = charts.find((c) => isPageChart(c.id))?.id;
 
   // Таблиці саме для цієї моделі немає — лише посилання на сторінку.
-  if (charts.length === 0 && !note) {
+  if (kind === "link") {
     return (
       <p className="mt-3 font-body text-[13px] text-ink-muted" data-size-help="link">
         <Link href={pageHref} prefetch={false} className="font-semibold text-accent hover:underline">

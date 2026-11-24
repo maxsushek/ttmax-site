@@ -79,7 +79,8 @@ function enabledHere(): boolean {
 
 function isInternal(): boolean {
   // ?ttmax_internal=1 — позначити пристрій без входу в адмінку (напр. телефон власника).
-  if (new URLSearchParams(window.location.search).get(INTERNAL_COOKIE) === "1") markInternalBrowser();
+  if (new URLSearchParams(window.location.search).get(INTERNAL_COOKIE) === "1")
+    markInternalBrowser();
   const hasCookie = document.cookie.split("; ").includes(`${INTERNAL_COOKIE}=1`);
   let flagged = hasCookie;
   try {
@@ -167,7 +168,9 @@ export function initPosthog(): void {
           session_recording: {
             // Усе, що людина вводить (ім'я, телефон, місто, відділення, текст відгуку), у записі
             // зірочками. .ph-mask — текст на екрані, у якому видно введене (підсумок доставки,
-            // e-mail на екрані «Дякуємо»).
+            // телефон на екрані «Замовлення оформлено»).
+            // ⚠️ .ph-mask діє ЛИШЕ на запис сеансу. Автозахоплення кліків збирає текст елемента
+            // окремо, тож такому тексту потрібен ще й клас ph-no-capture (див. CheckoutForm).
             maskAllInputs: true,
             maskTextSelector: ".ph-mask",
           },

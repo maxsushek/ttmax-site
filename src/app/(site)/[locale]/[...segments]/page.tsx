@@ -15,6 +15,7 @@ import {
   getCrossSell,
   getMinPrice,
   getProductBySlug,
+  getProductPath,
   getProductsByCategory,
   getProductsBySeries,
   isInStock,
@@ -37,6 +38,7 @@ import { promoOldPrice } from "@/data/catalog/promos";
 import { BasePurchasePanel } from "@/components/catalog/BasePurchasePanel";
 import { GearPurchasePanel } from "@/components/catalog/GearPurchasePanel";
 import { SizeHelp } from "@/components/catalog/SizeHelp";
+import { SIZE_CHART_PATH, sizeHelpKind } from "@/data/sizeCharts";
 import { CategoryFacts } from "@/components/catalog/CategoryFacts";
 import { categoryFacts } from "@/lib/catalog/categoryFacts";
 import {
@@ -286,7 +288,11 @@ export async function generateMetadata({
   });
 }
 
-/** Категория каталога → showcase-категория корзины (для лейбла в корзине). */
+/**
+ * Категорія каталогу → категорія кошика (для підпису позиції в кошику).
+ * ⚠️ Обернена мапа — LEGACY_SECTION у lib/cart/line.ts: за нею кошики, збережені до
+ * 24.11.2026 (без поля href), знаходять картку товару. Міняєш тут — перевір і там.
+ */
 const CART_CATEGORY: Record<string, ProductCategory> = {
   rakety: "base",
   nakladki: "rubber",
@@ -1533,6 +1539,7 @@ function RubberView({
         <ProductPurchasePanel
           locale={locale}
           slug={product.slug}
+          href={getProductPath(product)}
           brandLabel={brandName}
           model={product.model}
           cartCategory={cartCategory}
@@ -1646,8 +1653,11 @@ function GearView({
     >
       <div className="mt-7">
         <GearPurchasePanel
+          // key: вибраний розмір — стан цієї картки, він не має «переїхати» на іншу модель.
+          key={product.slug}
           locale={locale}
           slug={product.slug}
+          href={getProductPath(product)}
           brandLabel={brandName}
           model={product.model}
           cartCategory={cartCategory}
@@ -1661,6 +1671,8 @@ function GearView({
           inStock={product.inStock}
           phone={siteConfig.phone}
           imageUrl={img ? cldUrl(img.publicId, { w: 96, h: 96, crop: "fit" }) : undefined}
+          sizeHelp={gear.sizes?.length ? sizeHelpKind(product) : null}
+          sizeChartHref={`/${locale}${SIZE_CHART_PATH}`}
         />
         {/* Розмірна сітка — одразу під вибором розміру (лише одяг, взуття, шкарпетки, устілки). */}
         <SizeHelp product={product} locale={locale} />
@@ -1729,6 +1741,7 @@ function BaseView({
         <BasePurchasePanel
           locale={locale}
           slug={product.slug}
+          href={getProductPath(product)}
           brandLabel={brandName}
           model={product.model}
           cartCategory={cartCategory}
@@ -1925,6 +1938,7 @@ async function RacketComboView({
           <RacketComboPanel
             locale={locale}
             slug={product.slug}
+            href={getProductPath(product)}
             brandLabel={brandName}
             model={product.model}
             cartCategory={cartCategory}
