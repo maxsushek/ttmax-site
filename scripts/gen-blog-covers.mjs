@@ -623,7 +623,32 @@ function hratyShypamy() {
   return wrap(b.join("\n"));
 }
 
+/* ─── Рейтинг ФНТУ: рейтинг іде за внесками матчів, вага лише росте ─── */
+function reityng() {
+  // ⚠️ ТЕЗА СТАТТІ: після кожного матчу рейтинг (лінія) змінюється на внесок — перемоги
+  // піднімають, поразка опускає, — а вага (стовпчики) після турніру тільки зростає.
+  // Акцент — лінія рейтингу й перемоги; поразка й вага — тьмяні. БЕЗ ЧИСЕЛ.
+  const xs = [820, 900, 980, 1060, 1140, 1220, 1300];
+  const ys = [700, 640, 585, 612, 520, 455, 360];
+  const kind = ["start", "win", "win", "loss", "win", "win", "win"];
+  const bars = [20, 34, 48, 58, 72, 86, 100]; // вага накопичується: кожен стовпчик вищий
+  const base = 820;
+  const b = [`<circle cx="${xs[6]}" cy="${ys[6]}" r="230" fill="url(#halo)"/>`];
+  xs.forEach((x, i) => {
+    b.push(`<rect x="${x - 13}" y="${base - bars[i]}" width="26" height="${bars[i]}" rx="4" fill="${DOT_RING}" fill-opacity="0.45"/>`);
+  });
+  b.push(`<line x1="${xs[0] - 30}" y1="${base}" x2="${SAFE.x1}" y2="${base}" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="2"/>`);
+  b.push(`<polyline points="${xs.map((x, i) => `${x},${ys[i]}`).join(" ")}" fill="none" stroke="${ACCENT}" stroke-opacity="0.6" stroke-width="3" stroke-linejoin="round"/>`);
+  xs.forEach((x, i) => {
+    if (i === xs.length - 1) b.push(dotAccent(x, ys[i], 22));
+    else if (kind[i] === "win") b.push(`<circle cx="${x}" cy="${ys[i]}" r="11" fill="${ACCENT}" fill-opacity="0.85"/>`);
+    else b.push(dot(x, ys[i], 15, 0.6));
+  });
+  return wrap(b.join("\n"));
+}
+
 const FILES = {
+  "reityng-fntu-cover.svg": reityng(),
   "udary-v-nastilnomu-tenisi-cover.svg": udary(),
   "yak-hraty-shypamy-cover.svg": hratyShypamy(),
   "dignics-05-chy-09c-cover.svg": dignics0509(),

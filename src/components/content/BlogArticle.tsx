@@ -540,9 +540,9 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   </table>
                 </div>
               )}
-              {s.links && s.links.length > 0 && (
+              {((s.links?.length ?? 0) > 0 || (s.external?.length ?? 0) > 0) && (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {s.links.map((l, i) => (
+                  {s.links?.map((l, i) => (
                     <Link
                       key={i}
                       href={`/${locale}${l.href}`}
@@ -551,6 +551,19 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                     >
                       {l.label[locale]}
                     </Link>
+                  ))}
+                  {/* Зовнішні — звичайний <a>, без nofollow (редакційні, як «Джерела»). */}
+                  {s.external?.map((x, i) => (
+                    <a
+                      key={`x${i}`}
+                      href={x.url}
+                      target="_blank"
+                      rel="noopener"
+                      data-blog-link="external"
+                      className="rounded-full border border-accent/40 px-3 py-1 font-body text-[13px] text-accent hover:bg-accent/10"
+                    >
+                      {x.label[locale]} ↗
+                    </a>
                   ))}
                 </div>
               )}
