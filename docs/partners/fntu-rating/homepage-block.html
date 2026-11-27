@@ -1,0 +1,74 @@
+<!--
+  Блок «Партнер калькулятора» для головної fntu-rating.com.ua
+  ===========================================================
+  Де: index.html, наприкінці <main> — після секції «Часті запитання»
+  (<section class="doc faq" …>…</section>) і перед </main>.
+  Чому тут: це основний вміст сторінки, а не підвал (посилання з тексту сторінки важать
+  більше, ніж з підвалу), і блок не заважає калькулятору й статті з формулами.
+
+  Посилання — звичайні <a href> без rel: так вони «dofollow».
+  Не додавайте rel="nofollow", "sponsored" чи "ugc" і не міняйте адреси (без UTM).
+  Якщо сайт колись переїде на CMS (WordPress тощо), перевірте, що SEO-плагін
+  не дописує nofollow до зовнішніх посилань сам.
+
+  Посилання «Докладніше…» веде на нову сторінку /inventar-butterfly/ (файл page.html).
+  Поки її не опубліковано, приберіть останній абзац.
+-->
+    <section class="doc partner" aria-labelledby="h-partner">
+      <div class="card">
+        <h2 id="h-partner">Партнер калькулятора — магазин Butterfly UA</h2>
+        <p>Butterfly UA (TTMAX) — <a href="https://ttmax.com.ua/ua">магазин інвентарю для настільного тенісу</a> з Харкова. На ttmax.com.ua зібрано оригінальну продукцію Butterfly: <a href="https://ttmax.com.ua/ua/nakladki">накладки Tenergy і Dignics</a>, <a href="https://ttmax.com.ua/ua/osnovaniya">основи Viscaria й Timo Boll ALC</a>, <a href="https://ttmax.com.ua/ua/rakety">готові ракетки, зібрані майстром</a>, а також м'ячі, одяг і аксесуари.</p>
+        <p>Якщо замовити основу й накладки разом, їх безкоштовно поклеять. Доставка Новою Поштою або Укрпоштою по всій Україні, оплата при отриманні, від 5000 грн — безкоштовно. Якщо готуєтеся до рейтингового турніру, у магазині допоможуть підібрати інвентар під ваш рівень і стиль гри.</p>
+        <p><a href="/inventar-butterfly/">Докладніше про магазин і асортимент →</a></p>
+      </div>
+    </section>
+
+
+<!-- Стилі: додати в кінець style.css (лише правила, без тегів style). Без них посилання
+     матимуть стандартний синій колір, погано помітний у темній темі. -->
+<style>
+.partner a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.partner a:hover { text-decoration: underline; }
+</style>
+
+
+<!--
+  Розмітка: вставити в <head> файлу index.html окремим блоком — після наявного
+  <script type="application/ld+json">…</script>. Ваш JSON-LD не змінюється.
+  Що вона каже машинам: ця сторінка (#webpage) — частина вашого сайту (#website),
+  головне на ній — калькулятор (#app), і вона згадує магазин Butterfly UA.
+  @id магазину й компанії — ті самі, що в розмітці на ttmax.com.ua: пошуковики
+  й ШІ-асистенти склеюють їх в одну сутність.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://fntu-rating.com.ua/#webpage",
+      "url": "https://fntu-rating.com.ua/",
+      "name": "Калькулятор рейтингу з настільного тенісу ФНТУ онлайн",
+      "inLanguage": "uk",
+      "isPartOf": { "@id": "https://fntu-rating.com.ua/#website" },
+      "mainEntity": { "@id": "https://fntu-rating.com.ua/#app" },
+      "mentions": { "@id": "https://ttmax.com.ua/#business" }
+    },
+    {
+      "@type": "Store",
+      "@id": "https://ttmax.com.ua/#business",
+      "name": "Butterfly UA",
+      "alternateName": "TTMAX",
+      "url": "https://ttmax.com.ua",
+      "parentOrganization": { "@id": "https://ttmax.com.ua/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://ttmax.com.ua/#org",
+      "name": "Butterfly UA",
+      "alternateName": "TTMAX",
+      "url": "https://ttmax.com.ua"
+    }
+  ]
+}
+</script>

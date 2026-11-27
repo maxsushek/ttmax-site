@@ -1,0 +1,91 @@
+<!--
+  Банер Butterfly UA (TTMAX) для fntu-rating.com.ua
+  ===================================================
+  Файл банера: ttmax-banner.png, 680 × 400 px (показується як 340 × 200).
+  Покладіть його в корінь репозиторію сайту поруч з index.html.
+  Якщо у файлу інші пропорції — замініть width і height у тегах <img> на його розміри:
+  браузер збереже пропорції й не «стрибне» під час завантаження.
+
+  Посилання банера — rel="sponsored noopener": це реклама, так вимагає Google.
+  target="_blank" — калькулятор лишається відкритим у своїй вкладці.
+  Не додавайте rel="noreferrer": він ховає, що відвідувач прийшов з вашого сайту.
+-->
+
+
+<!-- ═════════ МІСЦЕ №1 (рекомендоване): під карткою результату ═════════
+  index.html: знайдіть блок
+      <aside class="card result" id="result" aria-live="polite" aria-label="Результат">
+        …
+      </aside>
+  і обгорніть його в <div class="side">, а після </aside> додайте два посилання.
+  На ПК банер стоїть під результатом і прокручується разом з ним (липкий стовпчик),
+  на телефоні — одразу після картки результату, у потоці сторінки.
+  Вийде так (вміст <aside> не змінюється, тут скорочено до «…»):
+-->
+      <div class="side">
+        <aside class="card result" id="result" aria-live="polite" aria-label="Результат">
+          …
+        </aside>
+
+        <a class="ttmax-banner ttmax-banner--desktop"
+           href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=desktop_sidebar"
+           rel="sponsored noopener" target="_blank">
+          <img src="ttmax-banner.png" width="680" height="400"
+               alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
+               decoding="async">
+        </a>
+        <a class="ttmax-banner ttmax-banner--mobile"
+           href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=mobile_after_result"
+           rel="sponsored noopener" target="_blank">
+          <img src="ttmax-banner.png" width="680" height="400"
+               alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
+               loading="lazy" decoding="async">
+        </a>
+        <p class="ttmax-banner-note">Партнер калькулятора</p>
+      </div>
+
+
+<!-- ═════════ МІСЦЕ №2 (альтернатива, якщо №1 не підходить) ═════════
+  ПК: смуга на всю ширину між калькулятором і статтею — вставити в index.html
+      перед рядком <noscript>…
+  Файл смуги: ttmax-banner-wide.png, 2096 × 280 px (показується як 1048 × 140).
+-->
+    <a class="ttmax-strip ttmax-strip--desktop"
+       href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=desktop_inline"
+       rel="sponsored noopener" target="_blank">
+      <img src="ttmax-banner-wide.png" width="2096" height="280"
+           alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
+           loading="lazy" decoding="async">
+    </a>
+
+<!--
+  Телефон: картка між статтею і «Часті запитання» — вставити в index.html
+      перед рядком <section class="doc faq" aria-labelledby="h-faq">
+  Файл той самий, що для місця №1: ttmax-banner.png.
+-->
+    <a class="ttmax-strip ttmax-strip--mobile"
+       href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=mobile_before_faq"
+       rel="sponsored noopener" target="_blank">
+      <img src="ttmax-banner.png" width="680" height="400"
+           alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
+           loading="lazy" decoding="async">
+    </a>
+
+
+<!-- ═════════ СТИЛІ: додати в кінець style.css (лише правила, без тегів style) ═════════ -->
+<style>
+/* Банер Butterfly UA (TTMAX) */
+.side { position: sticky; top: 16px; display: grid; gap: 16px; }
+.side .result { position: static; }
+.ttmax-banner, .ttmax-strip { display: block; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.ttmax-banner img, .ttmax-strip img { display: block; width: 100%; height: auto; }
+.ttmax-banner--mobile, .ttmax-strip--mobile { display: none; }
+.ttmax-strip { margin-top: 28px; }
+.ttmax-banner-note { margin: -8px 0 0; font-size: 12px; color: var(--muted); text-align: right; }
+@media (max-width: 860px) {
+  .side { position: static; }
+  .ttmax-banner--desktop, .ttmax-strip--desktop { display: none; }
+  .ttmax-banner--mobile, .ttmax-strip--mobile { display: block; width: 100%; max-width: 480px; }
+  .ttmax-banner-note { text-align: left; }
+}
+</style>
