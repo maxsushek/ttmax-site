@@ -1,10 +1,12 @@
 <!--
   Банер Butterfly UA (TTMAX) для fntu-rating.com.ua
   ===================================================
-  Файл банера: ttmax-banner.png, 680 × 400 px (показується як 340 × 200).
-  Покладіть його в корінь репозиторію сайту поруч з index.html.
-  Якщо у файлу інші пропорції — замініть width і height у тегах <img> на його розміри:
-  браузер збереже пропорції й не «стрибне» під час завантаження.
+  Файли — у теці banners/ пакета; покладіть їх у корінь репозиторію сайту поруч з index.html:
+    ttmax-banner.webp          1098 × 630, 95 КБ — ПК і телефон: на ПК показується 340 × 195,
+                               на телефоні — на ширину екрана, не ширше 480 px;
+    ttmax-banner-mobile.webp    486 × 874, 74 КБ — вертикальний варіант для телефона (див. нижче).
+  width і height у тегах <img> — справжні розміри файлів: браузер заздалегідь знає
+  пропорції, і сторінка не «стрибає» під час завантаження.
 
   Посилання банера — rel="sponsored noopener": це реклама, так вимагає Google.
   target="_blank" — калькулятор лишається відкритим у своїй вкладці.
@@ -30,17 +32,21 @@
         <a class="ttmax-banner ttmax-banner--desktop"
            href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=desktop_sidebar"
            rel="sponsored noopener" target="_blank">
-          <img src="ttmax-banner.png" width="680" height="400"
+          <img src="ttmax-banner.webp" width="1098" height="630"
                alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
                decoding="async">
         </a>
         <a class="ttmax-banner ttmax-banner--mobile"
            href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=mobile_after_result"
            rel="sponsored noopener" target="_blank">
-          <img src="ttmax-banner.png" width="680" height="400"
+          <img src="ttmax-banner.webp" width="1098" height="630"
                alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
                loading="lazy" decoding="async">
         </a>
+        <!-- Вертикальний варіант для телефона: у посиланні ttmax-banner--mobile замініть
+             src="ttmax-banner.webp" width="1098" height="630"
+             на src="ttmax-banner-mobile.webp" width="486" height="874"
+             і допишіть посиланню клас ttmax-banner--tall (ширина до 320 px, висота ≈575 px). -->
         <p class="ttmax-banner-note">Партнер калькулятора</p>
       </div>
 
@@ -49,6 +55,7 @@
   ПК: смуга на всю ширину між калькулятором і статтею — вставити в index.html
       перед рядком <noscript>…
   Файл смуги: ttmax-banner-wide.png, 2096 × 280 px (показується як 1048 × 140).
+  Такого файлу поки немає: якщо обираєте це місце, TTMAX підготує смугу.
 -->
     <a class="ttmax-strip ttmax-strip--desktop"
        href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=desktop_inline"
@@ -66,7 +73,7 @@
     <a class="ttmax-strip ttmax-strip--mobile"
        href="https://ttmax.com.ua/ua?utm_source=fntu-rating&amp;utm_medium=banner&amp;utm_campaign=fntu_partner&amp;utm_content=mobile_before_faq"
        rel="sponsored noopener" target="_blank">
-      <img src="ttmax-banner.png" width="680" height="400"
+      <img src="ttmax-banner.webp" width="1098" height="630"
            alt="Butterfly UA — магазин інвентарю Butterfly для настільного тенісу, ttmax.com.ua"
            loading="lazy" decoding="async">
     </a>
@@ -86,6 +93,7 @@
   .side { position: static; }
   .ttmax-banner--desktop, .ttmax-strip--desktop { display: none; }
   .ttmax-banner--mobile, .ttmax-strip--mobile { display: block; width: 100%; max-width: 480px; }
+  .ttmax-banner--tall { max-width: 320px; }
   .ttmax-banner-note { text-align: left; }
 }
 </style>
