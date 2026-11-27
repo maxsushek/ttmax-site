@@ -45,6 +45,14 @@ export type BlogSection = {
    */
   external?: { label: L; url: string }[];
   /**
+   * Міні-банер партнера: картинка-посилання на інший сайт з UTM-мітками. Рендериться в кінці
+   * розділу, не ширше 560 px, з підписом «Партнер». Картинка — з генератора (числа на ній
+   * руками не пишуться). Клік рахується як blog_link_click з kind="banner".
+   * ⚠️ rel="sponsored": банер — реклама, навіть без оплати (обмін), — так само банер TTMAX
+   * просили позначити в партнера. Звичайне посилання без nofollow — поле `external`.
+   */
+  banner?: { src: L; alt: L; url: L; width: number; height: number };
+  /**
    * Покрокова інструкція: малюється нумерованим списком ПІД абзацами розділу і з того ж
    * масиву будується розмітка HowTo. Одне джерело — тож текст і розмітка не розійдуться
    * (розмітка, якої немає на сторінці, порушує правила Google).
@@ -14000,6 +14008,22 @@ const POSTS: Record<string, BlogPost> = {
         external: [
           { label: { ua: "Калькулятор рейтингу ФНТУ", ru: "Калькулятор рейтинга ФНТУ" }, url: "https://fntu-rating.com.ua/" },
         ],
+        // Міні-банер партнера (27.11.2026): картинка — scripts/gen-fntu-calc-banner.mjs, числа —
+        // приклад цього розділу. UTM для аналітики партнера: utm_source=ttmax, utm_medium=banner,
+        // utm_campaign=ttmax_partner, utm_content=blog_reityng_fntu_{ua|ru}.
+        banner: {
+          src: { ua: "/blog/fntu-calc-banner-ua.svg", ru: "/blog/fntu-calc-banner-ru.svg" },
+          alt: {
+            ua: "Калькулятор рейтингу ФНТУ на fntu-rating.com.ua: рейтинг і вага після турніру",
+            ru: "Калькулятор рейтинга ФНТУ на fntu-rating.com.ua: рейтинг и вес после турнира",
+          },
+          url: {
+            ua: "https://fntu-rating.com.ua/?utm_source=ttmax&utm_medium=banner&utm_campaign=ttmax_partner&utm_content=blog_reityng_fntu_ua",
+            ru: "https://fntu-rating.com.ua/?utm_source=ttmax&utm_medium=banner&utm_campaign=ttmax_partner&utm_content=blog_reityng_fntu_ru",
+          },
+          width: 1200,
+          height: 640,
+        },
       },
       {
         id: "novachok",

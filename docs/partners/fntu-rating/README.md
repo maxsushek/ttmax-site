@@ -28,6 +28,17 @@ https://claude.ai/artifact/VtiSgTo3fcNRjr18rh11Et (приватна: відкр�
 вкладці; ще дві згадки калькулятора — у тексті й у FAQ. Кліки рахуються в PostHog:
 подія `blog_link_click`, `kind = external`, `post = reityng-fntu`.
 
+Під таблеткою — міні-банер калькулятора з підписом «Партнер» (картинка —
+`scripts/gen-fntu-calc-banner.mjs`, числа — приклад зі статті). Посилання з UTM для аналітики
+партнера, `rel="sponsored noopener"` (банер — реклама, як і банер TTMAX у партнера):
+
+```
+https://fntu-rating.com.ua/?utm_source=ttmax&utm_medium=banner&utm_campaign=ttmax_partner&utm_content=blog_reityng_fntu_ua
+https://fntu-rating.com.ua/?utm_source=ttmax&utm_medium=banner&utm_campaign=ttmax_partner&utm_content=blog_reityng_fntu_ru
+```
+
+Кліки — `blog_link_click` з `kind = banner`.
+
 ## Рішення власника (27.11.2026)
 
 - **Розміщує вебмайстер партнера сам** — йому передаємо файли й інструкцію нижче.

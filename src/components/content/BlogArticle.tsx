@@ -567,6 +567,32 @@ export function BlogArticle({ post, locale }: { post: BlogPost; locale: Locale }
                   ))}
                 </div>
               )}
+              {s.banner && (
+                <div className="mt-5 max-w-[560px]">
+                  <span className="mb-1.5 block font-body text-[11px] uppercase tracking-wide text-ink-dim">
+                    {locale === "ua" ? "Партнер" : "Партнёр"}
+                  </span>
+                  {/* Банер — реклама навіть без оплати, тому sponsored (див. BlogSection.banner). */}
+                  <a
+                    href={s.banner.url[locale]}
+                    target="_blank"
+                    rel="sponsored noopener"
+                    data-blog-link="banner"
+                    className="block overflow-hidden rounded-2xl border border-border-subtle transition-colors hover:border-accent/60"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={s.banner.src[locale]}
+                      alt={s.banner.alt[locale]}
+                      width={s.banner.width}
+                      height={s.banner.height}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto w-full"
+                    />
+                  </a>
+                </div>
+              )}
             </section>
             {productSlugs.length > 0 && productsAfter === s.id && (
               <BlogProducts owner={post.slug} slugs={productSlugs} locale={locale} />
